@@ -2,20 +2,47 @@ use piston_window::PistonWindow;
 use piston_window::Texture;
 use piston_window::TextureSettings;
 use piston_window::Flip;
-use graphics::math::Matrix2d;
 use std::path::PathBuf;
 use gfx_device_gl::Resources;
+use update_component::UpdateComponent;
+use std::mem;
 
 pub struct GameObject {
     pub x : f64,
     pub y : f64,
     pub rot : f64,
     pub texture : Texture<Resources>,
+    update_components : Vec<Box<UpdateComponent>>,
+    updated_components: Vec<Box<UpdateComponent>>,
 }
 
 impl GameObject {
     pub fn new(window : &mut PistonWindow) -> GameObject {
-        GameObject{x:0.0,y:0.0,rot:0.0,texture:Texture::empty(&mut window.factory).expect("Bro it's an empty texture.  How could this fail?")}
+        GameObject{
+            x : 0.0,
+            y : 0.0,
+            rot : 0.0,
+            update_components : Vec::new(),
+            updated_components : Vec::new(),
+            texture : Texture::empty(&mut window.factory)
+                .expect("Bro it's an empty texture.  How could this fail?"),
+        }
+    }
+
+    pub fn update(&mut self, delta_time : f64) {
+        self.updated_components = Vec::new();
+        let mut pop_result = self.update_components.pop();
+        while let Some(mut component) = pop_result {
+            component.update(self, delta_time);
+            self.updated_components.push(component);
+            pop_result = self.update_components.pop();
+        }
+        self.update_components = mem::replace(&mut self.updated_components, Vec::new());
+    }
+
+    pub fn add_update_component(&mut self, component : Box<UpdateComponent>)
+    {
+        self.update_components.push(component);
     }
 
     pub fn set_texture(&mut self, window : &mut PistonWindow, texture_name : &str) {

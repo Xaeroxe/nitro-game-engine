@@ -4,12 +4,15 @@ extern crate graphics;
 extern crate gfx_device_gl;
 
 mod game_object;
+mod update_component;
+mod spinny;
 
 use piston::window::WindowSettings;
 use piston::event_loop::*;
 use piston::input::*;
 use piston_window::{PistonWindow, OpenGL};
 use game_object::GameObject;
+use spinny::Spinny;
 
 pub struct App {
     window : PistonWindow,
@@ -39,7 +42,7 @@ impl App {
 
     fn update(&mut self, args : &UpdateArgs) {
         for game_obj in &mut self.game_objects {
-            game_obj.rot += 1.0 * args.dt;
+            game_obj.update(args.dt);
         }
     }
 }
@@ -62,6 +65,7 @@ fn main() {
     game_obj.x = 400.0;
     game_obj.y = 300.0;
     game_obj.set_texture(&mut app.window, "nitro.png");
+    game_obj.add_update_component(Box::new(Spinny{}));
     app.game_objects.push(game_obj);
     let mut events = app.window.events();
     while let Some(e) = events.next(&mut app.window) {
