@@ -10,7 +10,6 @@ use piston::event_loop::*;
 use piston::input::*;
 use piston_window::{PistonWindow, OpenGL};
 use game_object::GameObject;
-use graphics::Transformed;
 
 pub struct App {
     window : PistonWindow,
@@ -27,10 +26,12 @@ impl App {
             // Clear the screen.
             clear(GREY, gl);
             for game_obj in game_objs {
+                let (tex_width, tex_height) = game_obj.texture.get_size();
                 image(&game_obj.texture,
                     c.transform
                     .trans(game_obj.x, game_obj.y)
-                    .rot_rad(game_obj.rot),
+                    .rot_rad(game_obj.rot)
+                    .trans(-(tex_width as f64)/2.0, -(tex_height as f64)/2.0),
                 gl);
             }
         });
@@ -58,6 +59,8 @@ fn main() {
             .unwrap(),
     };
     let mut game_obj = GameObject::new(&mut app.window);
+    game_obj.x = 400.0;
+    game_obj.y = 300.0;
     game_obj.set_texture(&mut app.window, "nitro.png");
     app.game_objects.push(game_obj);
     let mut events = app.window.events();
