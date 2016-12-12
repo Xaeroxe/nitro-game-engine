@@ -32,8 +32,7 @@ impl App {
                 let (tex_width, tex_height) = game_obj.texture.get_size();
                 image(&game_obj.texture,
                     c.transform
-                    .trans(game_obj.x, game_obj.y)
-                    .rot_rad(game_obj.rot)
+                    .append_transform(game_obj.get_draw_matrix())
                     .trans(-(tex_width as f64)/2.0, -(tex_height as f64)/2.0),
                 gl);
             }
@@ -62,8 +61,8 @@ fn main() {
             .unwrap(),
     };
     let mut game_obj = GameObject::new(&mut app.window);
-    game_obj.x = 400.0;
-    game_obj.y = 300.0;
+    game_obj.set_x(400.0);
+    game_obj.set_y(300.0);
     game_obj.set_texture(&mut app.window, "nitro.png");
     game_obj.add_update_component(Box::new(Spinny{}));
     app.game_objects.push(game_obj);
