@@ -6,7 +6,7 @@ extern crate gfx_device_gl;
 mod game_object;
 mod transform;
 mod texture;
-mod update_component;
+mod component;
 mod spinny;
 
 use piston::window::WindowSettings;
@@ -66,7 +66,7 @@ fn main() {
     game_obj.transform.set_x(400.0);
     game_obj.transform.set_y(300.0);
     game_obj.texture.set_texture(&mut app, "nitro.png");
-    game_obj.add_update_component(Box::new(Spinny{}));
+    game_obj.add_component(Box::new(Spinny{}));
     app.game_objects.push(game_obj);
     let mut events = app.window.events();
     while let Some(e) = events.next(&mut app.window) {
