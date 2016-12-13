@@ -12,8 +12,8 @@ impl Transform {
         Transform{transform:[[1.0, 0.0, 0.0],[0.0, 1.0, 0.0]]}
     }
 
-    pub fn from_x_y_rotation(x : f64, y : f64, rotation : f64) {
-        let value = Transform::new();
+    pub fn from_x_y_rotation(x : f64, y : f64, rotation : f64) -> Transform {
+        let mut value = Transform::new();
         value.set_x(x);
         value.set_y(y);
         value.set_rotation(rotation);
