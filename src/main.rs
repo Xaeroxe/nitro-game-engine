@@ -4,6 +4,8 @@ extern crate graphics;
 extern crate gfx_device_gl;
 
 mod game_object;
+mod transform;
+mod texture;
 mod update_component;
 mod spinny;
 
@@ -29,10 +31,10 @@ impl App {
             // Clear the screen.
             clear(GREY, gl);
             for game_obj in game_objs {
-                let (tex_width, tex_height) = game_obj.texture.get_size();
-                image(&game_obj.texture,
+                let (tex_width, tex_height) = game_obj.texture.get_raw().get_size();
+                image(game_obj.texture.get_raw(),
                     c.transform
-                    .append_transform(game_obj.get_draw_matrix())
+                    .append_transform(game_obj.transform.get_raw())
                     .trans(-(tex_width as f64)/2.0, -(tex_height as f64)/2.0),
                 gl);
             }
@@ -60,10 +62,10 @@ fn main() {
             .build()
             .unwrap(),
     };
-    let mut game_obj = GameObject::new(&mut app.window);
-    game_obj.set_x(400.0);
-    game_obj.set_y(300.0);
-    game_obj.set_texture(&mut app.window, "nitro.png");
+    let mut game_obj = GameObject::new(&mut app);
+    game_obj.transform.set_x(400.0);
+    game_obj.transform.set_y(300.0);
+    game_obj.texture.set_texture(&mut app, "nitro.png");
     game_obj.add_update_component(Box::new(Spinny{}));
     app.game_objects.push(game_obj);
     let mut events = app.window.events();
