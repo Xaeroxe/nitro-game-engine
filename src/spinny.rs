@@ -13,6 +13,7 @@ impl Component for Spinny {
                 game_object.transform.add_rotation(1.0 * delta_time);
                 game_object.transform.add_x(10.0 * delta_time);
             }
+            _ => {}
         }
     }
 }
