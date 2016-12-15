@@ -1,9 +1,8 @@
-use super::App;
-use texture::Texture;
-use transform::Transform;
-use std::path::PathBuf;
-use component::Component;
-use component::Message;
+use nitro::app::App;
+use nitro::texture::Texture;
+use nitro::transform::Transform;
+use nitro::component::Component;
+use nitro::component::Message;
 use std::mem;
 
 pub struct GameObject {
@@ -22,16 +21,16 @@ impl GameObject {
     pub fn new(app : &mut App) -> GameObject {
         GameObject {
             transform : Transform::new(),
-            components : Vec::new(),
-            messaged_components : Vec::new(),
+            components : vec!(),
+            messaged_components : vec!(),
             texture : Texture::empty(app),
         }
     }
 
-    pub fn update(&mut self, delta_time : f64) {
+    pub fn update(&mut self, app : &mut App, delta_time : f64) {
         let mut pop_result = self.components.pop();
         while let Some(mut component) = pop_result {
-            component.receive_message(self, &Message::Update{delta_time : delta_time});
+            component.receive_message(app, self, &Message::Update{delta_time : delta_time});
             self.messaged_components.push(component);
             pop_result = self.components.pop();
         }

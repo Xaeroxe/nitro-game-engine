@@ -1,6 +1,6 @@
-use component::Component;
-use component::Message;
-use game_object::GameObject;
+use nitro::component::Component;
+use nitro::component::Message;
+use nitro::game_object::GameObject;
 
 pub struct Spinny {
 
