@@ -20,7 +20,7 @@ pub struct GameObject {
 
 impl GameObject {
     pub fn new(app : &mut App) -> GameObject {
-        GameObject{
+        GameObject {
             transform : Transform::new(),
             components : Vec::new(),
             messaged_components : Vec::new(),

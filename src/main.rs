@@ -19,6 +19,7 @@ use spinny::Spinny;
 pub struct App {
     window : PistonWindow,
     game_objects : Vec<GameObject>,
+    buttons_pressed : Vec<Button>,
 }
 
 impl App {
@@ -53,6 +54,7 @@ fn main() {
     // Create a new game and run it.
     let mut app = App {
         game_objects: vec!(),
+        buttons_pressed : vec!(),
         window : WindowSettings::new(
                 "Nitro Engine",
                 [800, 600]
@@ -70,12 +72,31 @@ fn main() {
     app.game_objects.push(game_obj);
     let mut events = app.window.events();
     while let Some(e) = events.next(&mut app.window) {
-        if let Some(r) = e.render_args() {
-            app.render(&e);
-        }
-
-        if let Some(u) = e.update_args() {
-            app.update(&u);
+        match e {
+            Event::Render(render_args) => {
+                app.render(&e);
+            }
+            Event::AfterRender(after_render_args) => {}
+            Event::Update(update_args) => {
+                app.update(&update_args)
+            }
+            Event::Idle(idle_args) => {}
+            Event::Input(input_event) => {
+                match input_event {
+                    Input::Press(button) => {
+                        app.buttons_pressed.push(button);
+                    }
+                    Input::Release(button) => {
+                        while let Some(i) = app.buttons_pressed.iter().position(
+                            |&item| item == button
+                        )
+                        {
+                            app.buttons_pressed.swap_remove(i);
+                        }
+                    }
+                    _ => {}
+                }
+            }
         }
     }
 }
