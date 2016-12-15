@@ -1,7 +1,7 @@
 extern crate nitro;
 
-use nitro::app::App;
-use nitro::game_object::GameObject;
+use nitro::App;
+use nitro::GameObject;
 use nitro::input::Axis;
 use nitro::input::Button;
 use nitro::input::keyboard::Key;
