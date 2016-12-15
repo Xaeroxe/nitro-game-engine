@@ -1,8 +1,8 @@
 mod spinny;
 pub use self::spinny::Spinny;
 
-use nitro::app::App;
-use nitro::game_object::GameObject;
+use app::App;
+use game_object::GameObject;
 use std::any::Any;
 
 pub trait Component {

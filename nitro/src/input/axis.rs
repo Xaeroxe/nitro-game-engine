@@ -1,6 +1,5 @@
-use nitro::app::App;
-
-use nitro::input::Button;
+use app::App;
+use input::Button;
 
 pub struct Axis {
     pos : Button,

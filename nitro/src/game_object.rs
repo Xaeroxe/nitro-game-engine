@@ -1,8 +1,8 @@
-use nitro::app::App;
-use nitro::texture::Texture;
-use nitro::transform::Transform;
-use nitro::component::Component;
-use nitro::component::Message;
+use app::App;
+use texture::Texture;
+use transform::Transform;
+use component::Component;
+use component::Message;
 use std::mem;
 
 pub struct GameObject {

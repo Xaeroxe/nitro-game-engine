@@ -20,10 +20,6 @@ impl Transform {
         value
     }
 
-    pub fn get_raw(&self) -> Matrix2d {
-        self.transform
-    }
-
     pub fn set_x(&mut self, x : f64) {
         self.transform[0][2] = x;
     }
@@ -67,4 +63,8 @@ impl Transform {
         let rot = self.get_rotation();
         self.set_rotation(rot + delta_rotation);
     }
+}
+
+pub fn get_raw(nitro_transform : &Transform) -> Matrix2d {
+    nitro_transform.transform
 }

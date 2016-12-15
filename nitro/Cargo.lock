@@ -1,8 +1,11 @@
 [root]
-name = "halera"
+name = "nitro"
 version = "0.1.0"
 dependencies = [
- "nitro 0.1.0",
+ "gfx_device_gl 0.11.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "piston 0.27.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "piston2d-graphics 0.19.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "piston_window 0.58.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -424,16 +427,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "gcc 0.3.40 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.2.18 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "nitro"
-version = "0.1.0"
-dependencies = [
- "gfx_device_gl 0.11.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "piston 0.27.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "piston2d-graphics 0.19.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "piston_window 0.58.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]

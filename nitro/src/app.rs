@@ -12,10 +12,12 @@ use piston_window::{
     Input,
 };
 use gfx_device_gl::Resources;
-use nitro::input::Button;
-use nitro::input::Axis;
-use nitro::game_object::GameObject;
-use nitro::texture::Texture;
+use input::Button;
+use input::Axis;
+use game_object::GameObject;
+use texture::Texture;
+use texture;
+use transform;
 use std::path::PathBuf;
 use std::mem;
 
@@ -60,10 +62,10 @@ impl App {
             // Clear the screen.
             clear(GREY, gl);
             for game_obj in game_objs {
-                let (tex_width, tex_height) = game_obj.texture.get_raw().get_size();
-                image(game_obj.texture.get_raw(),
+                let (tex_width, tex_height) = texture::get_raw(&game_obj.texture).get_size();
+                image(texture::get_raw(&game_obj.texture),
                     c.transform
-                    .append_transform(game_obj.transform.get_raw())
+                    .append_transform(transform::get_raw(&game_obj.transform))
                     .trans(-(tex_width as f64)/2.0, -(tex_height as f64)/2.0),
                 gl);
             }
@@ -150,7 +152,7 @@ impl App {
         let mut return_value = Texture::empty(self);
         match result {
             Ok(texture) => {
-                return_value.set_raw_texture(texture);
+                texture::set_raw_texture(&mut return_value, texture);
             }
             Err(err) => {
                 println!("Unable to load texture, {} Error: {:?}", texture_name, err);
