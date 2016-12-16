@@ -57,15 +57,15 @@ impl App {
         use graphics::*;
 
         const GREY: [f32; 4] = [0.8, 0.8, 0.8, 1.0];
-        let game_objs = &self.game_objects;
+        let mut game_objs = &mut self.game_objects;
         self.window.draw_2d(e, |c, gl| {
             // Clear the screen.
             clear(GREY, gl);
-            for game_obj in game_objs {
+            for mut game_obj in game_objs {
                 let (tex_width, tex_height) = texture::get_raw(&game_obj.texture).get_size();
                 image(texture::get_raw(&game_obj.texture),
                     c.transform
-                    .append_transform(transform::get_raw(&game_obj.transform))
+                    .append_transform(transform::get_raw(&mut game_obj.transform))
                     .trans(-(tex_width as f64)/2.0, -(tex_height as f64)/2.0),
                 gl);
             }

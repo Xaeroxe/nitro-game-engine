@@ -13,8 +13,9 @@ impl Component for Spinny {
             Message::Update{delta_time} => {
                 //game_object.transform.add_rotation(1.0 * delta_time);
                 if let Some(horizontal) = app.get_axis_value("horizontal") {
-                    game_object.transform.add_x(10.0 * delta_time * horizontal);
+                    *game_object.transform.x() += 100.0 * delta_time * horizontal;
                 }
+                *game_object.transform.rotation() += 1.0 * delta_time;
             }
             _ => {}
         }
