@@ -4,7 +4,6 @@ use piston_window;
 use piston_window::{
     PistonWindow,
     UpdateArgs,
-    RenderArgs,
     Event,
     OpenGL,
     TextureSettings,
@@ -17,7 +16,10 @@ use input::Axis;
 use game_object::GameObject;
 use texture::Texture;
 use texture;
+use transform::Transform;
 use transform;
+use camera::Camera;
+use std::collections::HashMap;
 use std::path::PathBuf;
 use std::mem;
 
@@ -31,45 +33,56 @@ pub struct App {
     game_objects : Vec<GameObject>,
     updated_game_objects : Vec<GameObject>,
     buttons_pressed : Vec<Button>,
-    axes : Vec<Axis>,
+    axes : HashMap<i32, Axis>,
+    camera : Camera,
 }
 
 impl App {
-    pub fn new() -> App {
+    pub fn new(name : &str, exit_on_esc : bool) -> App {
         let opengl = OpenGL::V3_2;
         App {
             game_objects: vec!(),
             updated_game_objects : vec!(),
             buttons_pressed : vec!(),
-            axes : vec!(),
+            axes : HashMap::new(),
             window : WindowSettings::new(
-                    "Nitro Engine",
+                    name,
                     [800, 600]
                 )
                 .opengl(opengl)
-                .exit_on_esc(true)
+                .exit_on_esc(exit_on_esc)
                 .build()
                 .unwrap(),
+            camera : Camera{transform : Transform::new()},
         }
     }
 
     fn render(&mut self, e : &Event) {
-        use graphics::*;
-
-        const GREY: [f32; 4] = [0.8, 0.8, 0.8, 1.0];
-        let mut game_objs = &mut self.game_objects;
-        self.window.draw_2d(e, |c, gl| {
-            // Clear the screen.
-            clear(GREY, gl);
-            for mut game_obj in game_objs {
-                let (tex_width, tex_height) = texture::get_raw(&game_obj.texture).get_size();
-                image(texture::get_raw(&game_obj.texture),
-                    c.transform
-                    .append_transform(transform::get_raw(&mut game_obj.transform))
-                    .trans(-(tex_width as f64)/2.0, -(tex_height as f64)/2.0),
-                gl);
-            }
-        });
+        // This should never be false.
+        // The only reason I didn't request the render_args in the signature is the Piston API
+        // Requires the event object.
+        if let Event::Render(render_args) = *e {
+            use graphics::*;
+            const GREY: [f32; 4] = [0.8, 0.8, 0.8, 1.0];
+            let game_objs = &self.game_objects;
+            let camera_transform = transform::get_raw_inverse(&self.camera.transform);
+            self.window.draw_2d(e, |c, gl| {
+                // Clear the screen.
+                clear(GREY, gl);
+                for game_obj in game_objs {
+                    let (tex_width, tex_height) = texture::get_raw(&game_obj.texture).get_size();
+                    image(texture::get_raw(&game_obj.texture),
+                        c.transform
+                        .append_transform(camera_transform);
+                        .append_transform(transform::get_raw(&game_obj.transform))
+                        .trans(-(tex_width as f64)/2.0, -(tex_height as f64)/2.0),
+                    gl);
+                }
+            });
+        }
+        else {
+            panic!("Render should never be called with an event that isn't Event::Render.");
+        }
     }
 
     fn update(&mut self, args : &UpdateArgs) {
@@ -81,6 +94,7 @@ impl App {
         }
         assert_eq!(self.game_objects.len(), 0);
         mem::swap(&mut self.game_objects, &mut self.updated_game_objects);
+        *self.camera.transform.x() += 5.0 * args.dt;
     }
 
     pub fn run(&mut self) {
@@ -90,11 +104,11 @@ impl App {
                 Event::Render(render_args) => {
                     self.render(&e);
                 }
-                Event::AfterRender(after_render_args) => {}
+                Event::AfterRender(_) => {}
                 Event::Update(update_args) => {
                     self.update(&update_args)
                 }
-                Event::Idle(idle_args) => {}
+                Event::Idle(_) => {}
                 Event::Input(input_event) => {
                     match input_event {
                         Input::Press(button) => {
@@ -115,12 +129,15 @@ impl App {
         }
     }
 
-    pub fn add_axis(&mut self, axis : Axis) {
-        self.axes.push(axis);
+    pub fn add_axis(&mut self, axis : Axis, id : i32) {
+        if self.axes.contains_key(&id) {
+            panic!("Axis id values must be unique!");
+        }
+        self.axes.insert(id, axis);
     }
 
-    pub fn get_axis_value(&self, axis_name : &str) -> Option<f64> {
-        if let Some(axis) = (&self.axes).into_iter().find(|&axis| axis.get_name() == axis_name) {
+    pub fn get_axis_value(&self, id : i32) -> Option<f64> {
+        if let Some(axis) = self.axes.get(&id) {
             return Some(axis.get_value(self));
         }
         None

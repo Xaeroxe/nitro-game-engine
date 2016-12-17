@@ -1,18 +1,18 @@
 use graphics::math::Matrix2d;
+use std::f64;
 
 #[derive(Copy, Clone)]
 pub struct Transform {
-    //Used to store results of rotation manipulation.
-    //When the raw value is requested this will be integrated into it before returning.
+    x : f64,
+    y : f64,
     rotation : f64,
-    transform :Matrix2d,
 }
 
 impl Transform {
     pub fn new() -> Transform {
         // zero format for Matrix2d. Reverse engineered from Piston.
         // x = 0, y = 0, rotation = 0
-        Transform{transform:[[1.0, 0.0, 0.0],[0.0, 1.0, 0.0]],rotation:0.0}
+        Transform{x:0.0,y:0.0,rotation:0.0}
     }
 
     pub fn from_x_y_rotation(x : f64, y : f64, rotation : f64) -> Transform {
@@ -24,30 +24,35 @@ impl Transform {
     }
 
     pub fn x(&mut self) -> &mut f64 {
-        &mut self.transform[0][2]
+        &mut self.x
     }
 
     pub fn y(&mut self) -> &mut f64 {
-        &mut self.transform[1][2]
+        &mut self.y
     }
 
     pub fn rotation(&mut self) -> &mut f64 {
         &mut self.rotation
     }
-
-    fn set_rotation(&mut self, rot : f64) {
-        let c = rot.cos();
-        let s = rot.sin();
-        self.transform[0][0] = c;
-        self.transform[0][1] = -s;
-        self.transform[1][0] = s;
-        self.transform[1][1] = c;
-    }
 }
 
-//This must be mut in order to apply the rotation.
-pub fn get_raw(nitro_transform : &mut Transform) -> Matrix2d {
-    //Integrate into the raw any rotation changes that might have happened.
-    unborrow!(nitro_transform.set_rotation(nitro_transform.rotation));
-    nitro_transform.transform
+//Raw format reverse engineered from Piston internals.
+pub fn get_raw(nitro_transform : &Transform) -> Matrix2d {
+    let c = nitro_transform.rotation.cos();
+    let s = nitro_transform.rotation.sin();
+    [
+        [c,-s,nitro_transform.x],
+        [s,c,nitro_transform.y]
+    ]
+}
+
+//TODO: Figure out why when the return value from this is appended the screen goes blank.
+pub fn get_raw_inverse(nitro_transform : &Transform) -> Matrix2d {
+    let reversed_rotation = nitro_transform.rotation + f64::consts::PI;
+    let c = reversed_rotation.cos();
+    let s = reversed_rotation.sin();
+    [
+        [c,-s,-nitro_transform.x],
+        [s,c,-nitro_transform.y]
+    ]
 }

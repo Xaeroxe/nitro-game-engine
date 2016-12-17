@@ -1,6 +1,3 @@
-mod spinny;
-pub use self::spinny::Spinny;
-
 use app::App;
 use game_object::GameObject;
 use std::any::Any;

@@ -19,3 +19,6 @@ mod transform;
 pub use transform::Transform;
 
 pub mod input;
+
+mod camera;
+pub use camera::Camera;
