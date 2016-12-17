@@ -48,7 +48,6 @@ impl Transform {
 //This must be mut in order to apply the rotation.
 pub fn get_raw(nitro_transform : &mut Transform) -> Matrix2d {
     //Integrate into the raw any rotation changes that might have happened.
-    let rot = nitro_transform.rotation;
-    nitro_transform.set_rotation(rot);
+    unborrow!(nitro_transform.set_rotation(nitro_transform.rotation));
     nitro_transform.transform
 }
