@@ -65,16 +65,19 @@ impl App {
             use graphics::*;
             const GREY: [f32; 4] = [0.8, 0.8, 0.8, 1.0];
             let game_objs = &self.game_objects;
-            let camera_transform = transform::get_raw_inverse(&self.camera.transform);
+            let mut camera_transform = self.camera.transform;
             self.window.draw_2d(e, |c, gl| {
                 // Clear the screen.
                 clear(GREY, gl);
                 for game_obj in game_objs {
+                    let mut render_transform = game_obj.transform;
+                    *render_transform.x() -= *camera_transform.x();
+                    *render_transform.y() -= *camera_transform.y();
+                    *render_transform.rotation() -= *camera_transform.rotation();
                     let (tex_width, tex_height) = texture::get_raw(&game_obj.texture).get_size();
                     image(texture::get_raw(&game_obj.texture),
                         c.transform
-                        .append_transform(camera_transform);
-                        .append_transform(transform::get_raw(&game_obj.transform))
+                        .append_transform(transform::get_raw(&render_transform))
                         .trans(-(tex_width as f64)/2.0, -(tex_height as f64)/2.0),
                     gl);
                 }
@@ -94,7 +97,6 @@ impl App {
         }
         assert_eq!(self.game_objects.len(), 0);
         mem::swap(&mut self.game_objects, &mut self.updated_game_objects);
-        *self.camera.transform.x() += 5.0 * args.dt;
     }
 
     pub fn run(&mut self) {

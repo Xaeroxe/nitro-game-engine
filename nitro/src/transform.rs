@@ -45,14 +45,3 @@ pub fn get_raw(nitro_transform : &Transform) -> Matrix2d {
         [s,c,nitro_transform.y]
     ]
 }
-
-//TODO: Figure out why when the return value from this is appended the screen goes blank.
-pub fn get_raw_inverse(nitro_transform : &Transform) -> Matrix2d {
-    let reversed_rotation = nitro_transform.rotation + f64::consts::PI;
-    let c = reversed_rotation.cos();
-    let s = reversed_rotation.sin();
-    [
-        [c,-s,-nitro_transform.x],
-        [s,c,-nitro_transform.y]
-    ]
-}
