@@ -13,7 +13,7 @@ use axes::AxisId;
 
 fn main() {
     // Create a new game and run it.
-    let mut app = App::new("Halera", true);
+    let mut app = App::new("Halera", false, true);
     app.add_axis(
         Axis::new(
             Button::Keyboard(Key::D),

@@ -12,7 +12,6 @@ impl Component for Spinny {
     fn receive_message(&mut self, app : &mut App, game_object : &mut GameObject, message : &Message) {
         match *message {
             Message::Update{delta_time} => {
-                *game_object.transform.mut_rotation() -= 1.0 * delta_time;
                 if let Some(horizontal) = app.get_axis_value(AxisId::Horizontal as i32) {
                     *game_object.transform.mut_x() += 100.0 * delta_time * horizontal;
                 }

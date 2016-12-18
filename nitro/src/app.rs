@@ -11,6 +11,7 @@ use piston_window::{
     Input,
 };
 use gfx_device_gl::Resources;
+use glutin;
 use input::Button;
 use input::Axis;
 use game_object::GameObject;
@@ -38,8 +39,9 @@ pub struct App {
 }
 
 impl App {
-    pub fn new(name : &str, exit_on_esc : bool) -> App {
+    pub fn new(name : &str, fullscreen : bool, exit_on_esc : bool) -> App {
         let opengl = OpenGL::V3_2;
+        let (width, height) = glutin::get_primary_monitor().get_dimensions();
         App {
             game_objects: vec!(),
             updated_game_objects : vec!(),
@@ -47,10 +49,11 @@ impl App {
             axes : HashMap::new(),
             window : WindowSettings::new(
                     name,
-                    [800, 600]
+                    [width, height]
                 )
                 .opengl(opengl)
                 .exit_on_esc(exit_on_esc)
+                .fullscreen(fullscreen)
                 .build()
                 .unwrap(),
             camera : Camera{transform : Transform::new()},
@@ -100,8 +103,7 @@ impl App {
     }
 
     pub fn run(&mut self) {
-        let mut events = self.window.events();
-        while let Some(e) = events.next(&mut self.window) {
+        while let Some(e) = self.window.next() {
             match e {
                 Event::Render(_) => {
                     self.render(&e);

@@ -2,6 +2,7 @@ extern crate piston;
 extern crate piston_window;
 extern crate graphics;
 extern crate gfx_device_gl;
+extern crate glutin;
 #[macro_use] extern crate unborrow;
 
 mod app;
