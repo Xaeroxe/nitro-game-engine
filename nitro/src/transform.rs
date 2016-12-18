@@ -17,21 +17,34 @@ impl Transform {
 
     pub fn from_x_y_rotation(x : f64, y : f64, rotation : f64) -> Transform {
         let mut value = Transform::new();
-        *value.x() = x;
-        *value.y() = y;
-        *value.rotation() = rotation;
+        *value.mut_x() = x;
+        *value.mut_y() = y;
+        *value.mut_rotation() = rotation;
         value
     }
 
-    pub fn x(&mut self) -> &mut f64 {
+    pub fn x(&self) -> &f64 {
+        &self.x
+    }
+
+    pub fn y(&self) -> &f64 {
+        &self.y
+    }
+
+    pub fn rotation(&self) -> &f64 {
+        &self.rotation
+    }
+
+    pub fn mut_x(&mut self) -> &mut f64 {
         &mut self.x
     }
 
-    pub fn y(&mut self) -> &mut f64 {
+    pub fn mut_y(&mut self) -> &mut f64 {
         &mut self.y
     }
 
-    pub fn rotation(&mut self) -> &mut f64 {
+    pub fn mut_rotation(&mut self) -> &mut f64 {
+        self.rotation %= 2.0 * f64::consts::PI;
         &mut self.rotation
     }
 }

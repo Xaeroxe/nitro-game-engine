@@ -29,8 +29,6 @@ fn main() {
          AxisId::Vertical as i32
      );
     let mut game_obj = GameObject::new(&mut app);
-    *game_obj.transform.x() = 400.0;
-    *game_obj.transform.y() = 300.0;
     game_obj.texture = app.fetch_texture("nitro.png");
     game_obj.add_component(Box::new(Spinny{}));
     app.add_gameobject(game_obj);

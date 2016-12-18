@@ -65,15 +65,15 @@ impl App {
             use graphics::*;
             const GREY: [f32; 4] = [0.8, 0.8, 0.8, 1.0];
             let game_objs = &self.game_objects;
-            let mut camera_transform = self.camera.transform;
+            let camera_transform = self.camera.transform;
             self.window.draw_2d(e, |c, gl| {
                 // Clear the screen.
                 clear(GREY, gl);
                 for game_obj in game_objs {
                     let mut render_transform = game_obj.transform;
-                    *render_transform.x() -= *camera_transform.x();
-                    *render_transform.y() -= *camera_transform.y();
-                    *render_transform.rotation() -= *camera_transform.rotation();
+                    *render_transform.mut_x() -= *camera_transform.x() - (render_args.draw_width/2) as f64;
+                    *render_transform.mut_y() -= *camera_transform.y() - (render_args.draw_height/2) as f64;
+                    *render_transform.mut_rotation() -= *camera_transform.rotation();
                     let (tex_width, tex_height) = texture::get_raw(&game_obj.texture).get_size();
                     image(texture::get_raw(&game_obj.texture),
                         c.transform
@@ -103,7 +103,7 @@ impl App {
         let mut events = self.window.events();
         while let Some(e) = events.next(&mut self.window) {
             match e {
-                Event::Render(render_args) => {
+                Event::Render(_) => {
                     self.render(&e);
                 }
                 Event::AfterRender(_) => {}
@@ -114,7 +114,10 @@ impl App {
                 Event::Input(input_event) => {
                     match input_event {
                         Input::Press(button) => {
-                            self.buttons_pressed.push(button);
+                            // The button may already be here as this event does repeat.
+                            if !self.buttons_pressed.iter().any(|&item| item == button) {
+                                self.buttons_pressed.push(button);
+                            }
                         }
                         Input::Release(button) => {
                             while let Some(i) = self.buttons_pressed.iter().position(
