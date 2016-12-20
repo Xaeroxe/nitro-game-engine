@@ -3,6 +3,7 @@ use nitro::component::Component;
 use nitro::component::Message;
 use nitro::GameObject;
 use axes::AxisId;
+use actions::ActionId;
 
 pub struct Spinny {
 
@@ -17,6 +18,9 @@ impl Component for Spinny {
                 }
                 if let Some(vertical) = app.get_axis_value(AxisId::Vertical as i32) {
                     *game_object.transform.mut_y() += 100.0 * delta_time * vertical;
+                }
+                if let Some(true) = app.action_released(ActionId::Blink as i32) {
+                    *game_object.transform.mut_x() += 50.0;
                 }
             }
             _ => {}
