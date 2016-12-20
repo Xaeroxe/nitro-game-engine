@@ -2,6 +2,7 @@ extern crate nitro;
 
 mod spinny;
 mod axes;
+mod actions;
 
 use nitro::App;
 use nitro::GameObject;
@@ -10,6 +11,7 @@ use nitro::input::Button;
 use nitro::input::keyboard::Key;
 use spinny::Spinny;
 use axes::AxisId;
+use actions::ActionId;
 
 fn main() {
     // Create a new game and run it.
@@ -27,7 +29,8 @@ fn main() {
              Button::Keyboard(Key::W)
          ),
          AxisId::Vertical as i32
-     );
+    );
+    app.add_action(Button::Keyboard(Key::F), ActionId::Blink as i32);
     let mut game_obj = GameObject::new(&mut app);
     game_obj.texture = app.fetch_texture("nitro.png");
     game_obj.add_component(Box::new(Spinny{}));

@@ -12,8 +12,8 @@ impl Axis {
     }
 
     pub fn get_value(&self, app : &App) -> f64 {
-        let pos_bool = app.is_button_pressed(self.pos);
-        if pos_bool == app.is_button_pressed(self.neg) {
+        let pos_bool = app.is_button_down(self.pos);
+        if pos_bool == app.is_button_down(self.neg) {
             return 0.0;
         }
         if pos_bool {

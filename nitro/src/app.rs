@@ -34,7 +34,9 @@ pub struct App {
     game_objects : Vec<GameObject>,
     updated_game_objects : Vec<GameObject>,
     buttons_pressed : Vec<Button>,
+    previous_buttons_pressed : Vec<Button>, // buttons_pressed from last frame.
     axes : HashMap<i32, Axis>,
+    actions : HashMap<i32, Button>,
     camera : Camera,
 }
 
@@ -46,7 +48,9 @@ impl App {
             game_objects: vec!(),
             updated_game_objects : vec!(),
             buttons_pressed : vec!(),
+            previous_buttons_pressed : vec!(),
             axes : HashMap::new(),
+            actions : HashMap::new(),
             window : WindowSettings::new(
                     name,
                     [width, height]
@@ -100,6 +104,7 @@ impl App {
         }
         assert_eq!(self.game_objects.len(), 0);
         mem::swap(&mut self.game_objects, &mut self.updated_game_objects);
+        self.previous_buttons_pressed = self.buttons_pressed.clone();
     }
 
     pub fn run(&mut self) {
@@ -150,8 +155,47 @@ impl App {
         None
     }
 
+    pub fn add_action(&mut self, button : Button, id : i32) {
+        if self.actions.contains_key(&id) {
+            panic!("Action id values must be unique!");
+        }
+        self.actions.insert(id, button);
+    }
+
+    // Named for consistency with get_axis_value
+    pub fn action_pressed(&self, id : i32) -> Option<bool> {
+        if let Some(button) = self.actions.get(&id) {
+            return Some(self.is_button_pressed(*button));
+        }
+        None
+    }
+
+    pub fn action_down(&self, id : i32) -> Option<bool> {
+        if let Some(button) = self.actions.get(&id) {
+            return Some(self.is_button_down(*button));
+        }
+        None
+    }
+
+    pub fn action_released(&self, id : i32) -> Option<bool> {
+        if let Some(button) = self.actions.get(&id) {
+            return Some(self.is_button_released(*button));
+        }
+        None
+    }
+
     pub fn is_button_pressed(&self, button : Button) -> bool {
         (&self.buttons_pressed).into_iter().any(|&b| b == button)
+        && !(&self.previous_buttons_pressed).into_iter().any(|&b| b == button)
+    }
+
+    pub fn is_button_down(&self, button : Button) -> bool {
+        (&self.buttons_pressed).into_iter().any(|&b| b == button)
+    }
+
+    pub fn is_button_released(&self, button : Button) -> bool {
+        !(&self.buttons_pressed).into_iter().any(|&b| b == button)
+        && (&self.previous_buttons_pressed).into_iter().any(|&b| b == button)
     }
 
     pub fn add_gameobject(&mut self, game_object : GameObject) {
