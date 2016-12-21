@@ -20,6 +20,8 @@ use texture;
 use transform::Transform;
 use transform;
 use camera::Camera;
+use liquidfun::box2d::common::math::*;
+use liquidfun::box2d::dynamics::world::*;
 use std::collections::HashMap;
 use std::path::PathBuf;
 use std::mem;
@@ -38,6 +40,7 @@ pub struct App {
     axes : HashMap<i32, Axis>,
     actions : HashMap<i32, Button>,
     camera : Camera,
+    world : World,
 }
 
 impl App {
@@ -61,6 +64,7 @@ impl App {
                 .build()
                 .unwrap(),
             camera : Camera{transform : Transform::new()},
+            world : World::new(&Vec2::new(0.0, 10.0)),
         }
     }
 
