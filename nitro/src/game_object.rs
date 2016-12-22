@@ -7,31 +7,31 @@ use std::collections::LinkedList;
 use std::mem;
 
 pub struct GameObject {
-    pub transform : Transform,
-    pub texture : Texture,
+    pub transform: Transform,
+    pub texture: Texture,
     // When searching for a component associated with a GameObject you will need to search both of
     // these vectors. At any given time either one of them could contain the Component you are
     // searching for. As messages are distributed to components they are migrated from
     // components to messaged_components and once the distribution of a message is complete
     // the two vectors are swapped.
-    components : LinkedList<Box<Component>>, // These have not had a message sent (yet).
+    components: LinkedList<Box<Component>>, // These have not had a message sent (yet).
     messaged_components: LinkedList<Box<Component>>, // These have had a message sent.
 }
 
 impl GameObject {
-    pub fn new(app : &mut App) -> GameObject {
+    pub fn new(app: &mut App) -> GameObject {
         GameObject {
-            transform : Transform::new(),
-            components : LinkedList::new(),
-            messaged_components : LinkedList::new(),
-            texture : Texture::empty(app),
+            transform: Transform::new(),
+            components: LinkedList::new(),
+            messaged_components: LinkedList::new(),
+            texture: Texture::empty(app),
         }
     }
 
-    pub fn update(&mut self, app : &mut App, delta_time : f64) {
+    pub fn update(&mut self, app: &mut App, delta_time: f64) {
         let mut pop_result = self.components.pop_front();
         while let Some(mut component) = pop_result {
-            component.receive_message(app, self, &Message::Update{delta_time : delta_time});
+            component.receive_message(app, self, &Message::Update { delta_time: delta_time });
             self.messaged_components.push_back(component);
             pop_result = self.components.pop_front();
         }
@@ -39,7 +39,7 @@ impl GameObject {
         mem::swap(&mut self.components, &mut self.messaged_components);
     }
 
-    pub fn add_component(&mut self, component : Box<Component>) {
+    pub fn add_component(&mut self, component: Box<Component>) {
         self.components.push_front(component);
     }
 }

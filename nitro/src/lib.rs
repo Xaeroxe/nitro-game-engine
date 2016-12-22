@@ -4,7 +4,8 @@ extern crate graphics;
 extern crate gfx_device_gl;
 extern crate glutin;
 extern crate liquidfun;
-#[macro_use] extern crate unborrow;
+#[macro_use]
+extern crate unborrow;
 
 mod app;
 pub use app::App;

@@ -4,24 +4,21 @@ use vec2::Vec2;
 
 #[derive(Copy, Clone)]
 pub struct Transform {
-    position : Vec2,
-    rotation : f64,
+    position: Vec2,
+    rotation: f64,
 }
 
 impl Transform {
     pub fn new() -> Transform {
         // zero format for Matrix2d. Reverse engineered from Piston.
         // x = 0, y = 0, rotation = 0
-        Transform{
-            position : Vec2{
-                x:0.0,
-                y:0.0
-            },
-            rotation:0.0
+        Transform {
+            position: Vec2 { x: 0.0, y: 0.0 },
+            rotation: 0.0,
         }
     }
 
-    pub fn from_x_y_rotation(x : f64, y : f64, rotation : f64) -> Transform {
+    pub fn from_x_y_rotation(x: f64, y: f64, rotation: f64) -> Transform {
         let mut value = Transform::new();
         *value.mut_x() = x;
         *value.mut_y() = y;
@@ -63,27 +60,23 @@ impl Transform {
     }
 
     pub fn forward_vec2(&self) -> Vec2 {
-        Vec2{
-            x : -self.rotation().sin(),
-            y : self.rotation().cos()
+        Vec2 {
+            x: -self.rotation().sin(),
+            y: self.rotation().cos(),
         }
     }
 
     pub fn right_vec2(&self) -> Vec2 {
-        let right_rot = self.rotation() + f64::consts::PI/2.0;
-        Vec2{
-            x : right_rot.sin(),
-            y : -right_rot.cos()
+        Vec2 {
+            x: self.rotation().cos(),
+            y: -self.rotation().sin(),
         }
     }
 }
 
-//Raw format reverse engineered from Piston internals.
-pub fn get_raw(nitro_transform : &Transform) -> Matrix2d {
+// Raw format reverse engineered from Piston internals.
+pub fn get_raw(nitro_transform: &Transform) -> Matrix2d {
     let c = nitro_transform.rotation.cos();
     let s = nitro_transform.rotation.sin();
-    [
-        [c,-s,nitro_transform.position.x],
-        [s,c,nitro_transform.position.y]
-    ]
+    [[c, -s, nitro_transform.position.x], [s, c, nitro_transform.position.y]]
 }
