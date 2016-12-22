@@ -69,7 +69,7 @@ impl Transform {
     pub fn right_vec2(&self) -> Vec2 {
         Vec2 {
             x: self.rotation().cos(),
-            y: -self.rotation().sin(),
+            y: self.rotation().sin(),
         }
     }
 }
