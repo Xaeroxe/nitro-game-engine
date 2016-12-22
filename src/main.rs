@@ -30,6 +30,13 @@ fn main() {
          ),
          AxisId::Vertical as i32
     );
+    app.add_axis(
+        Axis::new(
+            Button::Keyboard(Key::E),
+            Button::Keyboard(Key::Q)
+        ),
+        AxisId::Rotation as i32
+    );
     app.add_action(Button::Keyboard(Key::F), ActionId::Blink as i32);
     let mut game_obj = GameObject::new(&mut app);
     game_obj.texture = app.fetch_texture("nitro.png");

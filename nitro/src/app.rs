@@ -1,5 +1,4 @@
 use piston::window::WindowSettings;
-use piston::event_loop::*;
 use piston_window;
 use piston_window::{
     PistonWindow,
@@ -23,6 +22,7 @@ use camera::Camera;
 use liquidfun::box2d::common::math::*;
 use liquidfun::box2d::dynamics::world::*;
 use std::collections::HashMap;
+use std::collections::LinkedList;
 use std::path::PathBuf;
 use std::mem;
 
@@ -33,8 +33,8 @@ pub struct App {
     // searching for. As GameObjects are updated they are migrated from
     // game_objects to updated_game_objects and once the update is complete
     // the two vectors are swapped.
-    game_objects : Vec<GameObject>,
-    updated_game_objects : Vec<GameObject>,
+    game_objects : LinkedList<GameObject>,
+    updated_game_objects : LinkedList<GameObject>,
     buttons_pressed : Vec<Button>,
     previous_buttons_pressed : Vec<Button>, // buttons_pressed from last frame.
     axes : HashMap<i32, Axis>,
@@ -48,8 +48,8 @@ impl App {
         let opengl = OpenGL::V3_2;
         let (width, height) = glutin::get_primary_monitor().get_dimensions();
         App {
-            game_objects: vec!(),
-            updated_game_objects : vec!(),
+            game_objects: LinkedList::new(),
+            updated_game_objects : LinkedList::new(),
             buttons_pressed : vec!(),
             previous_buttons_pressed : vec!(),
             axes : HashMap::new(),
@@ -74,7 +74,7 @@ impl App {
         // Requires the event object.
         if let Event::Render(render_args) = *e {
             use graphics::*;
-            const GREY: [f32; 4] = [0.8, 0.8, 0.8, 1.0];
+            const GREY: [f32; 4] = [0.9, 0.9, 0.9, 1.0];
             let game_objs = &self.game_objects;
             let camera_transform = self.camera.transform;
             self.window.draw_2d(e, |c, gl| {
@@ -100,11 +100,11 @@ impl App {
     }
 
     fn update(&mut self, args : &UpdateArgs) {
-        let mut pop_result = self.game_objects.pop();
+        let mut pop_result = self.game_objects.pop_front();
         while let Some(mut game_object) = pop_result {
             game_object.update(self, args.dt);
-            self.updated_game_objects.push(game_object);
-            pop_result = self.game_objects.pop();
+            self.updated_game_objects.push_back(game_object);
+            pop_result = self.game_objects.pop_front();
         }
         assert_eq!(self.game_objects.len(), 0);
         mem::swap(&mut self.game_objects, &mut self.updated_game_objects);
@@ -203,7 +203,7 @@ impl App {
     }
 
     pub fn add_gameobject(&mut self, game_object : GameObject) {
-        self.game_objects.push(game_object);
+        self.game_objects.push_front(game_object);
     }
 
     pub fn empty_raw_texture(&mut self) -> piston_window::Texture<Resources> {

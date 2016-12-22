@@ -24,3 +24,6 @@ pub mod input;
 
 mod camera;
 pub use camera::Camera;
+
+mod vec2;
+pub use vec2::Vec2;
