@@ -123,7 +123,10 @@ impl Mul<f64> for Vec2 {
 impl Mul<Vec2> for f64 {
     type Output = Vec2;
     fn mul(self, other: Vec2) -> Vec2 {
-        other * self
+        Vec2 {
+            x: self * other.x,
+            y: self * other.y
+        }
     }
 }
 
@@ -138,8 +141,8 @@ impl Neg for Vec2 {
     type Output = Vec2;
     fn neg(self) -> Vec2 {
         Vec2 {
-            x: self.x * -1.0,
-            y: self.y * -1.0,
+            x: -self.x,
+            y: -self.y,
         }
     }
 }
