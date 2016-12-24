@@ -13,6 +13,7 @@ use transform;
 use camera::Camera;
 use liquidfun::box2d::common::math::*;
 use liquidfun::box2d::dynamics::world::*;
+use serde_hjson;
 use std::collections::HashMap;
 use std::collections::LinkedList;
 use std::path::PathBuf;
@@ -129,6 +130,12 @@ impl App {
                     }
                 }
             }
+        }
+    }
+
+    pub fn save_bindings(&mut self, path: &str) {
+        for axis in self.axes {
+            serde_hjson::ser::to_string(&axis);
         }
     }
 

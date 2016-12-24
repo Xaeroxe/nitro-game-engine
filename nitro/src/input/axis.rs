@@ -1,5 +1,7 @@
 use app::App;
 use input::Button;
+use serde::Serialize;
+use serde::Serializer;
 
 pub struct Axis {
     pos: Button,
@@ -23,5 +25,11 @@ impl Axis {
             return 1.0;
         }
         -1.0 // They aren't equal and positive is false so negative is true.
+    }
+}
+
+impl Serialize for Axis {
+    fn serialize<S>(&self, serializer: &mut S) -> Result<(), S::Error> where S: Serializer {
+        //TODO: Write this when not tired as fuck.
     }
 }
