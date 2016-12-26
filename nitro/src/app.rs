@@ -133,10 +133,18 @@ impl App {
         }
     }
 
-    pub fn save_bindings(&mut self, path: &str) {
-        for axis in self.axes {
-            serde_hjson::ser::to_string(&axis);
+    pub fn save_bindings(&mut self, path: &str) -> Result<(), String> {
+        for axis in &self.axes {
+            match serde_hjson::ser::to_string(&axis) {
+                Ok(result) => {
+                    println!("{}", result);
+                }
+                Err(err) => {
+                    return Err(format!("{:?}", err));
+                }
+            }
         }
+        Ok(())
     }
 
     pub fn add_axis(&mut self, axis: Axis, id: i32) {
