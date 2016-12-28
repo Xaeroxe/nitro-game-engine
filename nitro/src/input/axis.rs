@@ -3,6 +3,8 @@ use input::Button;
 use serde::Serialize;
 use serde::Deserialize;
 use serde::Serializer;
+use serde::Deserializer;
+use serde::de::Visitor;
 
 pub struct Axis {
     pos: Button,
@@ -32,9 +34,10 @@ impl Axis {
         -1.0 // They aren't equal and positive is false so negative is true.
     }
 
-    fn serialize_button<S: Serializer>(button: Button, serializer: &mut S, name: &'static str)
-        -> Result<(), S::Error>
-    {
+    fn serialize_button<S: Serializer>(button: Button,
+                                       serializer: &mut S,
+                                       name: &'static str)
+                                       -> Result<(), S::Error> {
         let mut state = serializer.serialize_map(Some(3))?;
         serializer.serialize_map_key(&mut state, name)?;
         match button {
@@ -69,10 +72,22 @@ impl Axis {
         serializer.serialize_map_end(state)?;
         Ok(())
     }
+
+    fn deserialize_button<D: Deserializer>(deserializer: D) -> Result<Button, D::Error> {
+        // TODO: Make this deserialize.
+    }
+}
+
+struct AxisVisitor;
+
+impl Visitor for AxisVisitor {
+    type Value = Axis;
 }
 
 impl Serialize for Axis {
-    fn serialize<S>(&self, serializer: &mut S) -> Result<(), S::Error> where S: Serializer {
+    fn serialize<S>(&self, serializer: &mut S) -> Result<(), S::Error>
+        where S: Serializer
+    {
         let mut state = serializer.serialize_map(Some(2))?;
         serializer.serialize_map_key(&mut state, "Axis")?;
         Axis::serialize_button(self.pos, serializer, "Pos")?;
@@ -80,4 +95,8 @@ impl Serialize for Axis {
         serializer.serialize_map_end(state)?;
         Ok(())
     }
+}
+
+impl Deserialize for Axis {
+    fn deserialize<D>(deserializer: &mut D) -> Result<Self, D::Error> where D: Deserializer {}
 }
