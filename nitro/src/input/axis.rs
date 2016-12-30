@@ -72,16 +72,6 @@ impl Axis {
         serializer.serialize_map_end(state)?;
         Ok(())
     }
-
-    fn deserialize_button<D: Deserializer>(deserializer: D) -> Result<Button, D::Error> {
-        // TODO: Make this deserialize.
-    }
-}
-
-struct AxisVisitor;
-
-impl Visitor for AxisVisitor {
-    type Value = Axis;
 }
 
 impl Serialize for Axis {
@@ -95,8 +85,4 @@ impl Serialize for Axis {
         serializer.serialize_map_end(state)?;
         Ok(())
     }
-}
-
-impl Deserialize for Axis {
-    fn deserialize<D>(deserializer: &mut D) -> Result<Self, D::Error> where D: Deserializer {}
 }

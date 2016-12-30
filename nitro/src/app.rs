@@ -91,6 +91,7 @@ impl App {
     }
 
     fn update(&mut self, args: &UpdateArgs) {
+        self.world.step(args.dt as f32, 1, 1);
         let mut pop_result = self.game_objects.pop_front();
         while let Some(mut game_object) = pop_result {
             game_object.update(self, args.dt);
