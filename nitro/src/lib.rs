@@ -3,7 +3,7 @@ extern crate piston_window;
 extern crate graphics;
 extern crate gfx_device_gl;
 extern crate glutin;
-extern crate liquidfun;
+extern crate nphysics2d;
 extern crate serde;
 extern crate serde_hjson;
 #[macro_use]

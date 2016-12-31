@@ -5,12 +5,12 @@ use component::Component;
 use component::Message;
 use std::collections::LinkedList;
 use std::mem;
-use liquidfun::box2d::dynamics::body::Body;
+use nphysics2d::object::RigidBody;
 
 pub struct GameObject {
     pub transform: Transform,
     pub texture: Texture,
-    body: Option<Box<Body>>,
+    body: Option<Box<RigidBody<f64>>>,
     // When searching for a component associated with a GameObject you will need to search both of
     // these vectors. At any given time either one of them could contain the Component you are
     // searching for. As messages are distributed to components they are migrated from
@@ -34,10 +34,10 @@ impl GameObject {
     pub fn update(&mut self, app: &mut App, delta_time: f64) {
         // Add physics simulation modification.
         if let &Some(ref body_box) = &self.body {
-            let pos = body_box.get_position();
-            *self.transform.mut_x() = pos.x as f64;
-            *self.transform.mut_y() = pos.y as f64;
-            *self.transform.mut_rotation() = body_box.get_angle() as f64;
+            *self.transform.mut_x() = body_box.position().translation.x;
+            *self.transform.mut_y() = body_box.position().translation.y;
+            let rot_matrix = body_box.position().rotation.submatrix();
+            *self.transform.mut_rotation() = rot_matrix.m12.atan2(rot_matrix.m11);
         }
 
         let mut pop_result = self.components.pop_front();

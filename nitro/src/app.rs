@@ -11,8 +11,7 @@ use texture;
 use transform::Transform;
 use transform;
 use camera::Camera;
-use liquidfun::box2d::common::math::*;
-use liquidfun::box2d::dynamics::world::*;
+use nphysics2d::world::World;
 use serde_hjson;
 use std::collections::HashMap;
 use std::collections::LinkedList;
@@ -33,7 +32,7 @@ pub struct App {
     axes: HashMap<i32, Axis>,
     actions: HashMap<i32, Button>,
     camera: Camera,
-    world: World,
+    world: World<f64>,
 }
 
 impl App {
@@ -54,14 +53,14 @@ impl App {
                 .build()
                 .unwrap(),
             camera: Camera { transform: Transform::new() },
-            world: World::new(&Vec2::new(0.0, 10.0)),
+            world: World::new(),
         }
     }
 
     fn render(&mut self, e: &Event) {
         // This should never be false.
         // The only reason I didn't request the render_args in the signature is the Piston API
-        // Requires the event object.
+        // requires the event object.
         if let Event::Render(render_args) = *e {
             use graphics::*;
             const GREY: [f32; 4] = [0.9, 0.9, 0.9, 1.0];
@@ -91,7 +90,7 @@ impl App {
     }
 
     fn update(&mut self, args: &UpdateArgs) {
-        self.world.step(args.dt as f32, 1, 1);
+        self.world.step(args.dt);
         let mut pop_result = self.game_objects.pop_front();
         while let Some(mut game_object) = pop_result {
             game_object.update(self, args.dt);
@@ -106,12 +105,12 @@ impl App {
     pub fn run(&mut self) {
         while let Some(e) = self.window.next() {
             match e {
-                Event::Render(_) => {
+                Event::Render(..) => {
                     self.render(&e);
                 }
-                Event::AfterRender(_) => {}
+                Event::AfterRender(..) => {}
                 Event::Update(update_args) => self.update(&update_args),
-                Event::Idle(_) => {}
+                Event::Idle(..) => {}
                 Event::Input(input_event) => {
                     match input_event {
                         Input::Press(button) => {
