@@ -6,6 +6,7 @@ use glutin;
 use input::Button;
 use input::Axis;
 use game_object::GameObject;
+use game_object;
 use texture::Texture;
 use texture;
 use transform::Transform;
@@ -90,7 +91,13 @@ impl App {
     }
 
     fn update(&mut self, args: &UpdateArgs) {
+        for mut game_object in &mut self.game_objects {
+            game_object::copy_to_physics(&mut game_object);
+        }
         self.world.step(args.dt);
+        for mut game_object in &mut self.game_objects {
+            game_object::copy_from_physics(&mut game_object);
+        }
         let mut pop_result = self.game_objects.pop_front();
         while let Some(mut game_object) = pop_result {
             game_object.update(self, args.dt);

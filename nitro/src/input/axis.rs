@@ -1,10 +1,7 @@
 use app::App;
 use input::Button;
 use serde::Serialize;
-use serde::Deserialize;
 use serde::Serializer;
-use serde::Deserializer;
-use serde::de::Visitor;
 
 pub struct Axis {
     pos: Button,
