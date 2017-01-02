@@ -10,8 +10,6 @@ pub struct Transform {
 
 impl Transform {
     pub fn new() -> Transform {
-        // zero format for Matrix2d. Reverse engineered from Piston.
-        // x = 0, y = 0, rotation = 0
         Transform {
             position: Vec2 { x: 0.0, y: 0.0 },
             rotation: 0.0,
