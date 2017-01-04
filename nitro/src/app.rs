@@ -12,7 +12,7 @@ use texture;
 use transform::Transform;
 use transform;
 use camera::Camera;
-use nphysics2d::world::World;
+use physics::nphysics2d::world::World;
 use serde_hjson;
 use std::collections::HashMap;
 use std::collections::LinkedList;
@@ -32,8 +32,8 @@ pub struct App {
     previous_buttons_pressed: Vec<Button>, // buttons_pressed from last frame.
     axes: HashMap<i32, Axis>,
     actions: HashMap<i32, Button>,
-    camera: Camera,
-    world: World<f64>,
+    pub camera: Camera,
+    pub world: World<f64>,
 }
 
 impl App {

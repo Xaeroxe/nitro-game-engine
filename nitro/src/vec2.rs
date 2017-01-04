@@ -9,7 +9,7 @@ use std::ops::Mul;
 use std::ops::MulAssign;
 use std::ops::Neg;
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 pub struct Vec2 {
     pub x: f64,
     pub y: f64,
@@ -125,7 +125,7 @@ impl Mul<Vec2> for f64 {
     fn mul(self, other: Vec2) -> Vec2 {
         Vec2 {
             x: self * other.x,
-            y: self * other.y
+            y: self * other.y,
         }
     }
 }

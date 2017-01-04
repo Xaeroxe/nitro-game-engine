@@ -9,6 +9,9 @@ use nitro::GameObject;
 use nitro::input::Axis;
 use nitro::input::Button;
 use nitro::input::keyboard::Key;
+use nitro::physics::nphysics2d::object::RigidBody;
+use nitro::physics::ncollide::shape::Cuboid2;
+use nitro::physics::nalgebra::Vector2;
 use spinny::Spinny;
 use axes::AxisId;
 use actions::ActionId;
@@ -26,6 +29,12 @@ fn main() {
     let mut game_obj = GameObject::new(&mut app);
     game_obj.texture = app.fetch_texture("nitro.png");
     game_obj.add_component(Box::new(Spinny {}));
+    game_obj.set_rigid_body(&mut app,
+                            RigidBody::new_dynamic(Cuboid2::new(Vector2 { x: 0.5, y: 0.5 }),
+                                                   1.0,
+                                                   0.3,
+                                                   0.6));
     app.add_gameobject(game_obj);
+    app.world.set_gravity(Vector2 { x: 0.0, y: 9.0 });
     app.run();
 }

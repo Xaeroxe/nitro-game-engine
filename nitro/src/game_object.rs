@@ -5,9 +5,9 @@ use component::Component;
 use component::Message;
 use std::collections::LinkedList;
 use std::mem;
-use nphysics2d::object::RigidBodyHandle;
-use nphysics2d::math::Matrix;
-use nalgebra::{Rotation2, Vector2, Vector1};
+use physics::nphysics2d::object::{RigidBody, RigidBodyHandle};
+use physics::nphysics2d::math::Matrix;
+use physics::nalgebra::{Rotation2, Vector2, Vector1};
 
 pub struct GameObject {
     pub transform: Transform,
@@ -47,9 +47,13 @@ impl GameObject {
     pub fn add_component(&mut self, component: Box<Component>) {
         self.components.push_front(component);
     }
+
+    pub fn set_rigid_body(&mut self, app: &mut App, rigid_body: RigidBody<f64>) {
+        self.body = Some(app.world.add_rigid_body(rigid_body));
+    }
 }
 
-pub fn copy_to_physics(game_object: &mut GameObject) {
+pub fn copy_from_physics(game_object: &mut GameObject) {
     if let &Some(ref body_box) = &game_object.body {
         let body_borrow = body_box.borrow();
         *game_object.transform.mut_x() = body_borrow.position().translation.x;
@@ -61,13 +65,14 @@ pub fn copy_to_physics(game_object: &mut GameObject) {
     }
 }
 
-pub fn copy_from_physics(game_object: &mut GameObject) {
+pub fn copy_to_physics(game_object: &mut GameObject) {
     if let Some(ref mut body_box) = game_object.body {
-        body_box.borrow_mut().set_transformation(
-            Matrix::<f64> {
-                rotation: Rotation2::new(Vector1 {x: *game_object.transform.rotation()}),
-                translation: Vector2{x: *game_object.transform.x(), y: *game_object.transform.y()}
-            }
-        );
+        body_box.borrow_mut().set_transformation(Matrix::<f64> {
+            rotation: Rotation2::new(Vector1 { x: *game_object.transform.rotation() }),
+            translation: Vector2 {
+                x: *game_object.transform.x(),
+                y: *game_object.transform.y(),
+            },
+        });
     }
 }

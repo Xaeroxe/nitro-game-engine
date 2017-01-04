@@ -3,8 +3,6 @@ extern crate piston_window;
 extern crate graphics;
 extern crate gfx_device_gl;
 extern crate glutin;
-extern crate nphysics2d;
-extern crate nalgebra;
 extern crate serde;
 extern crate serde_hjson;
 #[macro_use]
@@ -31,3 +29,5 @@ pub use camera::Camera;
 
 mod vec2;
 pub use vec2::Vec2;
+
+pub mod physics;
