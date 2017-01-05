@@ -4,7 +4,8 @@ use transform::Transform;
 use component::Component;
 use component::Message;
 use std::collections::BTreeMap;
-use std::mem;
+use std::any::Any;
+use std::any::TypeId;
 use physics::nphysics2d::object::{RigidBody, RigidBodyHandle};
 use physics::nphysics2d::math::Matrix;
 use physics::nalgebra::{Rotation2, Vector2, Vector1};
@@ -13,13 +14,8 @@ pub struct GameObject {
     pub transform: Transform,
     pub texture: Texture,
     body: Option<RigidBodyHandle<f64>>,
-    // When searching for a component associated with a GameObject you will need to search both of
-    // these collections. At any given time either one of them could contain the Component you are
-    // searching for. As messages are distributed to components they are migrated from
-    // components to messaged_components and once the distribution of a message is complete
-    // the two collections are swapped.
-    components: BTreeMap<i32, Box<Component>>, // These have not had a message sent (yet).
-    messaged_components: BTreeMap<i32, Box<Component>>, // These have had a message sent.
+    components: BTreeMap<i32, Box<Component>>,
+    component_types: BTreeMap<i32, TypeId>, // Identical to components just stores their type instead.
 }
 
 impl GameObject {
@@ -27,7 +23,7 @@ impl GameObject {
         GameObject {
             transform: Transform::new(),
             components: BTreeMap::new(),
-            messaged_components: BTreeMap::new(),
+            component_types: BTreeMap::new(),
             texture: Texture::empty(app),
             body: None,
         }
@@ -38,28 +34,35 @@ impl GameObject {
         for key in self.components.keys().map(|x| *x).collect::<Vec<i32>>() {
             if let Some(mut component) = self.components.remove(&key) {
                 component.receive_message(app, self, &message);
-                self.messaged_components.insert(key, component);
+                self.components.insert(key, component);
             }
         }
-        assert_eq!(self.components.len(), 0);
-        mem::swap(&mut self.components, &mut self.messaged_components);
     }
 
     pub fn component_indices(&self) -> Vec<i32> {
         self.components.keys().map(|x| *x).collect::<Vec<i32>>()
     }
 
-    pub fn get_component(&self, index: i32) -> Option<&Box<Component>> {
-        self.components.get(&index)
+    pub fn get_components_of_type<T>(&self) -> Vec<i32> where T: Component + 'static {
+        self.component_types.iter().filter_map(|(k, v)| {
+            if *v == TypeId::of::<T>() {Some(*k)}
+            else {None}
+        }).collect::<Vec<i32>>()
+    }
+
+    pub fn get_component(&mut self, index: i32) -> Option<&mut Box<Component>> {
+        self.components.get_mut(&index)
     }
 
     pub fn add_component_at_index(&mut self, component: Box<Component>, index: i32) {
         self.components.insert(index, component);
     }
 
-    pub fn add_component(&mut self, component: Box<Component>) {
+    pub fn add_component<T>(&mut self, component: T) -> i32 where T: Component + 'static {
         let new_key = self.components.keys().nth(0).unwrap_or(&1) - 1;
-        self.components.insert(new_key, component);
+        self.component_types.insert(new_key, TypeId::of::<T>());
+        self.components.insert(new_key, Box::new(component));
+        new_key
     }
 
     pub fn set_rigid_body(&mut self, app: &mut App, rigid_body: RigidBody<f64>) {
