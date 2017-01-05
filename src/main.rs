@@ -28,7 +28,7 @@ fn main() {
     app.add_action(Button::Keyboard(Key::F), ActionId::Blink as i32);
     let mut game_obj = GameObject::new(&mut app);
     game_obj.texture = app.fetch_texture("nitro.png");
-    game_obj.add_component(Box::new(Spinny {}));
+    game_obj.add_component(Spinny {});
     game_obj.set_rigid_body(&mut app,
                             RigidBody::new_dynamic(Cuboid2::new(Vector2 { x: 0.5, y: 0.5 }),
                                                    1.0,
