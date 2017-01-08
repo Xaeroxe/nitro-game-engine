@@ -36,15 +36,19 @@ impl GameObject {
         }
     }
 
-    pub fn component_keys(&self) -> Vec<i32> {
-        self.components.keys().map(|x| *x).collect::<Vec<i32>>()
+    pub fn component_keys<'a>(&'a self) -> Box<Iterator<Item=i32>+'a> {
+        Box::new(self.components.keys().map(|x| *x))
     }
 
-    pub fn component_keys_with_type<T>(&self) -> Vec<i32> where T: Component + 'static {
-        self.components.iter().filter_map(|(k, &(_, type_id))| {
+    pub fn component_keys_with_type<'a, T>(&'a self) -> Box<Iterator<Item=i32>+'a> where T: Component + 'static {
+        Box::new(self.components.iter().filter_map(|(k, &(_, type_id))| {
             if type_id == TypeId::of::<T>() {Some(*k)}
             else {None}
-        }).collect::<Vec<i32>>()
+        }))
+    }
+
+    pub fn remove_component(&mut self, index: i32) -> Option<(Box<Component>, TypeId)> {
+        self.components.remove(&index)
     }
 
     pub fn component(&self, index: i32) -> Option<&(Box<Component>, TypeId)> {
