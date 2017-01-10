@@ -36,14 +36,19 @@ impl GameObject {
         }
     }
 
-    pub fn component_keys<'a>(&'a self) -> Box<Iterator<Item=i32>+'a> {
+    pub fn component_keys<'a>(&'a self) -> Box<Iterator<Item = i32> + 'a> {
         Box::new(self.components.keys().map(|x| *x))
     }
 
-    pub fn component_keys_with_type<'a, T>(&'a self) -> Box<Iterator<Item=i32>+'a> where T: Component + 'static {
+    pub fn component_keys_with_type<'a, T>(&'a self) -> Box<Iterator<Item = i32> + 'a>
+        where T: Component + 'static
+    {
         Box::new(self.components.iter().filter_map(|(k, &(_, type_id))| {
-            if type_id == TypeId::of::<T>() {Some(*k)}
-            else {None}
+            if type_id == TypeId::of::<T>() {
+                Some(*k)
+            } else {
+                None
+            }
         }))
     }
 
@@ -59,13 +64,18 @@ impl GameObject {
         self.components.get_mut(&index)
     }
 
-    pub fn insert_component<T>(&mut self, component: T, index: i32)
-    -> Option<(Box<Component + 'static>, TypeId)>
-    where T: Component + 'static {
+    pub fn insert_component<T>(&mut self,
+                               component: T,
+                               index: i32)
+                               -> Option<(Box<Component + 'static>, TypeId)>
+        where T: Component + 'static
+    {
         self.components.insert(index, (Box::new(component), TypeId::of::<T>()))
     }
 
-    pub fn add_component<T>(&mut self, component: T) -> i32 where T: Component + 'static {
+    pub fn add_component<T>(&mut self, component: T) -> i32
+        where T: Component + 'static
+    {
         let new_key = self.components.keys().map(|x| *x).nth(0).unwrap_or(1) - 1;
         self.components.insert(new_key, (Box::new(component), TypeId::of::<T>()));
         new_key
@@ -81,7 +91,7 @@ pub fn copy_from_physics(game_object: &mut GameObject) {
         let body_borrow = body_box.borrow();
         *game_object.transform.mut_x() = body_borrow.position().translation.x;
         *game_object.transform.mut_y() = body_borrow.position().translation.y;
-        *game_object.transform.mut_rotation() = body_borrow.position().rotation.rotation().x
+        *game_object.transform.mut_rotation() = body_borrow.position().rotation.rotation().x;
     }
 }
 
