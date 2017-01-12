@@ -4,7 +4,7 @@ use transform::Transform;
 use component::Component;
 use component::Message;
 use std::collections::BTreeMap;
-use std::any::TypeId;
+use std::any::Any;
 use physics::nphysics2d::object::{RigidBody, RigidBodyHandle};
 use physics::nphysics2d::math::Matrix;
 use physics::nalgebra::{Rotation2, Vector2, Vector1, Rotation};
@@ -13,7 +13,7 @@ pub struct GameObject {
     pub transform: Transform,
     pub texture: Texture,
     pub body: Option<RigidBodyHandle<f64>>,
-    components: BTreeMap<i32, (Box<Component>, TypeId)>,
+    components: BTreeMap<i32, Box<Component>>,
 }
 
 impl GameObject {
@@ -29,9 +29,9 @@ impl GameObject {
     pub fn update(&mut self, app: &mut App, delta_time: f64) {
         let message = &Message::Update { delta_time: delta_time };
         for key in self.components.keys().map(|x| *x).collect::<Vec<i32>>() {
-            if let Some((mut component, type_id)) = self.components.remove(&key) {
+            if let Some(mut component) = self.components.remove(&key) {
                 component.receive_message(app, self, &message);
-                self.components.insert(key, (component, type_id));
+                self.components.insert(key, component);
             }
         }
     }
@@ -43,41 +43,52 @@ impl GameObject {
     pub fn component_keys_with_type<'a, T>(&'a self) -> Box<Iterator<Item = i32> + 'a>
         where T: Component + 'static
     {
-        Box::new(self.components.iter().filter_map(|(k, &(_, type_id))| {
-            if type_id == TypeId::of::<T>() {
-                Some(*k)
-            } else {
-                None
-            }
-        }))
+        Box::new(self.components
+            .iter()
+            .filter_map(|(k, c)| { if c.as_any().is::<T>() { Some(*k) } else { None } }))
     }
 
-    pub fn remove_component(&mut self, index: i32) -> Option<(Box<Component>, TypeId)> {
+    pub fn remove_component(&mut self, index: i32) -> Option<Box<Component>> {
         self.components.remove(&index)
     }
 
-    pub fn component(&self, index: i32) -> Option<&(Box<Component>, TypeId)> {
+    pub fn component(&self, index: i32) -> Option<&Box<Component>> {
         self.components.get(&index)
     }
 
-    pub fn component_mut(&mut self, index: i32) -> Option<&mut (Box<Component>, TypeId)> {
+    pub fn component_mut(&mut self, index: i32) -> Option<&mut Box<Component>> {
         self.components.get_mut(&index)
     }
 
-    pub fn insert_component<T>(&mut self,
-                               component: T,
-                               index: i32)
-                               -> Option<(Box<Component + 'static>, TypeId)>
+    pub fn component_with_type<T>(&self, index: i32) -> Option<&T>
         where T: Component + 'static
     {
-        self.components.insert(index, (Box::new(component), TypeId::of::<T>()))
+        if let Some(component) = self.components.get(&index) {
+            return component.as_any().downcast_ref::<T>();
+        }
+        None
+    }
+
+    pub fn component_mut_with_type<T>(&mut self, index: i32) -> Option<&mut T>
+        where T: Component + 'static
+    {
+        if let Some(component) = self.components.get_mut(&index) {
+            return component.as_any_mut().downcast_mut::<T>();
+        }
+        None
+    }
+
+    pub fn insert_component<T>(&mut self, component: T, index: i32) -> Option<Box<Component>>
+        where T: Component + 'static
+    {
+        self.components.insert(index, Box::new(component))
     }
 
     pub fn add_component<T>(&mut self, component: T) -> i32
         where T: Component + 'static
     {
         let new_key = self.components.keys().map(|x| *x).nth(0).unwrap_or(1) - 1;
-        self.components.insert(new_key, (Box::new(component), TypeId::of::<T>()));
+        self.components.insert(new_key, Box::new(component));
         new_key
     }
 

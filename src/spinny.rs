@@ -4,6 +4,7 @@ use nitro::component::Message;
 use nitro::GameObject;
 use axes::AxisId;
 use actions::ActionId;
+use std::any::Any;
 
 pub struct Spinny {
 
@@ -30,5 +31,12 @@ impl Component for Spinny {
             }
             _ => {}
         }
+    }
+
+    fn as_any(&self) -> &Any {
+        self
+    }
+    fn as_any_mut(&mut self) -> &mut Any {
+        self
     }
 }
