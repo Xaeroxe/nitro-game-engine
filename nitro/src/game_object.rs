@@ -45,7 +45,7 @@ impl GameObject {
     {
         Box::new(self.components
             .iter()
-            .filter_map(|(k, c)| { if c.as_any().is::<T>() { Some(*k) } else { None } }))
+            .filter_map(|(k, c)| { if (**c).is::<T>() { Some(*k) } else { None } }))
     }
 
     pub fn remove_component(&mut self, index: i32) -> Option<Box<Component>> {
@@ -64,7 +64,7 @@ impl GameObject {
         where T: Component + 'static
     {
         if let Some(component) = self.components.get(&index) {
-            return component.as_any().downcast_ref::<T>();
+            return component.downcast_ref::<T>();
         }
         None
     }
@@ -73,7 +73,7 @@ impl GameObject {
         where T: Component + 'static
     {
         if let Some(component) = self.components.get_mut(&index) {
-            return component.as_any_mut().downcast_mut::<T>();
+            return component.downcast_mut::<T>();
         }
         None
     }
