@@ -10,17 +10,7 @@ pub struct Spinny {
 
 }
 
-impl AsRef<Any> for Spinny {
-    fn as_ref(&self) -> &Any {
-        self
-    }
-}
-
-impl AsMut<Any> for Spinny {
-    fn as_mut(&mut self) -> &mut Any {
-        self
-    }
-}
+to_any!(Spinny);
 
 impl Component for Spinny {
     fn receive_message(&mut self, app: &mut App, game_object: &mut GameObject, message: &Message) {

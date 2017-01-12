@@ -14,6 +14,7 @@ pub use app::App;
 mod game_object;
 pub use game_object::GameObject;
 
+#[macro_use]
 pub mod component;
 
 mod texture;
