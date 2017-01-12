@@ -4,7 +4,6 @@ use transform::Transform;
 use component::Component;
 use component::Message;
 use std::collections::BTreeMap;
-use std::any::Any;
 use physics::nphysics2d::object::{RigidBody, RigidBodyHandle};
 use physics::nphysics2d::math::Matrix;
 use physics::nalgebra::{Rotation2, Vector2, Vector1, Rotation};
@@ -45,7 +44,7 @@ impl GameObject {
     {
         Box::new(self.components
             .iter()
-            .filter_map(|(k, c)| { if (**c).is::<T>() { Some(*k) } else { None } }))
+            .filter_map(|(k, c)| { if c.as_any().is::<T>() { Some(*k) } else { None } }))
     }
 
     pub fn remove_component(&mut self, index: i32) -> Option<Box<Component>> {
@@ -64,7 +63,7 @@ impl GameObject {
         where T: Component + 'static
     {
         if let Some(component) = self.components.get(&index) {
-            return component.downcast_ref::<T>();
+            return component.as_any().downcast_ref::<T>();
         }
         None
     }
@@ -73,7 +72,7 @@ impl GameObject {
         where T: Component + 'static
     {
         if let Some(component) = self.components.get_mut(&index) {
-            return component.downcast_mut::<T>();
+            return component.as_any_mut().downcast_mut::<T>();
         }
         None
     }

@@ -32,4 +32,12 @@ impl Component for Spinny {
             _ => {}
         }
     }
+
+    fn as_any(&self) -> &Any {
+        self
+    }
+
+    fn as_any_mut(&mut self) -> &mut Any {
+        self
+    }
 }
