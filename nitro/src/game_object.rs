@@ -86,13 +86,17 @@ impl GameObject {
     pub fn insert_component<T>(&mut self, component: T, index: i32) -> Option<Box<Component>>
         where T: Component + 'static
     {
+        // TODO: Figure out how to best get an app reference here.
+        component.receive_message(app: &mut App, self, &Message::Start { key: index });
         self.components.insert(index, Box::new(component))
     }
 
     pub fn add_component<T>(&mut self, component: T) -> i32
         where T: Component + 'static
     {
+        // TODO: Figure out how to best get an app reference here.
         let new_key = self.components.keys().map(|x| *x).nth(0).unwrap_or(1) - 1;
+        component.receive_message(app: &mut App, self, &Message::Start { key: new_key });
         self.components.insert(new_key, Box::new(component));
         new_key
     }

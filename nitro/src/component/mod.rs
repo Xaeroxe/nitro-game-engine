@@ -7,6 +7,7 @@ pub trait Component: AsRef<Any> + AsMut<Any> {
 }
 
 pub enum Message {
+    Start { key: i32 },
     Update { delta_time: f64 },
     UserMessage(Box<Any>),
 }
