@@ -10,9 +10,10 @@ pub struct Spinny {
 
 }
 
-to_any!(Spinny);
 
 impl Component for Spinny {
+    default_component_impl!();
+
     fn receive_message(&mut self, app: &mut App, game_object: &mut GameObject, message: &Message) {
         match *message {
             Message::Update { delta_time } => {

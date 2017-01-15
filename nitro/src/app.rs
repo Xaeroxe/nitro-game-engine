@@ -37,7 +37,7 @@ pub struct App {
 }
 
 impl App {
-    pub fn new(name: &str, fullscreen: bool, exit_on_esc: bool) -> App {
+    pub fn new(name: &str) -> App {
         let opengl = OpenGL::V3_2;
         let (width, height) = glutin::get_primary_monitor().get_dimensions();
         App {
@@ -49,8 +49,8 @@ impl App {
             actions: HashMap::new(),
             window: WindowSettings::new(name, [width, height])
                 .opengl(opengl)
-                .exit_on_esc(exit_on_esc)
-                .fullscreen(fullscreen)
+                .exit_on_esc(true)
+                .fullscreen(true)
                 .build()
                 .unwrap(),
             camera: Camera { transform: Transform::new() },

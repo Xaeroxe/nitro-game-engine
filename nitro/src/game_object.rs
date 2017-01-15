@@ -44,13 +44,7 @@ impl GameObject {
     {
         Box::new(self.components
             .iter()
-            .filter_map(|(k, c)| {
-                if (**c).as_ref().is::<T>() {
-                    Some(*k)
-                } else {
-                    None
-                }
-            }))
+            .filter_map(|(k, c)| { if c.as_any().is::<T>() { Some(*k) } else { None } }))
     }
 
     pub fn remove_component(&mut self, index: i32) -> Option<Box<Component>> {
@@ -69,7 +63,7 @@ impl GameObject {
         where T: Component + 'static
     {
         if let Some(component) = self.components.get(&index) {
-            return (**component).as_ref().downcast_ref::<T>();
+            return component.as_any().downcast_ref::<T>();
         }
         None
     }
@@ -78,26 +72,31 @@ impl GameObject {
         where T: Component + 'static
     {
         if let Some(component) = self.components.get_mut(&index) {
-            return (**component).as_mut().downcast_mut::<T>();
+            return component.as_any_mut().downcast_mut::<T>();
         }
         None
     }
 
-    pub fn insert_component<T>(&mut self, component: T, index: i32) -> Option<Box<Component>>
+    pub fn insert_component<T>(&mut self,
+                               app: &mut App,
+                               component: T,
+                               index: i32)
+                               -> Option<Box<Component>>
         where T: Component + 'static
     {
-        // TODO: Figure out how to best get an app reference here.
-        component.receive_message(app: &mut App, self, &Message::Start { key: index });
-        self.components.insert(index, Box::new(component))
+        let mut boxxed = Box::new(component);
+        boxxed.receive_message(app, self, &Message::Start { key: index });
+        self.components.insert(index, boxxed)
     }
 
-    pub fn add_component<T>(&mut self, component: T) -> i32
+    pub fn add_component<T>(&mut self, app: &mut App, component: T) -> i32
         where T: Component + 'static
     {
         // TODO: Figure out how to best get an app reference here.
         let new_key = self.components.keys().map(|x| *x).nth(0).unwrap_or(1) - 1;
-        component.receive_message(app: &mut App, self, &Message::Start { key: new_key });
-        self.components.insert(new_key, Box::new(component));
+        let mut boxxed = Box::new(component);
+        boxxed.receive_message(app, self, &Message::Start { key: new_key });
+        self.components.insert(new_key, boxxed);
         new_key
     }
 

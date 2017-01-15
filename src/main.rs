@@ -19,7 +19,7 @@ use actions::ActionId;
 
 fn main() {
     // Create a new game and run it.
-    let mut app = App::new("Halera", false, true);
+    let mut app = App::new("Halera");
     app.add_axis(Axis::new(Button::Keyboard(Key::D), Button::Keyboard(Key::A)),
                  AxisId::Horizontal as i32);
     app.add_axis(Axis::new(Button::Keyboard(Key::S), Button::Keyboard(Key::W)),
@@ -29,7 +29,7 @@ fn main() {
     app.add_action(Button::Keyboard(Key::F), ActionId::Blink as i32);
     let mut game_obj = GameObject::new(&mut app);
     game_obj.texture = app.fetch_texture("nitro.png");
-    game_obj.add_component(Spinny {});
+    game_obj.add_component(&mut app, Spinny {});
     game_obj.set_rigid_body(&mut app,
                             RigidBody::new_dynamic(Cuboid2::new(Vector2 { x: 0.5, y: 0.5 }),
                                                    1.0,

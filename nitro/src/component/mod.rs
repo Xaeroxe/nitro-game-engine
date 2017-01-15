@@ -4,23 +4,21 @@ use app::App;
 use game_object::GameObject;
 use std::any::Any;
 
-pub trait Component: AsRef<Any> + AsMut<Any> + 'static {
+pub trait Component: Any + 'static {
     fn receive_message(&mut self, app: &mut App, game_object: &mut GameObject, message: &Message);
+    fn as_any(&self) -> &Any;
+    fn as_any_mut(&mut self) -> &mut Any;
 }
 
 #[macro_export]
-macro_rules! to_any {
-    ($t:ty) => {
-        impl AsRef<Any> for $t {
-            fn as_ref(&self) -> &Any {
-                self
-            }
+macro_rules! default_component_impl {
+    () => {
+        fn as_any(&self) -> &Any {
+            self
         }
 
-        impl AsMut<Any> for $t {
-            fn as_mut(&mut self) -> &mut Any {
-                self
-            }
+        fn as_any_mut(&mut self) -> &mut Any {
+            self
         }
     }
 }
