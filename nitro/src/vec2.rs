@@ -1,4 +1,4 @@
-use std::f64;
+use std::f32;
 use std::ops::Add;
 use std::ops::AddAssign;
 use std::ops::Sub;
@@ -11,8 +11,8 @@ use std::ops::Neg;
 
 #[derive(Copy, Clone, Debug)]
 pub struct Vec2 {
-    pub x: f64,
-    pub y: f64,
+    pub x: f32,
+    pub y: f32,
 }
 
 impl Vec2 {
@@ -20,7 +20,7 @@ impl Vec2 {
         self / self.magnitude()
     }
 
-    pub fn magnitude(&self) -> f64 {
+    pub fn magnitude(&self) -> f32 {
         (self.x.powi(2) + self.y.powi(2)).sqrt()
     }
 }
@@ -76,9 +76,9 @@ impl DivAssign for Vec2 {
     }
 }
 
-impl Div<f64> for Vec2 {
+impl Div<f32> for Vec2 {
     type Output = Vec2;
-    fn div(self, other: f64) -> Vec2 {
+    fn div(self, other: f32) -> Vec2 {
         Vec2 {
             x: self.x / other,
             y: self.y / other,
@@ -86,8 +86,8 @@ impl Div<f64> for Vec2 {
     }
 }
 
-impl DivAssign<f64> for Vec2 {
-    fn div_assign(&mut self, other: f64) {
+impl DivAssign<f32> for Vec2 {
+    fn div_assign(&mut self, other: f32) {
         self.x /= other;
         self.y /= other;
     }
@@ -110,9 +110,9 @@ impl MulAssign for Vec2 {
     }
 }
 
-impl Mul<f64> for Vec2 {
+impl Mul<f32> for Vec2 {
     type Output = Vec2;
-    fn mul(self, other: f64) -> Vec2 {
+    fn mul(self, other: f32) -> Vec2 {
         Vec2 {
             x: self.x * other,
             y: self.y * other,
@@ -120,7 +120,7 @@ impl Mul<f64> for Vec2 {
     }
 }
 
-impl Mul<Vec2> for f64 {
+impl Mul<Vec2> for f32 {
     type Output = Vec2;
     fn mul(self, other: Vec2) -> Vec2 {
         Vec2 {
@@ -130,8 +130,8 @@ impl Mul<Vec2> for f64 {
     }
 }
 
-impl MulAssign<f64> for Vec2 {
-    fn mul_assign(&mut self, other: f64) {
+impl MulAssign<f32> for Vec2 {
+    fn mul_assign(&mut self, other: f32) {
         self.x *= other;
         self.y *= other;
     }

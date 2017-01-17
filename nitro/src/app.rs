@@ -17,6 +17,7 @@ use serde_hjson;
 use std::collections::HashMap;
 use std::collections::LinkedList;
 use std::path::PathBuf;
+use std::f32;
 use std::mem;
 
 pub struct App {
@@ -33,7 +34,7 @@ pub struct App {
     axes: HashMap<i32, Axis>,
     actions: HashMap<i32, Button>,
     pub camera: Camera,
-    pub world: World<f64>,
+    pub world: World<f32>,
 }
 
 impl App {
@@ -73,9 +74,9 @@ impl App {
                 for game_obj in game_objs {
                     let mut render_transform = game_obj.transform;
                     *render_transform.mut_x() -= *camera_transform.x() -
-                                                 (render_args.draw_width / 2) as f64;
+                                                 (render_args.draw_width / 2) as f32;
                     *render_transform.mut_y() -= *camera_transform.y() -
-                                                 (render_args.draw_height / 2) as f64;
+                                                 (render_args.draw_height / 2) as f32;
                     *render_transform.mut_rotation() -= *camera_transform.rotation();
                     let (tex_width, tex_height) = texture::get_raw(&game_obj.texture).get_size();
                     image(texture::get_raw(&game_obj.texture),
@@ -94,13 +95,14 @@ impl App {
         for mut game_object in &mut self.game_objects {
             game_object::copy_to_physics(&mut game_object);
         }
-        self.world.step(args.dt);
+        self.world.step(args.dt as f32);
         for mut game_object in &mut self.game_objects {
             game_object::copy_from_physics(&mut game_object);
         }
         let mut pop_result = self.game_objects.pop_front();
         while let Some(mut game_object) = pop_result {
             game_object.update(self, args.dt);
+            *game_object.transform.mut_rotation() %= 2.0 * f32::consts::PI;
             self.updated_game_objects.push_back(game_object);
             pop_result = self.game_objects.pop_front();
         }

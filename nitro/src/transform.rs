@@ -1,11 +1,11 @@
 use graphics::math::Matrix2d;
-use std::f64;
+use std::f32;
 use vec2::Vec2;
 
 #[derive(Copy, Clone)]
 pub struct Transform {
     position: Vec2,
-    rotation: f64,
+    rotation: f32,
 }
 
 impl Transform {
@@ -16,7 +16,7 @@ impl Transform {
         }
     }
 
-    pub fn from_x_y_rotation(x: f64, y: f64, rotation: f64) -> Transform {
+    pub fn from_x_y_rotation(x: f32, y: f32, rotation: f32) -> Transform {
         let mut value = Transform::new();
         *value.mut_x() = x;
         *value.mut_y() = y;
@@ -32,28 +32,27 @@ impl Transform {
         &mut self.position
     }
 
-    pub fn x(&self) -> &f64 {
+    pub fn x(&self) -> &f32 {
         &self.position.x
     }
 
-    pub fn y(&self) -> &f64 {
+    pub fn y(&self) -> &f32 {
         &self.position.y
     }
 
-    pub fn rotation(&self) -> &f64 {
+    pub fn rotation(&self) -> &f32 {
         &self.rotation
     }
 
-    pub fn mut_x(&mut self) -> &mut f64 {
+    pub fn mut_x(&mut self) -> &mut f32 {
         &mut self.position.x
     }
 
-    pub fn mut_y(&mut self) -> &mut f64 {
+    pub fn mut_y(&mut self) -> &mut f32 {
         &mut self.position.y
     }
 
-    pub fn mut_rotation(&mut self) -> &mut f64 {
-        self.rotation %= 2.0 * f64::consts::PI;
+    pub fn mut_rotation(&mut self) -> &mut f32 {
         &mut self.rotation
     }
 
@@ -74,7 +73,7 @@ impl Transform {
 
 // Raw format reverse engineered from Piston internals.
 pub fn get_raw(nitro_transform: &Transform) -> Matrix2d {
-    let c = nitro_transform.rotation.cos();
-    let s = nitro_transform.rotation.sin();
-    [[c, -s, nitro_transform.position.x], [s, c, nitro_transform.position.y]]
+    let c = nitro_transform.rotation.cos() as f64;
+    let s = nitro_transform.rotation.sin() as f64;
+    [[c, -s, nitro_transform.position.x as f64], [s, c, nitro_transform.position.y as f64]]
 }
