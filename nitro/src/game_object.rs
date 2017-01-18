@@ -11,7 +11,7 @@ use physics::nalgebra::{Rotation2, Vector2, Vector1, Rotation};
 pub struct GameObject {
     pub transform: Transform,
     pub texture: Texture,
-    pub body: Option<RigidBodyHandle<f64>>,
+    pub body: Option<RigidBodyHandle<f32>>,
     components: BTreeMap<i32, Box<Component>>,
 }
 
@@ -100,7 +100,7 @@ impl GameObject {
         new_key
     }
 
-    pub fn set_rigid_body(&mut self, app: &mut App, rigid_body: RigidBody<f64>) {
+    pub fn set_rigid_body(&mut self, app: &mut App, rigid_body: RigidBody<f32>) {
         self.body = Some(app.world.add_rigid_body(rigid_body));
     }
 }
@@ -116,7 +116,7 @@ pub fn copy_from_physics(game_object: &mut GameObject) {
 
 pub fn copy_to_physics(game_object: &mut GameObject) {
     if let Some(ref mut body_box) = game_object.body {
-        body_box.borrow_mut().set_transformation(Matrix::<f64> {
+        body_box.borrow_mut().set_transformation(Matrix::<f32> {
             rotation: Rotation2::new(Vector1 { x: *game_object.transform.rotation() }),
             translation: Vector2 {
                 x: *game_object.transform.x(),
