@@ -154,35 +154,23 @@ impl App {
         let source = self.fetch_sound(path);
         let endpoint = rodio::get_default_endpoint().unwrap();
         let sink = rodio::Sink::new(&endpoint);
-        sink.append(source.buffered());
+        sink.append(source);
     }
 
     pub fn loop_sound_forever(&mut self, path: &str) {
         let source = self.fetch_sound(path).repeat_infinite();
         let endpoint = rodio::get_default_endpoint().unwrap();
         let sink = rodio::Sink::new(&endpoint);
-        sink.append(source.buffered());
+        sink.append(source);
     }
 
     // Fetches sound from cache if present, otherwise loads it from the filesystem.
-    fn fetch_sound(&mut self, path: &str) -> Box<Buffered<Decoder<BufReader<File>>>> {
-        let source;
-        if self.sound_cache.contains_key(path) {
-            let cached = self.sound_cache.get(path).unwrap();
-            source = cached.clone();
-        } else {
-            let mut sound_path = PathBuf::from("assets");
-            sound_path.push("sounds");
-            sound_path.push(path);
-            let file = File::open(sound_path).unwrap();
-            let new_source =
-                Box::new(rodio::Decoder::new(BufReader::new(file)).unwrap().buffered());
-            source = new_source.clone();
-            self.sound_cache.insert(path.to_owned(), new_source);
-        }
-        return source;
+    fn fetch_sound(&mut self, path: &str) -> Buffered<Decoder<BufReader<File>>> {
+        self.load_sound(path);
+        (**self.sound_cache.get(path).unwrap()).clone()
     }
 
+    // Load a sound into the cache if it's not already there.
     pub fn load_sound(&mut self, path: &str) {
         if !self.sound_cache.contains_key(path) {
             let mut sound_path = PathBuf::from("assets");
