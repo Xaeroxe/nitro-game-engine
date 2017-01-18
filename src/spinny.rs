@@ -16,6 +16,10 @@ impl Component for Spinny {
 
     fn receive_message(&mut self, app: &mut App, game_object: &mut GameObject, message: &Message) {
         match *message {
+            Message::Start { key } => {
+                app.play_sound("example.ogg");
+            }
+
             Message::Update { delta_time } => {
                 if let Some(horizontal) = app.get_axis_value(AxisId::Horizontal as i32) {
                     *game_object.transform.mut_position() += 100.0 * delta_time * horizontal *

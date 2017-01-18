@@ -7,6 +7,7 @@ extern crate serde;
 extern crate serde_hjson;
 #[macro_use]
 extern crate unborrow;
+extern crate rodio;
 
 mod app;
 pub use app::App;

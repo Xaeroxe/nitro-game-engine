@@ -14,7 +14,13 @@ use transform;
 use camera::Camera;
 use physics::nphysics2d::world::World;
 use serde_hjson;
+use rodio;
+use rodio::Decoder;
+use rodio::source::Buffered;
+use rodio::Source;
 use std::collections::HashMap;
+use std::fs::File;
+use std::io::BufReader;
 use std::collections::LinkedList;
 use std::path::PathBuf;
 use std::mem;
@@ -32,6 +38,7 @@ pub struct App {
     previous_buttons_pressed: Vec<Button>, // buttons_pressed from last frame.
     axes: HashMap<i32, Axis>,
     actions: HashMap<i32, Button>,
+    sound_cache: HashMap<String, Box<Buffered<Decoder<BufReader<File>>>>>,
     pub camera: Camera,
     pub world: World<f64>,
 }
@@ -47,6 +54,7 @@ impl App {
             previous_buttons_pressed: vec![],
             axes: HashMap::new(),
             actions: HashMap::new(),
+            sound_cache: HashMap::new(),
             window: WindowSettings::new(name, [width, height])
                 .opengl(opengl)
                 .exit_on_esc(true)
@@ -138,6 +146,40 @@ impl App {
                 }
             }
         }
+    }
+
+    pub fn play_sound(&mut self, path: &str) {
+        let source;
+
+        if self.sound_cache.contains_key(path) {
+            let cached = self.sound_cache.get(path).unwrap();
+            source = cached.clone();
+        } else {
+            let mut sound_path = PathBuf::from("assets");
+            sound_path.push("sounds");
+            sound_path.push(path);
+            let file = File::open(sound_path).unwrap();
+            let new_source =
+                Box::new(rodio::Decoder::new(BufReader::new(file)).unwrap().buffered());
+            source = new_source.clone();
+            self.sound_cache.insert(path.to_owned(), new_source);
+        }
+        let endpoint = rodio::get_default_endpoint().unwrap();
+        let sink = rodio::Sink::new(&endpoint);
+        sink.append(source.buffered());
+    }
+
+    pub fn load_sound(&mut self, path: &str) {
+        let mut sound_path = PathBuf::from("assets");
+        sound_path.push("sounds");
+        sound_path.push(path);
+        let file = File::open(sound_path).unwrap();
+        let new_source = Box::new(rodio::Decoder::new(BufReader::new(file)).unwrap().buffered());
+        self.sound_cache.insert(path.to_owned(), new_source);
+    }
+
+    pub fn unload_sound(&mut self, path: &str) {
+        self.sound_cache.remove(path);
     }
 
     pub fn save_bindings(&mut self, path: &str) -> Result<(), String> {
