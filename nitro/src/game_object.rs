@@ -25,7 +25,7 @@ impl GameObject {
         }
     }
 
-    pub fn update(&mut self, app: &mut App, delta_time: f64) {
+    pub fn update(&mut self, app: &mut App, delta_time: f32) {
         let message = &Message::Update { delta_time: delta_time };
         for key in self.components.keys().map(|x| *x).collect::<Vec<i32>>() {
             if let Some(mut component) = self.components.remove(&key) {

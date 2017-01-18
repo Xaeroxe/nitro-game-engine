@@ -109,7 +109,7 @@ impl App {
         }
         let mut pop_result = self.game_objects.pop_front();
         while let Some(mut game_object) = pop_result {
-            game_object.update(self, args.dt);
+            game_object.update(self, args.dt as f32);
             *game_object.transform.mut_rotation() %= 2.0 * f32::consts::PI;
             self.updated_game_objects.push_back(game_object);
             pop_result = self.game_objects.pop_front();
@@ -151,8 +151,22 @@ impl App {
     }
 
     pub fn play_sound(&mut self, path: &str) {
-        let source;
+        let source = self.fetch_sound(path);
+        let endpoint = rodio::get_default_endpoint().unwrap();
+        let sink = rodio::Sink::new(&endpoint);
+        sink.append(source.buffered());
+    }
 
+    pub fn loop_sound_forever(&mut self, path: &str) {
+        let source = self.fetch_sound(path).repeat_infinite();
+        let endpoint = rodio::get_default_endpoint().unwrap();
+        let sink = rodio::Sink::new(&endpoint);
+        sink.append(source.buffered());
+    }
+
+    // Fetches sound from cache if present, otherwise loads it from the filesystem.
+    fn fetch_sound(&mut self, path: &str) -> Box<Buffered<Decoder<BufReader<File>>>> {
+        let source;
         if self.sound_cache.contains_key(path) {
             let cached = self.sound_cache.get(path).unwrap();
             source = cached.clone();
@@ -166,18 +180,19 @@ impl App {
             source = new_source.clone();
             self.sound_cache.insert(path.to_owned(), new_source);
         }
-        let endpoint = rodio::get_default_endpoint().unwrap();
-        let sink = rodio::Sink::new(&endpoint);
-        sink.append(source.buffered());
+        return source;
     }
 
     pub fn load_sound(&mut self, path: &str) {
-        let mut sound_path = PathBuf::from("assets");
-        sound_path.push("sounds");
-        sound_path.push(path);
-        let file = File::open(sound_path).unwrap();
-        let new_source = Box::new(rodio::Decoder::new(BufReader::new(file)).unwrap().buffered());
-        self.sound_cache.insert(path.to_owned(), new_source);
+        if !self.sound_cache.contains_key(path) {
+            let mut sound_path = PathBuf::from("assets");
+            sound_path.push("sounds");
+            sound_path.push(path);
+            let file = File::open(sound_path).unwrap();
+            let new_source =
+                Box::new(rodio::Decoder::new(BufReader::new(file)).unwrap().buffered());
+            self.sound_cache.insert(path.to_owned(), new_source);
+        }
     }
 
     pub fn unload_sound(&mut self, path: &str) {
@@ -205,7 +220,7 @@ impl App {
         self.axes.insert(id, axis);
     }
 
-    pub fn get_axis_value(&self, id: i32) -> Option<f64> {
+    pub fn get_axis_value(&self, id: i32) -> Option<f32> {
         if let Some(axis) = self.axes.get(&id) {
             return Some(axis.get_value(self));
         }
