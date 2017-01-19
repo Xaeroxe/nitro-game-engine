@@ -17,22 +17,22 @@ impl Component for Spinny {
     fn receive_message(&mut self, app: &mut App, game_object: &mut GameObject, message: &Message) {
         match *message {
             Message::Start { key } => {
-                app.play_sound("example.ogg");
+                // app.play_sound("example.ogg");
             }
 
             Message::Update { delta_time } => {
-                if let Some(horizontal) = app.get_axis_value(AxisId::Horizontal as i32) {
+                if let Some(horizontal) = app.input.get_axis_value(AxisId::Horizontal as i32) {
                     *game_object.transform.mut_position() += 100.0 * delta_time * horizontal *
                                                              game_object.transform.right_vec2();
                 }
-                if let Some(vertical) = app.get_axis_value(AxisId::Vertical as i32) {
+                if let Some(vertical) = app.input.get_axis_value(AxisId::Vertical as i32) {
                     *game_object.transform.mut_position() += 100.0 * delta_time * vertical *
                                                              game_object.transform.forward_vec2();
                 }
-                if let Some(rotation) = app.get_axis_value(AxisId::Rotation as i32) {
+                if let Some(rotation) = app.input.get_axis_value(AxisId::Rotation as i32) {
                     *game_object.transform.mut_rotation() += 1.0 * delta_time * rotation;
                 }
-                if let Some(true) = app.action_released(ActionId::Blink as i32) {
+                if let Some(true) = app.input.action_released(ActionId::Blink as i32) {
                     *game_object.transform.mut_x() += 50.0;
                 }
             }

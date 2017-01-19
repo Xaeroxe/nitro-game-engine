@@ -1,10 +1,10 @@
 use piston::window::WindowSettings;
 use piston_window;
-use piston_window::{PistonWindow, UpdateArgs, Event, OpenGL, TextureSettings, Flip, Input};
+use piston_window::{PistonWindow, UpdateArgs, Event, OpenGL, TextureSettings, Flip};
 use gfx_device_gl::Resources;
 use glutin;
-use input::Button;
-use input::Axis;
+use input_private;
+use input::Input;
 use game_object::GameObject;
 use game_object;
 use texture::Texture;
@@ -13,7 +13,6 @@ use transform::Transform;
 use transform;
 use camera::Camera;
 use physics::nphysics2d::world::World;
-use serde_hjson;
 use rodio;
 use rodio::Decoder;
 use rodio::source::Buffered;
@@ -29,16 +28,13 @@ use std::mem;
 pub struct App {
     window: PistonWindow,
     // When searching for a GameObject you will need to search both of
-    // these vectors. At any given time either one of them could contain the GameObject you are
+    // these lists. At any given time either one of them could contain the GameObject you are
     // searching for. As GameObjects are updated they are migrated from
     // game_objects to updated_game_objects and once the update is complete
-    // the two vectors are swapped.
+    // the two lists are swapped.
     game_objects: LinkedList<GameObject>,
     updated_game_objects: LinkedList<GameObject>,
-    buttons_pressed: Vec<Button>,
-    previous_buttons_pressed: Vec<Button>, // buttons_pressed from last frame.
-    axes: HashMap<i32, Axis>,
-    actions: HashMap<i32, Button>,
+    pub input: Input,
     sound_cache: HashMap<String, Box<Buffered<Decoder<BufReader<File>>>>>,
     pub camera: Camera,
     pub world: World<f32>,
@@ -51,10 +47,7 @@ impl App {
         App {
             game_objects: LinkedList::new(),
             updated_game_objects: LinkedList::new(),
-            buttons_pressed: vec![],
-            previous_buttons_pressed: vec![],
-            axes: HashMap::new(),
-            actions: HashMap::new(),
+            input: Input::new(),
             sound_cache: HashMap::new(),
             window: WindowSettings::new(name, [width, height])
                 .opengl(opengl)
@@ -116,7 +109,7 @@ impl App {
         }
         assert_eq!(self.game_objects.len(), 0);
         mem::swap(&mut self.game_objects, &mut self.updated_game_objects);
-        self.previous_buttons_pressed = self.buttons_pressed.clone();
+        input_private::input::shift_frame(&mut self.input);
     }
 
     pub fn run(&mut self) {
@@ -129,22 +122,7 @@ impl App {
                 Event::Update(update_args) => self.update(&update_args),
                 Event::Idle(..) => {}
                 Event::Input(input_event) => {
-                    match input_event {
-                        Input::Press(button) => {
-                            // The button may already be here as this event does repeat.
-                            if !self.buttons_pressed.iter().any(|&item| item == button) {
-                                self.buttons_pressed.push(button);
-                            }
-                        }
-                        Input::Release(button) => {
-                            while let Some(i) = self.buttons_pressed
-                                .iter()
-                                .position(|&item| item == button) {
-                                self.buttons_pressed.swap_remove(i);
-                            }
-                        }
-                        _ => {}
-                    }
+                    input_private::input::process_event(&mut self.input, input_event);
                 }
             }
         }
@@ -185,77 +163,6 @@ impl App {
 
     pub fn unload_sound(&mut self, path: &str) {
         self.sound_cache.remove(path);
-    }
-
-    pub fn save_bindings(&mut self, path: &str) -> Result<(), String> {
-        for axis in &self.axes {
-            match serde_hjson::ser::to_string(&axis) {
-                Ok(result) => {
-                    println!("{}", result);
-                }
-                Err(err) => {
-                    return Err(format!("{:?}", err));
-                }
-            }
-        }
-        Ok(())
-    }
-
-    pub fn add_axis(&mut self, axis: Axis, id: i32) {
-        if self.axes.contains_key(&id) {
-            panic!("Axis id values must be unique!");
-        }
-        self.axes.insert(id, axis);
-    }
-
-    pub fn get_axis_value(&self, id: i32) -> Option<f32> {
-        if let Some(axis) = self.axes.get(&id) {
-            return Some(axis.get_value(self));
-        }
-        None
-    }
-
-    pub fn add_action(&mut self, button: Button, id: i32) {
-        if self.actions.contains_key(&id) {
-            panic!("Action id values must be unique!");
-        }
-        self.actions.insert(id, button);
-    }
-
-    // Named for consistency with get_axis_value
-    pub fn action_pressed(&self, id: i32) -> Option<bool> {
-        if let Some(button) = self.actions.get(&id) {
-            return Some(self.is_button_pressed(*button));
-        }
-        None
-    }
-
-    pub fn action_down(&self, id: i32) -> Option<bool> {
-        if let Some(button) = self.actions.get(&id) {
-            return Some(self.is_button_down(*button));
-        }
-        None
-    }
-
-    pub fn action_released(&self, id: i32) -> Option<bool> {
-        if let Some(button) = self.actions.get(&id) {
-            return Some(self.is_button_released(*button));
-        }
-        None
-    }
-
-    pub fn is_button_pressed(&self, button: Button) -> bool {
-        (&self.buttons_pressed).into_iter().any(|&b| b == button) &&
-        !(&self.previous_buttons_pressed).into_iter().any(|&b| b == button)
-    }
-
-    pub fn is_button_down(&self, button: Button) -> bool {
-        (&self.buttons_pressed).into_iter().any(|&b| b == button)
-    }
-
-    pub fn is_button_released(&self, button: Button) -> bool {
-        !(&self.buttons_pressed).into_iter().any(|&b| b == button) &&
-        (&self.previous_buttons_pressed).into_iter().any(|&b| b == button)
     }
 
     pub fn add_gameobject(&mut self, game_object: GameObject) {

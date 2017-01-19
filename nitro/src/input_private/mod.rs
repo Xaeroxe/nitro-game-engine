@@ -1,6 +1,8 @@
 mod axis;
 pub use self::axis::Axis;
 
+pub mod input;
+
 pub use piston::input::Button;
 
 pub mod keyboard {

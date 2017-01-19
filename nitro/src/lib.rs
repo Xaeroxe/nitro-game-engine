@@ -24,7 +24,16 @@ pub use texture::Texture;
 mod transform;
 pub use transform::Transform;
 
-pub mod input;
+mod input_private;
+pub mod input {
+    pub use input_private::Axis;
+    pub use input_private::controller;
+    pub use input_private::input::Input;
+    pub use input_private::keyboard;
+    pub use input_private::mouse;
+    pub use input_private::Button;
+}
+
 
 mod camera;
 pub use camera::Camera;

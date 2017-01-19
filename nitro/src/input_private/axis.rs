@@ -2,6 +2,7 @@ use app::App;
 use input::Button;
 use serde::Serialize;
 use serde::Serializer;
+use input_private::input::Input;
 
 pub struct Axis {
     pos: Button,
@@ -20,9 +21,9 @@ impl Axis {
         }
     }
 
-    pub fn get_value(&self, app: &App) -> f32 {
-        let pos_bool = app.is_button_down(self.pos);
-        if pos_bool == app.is_button_down(self.neg) {
+    pub fn get_value(&self, input: &Input) -> f32 {
+        let pos_bool = input.is_button_down(self.pos);
+        if pos_bool == input.is_button_down(self.neg) {
             return 0.0;
         }
         if pos_bool {
