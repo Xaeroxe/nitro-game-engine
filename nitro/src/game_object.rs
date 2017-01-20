@@ -2,6 +2,7 @@ use app::App;
 use texture::Texture;
 use transform::Transform;
 use component::Component;
+use component::ComponentAny;
 use component::Message;
 use std::collections::BTreeMap;
 use physics::nphysics2d::object::{RigidBody, RigidBodyHandle};
@@ -12,7 +13,7 @@ pub struct GameObject {
     pub transform: Transform,
     pub texture: Texture,
     pub body: Option<RigidBodyHandle<f32>>,
-    components: BTreeMap<i32, Box<Component>>,
+    components: BTreeMap<i32, Box<ComponentAny>>,
 }
 
 impl GameObject {
@@ -47,15 +48,15 @@ impl GameObject {
             .filter_map(|(k, c)| { if c.as_any().is::<T>() { Some(*k) } else { None } }))
     }
 
-    pub fn remove_component(&mut self, index: i32) -> Option<Box<Component>> {
+    pub fn remove_component(&mut self, index: i32) -> Option<Box<ComponentAny>> {
         self.components.remove(&index)
     }
 
-    pub fn component(&self, index: i32) -> Option<&Box<Component>> {
+    pub fn component(&self, index: i32) -> Option<&Box<ComponentAny>> {
         self.components.get(&index)
     }
 
-    pub fn component_mut(&mut self, index: i32) -> Option<&mut Box<Component>> {
+    pub fn component_mut(&mut self, index: i32) -> Option<&mut Box<ComponentAny>> {
         self.components.get_mut(&index)
     }
 
@@ -81,7 +82,7 @@ impl GameObject {
                                app: &mut App,
                                component: T,
                                index: i32)
-                               -> Option<Box<Component>>
+                               -> Option<Box<ComponentAny>>
         where T: Component + 'static
     {
         let mut boxxed = Box::new(component);

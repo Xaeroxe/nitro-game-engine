@@ -1,4 +1,3 @@
-use app::App;
 use input::Button;
 use serde::Serialize;
 use serde::Serializer;

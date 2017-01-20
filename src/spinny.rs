@@ -12,8 +12,6 @@ pub struct Spinny {
 
 
 impl Component for Spinny {
-    default_component_impl!();
-
     fn receive_message(&mut self, app: &mut App, game_object: &mut GameObject, message: &Message) {
         match *message {
             Message::Start { key } => {
