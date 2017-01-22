@@ -129,17 +129,13 @@ impl App {
     }
 
     pub fn play_sound(&mut self, path: &str) {
-        let source = self.fetch_sound(path);
-        let endpoint = rodio::get_default_endpoint().unwrap();
-        let sink = rodio::Sink::new(&endpoint);
-        sink.append(source);
+        let sink = rodio::Sink::new(&rodio::get_default_endpoint().unwrap());
+        sink.append(self.fetch_sound(path));
     }
 
     pub fn loop_sound_forever(&mut self, path: &str) {
-        let source = self.fetch_sound(path).repeat_infinite();
-        let endpoint = rodio::get_default_endpoint().unwrap();
-        let sink = rodio::Sink::new(&endpoint);
-        sink.append(source);
+        let sink = rodio::Sink::new(&rodio::get_default_endpoint().unwrap());
+        sink.append(self.fetch_sound(path).repeat_infinite());
     }
 
     // Fetches sound from cache if present, otherwise loads it from the filesystem.
