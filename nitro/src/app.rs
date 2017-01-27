@@ -3,6 +3,8 @@ use piston_window;
 use piston_window::{PistonWindow, UpdateArgs, Event, OpenGL, TextureSettings, Flip};
 use gfx_device_gl::Resources;
 use glutin;
+use audio_private;
+use audio::Dj;
 use input_private;
 use input::Input;
 use game_object::GameObject;
@@ -128,20 +130,16 @@ impl App {
         }
     }
 
-    pub fn play_sound(&mut self, path: &str) {
-        let sink = rodio::Sink::new(&rodio::get_default_endpoint().unwrap());
-        sink.append(self.fetch_sound(path));
+    pub fn play_sound(&mut self, path: &str, volume: f32) {
+        let mut sink = rodio::Sink::new(&rodio::get_default_endpoint().unwrap());
+        sink.set_volume(volume);
+        sink.append(fetch_sound(self, path));
+        sink.detach();
     }
 
-    pub fn loop_sound_forever(&mut self, path: &str) {
+    pub fn hire_dj(&mut self) -> Dj {
         let sink = rodio::Sink::new(&rodio::get_default_endpoint().unwrap());
-        sink.append(self.fetch_sound(path).repeat_infinite());
-    }
-
-    // Fetches sound from cache if present, otherwise loads it from the filesystem.
-    fn fetch_sound(&mut self, path: &str) -> Buffered<Decoder<BufReader<File>>> {
-        self.load_sound(path);
-        (**self.sound_cache.get(path).unwrap()).clone()
+        audio_private::dj::new_dj(sink)
     }
 
     // Load a sound into the cache if it's not already there.
@@ -189,4 +187,18 @@ impl App {
         }
         return_value
     }
+}
+
+// Fetches sound from cache if present, otherwise loads it from the filesystem.
+pub fn fetch_sound(app: &mut App, path: &str) -> Buffered<Decoder<BufReader<File>>> {
+    if !app.sound_cache.contains_key(path) {
+        let mut sound_path = PathBuf::from("assets");
+        sound_path.push("sounds");
+        sound_path.push(path);
+        let file = File::open(sound_path).unwrap();
+        let new_source = rodio::Decoder::new(BufReader::new(file)).unwrap().buffered();
+        app.sound_cache.insert(path.to_owned(), Box::new(new_source.clone()));
+        return new_source;
+    }
+    (**app.sound_cache.get(path).unwrap()).clone()
 }

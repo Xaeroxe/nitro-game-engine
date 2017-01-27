@@ -12,6 +12,11 @@ extern crate rodio;
 mod app;
 pub use app::App;
 
+mod audio_private;
+pub mod audio {
+    pub use audio_private::dj::Dj;
+}
+
 mod game_object;
 pub use game_object::GameObject;
 
