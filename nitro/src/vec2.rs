@@ -8,11 +8,30 @@ use std::ops::DivAssign;
 use std::ops::Mul;
 use std::ops::MulAssign;
 use std::ops::Neg;
+use std::convert::From;
+use physics::nphysics2d::math::Vector;
+use std::mem::transmute;
 
 #[derive(Copy, Clone, Debug)]
 pub struct Vec2 {
     pub x: f32,
     pub y: f32,
+}
+
+impl From<Vector<f32>> for Vec2 {
+    fn from(vec: Vector<f32>) -> Vec2 {
+        unsafe {
+            transmute::<Vector<f32>, Vec2>(vec)
+        }
+    }
+}
+
+impl From<Vec2> for Vector<f32> {
+    fn from(vec: Vec2) -> Vector<f32> {
+        unsafe {
+            transmute::<Vec2, Vector<f32>>(vec)
+        }
+    }
 }
 
 impl Vec2 {
