@@ -56,14 +56,14 @@ impl Transform {
         &mut self.rotation
     }
 
-    pub fn forward_vector(&self) -> Vector {
+    pub fn forward(&self) -> Vector {
         Vector {
             x: -self.rotation().sin(),
             y: self.rotation().cos(),
         }
     }
 
-    pub fn right_vector(&self) -> Vector {
+    pub fn right(&self) -> Vector {
         Vector {
             x: self.rotation().cos(),
             y: self.rotation().sin(),
