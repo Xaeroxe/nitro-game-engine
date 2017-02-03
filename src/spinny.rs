@@ -4,7 +4,6 @@ use nitro::component::Message;
 use nitro::GameObject;
 use axes::AxisId;
 use actions::ActionId;
-use std::any::Any;
 
 pub struct Spinny {
 
@@ -21,11 +20,11 @@ impl Component for Spinny {
             Message::Update { delta_time } => {
                 if let Some(horizontal) = app.input.get_axis_value(AxisId::Horizontal as i32) {
                     *game_object.transform.mut_position() += 100.0 * delta_time * horizontal *
-                                                             game_object.transform.right_vec2();
+                                                             game_object.transform.right();
                 }
                 if let Some(vertical) = app.input.get_axis_value(AxisId::Vertical as i32) {
                     *game_object.transform.mut_position() += 100.0 * delta_time * vertical *
-                                                             game_object.transform.forward_vec2();
+                                                             game_object.transform.forward();
                 }
                 if let Some(rotation) = app.input.get_axis_value(AxisId::Rotation as i32) {
                     *game_object.transform.mut_rotation() += 1.0 * delta_time * rotation;

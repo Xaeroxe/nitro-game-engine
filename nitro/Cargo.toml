@@ -15,4 +15,4 @@ nalgebra = "0.9.0"
 ncollide = "0.10.0"
 serde = "0.8.0"
 serde-hjson = "0.8.0"
-rodio = { git = "https://github.com/Xaeroxe23/rodio", rev = "bf4000331959cb61ee4c858dd67597d542962578" }
+rodio = { git = "https://github.com/tomaka/rodio", rev = "6b8c418dd271954acea0288c9db3fd15e5746d23" }

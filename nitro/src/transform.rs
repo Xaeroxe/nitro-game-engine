@@ -1,17 +1,17 @@
 use graphics::math::Matrix2d;
 use std::f32;
-use vec2::Vec2;
+use Vector;
 
 #[derive(Copy, Clone)]
 pub struct Transform {
-    position: Vec2,
+    position: Vector,
     rotation: f32,
 }
 
 impl Transform {
     pub fn new() -> Transform {
         Transform {
-            position: Vec2 { x: 0.0, y: 0.0 },
+            position: Vector { x: 0.0, y: 0.0 },
             rotation: 0.0,
         }
     }
@@ -24,11 +24,11 @@ impl Transform {
         value
     }
 
-    pub fn position(&self) -> &Vec2 {
+    pub fn position(&self) -> &Vector {
         &self.position
     }
 
-    pub fn mut_position(&mut self) -> &mut Vec2 {
+    pub fn mut_position(&mut self) -> &mut Vector {
         &mut self.position
     }
 
@@ -56,15 +56,15 @@ impl Transform {
         &mut self.rotation
     }
 
-    pub fn forward_vec2(&self) -> Vec2 {
-        Vec2 {
+    pub fn forward(&self) -> Vector {
+        Vector {
             x: -self.rotation().sin(),
             y: self.rotation().cos(),
         }
     }
 
-    pub fn right_vec2(&self) -> Vec2 {
-        Vec2 {
+    pub fn right(&self) -> Vector {
+        Vector {
             x: self.rotation().cos(),
             y: self.rotation().sin(),
         }
