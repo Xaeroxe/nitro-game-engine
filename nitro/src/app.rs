@@ -27,6 +27,8 @@ use std::path::PathBuf;
 use std::f32;
 use std::mem;
 
+type BufferedAudioFile = Buffered<Decoder<BufReader<File>>>;
+
 pub struct App {
     window: PistonWindow,
     // When searching for a GameObject you will need to search both of
@@ -37,7 +39,7 @@ pub struct App {
     game_objects: LinkedList<GameObject>,
     updated_game_objects: LinkedList<GameObject>,
     pub input: Input,
-    sound_cache: HashMap<String, Box<Buffered<Decoder<BufReader<File>>>>>,
+    sound_cache: HashMap<String, Box<BufferedAudioFile>>,
     pub camera: Camera,
     pub world: World<f32>,
 }
@@ -54,7 +56,7 @@ impl App {
             window: WindowSettings::new(name, [width, height])
                 .opengl(opengl)
                 .exit_on_esc(true)
-                .fullscreen(true)
+                .fullscreen(false)
                 .build()
                 .unwrap(),
             camera: Camera { transform: Transform::new() },
@@ -190,7 +192,7 @@ impl App {
 }
 
 // Fetches sound from cache if present, otherwise loads it from the filesystem.
-pub fn fetch_sound(app: &mut App, path: &str) -> Buffered<Decoder<BufReader<File>>> {
+pub fn fetch_sound(app: &mut App, path: &str) -> BufferedAudioFile {
     if !app.sound_cache.contains_key(path) {
         let mut sound_path = PathBuf::from("assets");
         sound_path.push("sounds");

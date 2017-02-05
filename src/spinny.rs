@@ -13,8 +13,8 @@ pub struct Spinny {
 impl Component for Spinny {
     fn receive_message(&mut self, app: &mut App, game_object: &mut GameObject, message: &Message) {
         match *message {
-            Message::Start { key } => {
-                // app.play_sound("example.ogg");
+            Message::Start { .. } => {
+                //app.play_sound("example.ogg", 0.2);
             }
 
             Message::Update { delta_time } => {

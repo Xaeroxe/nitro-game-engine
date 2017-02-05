@@ -4,9 +4,14 @@ extern crate graphics;
 extern crate gfx_device_gl;
 extern crate glutin;
 extern crate serde;
+#[macro_use]
+extern crate serde_derive;
 extern crate serde_hjson;
 #[macro_use]
 extern crate unborrow;
+#[macro_use]
+extern crate enum_primitive;
+extern crate num;
 extern crate rodio;
 
 mod app;
@@ -43,7 +48,7 @@ pub mod input {
 mod camera;
 pub use camera::Camera;
 
-type Vector = physics::nphysics2d::math::Vector<f32>;
+pub type Vector = physics::nphysics2d::math::Vector<f32>;
 
 pub mod physics;
 

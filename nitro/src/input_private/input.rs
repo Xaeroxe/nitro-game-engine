@@ -97,14 +97,14 @@ pub fn process_event(input: &mut Input, input_event: piston_window::Input) {
     match input_event {
         piston_window::Input::Press(button) => {
             // The button may already be here as this event does repeat.
-            if !input.buttons_pressed.iter().any(|&item| item == button) {
-                input.buttons_pressed.push(button);
+            if !input.buttons_pressed.iter().any(|&item| item == Button::from(button)) {
+                input.buttons_pressed.push(Button::from(button));
             }
         }
         piston_window::Input::Release(button) => {
             while let Some(i) = input.buttons_pressed
                 .iter()
-                .position(|&item| item == button) {
+                .position(|&item| item == Button::from(button)) {
                 input.buttons_pressed.swap_remove(i);
             }
         }
