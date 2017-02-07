@@ -38,6 +38,7 @@ pub struct App {
     // the two lists are swapped.
     game_objects: LinkedList<GameObject>,
     updated_game_objects: LinkedList<GameObject>,
+    next_game_object_id: u64,
     pub input: Input,
     sound_cache: HashMap<String, Box<BufferedAudioFile>>,
     pub camera: Camera,
@@ -49,6 +50,7 @@ impl App {
         let opengl = OpenGL::V3_2;
         let (width, height) = glutin::get_primary_monitor().get_dimensions();
         App {
+            next_game_object_id: 0,
             game_objects: LinkedList::new(),
             updated_game_objects: LinkedList::new(),
             input: Input::new(),
@@ -189,6 +191,12 @@ impl App {
         }
         return_value
     }
+}
+
+// This function will never return 0.  0 can now be used as a null value.
+pub fn next_game_object_id(app: &mut App) -> u64 {
+    app.next_game_object_id += 1;
+    app.next_game_object_id
 }
 
 // Fetches sound from cache if present, otherwise loads it from the filesystem.

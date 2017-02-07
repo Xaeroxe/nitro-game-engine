@@ -6,10 +6,9 @@ use num::FromPrimitive;
 
 pub mod input;
 
-mod input_enums;
-pub use self::input_enums::keyboard;
-pub use self::input_enums::controller;
-pub use self::input_enums::mouse;
+pub mod keyboard;
+pub mod mouse;
+pub mod controller;
 
 #[derive(Eq, PartialEq, Copy, Clone, Debug, Serialize, Deserialize)]
 pub enum Button {

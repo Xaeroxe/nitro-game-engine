@@ -1,3 +1,4 @@
+use app;
 use app::App;
 use texture::Texture;
 use transform::Transform;
@@ -13,17 +14,28 @@ pub struct GameObject {
     pub transform: Transform,
     pub texture: Texture,
     pub body: Option<RigidBodyHandle<f32>>,
+    // This value will never be 0.  0 can now be used as a null value.
+    id: u64,
     components: BTreeMap<i32, Box<ComponentAny>>,
+}
+
+pub struct GameObjectId {
+    id: u64,
 }
 
 impl GameObject {
     pub fn new(app: &mut App) -> GameObject {
         GameObject {
+            id: app::next_game_object_id(app),
             transform: Transform::new(),
             components: BTreeMap::new(),
             texture: Texture::empty(app),
             body: None,
         }
+    }
+
+    pub fn get_id(&self) -> GameObjectId {
+        GameObjectId {id: self.id}
     }
 
     pub fn update(&mut self, app: &mut App, delta_time: f32) {
