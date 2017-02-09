@@ -1,7 +1,7 @@
 use input::Button;
 use input_private::input::Input;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct Axis {
     name: String,
     pos: Button,

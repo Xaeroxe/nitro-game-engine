@@ -1,0 +1,44 @@
+[
+  [
+    "1"
+    {
+      name: Vertical
+      pos:
+      {
+        Keyboard: S
+      }
+      neg:
+      {
+        Keyboard: W
+      }
+    }
+  ]
+  [
+    "0"
+    {
+      name: Horizontal
+      pos:
+      {
+        Keyboard: D
+      }
+      neg:
+      {
+        Keyboard: A
+      }
+    }
+  ]
+  [
+    "2"
+    {
+      name: Rotation
+      pos:
+      {
+        Keyboard: E
+      }
+      neg:
+      {
+        Keyboard: Q
+      }
+    }
+  ]
+]

@@ -1,8 +1,31 @@
 use input::Button;
 use input::Axis;
+use std::io::Result as IOResult;
+use std::io::Error;
+use std::io::Write;
+use std::fs::File;
+use std::clone::Clone;
 use std::collections::HashMap;
 use serde_hjson;
 use piston_window;
+
+#[derive(Debug)]
+pub enum HjsonReadError {
+    IOError(Error),
+    HJSONError(serde_hjson::error::Error),
+}
+
+impl From<Error> for HjsonReadError {
+    fn from(err: Error) -> HjsonReadError {
+        HjsonReadError::IOError(err)
+    }
+}
+
+impl From<serde_hjson::error::Error> for HjsonReadError {
+    fn from(err: serde_hjson::error::Error) -> HjsonReadError {
+        HjsonReadError::HJSONError(err)
+    }
+}
 
 pub struct Input {
     buttons_pressed: Vec<Button>,
@@ -21,17 +44,18 @@ impl Input {
         }
     }
 
-    pub fn save_bindings(&mut self, path: &str) -> Result<(), String> {
-        for axis in &self.axes {
-            match serde_hjson::ser::to_string(&axis) {
-                Ok(result) => {
-                    println!("{}", result);
-                }
-                Err(err) => {
-                    return Err(format!("{:?}", err));
-                }
-            }
-        }
+    pub fn load_bindings(&mut self, path: &str) -> Result<(), HjsonReadError> {
+        let file = File::open(path)?;
+        let axis_vec = serde_hjson::de::from_reader::<_, Vec<(String, Axis)>>(file)?;
+        self.axes = axis_vec.iter().map(|t| (t.0.parse().unwrap(), t.1.clone())).collect::<HashMap<i32, Axis>>();
+        Ok(())
+    }
+
+    pub fn save_bindings(&mut self, path: &str) -> IOResult<()> {
+        let mut f = File::create(path)?;
+        let formatted_axes = self.axes.iter().map(|(k, v)| (k.to_string(), v)).collect::<Vec<(String, &Axis)>>();
+        let result = serde_hjson::ser::to_string(&formatted_axes).unwrap(); // This won't fail.
+        f.write_all(result.into_bytes().as_slice())?;
         Ok(())
     }
 
