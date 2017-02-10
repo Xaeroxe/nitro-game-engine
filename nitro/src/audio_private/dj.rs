@@ -37,7 +37,5 @@ impl Dj {
 }
 
 pub fn new_dj(sink: Sink) -> Dj {
-    Dj {
-        sink: sink,
-    }
+    Dj { sink: sink }
 }

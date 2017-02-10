@@ -5,9 +5,7 @@ use nitro::GameObject;
 use axes::AxisId;
 use actions::ActionId;
 
-pub struct Spinny {
-
-}
+pub struct Spinny {}
 
 
 impl Component for Spinny {

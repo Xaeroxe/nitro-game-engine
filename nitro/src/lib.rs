@@ -6,7 +6,7 @@ extern crate glutin;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
-extern crate serde_hjson;
+extern crate bincode;
 #[macro_use]
 extern crate unborrow;
 #[macro_use]
@@ -54,11 +54,12 @@ pub mod physics;
 
 use std::ops::SubAssign;
 pub fn check_and_use<T, K>(resource: &mut T, cost: K) -> bool
-where T: SubAssign<K> + PartialOrd<K>
+    where T: SubAssign<K> + PartialOrd<K>
 {
     if *resource >= cost {
         *resource -= cost;
         true
+    } else {
+        false
     }
-    else {false}
 }

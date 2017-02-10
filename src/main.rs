@@ -17,17 +17,23 @@ use actions::ActionId;
 fn main() {
     // Create a new game and run it.
     let mut app = App::new("Halera");
-    /*
-    app.input.add_axis(Axis::new("Horizontal", Button::Keyboard(Key::D), Button::Keyboard(Key::A)),
+
+    app.input.add_axis(Axis::new("Horizontal",
+                                 Button::Keyboard(Key::D),
+                                 Button::Keyboard(Key::A)),
                        AxisId::Horizontal as i32);
-    app.input.add_axis(Axis::new("Vertical", Button::Keyboard(Key::S), Button::Keyboard(Key::W)),
+    app.input.add_axis(Axis::new("Vertical",
+                                 Button::Keyboard(Key::S),
+                                 Button::Keyboard(Key::W)),
                        AxisId::Vertical as i32);
-    app.input.add_axis(Axis::new("Rotation", Button::Keyboard(Key::E), Button::Keyboard(Key::Q)),
+    app.input.add_axis(Axis::new("Rotation",
+                                 Button::Keyboard(Key::E),
+                                 Button::Keyboard(Key::Q)),
                        AxisId::Rotation as i32);
     app.input.add_action(Button::Keyboard(Key::F), ActionId::Blink as i32);
+
     app.input.save_bindings("halera.bindings");
-    */
-    println!("Load result: {:?}", app.input.load_bindings("halera.bindings"));
+    app.input.load_bindings("halera.bindings");
     let mut game_obj = GameObject::new(&mut app);
     game_obj.texture = app.fetch_texture("nitro.png");
     game_obj.add_component(&mut app, Spinny {});

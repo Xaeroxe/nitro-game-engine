@@ -35,7 +35,7 @@ impl GameObject {
     }
 
     pub fn get_id(&self) -> GameObjectId {
-        GameObjectId {id: self.id}
+        GameObjectId { id: self.id }
     }
 
     pub fn update(&mut self, app: &mut App, delta_time: f32) {
@@ -57,7 +57,7 @@ impl GameObject {
     {
         Box::new(self.components
             .iter()
-            .filter_map(|(k, c)| { if c.as_any().is::<T>() { Some(*k) } else { None } }))
+            .filter_map(|(k, c)| if c.as_any().is::<T>() { Some(*k) } else { None }))
     }
 
     pub fn remove_component(&mut self, index: i32) -> Option<Box<ComponentAny>> {

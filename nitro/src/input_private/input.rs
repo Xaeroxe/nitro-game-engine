@@ -3,35 +3,37 @@ use input::Axis;
 use std::io::Result as IOResult;
 use std::io::Error;
 use std::io::Write;
+use std::io::Read;
 use std::fs::File;
 use std::clone::Clone;
 use std::collections::HashMap;
-use serde_hjson;
+use bincode::SizeLimit;
+use bincode::serde::{serialize, deserialize, DeserializeError};
 use piston_window;
-
-#[derive(Debug)]
-pub enum HjsonReadError {
-    IOError(Error),
-    HJSONError(serde_hjson::error::Error),
-}
-
-impl From<Error> for HjsonReadError {
-    fn from(err: Error) -> HjsonReadError {
-        HjsonReadError::IOError(err)
-    }
-}
-
-impl From<serde_hjson::error::Error> for HjsonReadError {
-    fn from(err: serde_hjson::error::Error) -> HjsonReadError {
-        HjsonReadError::HJSONError(err)
-    }
-}
 
 pub struct Input {
     buttons_pressed: Vec<Button>,
     previous_buttons_pressed: Vec<Button>, // buttons_pressed from last frame.
     axes: HashMap<i32, Axis>,
     actions: HashMap<i32, Button>,
+}
+
+#[derive(Debug)]
+pub enum ReadBincodeFileError {
+    IOError(Error),
+    BincodeError(DeserializeError),
+}
+
+impl From<Error> for ReadBincodeFileError {
+    fn from(err: Error) -> ReadBincodeFileError {
+        ReadBincodeFileError::IOError(err)
+    }
+}
+
+impl From<DeserializeError> for ReadBincodeFileError {
+    fn from(err: DeserializeError) -> ReadBincodeFileError {
+        ReadBincodeFileError::BincodeError(err)
+    }
 }
 
 impl Input {
@@ -44,18 +46,18 @@ impl Input {
         }
     }
 
-    pub fn load_bindings(&mut self, path: &str) -> Result<(), HjsonReadError> {
-        let file = File::open(path)?;
-        let axis_vec = serde_hjson::de::from_reader::<_, Vec<(String, Axis)>>(file)?;
-        self.axes = axis_vec.iter().map(|t| (t.0.parse().unwrap(), t.1.clone())).collect::<HashMap<i32, Axis>>();
+    pub fn load_bindings(&mut self, path: &str) -> Result<(), ReadBincodeFileError> {
+        let mut f = File::open(path)?;
+        let mut buf = Vec::new();
+        f.read_to_end(&mut buf)?;
+        self.axes = deserialize::<HashMap<i32, Axis>>(buf.as_slice())?;
         Ok(())
     }
 
     pub fn save_bindings(&mut self, path: &str) -> IOResult<()> {
         let mut f = File::create(path)?;
-        let formatted_axes = self.axes.iter().map(|(k, v)| (k.to_string(), v)).collect::<Vec<(String, &Axis)>>();
-        let result = serde_hjson::ser::to_string(&formatted_axes).unwrap(); // This won't fail.
-        f.write_all(result.into_bytes().as_slice())?;
+        let result = serialize(&self.axes, SizeLimit::Infinite).unwrap();
+        f.write_all(result.as_slice())?;
         Ok(())
     }
 
