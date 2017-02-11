@@ -3,8 +3,9 @@ use app::App;
 use texture::Texture;
 use transform::Transform;
 use component::Component;
-
+use component::ComponentAny;
 use component::Message;
+use std::collections::BTreeMap;
 use physics::nphysics2d::object::{RigidBody, RigidBodyHandle};
 use physics::nphysics2d::math::Matrix;
 use physics::nalgebra::{Rotation2, Vector2, Vector1, Rotation};
@@ -15,6 +16,7 @@ pub struct GameObject {
     pub body: Option<RigidBodyHandle<f32>>,
     // This value will never be 0.  0 can now be used as a null value.
     id: u64,
+    components: BTreeMap<i32, Box<ComponentAny>>,
 }
 
 pub struct GameObjectId {
@@ -24,8 +26,9 @@ pub struct GameObjectId {
 impl GameObject {
     pub fn new(app: &mut App) -> GameObject {
         GameObject {
-            id: 0,
+            id: app::next_game_object_id(app),
             transform: Transform::new(),
+            components: BTreeMap::new(),
             texture: Texture::empty(app),
             body: None,
         }
@@ -33,6 +36,16 @@ impl GameObject {
 
     pub fn get_id(&self) -> GameObjectId {
         GameObjectId { id: self.id }
+    }
+
+    pub fn update(&mut self, app: &mut App, delta_time: f32) {
+        let message = &Message::Update { delta_time: delta_time };
+        for key in self.components.keys().map(|x| *x).collect::<Vec<i32>>() {
+            if let Some(mut component) = self.components.remove(&key) {
+                component.receive_message(app, self, &message);
+                self.components.insert(key, component);
+            }
+        }
     }
 
     pub fn component_keys<'a>(&'a self) -> Box<Iterator<Item = i32> + 'a> {
@@ -103,10 +116,6 @@ impl GameObject {
     pub fn set_rigid_body(&mut self, app: &mut App, rigid_body: RigidBody<f32>) {
         self.body = Some(app.world.add_rigid_body(rigid_body));
     }
-}
-
-pub fn set_id(game_object: &mut GameObject, id: u64) {
-    game_object.id = id;
 }
 
 pub fn copy_from_physics(game_object: &mut GameObject) {
