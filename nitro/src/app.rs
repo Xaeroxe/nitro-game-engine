@@ -9,6 +9,8 @@ use input_private;
 use input::Input;
 use game_object::GameObject;
 use game_object;
+use component::ComponentAny;
+use component::Message;
 use texture::Texture;
 use texture;
 use transform::Transform;
@@ -20,6 +22,7 @@ use rodio::Decoder;
 use rodio::source::Buffered;
 use rodio::Source;
 use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::BufReader;
 use std::collections::LinkedList;
@@ -31,13 +34,7 @@ type BufferedAudioFile = Buffered<Decoder<BufReader<File>>>;
 
 pub struct App {
     window: PistonWindow,
-    // When searching for a GameObject you will need to search both of
-    // these lists. At any given time either one of them could contain the GameObject you are
-    // searching for. As GameObjects are updated they are migrated from
-    // game_objects to updated_game_objects and once the update is complete
-    // the two lists are swapped.
-    game_objects: LinkedList<GameObject>,
-    updated_game_objects: LinkedList<GameObject>,
+    game_objects: BTreeMap<u64, (GameObject, BTreeMap<i32, Box<ComponentAny>>)>,
     next_game_object_id: u64,
     pub input: Input,
     sound_cache: HashMap<String, Box<BufferedAudioFile>>,
@@ -51,8 +48,7 @@ impl App {
         let (width, height) = glutin::get_primary_monitor().get_dimensions();
         App {
             next_game_object_id: 0,
-            game_objects: LinkedList::new(),
-            updated_game_objects: LinkedList::new(),
+            game_objects: BTreeMap::new(),
             input: Input::new(),
             sound_cache: HashMap::new(),
             window: WindowSettings::new(name, [width, height])
@@ -78,15 +74,15 @@ impl App {
             self.window.draw_2d(e, |c, gl| {
                 // Clear the screen.
                 clear(GREY, gl);
-                for game_obj in game_objs {
-                    let mut render_transform = game_obj.transform;
+                for game_obj in game_objs.values() {
+                    let mut render_transform = game_obj.0.transform;
                     *render_transform.mut_x() -= *camera_transform.x() -
                                                  (render_args.draw_width / 2) as f32;
                     *render_transform.mut_y() -= *camera_transform.y() -
                                                  (render_args.draw_height / 2) as f32;
                     *render_transform.mut_rotation() -= *camera_transform.rotation();
-                    let (tex_width, tex_height) = texture::get_raw(&game_obj.texture).get_size();
-                    image(texture::get_raw(&game_obj.texture),
+                    let (tex_width, tex_height) = texture::get_raw(&game_obj.0.texture).get_size();
+                    image(texture::get_raw(&game_obj.0.texture),
                           c.transform
                               .append_transform(transform::get_raw(&render_transform))
                               .trans(-(tex_width as f64) / 2.0, -(tex_height as f64) / 2.0),
@@ -99,22 +95,24 @@ impl App {
     }
 
     fn update(&mut self, args: &UpdateArgs) {
-        for mut game_object in &mut self.game_objects {
-            game_object::copy_to_physics(&mut game_object);
+        for mut listing in self.game_objects.values_mut() {
+            game_object::copy_to_physics(&mut listing.0);
         }
         self.world.step(args.dt as f32);
-        for mut game_object in &mut self.game_objects {
-            game_object::copy_from_physics(&mut game_object);
+
+        for mut listing in self.game_objects.values_mut() {
+            game_object::copy_from_physics(&mut listing.0);
         }
-        let mut pop_result = self.game_objects.pop_front();
-        while let Some(mut game_object) = pop_result {
-            game_object.update(self, args.dt as f32);
-            *game_object.transform.mut_rotation() %= 2.0 * f32::consts::PI;
-            self.updated_game_objects.push_back(game_object);
-            pop_result = self.game_objects.pop_front();
+        let message = &Message::Update { delta_time: args.dt };
+        let keys = self.game_objects.keys().map(|x| *x).collect::<Vec<u64>>();
+        for key in keys {
+            if let Some(&mut listing) = self.game_objects.get_mut(&key) {
+                for component in listing.1.values_mut() {
+                    component.receive_message(self, &mut listing.0, message);
+                }
+                *listing.0.transform.mut_rotation() %= 2.0 * f32::consts::PI;
+            }
         }
-        assert_eq!(self.game_objects.len(), 0);
-        mem::swap(&mut self.game_objects, &mut self.updated_game_objects);
         input_private::input::shift_frame(&mut self.input);
     }
 
@@ -164,7 +162,9 @@ impl App {
     }
 
     pub fn add_gameobject(&mut self, game_object: GameObject) {
-        self.game_objects.push_front(game_object);
+        let id = next_game_object_id(self);
+        game_object::set_id(&mut game_object, id);
+        self.game_objects.insert(id, (game_object, BTreeMap::new()));
     }
 
     pub fn empty_raw_texture(&mut self) -> piston_window::Texture<Resources> {
