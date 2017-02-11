@@ -22,22 +22,14 @@ use rodio::Source;
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::BufReader;
-use std::collections::LinkedList;
 use std::path::PathBuf;
 use std::f32;
-use std::mem;
 
 type BufferedAudioFile = Buffered<Decoder<BufReader<File>>>;
 
 pub struct App {
     window: PistonWindow,
-    // When searching for a GameObject you will need to search both of
-    // these lists. At any given time either one of them could contain the GameObject you are
-    // searching for. As GameObjects are updated they are migrated from
-    // game_objects to updated_game_objects and once the update is complete
-    // the two lists are swapped.
-    game_objects: LinkedList<GameObject>,
-    updated_game_objects: LinkedList<GameObject>,
+    game_objects: HashMap<u64, Box<GameObject>>,
     next_game_object_id: u64,
     pub input: Input,
     sound_cache: HashMap<String, Box<BufferedAudioFile>>,
@@ -51,8 +43,7 @@ impl App {
         let (width, height) = glutin::get_primary_monitor().get_dimensions();
         App {
             next_game_object_id: 0,
-            game_objects: LinkedList::new(),
-            updated_game_objects: LinkedList::new(),
+            game_objects: HashMap::new(),
             input: Input::new(),
             sound_cache: HashMap::new(),
             window: WindowSettings::new(name, [width, height])
@@ -78,7 +69,7 @@ impl App {
             self.window.draw_2d(e, |c, gl| {
                 // Clear the screen.
                 clear(GREY, gl);
-                for game_obj in game_objs {
+                for game_obj in game_objs.values() {
                     let mut render_transform = game_obj.transform;
                     *render_transform.mut_x() -= *camera_transform.x() -
                                                  (render_args.draw_width / 2) as f32;
@@ -99,22 +90,21 @@ impl App {
     }
 
     fn update(&mut self, args: &UpdateArgs) {
-        for mut game_object in &mut self.game_objects {
-            game_object::copy_to_physics(&mut game_object);
+        for mut game_object in self.game_objects.values_mut() {
+            game_object::copy_to_physics(game_object);
         }
         self.world.step(args.dt as f32);
-        for mut game_object in &mut self.game_objects {
-            game_object::copy_from_physics(&mut game_object);
+        for mut game_object in self.game_objects.values_mut() {
+            game_object::copy_from_physics(game_object);
         }
-        let mut pop_result = self.game_objects.pop_front();
-        while let Some(mut game_object) = pop_result {
-            game_object.update(self, args.dt as f32);
-            *game_object.transform.mut_rotation() %= 2.0 * f32::consts::PI;
-            self.updated_game_objects.push_back(game_object);
-            pop_result = self.game_objects.pop_front();
+        let keys = self.game_objects.keys().map(|x| *x).collect::<Vec<u64>>();
+        for key in keys {
+            if let Some(mut game_object) = self.game_objects.remove(&key) {
+                game_object.update(self, args.dt as f32);
+                *game_object.transform.mut_rotation() %= 2.0 * f32::consts::PI;
+                self.game_objects.insert(game_object.get_id(), game_object);
+            }
         }
-        assert_eq!(self.game_objects.len(), 0);
-        mem::swap(&mut self.game_objects, &mut self.updated_game_objects);
         input_private::input::shift_frame(&mut self.input);
     }
 
@@ -163,8 +153,11 @@ impl App {
         self.sound_cache.remove(path);
     }
 
-    pub fn add_gameobject(&mut self, game_object: GameObject) {
-        self.game_objects.push_front(game_object);
+    pub fn new_gameobject<F>(&mut self, f: F) where F: FnOnce(&mut App, &mut GameObject) {
+        let mut game_object = Box::new(game_object::new(self));
+        f(self, &mut game_object);
+        let id = game_object.get_id();
+        self.game_objects.insert(id, game_object);
     }
 
     pub fn empty_raw_texture(&mut self) -> piston_window::Texture<Resources> {

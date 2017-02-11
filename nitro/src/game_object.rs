@@ -19,23 +19,9 @@ pub struct GameObject {
     components: BTreeMap<i32, Box<ComponentAny>>,
 }
 
-pub struct GameObjectId {
-    id: u64,
-}
-
 impl GameObject {
-    pub fn new(app: &mut App) -> GameObject {
-        GameObject {
-            id: app::next_game_object_id(app),
-            transform: Transform::new(),
-            components: BTreeMap::new(),
-            texture: Texture::empty(app),
-            body: None,
-        }
-    }
-
-    pub fn get_id(&self) -> GameObjectId {
-        GameObjectId { id: self.id }
+    pub fn get_id(&self) -> u64 {
+        self.id
     }
 
     pub fn update(&mut self, app: &mut App, delta_time: f32) {
@@ -105,7 +91,6 @@ impl GameObject {
     pub fn add_component<T>(&mut self, app: &mut App, component: T) -> i32
         where T: Component + 'static
     {
-        // TODO: Figure out how to best get an app reference here.
         let new_key = self.components.keys().map(|x| *x).nth(0).unwrap_or(1) - 1;
         let mut boxxed = Box::new(component);
         boxxed.receive_message(app, self, &Message::Start { key: new_key });
@@ -115,6 +100,16 @@ impl GameObject {
 
     pub fn set_rigid_body(&mut self, app: &mut App, rigid_body: RigidBody<f32>) {
         self.body = Some(app.world.add_rigid_body(rigid_body));
+    }
+}
+
+pub fn new(app: &mut App) -> GameObject {
+    GameObject {
+        id: app::next_game_object_id(app),
+        transform: Transform::new(),
+        components: BTreeMap::new(),
+        texture: Texture::empty(app),
+        body: None,
     }
 }
 

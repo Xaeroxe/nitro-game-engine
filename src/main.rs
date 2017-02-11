@@ -34,10 +34,10 @@ fn main() {
 
     app.input.save_bindings("halera.bindings");
     app.input.load_bindings("halera.bindings");
-    let mut game_obj = GameObject::new(&mut app);
-    game_obj.texture = app.fetch_texture("nitro.png");
-    game_obj.add_component(&mut app, Spinny {});
-    app.add_gameobject(game_obj);
+    app.new_gameobject(|app, game_obj| {
+        game_obj.texture = app.fetch_texture("nitro.png");
+        game_obj.add_component(app, Spinny {});
+    });
     app.world.set_gravity(Vector { x: 0.0, y: 9.0 });
     app.run();
 }
