@@ -3,15 +3,13 @@ use input_private::input::Input;
 
 #[derive(Serialize, Deserialize, Clone)]
 pub struct Axis {
-    name: String,
     pos: Button,
     neg: Button,
 }
 
 impl Axis {
-    pub fn new(name: &str, pos: Button, neg: Button) -> Axis {
+    pub fn new(pos: Button, neg: Button) -> Axis {
         Axis {
-            name: String::from(name),
             pos: pos,
             neg: neg,
         }

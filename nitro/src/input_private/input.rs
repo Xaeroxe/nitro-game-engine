@@ -50,13 +50,16 @@ impl Input {
         let mut f = File::open(path)?;
         let mut buf = Vec::new();
         f.read_to_end(&mut buf)?;
-        self.axes = deserialize::<HashMap<i32, Axis>>(buf.as_slice())?;
+        let (axes, actions) =
+            deserialize::<(HashMap<i32, Axis>, HashMap<i32, Button>)>(buf.as_slice())?;
+        self.axes = axes;
+        self.actions = actions;
         Ok(())
     }
 
     pub fn save_bindings(&mut self, path: &str) -> IOResult<()> {
         let mut f = File::create(path)?;
-        let result = serialize(&self.axes, SizeLimit::Infinite).unwrap();
+        let result = serialize(&(&self.axes, &self.actions), SizeLimit::Infinite).unwrap();
         f.write_all(result.as_slice())?;
         Ok(())
     }
