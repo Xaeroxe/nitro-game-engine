@@ -6,6 +6,7 @@ use component::Component;
 use component::ComponentAny;
 use component::Message;
 use std::collections::BTreeMap;
+use std::mem::replace;
 use physics::nphysics2d::object::{RigidBody, RigidBodyHandle};
 use physics::nphysics2d::math::Matrix;
 use physics::nalgebra::{Rotation2, Vector2, Vector1, Rotation};
@@ -16,7 +17,7 @@ pub struct GameObject {
     pub body: Option<RigidBodyHandle<f32>>,
     // This value will never be 0.  0 can now be used as a null value.
     id: u64,
-    components: BTreeMap<i32, Box<ComponentAny>>,
+    components: BTreeMap<i32, Option<Box<ComponentAny>>>,
 }
 
 impl GameObject {
@@ -27,9 +28,17 @@ impl GameObject {
     pub fn update(&mut self, app: &mut App, delta_time: f32) {
         let message = &Message::Update { delta_time: delta_time };
         for key in self.components.keys().map(|x| *x).collect::<Vec<i32>>() {
-            if let Some(mut component) = self.components.remove(&key) {
+            let mut component_option = None;
+            if let Some(component_ref) = self.components.get_mut(&key) {
+                component_option = replace(component_ref, None);
+            }
+            if let Some(ref mut component) = component_option {
                 component.receive_message(app, self, &message);
-                self.components.insert(key, component);
+            }
+            if let Some(component_ref) = self.components.get_mut(&key) {
+                if component_option.is_some() {
+                    replace(component_ref, component_option);
+                }
             }
         }
     }
@@ -43,25 +52,45 @@ impl GameObject {
     {
         Box::new(self.components
             .iter()
-            .filter_map(|(k, c)| if c.as_any().is::<T>() { Some(*k) } else { None }))
+            .filter_map(|(k, c)| if let &Some(ref c) = c {
+                if c.as_any().is::<T>() { Some(*k) } else { None }
+            } else {
+                None
+            }))
     }
 
     pub fn remove_component(&mut self, index: i32) -> Option<Box<ComponentAny>> {
-        self.components.remove(&index)
+        if let Some(Some(removed)) = self.components.remove(&index) {
+            Some(removed)
+        }
+        else {
+            None
+        }
     }
 
-    pub fn component(&self, index: i32) -> Option<&Box<ComponentAny>> {
-        self.components.get(&index)
+    pub fn component(&self, index: i32) -> Option<&ComponentAny> {
+        if let Some(&Some(ref component)) = self.components.get(&index) {
+            Some(component.as_ref())
+        }
+        else {
+            None
+        }
     }
 
     pub fn component_mut(&mut self, index: i32) -> Option<&mut Box<ComponentAny>> {
-        self.components.get_mut(&index)
+        use std::borrow::BorrowMut;
+        if let Some(&mut Some(ref mut component)) = self.components.get_mut(&index) {
+            Some(component.borrow_mut())
+        }
+        else {
+            None
+        }
     }
 
     pub fn component_with_type<T>(&self, index: i32) -> Option<&T>
         where T: Component + 'static
     {
-        if let Some(component) = self.components.get(&index) {
+        if let Some(&Some(ref component)) = self.components.get(&index) {
             return component.as_any().downcast_ref::<T>();
         }
         None
@@ -70,7 +99,7 @@ impl GameObject {
     pub fn component_mut_with_type<T>(&mut self, index: i32) -> Option<&mut T>
         where T: Component + 'static
     {
-        if let Some(component) = self.components.get_mut(&index) {
+        if let Some(&mut Some(ref mut component)) = self.components.get_mut(&index) {
             return component.as_any_mut().downcast_mut::<T>();
         }
         None
@@ -85,16 +114,20 @@ impl GameObject {
     {
         let mut boxxed = Box::new(component);
         boxxed.receive_message(app, self, &Message::Start { key: index });
-        self.components.insert(index, boxxed)
+        let replaced = self.components.insert(index, Some(boxxed));
+        if let Some(Some(component)) = replaced {
+            Some(component)
+        }
+        else {
+            None
+        }
     }
 
     pub fn add_component<T>(&mut self, app: &mut App, component: T) -> i32
         where T: Component + 'static
     {
         let new_key = self.components.keys().map(|x| *x).nth(0).unwrap_or(1) - 1;
-        let mut boxxed = Box::new(component);
-        boxxed.receive_message(app, self, &Message::Start { key: new_key });
-        self.components.insert(new_key, boxxed);
+        self.insert_component(app, component, new_key);
         new_key
     }
 
