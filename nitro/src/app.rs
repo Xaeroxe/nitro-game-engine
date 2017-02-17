@@ -1,6 +1,8 @@
 use piston::window::WindowSettings;
-use piston_window;
-use piston_window::{PistonWindow, UpdateArgs, Event, OpenGL, TextureSettings, Flip};
+use piston::window;
+use piston::window::Window;
+use piston::input::UpdateArgs;
+use piston::input::GenericEvent;
 use gfx_device_gl::Resources;
 use glutin;
 use audio_private;
@@ -28,7 +30,7 @@ use std::f32;
 type BufferedAudioFile = Buffered<Decoder<BufReader<File>>>;
 
 pub struct App {
-    window: PistonWindow,
+    window: Window,
     game_objects: HashMap<u64, Box<GameObject>>,
     next_game_object_id: u64,
     pub input: Input,
@@ -57,7 +59,7 @@ impl App {
         }
     }
 
-    fn render(&mut self, e: &Event) {
+    fn render(&mut self, e: &RenderEvent) {
         // This should never be false.
         // The only reason I didn't request the render_args in the signature is the Piston API
         // requires the event object.
@@ -153,7 +155,9 @@ impl App {
         self.sound_cache.remove(path);
     }
 
-    pub fn new_gameobject<F>(&mut self, f: F) where F: FnOnce(&mut App, &mut GameObject) {
+    pub fn new_gameobject<F>(&mut self, f: F)
+        where F: FnOnce(&mut App, &mut GameObject)
+    {
         let mut game_object = Box::new(game_object::new(self));
         f(self, &mut game_object);
         let id = game_object.get_id();
