@@ -62,7 +62,8 @@ impl GameObject {
     pub fn remove_component(&mut self, index: i32) -> Option<Box<ComponentAny>> {
         if let Some(Some(removed)) = self.components.remove(&index) {
             Some(removed)
-        } else {
+        }
+        else {
             None
         }
     }
@@ -70,7 +71,8 @@ impl GameObject {
     pub fn component(&self, index: i32) -> Option<&ComponentAny> {
         if let Some(&Some(ref component)) = self.components.get(&index) {
             Some(component.as_ref())
-        } else {
+        }
+        else {
             None
         }
     }
@@ -79,7 +81,8 @@ impl GameObject {
         use std::borrow::BorrowMut;
         if let Some(&mut Some(ref mut component)) = self.components.get_mut(&index) {
             Some(component.borrow_mut())
-        } else {
+        }
+        else {
             None
         }
     }
@@ -114,7 +117,8 @@ impl GameObject {
         let replaced = self.components.insert(index, Some(boxxed));
         if let Some(Some(component)) = replaced {
             Some(component)
-        } else {
+        }
+        else {
             None
         }
     }
