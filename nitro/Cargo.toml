@@ -18,4 +18,4 @@ ncollide = "0.10.0"
 serde = "0.8.0"
 serde_derive = "0.8.0"
 bincode = "0.6.1"
-rodio = { git = "https://github.com/tomaka/rodio", rev = "6b8c418dd271954acea0288c9db3fd15e5746d23" }
+rodio = { path = "rodio" }

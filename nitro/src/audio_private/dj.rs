@@ -55,8 +55,7 @@ impl Dj {
     }
 
     pub fn is_over(&self) -> bool {
-        //TODO: Fix this.
-        true
+        self.sink.is_empty()
     }
 }
 

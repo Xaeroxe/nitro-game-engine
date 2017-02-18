@@ -30,7 +30,7 @@ fn main() {
     let mut component_id = 0;
     let game_obj_id = app.new_gameobject(|app, game_obj| {
         game_obj.texture = app.fetch_texture("nitro.png");
-        component_id = game_obj.add_component(app, Spinny { kill_dj: false });
+        component_id = game_obj.add_component(app, Spinny {});
     });
     app.new_dj(|_, dj| { dj.set_idle_listener(game_obj_id, component_id); });
     app.world.set_gravity(Vector { x: 0.0, y: 9.0 });

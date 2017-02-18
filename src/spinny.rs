@@ -6,7 +6,6 @@ use axes::AxisId;
 use actions::ActionId;
 
 pub struct Spinny {
-    pub kill_dj: bool,
 }
 
 
@@ -36,12 +35,7 @@ impl Component for Spinny {
 
             Message::DjIdle { ref dj } => {
                 if let Ok(mut dj) = dj.try_borrow_mut() {
-                    if self.kill_dj {
-                        dj.drop();
-                    } else {
-                        dj.queue(app, "example.ogg");
-                        self.kill_dj = true;
-                    }
+                    dj.queue(app, "example.ogg");
                 }
             }
             _ => {}
