@@ -153,7 +153,9 @@ impl App {
         self.sound_cache.remove(path);
     }
 
-    pub fn new_gameobject<F>(&mut self, f: F) where F: FnOnce(&mut App, &mut GameObject) {
+    pub fn new_gameobject<F>(&mut self, f: F)
+        where F: FnOnce(&mut App, &mut GameObject)
+    {
         let mut game_object = Box::new(game_object::new(self));
         f(self, &mut game_object);
         let id = game_object.get_id();
@@ -163,18 +165,16 @@ impl App {
     pub fn game_object_by_id(&self, id: u64) -> Option<&GameObject> {
         if let Some(boxxed) = self.game_objects.get(&id) {
             Some(boxxed.as_ref())
-        }
-        else {
+        } else {
             None
         }
     }
 
-    pub fn game_object_mut_by_id(&mut self, id: u64) -> Option<&mut GameObject> {
+    pub fn game_object_by_id_mut(&mut self, id: u64) -> Option<&mut GameObject> {
         use std::borrow::BorrowMut;
         if let Some(boxxed) = self.game_objects.get_mut(&id) {
             Some(boxxed.borrow_mut())
-        }
-        else {
+        } else {
             None
         }
     }
