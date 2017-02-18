@@ -4,11 +4,13 @@ use piston_window::{PistonWindow, UpdateArgs, Event, OpenGL, TextureSettings, Fl
 use gfx_device_gl::Resources;
 use glutin;
 use audio_private;
+use audio_private::dj;
 use audio::Dj;
 use input_private;
 use input::Input;
 use game_object::GameObject;
 use game_object;
+use component::Message;
 use texture::Texture;
 use texture;
 use transform::Transform;
@@ -20,8 +22,10 @@ use rodio::Decoder;
 use rodio::source::Buffered;
 use rodio::Source;
 use std::collections::HashMap;
+use std::borrow::BorrowMut;
 use std::fs::File;
 use std::io::BufReader;
+use std::cell::RefCell;
 use std::path::PathBuf;
 use std::f32;
 
@@ -30,7 +34,9 @@ type BufferedAudioFile = Buffered<Decoder<BufReader<File>>>;
 pub struct App {
     window: PistonWindow,
     game_objects: HashMap<u64, Box<GameObject>>,
+    djs: HashMap<u64, Box<Dj>>,
     next_game_object_id: u64,
+    next_dj_id: u64,
     pub input: Input,
     sound_cache: HashMap<String, Box<BufferedAudioFile>>,
     pub camera: Camera,
@@ -43,7 +49,9 @@ impl App {
         let (width, height) = glutin::get_primary_monitor().get_dimensions();
         App {
             next_game_object_id: 0,
+            next_dj_id: 0,
             game_objects: HashMap::new(),
+            djs: HashMap::new(),
             input: Input::new(),
             sound_cache: HashMap::new(),
             window: WindowSettings::new(name, [width, height])
@@ -90,6 +98,24 @@ impl App {
     }
 
     fn update(&mut self, args: &UpdateArgs) {
+        //Process Djs for this frame.
+        let keys = self.djs.keys().map(|x| *x).collect::<Vec<u64>>();
+        for key in keys {
+            if let Some(mut dj) = self.djs.remove(&key) {
+                if dj.is_over() {
+                    let (game_object_id, component_id) = dj::get_listener(&dj);
+                    let message = Message::DjIdle { dj: RefCell::new(dj.borrow_mut()) };
+                    if let Some(mut game_object) = self.game_objects.remove(&game_object_id) {
+                        game_object.send_message_to_component(self, &message, component_id);
+                        self.game_objects.insert(game_object.id(), game_object);
+                    }
+                }
+                if !dj::was_dropped(&dj) {
+                    self.djs.insert(dj.id(), dj);
+                }
+            }
+        }
+        //Copy game_object to the physics world, step, then copy from physics to game_object
         for mut game_object in self.game_objects.values_mut() {
             game_object::copy_to_physics(game_object);
         }
@@ -97,12 +123,16 @@ impl App {
         for mut game_object in self.game_objects.values_mut() {
             game_object::copy_from_physics(game_object);
         }
+
+        //Send update messages
         let keys = self.game_objects.keys().map(|x| *x).collect::<Vec<u64>>();
         for key in keys {
             if let Some(mut game_object) = self.game_objects.remove(&key) {
                 game_object.update(self, args.dt as f32);
                 *game_object.transform.mut_rotation() %= 2.0 * f32::consts::PI;
-                self.game_objects.insert(game_object.get_id(), game_object);
+                if !game_object::was_dropped(game_object.borrow_mut()) {
+                    self.game_objects.insert(game_object.id(), game_object);
+                }
             }
         }
         input_private::input::shift_frame(&mut self.input);
@@ -131,9 +161,31 @@ impl App {
         sink.detach();
     }
 
-    pub fn hire_dj(&mut self) -> Dj {
+    pub fn new_dj<F>(&mut self, f: F) -> u64
+        where F: FnOnce(&mut App, &mut Dj)
+    {
         let sink = rodio::Sink::new(&rodio::get_default_endpoint().unwrap());
-        audio_private::dj::new_dj(sink)
+        let mut dj = Box::new(audio_private::dj::new_dj(sink, self));
+        f(self, dj.borrow_mut());
+        let id = dj.id();
+        self.djs.insert(id, dj);
+        id
+    }
+
+    pub fn dj_by_id(&self, id: u64) -> Option<&Dj> {
+        if let Some(boxxed) = self.djs.get(&id) {
+            Some(boxxed.as_ref())
+        } else {
+            None
+        }
+    }
+
+    pub fn dj_by_id_mut(&mut self, id: u64) -> Option<&mut Dj> {
+        if let Some(boxxed) = self.djs.get_mut(&id) {
+            Some(boxxed.borrow_mut())
+        } else {
+            None
+        }
     }
 
     // Load a sound into the cache if it's not already there.
@@ -153,13 +205,14 @@ impl App {
         self.sound_cache.remove(path);
     }
 
-    pub fn new_gameobject<F>(&mut self, f: F)
+    pub fn new_gameobject<F>(&mut self, f: F) -> u64
         where F: FnOnce(&mut App, &mut GameObject)
     {
         let mut game_object = Box::new(game_object::new(self));
         f(self, &mut game_object);
-        let id = game_object.get_id();
+        let id = game_object.id();
         self.game_objects.insert(id, game_object);
+        id
     }
 
     pub fn game_object_by_id(&self, id: u64) -> Option<&GameObject> {
@@ -171,7 +224,6 @@ impl App {
     }
 
     pub fn game_object_by_id_mut(&mut self, id: u64) -> Option<&mut GameObject> {
-        use std::borrow::BorrowMut;
         if let Some(boxxed) = self.game_objects.get_mut(&id) {
             Some(boxxed.borrow_mut())
         } else {
@@ -203,6 +255,12 @@ impl App {
         }
         return_value
     }
+}
+
+// This function will never return 0.  0 can now be used as a null value.
+pub fn next_dj_id(app: &mut App) -> u64 {
+    app.next_dj_id += 1;
+    app.next_dj_id
 }
 
 // This function will never return 0.  0 can now be used as a null value.

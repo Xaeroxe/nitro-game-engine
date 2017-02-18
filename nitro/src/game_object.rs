@@ -18,29 +18,45 @@ pub struct GameObject {
     // This value will never be 0.  0 can now be used as a null value.
     id: u64,
     components: BTreeMap<i32, Option<Box<ComponentAny>>>,
+    drop: bool,
 }
 
 impl GameObject {
-    pub fn get_id(&self) -> u64 {
+    pub fn id(&self) -> u64 {
         self.id
+    }
+
+    pub fn drop(&mut self) {
+        self.drop = true;
+    }
+
+    pub fn send_message_to_component(&mut self,
+                                     app: &mut App,
+                                     message: &Message,
+                                     component_id: i32) {
+        let mut component_option = None;
+        if let Some(component_ref) = self.components.get_mut(&component_id) {
+            component_option = replace(component_ref, None);
+        }
+        if let Some(ref mut component) = component_option {
+            component.receive_message(app, self, &message);
+        }
+        if let Some(component_ref) = self.components.get_mut(&component_id) {
+            if component_option.is_some() {
+                replace(component_ref, component_option);
+            }
+        }
+    }
+
+    pub fn receive_message(&mut self, app: &mut App, message: &Message) {
+        for key in self.components.keys().map(|x| *x).collect::<Vec<i32>>() {
+            self.send_message_to_component(app, message, key);
+        }
     }
 
     pub fn update(&mut self, app: &mut App, delta_time: f32) {
         let message = &Message::Update { delta_time: delta_time };
-        for key in self.components.keys().map(|x| *x).collect::<Vec<i32>>() {
-            let mut component_option = None;
-            if let Some(component_ref) = self.components.get_mut(&key) {
-                component_option = replace(component_ref, None);
-            }
-            if let Some(ref mut component) = component_option {
-                component.receive_message(app, self, &message);
-            }
-            if let Some(component_ref) = self.components.get_mut(&key) {
-                if component_option.is_some() {
-                    replace(component_ref, component_option);
-                }
-            }
-        }
+        self.receive_message(app, message)
     }
 
     pub fn component_keys<'a>(&'a self) -> Box<Iterator<Item = i32> + 'a> {
@@ -101,8 +117,7 @@ impl GameObject {
         let replaced = self.components.insert(index, Some(boxxed));
         if let Some(Some(component)) = replaced {
             Some(component)
-        }
-        else {
+        } else {
             None
         }
     }
@@ -123,11 +138,16 @@ impl GameObject {
 pub fn new(app: &mut App) -> GameObject {
     GameObject {
         id: app::next_game_object_id(app),
+        drop: false,
         transform: Transform::new(),
         components: BTreeMap::new(),
         texture: Texture::empty(app),
         body: None,
     }
+}
+
+pub fn was_dropped(game_object: &mut GameObject) -> bool {
+    game_object.drop
 }
 
 pub fn copy_from_physics(game_object: &mut GameObject) {
