@@ -7,9 +7,9 @@ use component::ComponentAny;
 use component::Message;
 use std::collections::BTreeMap;
 use std::mem::replace;
-use physics::nphysics2d::object::{RigidBody, RigidBodyHandle};
-use physics::nphysics2d::math::Matrix;
-use physics::nalgebra::{Rotation2, Vector2, Vector1, Rotation};
+use nphysics2d::object::{RigidBody, RigidBodyHandle};
+use nphysics2d::math::Matrix;
+use nalgebra::{Rotation2, Vector2, Vector1, Rotation};
 
 pub struct GameObject {
     pub transform: Transform,
@@ -59,32 +59,16 @@ impl GameObject {
             }))
     }
 
-    pub fn remove_component(&mut self, index: i32) -> Option<Box<ComponentAny>> {
-        if let Some(Some(removed)) = self.components.remove(&index) {
-            Some(removed)
-        }
-        else {
-            None
-        }
+    pub fn remove_component(&mut self, index: i32) -> Option<Option<Box<ComponentAny>>> {
+        self.components.remove(&index)
     }
 
-    pub fn component(&self, index: i32) -> Option<&ComponentAny> {
-        if let Some(&Some(ref component)) = self.components.get(&index) {
-            Some(component.as_ref())
-        }
-        else {
-            None
-        }
+    pub fn component(&self, index: i32) -> Option<&Option<Box<ComponentAny>>> {
+        self.components.get(&index)
     }
 
-    pub fn component_mut(&mut self, index: i32) -> Option<&mut Box<ComponentAny>> {
-        use std::borrow::BorrowMut;
-        if let Some(&mut Some(ref mut component)) = self.components.get_mut(&index) {
-            Some(component.borrow_mut())
-        }
-        else {
-            None
-        }
+    pub fn component_mut(&mut self, index: i32) -> Option<&mut Option<Box<ComponentAny>>> {
+        self.components.get_mut(&index)
     }
 
     pub fn component_with_type<T>(&self, index: i32) -> Option<&T>

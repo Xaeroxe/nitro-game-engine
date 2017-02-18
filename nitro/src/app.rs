@@ -14,7 +14,7 @@ use texture;
 use transform::Transform;
 use transform;
 use camera::Camera;
-use physics::nphysics2d::world::World;
+use nphysics2d::world::World;
 use rodio;
 use rodio::Decoder;
 use rodio::source::Buffered;
@@ -158,6 +158,25 @@ impl App {
         f(self, &mut game_object);
         let id = game_object.get_id();
         self.game_objects.insert(id, game_object);
+    }
+
+    pub fn game_object_by_id(&self, id: u64) -> Option<&GameObject> {
+        if let Some(boxxed) = self.game_objects.get(&id) {
+            Some(boxxed.as_ref())
+        }
+        else {
+            None
+        }
+    }
+
+    pub fn game_object_mut_by_id(&mut self, id: u64) -> Option<&mut GameObject> {
+        use std::borrow::BorrowMut;
+        if let Some(boxxed) = self.game_objects.get_mut(&id) {
+            Some(boxxed.borrow_mut())
+        }
+        else {
+            None
+        }
     }
 
     pub fn empty_raw_texture(&mut self) -> piston_window::Texture<Resources> {

@@ -14,6 +14,10 @@ extern crate enum_primitive;
 extern crate num;
 extern crate rodio;
 
+pub extern crate ncollide;
+pub extern crate nphysics2d;
+pub extern crate nalgebra;
+
 mod app;
 pub use app::App;
 
@@ -48,9 +52,8 @@ pub mod input {
 mod camera;
 pub use camera::Camera;
 
-pub type Vector = physics::nphysics2d::math::Vector<f32>;
+pub type Vector = nphysics2d::math::Vector<f32>;
 
-pub mod physics;
 
 use std::ops::SubAssign;
 pub fn check_and_use<T, K>(resource: &mut T, cost: K) -> bool
