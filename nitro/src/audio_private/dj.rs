@@ -1,11 +1,6 @@
 use rodio::Sink;
 use app;
 use app::App;
-use std::sync::atomic::AtomicBool;
-use std::sync::atomic::Ordering;
-use std::sync::Arc;
-use rodio::Source;
-use rodio::Sample;
 
 pub struct Dj {
     sink: Sink,
@@ -50,7 +45,6 @@ impl Dj {
     }
 
     pub fn queue(&mut self, app: &mut App, path: &str) {
-        let sound_over = Arc::new(AtomicBool::new(false));
         self.sink.append(app::fetch_sound(app, path));
     }
 
