@@ -38,6 +38,9 @@ pub use texture::Texture;
 mod transform;
 pub use transform::Transform;
 
+mod polar_coords;
+pub use polar_coords::PolarCoords;
+
 mod input_private;
 pub mod input {
     pub use input_private::Axis;

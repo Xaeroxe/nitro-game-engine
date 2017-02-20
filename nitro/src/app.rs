@@ -13,6 +13,8 @@ use game_object;
 use component::Message;
 use texture::Texture;
 use texture;
+use PolarCoords;
+use Vector;
 use transform::Transform;
 use transform;
 use camera::Camera;
@@ -79,10 +81,13 @@ impl App {
                 clear(GREY, gl);
                 for game_obj in game_objs.values() {
                     let mut render_transform = game_obj.transform;
-                    *render_transform.mut_x() -= *camera_transform.x() -
-                                                 (render_args.draw_width / 2) as f32;
-                    *render_transform.mut_y() -= *camera_transform.y() -
-                                                 (render_args.draw_height / 2) as f32;
+                    *render_transform.mut_x() -= *camera_transform.x();
+                    *render_transform.mut_y() -= *camera_transform.y();
+                    let mut polar = PolarCoords::from(render_transform.position().clone());
+                    polar.rotation -= *camera_transform.rotation();
+                    *render_transform.mut_position() = Vector::from(polar);
+                    *render_transform.mut_x() -= (render_args.draw_width / 2) as f32;
+                    *render_transform.mut_y() -= (render_args.draw_height / 2) as f32;
                     *render_transform.mut_rotation() -= *camera_transform.rotation();
                     let (tex_width, tex_height) = texture::get_raw(&game_obj.texture).get_size();
                     image(texture::get_raw(&game_obj.texture),
@@ -152,6 +157,14 @@ impl App {
                 }
             }
         }
+    }
+
+    pub fn camera(&self) -> &Camera {
+        &self.camera
+    }
+
+    pub fn camera_mut(&mut self) -> &mut Camera {
+        &mut self.camera
     }
 
     pub fn play_sound(&mut self, path: &str, volume: f32) {

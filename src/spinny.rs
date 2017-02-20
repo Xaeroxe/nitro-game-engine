@@ -5,8 +5,7 @@ use nitro::GameObject;
 use axes::AxisId;
 use actions::ActionId;
 
-pub struct Spinny {
-}
+pub struct Spinny {}
 
 
 impl Component for Spinny {
@@ -31,12 +30,7 @@ impl Component for Spinny {
                 if let Some(true) = app.input.action_released(ActionId::Blink as i32) {
                     *game_object.transform.mut_x() += 50.0;
                 }
-            }
-
-            Message::DjIdle { ref dj } => {
-                if let Ok(mut dj) = dj.try_borrow_mut() {
-                    dj.queue(app, "example.ogg");
-                }
+                *app.camera_mut().transform.mut_rotation() += 1.0 * delta_time;
             }
             _ => {}
         }
