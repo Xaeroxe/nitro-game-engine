@@ -9,8 +9,8 @@ pub struct PolarCoords {
 impl From<Vector> for PolarCoords {
     fn from(vec: Vector) -> PolarCoords {
         PolarCoords {
-            rotation: (vec.x.powi(2) + vec.y.powi(2)).sqrt(),
-            radius: vec.y.atan2(vec.x),
+            radius: (vec.x.powi(2) + vec.y.powi(2)).sqrt(),
+            rotation: vec.y.atan2(vec.x),
         }
     }
 }

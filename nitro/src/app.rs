@@ -86,8 +86,8 @@ impl App {
                     let mut polar = PolarCoords::from(render_transform.position().clone());
                     polar.rotation -= *camera_transform.rotation();
                     *render_transform.mut_position() = Vector::from(polar);
-                    *render_transform.mut_x() -= (render_args.draw_width / 2) as f32;
-                    *render_transform.mut_y() -= (render_args.draw_height / 2) as f32;
+                    *render_transform.mut_x() += (render_args.draw_width / 2) as f32;
+                    *render_transform.mut_y() += (render_args.draw_height / 2) as f32;
                     *render_transform.mut_rotation() -= *camera_transform.rotation();
                     let (tex_width, tex_height) = texture::get_raw(&game_obj.texture).get_size();
                     image(texture::get_raw(&game_obj.texture),

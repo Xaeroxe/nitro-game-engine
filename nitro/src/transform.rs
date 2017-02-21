@@ -2,7 +2,7 @@ use graphics::math::Matrix2d;
 use std::f32;
 use Vector;
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 pub struct Transform {
     position: Vector,
     rotation: f32,
