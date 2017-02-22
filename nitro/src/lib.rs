@@ -58,6 +58,50 @@ pub use camera::Camera;
 
 pub type Vector = nphysics2d::math::Vector<f32>;
 
+pub enum OptionAway<T> {
+    Some(T),
+    Away,
+    None,
+}
+
+impl<T> From<Option<Option<T>>> for OptionAway<T> {
+    fn from(result: Option<Option<T>>) -> OptionAway<T> {
+        match result {
+            Some(Some(result)) => OptionAway::Some(result),
+            Some(None) => OptionAway::Away,
+            None => OptionAway::None,
+        }
+    }
+}
+
+impl<'a, T> From<Option<&'a Option<T>>> for OptionAway<&'a T> {
+    fn from(result: Option<&'a Option<T>>) -> OptionAway<&'a T> {
+        match result {
+            Some(inner) => {
+                match inner.as_ref() {
+                    Some(inner) => OptionAway::Some(inner),
+                    None => OptionAway::Away,
+                }
+            }
+            None => OptionAway::None,
+        }
+    }
+}
+
+impl<'a, T> From<Option<&'a mut Option<T>>> for OptionAway<&'a mut T> {
+    fn from(result: Option<&'a mut Option<T>>) -> OptionAway<&'a mut T> {
+
+        match result {
+            Some(inner) => {
+                match inner.as_mut() {
+                    Some(inner) => OptionAway::Some(inner),
+                    None => OptionAway::Away,
+                }
+            }
+            None => OptionAway::None,
+        }
+    }
+}
 
 use std::ops::SubAssign;
 pub fn check_and_use<T, K>(resource: &mut T, cost: K) -> bool

@@ -1,5 +1,6 @@
 use app;
 use app::App;
+use OptionAway;
 use texture::Texture;
 use transform::Transform;
 use component::Component;
@@ -75,16 +76,16 @@ impl GameObject {
             }))
     }
 
-    pub fn remove_component(&mut self, index: i32) -> Option<Option<Box<ComponentAny>>> {
-        self.components.remove(&index)
+    pub fn remove_component(&mut self, index: i32) -> OptionAway<Box<ComponentAny>> {
+        OptionAway::from(self.components.remove(&index))
     }
 
-    pub fn component(&self, index: i32) -> Option<&Option<Box<ComponentAny>>> {
-        self.components.get(&index)
+    pub fn component(&self, index: i32) -> OptionAway<&Box<ComponentAny>> {
+        OptionAway::from(self.components.get(&index))
     }
 
-    pub fn component_mut(&mut self, index: i32) -> Option<&mut Option<Box<ComponentAny>>> {
-        self.components.get_mut(&index)
+    pub fn component_mut(&mut self, index: i32) -> OptionAway<&mut Box<ComponentAny>> {
+        OptionAway::from(self.components.get_mut(&index))
     }
 
     pub fn component_with_type<T>(&self, index: i32) -> Option<&T>
