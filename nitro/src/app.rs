@@ -1,8 +1,10 @@
 use sdl2;
-use sdl2::video::Window;
+use sdl2::EventPump;
+use sdl2::event::Event;
 use sdl2::render::Renderer;
 use sdl2::pixels::Color;
 use sdl2::rect::Rect;
+use sdl2::image::LoadTexture;
 use audio_private;
 use audio_private::dj;
 use audio::Dj;
@@ -30,12 +32,14 @@ use std::io::BufReader;
 use std::cell::RefCell;
 use std::path::PathBuf;
 use std::f32;
+use std::time::Instant;
+use chrono::Duration;
 
 type BufferedAudioFile = Buffered<Decoder<BufReader<File>>>;
 
 pub struct App {
-    window: Window,
     renderer: Renderer<'static>,
+    event_pump: EventPump,
     game_objects: HashMap<u64, Box<GameObject>>,
     djs: HashMap<u64, Box<Dj>>,
     next_game_object_id: u64,
@@ -56,6 +60,7 @@ impl App {
             .opengl()
             .build()
             .unwrap();
+        let renderer = window.renderer().build().expect("Failed to initialize renderer");
         App {
             next_game_object_id: 0,
             next_dj_id: 0,
@@ -63,14 +68,15 @@ impl App {
             djs: HashMap::new(),
             input: Input::new(),
             sound_cache: HashMap::new(),
-            window: window,
-            renderer: window.renderer().build().expect("Failed to initialize renderer"),
+            renderer: renderer,
+            event_pump: sdl_context.event_pump().expect("Failed to initalize event pump."),
             camera: Camera { transform: Transform::new() },
             world: World::new(),
         }
     }
 
     fn render(&mut self) {
+        use std::f32;
         let game_objs = &self.game_objects;
         let camera_transform = self.camera.transform;
         // Clear the screen with grey.
@@ -94,13 +100,15 @@ impl App {
                                         ((*render_transform.y()) as i32) - (tex_height as i32 / 2),
                                         tex_width,
                                         tex_height);
-            self.renderer.copy_ex(&texture::get_raw(&game_obj.texture),
-                                  None,
-                                  Some(render_rect),
-                                  *game_obj.transform.rotation() as f64,
-                                  None,
-                                  false,
-                                  false);
+            if let &Some(ref texture) = texture::get_raw(&game_obj.texture) {
+                self.renderer.copy_ex(&texture,
+                                      None,
+                                      Some(render_rect),
+                                      (*game_obj.transform.rotation() * 180.0/f32::consts::PI) as f64,
+                                      None,
+                                      false,
+                                      false);
+            }
         }
         self.renderer.present();
     }
@@ -147,18 +155,20 @@ impl App {
     }
 
     pub fn run(&mut self) {
-        while let Some(e) = self.window.next() {
-            match e {
-                Event::Render(..) => {
-                    self.render(&e);
+        let mut exit = false;
+        let mut last_frame_instant = Instant::now();
+        while !exit {
+            while let Some(e) = self.event_pump.poll_event() {
+                if let Event::Quit{..} = e {
+                    exit = true;
                 }
-                Event::AfterRender(..) => {}
-                Event::Update(update_args) => self.update(&update_args),
-                Event::Idle(..) => {}
-                Event::Input(input_event) => {
-                    input_private::input::process_event(&mut self.input, input_event);
-                }
+                input_private::input::process_event(&mut self.input, &e);
             }
+            self.update(Duration::from_std(last_frame_instant.elapsed())
+                .unwrap()
+                .num_microseconds().unwrap() as f32 / 1000000.0);
+            last_frame_instant = Instant::now();
+            self.render();
         }
     }
 
@@ -247,29 +257,14 @@ impl App {
         }
     }
 
-    pub fn empty_raw_texture(&mut self) -> piston_window::Texture<Resources> {
-        piston_window::Texture::empty(&mut self.window.factory)
-            .expect("Getting empty texture failed. 0_o")
-    }
-
-    pub fn fetch_texture(&mut self, texture_name: &str) -> Texture {
+    pub fn fetch_texture(&mut self, texture_name: &str) -> Result<Texture, String> {
         let mut texture_path = PathBuf::from("assets");
         texture_path.push("textures");
         texture_path.push(texture_name);
-        let result = piston_window::Texture::from_path(&mut self.window.factory,
-                                                       texture_path,
-                                                       Flip::None,
-                                                       &TextureSettings::new());
-        let mut return_value = Texture::empty(self);
-        match result {
-            Ok(texture) => {
-                texture::set_raw_texture(&mut return_value, texture);
-            }
-            Err(err) => {
-                println!("Unable to load texture, {} Error: {:?}", texture_name, err);
-            }
-        }
-        return_value
+        let sdl_texture = self.renderer.load_texture(texture_path)?;
+        let mut nitro_texture = Texture::new();
+        texture::set_raw(&mut nitro_texture, sdl_texture);
+        Ok(nitro_texture)
     }
 }
 

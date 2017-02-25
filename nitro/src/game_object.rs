@@ -142,7 +142,7 @@ pub fn new(app: &mut App) -> GameObject {
         drop: false,
         transform: Transform::new(),
         components: BTreeMap::new(),
-        texture: Texture::empty(app),
+        texture: Texture::new(),
         body: None,
     }
 }

@@ -30,7 +30,6 @@ impl Component for Spinny {
                 if let Some(true) = app.input.action_released(ActionId::Blink as i32) {
                     *game_object.transform.mut_x() += 50.0;
                 }
-                *app.camera_mut().transform.mut_rotation() += 1.0 * delta_time;
             }
             _ => {}
         }

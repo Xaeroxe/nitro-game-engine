@@ -28,7 +28,7 @@ fn main() {
     app.input.load_bindings("halera.bindings");
     let mut component_id = 0;
     let game_obj_id = app.new_gameobject(|app, game_obj| {
-        game_obj.texture = app.fetch_texture("nitro.png");
+        game_obj.texture = app.fetch_texture("nitro.png").unwrap();
         component_id = game_obj.add_component(app, Spinny {});
     });
     app.new_dj(|_, dj| { dj.set_idle_listener(game_obj_id, component_id); });

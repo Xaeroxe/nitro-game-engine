@@ -1,6 +1,7 @@
 extern crate sdl2;
 extern crate conrod;
 extern crate serde;
+extern crate chrono;
 #[macro_use]
 extern crate serde_derive;
 extern crate bincode;
