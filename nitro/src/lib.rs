@@ -41,7 +41,6 @@ pub use polar_coords::PolarCoords;
 mod input_private;
 pub mod input {
     pub use input_private::Axis;
-    pub use input_private::controller;
     pub use input_private::input::Input;
     pub use input_private::keyboard;
     pub use input_private::mouse;

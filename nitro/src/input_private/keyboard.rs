@@ -1,6 +1,6 @@
 // ***WARNING***:
 // Many trait impls are highly dependent on the fact that this enum is identical to
-// piston_window::input::keyboard::Key.
+// the keycodes enum from SDL2 
 enum_from_primitive!{
     #[derive(Eq, PartialEq, Copy, Clone, Debug, Serialize, Deserialize)]
     pub enum Key {

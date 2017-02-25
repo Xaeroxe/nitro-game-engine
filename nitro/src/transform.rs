@@ -1,4 +1,3 @@
-use graphics::math::Matrix2d;
 use std::f32;
 use Vector;
 
@@ -71,9 +70,3 @@ impl Transform {
     }
 }
 
-// Raw format reverse engineered from Piston internals.
-pub fn get_raw(nitro_transform: &Transform) -> Matrix2d {
-    let c = nitro_transform.rotation.cos() as f64;
-    let s = nitro_transform.rotation.sin() as f64;
-    [[c, -s, nitro_transform.position.x as f64], [s, c, nitro_transform.position.y as f64]]
-}

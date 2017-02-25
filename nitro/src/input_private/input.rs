@@ -1,3 +1,6 @@
+use sdl2::event::Event;
+use input::keyboard::Key;
+use input::mouse::MouseButton;
 use input::Button;
 use input::Axis;
 use std::io::Result as IOResult;
@@ -9,7 +12,7 @@ use std::clone::Clone;
 use std::collections::HashMap;
 use bincode::SizeLimit;
 use bincode::serde::{serialize, deserialize, DeserializeError};
-use piston_window;
+use num::FromPrimitive;
 
 pub struct Input {
     buttons_pressed: Vec<Button>,
@@ -85,7 +88,6 @@ impl Input {
         self.actions.insert(id, button);
     }
 
-    // Named for consistency with get_axis_value
     pub fn action_pressed(&self, id: i32) -> Option<bool> {
         if let Some(button) = self.actions.get(&id) {
             return Some(self.is_button_pressed(*button));
@@ -122,18 +124,33 @@ impl Input {
     }
 }
 
-pub fn process_event(input: &mut Input, input_event: piston_window::Input) {
-    match input_event {
-        piston_window::Input::Press(button) => {
-            // The button may already be here as this event does repeat.
-            if !input.buttons_pressed.iter().any(|&item| item == Button::from(button)) {
-                input.buttons_pressed.push(Button::from(button));
+pub fn process_event(input: &mut Input, input_event: &Event) {
+    match *input_event {
+        Event::KeyDown { timestamp, window_id, keycode, scancode, keymod, repeat }  => {
+            if !repeat {
+                if let Some(scancode) = scancode {
+                    input.buttons_pressed.push(Button::Keyboard(Key::from_u32(scancode as u32).unwrap()));
+                }
             }
         }
-        piston_window::Input::Release(button) => {
+        Event::KeyUp { timestamp, window_id, keycode, scancode, keymod, repeat } => {
+            if !repeat {
+                if let Some(scancode) = scancode {
+                    while let Some(i) = input.buttons_pressed
+                        .iter()
+                        .position(|&item| item == Button::Keyboard(Key::from_u32(scancode as u32).unwrap())) {
+                        input.buttons_pressed.swap_remove(i);
+                    }
+                }
+            }
+        }
+        Event::MouseButtonDown { timestamp, window_id, which, mouse_btn, x, y } => {
+            input.buttons_pressed.push(Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap()));
+        }
+        Event::MouseButtonUp { timestamp, window_id, which, mouse_btn, x, y } => {
             while let Some(i) = input.buttons_pressed
                 .iter()
-                .position(|&item| item == Button::from(button)) {
+                .position(|&item| item == Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap())) {
                 input.buttons_pressed.swap_remove(i);
             }
         }
