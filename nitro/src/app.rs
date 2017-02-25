@@ -1,8 +1,8 @@
-use piston::window::WindowSettings;
-use piston_window;
-use piston_window::{PistonWindow, UpdateArgs, Event, OpenGL, TextureSettings, Flip};
-use gfx_device_gl::Resources;
-use glutin;
+use sdl2;
+use sdl2::video::Window;
+use sdl2::render::Renderer;
+use sdl2::pixels::Color;
+use sdl2::rect::Rect;
 use audio_private;
 use audio_private::dj;
 use audio::Dj;
@@ -34,7 +34,8 @@ use std::f32;
 type BufferedAudioFile = Buffered<Decoder<BufReader<File>>>;
 
 pub struct App {
-    window: PistonWindow,
+    window: Window,
+    renderer: Renderer<'static>,
     game_objects: HashMap<u64, Box<GameObject>>,
     djs: HashMap<u64, Box<Dj>>,
     next_game_object_id: u64,
@@ -47,8 +48,14 @@ pub struct App {
 
 impl App {
     pub fn new(name: &str) -> App {
-        let opengl = OpenGL::V3_2;
-        let (width, height) = glutin::get_primary_monitor().get_dimensions();
+        let sdl_context = sdl2::init().expect("Failed to initialize SDL2.");
+        let video_subsystem = sdl_context.video().expect("Failed to initialize video subsystem");
+        let window = video_subsystem.window("Halera", 800, 600)
+            .position_centered()
+            .fullscreen_desktop()
+            .opengl()
+            .build()
+            .unwrap();
         App {
             next_game_object_id: 0,
             next_dj_id: 0,
@@ -56,53 +63,49 @@ impl App {
             djs: HashMap::new(),
             input: Input::new(),
             sound_cache: HashMap::new(),
-            window: WindowSettings::new(name, [width, height])
-                .opengl(opengl)
-                .exit_on_esc(true)
-                .fullscreen(false)
-                .build()
-                .unwrap(),
+            window: window,
+            renderer: window.renderer().build().expect("Failed to initialize renderer"),
             camera: Camera { transform: Transform::new() },
             world: World::new(),
         }
     }
 
-    fn render(&mut self, e: &Event) {
-        // This should never be false.
-        // The only reason I didn't request the render_args in the signature is the Piston API
-        // requires the event object.
-        if let Event::Render(render_args) = *e {
-            use graphics::*;
-            const GREY: [f32; 4] = [0.9, 0.9, 0.9, 1.0];
-            let game_objs = &self.game_objects;
-            let camera_transform = self.camera.transform;
-            self.window.draw_2d(e, |c, gl| {
-                // Clear the screen.
-                clear(GREY, gl);
-                for game_obj in game_objs.values() {
-                    let mut render_transform = game_obj.transform;
-                    *render_transform.mut_x() -= *camera_transform.x();
-                    *render_transform.mut_y() -= *camera_transform.y();
-                    let mut polar = PolarCoords::from(render_transform.position().clone());
-                    polar.rotation -= *camera_transform.rotation();
-                    *render_transform.mut_position() = Vector::from(polar);
-                    *render_transform.mut_x() += (render_args.draw_width / 2) as f32;
-                    *render_transform.mut_y() += (render_args.draw_height / 2) as f32;
-                    *render_transform.mut_rotation() -= *camera_transform.rotation();
-                    let (tex_width, tex_height) = texture::get_raw(&game_obj.texture).get_size();
-                    image(texture::get_raw(&game_obj.texture),
-                          c.transform
-                              .append_transform(transform::get_raw(&render_transform))
-                              .trans(-(tex_width as f64) / 2.0, -(tex_height as f64) / 2.0),
-                          gl);
-                }
-            });
-        } else {
-            panic!("Render should never be called with an event that isn't Event::Render.");
+    fn render(&mut self) {
+        let game_objs = &self.game_objects;
+        let camera_transform = self.camera.transform;
+        // Clear the screen with grey.
+        self.renderer.set_draw_color(Color::RGB(240, 240, 240));
+        self.renderer.clear();
+        // Reset the draw color to white so subsequent draw calls are correct.
+        self.renderer.set_draw_color(Color::RGB(255, 255, 255));
+        let (screen_width, screen_height) = self.renderer.window().unwrap().size();
+        for game_obj in game_objs.values() {
+            let mut render_transform = game_obj.transform;
+            *render_transform.mut_x() -= *camera_transform.x();
+            *render_transform.mut_y() -= *camera_transform.y();
+            let mut polar = PolarCoords::from(render_transform.position().clone());
+            polar.rotation -= *camera_transform.rotation();
+            *render_transform.mut_position() = Vector::from(polar);
+            *render_transform.mut_x() += (screen_width / 2) as f32;
+            *render_transform.mut_y() += (screen_height / 2) as f32;
+            *render_transform.mut_rotation() -= *camera_transform.rotation();
+            let (tex_width, tex_height) = texture::size(&game_obj.texture);
+            let render_rect = Rect::new(((*render_transform.x()) as i32) - (tex_width as i32 / 2),
+                                        ((*render_transform.y()) as i32) - (tex_height as i32 / 2),
+                                        tex_width,
+                                        tex_height);
+            self.renderer.copy_ex(&texture::get_raw(&game_obj.texture),
+                                  None,
+                                  Some(render_rect),
+                                  *game_obj.transform.rotation() as f64,
+                                  None,
+                                  false,
+                                  false);
         }
+        self.renderer.present();
     }
 
-    fn update(&mut self, args: &UpdateArgs) {
+    fn update(&mut self, delta_time: f32) {
         //Process Djs for this frame.
         let keys = self.djs.keys().map(|x| *x).collect::<Vec<u64>>();
         for key in keys {
@@ -124,7 +127,7 @@ impl App {
         for mut game_object in self.game_objects.values_mut() {
             game_object::copy_to_physics(game_object);
         }
-        self.world.step(args.dt as f32);
+        self.world.step(delta_time);
         for mut game_object in self.game_objects.values_mut() {
             game_object::copy_from_physics(game_object);
         }
@@ -133,7 +136,7 @@ impl App {
         let keys = self.game_objects.keys().map(|x| *x).collect::<Vec<u64>>();
         for key in keys {
             if let Some(mut game_object) = self.game_objects.remove(&key) {
-                game_object.update(self, args.dt as f32);
+                game_object.update(self, delta_time);
                 *game_object.transform.mut_rotation() %= 2.0 * f32::consts::PI;
                 if !game_object::was_dropped(game_object.borrow_mut()) {
                     self.game_objects.insert(game_object.id(), game_object);
