@@ -1,5 +1,4 @@
 use sdl2::render::Texture as SdlTexture;
-use app::App;
 
 pub struct Texture {
     width: u32,

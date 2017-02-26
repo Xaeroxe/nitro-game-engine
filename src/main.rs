@@ -24,8 +24,6 @@ fn main() {
     app.input.add_axis(Axis::new(Button::Keyboard(Key::E), Button::Keyboard(Key::Q)),
                        AxisId::Rotation as i32);
     app.input.add_action(Button::Keyboard(Key::F), ActionId::Blink as i32);
-    app.input.save_bindings("halera.bindings");
-    app.input.load_bindings("halera.bindings");
     let mut component_id = 0;
     let game_obj_id = app.new_gameobject(|app, game_obj| {
         game_obj.texture = app.fetch_texture("nitro.png").unwrap();

@@ -43,9 +43,7 @@ impl GameObject {
             component.receive_message(app, self, &message);
         }
         if let Some(component_ref) = self.components.get_mut(&component_id) {
-            if component_option.is_some() {
-                replace(component_ref, component_option);
-            }
+            replace(component_ref, component_option);
         }
     }
 
@@ -147,7 +145,7 @@ pub fn new(app: &mut App) -> GameObject {
     }
 }
 
-pub fn was_dropped(game_object: &mut GameObject) -> bool {
+pub fn was_dropped(game_object: &GameObject) -> bool {
     game_object.drop
 }
 

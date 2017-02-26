@@ -126,14 +126,14 @@ impl Input {
 
 pub fn process_event(input: &mut Input, input_event: &Event) {
     match *input_event {
-        Event::KeyDown { timestamp, window_id, keycode, scancode, keymod, repeat }  => {
+        Event::KeyDown { scancode, repeat, .. }  => {
             if !repeat {
                 if let Some(scancode) = scancode {
                     input.buttons_pressed.push(Button::Keyboard(Key::from_u32(scancode as u32).unwrap()));
                 }
             }
         }
-        Event::KeyUp { timestamp, window_id, keycode, scancode, keymod, repeat } => {
+        Event::KeyUp { scancode, repeat, .. } => {
             if !repeat {
                 if let Some(scancode) = scancode {
                     while let Some(i) = input.buttons_pressed
@@ -144,10 +144,10 @@ pub fn process_event(input: &mut Input, input_event: &Event) {
                 }
             }
         }
-        Event::MouseButtonDown { timestamp, window_id, which, mouse_btn, x, y } => {
+        Event::MouseButtonDown { mouse_btn, .. } => {
             input.buttons_pressed.push(Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap()));
         }
-        Event::MouseButtonUp { timestamp, window_id, which, mouse_btn, x, y } => {
+        Event::MouseButtonUp { mouse_btn, .. } => {
             while let Some(i) = input.buttons_pressed
                 .iter()
                 .position(|&item| item == Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap())) {

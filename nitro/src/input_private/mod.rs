@@ -1,10 +1,7 @@
 mod axis;
 pub use self::axis::Axis;
 
-use num::FromPrimitive;
-
 pub mod input;
-
 pub mod keyboard;
 pub mod mouse;
 
