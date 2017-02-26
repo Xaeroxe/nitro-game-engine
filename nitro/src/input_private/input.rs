@@ -126,10 +126,11 @@ impl Input {
 
 pub fn process_event(input: &mut Input, input_event: &Event) {
     match *input_event {
-        Event::KeyDown { scancode, repeat, .. }  => {
+        Event::KeyDown { scancode, repeat, .. } => {
             if !repeat {
                 if let Some(scancode) = scancode {
-                    input.buttons_pressed.push(Button::Keyboard(Key::from_u32(scancode as u32).unwrap()));
+                    input.buttons_pressed
+                        .push(Button::Keyboard(Key::from_u32(scancode as u32).unwrap()));
                 }
             }
         }
@@ -138,19 +139,24 @@ pub fn process_event(input: &mut Input, input_event: &Event) {
                 if let Some(scancode) = scancode {
                     while let Some(i) = input.buttons_pressed
                         .iter()
-                        .position(|&item| item == Button::Keyboard(Key::from_u32(scancode as u32).unwrap())) {
+                        .position(|&item| {
+                            item == Button::Keyboard(Key::from_u32(scancode as u32).unwrap())
+                        }) {
                         input.buttons_pressed.swap_remove(i);
                     }
                 }
             }
         }
         Event::MouseButtonDown { mouse_btn, .. } => {
-            input.buttons_pressed.push(Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap()));
+            input.buttons_pressed
+                .push(Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap()));
         }
         Event::MouseButtonUp { mouse_btn, .. } => {
             while let Some(i) = input.buttons_pressed
                 .iter()
-                .position(|&item| item == Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap())) {
+                .position(|&item| {
+                    item == Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap())
+                }) {
                 input.buttons_pressed.swap_remove(i);
             }
         }

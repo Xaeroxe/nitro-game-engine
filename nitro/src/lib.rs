@@ -71,6 +71,8 @@ pub enum OptionAway<T> {
     None,
 }
 
+use std::borrow::{Borrow, BorrowMut};
+
 impl<T> From<Option<Option<T>>> for OptionAway<T> {
     fn from(result: Option<Option<T>>) -> OptionAway<T> {
         match result {
@@ -81,12 +83,14 @@ impl<T> From<Option<Option<T>>> for OptionAway<T> {
     }
 }
 
-impl<'a, T> From<Option<&'a Option<T>>> for OptionAway<&'a T> {
-    fn from(result: Option<&'a Option<T>>) -> OptionAway<&'a T> {
+impl<'a, T, M> From<Option<&'a Option<M>>> for OptionAway<&'a T>
+    where M: Borrow<T>
+{
+    fn from(result: Option<&'a Option<M>>) -> OptionAway<&'a T> {
         match result {
             Some(inner) => {
                 match inner.as_ref() {
-                    Some(inner) => OptionAway::Some(inner),
+                    Some(inner) => OptionAway::Some(inner.borrow()),
                     None => OptionAway::Away,
                 }
             }
@@ -95,40 +99,14 @@ impl<'a, T> From<Option<&'a Option<T>>> for OptionAway<&'a T> {
     }
 }
 
-impl<'a, T> From<Option<&'a mut Option<T>>> for OptionAway<&'a mut T> {
-    fn from(result: Option<&'a mut Option<T>>) -> OptionAway<&'a mut T> {
+impl<'a, T, M> From<Option<&'a mut Option<M>>> for OptionAway<&'a mut T>
+    where M: BorrowMut<T>
+{
+    fn from(result: Option<&'a mut Option<M>>) -> OptionAway<&'a mut T> {
         match result {
             Some(inner) => {
                 match inner.as_mut() {
-                    Some(inner) => OptionAway::Some(inner),
-                    None => OptionAway::Away,
-                }
-            }
-            None => OptionAway::None,
-        }
-    }
-}
-
-impl<'a, T> From<Option<&'a Option<Box<T>>>> for OptionAway<&'a T> {
-    fn from(result: Option<&'a Option<Box<T>>>) -> OptionAway<&'a T> {
-        match result {
-            Some(inner) => {
-                match inner.as_ref() {
-                    Some(inner) => OptionAway::Some(inner),
-                    None => OptionAway::Away,
-                }
-            }
-            None => OptionAway::None,
-        }
-    }
-}
-
-impl<'a, T> From<Option<&'a mut Option<Box<T>>>> for OptionAway<&'a mut T> {
-    fn from(result: Option<&'a mut Option<Box<T>>>) -> OptionAway<&'a mut T> {
-        match result {
-            Some(inner) => {
-                match inner.as_mut() {
-                    Some(inner) => OptionAway::Some(inner),
+                    Some(inner) => OptionAway::Some(inner.borrow_mut()),
                     None => OptionAway::Away,
                 }
             }

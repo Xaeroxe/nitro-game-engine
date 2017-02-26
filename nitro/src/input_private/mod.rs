@@ -10,4 +10,3 @@ pub enum Button {
     Keyboard(self::keyboard::Key),
     Mouse(self::mouse::MouseButton),
 }
-
