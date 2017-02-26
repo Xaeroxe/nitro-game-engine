@@ -110,14 +110,14 @@ impl App {
                               tex_height);
                 if let &Some(ref texture) = texture::get_raw(&game_obj.texture) {
                     let result = self.renderer.copy_ex(&texture,
-                                          None,
-                                          Some(render_rect),
-                                          (*game_obj.transform.rotation() * 180.0 /
-                                           f32::consts::PI) as
-                                          f64,
-                                          None,
-                                          false,
-                                          false);
+                                                       None,
+                                                       Some(render_rect),
+                                                       (*game_obj.transform.rotation() * 180.0 /
+                                                        f32::consts::PI) as
+                                                       f64,
+                                                       None,
+                                                       false,
+                                                       false);
                     if let Err(err) = result {
                         println!("Unable to draw texture, Error: {:?}", err);
                     }
@@ -193,8 +193,7 @@ impl App {
                 if game_object::was_dropped(game_obj.borrow()) {
                     dropped_keys.push(*key);
                 }
-            }
-            else {
+            } else {
                 dropped_keys.push(*key);
             }
         }
@@ -209,8 +208,7 @@ impl App {
                 if dj::was_dropped(dj.borrow()) {
                     dropped_keys.push(*key);
                 }
-            }
-            else {
+            } else {
                 dropped_keys.push(*key);
             }
         }
@@ -375,7 +373,7 @@ impl App {
 
     /// Loads a texture and returns it for use.
     ///
-    /// texture_name is the file name of the texture relative to assets/textures 
+    /// texture_name is the file name of the texture relative to assets/textures
     /// (assets\textures on Windows)
     pub fn fetch_texture(&mut self, texture_name: &str) -> Result<Texture, String> {
         let mut texture_path = PathBuf::from("assets");
