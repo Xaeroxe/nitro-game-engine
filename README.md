@@ -42,13 +42,6 @@ Alsa is configured to import via pkg_config if available however you will need t
 and the linkage for them in your project.  The rust-SDL2 project has some great tutorials for how to do that here:
 https://github.com/AngryLawyer/rust-sdl2/blob/daa27e6d3596f62ff930bc8e1dc70f150ee41f92/README.md
 
-
-The repository comes with a very basic demo project showing how to use some of the APIs.
-
-# Are you going to put this on crates.io?
-Yes, just not right now.  The project isn't quite ready as some licensing concerns from the dependencies need to be resolved
-and the project needs to be repackaged as a proper standalone library.
-
 # What's this rodio folder?
 Nitro depends on a custom version of the rodio project which was necessary in order to get the DjIdle Component message
 working.  This is not the cleanest solution so the audio backend may be overhauled at some point but for now there are other
