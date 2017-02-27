@@ -1,5 +1,5 @@
 [root]
-name = "halera"
+name = "nitro_example_project"
 version = "0.1.0"
 dependencies = [
  "nitro 0.1.0",

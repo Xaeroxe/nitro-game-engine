@@ -15,7 +15,7 @@ use actions::ActionId;
 
 fn main() {
     // Create a new game and run it.
-    let mut app = App::new("Halera");
+    let mut app = App::new("Nitro");
 
     app.input.add_axis(Axis::new(Button::Keyboard(Key::D), Button::Keyboard(Key::A)),
                        AxisId::Horizontal as i32);
