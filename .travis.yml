@@ -1,3 +1,8 @@
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y libasound2-dev
+  - sudo apt-get install -y libsdl2-dev
+  - sudo apt-get install -y libsdl2-image-dev
 language: rust
 rust:
   - stable
