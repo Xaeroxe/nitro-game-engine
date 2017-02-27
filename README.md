@@ -23,7 +23,7 @@ but you would be better served by several other engines as of this moment.
 * Facilitate easy setup of multiplayer games.
 * Improve asset import (Current asset system is just based on the filesystem.)
 * Create a scene editor
-* Implement a GUI editor that allows users to visually design a GUI WYSIWIG style.
+* Implement a GUI editor that allows users to visually design a GUI WYSIWYG style.
 
 # Objectives for the distant future
 * Extend the engine to work in 3D
