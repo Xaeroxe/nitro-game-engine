@@ -39,7 +39,7 @@ fn main() {
         dll_dir.push("32");
     }
     if target.contains("pc-windows") {
-        println!("cargo:rustc-link-search=static={}", lib_dir.display());
+        println!("cargo:rustc-link-search=all={}", lib_dir.display());
         for entry in std::fs::read_dir(dll_dir).expect("Can't read DLL dir")  {
             let entry_path = entry.expect("Invalid fs entry").path();
             let file_name_result = entry_path.file_name();
