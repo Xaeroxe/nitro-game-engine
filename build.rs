@@ -1,5 +1,5 @@
 use std::env;
-use std::path::{PathBuf, Path};
+use std::path::PathBuf;
 
 fn main() {
     let target = env::var("TARGET").unwrap();
@@ -15,10 +15,10 @@ fn main() {
         dll_dir.push("64");
     }
     else if target == "x86_64-pc-windows-gnu" {
-        lib_dir.push("gnu");
+        lib_dir.push("gnu-mingw");
         lib_dir.push("lib");
         lib_dir.push("64");
-        dll_dir.push("gnu");
+        dll_dir.push("gnu-mingw");
         dll_dir.push("dll");
         dll_dir.push("64");
     }
@@ -31,10 +31,10 @@ fn main() {
         dll_dir.push("32");
     }
     else if target == "i686-pc-windows-gnu" {
-        lib_dir.push("gnu");
+        lib_dir.push("gnu-mingw");
         lib_dir.push("lib");
         lib_dir.push("32");
-        dll_dir.push("gnu");
+        dll_dir.push("gnu-mingw");
         dll_dir.push("dll");
         dll_dir.push("32");
     }
