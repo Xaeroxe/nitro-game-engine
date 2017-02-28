@@ -1,10 +1,17 @@
+os:
+  - linux
+  - osx
+
 dist: trusty
 sudo: required
 before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y libasound2-dev
-  - sudo apt-get install -y libsdl2-dev
-  - sudo apt-get install -y libsdl2-image-dev
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -qq update; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libasound2-dev; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libsdl2-dev; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libsdl2-image-dev; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install sdl2; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install sdl2_image; fi
 language: rust
 rust:
   - stable
