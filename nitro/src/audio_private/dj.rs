@@ -1,10 +1,11 @@
-use rodio::Sink;
 use app;
 use app::App;
+use sdl2::mixer::Channel;
 
 pub struct Dj {
-    sink: Sink,
+    channel: Option<Channel>,
     id: u64,
+    volume: f32,
     drop: bool,
     game_object_listener_id: u64,
     component_listener_id: i32,
@@ -24,32 +25,50 @@ impl Dj {
         self.component_listener_id = component_id;
     }
 
-    pub fn play(&mut self) {
-        self.sink.play();
+    pub fn resume(&mut self) {
+        if let Some(channel) = self.channel {
+           channel.resume();
+        }
     }
 
     pub fn pause(&mut self) {
-        self.sink.pause();
+        if let Some(channel) = self.channel {
+           channel.pause();
+        }
     }
 
     pub fn is_paused(&self) -> bool {
-        self.sink.is_paused()
+        if let Some(channel) = self.channel {
+           channel.is_paused()
+        } else {
+           false
+        }
     }
 
     pub fn set_volume(&mut self, volume: f32) {
-        self.sink.set_volume(volume);
+        self.volume = volume;
+        if let Some(channel) = self.channel {
+            channel.set_volume((volume * 128.0) as i32);
+        }
     }
 
     pub fn volume(&self) -> f32 {
-        self.sink.volume()
+        self.volume
     }
 
-    pub fn queue(&mut self, app: &mut App, path: &str) {
-        self.sink.append(app::fetch_sound(app, path));
+    pub fn play_sound(&mut self, app: &mut App, path: &str) {
+        if self.channel.is_none() {
+            self.channel = Some(app::get_channel(app));
+        }
+        self.channel.unwrap().play(app::fetch_sound(app, path), 0);
     }
 
     pub fn is_over(&self) -> bool {
-        self.sink.is_empty()
+        if let Some(channel) = self.channel {
+            self.channel.is_playing()
+        } else {
+            true
+        }
     }
 }
 
@@ -63,8 +82,9 @@ pub fn get_listener(dj: &Dj) -> (u64, i32) {
 
 pub fn new_dj(sink: Sink, app: &mut App) -> Dj {
     Dj {
-        sink: sink,
+        channel: app::zero_channel(app),
         id: app::next_dj_id(app),
+        volume: 1.0,
         drop: false,
         game_object_listener_id: 0,
         component_listener_id: 0,

@@ -5,6 +5,7 @@ use sdl2::render::Renderer;
 use sdl2::pixels::Color;
 use sdl2::rect::Rect;
 use sdl2::image::LoadTexture;
+use sdl2::mixer::Chunk;
 use OptionAway;
 use audio_private;
 use audio_private::dj;
@@ -21,10 +22,6 @@ use Vector;
 use transform::Transform;
 use camera::Camera;
 use nphysics2d::world::World;
-use rodio;
-use rodio::Decoder;
-use rodio::source::Buffered;
-use rodio::Source;
 use std::mem::replace;
 use std::collections::HashMap;
 use std::borrow::{Borrow, BorrowMut};
@@ -36,8 +33,6 @@ use std::f32;
 use std::time::Instant;
 use chrono::Duration;
 
-type BufferedAudioFile = Buffered<Decoder<BufReader<File>>>;
-
 pub struct App {
     exit: bool,
     renderer: Renderer<'static>,
@@ -47,7 +42,7 @@ pub struct App {
     next_game_object_id: u64,
     next_dj_id: u64,
     pub input: Input,
-    sound_cache: HashMap<String, Box<BufferedAudioFile>>,
+    sound_cache: HashMap<String, Box<Chunk>>,
     pub camera: Camera,
     pub world: World<f32>,
 }
