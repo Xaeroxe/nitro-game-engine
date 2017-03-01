@@ -379,7 +379,7 @@ impl App {
         let mut texture_path = PathBuf::from("assets");
         texture_path.push("textures");
         texture_path.push(texture_name);
-        let sdl_texture = self.renderer.load_texture(texture_path)?;
+        let sdl_texture = self.renderer.load_texture(texture_path.as_path())?;
         let mut nitro_texture = Texture::new();
         texture::set_raw(&mut nitro_texture, sdl_texture);
         Ok(nitro_texture)
