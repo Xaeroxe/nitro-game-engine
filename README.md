@@ -1,4 +1,4 @@
-# Nitro game engine [![Build Status](https://travis-ci.org/Xaeroxe/nitro_game_engine.svg?branch=master)](https://travis-ci.org/Xaeroxe/nitro_game_engine) [![Build Status](https://ci.appveyor.com/api/projects/status/github/Xaeroxe/nitro_game_engine?branch=master)](https://ci.appveyor.com/project/Xaeroxe/nitro-game-engine)
+# Nitro game engine [![Build Status](https://travis-ci.org/Xaeroxe/nitro_game_engine.svg?branch=master)](https://travis-ci.org/Xaeroxe/nitro_game_engine/branches) [![Build Status](https://ci.appveyor.com/api/projects/status/github/Xaeroxe/nitro_game_engine?branch=master)](https://ci.appveyor.com/project/Xaeroxe/nitro-game-engine?branch=master)
 
 Nitro is a game engine built in Rust for Windows, Mac OSX, and Linux systems.
 
@@ -36,13 +36,9 @@ but you would be better served by several other engines as of this moment.
 Nitro has three major C based dependencies that will need to be setup on your dev machine:
 * SDL2
 * SDL2_image
-* Alsa (on Linux systems only)
+* SDL2_mixer
 
-Alsa is configured to import via pkg_config if available however you will need to setup the SDL2 and SDL2_image libraries
-and the linkage for them in your project.  The rust-SDL2 project has some great tutorials for how to do that here:
+If you are on Linux or OSX, you will need to setup the libraries and the linkage for them in your project.
+The rust-SDL2 project has some great tutorials for how to do that here:
 https://github.com/AngryLawyer/rust-sdl2/blob/daa27e6d3596f62ff930bc8e1dc70f150ee41f92/README.md
 
-# What's this rodio folder?
-Nitro depends on a custom version of the rodio project which was necessary in order to get the DjIdle Component message
-working.  This is not the cleanest solution so the audio backend may be overhauled at some point but for now there are other
-features I'm more eager to get to.
