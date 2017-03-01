@@ -5,10 +5,9 @@ authors = ["Jacob Kiesel <kieseljake@gmail.com>"]
 
 [dependencies.sdl2]
 version = "0.29.0"
-features = ["image"]
+features = ["image", "mixer"]
 
 [dependencies]
-conrod = "0.51.0"
 unborrow = "0.3.0"
 enum_primitive = "0.1.0"
 num = "0.1.0"
@@ -18,5 +17,4 @@ ncollide = "0.10.0"
 serde = "0.8.0"
 serde_derive = "0.8.0"
 bincode = "0.6.1"
-rodio = { path = "rodio" }
 chrono = "0.3.0"
