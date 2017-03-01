@@ -5,6 +5,8 @@ use sdl2::render::Renderer;
 use sdl2::pixels::Color;
 use sdl2::rect::Rect;
 use sdl2::image::LoadTexture;
+use sdl2::mixer;
+use sdl2::mixer::Channel;
 use sdl2::mixer::Chunk;
 use OptionAway;
 use audio_private;
@@ -42,7 +44,6 @@ pub struct App {
     next_game_object_id: u64,
     next_dj_id: u64,
     pub input: Input,
-    sound_cache: HashMap<String, Box<Chunk>>,
     pub camera: Camera,
     pub world: World<f32>,
 }
@@ -66,7 +67,6 @@ impl App {
             game_objects: HashMap::new(),
             djs: HashMap::new(),
             input: Input::new(),
-            sound_cache: HashMap::new(),
             renderer: renderer,
             event_pump: sdl_context.event_pump().expect("Failed to initalize event pump."),
             camera: Camera { transform: Transform::new() },
@@ -218,6 +218,7 @@ impl App {
     ///
     /// This function won't return until the game has been quit.
     pub fn run(&mut self) {
+        mixer::allocate_channels(128);
         let mut last_frame_instant = Instant::now();
         while !self.exit {
             while let Some(e) = self.event_pump.poll_event() {
@@ -256,11 +257,11 @@ impl App {
     ///
     /// If the sound is not yet loaded into memory this function will load it, which may introduce
     /// a delay.
-    pub fn play_sound(&mut self, path: &str, volume: f32) {
-        let mut sink = rodio::Sink::new(&rodio::get_default_endpoint().unwrap());
-        sink.set_volume(volume);
-        sink.append(fetch_sound(self, path));
-        sink.detach();
+    pub fn play_sound(&mut self, path: &str, volume: f32) -> Result<(), String> {
+        let mut file_path = PathBuf::from("assets");
+        file_path.push("sounds");
+        Channel::all().play(&Chunk::from_file(file_path)?, 0);
+        Ok(())
     }
 
     /// Creates a new Dj
