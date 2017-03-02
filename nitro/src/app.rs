@@ -6,6 +6,7 @@ use sdl2::pixels::Color;
 use sdl2::rect::Rect;
 use sdl2::image::LoadTexture;
 use sdl2::mixer;
+use sdl2::mixer::Sdl2MixerContext;
 use sdl2::mixer::Channel;
 use sdl2::mixer::Chunk;
 use OptionAway;
@@ -31,6 +32,7 @@ use chrono::Duration;
 pub struct App {
     exit: bool,
     renderer: Renderer<'static>,
+    mixer: Sdl2MixerContext,
     event_pump: EventPump,
     game_objects: HashMap<u64, Option<Box<GameObject>>>,
     next_game_object_id: u64,
@@ -51,12 +53,17 @@ impl App {
             .build()
             .unwrap();
         let renderer = window.renderer().build().expect("Failed to initialize renderer");
+        sdl_context.audio().expect("Failed to initialize audio");
+        let mixer = mixer::init(mixer::INIT_OGG).expect("Failed to initialize mixer");
+        mixer::open_audio(mixer::DEFAULT_FREQUENCY, mixer::DEFAULT_FORMAT, 2, 4096).expect("Failed to open audio");
+        mixer::allocate_channels(1);
         App {
             exit: false,
             next_game_object_id: 0,
             game_objects: HashMap::new(),
             input: Input::new(),
             renderer: renderer,
+            mixer: mixer,
             event_pump: sdl_context.event_pump().expect("Failed to initalize event pump."),
             camera: Camera { transform: Transform::new() },
             world: World::new(),
@@ -201,16 +208,13 @@ impl App {
     /// Plays a sound at a volume between 1.0 and 0.0
     ///
     /// path is a filename relative to assets/sounds (assets\sounds on Windows)
-    ///
-    /// If the sound is not yet loaded into memory this function will load it, which may introduce
-    /// a delay.
     pub fn play_sound(&mut self, path: &str, volume: f32) -> Result<(), String> {
         let mut file_path = PathBuf::from("assets");
         file_path.push("sounds");
         file_path.push(path);
         let mut sound = Chunk::from_file(file_path)?;
         sound.set_volume((volume * 128.0) as i32);
-        Channel::all().play(&sound, 0)?;
+        Channel::all().play(&sound, 1)?;
         Ok(())
     }
 
