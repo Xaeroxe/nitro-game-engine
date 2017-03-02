@@ -1,4 +1,5 @@
 use sdl2;
+use sdl2::AudioSubsystem;
 use sdl2::EventPump;
 use sdl2::event::Event;
 use sdl2::render::Renderer;
@@ -32,7 +33,8 @@ use chrono::Duration;
 pub struct App {
     exit: bool,
     renderer: Renderer<'static>,
-    mixer: Sdl2MixerContext,
+    _audio: AudioSubsystem,
+    _mixer: Sdl2MixerContext,
     event_pump: EventPump,
     game_objects: HashMap<u64, Option<Box<GameObject>>>,
     next_game_object_id: u64,
@@ -53,17 +55,18 @@ impl App {
             .build()
             .unwrap();
         let renderer = window.renderer().build().expect("Failed to initialize renderer");
-        sdl_context.audio().expect("Failed to initialize audio");
+        let audio = sdl_context.audio().expect("Failed to initialize audio");
         let mixer = mixer::init(mixer::INIT_OGG).expect("Failed to initialize mixer");
-        mixer::open_audio(mixer::DEFAULT_FREQUENCY, mixer::DEFAULT_FORMAT, 2, 4096).expect("Failed to open audio");
-        mixer::allocate_channels(1);
+        mixer::open_audio(mixer::DEFAULT_FREQUENCY, mixer::DEFAULT_FORMAT, 2, 1024)
+            .expect("Failed to open audio");
         App {
             exit: false,
             next_game_object_id: 0,
             game_objects: HashMap::new(),
             input: Input::new(),
             renderer: renderer,
-            mixer: mixer,
+            _audio: audio,
+            _mixer: mixer,
             event_pump: sdl_context.event_pump().expect("Failed to initalize event pump."),
             camera: Camera { transform: Transform::new() },
             world: World::new(),
@@ -214,7 +217,7 @@ impl App {
         file_path.push(path);
         let mut sound = Chunk::from_file(file_path)?;
         sound.set_volume((volume * 128.0) as i32);
-        Channel::all().play(&sound, 1)?;
+        let channel = Channel::all().play(&sound, 0)?;
         Ok(())
     }
 
@@ -277,4 +280,3 @@ pub fn next_game_object_id(app: &mut App) -> u64 {
     app.next_game_object_id += 1;
     app.next_game_object_id
 }
-
