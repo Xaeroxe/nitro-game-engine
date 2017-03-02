@@ -60,6 +60,7 @@ impl App {
         let mixer = mixer::init(mixer::INIT_OGG).expect("Failed to initialize mixer");
         mixer::open_audio(mixer::DEFAULT_FREQUENCY, mixer::DEFAULT_FORMAT, 2, 1024)
             .expect("Failed to open audio");
+        mixer::allocate_channels(128);
         App {
             exit: false,
             next_game_object_id: 0,
