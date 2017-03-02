@@ -1,8 +1,6 @@
 use app::App;
 use game_object::GameObject;
 use std::any::Any;
-use std::cell::RefCell;
-use audio::Dj;
 
 pub trait Component {
     fn receive_message(&mut self, app: &mut App, game_object: &mut GameObject, message: &Message);
@@ -25,9 +23,8 @@ impl<T> ComponentAny for T
     }
 }
 
-pub enum Message<'a> {
+pub enum Message {
     Start { key: i32 },
     Update { delta_time: f32 },
-    DjIdle { dj: RefCell<&'a mut Dj> },
     UserMessage(Box<Any>),
 }
