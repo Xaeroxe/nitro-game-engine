@@ -37,6 +37,7 @@ pub struct App {
     _mixer: Sdl2MixerContext,
     event_pump: EventPump,
     game_objects: HashMap<u64, Option<Box<GameObject>>>,
+    sound_cache: HashMap<String, Chunk>,
     next_game_object_id: u64,
     pub input: Input,
     pub camera: Camera,
@@ -65,6 +66,7 @@ impl App {
             game_objects: HashMap::new(),
             input: Input::new(),
             renderer: renderer,
+            sound_cache: HashMap::new(),
             _audio: audio,
             _mixer: mixer,
             event_pump: sdl_context.event_pump().expect("Failed to initalize event pump."),
@@ -212,12 +214,18 @@ impl App {
     ///
     /// path is a filename relative to assets/sounds (assets\sounds on Windows)
     pub fn play_sound(&mut self, path: &str, volume: f32) -> Result<(), String> {
+        if let Some(chunk) = self.sound_cache.get(path) {
+            let channel = Channel::all().play(chunk, 0)?;
+            channel.set_volume((volume * 128.0) as i32);
+            return Ok(());
+        }
         let mut file_path = PathBuf::from("assets");
         file_path.push("sounds");
         file_path.push(path);
-        let mut sound = Chunk::from_file(file_path)?;
-        sound.set_volume((volume * 128.0) as i32);
-        let channel = Channel::all().play(&sound, 0)?;
+        let chunk = Chunk::from_file(file_path)?;
+        let channel = Channel::all().play(&chunk, 0)?;
+        channel.set_volume((volume * 128.0) as i32);
+        self.sound_cache.insert(path.to_owned(), chunk);
         Ok(())
     }
 
