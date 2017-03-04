@@ -31,6 +31,13 @@ use std::f32;
 use std::time::Instant;
 use chrono::Duration;
 
+/// This structure represents a game instance.
+///
+/// This structure is responsible for managing asset loading,
+/// processing input, rendering the game and playing audio.
+///
+/// This structure makes 128 sound channels available to the user of this library.
+/// When member methods request a channel id that id must be between 0 and 127.
 pub struct App {
     exit: bool,
     renderer: Renderer<'static>,
@@ -236,13 +243,10 @@ impl App {
     }
 
     /// Play a sound on a user sound channel.
-    ///
-    /// There are 128 user sound channels available at indices 0-127. You may use them as you
-    /// please.
-    pub fn play_sound_on_channel(&mut self, channel: i32, path: &str) -> Result<(), String> {
-        if channel >= 0 && channel < 128 {
+    pub fn play_sound_on_channel(&mut self, channel_id: i32, path: &str) -> Result<(), String> {
+        if channel_id >= 0 && channel_id < 128 {
             if let Some(chunk) = self.sound_cache.get(path) {
-                mixer::channel(channel).play(chunk, 0)?;
+                mixer::channel(channel_id).play(chunk, 0)?;
                 return Ok(());
             }
             let mut file_path = PathBuf::from("assets");
@@ -257,47 +261,35 @@ impl App {
     }
 
     /// Set the volume for a user sound channel. Volume is between 0.0 and 1.0
-    ///
-    /// There are 128 user sound channels available at indices 0-127. You may use them as you
-    /// please.
-    pub fn set_channel_volume(&mut self, channel: i32, volume: f32) -> Result<(), String> {
-       if channel >= 0 && channel < 128 {
-            mixer::channel(channel).set_volume((volume * 128.0) as i32);
+    pub fn set_channel_volume(&mut self, channel_id: i32, volume: f32) -> Result<(), String> {
+       if channel_id >= 0 && channel_id < 128 {
+            mixer::channel(channel_id).set_volume((volume * 128.0) as i32);
             return Ok(());
        }
        Err("Channel out of range.".to_string())
     }
 
     /// Get the volume for a user sound channel. Volume is between 0.0 and 1.0
-    ///
-    /// There are 128 user sound channels available at indices 0-127. You may use them as you
-    /// please.
-    pub fn get_channel_volume(&self, channel: i32) -> Result<f32, String> {
-        if channel >= 0 && channel < 128 {
-            return Ok((mixer::channel(channel).get_volume() as f32)/128.0);
+    pub fn get_channel_volume(&self, channel_id: i32) -> Result<f32, String> {
+        if channel_id >= 0 && channel_id < 128 {
+            return Ok((mixer::channel(channel_id).get_volume() as f32)/128.0);
         }
         Err("Channel out of range.".to_string())
     }
 
     /// Pause audio output on a user sound channel.
-    ///
-    /// There are 128 user sound channels available at indices 0-127. You may use them as you
-    /// please.
-    pub fn pause_channel(&mut self, channel: i32) -> Result<(), String> {
-        if channel >= 0 && channel < 128 {
-            mixer::channel(channel).pause();
+    pub fn pause_channel(&mut self, channel_id: i32) -> Result<(), String> {
+        if channel_id >= 0 && channel_id < 128 {
+            mixer::channel(channel_id).pause();
             return Ok(());
         }
         Err("Channel out of range.".to_string())
     }
 
     /// Resume paused audio output on a user sound channel.
-    ///
-    /// There are 128 user sound channels available at indices 0-127. You may use them as you
-    /// please.
-    pub fn resume_channel(&mut self, channel: i32) -> Result<(), String> {
-        if channel >= 0 && channel < 128 {
-            mixer::channel(channel).resume();
+    pub fn resume_channel(&mut self, channel_id: i32) -> Result<(), String> {
+        if channel_id >= 0 && channel_id < 128 {
+            mixer::channel(channel_id).resume();
             return Ok(());
         }
         Err("Channel out of range.".to_string())
@@ -305,12 +297,9 @@ impl App {
 
     /// Returns true if a channel is not playing anything. This will still return false if the
     /// channel has a sound to play but is paused.
-    ///
-    /// There are 128 user sound channels available at indices 0-127. You may use them as you
-    /// please.
-    pub fn channel_idle(&mut self, channel: i32) -> Option<bool> {
-        if channel >= 0 && channel < 128 {
-            return Some(mixer::channel(channel).is_playing());
+    pub fn channel_idle(&mut self, channel_id: i32) -> Option<bool> {
+        if channel_id >= 0 && channel_id < 128 {
+            return Some(mixer::channel(channel_id).is_playing());
         }
         None
     }
