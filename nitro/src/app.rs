@@ -61,7 +61,8 @@ impl App {
         let mixer = mixer::init(mixer::INIT_OGG).expect("Failed to initialize mixer");
         mixer::open_audio(mixer::DEFAULT_FREQUENCY, mixer::DEFAULT_FORMAT, 2, 1024)
             .expect("Failed to open audio");
-        mixer::allocate_channels(128);
+        mixer::allocate_channels(256);
+        mixer::reserve_channels(128);
         App {
             exit: false,
             next_game_object_id: 0,
@@ -234,6 +235,53 @@ impl App {
         Ok(())
     }
 
+    /// Play a sound on a user sound channel.
+    ///
+    /// There are 128 user sound channels available at indices 0-127. You may use them as you
+    /// please.
+    pub fn play_sound_on_channel(&mut self, channel: i32, path: &str) -> Result<(), String> {
+        if channel >= 0 && channel < 128 {
+            mixer::channel(channel).play(fetch_sound_chunk(self, path)?, 0)?;
+            return Ok(());
+        }
+        Err("Channel out of range.".to_string())
+    }
+
+    /// Set the volume for a user sound channel. Volume is between 0.0 and 1.0
+    ///
+    /// There are 128 user sound channels available at indices 0-127. You may use them as you
+    /// please.
+    pub fn set_channel_volume(&mut self, channel: i32, volume: f32) -> Result<(), String> {
+       if channel >= 0 && channel < 128 {
+            mixer::channel(channel).set_volume((volume * 128.0) as i32);
+            return Ok(());
+       }
+       Err("Channel out of range.".to_string())
+    }
+
+    pub fn get_channel_volume(&self, channel: i32) -> Result<f32, String> {
+        if channel >= 0 && channel < 128 {
+            return Ok((mixer::channel(channel).get_volume() as f32)/128.0);
+        }
+        Err("Channel out of range.".to_string())
+    }
+
+    pub fn pause_channel(&mut self, channel: i32) -> Result<(), String> {
+        if channel >= 0 && channel < 128 {
+            mixer::channel(channel).pause();
+            return Ok(());
+        }
+        Err("Channel out of range.".to_string())
+    }
+
+    pub fn resume_channel(&mut self, channel: i32) -> Result<(), String> {
+        if channel >= 0 && channel < 128 {
+            mixer::channel(channel).resume();
+            return Ok(());
+        }
+        Err("Channel out of range.".to_string())
+    }
+
     /// Creates a new GameObject
     ///
     /// GameObjects are typically physical objects in your game world, such as characters or
@@ -286,6 +334,18 @@ impl App {
         texture::set_raw(&mut nitro_texture, sdl_texture);
         Ok(nitro_texture)
     }
+}
+
+pub fn fetch_sound_chunk<'a>(app: &'a mut App, path: &str) -> Result<&'a Chunk, String> {
+    if let Some(chunk) = app.sound_cache.get(path) {
+        return Ok(chunk);
+    }
+    let mut file_path = PathBuf::from("assets");
+    file_path.push("sounds");
+    file_path.push(path);
+    let chunk = Chunk::from_file(file_path)?;
+    app.sound_cache.insert(path.to_string(), chunk);
+    Ok(app.sound_cache.get(path).unwrap())
 }
 
 // This function will never return 0.  0 can now be used as a null value.
