@@ -268,6 +268,10 @@ impl App {
        Err("Channel out of range.".to_string())
     }
 
+    /// Get the volume for a user sound channel. Volume is between 0.0 and 1.0
+    ///
+    /// There are 128 user sound channels available at indices 0-127. You may use them as you
+    /// please.
     pub fn get_channel_volume(&self, channel: i32) -> Result<f32, String> {
         if channel >= 0 && channel < 128 {
             return Ok((mixer::channel(channel).get_volume() as f32)/128.0);
@@ -275,6 +279,10 @@ impl App {
         Err("Channel out of range.".to_string())
     }
 
+    /// Pause audio output on a user sound channel.
+    ///
+    /// There are 128 user sound channels available at indices 0-127. You may use them as you
+    /// please.
     pub fn pause_channel(&mut self, channel: i32) -> Result<(), String> {
         if channel >= 0 && channel < 128 {
             mixer::channel(channel).pause();
@@ -283,12 +291,28 @@ impl App {
         Err("Channel out of range.".to_string())
     }
 
+    /// Resume paused audio output on a user sound channel.
+    ///
+    /// There are 128 user sound channels available at indices 0-127. You may use them as you
+    /// please.
     pub fn resume_channel(&mut self, channel: i32) -> Result<(), String> {
         if channel >= 0 && channel < 128 {
             mixer::channel(channel).resume();
             return Ok(());
         }
         Err("Channel out of range.".to_string())
+    }
+
+    /// Returns true if a channel is not playing anything. This will still return false if the
+    /// channel has a sound to play but is paused.
+    ///
+    /// There are 128 user sound channels available at indices 0-127. You may use them as you
+    /// please.
+    pub fn channel_idle(&mut self, channel: i32) -> Option<bool> {
+        if channel >= 0 && channel < 128 {
+            return Some(mixer::channel(channel).is_playing());
+        }
+        None
     }
 
     /// Creates a new GameObject
