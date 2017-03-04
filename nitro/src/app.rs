@@ -14,6 +14,7 @@ use OptionAway;
 use input_private;
 use input::Input;
 use game_object::GameObject;
+use component::Message;
 use game_object;
 use texture::Texture;
 use texture;
@@ -168,7 +169,10 @@ impl App {
             }
         }
         for key in dropped_keys {
-            self.game_objects.remove(&key);
+            let removed = self.game_objects.remove(&key);
+            if let Some(Some(mut game_obj)) = removed {
+                game_obj.receive_message(self, &Message::OnDestroy);
+            }
         }
 
         input_private::input::shift_frame(&mut self.input);

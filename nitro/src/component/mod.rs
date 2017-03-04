@@ -26,5 +26,6 @@ impl<T> ComponentAny for T
 pub enum Message {
     Start { key: i32 },
     Update { delta_time: f32 },
+    OnDestroy,
     UserMessage(Box<Any>),
 }
