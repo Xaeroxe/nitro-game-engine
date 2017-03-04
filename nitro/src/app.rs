@@ -241,7 +241,16 @@ impl App {
     /// please.
     pub fn play_sound_on_channel(&mut self, channel: i32, path: &str) -> Result<(), String> {
         if channel >= 0 && channel < 128 {
-            mixer::channel(channel).play(fetch_sound_chunk(self, path)?, 0)?;
+            if let Some(chunk) = self.sound_cache.get(path) {
+                mixer::channel(channel).play(chunk, 0)?;
+                return Ok(());
+            }
+            let mut file_path = PathBuf::from("assets");
+            file_path.push("sounds");
+            file_path.push(path);
+            let chunk = Chunk::from_file(file_path)?;
+            Channel::all().play(&chunk, 0)?;
+            self.sound_cache.insert(path.to_owned(), chunk);
             return Ok(());
         }
         Err("Channel out of range.".to_string())
@@ -334,18 +343,6 @@ impl App {
         texture::set_raw(&mut nitro_texture, sdl_texture);
         Ok(nitro_texture)
     }
-}
-
-pub fn fetch_sound_chunk<'a>(app: &'a mut App, path: &str) -> Result<&'a Chunk, String> {
-    if let Some(chunk) = app.sound_cache.get(path) {
-        return Ok(chunk);
-    }
-    let mut file_path = PathBuf::from("assets");
-    file_path.push("sounds");
-    file_path.push(path);
-    let chunk = Chunk::from_file(file_path)?;
-    app.sound_cache.insert(path.to_string(), chunk);
-    Ok(app.sound_cache.get(path).unwrap())
 }
 
 // This function will never return 0.  0 can now be used as a null value.
