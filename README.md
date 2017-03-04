@@ -38,7 +38,25 @@ Nitro has three major C based dependencies that will need to be setup on your de
 * SDL2_image
 * SDL2_mixer
 
-If you are on Linux or OSX, you will need to setup the libraries and the linkage for them in your project.
-The rust-SDL2 project has some great tutorials for how to do that here:
-https://github.com/AngryLawyer/rust-sdl2/blob/daa27e6d3596f62ff930bc8e1dc70f150ee41f92/README.md
+If you're on Windows then you shouldn't need to worry about these as the build script should take care of it for you.
+
+If you are on Linux or OSX, you will need to install these dependencies.  Here's some commands to help:
+
+If you have homebrew on OSX you can install these using:
+
+```
+brew update
+brew install sdl2
+brew install sdl2_image
+brew install sdl2_mixer
+```
+
+If you're on Ubuntu 14.04 or greater these commands will install the dependencies for you:
+
+```
+sudo apt-get -qq update
+sudo apt-get install libsdl2-dev
+sudo apt-get install libsdl2-image-dev
+sudo apt-get install libsdl2-mixer-dev
+```
 
