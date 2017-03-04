@@ -77,7 +77,7 @@ impl GameObject {
     pub fn remove_component(&mut self, app: &mut App, index: i32) -> OptionAway<Box<ComponentAny>> {
         let mut component_result = self.components.remove(&index);
         if let Some(Some(ref mut component)) = component_result {
-            component.receive_message(app, self, &Message::OnDestroy);
+            component.receive_message(app, self, &Message::OnDetach);
         }
         OptionAway::from(component_result)
     }
