@@ -1,5 +1,4 @@
 extern crate sdl2;
-extern crate conrod;
 extern crate serde;
 extern crate chrono;
 #[macro_use]
@@ -10,7 +9,6 @@ extern crate unborrow;
 #[macro_use]
 extern crate enum_primitive;
 extern crate num;
-extern crate rodio;
 
 pub extern crate ncollide;
 pub extern crate nphysics2d;
@@ -18,11 +16,6 @@ pub extern crate nalgebra;
 
 mod app;
 pub use app::App;
-
-mod audio_private;
-pub mod audio {
-    pub use audio_private::dj::Dj;
-}
 
 mod game_object;
 pub use game_object::GameObject;
