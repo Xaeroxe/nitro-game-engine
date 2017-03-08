@@ -55,8 +55,6 @@ If you're on Ubuntu 14.04 or greater these commands will install the dependencie
 
 ```
 sudo apt-get -qq update
-sudo apt-get install libsdl2-dev
-sudo apt-get install libsdl2-image-dev
-sudo apt-get install libsdl2-mixer-dev
+sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev
 ```
 
