@@ -7,6 +7,7 @@ use sdl2::pixels::Color;
 use sdl2::rect::Rect;
 use sdl2::image::LoadTexture;
 use sdl2::mixer;
+use sdl2::render::Texture as SdlTexture;
 use sdl2::mixer::Sdl2MixerContext;
 use sdl2::mixer::Channel;
 use sdl2::mixer::Chunk;
@@ -23,6 +24,7 @@ use Vector;
 use transform::Transform;
 use camera::Camera;
 use nphysics2d::world::World;
+use std::sync::Arc;
 use std::mem::replace;
 use std::collections::HashMap;
 use std::borrow::Borrow;
@@ -45,6 +47,7 @@ pub struct App {
     _mixer: Sdl2MixerContext,
     event_pump: EventPump,
     game_objects: HashMap<u64, Option<Box<GameObject>>>,
+    texture_cache: HashMap<String, Arc<SdlTexture>>,
     sound_cache: HashMap<String, Chunk>,
     next_game_object_id: u64,
     pub input: Input,
@@ -76,6 +79,7 @@ impl App {
             game_objects: HashMap::new(),
             input: Input::new(),
             renderer: renderer,
+            texture_cache: HashMap::new(),
             sound_cache: HashMap::new(),
             _audio: audio,
             _mixer: mixer,
@@ -348,12 +352,17 @@ impl App {
     /// texture_name is the file name of the texture relative to assets/textures
     /// (assets\textures on Windows)
     pub fn fetch_texture(&mut self, texture_name: &str) -> Result<Texture, String> {
+        if let Some(sdl_texture) = self.texture_cache.get(texture_name) {
+            let mut nitro_texture = Texture::new();
+            texture::set_raw(&mut nitro_texture, sdl_texture.clone());
+            return Ok(nitro_texture);
+        }
         let mut texture_path = PathBuf::from("assets");
         texture_path.push("textures");
         texture_path.push(texture_name);
         let sdl_texture = self.renderer.load_texture(texture_path.as_path())?;
         let mut nitro_texture = Texture::new();
-        texture::set_raw(&mut nitro_texture, sdl_texture);
+        texture::set_raw(&mut nitro_texture, Arc::new(sdl_texture));
         Ok(nitro_texture)
     }
 }

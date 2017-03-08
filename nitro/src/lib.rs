@@ -26,6 +26,9 @@ pub mod component;
 mod texture;
 pub use texture::Texture;
 
+mod canvas;
+pub use canvas::Canvas;
+
 mod transform;
 pub use transform::Transform;
 
