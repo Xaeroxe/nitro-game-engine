@@ -35,5 +35,5 @@ impl Component for Spinny {
             _ => {}
         }
     }
-    fn render_gui(&self, canvas: &mut Canvas, app: &App, game_object: &GameObject) {}
+    fn render_gui(&self, canvas: &mut Canvas, game_object: &GameObject) {}
 }

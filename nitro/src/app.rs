@@ -22,6 +22,7 @@ use texture;
 use PolarCoords;
 use Vector;
 use transform::Transform;
+use Canvas;
 use camera::Camera;
 use nphysics2d::world::World;
 use std::sync::Arc;
@@ -96,10 +97,8 @@ impl App {
         let game_objs = &self.game_objects;
         let camera_transform = self.camera.transform;
         // Clear the screen with grey.
-        self.renderer.set_draw_color(Color::RGB(240, 240, 240));
+        self.renderer.set_draw_color(Color::RGB(0, 0, 0));
         self.renderer.clear();
-        // Reset the draw color to white so subsequent draw calls are correct.
-        self.renderer.set_draw_color(Color::RGB(255, 255, 255));
         let (screen_width, screen_height) = self.renderer.window().unwrap().size();
         for game_obj in game_objs.values() {
             if let Some(ref game_obj) = *game_obj {
@@ -130,6 +129,18 @@ impl App {
                                                        false);
                     if let Err(err) = result {
                         println!("Unable to draw texture, Error: {:?}", err);
+                    }
+                }
+            }
+        }
+        {
+            let mut canvas = Canvas::new(&mut self.renderer);
+            for game_obj in game_objs.values() {
+                if let Some(ref game_obj) = *game_obj {
+                    for key in game_obj.component_keys() {
+                        if let OptionAway::Some(component) = game_obj.component(key) {
+                            component.render_gui(&mut canvas, game_obj);
+                        }
                     }
                 }
             }
