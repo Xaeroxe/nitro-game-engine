@@ -2,14 +2,14 @@
 
 Nitro is a game engine built in Rust for Windows, Mac OSX, and Linux systems.
 
-The Nitro project aims to be a complete game development solution, complete with a scene editor, asset import,
+The Nitro project aims to be a complete game development solution, including a scene editor, asset import,
 and all the features we've come to expect from commercial offerings such as Unity or Unreal Engine 4.
-We're not there yet.  This project is very much so a Work In Progress.  You could create a game with Nitro as it exists today
-but you would be better served by several other engines as of this moment.
+We're not there yet.  This project is a Work In Progress.  You can make some basic games with it as it is today, for example a mario clone.  However in some areas the API endpoints are a bit scarce and some features such as multiplayer are missing entirely.
 
 # Progress thus far
 * Very basic asset management exists.
 * A 2D rendering backend powered by SDL2 is present, 3D is a long ways off at this point.
+* "Immediate mode" GUI system driven by Components.
 * Audio playback, including features such as volume and pausing/resuming are present.
 * The nphysics physics library has been integrated into Nitro and exposed to the end user.
 * Rebindable keys and input axes exist and can be queried by Components.
@@ -19,7 +19,6 @@ but you would be better served by several other engines as of this moment.
 # Objectives for the near future
 * Improve documentation.
 * Make "cargo build" work out of the box without requiring the user to setup our C dependencies.
-* Implement an "Immediate mode" GUI system driven by Components.
 * Facilitate easy setup of multiplayer games.
 * Improve asset import (Current asset system is just based on the filesystem.)
 * Create a scene editor
