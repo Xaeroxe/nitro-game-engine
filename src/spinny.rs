@@ -1,4 +1,5 @@
 use nitro::App;
+use nitro::Canvas;
 use nitro::component::Component;
 use nitro::component::Message;
 use nitro::GameObject;
@@ -34,4 +35,5 @@ impl Component for Spinny {
             _ => {}
         }
     }
+    fn render_gui(&self, canvas: &mut Canvas, game_object: &GameObject) {}
 }

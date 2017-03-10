@@ -1,9 +1,10 @@
 use sdl2::render::Texture as SdlTexture;
+use std::sync::Arc;
 
 pub struct Texture {
     width: u32,
     height: u32,
-    texture: Option<SdlTexture>,
+    texture: Option<Arc<SdlTexture>>,
 }
 
 impl Texture {
@@ -20,11 +21,11 @@ pub fn size(nitro_texture: &Texture) -> (u32, u32) {
     (nitro_texture.width, nitro_texture.height)
 }
 
-pub fn get_raw(nitro_texture: &Texture) -> &Option<SdlTexture> {
+pub fn get_raw(nitro_texture: &Texture) -> &Option<Arc<SdlTexture>> {
     &nitro_texture.texture
 }
 
-pub fn set_raw(nitro_texture: &mut Texture, texture: SdlTexture) {
+pub fn set_raw(nitro_texture: &mut Texture, texture: Arc<SdlTexture>) {
     let query = texture.query();
     nitro_texture.width = query.width;
     nitro_texture.height = query.height;

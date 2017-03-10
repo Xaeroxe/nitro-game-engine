@@ -2,14 +2,14 @@
 
 Nitro is a game engine built in Rust for Windows, Mac OSX, and Linux systems.
 
-The Nitro project aims to be a complete game development solution, complete with a scene editor, asset import,
+The Nitro project aims to be a complete game development solution, including a scene editor, asset import,
 and all the features we've come to expect from commercial offerings such as Unity or Unreal Engine 4.
-We're not there yet.  This project is very much so a Work In Progress.  You could create a game with Nitro as it exists today
-but you would be better served by several other engines as of this moment.
+We're not there yet.  This project is a Work In Progress.  You can make some basic games with it as it is today, for example a mario clone.  However in some areas the API endpoints are a bit scarce and some features such as multiplayer are missing entirely.
 
 # Progress thus far
 * Very basic asset management exists.
 * A 2D rendering backend powered by SDL2 is present, 3D is a long ways off at this point.
+* "Immediate mode" GUI system driven by Components.
 * Audio playback, including features such as volume and pausing/resuming are present.
 * The nphysics physics library has been integrated into Nitro and exposed to the end user.
 * Rebindable keys and input axes exist and can be queried by Components.
@@ -19,7 +19,6 @@ but you would be better served by several other engines as of this moment.
 # Objectives for the near future
 * Improve documentation.
 * Make "cargo build" work out of the box without requiring the user to setup our C dependencies.
-* Implement an "Immediate mode" GUI system driven by Components.
 * Facilitate easy setup of multiplayer games.
 * Improve asset import (Current asset system is just based on the filesystem.)
 * Create a scene editor
@@ -46,17 +45,18 @@ If you have homebrew on OSX you can install these using:
 
 ```
 brew update
-brew install sdl2
-brew install sdl2_image
-brew install sdl2_mixer
+brew install sdl2 sdl2_image sdl2_mixer
 ```
 
 If you're on Ubuntu 14.04 or greater these commands will install the dependencies for you:
 
 ```
 sudo apt-get -qq update
-sudo apt-get install libsdl2-dev
-sudo apt-get install libsdl2-image-dev
-sudo apt-get install libsdl2-mixer-dev
+sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev
 ```
 
+# Contributing
+
+* We try and keep the issues list on this project up to date with any "requests for help" we might have.  If you don't know what to start working on you can look there.
+* If you spot issues please submit them.
+* Small improvements can be made via PR without prior communication.  You're welcome to make larger PRs without prior communication as well, but be aware they may be rejected wholesale if they don't align with the project goals.  To avoid this, open up an issue for discussing the changes before you put too much work into them.
