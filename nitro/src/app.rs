@@ -17,8 +17,8 @@ use input::Input;
 use game_object::GameObject;
 use component::Message;
 use game_object;
-use texture::Texture;
-use texture;
+use graphics_private::texture::Texture;
+use graphics_private::texture;
 use PolarCoords;
 use Vector;
 use transform::Transform;
@@ -277,17 +277,17 @@ impl App {
 
     /// Set the volume for a user sound channel. Volume is between 0.0 and 1.0
     pub fn set_channel_volume(&mut self, channel_id: i32, volume: f32) -> Result<(), String> {
-       if channel_id >= 0 && channel_id < 128 {
+        if channel_id >= 0 && channel_id < 128 {
             mixer::channel(channel_id).set_volume((volume * 128.0) as i32);
             return Ok(());
-       }
-       Err("Channel out of range.".to_string())
+        }
+        Err("Channel out of range.".to_string())
     }
 
     /// Get the volume for a user sound channel. Volume is between 0.0 and 1.0
     pub fn get_channel_volume(&self, channel_id: i32) -> Result<f32, String> {
         if channel_id >= 0 && channel_id < 128 {
-            return Ok((mixer::channel(channel_id).get_volume() as f32)/128.0);
+            return Ok((mixer::channel(channel_id).get_volume() as f32) / 128.0);
         }
         Err("Channel out of range.".to_string())
     }

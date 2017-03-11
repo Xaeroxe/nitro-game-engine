@@ -23,8 +23,11 @@ pub use game_object::GameObject;
 #[macro_use]
 pub mod component;
 
-mod texture;
-pub use texture::Texture;
+mod graphics_private;
+pub mod graphics {
+    pub use graphics_private::texture::Texture;
+    pub use graphics_private::Sprite;
+}
 
 mod canvas;
 pub use canvas::Canvas;

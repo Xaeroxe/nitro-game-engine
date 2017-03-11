@@ -1,7 +1,7 @@
 use app;
 use app::App;
 use OptionAway;
-use texture::Texture;
+use graphics_private::texture::Texture;
 use transform::Transform;
 use component::Component;
 use component::ComponentAny;

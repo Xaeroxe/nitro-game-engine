@@ -1,5 +1,5 @@
-use texture;
-use texture::Texture;
+use graphics_private::texture;
+use graphics_private::texture::Texture;
 use rect::Rect;
 use sdl2::rect::Rect as SdlRect;
 use sdl2::rect::Point;
@@ -12,9 +12,7 @@ pub struct Canvas<'a> {
 
 impl<'a> Canvas<'a> {
     pub fn new(renderer: &'a mut Renderer<'static>) -> Canvas<'a> {
-        Canvas {
-            renderer: renderer,
-        }
+        Canvas { renderer: renderer }
     }
 
     pub fn draw_texture(&mut self,
@@ -32,29 +30,26 @@ impl<'a> Canvas<'a> {
             let sdl_center;
             if let Some(rect) = src {
                 sdl_src = Some(SdlRect::from(rect));
-            }
-            else {
+            } else {
                 sdl_src = None;
             }
             if let Some(rect) = dst {
                 sdl_dst = Some(SdlRect::from(rect));
-            }
-            else {
+            } else {
                 sdl_dst = None;
             }
             if let Some(vec) = center {
                 sdl_center = Some(Point::new(vec.x as i32, vec.y as i32));
-            }
-            else {
+            } else {
                 sdl_center = None;
             }
             return self.renderer.copy_ex(&*texture,
-                                  sdl_src,
-                                  sdl_dst,
-                                  angle,
-                                  sdl_center,
-                                  flip_horizontal,
-                                  flip_vertical)
+                                         sdl_src,
+                                         sdl_dst,
+                                         angle,
+                                         sdl_center,
+                                         flip_horizontal,
+                                         flip_vertical);
         }
         Err("Texture was empty.".to_string())
     }
