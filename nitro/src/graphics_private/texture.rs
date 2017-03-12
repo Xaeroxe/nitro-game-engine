@@ -5,6 +5,8 @@ pub struct Texture {
     width: u32,
     height: u32,
     texture: Option<Arc<SdlTexture>>,
+    pub flip_vertical: bool,
+    pub flip_horizontal: bool,
 }
 
 impl Texture {
@@ -13,6 +15,8 @@ impl Texture {
             width: 0,
             height: 0,
             texture: None,
+            flip_vertical: false,
+            flip_horizontal: false,
         }
     }
 }

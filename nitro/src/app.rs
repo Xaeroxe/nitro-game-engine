@@ -125,8 +125,8 @@ impl App {
                                                         f32::consts::PI) as
                                                        f64,
                                                        None,
-                                                       false,
-                                                       false);
+                                                       game_obj.texture.flip_horizontal,
+                                                       game_obj.texture.flip_vertical);
                     if let Err(err) = result {
                         println!("Unable to draw texture, Error: {:?}", err);
                     }
