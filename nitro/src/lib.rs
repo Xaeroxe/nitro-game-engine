@@ -27,6 +27,7 @@ mod graphics_private;
 pub mod graphics {
     pub use graphics_private::texture::Texture;
     pub use graphics_private::Sprite;
+    pub use graphics_private::sprite_sheet::SpriteSheet;
 }
 
 mod canvas;

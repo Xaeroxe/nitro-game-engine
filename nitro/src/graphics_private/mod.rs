@@ -1,8 +1,8 @@
 pub mod texture;
-pub mod spritesheet;
+pub mod sprite_sheet;
 
 use self::texture::Texture;
-use self::spritesheet::SpriteSheet;
+use self::sprite_sheet::SpriteSheet;
 pub enum Sprite {
     Texture(Texture),
     SpriteSheet(SpriteSheet),

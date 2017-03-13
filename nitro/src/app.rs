@@ -20,6 +20,7 @@ use game_object;
 use graphics::Texture;
 use graphics_private::texture;
 use graphics::Sprite;
+use graphics_private::sprite_sheet;
 use PolarCoords;
 use Vector;
 use transform::Transform;
@@ -104,27 +105,29 @@ impl App {
         for game_obj in game_objs.values() {
             if let Some(ref game_obj) = *game_obj {
                 if let Some(ref sprite) = game_obj.sprite {
+                    let mut render_transform = game_obj.transform;
+                    *render_transform.mut_x() -= *camera_transform.x();
+                    *render_transform.mut_y() -= *camera_transform.y();
+                    let mut polar = PolarCoords::from(render_transform.position().clone());
+                    polar.rotation -= *camera_transform.rotation();
+                    *render_transform.mut_position() = Vector::from(polar);
+                    *render_transform.mut_x() += (screen_width / 2) as f32;
+                    *render_transform.mut_y() += (screen_height / 2) as f32;
+                    *render_transform.mut_rotation() -= *camera_transform.rotation();
                     match *sprite {
                         Sprite::Texture(ref texture) => {
-                            let mut render_transform = game_obj.transform;
-                            *render_transform.mut_x() -= *camera_transform.x();
-                            *render_transform.mut_y() -= *camera_transform.y();
-                            let mut polar = PolarCoords::from(render_transform.position().clone());
-                            polar.rotation -= *camera_transform.rotation();
-                            *render_transform.mut_position() = Vector::from(polar);
-                            *render_transform.mut_x() += (screen_width / 2) as f32;
-                            *render_transform.mut_y() += (screen_height / 2) as f32;
-                            *render_transform.mut_rotation() -= *camera_transform.rotation();
                             let (tex_width, tex_height) = texture::size(texture);
-                            let render_rect =
-                                Rect::new(((*render_transform.x()) as i32) - (tex_width as i32 / 2),
-                                          ((*render_transform.y()) as i32) - (tex_height as i32 / 2),
-                                          tex_width,
-                                          tex_height);
+                            let render_rect = Rect::new(((*render_transform.x()) as i32) -
+                                                        (tex_width as i32 / 2),
+                                                        ((*render_transform.y()) as i32) -
+                                                        (tex_height as i32 / 2),
+                                                        tex_width,
+                                                        tex_height);
                             let result = self.renderer.copy_ex(texture::get_raw(texture),
                                                                None,
                                                                Some(render_rect),
-                                                               (*game_obj.transform.rotation() * 180.0 /
+                                                               (*game_obj.transform.rotation() *
+                                                                180.0 /
                                                                 f32::consts::PI) as
                                                                f64,
                                                                None,
@@ -134,7 +137,34 @@ impl App {
                                 println!("Unable to draw texture, Error: {:?}", err);
                             }
                         }
-                        _ => {}
+                        Sprite::SpriteSheet(ref sprite_sheet) => {
+                            let ref current_frame = sprite_sheet.animations[sprite_sheet.current_animation as
+                                                usize]
+                                                    [sprite_sheet.current_frame as usize];
+                            let result = self.renderer
+                                .copy_ex(sprite_sheet::get_texture(sprite_sheet),
+                                         Some(Rect::new(current_frame.frame_rect.x() as i32,
+                                                        current_frame.frame_rect.y() as i32,
+                                                        current_frame.frame_rect.width() as u32,
+                                                        current_frame.frame_rect.height() as u32)),
+                                         Some(Rect::new(((*render_transform.x()) as i32) -
+                                                        (current_frame.frame_rect.width() as i32 /
+                                                         2),
+                                                        ((*render_transform.y()) as i32) -
+                                                        (current_frame.frame_rect.height() as i32 /
+                                                         2),
+                                                        current_frame.frame_rect.width() as u32,
+                                                        current_frame.frame_rect.height() as u32)),
+                                         (*game_obj.transform.rotation() * 180.0 /
+                                          f32::consts::PI) as
+                                         f64,
+                                         None,
+                                         current_frame.flip_horizontal,
+                                         current_frame.flip_vertical);
+                            if let Err(err) = result {
+                                println!("Unable to draw texture, Error: {:?}", err);
+                            }
+                        }
                     }
                 }
             }

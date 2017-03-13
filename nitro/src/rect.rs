@@ -14,19 +14,19 @@ impl Rect {
         }
     }
 
-    fn x(&self) -> f32 {
+    pub fn x(&self) -> f32 {
         self.xy.x
     }
 
-    fn y(&self) -> f32 {
+    pub fn y(&self) -> f32 {
         self.xy.y
     }
 
-    fn width(&self) -> f32 {
+    pub fn width(&self) -> f32 {
         self.size.x
     }
 
-    fn height(&self) -> f32 {
+    pub fn height(&self) -> f32 {
         self.size.y
     }
 }
