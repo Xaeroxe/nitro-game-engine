@@ -1,7 +1,7 @@
 use app;
 use app::App;
 use OptionAway;
-use graphics_private::texture::Texture;
+use graphics::Sprite;
 use transform::Transform;
 use component::Component;
 use component::ComponentAny;
@@ -14,7 +14,7 @@ use nalgebra::{Rotation2, Vector2, Vector1, Rotation};
 
 pub struct GameObject {
     pub transform: Transform,
-    pub texture: Texture,
+    pub sprite: Option<Sprite>,
     pub body: Option<RigidBodyHandle<f32>>,
     // This value will never be 0.  0 can now be used as a null value.
     id: u64,
@@ -144,7 +144,7 @@ pub fn new(app: &mut App) -> GameObject {
         drop: false,
         transform: Transform::new(),
         components: BTreeMap::new(),
-        texture: Texture::new(),
+        sprite: None,
         body: None,
     }
 }

@@ -17,8 +17,9 @@ use input::Input;
 use game_object::GameObject;
 use component::Message;
 use game_object;
-use graphics_private::texture::Texture;
+use graphics::Texture;
 use graphics_private::texture;
+use graphics::Sprite;
 use PolarCoords;
 use Vector;
 use transform::Transform;
@@ -102,33 +103,38 @@ impl App {
         let (screen_width, screen_height) = self.renderer.window().unwrap().size();
         for game_obj in game_objs.values() {
             if let Some(ref game_obj) = *game_obj {
-                let mut render_transform = game_obj.transform;
-                *render_transform.mut_x() -= *camera_transform.x();
-                *render_transform.mut_y() -= *camera_transform.y();
-                let mut polar = PolarCoords::from(render_transform.position().clone());
-                polar.rotation -= *camera_transform.rotation();
-                *render_transform.mut_position() = Vector::from(polar);
-                *render_transform.mut_x() += (screen_width / 2) as f32;
-                *render_transform.mut_y() += (screen_height / 2) as f32;
-                *render_transform.mut_rotation() -= *camera_transform.rotation();
-                let (tex_width, tex_height) = texture::size(&game_obj.texture);
-                let render_rect =
-                    Rect::new(((*render_transform.x()) as i32) - (tex_width as i32 / 2),
-                              ((*render_transform.y()) as i32) - (tex_height as i32 / 2),
-                              tex_width,
-                              tex_height);
-                if let &Some(ref texture) = texture::get_raw(&game_obj.texture) {
-                    let result = self.renderer.copy_ex(&texture,
-                                                       None,
-                                                       Some(render_rect),
-                                                       (*game_obj.transform.rotation() * 180.0 /
-                                                        f32::consts::PI) as
-                                                       f64,
-                                                       None,
-                                                       game_obj.texture.flip_horizontal,
-                                                       game_obj.texture.flip_vertical);
-                    if let Err(err) = result {
-                        println!("Unable to draw texture, Error: {:?}", err);
+                if let Some(ref sprite) = game_obj.sprite {
+                    match *sprite {
+                        Sprite::Texture(ref texture) => {
+                            let mut render_transform = game_obj.transform;
+                            *render_transform.mut_x() -= *camera_transform.x();
+                            *render_transform.mut_y() -= *camera_transform.y();
+                            let mut polar = PolarCoords::from(render_transform.position().clone());
+                            polar.rotation -= *camera_transform.rotation();
+                            *render_transform.mut_position() = Vector::from(polar);
+                            *render_transform.mut_x() += (screen_width / 2) as f32;
+                            *render_transform.mut_y() += (screen_height / 2) as f32;
+                            *render_transform.mut_rotation() -= *camera_transform.rotation();
+                            let (tex_width, tex_height) = texture::size(texture);
+                            let render_rect =
+                                Rect::new(((*render_transform.x()) as i32) - (tex_width as i32 / 2),
+                                          ((*render_transform.y()) as i32) - (tex_height as i32 / 2),
+                                          tex_width,
+                                          tex_height);
+                            let result = self.renderer.copy_ex(texture::get_raw(texture),
+                                                               None,
+                                                               Some(render_rect),
+                                                               (*game_obj.transform.rotation() * 180.0 /
+                                                                f32::consts::PI) as
+                                                               f64,
+                                                               None,
+                                                               texture.flip_horizontal,
+                                                               texture.flip_vertical);
+                            if let Err(err) = result {
+                                println!("Unable to draw texture, Error: {:?}", err);
+                            }
+                        }
+                        _ => {}
                     }
                 }
             }
@@ -364,17 +370,15 @@ impl App {
     /// (assets\textures on Windows)
     pub fn fetch_texture(&mut self, texture_name: &str) -> Result<Texture, String> {
         if let Some(sdl_texture) = self.texture_cache.get(texture_name) {
-            let mut nitro_texture = Texture::new();
-            texture::set_raw(&mut nitro_texture, sdl_texture.clone());
-            return Ok(nitro_texture);
+            return Ok(texture::new(sdl_texture.clone()));
         }
         let mut texture_path = PathBuf::from("assets");
         texture_path.push("textures");
         texture_path.push(texture_name);
         let sdl_texture = self.renderer.load_texture(texture_path.as_path())?;
-        let mut nitro_texture = Texture::new();
-        texture::set_raw(&mut nitro_texture, Arc::new(sdl_texture));
-        Ok(nitro_texture)
+        let sdl_texture = Arc::new(sdl_texture);
+        self.texture_cache.insert(texture_name.to_string(), sdl_texture.clone());
+        Ok(texture::new(sdl_texture))
     }
 }
 

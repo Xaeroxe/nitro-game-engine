@@ -9,6 +9,7 @@ use nitro::App;
 use nitro::input::{Axis, Button};
 use nitro::input::keyboard::Key;
 use nitro::Vector;
+use nitro::graphics::Sprite;
 use spinny::Spinny;
 use axes::AxisId;
 use actions::ActionId;
@@ -25,7 +26,7 @@ fn main() {
                        AxisId::Rotation as i32);
     app.input.add_action(Button::Keyboard(Key::F), ActionId::Blink as i32);
     app.new_gameobject(|app, game_obj| {
-        game_obj.texture = app.fetch_texture("nitro.png").unwrap();
+        game_obj.sprite = Some(Sprite::Texture(app.fetch_texture("nitro.png").unwrap()));
         game_obj.add_component(app, Spinny {});
     });
     app.world.set_gravity(Vector { x: 0.0, y: 9.0 });
