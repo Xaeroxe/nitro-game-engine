@@ -45,7 +45,8 @@ If you have homebrew on OSX you can install these using:
 
 ```
 brew update
-brew install sdl2 sdl2_image sdl2_mixer
+brew install sdl2 sdl2_image
+brew install sdl2_mixer --with-libvorbis
 ```
 
 If you're on Ubuntu 14.04 or greater these commands will install the dependencies for you:
