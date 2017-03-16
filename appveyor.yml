@@ -119,3 +119,11 @@ build: false
 # environment variable.
 test_script:
   - cargo test --verbose %cargoflags%
+  
+# Webhook
+notifications:
+  - provider: Webhook
+    url: https://webhooks.gitter.im/e/e6a8a0b9cc7627016daf
+    on_build_success: true
+    on_build_failure: true
+    on_build_status_changed: true
