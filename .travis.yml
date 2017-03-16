@@ -8,7 +8,8 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -qq update; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install sdl2 sdl2_image sdl2_mixer; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install sdl2 sdl2_image; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install sdl2_mixer --with-libvorbis; fi
 language: rust
 rust:
   - stable
@@ -17,3 +18,11 @@ rust:
 matrix:
   allow_failures:
     - rust: nightly
+    
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/ebdb56bb4da002ad1293
+    on_success: always  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: never     # options: [always|never|change] default: always
