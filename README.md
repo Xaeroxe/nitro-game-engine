@@ -1,4 +1,4 @@
-# Nitro game engine [![Build Status](https://travis-ci.org/Xaeroxe/nitro-game-engine.svg?branch=master)](https://travis-ci.org/Xaeroxe/nitro-game-engine/branches) [![Build Status](https://ci.appveyor.com/api/projects/status/github/Xaeroxe/nitro-game-engine?branch=master&svg=true)](https://ci.appveyor.com/project/Xaeroxe/nitro-game-engine?branch=master)
+# Nitro game engine [![Build Status](https://travis-ci.org/Xaeroxe/nitro-game-engine.svg?branch=master)](https://travis-ci.org/Xaeroxe/nitro-game-engine/branches) [![Build Status](https://ci.appveyor.com/api/projects/status/github/Xaeroxe/nitro-game-engine?branch=master&svg=true)](https://ci.appveyor.com/project/Xaeroxe/nitro-game-engine?branch=master) [![Gitter Chat](https://badges.gitter.im/nitro-game-engine/Lobby.svg)](https://gitter.im/nitro-game-engine/Lobby)
 
 Nitro is a game engine built in Rust for Windows, Mac OSX, and Linux systems.
 
