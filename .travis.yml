@@ -6,10 +6,9 @@ dist: trusty
 sudo: required
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt -qq update; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt install -y libsdl2-dev libsdl2-image-dev libopenal-dev libsndfile1-dev; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install sdl2 sdl2_image; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install sdl2_mixer --with-libvorbis; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install sdl2 sdl2_image openal-soft libsndfile; fi
 language: rust
 rust:
   - stable
@@ -18,7 +17,7 @@ rust:
 matrix:
   allow_failures:
     - rust: nightly
-    
+
 notifications:
   webhooks:
     urls:

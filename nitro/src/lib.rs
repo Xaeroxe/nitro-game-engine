@@ -5,10 +5,9 @@ extern crate chrono;
 extern crate serde_derive;
 extern crate bincode;
 #[macro_use]
-extern crate unborrow;
-#[macro_use]
 extern crate enum_primitive;
 extern crate num;
+extern crate ears;
 
 pub extern crate ncollide;
 pub extern crate nphysics2d;
@@ -20,7 +19,6 @@ pub use app::App;
 mod game_object;
 pub use game_object::GameObject;
 
-#[macro_use]
 pub mod component;
 
 mod graphics_private;
@@ -50,6 +48,8 @@ pub mod input {
     pub use input_private::mouse;
     pub use input_private::Button;
 }
+
+pub mod audio;
 
 
 mod camera;
