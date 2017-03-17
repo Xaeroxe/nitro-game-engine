@@ -5,8 +5,6 @@ extern crate chrono;
 extern crate serde_derive;
 extern crate bincode;
 #[macro_use]
-extern crate unborrow;
-#[macro_use]
 extern crate enum_primitive;
 extern crate num;
 
@@ -16,6 +14,9 @@ pub extern crate nalgebra;
 
 mod app;
 pub use app::App;
+
+mod audio;
+pub use audio::Audio;
 
 mod game_object;
 pub use game_object::GameObject;
