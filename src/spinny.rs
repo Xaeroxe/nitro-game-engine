@@ -13,7 +13,7 @@ impl Component for Spinny {
     fn receive_message(&mut self, app: &mut App, game_object: &mut GameObject, message: &Message) {
         match *message {
             Message::Start { .. } => {
-                app.audio.play_sound("example.ogg");
+                app.play_sound("example.ogg", 1.0).expect("Sound failed to play.");
             }
 
             Message::Update { delta_time } => {
