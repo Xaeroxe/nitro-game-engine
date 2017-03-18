@@ -1,4 +1,4 @@
-use Vector;
+use math::Vector;
 use std::f32;
 
 pub struct PolarCoords {

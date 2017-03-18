@@ -1,4 +1,4 @@
-use transform::Transform;
+use math::Transform;
 
 pub struct Camera {
     pub transform: Transform,

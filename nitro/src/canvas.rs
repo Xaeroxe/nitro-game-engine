@@ -3,7 +3,7 @@ use graphics_private::texture::Texture;
 use rect::Rect;
 use sdl2::rect::Rect as SdlRect;
 use sdl2::rect::Point;
-use Vector;
+use math::Vector;
 use sdl2::render::Renderer;
 
 pub struct Canvas<'a> {

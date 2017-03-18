@@ -1,4 +1,4 @@
-use Vector;
+use math::Vector;
 use sdl2::rect::Rect as SdlRect;
 
 pub struct Rect {

@@ -7,7 +7,7 @@ mod actions;
 use nitro::App;
 use nitro::input::{Axis, Button};
 use nitro::input::keyboard::Key;
-use nitro::Vector;
+use nitro::math::Vector;
 use nitro::graphics::Sprite;
 use spinny::Spinny;
 use axes::AxisId;

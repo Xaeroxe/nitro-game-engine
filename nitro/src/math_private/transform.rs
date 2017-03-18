@@ -1,5 +1,5 @@
 use std::f32;
-use Vector;
+use math::Vector;
 
 #[derive(Copy, Clone, Debug)]
 pub struct Transform {

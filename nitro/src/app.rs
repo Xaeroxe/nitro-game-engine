@@ -7,7 +7,7 @@ use sdl2::rect::Rect;
 use sdl2::image::LoadTexture;
 use sdl2::render::Texture as SdlTexture;
 use sdl2::mixer;
-use OptionAway;
+use OptionLoaned;
 use input_private;
 use input::Input;
 use game_object::GameObject;
@@ -17,11 +17,11 @@ use graphics::Texture;
 use graphics_private::texture;
 use graphics::Sprite;
 use graphics_private::sprite_sheet;
-use PolarCoords;
-use Vector;
+use math::PolarCoords;
+use math::Vector;
 use audio::Audio;
 use audio;
-use transform::Transform;
+use math::Transform;
 use Canvas;
 use camera::Camera;
 use nphysics2d::world::World;
@@ -165,7 +165,7 @@ impl App {
             for game_obj in game_objs.values() {
                 if let Some(ref game_obj) = *game_obj {
                     for key in game_obj.component_keys() {
-                        if let OptionAway::Some(component) = game_obj.component(key) {
+                        if let OptionLoaned::Some(component) = game_obj.component(key) {
                             component.render_gui(&mut canvas, game_obj);
                         }
                     }
@@ -232,7 +232,6 @@ impl App {
     ///
     /// This function won't return until the game has been quit.
     pub fn run(&mut self) {
-        mixer::allocate_channels(128);
         let mut last_frame_instant = Instant::now();
         while !self.exit {
             while let Some(e) = self.event_pump.poll_event() {
@@ -289,8 +288,8 @@ impl App {
     ///
     /// Hint: That borrow is most likely in the game_object parameter of the receive_message
     /// function.
-    pub fn game_object_by_id(&self, id: u64) -> OptionAway<&GameObject> {
-        OptionAway::from(self.game_objects.get(&id))
+    pub fn game_object_by_id(&self, id: u64) -> OptionLoaned<&GameObject> {
+        OptionLoaned::from(self.game_objects.get(&id))
     }
 
     /// Retrieves a mutable reference to an existing GameObject by the GameObject's id.
@@ -300,8 +299,8 @@ impl App {
     ///
     /// Hint: That borrow is most likely in the game_object parameter of the receive_message
     /// function.
-    pub fn game_object_by_id_mut(&mut self, id: u64) -> OptionAway<&mut GameObject> {
-        OptionAway::from(self.game_objects.get_mut(&id))
+    pub fn game_object_by_id_mut(&mut self, id: u64) -> OptionLoaned<&mut GameObject> {
+        OptionLoaned::from(self.game_objects.get_mut(&id))
     }
 
     /// Loads a texture and returns it for use.

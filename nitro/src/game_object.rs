@@ -1,8 +1,8 @@
 use app;
 use app::App;
-use OptionAway;
+use OptionLoaned;
 use graphics::Sprite;
-use transform::Transform;
+use math::Transform;
 use component::Component;
 use component::ComponentAny;
 use component::Message;
@@ -74,20 +74,20 @@ impl GameObject {
             }))
     }
 
-    pub fn remove_component(&mut self, app: &mut App, index: i32) -> OptionAway<Box<ComponentAny>> {
+    pub fn remove_component(&mut self, app: &mut App, index: i32) -> OptionLoaned<Box<ComponentAny>> {
         let mut component_result = self.components.remove(&index);
         if let Some(Some(ref mut component)) = component_result {
             component.receive_message(app, self, &Message::OnDetach);
         }
-        OptionAway::from(component_result)
+        OptionLoaned::from(component_result)
     }
 
-    pub fn component(&self, index: i32) -> OptionAway<&Box<ComponentAny>> {
-        OptionAway::from(self.components.get(&index))
+    pub fn component(&self, index: i32) -> OptionLoaned<&Box<ComponentAny>> {
+        OptionLoaned::from(self.components.get(&index))
     }
 
-    pub fn component_mut(&mut self, index: i32) -> OptionAway<&mut Box<ComponentAny>> {
-        OptionAway::from(self.components.get_mut(&index))
+    pub fn component_mut(&mut self, index: i32) -> OptionLoaned<&mut Box<ComponentAny>> {
+        OptionLoaned::from(self.components.get_mut(&index))
     }
 
     pub fn component_with_type<T>(&self, index: i32) -> Option<&T>
