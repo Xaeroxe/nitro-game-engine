@@ -1,34 +1,8 @@
-use Canvas;
-use app::App;
-use game_object::GameObject;
-use std::any::Any;
+mod message;
+pub use self::message::Message;
 
-pub trait Component {
-    fn receive_message(&mut self, app: &mut App, game_object: &mut GameObject, message: &Message);
-    fn render_gui(&self, canvas: &mut Canvas, game_object: &GameObject);
-}
+mod component;
+pub use self::component::Component;
 
-pub trait ComponentAny: Component + Any {
-    fn as_any(&self) -> &Any;
-    fn as_any_mut(&mut self) -> &mut Any;
-}
-
-impl<T> ComponentAny for T
-    where T: Component + Any
-{
-    fn as_any(&self) -> &Any {
-        self
-    }
-
-    fn as_any_mut(&mut self) -> &mut Any {
-        self
-    }
-}
-
-pub enum Message {
-    Start { key: i32 },
-    Update { delta_time: f32 },
-    OnDestroy,
-    OnDetach,
-    UserMessage(Box<Any>),
-}
+mod component_any;
+pub use self::component_any::ComponentAny;
