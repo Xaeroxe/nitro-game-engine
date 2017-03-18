@@ -1,6 +1,6 @@
 use sdl2::render::Texture as SdlTexture;
 use std::sync::Arc;
-use Rect;
+use math::Rect;
 
 pub struct SpriteSheet {
     pub animations: Vec<Vec<SpriteSheetFrame>>,

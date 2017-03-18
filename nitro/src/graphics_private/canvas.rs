@@ -1,6 +1,6 @@
 use graphics_private::texture;
-use graphics_private::texture::Texture;
-use rect::Rect;
+use graphics::Texture;
+use math::Rect;
 use sdl2::rect::Rect as SdlRect;
 use sdl2::rect::Point;
 use math::Vector;

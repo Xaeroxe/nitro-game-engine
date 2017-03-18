@@ -1,4 +1,4 @@
-use Canvas;
+use graphics::Canvas;
 use app::App;
 use game_object::GameObject;
 use component::Message;

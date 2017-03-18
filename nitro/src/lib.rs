@@ -29,19 +29,15 @@ pub mod graphics {
     pub use graphics_private::texture::Texture;
     pub use graphics_private::Sprite;
     pub use graphics_private::sprite_sheet::SpriteSheet;
+    pub use graphics_private::canvas::Canvas;
 }
-
-mod canvas;
-pub use canvas::Canvas;
-
-mod rect;
-pub use rect::Rect;
 
 mod math_private;
 pub mod math {
     pub use math_private::vector::Vector;
     pub use math_private::transform::Transform;
     pub use math_private::polar_coords::PolarCoords;
+    pub use math_private::Rect;
 }
 
 mod input_private;

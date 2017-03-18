@@ -22,7 +22,7 @@ use math::Vector;
 use audio::Audio;
 use audio;
 use math::Transform;
-use Canvas;
+use graphics::Canvas;
 use camera::Camera;
 use nphysics2d::world::World;
 use std::sync::Arc;

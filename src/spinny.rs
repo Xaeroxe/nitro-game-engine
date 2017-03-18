@@ -1,5 +1,5 @@
 use nitro::App;
-use nitro::Canvas;
+use nitro::graphics::Canvas;
 use nitro::component::Component;
 use nitro::component::Message;
 use nitro::GameObject;
