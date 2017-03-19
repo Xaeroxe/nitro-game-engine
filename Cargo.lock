@@ -1,8 +1,17 @@
 [root]
-name = "nitro_example_project"
+name = "nitro"
 version = "0.1.0"
 dependencies = [
- "nitro 0.1.0",
+ "bincode 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "chrono 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "enum_primitive 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nalgebra 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ncollide 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "nphysics2d 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "num 0.1.36 (registry+https://github.com/rust-lang/crates.io-index)",
+ "sdl2 0.29.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde 0.8.19 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde_derive 0.8.23 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -156,22 +165,6 @@ dependencies = [
  "num 0.1.36 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.3.15 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustc-serialize 0.3.22 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "nitro"
-version = "0.1.0"
-dependencies = [
- "bincode 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "chrono 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "enum_primitive 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "nalgebra 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "ncollide 0.10.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "nphysics2d 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "num 0.1.36 (registry+https://github.com/rust-lang/crates.io-index)",
- "sdl2 0.29.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde 0.8.19 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde_derive 0.8.23 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
