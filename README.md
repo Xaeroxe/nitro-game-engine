@@ -39,7 +39,7 @@ Nitro has three major C based dependencies that will need to be setup on your de
 
 If you're on Windows please refer to the
 [nitro-example-project](https://github.com/nitro-devs/nitro-example-project)
-You will need the lib and dll folders, and make sure to add build.rs as
+You will need the dll folder, and make sure to add build.rs as
 a build script.
 
 If you are on Linux or OSX, you will need to install these dependencies.  Here's some commands to help:
