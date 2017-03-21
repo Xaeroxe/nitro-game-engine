@@ -38,6 +38,8 @@ pub mod math {
     pub use math_private::transform::Transform;
     pub use math_private::polar_coords::PolarCoords;
     pub use math_private::Rect;
+    pub use math_private::IntRect;
+    pub use math_private::IntVector;
 }
 
 mod input_private;

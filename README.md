@@ -18,7 +18,7 @@ We're not there yet.  This project is a Work In Progress.  You can make some bas
 
 # Objectives for the near future
 * Improve documentation.
-* Make "cargo build" work out of the box without requiring the user to setup our C dependencies.
+* Add layer masking support.
 * Facilitate easy setup of multiplayer games.
 * Improve asset import (Current asset system is just based on the filesystem.)
 * Create a scene editor
@@ -37,7 +37,10 @@ Nitro has three major C based dependencies that will need to be setup on your de
 * SDL2_image
 * SDL2_mixer
 
-If you're on Windows then you shouldn't need to worry about these as the build script should take care of it for you.
+If you're on Windows please refer to the
+[nitro-example-project](https://github.com/nitro-devs/nitro-example-project)
+You will need the lib and dll folders, and make sure to add build.rs as
+a build script.
 
 If you are on Linux or OSX, you will need to install these dependencies.  Here's some commands to help:
 

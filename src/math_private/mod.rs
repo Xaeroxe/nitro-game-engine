@@ -5,3 +5,7 @@ mod check_and_use;
 pub use self::check_and_use::check_and_use;
 mod rect;
 pub use self::rect::Rect;
+mod int_rect;
+pub use self::int_rect::IntRect;
+mod int_vector;
+pub use self::int_vector::IntVector;

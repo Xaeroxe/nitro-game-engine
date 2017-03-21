@@ -1,6 +1,6 @@
 use graphics_private::texture;
 use graphics::Texture;
-use math::Rect;
+use math::IntRect;
 use sdl2::rect::Rect as SdlRect;
 use sdl2::rect::Point;
 use math::Vector;
@@ -17,8 +17,8 @@ impl<'a> Canvas<'a> {
 
     pub fn draw_texture(&mut self,
                         texture: &Texture,
-                        src: Option<Rect>,
-                        dst: Option<Rect>,
+                        src: Option<IntRect>,
+                        dst: Option<IntRect>,
                         angle: f64,
                         center: Option<Vector>,
                         flip_horizontal: bool,

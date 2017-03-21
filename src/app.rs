@@ -134,18 +134,15 @@ impl App {
                                                     [sprite_sheet.current_frame as usize];
                             let result = self.renderer
                                 .copy_ex(sprite_sheet::get_texture(sprite_sheet),
-                                         Some(Rect::new(current_frame.frame_rect.x() as i32,
-                                                        current_frame.frame_rect.y() as i32,
-                                                        current_frame.frame_rect.width() as u32,
-                                                        current_frame.frame_rect.height() as u32)),
+                                         Some(Rect::from(current_frame.frame_rect)),
                                          Some(Rect::new(((*render_transform.x()) as i32) -
                                                         (current_frame.frame_rect.width() as i32 /
                                                          2),
                                                         ((*render_transform.y()) as i32) -
                                                         (current_frame.frame_rect.height() as i32 /
                                                          2),
-                                                        current_frame.frame_rect.width() as u32,
-                                                        current_frame.frame_rect.height() as u32)),
+                                                        current_frame.frame_rect.width(),
+                                                        current_frame.frame_rect.height())),
                                          (*game_obj.transform.rotation() * 180.0 /
                                           f32::consts::PI) as
                                          f64,
