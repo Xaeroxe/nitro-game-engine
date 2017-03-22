@@ -7,6 +7,9 @@ extern crate bincode;
 #[macro_use]
 extern crate enum_primitive;
 extern crate num;
+extern crate rand;
+#[macro_use]
+extern crate unborrow;
 
 pub extern crate ncollide;
 pub extern crate nphysics2d;
@@ -15,13 +18,15 @@ pub extern crate nalgebra;
 mod app;
 pub use app::App;
 
-mod audio;
-pub use audio::Audio;
+mod audio_private;
+pub mod audio {
+    pub use audio_private::audio::Audio;
+    pub use audio_private::playlist::Playlist;
+}
 
 mod game_object;
 pub use game_object::GameObject;
 
-#[macro_use]
 pub mod component;
 
 mod graphics_private;

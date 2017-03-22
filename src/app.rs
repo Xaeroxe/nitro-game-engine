@@ -20,7 +20,7 @@ use graphics_private::sprite_sheet;
 use math::PolarCoords;
 use math::Vector;
 use audio::Audio;
-use audio;
+use audio_private::audio;
 use math::Transform;
 use graphics::Canvas;
 use camera::Camera;

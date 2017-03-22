@@ -5,6 +5,8 @@ use sdl2::mixer::Sdl2MixerContext;
 use sdl2::mixer;
 use sdl2::AudioSubsystem;
 use std::path::PathBuf;
+use audio::Playlist;
+use audio_private::playlist;
 
 /// Responsible for controlling audio playback in the game.
 ///
@@ -14,6 +16,7 @@ pub struct Audio {
     sound_cache: HashMap<String, Chunk>,
     _audio: AudioSubsystem,
     _mixer: Sdl2MixerContext,
+    pub playlist: Playlist,
 }
 
 impl Audio {
@@ -101,6 +104,7 @@ impl Audio {
 
 pub fn new(audio: AudioSubsystem, mixer: Sdl2MixerContext) -> Audio {
     Audio {
+        playlist: playlist::new(),
         sound_cache: HashMap::new(),
         _audio: audio,
         _mixer: mixer,
