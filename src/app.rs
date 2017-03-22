@@ -21,6 +21,7 @@ use math::PolarCoords;
 use math::Vector;
 use audio::Audio;
 use audio_private::audio;
+use audio_private::playlist;
 use math::Transform;
 use graphics::Canvas;
 use camera::Camera;
@@ -92,7 +93,10 @@ impl App {
         // Clear the screen with grey.
         self.renderer.set_draw_color(Color::RGB(0, 0, 0));
         self.renderer.clear();
-        let (screen_width, screen_height) = self.renderer.window().unwrap().size();
+        let (screen_width, screen_height) = self.renderer
+            .window()
+            .unwrap()
+            .size();
         for game_obj in game_objs.values() {
             if let Some(ref game_obj) = *game_obj {
                 if let Some(ref sprite) = game_obj.sprite {
@@ -130,8 +134,8 @@ impl App {
                         }
                         Sprite::SpriteSheet(ref sprite_sheet) => {
                             let ref current_frame = sprite_sheet.animations[sprite_sheet.current_animation as
-                                                usize]
-                                                    [sprite_sheet.current_frame as usize];
+                            usize]
+                                [sprite_sheet.current_frame as usize];
                             let result = self.renderer
                                 .copy_ex(sprite_sheet::get_texture(sprite_sheet),
                                          Some(Rect::from(current_frame.frame_rect)),
@@ -175,6 +179,8 @@ impl App {
 
     /// Called every frame to simulate the game. Do not put rendering here, that goes in render.
     fn update(&mut self, delta_time: f32) {
+        // Advance audio if necessary.
+        playlist::advance_if_needed(&mut self.audio.playlist);
         //Copy game_object to the physics world, step, then copy from physics to game_object
         for mut game_object in self.game_objects.values_mut() {
             if let Some(game_object) = game_object.as_mut() {
@@ -189,7 +195,10 @@ impl App {
         }
 
         //Send update messages
-        let keys = self.game_objects.keys().map(|x| *x).collect::<Vec<u64>>();
+        let keys = self.game_objects
+            .keys()
+            .map(|x| *x)
+            .collect::<Vec<u64>>();
         for key in keys {
             let mut game_obj_option = None;
             if let Some(game_obj_ref) = self.game_objects.get_mut(&key) {
@@ -238,9 +247,9 @@ impl App {
                 input_private::input::process_event(&mut self.input, &e);
             }
             self.update(Duration::from_std(last_frame_instant.elapsed())
-                .unwrap()
-                .num_microseconds()
-                .unwrap() as f32 / 1000000.0);
+                            .unwrap()
+                            .num_microseconds()
+                            .unwrap() as f32 / 1000000.0);
             last_frame_instant = Instant::now();
             self.render();
         }

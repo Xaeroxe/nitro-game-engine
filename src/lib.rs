@@ -22,6 +22,7 @@ mod audio_private;
 pub mod audio {
     pub use audio_private::audio::Audio;
     pub use audio_private::playlist::Playlist;
+    pub use audio_private::playlist::ShuffleLoop;
 }
 
 mod game_object;
@@ -45,6 +46,7 @@ pub mod math {
     pub use math_private::Rect;
     pub use math_private::IntRect;
     pub use math_private::IntVector;
+    pub use math_private::check_and_use;
 }
 
 mod input_private;

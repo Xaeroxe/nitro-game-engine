@@ -27,4 +27,3 @@ pub fn size(nitro_texture: &Texture) -> (u32, u32) {
 pub fn get_raw(nitro_texture: &Texture) -> &Arc<SdlTexture> {
     &nitro_texture.texture
 }
-

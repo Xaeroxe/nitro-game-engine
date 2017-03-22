@@ -33,7 +33,7 @@ impl Playlist {
     pub fn next_track(&mut self) {
         match self.shuffle_loop {
             ShuffleLoop::Neither => {
-                if self.current_track < self.tracks.len() {
+                if self.current_track < self.tracks.len() - 1 {
                     unborrow!(self.play_track(self.current_track + 1))
                         .expect("Track index invalid.");
                 }
@@ -85,5 +85,11 @@ pub fn new() -> Playlist {
         tracks: Vec::new(),
         current_track: 0,
         shuffle_loop: ShuffleLoop::Neither,
+    }
+}
+
+pub fn advance_if_needed(playlist: &mut Playlist) {
+    if !Music::is_playing() {
+        playlist.next_track();
     }
 }
