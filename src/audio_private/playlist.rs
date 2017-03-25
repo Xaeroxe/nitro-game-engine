@@ -42,6 +42,9 @@ impl Playlist {
     }
 
     pub fn next_track(&mut self) {
+        if self.current_track < self.tracks.len() {
+            Music::halt();
+        }
         if self.current_track < self.tracks.len() - 1 {
             unborrow!(self.play_track(self.current_track + 1))
                 .expect("Track index invalid.");
