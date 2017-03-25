@@ -45,6 +45,7 @@ pub mod math {
     pub use math_private::Rect;
     pub use math_private::IntRect;
     pub use math_private::IntVector;
+    pub use math_private::check_and_use;
 }
 
 mod input_private;

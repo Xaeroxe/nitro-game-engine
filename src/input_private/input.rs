@@ -129,8 +129,8 @@ pub fn process_event(input: &mut Input, input_event: &Event) {
         Event::KeyDown { scancode, repeat, .. } => {
             if !repeat {
                 if let Some(scancode) = scancode {
-                    input.buttons_pressed
-                        .push(Button::Keyboard(Key::from_u32(scancode as u32).unwrap()));
+                    input.buttons_pressed.push(Button::Keyboard(Key::from_u32(scancode as u32)
+                                                                    .unwrap()));
                 }
             }
         }
@@ -148,8 +148,8 @@ pub fn process_event(input: &mut Input, input_event: &Event) {
             }
         }
         Event::MouseButtonDown { mouse_btn, .. } => {
-            input.buttons_pressed
-                .push(Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap()));
+            input.buttons_pressed.push(Button::Mouse(MouseButton::from_u32(mouse_btn as u32)
+                                                         .unwrap()));
         }
         Event::MouseButtonUp { mouse_btn, .. } => {
             while let Some(i) = input.buttons_pressed

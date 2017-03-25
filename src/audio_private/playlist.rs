@@ -80,4 +80,8 @@ impl Playlist {
     }
 }
 
-
+pub fn advance_if_needed(playlist: &mut Playlist) {
+    if !Music::is_playing() {
+        playlist.next_track();
+    }
+}

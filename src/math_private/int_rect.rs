@@ -37,9 +37,9 @@ impl IntRect {
 impl From<SdlRect> for IntRect {
     fn from(sdl_rect: SdlRect) -> IntRect {
         IntRect::new(sdl_rect.x(),
-                  sdl_rect.y(),
-                  sdl_rect.width(),
-                  sdl_rect.height())
+                     sdl_rect.y(),
+                     sdl_rect.width(),
+                     sdl_rect.height())
     }
 }
 

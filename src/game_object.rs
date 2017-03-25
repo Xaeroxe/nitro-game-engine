@@ -48,7 +48,10 @@ impl GameObject {
     }
 
     pub fn receive_message(&mut self, app: &mut App, message: &Message) {
-        for key in self.components.keys().map(|x| *x).collect::<Vec<i32>>() {
+        for key in self.components
+                .keys()
+                .map(|x| *x)
+                .collect::<Vec<i32>>() {
             self.send_message_to_component(app, message, key);
         }
     }
@@ -65,16 +68,21 @@ impl GameObject {
     pub fn component_keys_with_type<'a, T>(&'a self) -> Box<Iterator<Item = i32> + 'a>
         where T: Component + 'static
     {
-        Box::new(self.components
-            .iter()
-            .filter_map(|(k, c)| if let &Some(ref c) = c {
-                if c.as_any().is::<T>() { Some(*k) } else { None }
-            } else {
-                None
-            }))
+        Box::new(self.components.iter().filter_map(|(k, c)| if let &Some(ref c) = c {
+                                                       if c.as_any().is::<T>() {
+                                                           Some(*k)
+                                                       } else {
+                                                           None
+                                                       }
+                                                   } else {
+                                                       None
+                                                   }))
     }
 
-    pub fn remove_component(&mut self, app: &mut App, index: i32) -> OptionLoaned<Box<ComponentAny>> {
+    pub fn remove_component(&mut self,
+                            app: &mut App,
+                            index: i32)
+                            -> OptionLoaned<Box<ComponentAny>> {
         let mut component_result = self.components.remove(&index);
         if let Some(Some(ref mut component)) = component_result {
             component.receive_message(app, self, &Message::OnDetach);
@@ -128,7 +136,11 @@ impl GameObject {
     pub fn add_component<T>(&mut self, app: &mut App, component: T) -> i32
         where T: Component + 'static
     {
-        let new_key = self.components.keys().map(|x| *x).nth(0).unwrap_or(1) - 1;
+        let new_key = self.components
+            .keys()
+            .map(|x| *x)
+            .nth(0)
+            .unwrap_or(1) - 1;
         self.insert_component(app, component, new_key);
         new_key
     }
@@ -158,18 +170,25 @@ pub fn copy_from_physics(game_object: &mut GameObject) {
         let body_borrow = body_box.borrow();
         *game_object.transform.mut_x() = body_borrow.position().translation.x;
         *game_object.transform.mut_y() = body_borrow.position().translation.y;
-        *game_object.transform.mut_rotation() = body_borrow.position().rotation.rotation().x;
+        *game_object.transform.mut_rotation() = body_borrow.position()
+            .rotation
+            .rotation()
+            .x;
     }
 }
 
 pub fn copy_to_physics(game_object: &mut GameObject) {
     if let Some(ref mut body_box) = game_object.body {
-        body_box.borrow_mut().set_transformation(Matrix::<f32> {
-            rotation: Rotation2::new(Vector1 { x: *game_object.transform.rotation() }),
-            translation: Vector2 {
-                x: *game_object.transform.x(),
-                y: *game_object.transform.y(),
-            },
-        });
+        body_box.borrow_mut()
+            .set_transformation(Matrix::<f32> {
+                                    rotation: Rotation2::new(Vector1 {
+                                                                 x: *game_object.transform
+                                                                         .rotation(),
+                                                             }),
+                                    translation: Vector2 {
+                                        x: *game_object.transform.x(),
+                                        y: *game_object.transform.y(),
+                                    },
+                                });
     }
 }
