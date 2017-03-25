@@ -3,53 +3,53 @@ use rand::thread_rng;
 use std::path::PathBuf;
 use rand::Rng;
 
-pub enum ShuffleLoop {
-    Neither,
-    Loop,
-    ShuffleLoop,
-}
-
 pub struct Playlist {
     tracks: Vec<Music<'static>>,
     current_track: usize,
-    pub shuffle_loop: ShuffleLoop,
+    pub shuffle: bool,
+    pub loop_music: bool,
 }
 
 impl Playlist {
-    pub fn start(&mut self) {
-        match self.shuffle_loop {
-            ShuffleLoop::Neither => {
-                self.play_track(0).expect("No tracks present.");
-            }
-            ShuffleLoop::Loop => {
-                self.play_track(0).expect("No tracks present.");
-            }
-            ShuffleLoop::ShuffleLoop => {
-                unborrow!(self.play_track(thread_rng().gen_range(0, self.tracks.len())))
-                    .expect("No tracks present.");
-            }
+    pub fn new() -> Playlist {
+        Playlist {
+            tracks: Vec::new(),
+            current_track: 0,
+            shuffle: false,
+            loop_music: false,
         }
     }
+
+    pub fn start(&mut self) {
+        if self.shuffle {
+            self.shuffle();
+        }
+        self.play_track(0).expect("No tracks present.");
+    }
+
+    fn shuffle(&mut self) {
+        if self.tracks.len() > 1 {
+            let mut new_tracks = Vec::new();
+
+            // Make sure the new first track is never the previous last track.  Keeps from hearing
+            // the same song twice in a row.
+            new_tracks.push(unborrow!(self.tracks.remove(thread_rng().gen_range(0, self.tracks.len()-1))));
+            while self.tracks.len() > 0 {
+                new_tracks.push(unborrow!(self.tracks.remove(thread_rng().gen_range(0, self.tracks.len()))));
+            }
+            self.tracks = new_tracks;
+        }
+    }
+
     pub fn next_track(&mut self) {
-        match self.shuffle_loop {
-            ShuffleLoop::Neither => {
-                if self.current_track < self.tracks.len() {
-                    unborrow!(self.play_track(self.current_track + 1))
-                        .expect("Track index invalid.");
-                }
+        if self.current_track < self.tracks.len() - 1 {
+            unborrow!(self.play_track(self.current_track + 1))
+                .expect("Track index invalid.");
+        } else if self.loop_music {
+            if self.shuffle {
+                self.shuffle();
             }
-            ShuffleLoop::Loop => {
-                if self.current_track < self.tracks.len() - 1 {
-                    unborrow!(self.play_track(self.current_track + 1))
-                        .expect("Track index invalid.");
-                } else {
-                    self.play_track(0).expect("Track index invalid.");
-                }
-            }
-            ShuffleLoop::ShuffleLoop => {
-                unborrow!(self.play_track(thread_rng().gen_range(0, self.tracks.len())))
-                    .expect("Track index invalid.");
-            }
+            self.play_track(0).expect("Track index invalid.");
         }
     }
 
@@ -80,10 +80,4 @@ impl Playlist {
     }
 }
 
-pub fn new() -> Playlist {
-    Playlist {
-        tracks: Vec::new(),
-        current_track: 0,
-        shuffle_loop: ShuffleLoop::Neither,
-    }
-}
+
