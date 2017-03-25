@@ -42,9 +42,7 @@ impl Playlist {
     }
 
     pub fn next_track(&mut self) {
-        if self.current_track < self.tracks.len() {
-            Music::halt();
-        }
+        Music::halt();
         if self.current_track < self.tracks.len() - 1 {
             unborrow!(self.play_track(self.current_track + 1))
                 .expect("Track index invalid.");
@@ -58,9 +56,7 @@ impl Playlist {
 
     /// Returns err if track is not a valid index into self.tracks
     pub fn play_track(&mut self, track: usize) -> Result<(), String> {
-        if self.current_track < self.tracks.len() {
-            Music::halt();
-        }
+        Music::halt();
         if track < self.tracks.len() {
             self.current_track = track;
             self.tracks[track].play(1)?;
