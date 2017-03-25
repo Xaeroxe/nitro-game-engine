@@ -1,6 +1,6 @@
 [package]
 name = "nitro"
-version = "0.4.3"
+version = "0.4.4"
 authors = ["Jacob Kiesel <kieseljake@gmail.com>"]
 description = "A game engine built in Rust"
 license = "MIT/Apache-2.0"
