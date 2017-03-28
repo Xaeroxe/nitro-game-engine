@@ -8,6 +8,7 @@ pub struct Playlist {
     current_track: usize,
     pub shuffle: bool,
     pub loop_music: bool,
+    started: bool,
 }
 
 impl Playlist {
@@ -17,14 +18,26 @@ impl Playlist {
             current_track: 0,
             shuffle: false,
             loop_music: false,
+            started: false,
         }
     }
 
+    /// Start playing this playlist.
+    ///
+    /// Will not auto advance songs unless this playlist is attached to App::audio.playlist
     pub fn start(&mut self) {
         if self.shuffle {
             self.shuffle();
         }
+        self.started = true;
         self.play_track(0).expect("No tracks present.");
+    }
+
+    pub fn stop(&mut self) {
+        if self.started {
+            self.started = false;
+            Music::halt();
+        }
     }
 
     fn shuffle(&mut self) {
@@ -80,7 +93,9 @@ impl Playlist {
 }
 
 pub fn advance_if_needed(playlist: &mut Playlist) {
-    if !Music::is_playing() {
-        playlist.next_track();
+    if playlist.started {
+        if !Music::is_playing() {
+            playlist.next_track();
+        }
     }
 }
