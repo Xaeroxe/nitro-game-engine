@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["from_generics",""],["id",""],["path",""],["ty",""],["where_predicate",""]],"mod":[["generics",""],["ident",""],["invoke",""],["lifetime",""],["path",""],["qpath",""],["ty",""],["ty_param",""],["where_predicate",""]]});

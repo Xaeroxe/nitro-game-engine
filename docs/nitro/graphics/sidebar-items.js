@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["Sprite","Something which can be displayed on screen.  This can optionally be animated."]],"struct":[["Canvas","A canvas that can be drawn on.  Provided for open ended \"draw what you want to here\" operations."],["SpriteSheet","An animation given by a SpriteSheet."],["Texture","A static handle to a texture whose data is managed by Nitro."]]});

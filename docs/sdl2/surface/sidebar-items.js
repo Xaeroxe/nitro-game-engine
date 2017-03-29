@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Surface",""],["SurfaceRef","An unsized Surface reference."]]});

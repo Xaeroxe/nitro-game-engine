@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["WhereBoundPredicateBuilder",""],["WhereBoundPredicateTyBoundsBuilder",""],["WhereBoundPredicateTyBuilder",""],["WherePredicateBuilder",""],["WhereRegionPredicateBuilder",""]]});
