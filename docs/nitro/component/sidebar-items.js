@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Message",""]],"trait":[["Component","Allows GameObjects to be extended with additional behavior."],["ComponentAny","Helper trait for Components, any struct that implements Component and Any automatically implements this trait.  Needed to allow components of a specific type to be queried for on a GameObject."]]});

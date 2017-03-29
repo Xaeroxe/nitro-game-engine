@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["MouseButton","Definitions for mouse buttons.  Intended to be used with nitro::input::Input."]]});
