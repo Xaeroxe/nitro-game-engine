@@ -12,6 +12,10 @@ use nphysics2d::object::{RigidBody, RigidBodyHandle};
 use nphysics2d::math::Matrix;
 use nalgebra::{Rotation2, Vector2, Vector1, Rotation};
 
+/// GameObjects are the primary descriptor for things that are visible in the game world.
+/// Players, items, enemies, and whatever else exists in your game world are typically GameObjects.
+///
+/// To create a new GameObject use nitro::App::new_gameobject().
 pub struct GameObject {
     pub transform: Transform,
     pub sprite: Option<Sprite>,
