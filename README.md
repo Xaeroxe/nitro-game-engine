@@ -1,5 +1,7 @@
 # Nitro game engine [![Crates listing](https://img.shields.io/crates/v/nitro.svg)](https://crates.io/crates/nitro) [![Build Status](https://travis-ci.org/nitro-devs/nitro-game-engine.svg?branch=master)](https://travis-ci.org/nitro-devs/nitro-game-engine/branches) [![Build Status](https://ci.appveyor.com/api/projects/status/github/nitro-devs/nitro-game-engine?branch=master&svg=true)](https://ci.appveyor.com/project/Xaeroxe/nitro-game-engine?branch=master) [![Gitter Chat](https://badges.gitter.im/nitro-game-engine/nitro.svg)](https://gitter.im/nitro-game-engine/nitro)
 
+[Documentation](https://nitro-devs.github.io/nitro-game-engine/nitro/)
+
 Nitro is a game engine built in Rust for Windows, Mac OSX, and Linux systems.
 
 The Nitro project aims to be a complete game development solution, including a scene editor, asset import,
