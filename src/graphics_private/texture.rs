@@ -1,6 +1,7 @@
 use sdl2::render::Texture as SdlTexture;
 use std::sync::Arc;
 
+/// A static handle to a texture whose data is managed by Nitro.
 pub struct Texture {
     width: u32,
     height: u32,

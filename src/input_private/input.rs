@@ -14,6 +14,7 @@ use bincode::SizeLimit;
 use bincode::serde::{serialize, deserialize, DeserializeError};
 use num::FromPrimitive;
 
+/// Allows you to query user input, and save and load keybindings and axes.
 pub struct Input {
     buttons_pressed: Vec<Button>,
     previous_buttons_pressed: Vec<Button>, // buttons_pressed from last frame.

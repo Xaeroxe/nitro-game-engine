@@ -79,7 +79,7 @@ impl App {
             texture_cache: HashMap::new(),
             audio: audio::new(audio, mixer),
             event_pump: sdl_context.event_pump().expect("Failed to initalize event pump."),
-            camera: Camera { transform: Transform::new() },
+            camera: Camera { transform: Transform::new(Vector::new(0.0, 0.0), 0.0) },
             world: World::new(),
         }
     }

@@ -1,6 +1,12 @@
 use math::Vector;
 use std::f32;
 
+/// Polar coordinates, can be converted to and from nitro::math::Vector.
+///
+/// These are useful when doing math that can be more easily described in terms of polar
+/// coordinates, such as when describing orbital patterns.
+///
+/// Vector::from(PolarCoords) and PolarCoords::from(Vector) are the conversion functions.
 pub struct PolarCoords {
     pub rotation: f32,
     pub radius: f32,

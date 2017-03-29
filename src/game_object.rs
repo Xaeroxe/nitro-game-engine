@@ -3,6 +3,7 @@ use app::App;
 use OptionLoaned;
 use graphics::Sprite;
 use math::Transform;
+use math::Vector;
 use component::Component;
 use component::ComponentAny;
 use component::Message;
@@ -158,7 +159,7 @@ pub fn new(app: &mut App) -> GameObject {
     GameObject {
         id: app::next_game_object_id(app),
         drop: false,
-        transform: Transform::new(),
+        transform: Transform::new(Vector::new(0.0, 0.0), 0.0),
         components: BTreeMap::new(),
         sprite: None,
         body: None,

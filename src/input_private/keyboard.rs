@@ -1,4 +1,5 @@
 enum_from_primitive!{
+    /// Definitions for keys on a keyboard.  Intended to be used with nitro::input::Input.
     #[derive(Eq, PartialEq, Copy, Clone, Debug, Serialize, Deserialize)]
     pub enum Key {
         Unknown = 0,

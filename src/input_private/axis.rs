@@ -1,6 +1,8 @@
 use input::Button;
 use input_private::input::Input;
 
+/// An input axis, could be bound to W and S, A and D, up and down, or left and
+/// right.
 #[derive(Serialize, Deserialize, Clone)]
 pub struct Axis {
     pos: Button,

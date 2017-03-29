@@ -6,6 +6,8 @@ use sdl2::rect::Point;
 use math::Vector;
 use sdl2::render::Renderer;
 
+/// A canvas that can be drawn on.  Provided for open ended "draw what you want to here"
+/// operations.
 pub struct Canvas<'a> {
     renderer: &'a mut Renderer<'static>,
 }
