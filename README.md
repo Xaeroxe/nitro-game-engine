@@ -19,7 +19,6 @@ We're not there yet.  This project is a Work In Progress.  You can make some bas
 * Components receive messages from the engine which allow the components to respond to events as they occur.
 
 # Objectives for the near future
-* Improve documentation.
 * Add layer masking support.
 * Facilitate easy setup of multiplayer games.
 * Improve asset import (Current asset system is just based on the filesystem.)
