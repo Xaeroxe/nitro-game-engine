@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `MinkowskiSum` struct in crate `ncollide_geometry`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, MinkowskiSum">
+
+    <title>ncollide_geometry::shape::MinkowskiSum - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>ncollide_geometry</a>::<wbr><a href='index.html'>shape</a></p><script>window.sidebarCurrent = {name: 'MinkowskiSum', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>ncollide_geometry</a>::<wbr><a href='index.html'>shape</a>::<wbr><a class='struct' href=''>MinkowskiSum</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/ncollide_geometry/shape/minkowski_sum.rs.html#26-31' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct MinkowskiSum&lt;'a, M:&nbsp;'a, G1:&nbsp;?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + 'a, G2:&nbsp;?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + 'a&gt; { /* fields omitted */ }</pre><div class='docblock'><p>SupportMap representation of the Minkowski sum of two shapes.</p>
+
+<p>The only way to obtain the sum points is to use its support mapping
+function.</p>
+
+<ul>
+<li><code>G1</code>: type of the first object involved on the sum.</li>
+<li><code>G2</code>: type of the second object involved on the sum.</li>
+</ul>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, M, G1:&nbsp;?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>, G2:&nbsp;?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt; <a class='struct' href='../../ncollide_geometry/shape/struct.MinkowskiSum.html' title='ncollide_geometry::shape::MinkowskiSum'>MinkowskiSum</a>&lt;'a, M, G1, G2&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ncollide_geometry/shape/minkowski_sum.rs.html#33-66' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(m1: &amp;'a M,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; g1: &amp;'a G1,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; m2: &amp;'a M,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; g2: &amp;'a G2)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='struct' href='../../ncollide_geometry/shape/struct.MinkowskiSum.html' title='ncollide_geometry::shape::MinkowskiSum'>MinkowskiSum</a>&lt;'a, M, G1, G2&gt;</code></span></h4>
+<div class='docblock'><p>Builds the Minkowski sum of two shapes. Since the representation is
+implicit, this is done in constant time.</p>
+</div><h4 id='method.m1' class='method'><span id='m1.v' class='invisible'><code>fn <a href='#method.m1' class='fnname'>m1</a>(&amp;self) -&gt; &amp;'a M</code></span></h4>
+<div class='docblock'><p>The transformation matrix of the first shape of this Minkowski Sum.</p>
+</div><h4 id='method.m2' class='method'><span id='m2.v' class='invisible'><code>fn <a href='#method.m2' class='fnname'>m2</a>(&amp;self) -&gt; &amp;'a M</code></span></h4>
+<div class='docblock'><p>The transformation matrix of the second shape of this Minkowski Sum.</p>
+</div><h4 id='method.g1' class='method'><span id='g1.v' class='invisible'><code>fn <a href='#method.g1' class='fnname'>g1</a>(&amp;self) -&gt; &amp;'a G1</code></span></h4>
+<div class='docblock'><p>The first shape of this Minkowski Sum.</p>
+</div><h4 id='method.g2' class='method'><span id='g2.v' class='invisible'><code>fn <a href='#method.g2' class='fnname'>g2</a>(&amp;self) -&gt; &amp;'a G2</code></span></h4>
+<div class='docblock'><p>The second shape of this Minkowski Sum.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, M:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + 'a, G1:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + 'a, G2:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + 'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../ncollide_geometry/shape/struct.MinkowskiSum.html' title='ncollide_geometry::shape::MinkowskiSum'>MinkowskiSum</a>&lt;'a, M, G1, G2&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ncollide_geometry/shape/minkowski_sum.rs.html#25' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a, P, M, G1:&nbsp;?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>, G2:&nbsp;?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt; <a class='trait' href='../../ncollide_geometry/shape/trait.SupportMap.html' title='ncollide_geometry::shape::SupportMap'>SupportMap</a>&lt;P, <a class='struct' href='../../nalgebra/structs/matrix/struct.Identity.html' title='nalgebra::structs::matrix::Identity'>Identity</a>&gt; for <a class='struct' href='../../ncollide_geometry/shape/struct.MinkowskiSum.html' title='ncollide_geometry::shape::MinkowskiSum'>MinkowskiSum</a>&lt;'a, M, G1, G2&gt; <span class='where fmt-newline'>where P: <a class='trait' href='../../ncollide_math/trait.Point.html' title='ncollide_math::Point'>Point</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;G1: <a class='trait' href='../../ncollide_geometry/shape/trait.SupportMap.html' title='ncollide_geometry::shape::SupportMap'>SupportMap</a>&lt;P, M&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;G2: <a class='trait' href='../../ncollide_geometry/shape/trait.SupportMap.html' title='ncollide_geometry::shape::SupportMap'>SupportMap</a>&lt;P, M&gt;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ncollide_geometry/shape/minkowski_sum.rs.html#406-414' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.support_point' class='method'><span id='support_point.v' class='invisible'><code>fn <a href='../../ncollide_geometry/shape/trait.SupportMap.html#tymethod.support_point' class='fnname'>support_point</a>(&amp;self, _: &amp;<a class='struct' href='../../nalgebra/structs/matrix/struct.Identity.html' title='nalgebra::structs::matrix::Identity'>Identity</a>, dir: &amp;P::<a class='trait' href='../../ncollide_math/trait.Point.html' title='ncollide_math::Point'>Vect</a>) -&gt; P</code></span></h4>
+<div class='docblock'><p>Evaluates the support function of the object. A support function is a function associating a vector to the shape point which maximizes their dot product. This does not include the <code>margin</code> of the object. Margins are shape-dependent. Use <code>support_point</code> to sample the complete shape. <a href="../../ncollide_geometry/shape/trait.SupportMap.html#tymethod.support_point">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a, P, M, M2, G1:&nbsp;?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>, G2:&nbsp;?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt; <a class='trait' href='../../ncollide_geometry/query/trait.RayCast.html' title='ncollide_geometry::query::RayCast'>RayCast</a>&lt;P, M2&gt; for <a class='struct' href='../../ncollide_geometry/shape/struct.MinkowskiSum.html' title='ncollide_geometry::shape::MinkowskiSum'>MinkowskiSum</a>&lt;'a, M, G1, G2&gt; <span class='where fmt-newline'>where P: <a class='trait' href='../../ncollide_math/trait.Point.html' title='ncollide_math::Point'>Point</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;M2: <a class='trait' href='../../nalgebra/traits/geometry/trait.Transform.html' title='nalgebra::traits::geometry::Transform'>Transform</a>&lt;P&gt; + <a class='trait' href='../../nalgebra/traits/geometry/trait.Translate.html' title='nalgebra::traits::geometry::Translate'>Translate</a>&lt;P&gt; + <a class='trait' href='../../nalgebra/traits/geometry/trait.Rotate.html' title='nalgebra::traits::geometry::Rotate'>Rotate</a>&lt;P::<a class='trait' href='../../ncollide_math/trait.Point.html' title='ncollide_math::Point'>Vect</a>&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;G1: <a class='trait' href='../../ncollide_geometry/shape/trait.SupportMap.html' title='ncollide_geometry::shape::SupportMap'>SupportMap</a>&lt;P, M&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;G2: <a class='trait' href='../../ncollide_geometry/shape/trait.SupportMap.html' title='ncollide_geometry::shape::SupportMap'>SupportMap</a>&lt;P, M&gt;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ncollide_geometry/query/ray_internal/ray_support_map.rs.html#128-144' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.toi_and_normal_with_ray' class='method'><span id='toi_and_normal_with_ray.v' class='invisible'><code>fn <a href='../../ncollide_geometry/query/trait.RayCast.html#tymethod.toi_and_normal_with_ray' class='fnname'>toi_and_normal_with_ray</a>(&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; m: &amp;M2,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ray: &amp;<a class='struct' href='../../ncollide_geometry/query/ray_internal/struct.Ray.html' title='ncollide_geometry::query::ray_internal::Ray'>Ray</a>&lt;P&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; solid: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../ncollide_geometry/query/ray_internal/struct.RayIntersection.html' title='ncollide_geometry::query::ray_internal::RayIntersection'>RayIntersection</a>&lt;P::<a class='trait' href='../../ncollide_math/trait.Point.html' title='ncollide_math::Point'>Vect</a>&gt;&gt;</code></span></h4>
+<div class='docblock'><p>Computes the time of impact, and normal between this transformed shape and a ray.</p>
+</div><h4 id='method.toi_with_ray' class='method'><span id='toi_with_ray.v' class='invisible'><code>fn <a href='../../ncollide_geometry/query/trait.RayCast.html#method.toi_with_ray' class='fnname'>toi_with_ray</a>(&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; m: &amp;M,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ray: &amp;<a class='struct' href='../../ncollide_geometry/query/ray_internal/struct.Ray.html' title='ncollide_geometry::query::ray_internal::Ray'>Ray</a>&lt;P&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; solid: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;P::<a class='trait' href='../../ncollide_math/trait.Point.html' title='ncollide_math::Point'>Vect</a>::<a class='trait' href='../../ncollide_math/trait.Vector.html' title='ncollide_math::Vector'>Scalar</a>&gt;</code></span></h4>
+<div class='docblock'><p>Computes the time of impact between this transform shape and a ray.</p>
+</div><h4 id='method.toi_and_normal_and_uv_with_ray' class='method'><span id='toi_and_normal_and_uv_with_ray.v' class='invisible'><code>fn <a href='../../ncollide_geometry/query/trait.RayCast.html#method.toi_and_normal_and_uv_with_ray' class='fnname'>toi_and_normal_and_uv_with_ray</a>(&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; m: &amp;M,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ray: &amp;<a class='struct' href='../../ncollide_geometry/query/ray_internal/struct.Ray.html' title='ncollide_geometry::query::ray_internal::Ray'>Ray</a>&lt;P&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; solid: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../ncollide_geometry/query/ray_internal/struct.RayIntersection.html' title='ncollide_geometry::query::ray_internal::RayIntersection'>RayIntersection</a>&lt;P::<a class='trait' href='../../ncollide_math/trait.Point.html' title='ncollide_math::Point'>Vect</a>&gt;&gt;</code></span></h4>
+<div class='docblock'><p>Computes time of impact, normal, and texture coordinates (uv) between this transformed shape and a ray. <a href="../../ncollide_geometry/query/trait.RayCast.html#method.toi_and_normal_and_uv_with_ray">Read more</a></p>
+</div><h4 id='method.intersects_ray' class='method'><span id='intersects_ray.v' class='invisible'><code>fn <a href='../../ncollide_geometry/query/trait.RayCast.html#method.intersects_ray' class='fnname'>intersects_ray</a>(&amp;self, m: &amp;M, ray: &amp;<a class='struct' href='../../ncollide_geometry/query/ray_internal/struct.Ray.html' title='ncollide_geometry::query::ray_internal::Ray'>Ray</a>&lt;P&gt;) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>Tests whether a ray intersects this transformed shape.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "ncollide_geometry";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>
