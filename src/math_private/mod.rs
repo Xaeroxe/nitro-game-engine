@@ -7,5 +7,4 @@ mod rect;
 pub use self::rect::Rect;
 mod int_rect;
 pub use self::int_rect::IntRect;
-mod int_vector;
-pub use self::int_vector::IntVector;
+pub mod int_vector;
