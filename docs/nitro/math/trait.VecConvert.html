@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `IntVector` type in crate `nitro`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, IntVector">
+    <meta name="description" content="API documentation for the Rust `VecConvert` trait in crate `nitro`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, VecConvert">
 
-    <title>nitro::math::IntVector - Rust</title>
+    <title>nitro::math::VecConvert - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>nitro</a>::<wbr><a href='index.html'>math</a></p><script>window.sidebarCurrent = {name: 'IntVector', ty: 'type', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>nitro</a>::<wbr><a href='index.html'>math</a></p><script>window.sidebarCurrent = {name: 'VecConvert', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,13 +43,24 @@
         </form>
     </nav>
 
-    <section id='main' class="content type">
-<h1 class='fqn'><span class='in-band'>Type Definition <a href='../index.html'>nitro</a>::<wbr><a href='index.html'>math</a>::<wbr><a class='type' href=''>IntVector</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content trait">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>nitro</a>::<wbr><a href='index.html'>math</a>::<wbr><a class='trait' href=''>VecConvert</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/nitro/math_private/int_vector.rs.html#4' title='goto source code'>[src]</a></span></h1>
-<pre class='rust typedef'>type IntVector = <a class='type' href='../../nphysics2d/math/type.Vector.html' title='nphysics2d::math::Vector'>Vector</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>&gt;;</pre></section>
+               </span><a class='srclink' href='../../src/nitro/math_private/vector.rs.html#6-8' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait VecConvert {
+    fn <a href='#tymethod.to_int_vec' class='fnname'>to_int_vec</a>(&amp;self) -&gt; <a class='type' href='../../nitro/math/type.IntVector.html' title='nitro::math::IntVector'>IntVector</a>;
+}</pre>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.to_int_vec' class='method'><span id='to_int_vec.v' class='invisible'><code>fn <a href='#tymethod.to_int_vec' class='fnname'>to_int_vec</a>(&amp;self) -&gt; <a class='type' href='../../nitro/math/type.IntVector.html' title='nitro::math::IntVector'>IntVector</a></code></span></h3></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    <li><code>impl VecConvert for <a class='type' href='../../nitro/math/type.Vector.html' title='nitro::math::Vector'>Vector</a></code></li>
+</ul><script type="text/javascript" async
+                         src="../../implementors/nitro/math/trait.VecConvert.js">
+                 </script></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
