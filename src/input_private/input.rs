@@ -13,6 +13,7 @@ use std::collections::HashMap;
 use bincode::SizeLimit;
 use bincode::serde::{serialize, deserialize, DeserializeError};
 use num::FromPrimitive;
+use input::mouse::Mouse;
 
 /// Allows you to query user input, and save and load keybindings and axes.
 pub struct Input {
@@ -20,6 +21,7 @@ pub struct Input {
     previous_buttons_pressed: Vec<Button>, // buttons_pressed from last frame.
     axes: HashMap<i32, Axis>,
     actions: HashMap<i32, Button>,
+    pub mouse: Mouse,
 }
 
 #[derive(Debug)]
@@ -41,15 +43,6 @@ impl From<DeserializeError> for ReadBincodeFileError {
 }
 
 impl Input {
-    pub fn new() -> Input {
-        Input {
-            buttons_pressed: vec![],
-            previous_buttons_pressed: vec![],
-            axes: HashMap::new(),
-            actions: HashMap::new(),
-        }
-    }
-
     pub fn load_bindings(&mut self, path: &str) -> Result<(), ReadBincodeFileError> {
         let mut f = File::open(path)?;
         let mut buf = Vec::new();
@@ -122,6 +115,16 @@ impl Input {
     pub fn is_button_released(&self, button: Button) -> bool {
         !(&self.buttons_pressed).into_iter().any(|&b| b == button) &&
         (&self.previous_buttons_pressed).into_iter().any(|&b| b == button)
+    }
+}
+
+pub fn new(mouse_util: MouseUtil) -> Input {
+    Input {
+        buttons_pressed: vec![],
+        previous_buttons_pressed: vec![],
+        axes: HashMap::new(),
+        actions: HashMap::new(),
+        mouse: mouse::new(mouse_util),
     }
 }
 

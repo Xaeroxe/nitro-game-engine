@@ -70,11 +70,13 @@ impl App {
             .expect("Failed to open audio");
         mixer::allocate_channels(256);
         mixer::reserve_channels(128);
+        let mut input = Input::new();
+        mouse::set_mouse_util(&mut input.mouse, sdl_context.mouse());
         App {
             exit: false,
             next_game_object_id: 0,
             game_objects: HashMap::new(),
-            input: Input::new(),
+            input: input,
             renderer: renderer,
             texture_cache: HashMap::new(),
             audio: audio::new(audio, mixer),

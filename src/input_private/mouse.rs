@@ -16,3 +16,38 @@ enum_from_primitive! {
         Button8,
     }
 }
+
+/// Used to get input from the player's mouse, access from nitro::App.input.mouse
+pub struct Mouse {
+    mouse_util: MouseUtil,
+    pos: Vector,
+    relative_pos: Vector,
+}
+
+impl Mouse {
+    pub fn pos(&self) -> Vector {
+        pos
+    }
+
+    pub fn set_show_cursor(&mut self, input: bool) {
+        mouse_util.show_cursor(input);
+    }
+
+    pub fn set_relative_mode(&mut self, input: bool) {
+        mouse_util.set_relative_mouse_mode(input);
+    }
+}
+
+pub fn new(mouse_util: MouseUtil) -> Mouse {
+    Mouse {
+        mouse_util: mouse_util,
+        pos: Vector::new(0.0, 0.0),
+        relative_pos: Vector::new(0.0, 0.0),
+    }
+}
+
+pub fn process_event(mouse: &mut Mouse, event: &Event) {
+    match *input_event {
+        _ => {}
+    }
+}
