@@ -3,6 +3,7 @@ use input::keyboard::Key;
 use input::mouse::MouseButton;
 use input::Button;
 use input::Axis;
+use math::IntVector;
 use std::io::Result as IOResult;
 use std::io::Error;
 use std::io::Write;
@@ -116,6 +117,10 @@ impl Input {
         !(&self.buttons_pressed).into_iter().any(|&b| b == button) &&
         (&self.previous_buttons_pressed).into_iter().any(|&b| b == button)
     }
+
+    pub fn mouse_pos(&self) -> IntVector {
+        self.mouse_pos
+    }
 }
 
 pub fn new(mouse_util: MouseUtil) -> Input {
@@ -163,6 +168,9 @@ pub fn process_event(input: &mut Input, input_event: &Event) {
                 }) {
                 input.buttons_pressed.swap_remove(i);
             }
+        }
+        Event::MouseMotion{..} => {
+            input.mouse.process_event(input_event);
         }
         _ => {}
     }
