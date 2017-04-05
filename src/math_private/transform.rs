@@ -63,19 +63,13 @@ impl Transform {
     /// Useful for making an object go forward.  Multiply by -1 to get backwards.
     /// This direction could also be called up.  It's a matter of perspective.
     pub fn forward(&self) -> Vector {
-        Vector {
-            x: -self.rotation().sin(),
-            y: self.rotation().cos(),
-        }
+        Vector::new(-self.rotation().sin(), self.rotation().cos())
     }
 
     /// This vector points to the right relative to the Transform's rotation
     ///
     /// Useful for making an object go to its right.  Multiply by -1 to get left.
     pub fn right(&self) -> Vector {
-        Vector {
-            x: self.rotation().cos(),
-            y: self.rotation().sin(),
-        }
+        Vector::new(self.rotation().cos(), self.rotation().sin())
     }
 }

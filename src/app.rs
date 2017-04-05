@@ -10,6 +10,8 @@ use sdl2::mixer;
 use OptionLoaned;
 use input_private;
 use input::Input;
+use input_private::input;
+use input_private::mouse;
 use game_object::GameObject;
 use component::Message;
 use game_object;
@@ -70,8 +72,7 @@ impl App {
             .expect("Failed to open audio");
         mixer::allocate_channels(256);
         mixer::reserve_channels(128);
-        let mut input = Input::new();
-        mouse::set_mouse_util(&mut input.mouse, sdl_context.mouse());
+        let mut input = input::new(sdl_context.mouse());
         App {
             exit: false,
             next_game_object_id: 0,

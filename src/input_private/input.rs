@@ -1,6 +1,8 @@
 use sdl2::event::Event;
+use sdl2::mouse::MouseUtil;
 use input::keyboard::Key;
 use input::mouse::MouseButton;
+use input_private::mouse;
 use input::Button;
 use input::Axis;
 use math::IntVector;
@@ -117,10 +119,6 @@ impl Input {
         !(&self.buttons_pressed).into_iter().any(|&b| b == button) &&
         (&self.previous_buttons_pressed).into_iter().any(|&b| b == button)
     }
-
-    pub fn mouse_pos(&self) -> IntVector {
-        self.mouse_pos
-    }
 }
 
 pub fn new(mouse_util: MouseUtil) -> Input {
@@ -170,7 +168,7 @@ pub fn process_event(input: &mut Input, input_event: &Event) {
             }
         }
         Event::MouseMotion{..} => {
-            input.mouse.process_event(input_event);
+            mouse::process_event(&mut input.mouse, input_event);
         }
         _ => {}
     }

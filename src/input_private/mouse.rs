@@ -1,3 +1,8 @@
+use math::IntVector;
+use math::Vector;
+use sdl2::event::Event;
+use sdl2::mouse::MouseUtil;
+
 // ***WARNING***:
 // Many trait impls are highly dependent on the fact that this enum is identical to
 // the keycodes enum from SDL2
@@ -26,15 +31,15 @@ pub struct Mouse {
 
 impl Mouse {
     pub fn pos(&self) -> Vector {
-        pos
+        self.pos
     }
 
     pub fn set_show_cursor(&mut self, input: bool) {
-        mouse_util.show_cursor(input);
+        self.mouse_util.show_cursor(input);
     }
 
     pub fn set_relative_mode(&mut self, input: bool) {
-        mouse_util.set_relative_mouse_mode(input);
+        self.mouse_util.set_relative_mouse_mode(input);
     }
 }
 
@@ -47,9 +52,9 @@ pub fn new(mouse_util: MouseUtil) -> Mouse {
 }
 
 pub fn process_event(mouse: &mut Mouse, event: &Event) {
-    match *input_event {
+    match *event {
         Event::MouseMotion{ x, y, .. } => {
-            mouse.pos = IntVector::new(x, y);
+            mouse.pos = Vector::new(x as f32, y as f32);
         }
         _ => {}
     }
