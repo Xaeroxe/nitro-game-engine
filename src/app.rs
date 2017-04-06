@@ -280,7 +280,7 @@ impl App {
             .window()
             .unwrap()
             .size();
-        self.camera.transform.translation.vector + (self.input.mouse.pos() - IntVector::new(screen_width as i32, screen_height as i32)).to_vec()
+        self.camera.transform.translation.vector + (self.input.mouse.pos() - IntVector::new((screen_width / 2) as i32, (screen_height / 2) as i32)).to_vec()
     }
 
     /// Creates a new GameObject
