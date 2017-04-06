@@ -10,8 +10,6 @@ use component::Message;
 use std::collections::BTreeMap;
 use std::mem::replace;
 use nphysics2d::object::{RigidBody, RigidBodyHandle};
-use nalgebra::{Rotation2, Vector2, Vector1, Rotation};
-use nalgebra::core::Matrix;
 
 /// GameObjects are the primary descriptor for things that are visible in the game world.
 /// Players, items, enemies, and whatever else exists in your game world are typically GameObjects.
@@ -173,26 +171,12 @@ pub fn was_dropped(game_object: &GameObject) -> bool {
 pub fn copy_from_physics(game_object: &mut GameObject) {
     if let &Some(ref body_box) = &game_object.body {
         let body_borrow = body_box.borrow();
-        *game_object.transform.mut_x() = body_borrow.position().translation.vector.x;
-        *game_object.transform.mut_y() = body_borrow.position().translation.vector.y;
-        *game_object.transform.mut_rotation() = body_borrow.position()
-            .rotation
-            .angle();
+        game_object.transform = body_borrow.position().clone();
     }
 }
 
 pub fn copy_to_physics(game_object: &mut GameObject) {
     if let Some(ref mut body_box) = game_object.body {
-        body_box.borrow_mut()
-            .set_transformation(Matrix::<f32> {
-                                    rotation: Rotation2::new(Vector1 {
-                                                                 x: *game_object.transform
-                                                                         .rotation(),
-                                                             }),
-                                    translation: Vector2 {
-                                        x: *game_object.transform.x(),
-                                        y: *game_object.transform.y(),
-                                    },
-                                });
+        body_box.borrow_mut().set_transformation(game_object.transform.clone());
     }
 }

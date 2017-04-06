@@ -5,7 +5,6 @@ use input::mouse::MouseButton;
 use input_private::mouse;
 use input::Button;
 use input::Axis;
-use math::IntVector;
 use std::io::Result as IOResult;
 use std::io::Error;
 use std::io::Write;

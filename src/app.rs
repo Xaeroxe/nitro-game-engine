@@ -11,7 +11,6 @@ use OptionLoaned;
 use input_private;
 use input::Input;
 use input_private::input;
-use input_private::mouse;
 use game_object::GameObject;
 use component::Message;
 use game_object;
@@ -21,6 +20,8 @@ use graphics::Sprite;
 use graphics_private::sprite_sheet;
 use math::PolarCoords;
 use math::Vector;
+use math::IntVector;
+use math_private::int_vector::IntVecConvert;
 use audio::Audio;
 use audio_private::audio;
 use audio_private::playlist;
@@ -28,6 +29,8 @@ use math::Transform;
 use graphics::Canvas;
 use camera::Camera;
 use nphysics2d::world::World;
+use nphysics2d::math::Translation;
+use nalgebra::geometry::UnitComplex;
 use std::sync::Arc;
 use std::mem::replace;
 use std::collections::HashMap;
@@ -72,7 +75,7 @@ impl App {
             .expect("Failed to open audio");
         mixer::allocate_channels(256);
         mixer::reserve_channels(128);
-        let mut input = input::new(sdl_context.mouse());
+        let input = input::new(sdl_context.mouse());
         App {
             exit: false,
             next_game_object_id: 0,
@@ -104,27 +107,27 @@ impl App {
             if let Some(ref game_obj) = *game_obj {
                 if let Some(ref sprite) = game_obj.sprite {
                     let mut render_transform = game_obj.transform;
-                    *render_transform.mut_x() -= *camera_transform.x();
-                    *render_transform.mut_y() -= *camera_transform.y();
-                    let mut polar = PolarCoords::from(render_transform.position().clone());
-                    polar.rotation -= *camera_transform.rotation();
-                    *render_transform.mut_position() = Vector::from(polar);
-                    *render_transform.mut_x() += (screen_width / 2) as f32;
-                    *render_transform.mut_y() += (screen_height / 2) as f32;
-                    *render_transform.mut_rotation() -= *camera_transform.rotation();
+                    render_transform.translation.vector.x -= camera_transform.translation.vector.x;
+                    render_transform.translation.vector.y -= camera_transform.translation.vector.y;
+                    let mut polar = PolarCoords::from(render_transform.translation.vector.clone());
+                    polar.rotation -= camera_transform.rotation.angle();
+                    render_transform.translation = Translation::from_vector(Vector::from(polar));
+                    render_transform.translation.vector.x += (screen_width / 2) as f32;
+                    render_transform.translation.vector.y += (screen_height / 2) as f32;
+                    render_transform.rotation = UnitComplex::from_angle(render_transform.rotation.angle() - camera_transform.rotation.angle());
                     match *sprite {
                         Sprite::Texture(ref texture) => {
                             let (tex_width, tex_height) = texture::size(texture);
-                            let render_rect = Rect::new(((*render_transform.x()) as i32) -
+                            let render_rect = Rect::new((render_transform.translation.vector.x as i32) -
                                                         (tex_width as i32 / 2),
-                                                        ((*render_transform.y()) as i32) -
+                                                        (render_transform.translation.vector.y as i32) -
                                                         (tex_height as i32 / 2),
                                                         tex_width,
                                                         tex_height);
                             let result = self.renderer.copy_ex(texture::get_raw(texture),
                                                                None,
                                                                Some(render_rect),
-                                                               (*game_obj.transform.rotation() *
+                                                               (game_obj.transform.rotation.angle() *
                                                                 180.0 /
                                                                 f32::consts::PI) as
                                                                f64,
@@ -142,15 +145,15 @@ impl App {
                             let result = self.renderer
                                 .copy_ex(sprite_sheet::get_texture(sprite_sheet),
                                          Some(Rect::from(current_frame.frame_rect)),
-                                         Some(Rect::new(((*render_transform.x()) as i32) -
+                                         Some(Rect::new((render_transform.translation.vector.x as i32) -
                                                         (current_frame.frame_rect.width() as i32 /
                                                          2),
-                                                        ((*render_transform.y()) as i32) -
+                                                        (render_transform.translation.vector.y as i32) -
                                                         (current_frame.frame_rect.height() as i32 /
                                                          2),
                                                         current_frame.frame_rect.width(),
                                                         current_frame.frame_rect.height())),
-                                         (*game_obj.transform.rotation() * 180.0 /
+                                         (game_obj.transform.rotation.angle() * 180.0 /
                                           f32::consts::PI) as
                                          f64,
                                          None,
@@ -209,7 +212,6 @@ impl App {
             }
             if let Some(ref mut game_obj) = game_obj_option {
                 game_obj.update(self, delta_time);
-                *game_obj.transform.mut_rotation() %= 2.0 * f32::consts::PI;
             }
             if let Some(game_obj_ref) = self.game_objects.get_mut(&key) {
                 replace(game_obj_ref, game_obj_option);
@@ -271,6 +273,14 @@ impl App {
 
     pub fn camera_mut(&mut self) -> &mut Camera {
         &mut self.camera
+    }
+
+    pub fn world_mouse_pos(&self) -> Vector {
+         let (screen_width, screen_height) = self.renderer
+            .window()
+            .unwrap()
+            .size();
+        self.camera.transform.translation.vector + (self.input.mouse.pos() - IntVector::new(screen_width as i32, screen_height as i32)).to_vec()
     }
 
     /// Creates a new GameObject
