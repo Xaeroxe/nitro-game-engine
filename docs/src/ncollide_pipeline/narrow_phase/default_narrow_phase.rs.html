@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_pipeline-0.9.0/narrow_phase/default_narrow_phase.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_pipeline-0.10.0/narrow_phase/default_narrow_phase.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>default_narrow_phase.rs.html -- source</title>
@@ -214,7 +214,7 @@
 <span class='doccomment'>/// Collision detector dispatcher for collision objects.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>DefaultNarrowPhase</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
     <span class='ident'>contact_dispatcher</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ContactDispatcher</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>,
-    <span class='ident'>contact_generators</span>:  <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>Pair</span>, <span class='ident'>ContactAlgorithm</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>, <span class='ident'>PairTWHash</span><span class='op'>&gt;</span>,
+    <span class='ident'>contact_generators</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>Pair</span>, <span class='ident'>ContactAlgorithm</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>, <span class='ident'>PairTWHash</span><span class='op'>&gt;</span>,
 
     <span class='ident'>proximity_dispatcher</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ProximityDispatcher</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>,
     <span class='ident'>proximity_detectors</span>:  <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>Pair</span>, <span class='ident'>ProximityAlgorithm</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>, <span class='ident'>PairTWHash</span><span class='op'>&gt;</span>,
@@ -222,7 +222,7 @@
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> <span class='ident'>DefaultNarrowPhase</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Creates a new `DefaultNarrowPhase`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>contact_dispatcher</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ContactDispatcher</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>,
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>contact_dispatcher</span>:   <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ContactDispatcher</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>,
                <span class='ident'>proximity_dispatcher</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ProximityDispatcher</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>)
                <span class='op'>-&gt;</span> <span class='ident'>DefaultNarrowPhase</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
         <span class='ident'>DefaultNarrowPhase</span> {

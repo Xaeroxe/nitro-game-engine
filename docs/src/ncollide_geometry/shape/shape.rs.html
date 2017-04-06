@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.2.0/shape/shape.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.3.0/shape/shape.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>shape.rs.html -- source</title>
@@ -190,18 +190,22 @@
 <span id="145">145</span>
 <span id="146">146</span>
 <span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::{<span class='ident'>Any</span>, <span class='ident'>TypeId</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::<span class='ident'>Deref</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>Arc</span>;
+
 <span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
+
 <span class='comment'>// Repr.</span>
 <span class='kw'>use</span> <span class='ident'>shape</span>::{<span class='ident'>CompositeShape</span>, <span class='ident'>SupportMap</span>};
 <span class='comment'>// Queries.</span>
 <span class='kw'>use</span> <span class='ident'>bounding_volume</span>::{<span class='ident'>AABB</span>, <span class='ident'>BoundingSphere</span>};
 <span class='kw'>use</span> <span class='ident'>query</span>::{<span class='ident'>RayCast</span>, <span class='ident'>PointQuery</span>};
+<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
 
 <span class='doccomment'>/// Trait implemented by all shapes supported by ncollide.</span>
 <span class='doccomment'>///</span>

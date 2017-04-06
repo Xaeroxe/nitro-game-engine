@@ -48,16 +48,17 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/ncollide_geometry/bounding_volume/bounding_volume.rs.html#12-36' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait BoundingVolume&lt;N&gt; {
+               </span><a class='srclink' href='../../src/ncollide_geometry/bounding_volume/bounding_volume.rs.html#14-43' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait BoundingVolume&lt;P:&nbsp;<a class='trait' href='../../ncollide_math/point/trait.Point.html' title='ncollide_math::point::Point'>Point</a>&gt; {
+    fn <a href='#tymethod.center' class='fnname'>center</a>(&amp;self) -&gt; P;
     fn <a href='#tymethod.intersects' class='fnname'>intersects</a>(&amp;self, _: &amp;Self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
     fn <a href='#tymethod.contains' class='fnname'>contains</a>(&amp;self, _: &amp;Self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
     fn <a href='#tymethod.merge' class='fnname'>merge</a>(&amp;mut self, _: &amp;Self);
     fn <a href='#tymethod.merged' class='fnname'>merged</a>(&amp;self, _: &amp;Self) -&gt; Self;
-    fn <a href='#tymethod.loosen' class='fnname'>loosen</a>(&amp;mut self, _: N);
-    fn <a href='#tymethod.loosened' class='fnname'>loosened</a>(&amp;self, _: N) -&gt; Self;
-    fn <a href='#tymethod.tighten' class='fnname'>tighten</a>(&amp;mut self, _: N);
-    fn <a href='#tymethod.tightened' class='fnname'>tightened</a>(&amp;self, _: N) -&gt; Self;
+    fn <a href='#tymethod.loosen' class='fnname'>loosen</a>(&amp;mut self, _: P::<a class='trait' href='../../alga/linear/vector/trait.EuclideanSpace.html' title='alga::linear::vector::EuclideanSpace'>Real</a>);
+    fn <a href='#tymethod.loosened' class='fnname'>loosened</a>(&amp;self, _: P::<a class='trait' href='../../alga/linear/vector/trait.EuclideanSpace.html' title='alga::linear::vector::EuclideanSpace'>Real</a>) -&gt; Self;
+    fn <a href='#tymethod.tighten' class='fnname'>tighten</a>(&amp;mut self, _: P::<a class='trait' href='../../alga/linear/vector/trait.EuclideanSpace.html' title='alga::linear::vector::EuclideanSpace'>Real</a>);
+    fn <a href='#tymethod.tightened' class='fnname'>tightened</a>(&amp;self, _: P::<a class='trait' href='../../alga/linear/vector/trait.EuclideanSpace.html' title='alga::linear::vector::EuclideanSpace'>Real</a>) -&gt; Self;
 }</pre><div class='docblock'><p>Trait of bounding volumes.</p>
 
 <p>Bounding volumes are coarse approximations of shapes. It usually have constant time
@@ -66,19 +67,20 @@ volume.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.intersects' class='method'><span id='intersects.v' class='invisible'><code>fn <a href='#tymethod.intersects' class='fnname'>intersects</a>(&amp;self, _: &amp;Self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><div class='docblock'><p>Checks if this bounding volume intersect with another one.</p>
+        <h3 id='tymethod.center' class='method'><span id='center.v' class='invisible'><code>fn <a href='#tymethod.center' class='fnname'>center</a>(&amp;self) -&gt; P</code></span></h3><div class='docblock'><p>Returns a point inside of this bounding volume. This is ideally its center.</p>
+</div><h3 id='tymethod.intersects' class='method'><span id='intersects.v' class='invisible'><code>fn <a href='#tymethod.intersects' class='fnname'>intersects</a>(&amp;self, _: &amp;Self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><div class='docblock'><p>Checks if this bounding volume intersect with another one.</p>
 </div><h3 id='tymethod.contains' class='method'><span id='contains.v' class='invisible'><code>fn <a href='#tymethod.contains' class='fnname'>contains</a>(&amp;self, _: &amp;Self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><div class='docblock'><p>Checks if this bounding volume contains another one.</p>
 </div><h3 id='tymethod.merge' class='method'><span id='merge.v' class='invisible'><code>fn <a href='#tymethod.merge' class='fnname'>merge</a>(&amp;mut self, _: &amp;Self)</code></span></h3><div class='docblock'><p>Merges this bounding volume with another one. The merge is done in-place.</p>
 </div><h3 id='tymethod.merged' class='method'><span id='merged.v' class='invisible'><code>fn <a href='#tymethod.merged' class='fnname'>merged</a>(&amp;self, _: &amp;Self) -&gt; Self</code></span></h3><div class='docblock'><p>Merges this bounding volume with another one.</p>
-</div><h3 id='tymethod.loosen' class='method'><span id='loosen.v' class='invisible'><code>fn <a href='#tymethod.loosen' class='fnname'>loosen</a>(&amp;mut self, _: N)</code></span></h3><div class='docblock'><p>Enlarges this bounding volume.</p>
-</div><h3 id='tymethod.loosened' class='method'><span id='loosened.v' class='invisible'><code>fn <a href='#tymethod.loosened' class='fnname'>loosened</a>(&amp;self, _: N) -&gt; Self</code></span></h3><div class='docblock'><p>Creates a new, enlarged version, of this bounding volume.</p>
-</div><h3 id='tymethod.tighten' class='method'><span id='tighten.v' class='invisible'><code>fn <a href='#tymethod.tighten' class='fnname'>tighten</a>(&amp;mut self, _: N)</code></span></h3><div class='docblock'><p>Tighten this bounding volume.</p>
-</div><h3 id='tymethod.tightened' class='method'><span id='tightened.v' class='invisible'><code>fn <a href='#tymethod.tightened' class='fnname'>tightened</a>(&amp;self, _: N) -&gt; Self</code></span></h3><div class='docblock'><p>Creates a new, tightened version, of this bounding volume.</p>
+</div><h3 id='tymethod.loosen' class='method'><span id='loosen.v' class='invisible'><code>fn <a href='#tymethod.loosen' class='fnname'>loosen</a>(&amp;mut self, _: P::<a class='trait' href='../../alga/linear/vector/trait.EuclideanSpace.html' title='alga::linear::vector::EuclideanSpace'>Real</a>)</code></span></h3><div class='docblock'><p>Enlarges this bounding volume.</p>
+</div><h3 id='tymethod.loosened' class='method'><span id='loosened.v' class='invisible'><code>fn <a href='#tymethod.loosened' class='fnname'>loosened</a>(&amp;self, _: P::<a class='trait' href='../../alga/linear/vector/trait.EuclideanSpace.html' title='alga::linear::vector::EuclideanSpace'>Real</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Creates a new, enlarged version, of this bounding volume.</p>
+</div><h3 id='tymethod.tighten' class='method'><span id='tighten.v' class='invisible'><code>fn <a href='#tymethod.tighten' class='fnname'>tighten</a>(&amp;mut self, _: P::<a class='trait' href='../../alga/linear/vector/trait.EuclideanSpace.html' title='alga::linear::vector::EuclideanSpace'>Real</a>)</code></span></h3><div class='docblock'><p>Tighten this bounding volume.</p>
+</div><h3 id='tymethod.tightened' class='method'><span id='tightened.v' class='invisible'><code>fn <a href='#tymethod.tightened' class='fnname'>tightened</a>(&amp;self, _: P::<a class='trait' href='../../alga/linear/vector/trait.EuclideanSpace.html' title='alga::linear::vector::EuclideanSpace'>Real</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Creates a new, tightened version, of this bounding volume.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;P&gt; BoundingVolume&lt;P::<a class='trait' href='../../ncollide_math/trait.Point.html' title='ncollide_math::Point'>Vect</a>::<a class='trait' href='../../ncollide_math/trait.Vector.html' title='ncollide_math::Vector'>Scalar</a>&gt; for <a class='struct' href='../../ncollide_geometry/bounding_volume/struct.AABB.html' title='ncollide_geometry::bounding_volume::AABB'>AABB</a>&lt;P&gt; <span class='where fmt-newline'>where P: <a class='trait' href='../../ncollide_math/trait.Point.html' title='ncollide_math::Point'>Point</a></span></code></li>
-<li><code>impl&lt;P&gt; BoundingVolume&lt;P::<a class='trait' href='../../ncollide_math/trait.Point.html' title='ncollide_math::Point'>Vect</a>::<a class='trait' href='../../ncollide_math/trait.Vector.html' title='ncollide_math::Vector'>Scalar</a>&gt; for <a class='struct' href='../../ncollide_geometry/bounding_volume/struct.BoundingSphere.html' title='ncollide_geometry::bounding_volume::BoundingSphere'>BoundingSphere</a>&lt;P&gt; <span class='where fmt-newline'>where P: <a class='trait' href='../../ncollide_math/trait.Point.html' title='ncollide_math::Point'>Point</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P::<a class='trait' href='../../ncollide_math/trait.Point.html' title='ncollide_math::Point'>Vect</a>: <a class='trait' href='../../nalgebra/traits/geometry/trait.Translate.html' title='nalgebra::traits::geometry::Translate'>Translate</a>&lt;P&gt;</span></code></li>
+    <li><code>impl&lt;P:&nbsp;<a class='trait' href='../../ncollide_math/point/trait.Point.html' title='ncollide_math::point::Point'>Point</a>&gt; BoundingVolume&lt;P&gt; for <a class='struct' href='../../ncollide_geometry/bounding_volume/struct.AABB.html' title='ncollide_geometry::bounding_volume::AABB'>AABB</a>&lt;P&gt;</code></li>
+<li><code>impl&lt;P:&nbsp;<a class='trait' href='../../ncollide_math/point/trait.Point.html' title='ncollide_math::point::Point'>Point</a>&gt; BoundingVolume&lt;P&gt; for <a class='struct' href='../../ncollide_geometry/bounding_volume/struct.BoundingSphere.html' title='ncollide_geometry::bounding_volume::BoundingSphere'>BoundingSphere</a>&lt;P&gt;</code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/ncollide_geometry/bounding_volume/trait.BoundingVolume.js">
                  </script></section>

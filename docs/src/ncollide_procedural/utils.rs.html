@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_procedural-0.5.0/utils.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_procedural-0.6.0/utils.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>utils.rs.html -- source</title>
@@ -286,27 +286,25 @@
 <span id="241">241</span>
 <span id="242">242</span>
 <span id="243">243</span>
-<span id="244">244</span>
-<span id="245">245</span>
-<span id="246">246</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Utilities useful for various generations tasks.</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Index</span>, <span class='ident'>IndexMut</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>hash_map</span>::<span class='ident'>Entry</span>;
+<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Zero</span>;
+
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
 <span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='ident'>Point3</span>, <span class='ident'>Dimension</span>, <span class='ident'>Cross</span>, <span class='ident'>Origin</span>};
-<span class='kw'>use</span> <span class='ident'>ncollide_utils</span>::{<span class='ident'>HashablePartialEq</span>, <span class='ident'>AsBytes</span>};
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Scalar</span>, <span class='ident'>Point</span>, <span class='ident'>Vector</span>};
+<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='ident'>Scalar</span>, <span class='ident'>Point3</span>};
+<span class='kw'>use</span> <span class='ident'>ncollide_utils</span>::{<span class='self'>self</span>, <span class='ident'>HashablePartialEq</span>, <span class='ident'>AsBytes</span>};
+<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
 
 <span class='comment'>// FIXME: remove that in favor of `push_xy_circle` ?</span>
 <span class='doccomment'>/// Pushes a discretized counterclockwise circle to a buffer.</span>
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>push_circle</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span>(<span class='ident'>radius</span>: <span class='ident'>N</span>, <span class='ident'>nsubdiv</span>: <span class='ident'>u32</span>, <span class='ident'>dtheta</span>: <span class='ident'>N</span>, <span class='ident'>y</span>: <span class='ident'>N</span>, <span class='ident'>out</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>) {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>curr_theta</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>push_circle</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='ident'>radius</span>: <span class='ident'>N</span>, <span class='ident'>nsubdiv</span>: <span class='ident'>u32</span>, <span class='ident'>dtheta</span>: <span class='ident'>N</span>, <span class='ident'>y</span>: <span class='ident'>N</span>, <span class='ident'>out</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>) {
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>curr_theta</span> <span class='op'>=</span> <span class='ident'>N</span>::<span class='ident'>zero</span>();
 
     <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='number'>0</span> .. <span class='ident'>nsubdiv</span> {
         <span class='ident'>out</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>curr_theta</span>.<span class='ident'>cos</span>() <span class='op'>*</span> <span class='ident'>radius</span>, <span class='ident'>y</span>.<span class='ident'>clone</span>(), <span class='ident'>curr_theta</span>.<span class='ident'>sin</span>() <span class='op'>*</span> <span class='ident'>radius</span>));
@@ -317,19 +315,17 @@
 <span class='doccomment'>/// Pushes a discretized counterclockwise circle to a buffer.</span>
 <span class='doccomment'>/// The circle is contained on the plane spanned by the `x` and `y` axis.</span>
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>push_xy_arc</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>P</span><span class='op'>&gt;</span>(<span class='ident'>radius</span>: <span class='ident'>N</span>, <span class='ident'>nsubdiv</span>: <span class='ident'>u32</span>, <span class='ident'>dtheta</span>: <span class='ident'>N</span>, <span class='ident'>out</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>)
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span>,
-          <span class='ident'>P</span>: <span class='ident'>Dimension</span> <span class='op'>+</span> <span class='ident'>Origin</span> <span class='op'>+</span> <span class='ident'>Index</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>IndexMut</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>N</span><span class='op'>&gt;</span> {
-    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>() <span class='op'>&gt;=</span> <span class='number'>2</span>);
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>push_xy_arc</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span>(<span class='ident'>radius</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>, <span class='ident'>nsubdiv</span>: <span class='ident'>u32</span>, <span class='ident'>dtheta</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>, <span class='ident'>out</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>) {
+    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span>() <span class='op'>&gt;=</span> <span class='number'>2</span>);
 
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>curr_theta</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>curr_theta</span> <span class='op'>=</span> <span class='ident'>P</span>::<span class='ident'>Real</span>::<span class='ident'>zero</span>();
 
     <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='number'>0</span> .. <span class='ident'>nsubdiv</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>pt</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>origin</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>pt_coords</span> <span class='op'>=</span> <span class='ident'>P</span>::<span class='ident'>Vector</span>::<span class='ident'>zero</span>();
 
-        <span class='ident'>pt</span>[<span class='number'>0</span>] <span class='op'>=</span> <span class='ident'>curr_theta</span>.<span class='ident'>cos</span>() <span class='op'>*</span> <span class='ident'>radius</span>;
-        <span class='ident'>pt</span>[<span class='number'>1</span>] <span class='op'>=</span> <span class='ident'>curr_theta</span>.<span class='ident'>sin</span>() <span class='op'>*</span> <span class='ident'>radius</span>;
-        <span class='ident'>out</span>.<span class='ident'>push</span>(<span class='ident'>pt</span>);
+        <span class='ident'>pt_coords</span>[<span class='number'>0</span>] <span class='op'>=</span> <span class='ident'>curr_theta</span>.<span class='ident'>cos</span>() <span class='op'>*</span> <span class='ident'>radius</span>;
+        <span class='ident'>pt_coords</span>[<span class='number'>1</span>] <span class='op'>=</span> <span class='ident'>curr_theta</span>.<span class='ident'>sin</span>() <span class='op'>*</span> <span class='ident'>radius</span>;
+        <span class='ident'>out</span>.<span class='ident'>push</span>(<span class='ident'>P</span>::<span class='ident'>from_coordinates</span>(<span class='ident'>pt_coords</span>));
 
         <span class='ident'>curr_theta</span> <span class='op'>=</span> <span class='ident'>curr_theta</span> <span class='op'>+</span> <span class='ident'>dtheta</span>;
     }
@@ -406,7 +402,7 @@
 <span class='doccomment'>/// * `dr` - the down-left point.</span>
 <span class='doccomment'>/// * `ur` - the up-left point.</span>
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>push_rectangle_indices</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Clone</span><span class='op'>&gt;</span>(<span class='ident'>ul</span>: <span class='ident'>T</span>, <span class='ident'>ur</span>: <span class='ident'>T</span>, <span class='ident'>dl</span>: <span class='ident'>T</span>, <span class='ident'>dr</span>: <span class='ident'>T</span>, <span class='ident'>out</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span>) {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>push_rectangle_indices</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span>(<span class='ident'>ul</span>: <span class='ident'>T</span>, <span class='ident'>ur</span>: <span class='ident'>T</span>, <span class='ident'>dl</span>: <span class='ident'>T</span>, <span class='ident'>dr</span>: <span class='ident'>T</span>, <span class='ident'>out</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span>) {
     <span class='ident'>out</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>ul</span>.<span class='ident'>clone</span>(), <span class='ident'>dl</span>, <span class='ident'>dr</span>.<span class='ident'>clone</span>()));
     <span class='ident'>out</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>dr</span>        , <span class='ident'>ur</span>, <span class='ident'>ul</span>));
 }
@@ -415,7 +411,7 @@
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>reverse_clockwising</span>(<span class='ident'>indices</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span>]) {
     <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='ident'>indices</span>.<span class='ident'>iter_mut</span>() {
-        <span class='ident'>mem</span>::<span class='ident'>swap</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>i</span>.<span class='ident'>x</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>i</span>.<span class='ident'>y</span>);
+        <span class='ident'>i</span>.<span class='ident'>coords</span>.<span class='ident'>swap</span>((<span class='number'>0</span>, <span class='number'>0</span>), (<span class='number'>1</span>, <span class='number'>0</span>));
     }
 }
 
@@ -431,8 +427,7 @@
             <span class='ident'>Point3</span>::<span class='ident'>new</span>(
                 <span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>vertex</span>.<span class='ident'>x</span>, <span class='ident'>vertex</span>.<span class='ident'>x</span>, <span class='ident'>vertex</span>.<span class='ident'>x</span>),
                 <span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>vertex</span>.<span class='ident'>y</span>, <span class='ident'>vertex</span>.<span class='ident'>y</span>, <span class='ident'>vertex</span>.<span class='ident'>y</span>),
-                <span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>vertex</span>.<span class='ident'>z</span>, <span class='ident'>vertex</span>.<span class='ident'>z</span>, <span class='ident'>vertex</span>.<span class='ident'>z</span>)
-                )
+                <span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>vertex</span>.<span class='ident'>z</span>, <span class='ident'>vertex</span>.<span class='ident'>z</span>, <span class='ident'>vertex</span>.<span class='ident'>z</span>))
             );
     }
 
@@ -492,12 +487,11 @@
     (<span class='ident'>out</span>, <span class='ident'>new_coords</span>)
 }
 
+<span class='comment'>// FIXME: check at compile-time that we are in 3D?</span>
 <span class='doccomment'>/// Computes the normals of a set of vertices.</span>
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>compute_normals</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(<span class='ident'>coordinates</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>P</span>], <span class='ident'>faces</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span>], <span class='ident'>normals</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span><span class='op'>&gt;</span>)
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span>,
-          <span class='ident'>P</span>::<span class='ident'>Vect</span>: <span class='ident'>Vector</span> <span class='op'>+</span> <span class='ident'>Cross</span><span class='op'>&lt;</span><span class='ident'>CrossProductType</span> <span class='op'>=</span> <span class='op'>&lt;</span><span class='ident'>P</span> <span class='kw'>as</span> <span class='ident'>Point</span><span class='op'>&gt;</span>::<span class='ident'>Vect</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>divisor</span>: <span class='ident'>Vec</span><span class='op'>&lt;&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>iter</span>::<span class='ident'>repeat</span>(<span class='ident'>na</span>::<span class='ident'>zero</span>()).<span class='ident'>take</span>(<span class='ident'>coordinates</span>.<span class='ident'>len</span>()).<span class='ident'>collect</span>();
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>compute_normals</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span>(<span class='ident'>coordinates</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>P</span>], <span class='ident'>faces</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span>], <span class='ident'>normals</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span>) {
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>divisor</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>iter</span>::<span class='ident'>repeat</span>(<span class='ident'>na</span>::<span class='ident'>zero</span>()).<span class='ident'>take</span>(<span class='ident'>coordinates</span>.<span class='ident'>len</span>()).<span class='ident'>collect</span>();
 
     <span class='comment'>// Shrink the output buffer if it is too big.</span>
     <span class='kw'>if</span> <span class='ident'>normals</span>.<span class='ident'>len</span>() <span class='op'>&gt;</span> <span class='ident'>coordinates</span>.<span class='ident'>len</span>() {
@@ -506,16 +500,16 @@
 
     <span class='comment'>// Reinit all normals to zero.</span>
     <span class='ident'>normals</span>.<span class='ident'>clear</span>();
-    <span class='ident'>normals</span>.<span class='ident'>extend</span>(<span class='ident'>iter</span>::<span class='ident'>repeat</span>(<span class='ident'>na</span>::<span class='ident'>zero</span>::<span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span><span class='op'>&gt;</span>()).<span class='ident'>take</span>(<span class='ident'>coordinates</span>.<span class='ident'>len</span>()));
+    <span class='ident'>normals</span>.<span class='ident'>extend</span>(<span class='ident'>iter</span>::<span class='ident'>repeat</span>(<span class='ident'>na</span>::<span class='ident'>zero</span>::<span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span>()).<span class='ident'>take</span>(<span class='ident'>coordinates</span>.<span class='ident'>len</span>()));
 
     <span class='comment'>// Accumulate normals ...</span>
     <span class='kw'>for</span> <span class='ident'>f</span> <span class='kw'>in</span> <span class='ident'>faces</span>.<span class='ident'>iter</span>() {
-        <span class='kw'>let</span> <span class='ident'>edge1</span>  <span class='op'>=</span> <span class='ident'>coordinates</span>[<span class='ident'>f</span>.<span class='ident'>y</span> <span class='kw'>as</span> <span class='ident'>usize</span>] <span class='op'>-</span> <span class='ident'>coordinates</span>[<span class='ident'>f</span>.<span class='ident'>x</span> <span class='kw'>as</span> <span class='ident'>usize</span>];
-        <span class='kw'>let</span> <span class='ident'>edge2</span>  <span class='op'>=</span> <span class='ident'>coordinates</span>[<span class='ident'>f</span>.<span class='ident'>z</span> <span class='kw'>as</span> <span class='ident'>usize</span>] <span class='op'>-</span> <span class='ident'>coordinates</span>[<span class='ident'>f</span>.<span class='ident'>x</span> <span class='kw'>as</span> <span class='ident'>usize</span>];
-        <span class='kw'>let</span> <span class='ident'>cross</span>  <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>cross</span>(<span class='kw-2'>&amp;</span><span class='ident'>edge1</span>, <span class='kw-2'>&amp;</span><span class='ident'>edge2</span>);
+        <span class='kw'>let</span> <span class='ident'>edge1</span> <span class='op'>=</span> <span class='ident'>coordinates</span>[<span class='ident'>f</span>.<span class='ident'>y</span> <span class='kw'>as</span> <span class='ident'>usize</span>] <span class='op'>-</span> <span class='ident'>coordinates</span>[<span class='ident'>f</span>.<span class='ident'>x</span> <span class='kw'>as</span> <span class='ident'>usize</span>];
+        <span class='kw'>let</span> <span class='ident'>edge2</span> <span class='op'>=</span> <span class='ident'>coordinates</span>[<span class='ident'>f</span>.<span class='ident'>z</span> <span class='kw'>as</span> <span class='ident'>usize</span>] <span class='op'>-</span> <span class='ident'>coordinates</span>[<span class='ident'>f</span>.<span class='ident'>x</span> <span class='kw'>as</span> <span class='ident'>usize</span>];
+        <span class='kw'>let</span> <span class='ident'>cross</span> <span class='op'>=</span> <span class='ident'>ncollide_utils</span>::<span class='ident'>cross3</span>(<span class='kw-2'>&amp;</span><span class='ident'>edge1</span>, <span class='kw-2'>&amp;</span><span class='ident'>edge2</span>);
         <span class='kw'>let</span> <span class='ident'>normal</span>;
 
-        <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>na</span>::<span class='ident'>is_zero</span>(<span class='kw-2'>&amp;</span><span class='ident'>cross</span>) {
+        <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>cross</span>.<span class='ident'>is_zero</span>() {
             <span class='ident'>normal</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>normalize</span>(<span class='kw-2'>&amp;</span><span class='ident'>cross</span>)
         }
         <span class='kw'>else</span> {

@@ -1,1 +1,1 @@
-initSidebarItems({"type":[["AngularInertia","The inertia tensor type."],["Matrix","The transformation matrix type."],["Orientation","The orientation type."],["Point","The point type."],["RotationMatrix","The rotation matrix type."],["Vector","The vector type."]]});
+initSidebarItems({"type":[["AngularInertia","The inertia tensor type."],["Isometry","The transformation matrix type."],["Orientation","The orientation type."],["Point","The point type."],["Rotation","The rotation matrix type."],["Translation","The translation type."],["Vector","The vector type."]]});

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.5.0/src/utils/deterministic_state.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.6.1/src/utils/deterministic_state.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>deterministic_state.rs.html -- source</title>
@@ -64,24 +64,24 @@
 <span id="19">19</span>
 <span id="20">20</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>hash</span>::<span class='ident'>SipHasher</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>hash_map</span>::<span class='ident'>DefaultHasher</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>hash</span>::<span class='ident'>BuildHasher</span>;
 
-<span class='doccomment'>/// A hasher builder that creates `SipHasher` with default keys.</span>
+<span class='doccomment'>/// A hasher builder that creates `DefaultHasher` with default keys.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>DeterministicState</span>;
 
 <span class='kw'>impl</span> <span class='ident'>DeterministicState</span> {
-    <span class='doccomment'>/// Creates a new `DeterministicState` that builds `SipHasher` with default keys.</span>
+    <span class='doccomment'>/// Creates a new `DeterministicState` that builds `DefaultHasher` with default keys.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>DeterministicState</span> {
         <span class='ident'>DeterministicState</span>
     }
 }
 
 <span class='kw'>impl</span> <span class='ident'>BuildHasher</span> <span class='kw'>for</span> <span class='ident'>DeterministicState</span> {
-    <span class='kw'>type</span> <span class='ident'>Hasher</span> <span class='op'>=</span> <span class='ident'>SipHasher</span>;
+    <span class='kw'>type</span> <span class='ident'>Hasher</span> <span class='op'>=</span> <span class='ident'>DefaultHasher</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>build_hasher</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>SipHasher</span> {
-        <span class='ident'>SipHasher</span>::<span class='ident'>new</span>()
+    <span class='kw'>fn</span> <span class='ident'>build_hasher</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>DefaultHasher</span> {
+        <span class='ident'>DefaultHasher</span>::<span class='ident'>new</span>()
     }
 }
 </pre>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.5.0/src/resolution/constraint/accumulated_impulse_solver.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.6.1/src/resolution/constraint/accumulated_impulse_solver.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>accumulated_impulse_solver.rs.html -- source</title>
@@ -446,14 +446,16 @@
 <span id="401">401</span>
 <span id="402">402</span>
 <span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>RefCell</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>;
 <span class='comment'>// use rand::RngUtil;</span>
-<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='self'>self</span>, <span class='ident'>Translation</span>, <span class='ident'>Transformation</span>, <span class='ident'>RotationWithTranslation</span>};
-<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>math</span>::<span class='ident'>Scalar</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Vector</span>, <span class='ident'>Orientation</span>, <span class='ident'>Matrix</span>};
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
+<span class='kw'>use</span> <span class='ident'>na</span>;
+<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Vector</span>, <span class='ident'>Orientation</span>, <span class='ident'>Rotation</span>, <span class='ident'>Translation</span>, <span class='ident'>Isometry</span>};
 <span class='kw'>use</span> <span class='ident'>detection</span>::<span class='ident'>constraint</span>::<span class='ident'>Constraint</span>;
 <span class='kw'>use</span> <span class='ident'>detection</span>::<span class='ident'>joint</span>::<span class='ident'>Joint</span>;
 <span class='kw'>use</span> <span class='ident'>object</span>::<span class='ident'>RigidBody</span>;
@@ -469,7 +471,7 @@
 
 
 <span class='doccomment'>/// Constraint solver using the projected gauss seidel algorithm and warm-starting.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>AccumulatedImpulseSolver</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>AccumulatedImpulseSolver</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> {
     <span class='ident'>correction</span>:              <span class='ident'>CorrectionParameters</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
     <span class='ident'>cache</span>:                   <span class='ident'>ImpulseCache</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
     <span class='ident'>num_first_order_iter</span>:    <span class='ident'>usize</span>,
@@ -479,7 +481,7 @@
     <span class='ident'>mj_lambda</span>:               <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Velocities</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='ident'>AccumulatedImpulseSolver</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>AccumulatedImpulseSolver</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Creates a new `AccumulatedImpulseSolver`.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>step</span>:                  <span class='ident'>N</span>,
                <span class='ident'>correction_mode</span>:       <span class='ident'>CorrectionMode</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
@@ -553,7 +555,9 @@
                     <span class='ident'>num_joint_equations</span> <span class='op'>=</span> <span class='ident'>num_joint_equations</span> <span class='op'>+</span> <span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>()
                 },
                 <span class='ident'>Constraint</span>::<span class='ident'>Fixed</span>(_) <span class='op'>=&gt;</span> {
-                    <span class='ident'>num_joint_equations</span> <span class='op'>=</span> <span class='ident'>num_joint_equations</span> <span class='op'>+</span> <span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>() <span class='op'>+</span> <span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>()
+                    <span class='ident'>num_joint_equations</span> <span class='op'>=</span> <span class='ident'>num_joint_equations</span> <span class='op'>+</span>
+                                          <span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>() <span class='op'>+</span>
+                                          <span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>()
                 },
                 <span class='ident'>Constraint</span>::<span class='ident'>RBRB</span>(_, _, _) <span class='op'>=&gt;</span> { }
             }
@@ -632,17 +636,17 @@
             <span class='kw'>let</span> <span class='ident'>curr_lin_vel</span> <span class='op'>=</span> <span class='ident'>rb</span>.<span class='ident'>lin_vel</span>();
             <span class='kw'>let</span> <span class='ident'>curr_ang_vel</span> <span class='op'>=</span> <span class='ident'>rb</span>.<span class='ident'>ang_vel</span>();
 
-            <span class='ident'>rb</span>.<span class='ident'>set_lin_vel</span>(<span class='ident'>curr_lin_vel</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>mj_lambda</span>[<span class='ident'>i</span> <span class='kw'>as</span> <span class='ident'>usize</span>].<span class='ident'>lv</span>);
-            <span class='ident'>rb</span>.<span class='ident'>set_ang_vel</span>(<span class='ident'>curr_ang_vel</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>mj_lambda</span>[<span class='ident'>i</span> <span class='kw'>as</span> <span class='ident'>usize</span>].<span class='ident'>av</span>);
+            <span class='ident'>rb</span>.<span class='ident'>set_lin_vel_internal</span>(<span class='ident'>curr_lin_vel</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>mj_lambda</span>[<span class='ident'>i</span> <span class='kw'>as</span> <span class='ident'>usize</span>].<span class='ident'>lv</span>);
+            <span class='ident'>rb</span>.<span class='ident'>set_ang_vel_internal</span>(<span class='ident'>curr_ang_vel</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>mj_lambda</span>[<span class='ident'>i</span> <span class='kw'>as</span> <span class='ident'>usize</span>].<span class='ident'>av</span>);
         }
 
         <span class='kw'>for</span> (<span class='ident'>i</span>, <span class='ident'>dv</span>) <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>restitution_constraints</span>.<span class='ident'>iter</span>().<span class='ident'>enumerate</span>() {
             <span class='kw'>let</span> <span class='ident'>imps</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cache</span>.<span class='ident'>push_impulsions</span>();
-            <span class='ident'>imps</span>[<span class='number'>0</span>]  <span class='op'>=</span> <span class='ident'>dv</span>.<span class='ident'>impulse</span> <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>cast</span>::<span class='op'>&lt;</span><span class='ident'>f64</span>, <span class='ident'>N</span><span class='op'>&gt;</span>(<span class='number'>0.85f64</span>);
+            <span class='ident'>imps</span>[<span class='number'>0</span>]  <span class='op'>=</span> <span class='ident'>dv</span>.<span class='ident'>impulse</span> <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>convert</span>::<span class='op'>&lt;</span><span class='ident'>f64</span>, <span class='ident'>N</span><span class='op'>&gt;</span>(<span class='number'>0.85f64</span>);
 
             <span class='kw'>for</span> <span class='ident'>j</span> <span class='kw'>in</span> <span class='number'>0usize</span> .. <span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>() <span class='op'>-</span> <span class='number'>1</span> {
                 <span class='kw'>let</span> <span class='ident'>fc</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>friction_constraints</span>[<span class='ident'>i</span> <span class='op'>*</span> (<span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>() <span class='op'>-</span> <span class='number'>1</span>) <span class='op'>+</span> <span class='ident'>j</span>];
-                <span class='ident'>imps</span>[<span class='number'>1</span> <span class='op'>+</span> <span class='ident'>j</span>] <span class='op'>=</span> <span class='ident'>fc</span>.<span class='ident'>impulse</span> <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>cast</span>::<span class='op'>&lt;</span><span class='ident'>f64</span>, <span class='ident'>N</span><span class='op'>&gt;</span>(<span class='number'>0.85f64</span>);
+                <span class='ident'>imps</span>[<span class='number'>1</span> <span class='op'>+</span> <span class='ident'>j</span>] <span class='op'>=</span> <span class='ident'>fc</span>.<span class='ident'>impulse</span> <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>convert</span>::<span class='op'>&lt;</span><span class='ident'>f64</span>, <span class='ident'>N</span><span class='op'>&gt;</span>(<span class='number'>0.85f64</span>);
             }
         }
 
@@ -654,7 +658,7 @@
         <span class='comment'>/*
          * first order resolution
          */</span>
-        <span class='kw'>let</span> <span class='ident'>needs_correction</span> <span class='op'>=</span> <span class='op'>!</span><span class='ident'>na</span>::<span class='ident'>is_zero</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>correction</span>.<span class='ident'>corr_mode</span>.<span class='ident'>pos_corr_factor</span>()) <span class='op'>&amp;&amp;</span>
+        <span class='kw'>let</span> <span class='ident'>needs_correction</span> <span class='op'>=</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>correction</span>.<span class='ident'>corr_mode</span>.<span class='ident'>pos_corr_factor</span>().<span class='ident'>is_zero</span>() <span class='op'>&amp;&amp;</span>
             <span class='ident'>constraints</span>.<span class='ident'>iter</span>().<span class='ident'>any</span>(<span class='op'>|</span><span class='ident'>constraint</span><span class='op'>|</span> {
             <span class='kw'>match</span> <span class='kw-2'>*</span><span class='ident'>constraint</span> {
                 <span class='ident'>Constraint</span>::<span class='ident'>RBRB</span>(_, _, <span class='kw-2'>ref</span> <span class='ident'>c</span>) <span class='op'>=&gt;</span>
@@ -692,13 +696,13 @@
                 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>rb</span> <span class='op'>=</span> <span class='ident'>b</span>.<span class='ident'>borrow_mut</span>();
                 <span class='kw'>let</span> <span class='ident'>i</span>      <span class='op'>=</span> <span class='ident'>rb</span>.<span class='ident'>index</span>();
 
-                <span class='kw'>let</span> <span class='ident'>translation</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>mj_lambda</span>[<span class='ident'>i</span> <span class='kw'>as</span> <span class='ident'>usize</span>].<span class='ident'>lv</span> <span class='op'>*</span> <span class='ident'>dt</span>;
-                <span class='kw'>let</span> <span class='ident'>rotation</span>    <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>mj_lambda</span>[<span class='ident'>i</span> <span class='kw'>as</span> <span class='ident'>usize</span>].<span class='ident'>av</span> <span class='op'>*</span> <span class='ident'>dt</span>;
+                <span class='kw'>let</span> <span class='ident'>translation</span> <span class='op'>=</span> <span class='ident'>Translation</span>::<span class='ident'>from_vector</span>(<span class='self'>self</span>.<span class='ident'>mj_lambda</span>[<span class='ident'>i</span> <span class='kw'>as</span> <span class='ident'>usize</span>].<span class='ident'>lv</span> <span class='op'>*</span> <span class='ident'>dt</span>);
+                <span class='kw'>let</span> <span class='ident'>rotation</span>    <span class='op'>=</span> <span class='ident'>Rotation</span>::<span class='ident'>from_scaled_axis</span>(<span class='self'>self</span>.<span class='ident'>mj_lambda</span>[<span class='ident'>i</span> <span class='kw'>as</span> <span class='ident'>usize</span>].<span class='ident'>av</span> <span class='op'>*</span> <span class='ident'>dt</span>);
 
-                <span class='kw'>let</span> <span class='ident'>center</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>rb</span>.<span class='ident'>center_of_mass</span>().<span class='ident'>clone</span>();
+                <span class='kw'>let</span> <span class='ident'>center</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>rb</span>.<span class='ident'>center_of_mass</span>();
 
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>delta</span>: <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>one</span>();
-                <span class='ident'>delta</span>.<span class='ident'>append_rotation_wrt_point_mut</span>(<span class='kw-2'>&amp;</span><span class='ident'>rotation</span>, <span class='ident'>center</span>.<span class='ident'>as_vector</span>());
+                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>delta</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>one</span>();
+                <span class='ident'>delta</span>.<span class='ident'>append_rotation_wrt_point_mut</span>(<span class='kw-2'>&amp;</span><span class='ident'>rotation</span>, <span class='kw-2'>&amp;</span><span class='ident'>center</span>);
                 <span class='ident'>delta</span>.<span class='ident'>append_translation_mut</span>(<span class='kw-2'>&amp;</span><span class='ident'>translation</span>);
 
                 <span class='ident'>rb</span>.<span class='ident'>append_transformation</span>(<span class='kw-2'>&amp;</span><span class='ident'>delta</span>);
@@ -707,7 +711,7 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='ident'>Solver</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>Constraint</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>AccumulatedImpulseSolver</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>Solver</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>Constraint</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>AccumulatedImpulseSolver</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>solve</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>dt</span>: <span class='ident'>N</span>, <span class='ident'>constraints</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>Constraint</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>]) {
         <span class='comment'>// FIXME: bodies index assignment is very ugly</span>
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>bodies</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
@@ -782,9 +786,9 @@
 
             <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>id</span> <span class='op'>=</span> <span class='number'>0</span>;
 
-            <span class='kw'>fn</span> <span class='ident'>set_body_index</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span>(<span class='ident'>a</span>:      <span class='kw-2'>&amp;</span><span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>,
-                                         <span class='ident'>bodies</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;&gt;</span>,
-                                         <span class='ident'>id</span>:     <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>isize</span>) {
+            <span class='kw'>fn</span> <span class='ident'>set_body_index</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='ident'>a</span>:      <span class='kw-2'>&amp;</span><span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>,
+                                       <span class='ident'>bodies</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;&gt;</span>,
+                                       <span class='ident'>id</span>:     <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>isize</span>) {
                 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>ba</span> <span class='op'>=</span> <span class='ident'>a</span>.<span class='ident'>borrow_mut</span>();
                 <span class='kw'>if</span> <span class='ident'>ba</span>.<span class='ident'>index</span>() <span class='op'>==</span> <span class='op'>-</span><span class='number'>2</span> {
                     <span class='kw'>if</span> <span class='ident'>ba</span>.<span class='ident'>can_move</span>() {

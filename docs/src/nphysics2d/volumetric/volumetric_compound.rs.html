@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.5.0/src/volumetric/volumetric_compound.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.6.1/src/volumetric/volumetric_compound.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>volumetric_compound.rs.html -- source</title>
@@ -145,117 +145,109 @@
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
-<span id="103">103</span>
-<span id="104">104</span>
-<span id="105">105</span>
-<span id="106">106</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='ident'>Point2</span>, <span class='ident'>Point3</span>, <span class='ident'>Matrix1</span>, <span class='ident'>Matrix3</span>};
+<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Zero</span>;
+
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>linear</span>::<span class='ident'>EuclideanSpace</span>;
 <span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>shape</span>::{<span class='ident'>Compound2</span>, <span class='ident'>Compound3</span>};
-<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>math</span>::<span class='ident'>Scalar</span>;
+<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>shape</span>::<span class='ident'>Compound</span>;
 <span class='kw'>use</span> <span class='ident'>volumetric</span>::{<span class='ident'>Volumetric</span>, <span class='ident'>InertiaTensor</span>};
+<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Isometry</span>, <span class='ident'>AngularInertia</span>};
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>impl_volumetric_compound</span>(
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>: <span class='ident'>ty</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>p</span>: <span class='ident'>ty</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span>: <span class='ident'>ty</span>) <span class='op'>=&gt;</span> (
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='ident'>Volumetric</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>p</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span> {
-            <span class='kw'>fn</span> <span class='ident'>area</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>stot</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>Volumetric</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>AngularInertia</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Compound</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>area</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>stot</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
 
-                <span class='kw'>for</span> <span class='kw-2'>&amp;</span>(_, <span class='kw-2'>ref</span> <span class='ident'>s</span>) <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>shapes</span>().<span class='ident'>iter</span>() {
-                    <span class='ident'>stot</span> <span class='op'>=</span> <span class='ident'>stot</span> <span class='op'>+</span> <span class='ident'>s</span>.<span class='ident'>area</span>()
-                }
-
-                <span class='ident'>stot</span>
-            }
-
-            <span class='kw'>fn</span> <span class='ident'>volume</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>vtot</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
-
-                <span class='kw'>for</span> <span class='kw-2'>&amp;</span>(_, <span class='kw-2'>ref</span> <span class='ident'>s</span>) <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>shapes</span>().<span class='ident'>iter</span>() {
-                    <span class='ident'>vtot</span> <span class='op'>=</span> <span class='ident'>vtot</span> <span class='op'>+</span> <span class='ident'>s</span>.<span class='ident'>volume</span>()
-                }
-
-                <span class='ident'>vtot</span>
-            }
-
-            <span class='kw'>fn</span> <span class='ident'>center_of_mass</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>p</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>mtot</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>::<span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>();
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>ctot</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>origin</span>::<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>p</span><span class='op'>&gt;</span>();
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>gtot</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>origin</span>::<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>p</span><span class='op'>&gt;</span>(); <span class='comment'>// geometric center.</span>
-
-                <span class='kw'>let</span> <span class='ident'>shapes</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>shapes</span>();
-
-                <span class='kw'>for</span> <span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>m</span>, <span class='kw-2'>ref</span> <span class='ident'>s</span>) <span class='kw'>in</span> <span class='ident'>shapes</span>.<span class='ident'>iter</span>() {
-                    <span class='kw'>let</span> (<span class='ident'>mpart</span>, <span class='ident'>cpart</span>, _) <span class='op'>=</span> <span class='ident'>s</span>.<span class='ident'>mass_properties</span>(<span class='ident'>na</span>::<span class='ident'>one</span>());
-
-                    <span class='ident'>mtot</span> <span class='op'>=</span> <span class='ident'>mtot</span> <span class='op'>+</span> <span class='ident'>mpart</span>;
-                    <span class='ident'>ctot</span> <span class='op'>=</span> <span class='ident'>ctot</span> <span class='op'>+</span> (<span class='kw-2'>*</span><span class='ident'>m</span> <span class='op'>*</span> <span class='ident'>cpart</span> <span class='op'>*</span> <span class='ident'>mpart</span>).<span class='ident'>to_vector</span>();
-                    <span class='ident'>gtot</span> <span class='op'>=</span> <span class='ident'>gtot</span> <span class='op'>+</span> (<span class='kw-2'>*</span><span class='ident'>m</span> <span class='op'>*</span> <span class='ident'>cpart</span>).<span class='ident'>to_vector</span>();
-                }
-
-                <span class='kw'>if</span> <span class='ident'>na</span>::<span class='ident'>is_zero</span>(<span class='kw-2'>&amp;</span><span class='ident'>mtot</span>) {
-                    <span class='ident'>gtot</span>
-                }
-                <span class='kw'>else</span> {
-                    <span class='ident'>ctot</span> <span class='op'>/</span> <span class='ident'>mtot</span>
-                }
-            }
-
-            <span class='kw'>fn</span> <span class='ident'>unit_angular_inertia</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>itot</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>::<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span><span class='op'>&gt;</span>();
-
-                <span class='kw'>let</span> <span class='ident'>com</span>    <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>center_of_mass</span>();
-                <span class='kw'>let</span> <span class='ident'>shapes</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>shapes</span>();
-
-                <span class='kw'>for</span> <span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>m</span>, <span class='kw-2'>ref</span> <span class='ident'>s</span>) <span class='kw'>in</span> <span class='ident'>shapes</span>.<span class='ident'>iter</span>() {
-                    <span class='kw'>let</span> (<span class='ident'>mpart</span>, <span class='ident'>cpart</span>, <span class='ident'>ipart</span>) <span class='op'>=</span> <span class='ident'>s</span>.<span class='ident'>mass_properties</span>(<span class='ident'>na</span>::<span class='ident'>one</span>());
-
-                    <span class='ident'>itot</span> <span class='op'>=</span> <span class='ident'>itot</span> <span class='op'>+</span> <span class='ident'>ipart</span>.<span class='ident'>to_world_space</span>(<span class='ident'>m</span>)
-                                       .<span class='ident'>to_relative_wrt_point</span>(<span class='ident'>mpart</span>, <span class='kw-2'>&amp;</span>(<span class='kw-2'>*</span><span class='ident'>m</span> <span class='op'>*</span> <span class='ident'>cpart</span> <span class='op'>+</span> (<span class='op'>-</span><span class='kw-2'>*</span><span class='ident'>com</span>.<span class='ident'>as_vector</span>())));
-                }
-
-                <span class='ident'>itot</span>
-            }
-
-            <span class='doccomment'>/// The mass properties of this `CompoundData`.</span>
-            <span class='doccomment'>///</span>
-            <span class='doccomment'>/// If `density` is not zero, it will be multiplied with the density of every object of the</span>
-            <span class='doccomment'>/// compound shape.</span>
-            <span class='kw'>fn</span> <span class='ident'>mass_properties</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>density</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> (<span class='ident'>N</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>p</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span>) {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>mtot</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>::<span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>();
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>itot</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>::<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span><span class='op'>&gt;</span>();
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>ctot</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>origin</span>::<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>p</span><span class='op'>&gt;</span>();
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>gtot</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>origin</span>::<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>p</span><span class='op'>&gt;</span>(); <span class='comment'>// geometric center.</span>
-
-                <span class='kw'>let</span> <span class='ident'>shapes</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>shapes</span>();
-                <span class='kw'>let</span> <span class='ident'>props</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>shapes</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span>(_, <span class='kw-2'>ref</span> <span class='ident'>s</span>)<span class='op'>|</span> <span class='ident'>s</span>.<span class='ident'>mass_properties</span>(<span class='ident'>na</span>::<span class='ident'>one</span>())).<span class='ident'>collect</span>();
-
-                <span class='kw'>for</span> (<span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>m</span>, _), <span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>mpart</span>, <span class='kw-2'>ref</span> <span class='ident'>cpart</span>, _)) <span class='kw'>in</span> <span class='ident'>shapes</span>.<span class='ident'>iter</span>().<span class='ident'>zip</span>(<span class='ident'>props</span>.<span class='ident'>iter</span>()) {
-                    <span class='ident'>mtot</span> <span class='op'>=</span> <span class='ident'>mtot</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='ident'>mpart</span>;
-                    <span class='ident'>ctot</span> <span class='op'>=</span> <span class='ident'>ctot</span> <span class='op'>+</span> (<span class='kw-2'>*</span><span class='ident'>m</span> <span class='op'>*</span> <span class='kw-2'>*</span><span class='ident'>cpart</span> <span class='op'>*</span> <span class='kw-2'>*</span><span class='ident'>mpart</span>).<span class='ident'>to_vector</span>();
-                    <span class='ident'>gtot</span> <span class='op'>=</span> <span class='ident'>gtot</span> <span class='op'>+</span> (<span class='kw-2'>*</span><span class='ident'>m</span> <span class='op'>*</span> <span class='kw-2'>*</span><span class='ident'>cpart</span>).<span class='ident'>to_vector</span>();
-                }
-
-                <span class='kw'>if</span> <span class='ident'>na</span>::<span class='ident'>is_zero</span>(<span class='kw-2'>&amp;</span><span class='ident'>mtot</span>) {
-                    <span class='ident'>ctot</span> <span class='op'>=</span> <span class='ident'>gtot</span>;
-                }
-                <span class='kw'>else</span> {
-                    <span class='ident'>ctot</span> <span class='op'>=</span> <span class='ident'>ctot</span> <span class='op'>/</span> <span class='ident'>mtot</span>;
-                }
-
-                <span class='kw'>for</span> (<span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>m</span>, _), <span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>mpart</span>, <span class='kw-2'>ref</span> <span class='ident'>cpart</span>, <span class='kw-2'>ref</span> <span class='ident'>ipart</span>)) <span class='kw'>in</span> <span class='ident'>shapes</span>.<span class='ident'>iter</span>().<span class='ident'>zip</span>(<span class='ident'>props</span>.<span class='ident'>iter</span>()) {
-                    <span class='ident'>itot</span> <span class='op'>=</span> <span class='ident'>itot</span> <span class='op'>+</span> <span class='ident'>ipart</span>.<span class='ident'>to_world_space</span>(<span class='ident'>m</span>).<span class='ident'>to_relative_wrt_point</span>(<span class='kw-2'>*</span><span class='ident'>mpart</span>, <span class='kw-2'>&amp;</span>(<span class='kw-2'>*</span><span class='ident'>m</span> <span class='op'>*</span> <span class='kw-2'>*</span><span class='ident'>cpart</span> <span class='op'>+</span> (<span class='op'>-</span><span class='kw-2'>*</span><span class='ident'>ctot</span>.<span class='ident'>as_vector</span>())));
-                }
-
-                (<span class='ident'>mtot</span> <span class='op'>*</span> <span class='ident'>density</span>, <span class='ident'>ctot</span>, <span class='ident'>itot</span> <span class='op'>*</span> <span class='ident'>density</span>)
-            }
+        <span class='kw'>for</span> <span class='kw-2'>&amp;</span>(_, <span class='kw-2'>ref</span> <span class='ident'>s</span>) <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>shapes</span>().<span class='ident'>iter</span>() {
+            <span class='ident'>stot</span> <span class='op'>=</span> <span class='ident'>stot</span> <span class='op'>+</span> <span class='ident'>s</span>.<span class='ident'>area</span>()
         }
-    )
-);
 
-<span class='macro'>impl_volumetric_compound</span><span class='macro'>!</span>(<span class='ident'>Compound2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Point2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Matrix1</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>);
-<span class='macro'>impl_volumetric_compound</span><span class='macro'>!</span>(<span class='ident'>Compound3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Matrix3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>);
+        <span class='ident'>stot</span>
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>volume</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>vtot</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
+
+        <span class='kw'>for</span> <span class='kw-2'>&amp;</span>(_, <span class='kw-2'>ref</span> <span class='ident'>s</span>) <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>shapes</span>().<span class='ident'>iter</span>() {
+            <span class='ident'>vtot</span> <span class='op'>=</span> <span class='ident'>vtot</span> <span class='op'>+</span> <span class='ident'>s</span>.<span class='ident'>volume</span>()
+        }
+
+        <span class='ident'>vtot</span>
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>center_of_mass</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>mtot</span> <span class='op'>=</span> <span class='ident'>N</span>::<span class='ident'>zero</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>ctot</span>: <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>EuclideanSpace</span>::<span class='ident'>origin</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>gtot</span>: <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>EuclideanSpace</span>::<span class='ident'>origin</span>(); <span class='comment'>// geometric center.</span>
+
+        <span class='kw'>let</span> <span class='ident'>shapes</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>shapes</span>();
+
+        <span class='kw'>for</span> <span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>m</span>, <span class='kw-2'>ref</span> <span class='ident'>s</span>) <span class='kw'>in</span> <span class='ident'>shapes</span>.<span class='ident'>iter</span>() {
+            <span class='kw'>let</span> (<span class='ident'>mpart</span>, <span class='ident'>cpart</span>, _) <span class='op'>=</span> <span class='ident'>s</span>.<span class='ident'>mass_properties</span>(<span class='ident'>na</span>::<span class='ident'>one</span>());
+
+            <span class='ident'>mtot</span> <span class='op'>=</span> <span class='ident'>mtot</span> <span class='op'>+</span> <span class='ident'>mpart</span>;
+            <span class='ident'>ctot</span> <span class='op'>=</span> <span class='ident'>ctot</span> <span class='op'>+</span> (<span class='kw-2'>*</span><span class='ident'>m</span> <span class='op'>*</span> <span class='ident'>cpart</span> <span class='op'>*</span> <span class='ident'>mpart</span>).<span class='ident'>coords</span>;
+            <span class='ident'>gtot</span> <span class='op'>=</span> <span class='ident'>gtot</span> <span class='op'>+</span> (<span class='kw-2'>*</span><span class='ident'>m</span> <span class='op'>*</span> <span class='ident'>cpart</span>).<span class='ident'>coords</span>;
+        }
+
+        <span class='kw'>if</span> <span class='ident'>mtot</span>.<span class='ident'>is_zero</span>() {
+            <span class='ident'>gtot</span>
+        }
+        <span class='kw'>else</span> {
+            <span class='ident'>ctot</span> <span class='op'>/</span> <span class='ident'>mtot</span>
+        }
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>unit_angular_inertia</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>AngularInertia</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>itot</span>: <span class='ident'>AngularInertia</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Zero</span>::<span class='ident'>zero</span>();
+
+        <span class='kw'>let</span> <span class='ident'>com</span>    <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>center_of_mass</span>();
+        <span class='kw'>let</span> <span class='ident'>shapes</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>shapes</span>();
+
+        <span class='kw'>for</span> <span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>m</span>, <span class='kw-2'>ref</span> <span class='ident'>s</span>) <span class='kw'>in</span> <span class='ident'>shapes</span>.<span class='ident'>iter</span>() {
+            <span class='kw'>let</span> (<span class='ident'>mpart</span>, <span class='ident'>cpart</span>, <span class='ident'>ipart</span>) <span class='op'>=</span> <span class='ident'>s</span>.<span class='ident'>mass_properties</span>(<span class='ident'>na</span>::<span class='ident'>one</span>());
+
+            <span class='ident'>itot</span> <span class='op'>=</span> <span class='ident'>itot</span> <span class='op'>+</span> <span class='ident'>ipart</span>.<span class='ident'>to_world_space</span>(<span class='ident'>m</span>)
+                               .<span class='ident'>to_relative_wrt_point</span>(<span class='ident'>mpart</span>, <span class='kw-2'>&amp;</span>(<span class='kw-2'>*</span><span class='ident'>m</span> <span class='op'>*</span> <span class='ident'>cpart</span> <span class='op'>+</span> (<span class='op'>-</span><span class='ident'>com</span>.<span class='ident'>coords</span>)));
+        }
+
+        <span class='ident'>itot</span>
+    }
+
+    <span class='doccomment'>/// The mass properties of this `CompoundData`.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// If `density` is not zero, it will be multiplied with the density of every object of the</span>
+    <span class='doccomment'>/// compound shape.</span>
+    <span class='kw'>fn</span> <span class='ident'>mass_properties</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>density</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> (<span class='ident'>N</span>, <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>AngularInertia</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>itot</span>: <span class='ident'>AngularInertia</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Zero</span>::<span class='ident'>zero</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>ctot</span>: <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>EuclideanSpace</span>::<span class='ident'>origin</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>gtot</span>: <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>EuclideanSpace</span>::<span class='ident'>origin</span>(); <span class='comment'>// geometric center.</span>
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>mtot</span> <span class='op'>=</span> <span class='ident'>N</span>::<span class='ident'>zero</span>();
+
+        <span class='kw'>let</span> <span class='ident'>shapes</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>shapes</span>();
+        <span class='kw'>let</span> <span class='ident'>props</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>shapes</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span>(_, <span class='kw-2'>ref</span> <span class='ident'>s</span>)<span class='op'>|</span> <span class='ident'>s</span>.<span class='ident'>mass_properties</span>(<span class='ident'>na</span>::<span class='ident'>one</span>())).<span class='ident'>collect</span>();
+
+        <span class='kw'>for</span> (<span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>m</span>, _), <span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>mpart</span>, <span class='kw-2'>ref</span> <span class='ident'>cpart</span>, _)) <span class='kw'>in</span> <span class='ident'>shapes</span>.<span class='ident'>iter</span>().<span class='ident'>zip</span>(<span class='ident'>props</span>.<span class='ident'>iter</span>()) {
+            <span class='ident'>mtot</span> <span class='op'>=</span> <span class='ident'>mtot</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='ident'>mpart</span>;
+            <span class='ident'>ctot</span> <span class='op'>=</span> <span class='ident'>ctot</span> <span class='op'>+</span> (<span class='kw-2'>*</span><span class='ident'>m</span> <span class='op'>*</span> <span class='kw-2'>*</span><span class='ident'>cpart</span> <span class='op'>*</span> <span class='kw-2'>*</span><span class='ident'>mpart</span>).<span class='ident'>coords</span>;
+            <span class='ident'>gtot</span> <span class='op'>=</span> <span class='ident'>gtot</span> <span class='op'>+</span> (<span class='kw-2'>*</span><span class='ident'>m</span> <span class='op'>*</span> <span class='kw-2'>*</span><span class='ident'>cpart</span>).<span class='ident'>coords</span>;
+        }
+
+        <span class='kw'>if</span> <span class='ident'>mtot</span>.<span class='ident'>is_zero</span>() {
+            <span class='ident'>ctot</span> <span class='op'>=</span> <span class='ident'>gtot</span>;
+        }
+        <span class='kw'>else</span> {
+            <span class='ident'>ctot</span> <span class='op'>=</span> <span class='ident'>ctot</span> <span class='op'>/</span> <span class='ident'>mtot</span>;
+        }
+
+        <span class='kw'>for</span> (<span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>m</span>, _), <span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>mpart</span>, <span class='kw-2'>ref</span> <span class='ident'>cpart</span>, <span class='kw-2'>ref</span> <span class='ident'>ipart</span>)) <span class='kw'>in</span> <span class='ident'>shapes</span>.<span class='ident'>iter</span>().<span class='ident'>zip</span>(<span class='ident'>props</span>.<span class='ident'>iter</span>()) {
+            <span class='ident'>itot</span> <span class='op'>=</span> <span class='ident'>itot</span> <span class='op'>+</span> <span class='ident'>ipart</span>.<span class='ident'>to_world_space</span>(<span class='ident'>m</span>).<span class='ident'>to_relative_wrt_point</span>(<span class='kw-2'>*</span><span class='ident'>mpart</span>, <span class='kw-2'>&amp;</span>(<span class='kw-2'>*</span><span class='ident'>m</span> <span class='op'>*</span> <span class='kw-2'>*</span><span class='ident'>cpart</span> <span class='op'>+</span> (<span class='op'>-</span><span class='ident'>ctot</span>.<span class='ident'>coords</span>)));
+        }
+
+        (<span class='ident'>mtot</span> <span class='op'>*</span> <span class='ident'>density</span>, <span class='ident'>ctot</span>, <span class='ident'>itot</span> <span class='op'>*</span> <span class='ident'>density</span>)
+    }
+}
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

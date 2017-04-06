@@ -1,5 +1,6 @@
 (function() {var implementors = {};
 implementors["chrono"] = [];
+implementors["nalgebra"] = [];
 implementors["ncollide"] = [];
 implementors["num"] = [];
 implementors["rand"] = [];

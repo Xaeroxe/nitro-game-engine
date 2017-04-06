@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_procedural-0.5.0/path/path.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_procedural-0.6.0/path/path.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>path.rs.html -- source</title>
@@ -79,11 +79,11 @@
 <span class='doccomment'>/// A sample point and its associated tangent.</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>PathSample</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// A point that starts a new path.</span>
-    <span class='ident'>StartPoint</span>(<span class='ident'>P</span>, <span class='ident'>P</span>::<span class='ident'>Vect</span>),
+    <span class='ident'>StartPoint</span>(<span class='ident'>P</span>, <span class='ident'>P</span>::<span class='ident'>Vector</span>),
     <span class='doccomment'>/// A point that is inside of the path currently generated.</span>
-    <span class='ident'>InnerPoint</span>(<span class='ident'>P</span>, <span class='ident'>P</span>::<span class='ident'>Vect</span>),
+    <span class='ident'>InnerPoint</span>(<span class='ident'>P</span>, <span class='ident'>P</span>::<span class='ident'>Vector</span>),
     <span class='doccomment'>/// A point that ends the path currently generated.</span>
-    <span class='ident'>EndPoint</span>(<span class='ident'>P</span>, <span class='ident'>P</span>::<span class='ident'>Vect</span>),
+    <span class='ident'>EndPoint</span>(<span class='ident'>P</span>, <span class='ident'>P</span>::<span class='ident'>Vector</span>),
     <span class='doccomment'>/// Used when the sampler does not have any other points to generate.</span>
     <span class='ident'>EndOfSample</span>
 

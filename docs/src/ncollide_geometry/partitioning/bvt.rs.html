@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.2.0/partitioning/bvt.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.3.0/partitioning/bvt.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>bvt.rs.html -- source</title>
@@ -361,21 +361,18 @@
 <span id="316">316</span>
 <span id="317">317</span>
 <span id="318">318</span>
-<span id="319">319</span>
-<span id="320">320</span>
-<span id="321">321</span>
-<span id="322">322</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! A read-only Bounding Volume Tree.</span>
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>BinaryHeap</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='ident'>Translation</span>, <span class='ident'>Bounded</span>};
+
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
 <span class='kw'>use</span> <span class='ident'>na</span>;
 <span class='kw'>use</span> <span class='ident'>partitioning</span>::{<span class='ident'>BVTVisitor</span>, <span class='ident'>BVTTVisitor</span>, <span class='ident'>BVTCostFn</span>};
 <span class='kw'>use</span> <span class='ident'>bounding_volume</span>::<span class='ident'>BoundingVolume</span>;
 <span class='kw'>use</span> <span class='ident'>utils</span>::<span class='ident'>data</span>::<span class='ident'>ref_with_cost</span>::<span class='ident'>RefWithCost</span>;
 <span class='kw'>use</span> <span class='ident'>utils</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Scalar</span>, <span class='ident'>Vector</span>};
+<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
 
 
 <span class='doccomment'>/// A Boundig Volume Tree.</span>
@@ -416,7 +413,7 @@
         }
         <span class='kw'>else</span> {
             <span class='ident'>BVT</span> {
-                <span class='ident'>tree</span>: <span class='prelude-val'>Some</span>(<span class='ident'>_new_with_partitioner</span>(<span class='number'>0</span>, <span class='ident'>leaves</span>, <span class='ident'>partitioner</span>))
+                <span class='ident'>tree</span>: <span class='prelude-val'>Some</span>(<span class='self'>Self</span>::<span class='ident'>_new_with_partitioner</span>(<span class='number'>0</span>, <span class='ident'>leaves</span>, <span class='ident'>partitioner</span>))
             }
         }
     }
@@ -446,7 +443,7 @@
     <span class='doccomment'>/// Returns the content of the leaf with the smallest associated cost, and a result of</span>
     <span class='doccomment'>/// user-defined type.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>best_first_search</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>N</span>, <span class='ident'>BFS</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>algorithm</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>BFS</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>B</span>, <span class='ident'>BFS</span>::<span class='ident'>UserData</span>)<span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>N</span>:   <span class='ident'>Scalar</span>,
+        <span class='kw'>where</span> <span class='ident'>N</span>:   <span class='ident'>Real</span>,
               <span class='ident'>BFS</span>: <span class='ident'>BVTCostFn</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span> {
         <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>tree</span> {
             <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>t</span>) <span class='op'>=&gt;</span> <span class='ident'>t</span>.<span class='ident'>best_first_search</span>(<span class='ident'>algorithm</span>),
@@ -478,10 +475,90 @@
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span> <span class='ident'>BVT</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Creates a balanced `BVT`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_balanced</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>(<span class='ident'>leaves</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>B</span>, <span class='ident'>BV</span>)<span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>BVT</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>V</span>: <span class='ident'>Vector</span>,
-              <span class='ident'>BV</span>: <span class='ident'>Translation</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>BoundingVolume</span><span class='op'>&lt;</span><span class='ident'>V</span>::<span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Clone</span> {
-        <span class='ident'>BVT</span>::<span class='ident'>new_with_partitioner</span>(<span class='ident'>leaves</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>median_partitioner</span>)
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_balanced</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(<span class='ident'>leaves</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>B</span>, <span class='ident'>BV</span>)<span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>BVT</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span>
+        <span class='kw'>where</span> <span class='ident'>P</span>:  <span class='ident'>Point</span>,
+              <span class='ident'>BV</span>: <span class='ident'>BoundingVolume</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Clone</span> {
+        <span class='ident'>BVT</span>::<span class='ident'>new_with_partitioner</span>(<span class='ident'>leaves</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>Self</span>::<span class='ident'>median_partitioner</span>)
+    }
+
+    <span class='doccomment'>/// Construction function for a kdree to be used with `BVT::new_with_partitioner`.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>median_partitioner_with_centers</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>F</span>: <span class='ident'>FnMut</span>(<span class='kw-2'>&amp;</span><span class='ident'>B</span>, <span class='kw-2'>&amp;</span><span class='ident'>BV</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span><span class='op'>&gt;</span>
+            (<span class='ident'>depth</span>: <span class='ident'>usize</span>, <span class='ident'>leaves</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>B</span>, <span class='ident'>BV</span>)<span class='op'>&gt;</span>, <span class='ident'>center</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>F</span>) <span class='op'>-&gt;</span> (<span class='ident'>BV</span>, <span class='ident'>BinaryPartition</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span>)
+        <span class='kw'>where</span> <span class='ident'>P</span>:  <span class='ident'>Point</span>,
+              <span class='ident'>BV</span>: <span class='ident'>BoundingVolume</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Clone</span> {
+        <span class='kw'>if</span> <span class='ident'>leaves</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
+            <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Cannot build a tree without leaves.&quot;</span>);
+        }
+        <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>leaves</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>1</span> {
+            <span class='kw'>let</span> (<span class='ident'>b</span>, <span class='ident'>bv</span>) <span class='op'>=</span> <span class='ident'>leaves</span>.<span class='ident'>into_iter</span>().<span class='ident'>next</span>().<span class='ident'>unwrap</span>();
+            (<span class='ident'>bv</span>, <span class='ident'>BinaryPartition</span>::<span class='ident'>Part</span>(<span class='ident'>b</span>))
+        }
+        <span class='kw'>else</span> {
+            <span class='kw'>let</span> <span class='ident'>sep_axis</span> <span class='op'>=</span> <span class='ident'>depth</span> <span class='op'>%</span> <span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span>();
+
+            <span class='comment'>// compute the median along sep_axis</span>
+            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>median</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+
+            <span class='kw'>for</span> <span class='ident'>l</span> <span class='kw'>in</span> <span class='ident'>leaves</span>.<span class='ident'>iter</span>() {
+                <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> (<span class='kw-2'>*</span><span class='ident'>center</span>)(<span class='kw-2'>&amp;</span><span class='ident'>l</span>.<span class='number'>0</span>, <span class='kw-2'>&amp;</span><span class='ident'>l</span>.<span class='number'>1</span>);
+                <span class='ident'>median</span>.<span class='ident'>push</span>(<span class='ident'>c</span>[<span class='ident'>sep_axis</span>]);
+            }
+
+            <span class='kw'>let</span> <span class='ident'>median</span> <span class='op'>=</span> <span class='ident'>utils</span>::<span class='ident'>median</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>median</span>[..]);
+
+            <span class='comment'>// build the partitions</span>
+            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>right</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>left</span>  <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>bounding_bounding_volume</span> <span class='op'>=</span> <span class='ident'>leaves</span>[<span class='number'>0</span>].<span class='number'>1</span>.<span class='ident'>clone</span>();
+
+            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>insert_left</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
+
+            <span class='kw'>for</span> (<span class='ident'>b</span>, <span class='ident'>bv</span>) <span class='kw'>in</span> <span class='ident'>leaves</span>.<span class='ident'>into_iter</span>() {
+                <span class='ident'>bounding_bounding_volume</span>.<span class='ident'>merge</span>(<span class='kw-2'>&amp;</span><span class='ident'>bv</span>);
+
+                <span class='kw'>let</span> <span class='ident'>pos</span> <span class='op'>=</span> (<span class='kw-2'>*</span><span class='ident'>center</span>)(<span class='kw-2'>&amp;</span><span class='ident'>b</span>, <span class='kw-2'>&amp;</span><span class='ident'>bv</span>)[<span class='ident'>sep_axis</span>];
+
+                <span class='kw'>if</span> <span class='ident'>pos</span> <span class='op'>&lt;</span> <span class='ident'>median</span> <span class='op'>||</span> (<span class='ident'>pos</span> <span class='op'>==</span> <span class='ident'>median</span> <span class='op'>&amp;&amp;</span> <span class='ident'>insert_left</span>) {
+                    <span class='ident'>left</span>.<span class='ident'>push</span>((<span class='ident'>b</span>, <span class='ident'>bv</span>));
+                    <span class='ident'>insert_left</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
+                }
+                <span class='kw'>else</span> {
+                    <span class='ident'>right</span>.<span class='ident'>push</span>((<span class='ident'>b</span>, <span class='ident'>bv</span>));
+                    <span class='ident'>insert_left</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
+                }
+            }
+
+            <span class='comment'>// XXX: hack to avoid degeneracies.</span>
+            <span class='kw'>if</span> <span class='ident'>left</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
+                <span class='ident'>left</span>.<span class='ident'>push</span>(<span class='ident'>right</span>.<span class='ident'>pop</span>().<span class='ident'>unwrap</span>());
+            }
+            <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>right</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
+                <span class='ident'>right</span>.<span class='ident'>push</span>(<span class='ident'>left</span>.<span class='ident'>pop</span>().<span class='ident'>unwrap</span>());
+            }
+
+            (<span class='ident'>bounding_bounding_volume</span>, <span class='ident'>BinaryPartition</span>::<span class='ident'>Parts</span>(<span class='ident'>left</span>, <span class='ident'>right</span>))
+        }
+    }
+
+    <span class='doccomment'>/// Construction function for a kdree to be used with `BVT::new_with_partitioner`.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>median_partitioner</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(<span class='ident'>depth</span>: <span class='ident'>usize</span>, <span class='ident'>leaves</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>B</span>, <span class='ident'>BV</span>)<span class='op'>&gt;</span>) <span class='op'>-&gt;</span> (<span class='ident'>BV</span>, <span class='ident'>BinaryPartition</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span>)
+        <span class='kw'>where</span> <span class='ident'>P</span>:  <span class='ident'>Point</span>,
+              <span class='ident'>BV</span>: <span class='ident'>BoundingVolume</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Clone</span> {
+        <span class='self'>Self</span>::<span class='ident'>median_partitioner_with_centers</span>(<span class='ident'>depth</span>, <span class='ident'>leaves</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='op'>|</span>_, <span class='ident'>bv</span><span class='op'>|</span> <span class='ident'>bv</span>.<span class='ident'>center</span>())
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>_new_with_partitioner</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnMut</span>(<span class='ident'>usize</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>B</span>, <span class='ident'>BV</span>)<span class='op'>&gt;</span>) <span class='op'>-&gt;</span> (<span class='ident'>BV</span>, <span class='ident'>BinaryPartition</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span>)<span class='op'>&gt;</span>
+                             (<span class='ident'>depth</span>: <span class='ident'>usize</span>, <span class='ident'>leaves</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>B</span>, <span class='ident'>BV</span>)<span class='op'>&gt;</span>, <span class='ident'>partitioner</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>BVTNode</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span> {
+        <span class='kw'>let</span> (<span class='ident'>bv</span>, <span class='ident'>partitions</span>) <span class='op'>=</span> <span class='ident'>partitioner</span>(<span class='ident'>depth</span>, <span class='ident'>leaves</span>);
+
+        <span class='kw'>match</span> <span class='ident'>partitions</span> {
+            <span class='ident'>BinaryPartition</span>::<span class='ident'>Part</span>(<span class='ident'>b</span>)            <span class='op'>=&gt;</span> <span class='ident'>BVTNode</span>::<span class='ident'>Leaf</span>(<span class='ident'>bv</span>, <span class='ident'>b</span>),
+            <span class='ident'>BinaryPartition</span>::<span class='ident'>Parts</span>(<span class='ident'>left</span>, <span class='ident'>right</span>) <span class='op'>=&gt;</span> {
+                <span class='kw'>let</span> <span class='ident'>left</span>  <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>_new_with_partitioner</span>(<span class='ident'>depth</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='ident'>left</span>, <span class='ident'>partitioner</span>);
+                <span class='kw'>let</span> <span class='ident'>right</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>_new_with_partitioner</span>(<span class='ident'>depth</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='ident'>right</span>, <span class='ident'>partitioner</span>);
+                <span class='ident'>BVTNode</span>::<span class='ident'>Internal</span>(<span class='ident'>bv</span>, <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>left</span>), <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>right</span>))
+            }
+        }
     }
 }
 
@@ -538,10 +615,10 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>best_first_search</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>N</span>, <span class='ident'>BFS</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>algorithm</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>BFS</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>B</span>, <span class='ident'>BFS</span>::<span class='ident'>UserData</span>)<span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>N</span>:   <span class='ident'>Scalar</span>,
+        <span class='kw'>where</span> <span class='ident'>N</span>:   <span class='ident'>Real</span>,
               <span class='ident'>BFS</span>: <span class='ident'>BVTCostFn</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>queue</span>: <span class='ident'>BinaryHeap</span><span class='op'>&lt;</span><span class='ident'>RefWithCost</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>N</span>, <span class='ident'>BVTNode</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>BinaryHeap</span>::<span class='ident'>new</span>();
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>best_cost</span> <span class='op'>=</span> <span class='ident'>Bounded</span>::<span class='ident'>max_value</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>best_cost</span> <span class='op'>=</span> <span class='ident'>N</span>::<span class='ident'>max_value</span>();
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span>    <span class='op'>=</span> <span class='prelude-val'>None</span>;
 
         <span class='kw'>match</span> <span class='ident'>algorithm</span>.<span class='ident'>compute_bv_cost</span>(<span class='self'>self</span>.<span class='ident'>bounding_volume</span>()) {
@@ -600,91 +677,6 @@
         <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
             <span class='ident'>BVTNode</span>::<span class='ident'>Internal</span>(_, <span class='kw-2'>ref</span> <span class='ident'>left</span>, <span class='kw-2'>ref</span> <span class='ident'>right</span>) <span class='op'>=&gt;</span> <span class='number'>1</span> <span class='op'>+</span> <span class='ident'>na</span>::<span class='ident'>max</span>(<span class='ident'>left</span>.<span class='ident'>depth</span>(), <span class='ident'>right</span>.<span class='ident'>depth</span>()),
             <span class='ident'>BVTNode</span>::<span class='ident'>Leaf</span>(_, _) <span class='op'>=&gt;</span> <span class='number'>1</span>
-        }
-    }
-}
-
-<span class='doccomment'>/// Construction function for a kdree to be used with `BVT::new_with_partitioner`.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>median_partitioner_with_centers</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>B</span>, <span class='ident'>BV</span>, <span class='ident'>F</span>: <span class='ident'>FnMut</span>(<span class='kw-2'>&amp;</span><span class='ident'>B</span>, <span class='kw-2'>&amp;</span><span class='ident'>BV</span>) <span class='op'>-&gt;</span> <span class='ident'>V</span><span class='op'>&gt;</span>
-        (<span class='ident'>depth</span>: <span class='ident'>usize</span>, <span class='ident'>leaves</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>B</span>, <span class='ident'>BV</span>)<span class='op'>&gt;</span>, <span class='ident'>center</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>F</span>) <span class='op'>-&gt;</span> (<span class='ident'>BV</span>, <span class='ident'>BinaryPartition</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span>)
-    <span class='kw'>where</span> <span class='ident'>V</span>:  <span class='ident'>Vector</span>,
-          <span class='ident'>BV</span>: <span class='ident'>BoundingVolume</span><span class='op'>&lt;</span><span class='ident'>V</span>::<span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Clone</span> {
-    <span class='kw'>if</span> <span class='ident'>leaves</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
-        <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Cannot build a tree without leaves.&quot;</span>);
-    }
-    <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>leaves</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>1</span> {
-        <span class='kw'>let</span> (<span class='ident'>b</span>, <span class='ident'>bv</span>) <span class='op'>=</span> <span class='ident'>leaves</span>.<span class='ident'>into_iter</span>().<span class='ident'>next</span>().<span class='ident'>unwrap</span>();
-        (<span class='ident'>bv</span>, <span class='ident'>BinaryPartition</span>::<span class='ident'>Part</span>(<span class='ident'>b</span>))
-    }
-    <span class='kw'>else</span> {
-        <span class='kw'>let</span> <span class='ident'>sep_axis</span> <span class='op'>=</span> <span class='ident'>depth</span> <span class='op'>%</span> <span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>();
-
-        <span class='comment'>// compute the median along sep_axis</span>
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>median</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
-
-        <span class='kw'>for</span> <span class='ident'>l</span> <span class='kw'>in</span> <span class='ident'>leaves</span>.<span class='ident'>iter</span>() {
-            <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> (<span class='kw-2'>*</span><span class='ident'>center</span>)(<span class='kw-2'>&amp;</span><span class='ident'>l</span>.<span class='number'>0</span>, <span class='kw-2'>&amp;</span><span class='ident'>l</span>.<span class='number'>1</span>);
-            <span class='ident'>median</span>.<span class='ident'>push</span>(<span class='ident'>c</span>[<span class='ident'>sep_axis</span>]);
-        }
-
-        <span class='kw'>let</span> <span class='ident'>median</span> <span class='op'>=</span> <span class='ident'>utils</span>::<span class='ident'>median</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>median</span>[..]);
-
-        <span class='comment'>// build the partitions</span>
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>right</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>left</span>  <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>bounding_bounding_volume</span> <span class='op'>=</span> <span class='ident'>leaves</span>[<span class='number'>0</span>].<span class='number'>1</span>.<span class='ident'>clone</span>();
-
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>insert_left</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
-
-        <span class='kw'>for</span> (<span class='ident'>b</span>, <span class='ident'>bv</span>) <span class='kw'>in</span> <span class='ident'>leaves</span>.<span class='ident'>into_iter</span>() {
-            <span class='ident'>bounding_bounding_volume</span>.<span class='ident'>merge</span>(<span class='kw-2'>&amp;</span><span class='ident'>bv</span>);
-
-            <span class='kw'>let</span> <span class='ident'>pos</span> <span class='op'>=</span> (<span class='kw-2'>*</span><span class='ident'>center</span>)(<span class='kw-2'>&amp;</span><span class='ident'>b</span>, <span class='kw-2'>&amp;</span><span class='ident'>bv</span>)[<span class='ident'>sep_axis</span>];
-
-            <span class='kw'>if</span> <span class='ident'>pos</span> <span class='op'>&lt;</span> <span class='ident'>median</span> <span class='op'>||</span> (<span class='ident'>pos</span> <span class='op'>==</span> <span class='ident'>median</span> <span class='op'>&amp;&amp;</span> <span class='ident'>insert_left</span>) {
-                <span class='ident'>left</span>.<span class='ident'>push</span>((<span class='ident'>b</span>, <span class='ident'>bv</span>));
-                <span class='ident'>insert_left</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
-            }
-            <span class='kw'>else</span> {
-                <span class='ident'>right</span>.<span class='ident'>push</span>((<span class='ident'>b</span>, <span class='ident'>bv</span>));
-                <span class='ident'>insert_left</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
-            }
-        }
-
-        <span class='comment'>// XXX: hack to avoid degeneracies.</span>
-        <span class='kw'>if</span> <span class='ident'>left</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
-            <span class='ident'>left</span>.<span class='ident'>push</span>(<span class='ident'>right</span>.<span class='ident'>pop</span>().<span class='ident'>unwrap</span>());
-        }
-        <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>right</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
-            <span class='ident'>right</span>.<span class='ident'>push</span>(<span class='ident'>left</span>.<span class='ident'>pop</span>().<span class='ident'>unwrap</span>());
-        }
-
-        (<span class='ident'>bounding_bounding_volume</span>, <span class='ident'>BinaryPartition</span>::<span class='ident'>Parts</span>(<span class='ident'>left</span>, <span class='ident'>right</span>))
-    }
-}
-
-<span class='doccomment'>/// Construction function for a kdree to be used with `BVT::new_with_partitioner`.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>median_partitioner</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span>(<span class='ident'>depth</span>: <span class='ident'>usize</span>, <span class='ident'>leaves</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>B</span>, <span class='ident'>BV</span>)<span class='op'>&gt;</span>) <span class='op'>-&gt;</span> (<span class='ident'>BV</span>, <span class='ident'>BinaryPartition</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span>)
-    <span class='kw'>where</span> <span class='ident'>V</span>:  <span class='ident'>Vector</span>,
-          <span class='ident'>BV</span>: <span class='ident'>Translation</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>BoundingVolume</span><span class='op'>&lt;</span><span class='ident'>V</span>::<span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Clone</span> {
-    <span class='ident'>median_partitioner_with_centers</span>(<span class='ident'>depth</span>, <span class='ident'>leaves</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='op'>|</span>_, <span class='ident'>bv</span><span class='op'>|</span> <span class='ident'>bv</span>.<span class='ident'>translation</span>())
-}
-
-<span class='kw'>fn</span> <span class='ident'>_new_with_partitioner</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>BV</span>, <span class='ident'>F</span>: <span class='ident'>FnMut</span>(<span class='ident'>usize</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>B</span>, <span class='ident'>BV</span>)<span class='op'>&gt;</span>) <span class='op'>-&gt;</span> (<span class='ident'>BV</span>, <span class='ident'>BinaryPartition</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span>)<span class='op'>&gt;</span>
-                         (<span class='ident'>depth</span>: <span class='ident'>usize</span>, <span class='ident'>leaves</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>B</span>, <span class='ident'>BV</span>)<span class='op'>&gt;</span>, <span class='ident'>partitioner</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>BVTNode</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span> {
-    <span class='ident'>__new_with_partitioner</span>(<span class='ident'>depth</span>, <span class='ident'>leaves</span>, <span class='ident'>partitioner</span>)
-}
-
-<span class='kw'>fn</span> <span class='ident'>__new_with_partitioner</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>BV</span>, <span class='ident'>F</span>: <span class='ident'>FnMut</span>(<span class='ident'>usize</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>B</span>, <span class='ident'>BV</span>)<span class='op'>&gt;</span>) <span class='op'>-&gt;</span> (<span class='ident'>BV</span>, <span class='ident'>BinaryPartition</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span>)<span class='op'>&gt;</span>
-                          (<span class='ident'>depth</span>: <span class='ident'>usize</span>, <span class='ident'>leaves</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>B</span>, <span class='ident'>BV</span>)<span class='op'>&gt;</span>, <span class='ident'>partitioner</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='ident'>BVTNode</span><span class='op'>&lt;</span><span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> (<span class='ident'>bv</span>, <span class='ident'>partitions</span>) <span class='op'>=</span> <span class='ident'>partitioner</span>(<span class='ident'>depth</span>, <span class='ident'>leaves</span>);
-
-    <span class='kw'>match</span> <span class='ident'>partitions</span> {
-        <span class='ident'>BinaryPartition</span>::<span class='ident'>Part</span>(<span class='ident'>b</span>)            <span class='op'>=&gt;</span> <span class='ident'>BVTNode</span>::<span class='ident'>Leaf</span>(<span class='ident'>bv</span>, <span class='ident'>b</span>),
-        <span class='ident'>BinaryPartition</span>::<span class='ident'>Parts</span>(<span class='ident'>left</span>, <span class='ident'>right</span>) <span class='op'>=&gt;</span> {
-            <span class='kw'>let</span> <span class='ident'>left</span>  <span class='op'>=</span> <span class='ident'>__new_with_partitioner</span>(<span class='ident'>depth</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='ident'>left</span>, <span class='ident'>partitioner</span>);
-            <span class='kw'>let</span> <span class='ident'>right</span> <span class='op'>=</span> <span class='ident'>__new_with_partitioner</span>(<span class='ident'>depth</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='ident'>right</span>, <span class='ident'>partitioner</span>);
-            <span class='ident'>BVTNode</span>::<span class='ident'>Internal</span>(<span class='ident'>bv</span>, <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>left</span>), <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>right</span>))
         }
     }
 }

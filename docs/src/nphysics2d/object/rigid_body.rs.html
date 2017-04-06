@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.5.0/src/object/rigid_body.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.6.1/src/object/rigid_body.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>rigid_body.rs.html -- source</title>
@@ -723,17 +723,61 @@
 <span id="678">678</span>
 <span id="679">679</span>
 <span id="680">680</span>
+<span id="681">681</span>
+<span id="682">682</span>
+<span id="683">683</span>
+<span id="684">684</span>
+<span id="685">685</span>
+<span id="686">686</span>
+<span id="687">687</span>
+<span id="688">688</span>
+<span id="689">689</span>
+<span id="690">690</span>
+<span id="691">691</span>
+<span id="692">692</span>
+<span id="693">693</span>
+<span id="694">694</span>
+<span id="695">695</span>
+<span id="696">696</span>
+<span id="697">697</span>
+<span id="698">698</span>
+<span id="699">699</span>
+<span id="700">700</span>
+<span id="701">701</span>
+<span id="702">702</span>
+<span id="703">703</span>
+<span id="704">704</span>
+<span id="705">705</span>
+<span id="706">706</span>
+<span id="707">707</span>
+<span id="708">708</span>
+<span id="709">709</span>
+<span id="710">710</span>
+<span id="711">711</span>
+<span id="712">712</span>
+<span id="713">713</span>
+<span id="714">714</span>
+<span id="715">715</span>
+<span id="716">716</span>
+<span id="717">717</span>
+<span id="718">718</span>
+<span id="719">719</span>
+<span id="720">720</span>
+<span id="721">721</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::<span class='ident'>Mul</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>RefCell</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='self'>self</span>, <span class='ident'>Transformation</span>, <span class='ident'>Transform</span>, <span class='ident'>Translation</span>, <span class='ident'>Rotation</span>, <span class='ident'>Bounded</span>, <span class='ident'>Cross</span>};
+<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Bounded</span>;
+
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
+<span class='kw'>use</span> <span class='ident'>na</span>;
 <span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>bounding_volume</span>::{<span class='self'>self</span>, <span class='ident'>HasBoundingVolume</span>, <span class='ident'>BoundingVolume</span>, <span class='ident'>AABB</span>, <span class='ident'>BoundingSphere</span>};
 <span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>shape</span>::{<span class='ident'>Shape</span>, <span class='ident'>ShapeHandle</span>};
-<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>math</span>::<span class='ident'>Scalar</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Vector</span>, <span class='ident'>Orientation</span>, <span class='ident'>Matrix</span>, <span class='ident'>AngularInertia</span>};
+<span class='kw'>use</span> <span class='ident'>utils</span>::<span class='ident'>GeneralizedCross</span>;
+<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Vector</span>, <span class='ident'>Orientation</span>, <span class='ident'>Rotation</span>, <span class='ident'>Translation</span>, <span class='ident'>Isometry</span>, <span class='ident'>AngularInertia</span>};
 <span class='kw'>use</span> <span class='ident'>volumetric</span>::{<span class='ident'>InertiaTensor</span>, <span class='ident'>Volumetric</span>};
 <span class='kw'>use</span> <span class='ident'>object</span>::<span class='ident'>RigidBodyCollisionGroups</span>;
 
@@ -752,7 +796,7 @@
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Clone</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
 <span class='doccomment'>/// The activation state of a rigid body.</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ActivationState</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ActivationState</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// The rigid body is active with a not-zero energy.</span>
     <span class='ident'>Active</span>(<span class='ident'>N</span>),
     <span class='doccomment'>/// The rigid body is inactive.</span>
@@ -761,7 +805,7 @@
     <span class='ident'>Deleted</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='ident'>ActivationState</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>ActivationState</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// The energy accumulated other several frames.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>energy</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
         <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
@@ -775,10 +819,10 @@
 <span class='doccomment'>/// The rigid body structure.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// This is the structure describing an object on the physics world.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> {
     <span class='ident'>state</span>:                <span class='ident'>RigidBodyState</span>,
-    <span class='ident'>shape</span>:                <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>local_to_world</span>:       <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
+    <span class='ident'>shape</span>:                <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>,
+    <span class='ident'>local_to_world</span>:       <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
     <span class='ident'>lin_vel</span>:              <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
     <span class='ident'>ang_vel</span>:              <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
     <span class='ident'>inv_mass</span>:             <span class='ident'>N</span>,
@@ -803,7 +847,7 @@
     <span class='ident'>user_data</span>:            <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='ident'>Clone</span> <span class='kw'>for</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>Clone</span> <span class='kw'>for</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Clones this rigid body but not its associated user-data.</span>
     <span class='kw'>fn</span> <span class='ident'>clone</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
         <span class='ident'>RigidBody</span> {
@@ -837,7 +881,7 @@
 }
 
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>deactivate</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
@@ -862,18 +906,26 @@
     <span class='doccomment'>/// Updates the center of mass of this rigid body.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>update_center_of_mass</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>center_of_mass</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>transform</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>ls_center_of_mass</span>);
+        <span class='self'>self</span>.<span class='ident'>center_of_mass</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>local_to_world</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>ls_center_of_mass</span>;
     }
 
     <span class='doccomment'>/// Gets a reference to this body&#39;s transform.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>position</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>position</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
         <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>local_to_world</span>
+    }
+
+    <span class='doccomment'>/// The center given by this object&#39;s position. May not be the same as its center of mass.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// This is the point with coordinates `self.position().translation.vector`.</span>
+    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>position_center</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
+        <span class='ident'>Point</span>::<span class='ident'>from_coordinates</span>(<span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>translation</span>.<span class='ident'>vector</span>)
     }
 
     <span class='doccomment'>/// A reference to this body&#39;s shape handle.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>shape</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>shape</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
         <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>shape</span>
     }
 
@@ -985,7 +1037,7 @@
 
     <span class='doccomment'>/// Creates a new rigid body that can move.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_dynamic</span><span class='op'>&lt;</span><span class='ident'>G</span><span class='op'>&gt;</span>(<span class='ident'>shape</span>: <span class='ident'>G</span>, <span class='ident'>density</span>: <span class='ident'>N</span>, <span class='ident'>restitution</span>: <span class='ident'>N</span>, <span class='ident'>friction</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>G</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='op'>+</span> <span class='ident'>Volumetric</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>AngularInertia</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
+        <span class='kw'>where</span> <span class='ident'>G</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='op'>+</span> <span class='ident'>Volumetric</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>AngularInertia</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>props</span> <span class='op'>=</span> <span class='ident'>shape</span>.<span class='ident'>mass_properties</span>(<span class='ident'>density</span>);
 
         <span class='ident'>RigidBody</span>::<span class='ident'>new</span>(<span class='ident'>ShapeHandle</span>::<span class='ident'>new</span>(<span class='ident'>shape</span>), <span class='prelude-val'>Some</span>(<span class='ident'>props</span>), <span class='ident'>restitution</span>, <span class='ident'>friction</span>)
@@ -993,7 +1045,7 @@
 
     <span class='doccomment'>/// Creates a new rigid body that cannot move.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_static</span><span class='op'>&lt;</span><span class='ident'>G</span><span class='op'>&gt;</span>(<span class='ident'>shape</span>: <span class='ident'>G</span>, <span class='ident'>restitution</span>: <span class='ident'>N</span>, <span class='ident'>friction</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>G</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
+        <span class='kw'>where</span> <span class='ident'>G</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
 
         <span class='ident'>RigidBody</span>::<span class='ident'>new</span>(<span class='ident'>ShapeHandle</span>::<span class='ident'>new</span>(<span class='ident'>shape</span>), <span class='prelude-val'>None</span>, <span class='ident'>restitution</span>, <span class='ident'>friction</span>)
     }
@@ -1002,29 +1054,34 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Use this if the shape is shared by multiple rigid bodies.</span>
     <span class='doccomment'>/// Set `mass_properties` to `None` if the rigid body is to be static.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>shape</span>:           <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>,
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>shape</span>:           <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>,
                <span class='ident'>mass_properties</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='ident'>N</span>, <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>AngularInertia</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>)<span class='op'>&gt;</span>,
                <span class='ident'>restitution</span>:     <span class='ident'>N</span>,
                <span class='ident'>friction</span>:        <span class='ident'>N</span>)
                <span class='op'>-&gt;</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> (<span class='ident'>inv_mass</span>, <span class='ident'>center_of_mass</span>, <span class='ident'>inv_inertia</span>, <span class='ident'>active</span>, <span class='ident'>state</span>, <span class='ident'>groups</span>) <span class='op'>=</span>
             <span class='kw'>match</span> <span class='ident'>mass_properties</span> {
-                <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> (<span class='ident'>na</span>::<span class='ident'>zero</span>(), <span class='ident'>na</span>::<span class='ident'>origin</span>(), <span class='ident'>na</span>::<span class='ident'>zero</span>(), <span class='ident'>ActivationState</span>::<span class='ident'>Inactive</span>, <span class='ident'>RigidBodyState</span>::<span class='ident'>Static</span>, <span class='ident'>RigidBodyCollisionGroups</span>::<span class='ident'>new_static</span>()),
+                <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> (<span class='ident'>na</span>::<span class='ident'>zero</span>(), <span class='ident'>na</span>::<span class='ident'>origin</span>(), <span class='ident'>na</span>::<span class='ident'>zero</span>(),
+                         <span class='ident'>ActivationState</span>::<span class='ident'>Inactive</span>, <span class='ident'>RigidBodyState</span>::<span class='ident'>Static</span>,
+                         <span class='ident'>RigidBodyCollisionGroups</span>::<span class='ident'>new_static</span>()),
                 <span class='prelude-val'>Some</span>((<span class='ident'>mass</span>, <span class='ident'>com</span>, <span class='ident'>inertia</span>)) <span class='op'>=&gt;</span> {
-                    <span class='kw'>if</span> <span class='ident'>na</span>::<span class='ident'>is_zero</span>(<span class='kw-2'>&amp;</span><span class='ident'>mass</span>) {
+                    <span class='kw'>if</span> <span class='ident'>mass</span>.<span class='ident'>is_zero</span>() {
                         <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;A dynamic body must not have a zero volume.&quot;</span>)
                     }
 
                     <span class='kw'>let</span> <span class='ident'>ii</span>: <span class='ident'>AngularInertia</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>;
 
-                    <span class='kw'>match</span> <span class='ident'>na</span>::<span class='ident'>inverse</span>(<span class='kw-2'>&amp;</span><span class='ident'>inertia</span>) {
+                    <span class='kw'>match</span> <span class='ident'>inertia</span>.<span class='ident'>try_inverse</span>() {
                         <span class='prelude-val'>Some</span>(<span class='ident'>i</span>) <span class='op'>=&gt;</span> <span class='ident'>ii</span> <span class='op'>=</span> <span class='ident'>i</span>,
                         <span class='prelude-val'>None</span>    <span class='op'>=&gt;</span> <span class='ident'>ii</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>()
                     }
 
+                    <span class='comment'>// Will be set to a sensible value later.</span>
+                    <span class='kw'>let</span> <span class='ident'>active</span> <span class='op'>=</span> <span class='ident'>ActivationState</span>::<span class='ident'>Active</span>(<span class='ident'>Bounded</span>::<span class='ident'>max_value</span>());
+                    <span class='kw'>let</span> <span class='ident'>groups</span> <span class='op'>=</span> <span class='ident'>RigidBodyCollisionGroups</span>::<span class='ident'>new_dynamic</span>();
                     <span class='kw'>let</span> <span class='ident'>_1</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>one</span>();
 
-                    (<span class='ident'>_1</span> <span class='op'>/</span> <span class='ident'>mass</span>, <span class='ident'>com</span>, <span class='ident'>ii</span>, <span class='ident'>ActivationState</span>::<span class='ident'>Active</span>(<span class='ident'>Bounded</span>::<span class='ident'>max_value</span>()), <span class='ident'>RigidBodyState</span>::<span class='ident'>Dynamic</span>, <span class='ident'>RigidBodyCollisionGroups</span>::<span class='ident'>new_dynamic</span>())
+                    (<span class='ident'>_1</span> <span class='op'>/</span> <span class='ident'>mass</span>, <span class='ident'>com</span>, <span class='ident'>ii</span>, <span class='ident'>active</span>, <span class='ident'>RigidBodyState</span>::<span class='ident'>Dynamic</span>, <span class='ident'>groups</span>)
                 },
             };
 
@@ -1049,10 +1106,10 @@
                 <span class='ident'>restitution</span>:       <span class='ident'>restitution</span>,
                 <span class='ident'>index</span>:             <span class='number'>0</span>,
                 <span class='ident'>activation_state</span>:  <span class='ident'>active</span>,
-                <span class='ident'>sleep_threshold</span>:   <span class='prelude-val'>Some</span>(<span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>0.1f64</span>)),
-                <span class='ident'>lin_acc_scale</span>:     <span class='ident'>na</span>::<span class='ident'>one</span>(),
-                <span class='ident'>ang_acc_scale</span>:     <span class='ident'>na</span>::<span class='ident'>one</span>(),
-                <span class='ident'>margin</span>:            <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>0.04f64</span>), <span class='comment'>// FIXME: do not hard-code this.</span>
+                <span class='ident'>sleep_threshold</span>:   <span class='prelude-val'>Some</span>(<span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>0.1f64</span>)),
+                <span class='ident'>lin_acc_scale</span>:     <span class='ident'>Vector</span>::<span class='ident'>from_element</span>(<span class='ident'>N</span>::<span class='ident'>one</span>()),
+                <span class='ident'>ang_acc_scale</span>:     <span class='ident'>Orientation</span>::<span class='ident'>from_element</span>(<span class='ident'>N</span>::<span class='ident'>one</span>()),
+                <span class='ident'>margin</span>:            <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>0.04f64</span>), <span class='comment'>// FIXME: do not hard-code this.</span>
                 <span class='ident'>collision_groups</span>:  <span class='ident'>groups</span>,
                 <span class='ident'>user_data</span>:         <span class='prelude-val'>None</span>
             };
@@ -1083,6 +1140,7 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_lin_acc_scale</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>scale</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
         <span class='self'>self</span>.<span class='ident'>lin_acc_scale</span> <span class='op'>=</span> <span class='ident'>scale</span>;
         <span class='self'>self</span>.<span class='ident'>update_lin_acc</span>();
+        <span class='self'>self</span>.<span class='ident'>wake_up</span>();
     }
 
     <span class='doccomment'>/// Gets the angular acceleration scale of this rigid body.</span>
@@ -1096,6 +1154,7 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_ang_acc_scale</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>scale</span>: <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
         <span class='self'>self</span>.<span class='ident'>ang_acc_scale</span> <span class='op'>=</span> <span class='ident'>scale</span>;
         <span class='self'>self</span>.<span class='ident'>update_ang_acc</span>();
+        <span class='self'>self</span>.<span class='ident'>wake_up</span>();
     }
 
     <span class='doccomment'>/// Get the linear velocity of this rigid body.</span>
@@ -1107,6 +1166,14 @@
     <span class='doccomment'>/// Sets the linear velocity of this rigid body.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_lin_vel</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>lv</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
+        <span class='self'>self</span>.<span class='ident'>set_lin_vel_internal</span>(<span class='ident'>lv</span>);
+        <span class='self'>self</span>.<span class='ident'>wake_up</span>();
+    }
+
+    <span class='doccomment'>/// Sets the linear velocity of this rigid body but does not wake it up.</span>
+    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_lin_vel_internal</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>lv</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
         <span class='self'>self</span>.<span class='ident'>lin_vel</span> <span class='op'>=</span> <span class='ident'>lv</span>
     }
 
@@ -1120,6 +1187,7 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Note that this might be reset by the physics engine automatically.</span>
     <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_lin_acc</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>lf</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
         <span class='self'>self</span>.<span class='ident'>lin_acc</span> <span class='op'>=</span> <span class='ident'>lf</span>
     }
@@ -1133,6 +1201,14 @@
     <span class='doccomment'>/// Sets the angular velocity of this rigid body.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_ang_vel</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>av</span>: <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
+        <span class='self'>self</span>.<span class='ident'>set_ang_vel_internal</span>(<span class='ident'>av</span>);
+        <span class='self'>self</span>.<span class='ident'>wake_up</span>();
+    }
+
+    <span class='doccomment'>/// Sets the angular velocity of this rigid body but does not wake it up.</span>
+    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
+    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_ang_vel_internal</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>av</span>: <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
         <span class='self'>self</span>.<span class='ident'>ang_vel</span> <span class='op'>=</span> <span class='ident'>av</span>
     }
 
@@ -1171,6 +1247,7 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clear_linear_force</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='self'>self</span>.<span class='ident'>lin_force</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
         <span class='self'>self</span>.<span class='ident'>update_lin_acc</span>();
+        <span class='self'>self</span>.<span class='ident'>wake_up</span>();
     }
 
     <span class='doccomment'>/// Resets angular force.</span>
@@ -1178,13 +1255,15 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clear_angular_force</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='self'>self</span>.<span class='ident'>ang_force</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
         <span class='self'>self</span>.<span class='ident'>update_ang_acc</span>();
+        <span class='self'>self</span>.<span class='ident'>wake_up</span>();
     }
 
     <span class='doccomment'>/// Adds an additional linear force.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append_lin_force</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>force</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
         <span class='self'>self</span>.<span class='ident'>lin_force</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>lin_force</span> <span class='op'>+</span> <span class='ident'>force</span>;
-        <span class='self'>self</span>.<span class='ident'>update_acc</span>();
+        <span class='self'>self</span>.<span class='ident'>update_lin_acc</span>();
+        <span class='self'>self</span>.<span class='ident'>wake_up</span>();
     }
 
     <span class='doccomment'>/// Adds an additional angular force.</span>
@@ -1192,6 +1271,7 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append_ang_force</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>force</span>: <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
         <span class='self'>self</span>.<span class='ident'>ang_force</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>ang_force</span> <span class='op'>+</span> <span class='ident'>force</span>;
         <span class='self'>self</span>.<span class='ident'>update_ang_acc</span>();
+        <span class='self'>self</span>.<span class='ident'>wake_up</span>();
     }
 
     <span class='doccomment'>/// Adds an additional force acting at a point different to the center of mass.</span>
@@ -1201,31 +1281,33 @@
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append_force_wrt_point</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>force</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>pnt_to_com</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
         <span class='self'>self</span>.<span class='ident'>append_lin_force</span>(<span class='ident'>force</span>);
-        <span class='self'>self</span>.<span class='ident'>append_ang_force</span>(<span class='ident'>pnt_to_com</span>.<span class='ident'>cross</span>(<span class='kw-2'>&amp;</span><span class='ident'>force</span>));
+        <span class='self'>self</span>.<span class='ident'>append_ang_force</span>(<span class='ident'>pnt_to_com</span>.<span class='ident'>gcross</span>(<span class='kw-2'>&amp;</span><span class='ident'>force</span>));
     }
 
-    <span class='doccomment'>/// Update the linear and angular acceleraction from the applied forces.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>update_acc</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>update_lin_acc</span>();
-        <span class='self'>self</span>.<span class='ident'>update_ang_acc</span>();
-    }
     <span class='doccomment'>/// Update the linear acceleraction from the applied forces.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>update_lin_acc</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>lin_acc</span> <span class='op'>=</span> (<span class='self'>self</span>.<span class='ident'>lin_force</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>inv_mass</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>gravity</span>) <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>lin_acc_scale</span>;
+        <span class='self'>self</span>.<span class='ident'>lin_acc</span> <span class='op'>=</span> (<span class='self'>self</span>.<span class='ident'>lin_force</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>inv_mass</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>gravity</span>).<span class='ident'>component_mul</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>lin_acc_scale</span>);
     }
     <span class='doccomment'>/// Update the angular acceleraction from the applied forces.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>update_ang_acc</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>ang_acc</span> <span class='op'>=</span> (<span class='self'>self</span>.<span class='ident'>ang_force</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>inv_inertia</span>) <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>ang_acc_scale</span>;
+        <span class='self'>self</span>.<span class='ident'>ang_acc</span> <span class='op'>=</span> (<span class='self'>self</span>.<span class='ident'>inv_inertia</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>ang_force</span>).<span class='ident'>component_mul</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>ang_acc_scale</span>);
+    }
+
+    <span class='doccomment'>/// Forces the body to respond to any impulses before the next tick.</span>
+    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wake_up</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
+        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>deactivation_threshold</span>().<span class='ident'>is_some</span>() {
+            <span class='self'>self</span>.<span class='ident'>activate</span>(<span class='ident'>Bounded</span>::<span class='ident'>max_value</span>())
+        }
     }
 
     <span class='doccomment'>/// Applies a one-time central impulse.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>apply_central_impulse</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>impulse</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>){
         <span class='kw'>let</span> <span class='ident'>current_velocity</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>lin_vel</span>();
-        <span class='kw'>let</span> <span class='ident'>inverted_mass</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>inv_mass</span>();
+        <span class='kw'>let</span> <span class='ident'>inverted_mass</span>    <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>inv_mass</span>();
         <span class='self'>self</span>.<span class='ident'>set_lin_vel</span>(<span class='ident'>current_velocity</span> <span class='op'>+</span> <span class='ident'>impulse</span> <span class='op'>*</span> <span class='ident'>inverted_mass</span>);
     }
 
@@ -1234,17 +1316,17 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>apply_angular_momentum</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>ang_moment</span>: <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>){
         <span class='kw'>let</span> <span class='ident'>current_ang_velocity</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>ang_vel</span>();
         <span class='kw'>let</span> <span class='ident'>inverted_tensor</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>inv_inertia</span>().<span class='ident'>clone</span>();
-        <span class='self'>self</span>.<span class='ident'>set_ang_vel</span>(<span class='ident'>current_ang_velocity</span> <span class='op'>+</span> <span class='ident'>inverted_tensor</span><span class='kw-2'>*</span><span class='ident'>ang_moment</span>);
+        <span class='self'>self</span>.<span class='ident'>set_ang_vel</span>(<span class='ident'>current_ang_velocity</span> <span class='op'>+</span> <span class='ident'>inverted_tensor</span> <span class='op'>*</span> <span class='ident'>ang_moment</span>);
     }
 
     <span class='doccomment'>/// Applies a one-time impulse to a point relative to the center of mass.</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The ```pnt_to_com``` vector has to point from the center of mass to the</span>
+    <span class='doccomment'>/// The `pnt_to_com` vector has to point from the center of mass to the</span>
     <span class='doccomment'>/// point where the impulse acts.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>apply_impulse_wrt_point</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>impulse</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>pnt_to_com</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>){
         <span class='self'>self</span>.<span class='ident'>apply_central_impulse</span>(<span class='ident'>impulse</span>);
-        <span class='self'>self</span>.<span class='ident'>apply_angular_momentum</span>(<span class='ident'>pnt_to_com</span>.<span class='ident'>cross</span>(<span class='kw-2'>&amp;</span><span class='ident'>impulse</span>));
+        <span class='self'>self</span>.<span class='ident'>apply_angular_momentum</span>(<span class='ident'>pnt_to_com</span>.<span class='ident'>gcross</span>(<span class='kw-2'>&amp;</span><span class='ident'>impulse</span>));
     }
 
     <span class='doccomment'>/// Gets the inverse mass of this rigid body.</span>
@@ -1275,8 +1357,8 @@
 
     <span class='doccomment'>/// Appends a transformation to this rigid body.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append_transformation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>to_append</span>: <span class='kw-2'>&amp;</span><span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>append_transformation_mut</span>(<span class='ident'>to_append</span>);
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append_transformation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>to_append</span>: <span class='kw-2'>&amp;</span><span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
+        <span class='self'>self</span>.<span class='ident'>local_to_world</span> <span class='op'>=</span> <span class='ident'>to_append</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>local_to_world</span>;
 
         <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
         <span class='self'>self</span>.<span class='ident'>update_inertia_tensor</span>();
@@ -1284,8 +1366,8 @@
 
     <span class='doccomment'>/// Prepends a transformation to this rigid body.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>prepend_transformation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>to_prepend</span>: <span class='kw-2'>&amp;</span><span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>prepend_transformation_mut</span>(<span class='ident'>to_prepend</span>);
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>prepend_transformation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>to_prepend</span>: <span class='kw-2'>&amp;</span><span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
+        <span class='self'>self</span>.<span class='ident'>local_to_world</span> <span class='op'>*=</span> <span class='ident'>to_prepend</span>;
 
         <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
         <span class='self'>self</span>.<span class='ident'>update_inertia_tensor</span>();
@@ -1293,7 +1375,7 @@
 
     <span class='doccomment'>/// Sets the transformation of this rigid body.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_transformation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>m</span>: <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_transformation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>m</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
         <span class='self'>self</span>.<span class='ident'>local_to_world</span> <span class='op'>=</span> <span class='ident'>m</span>;
 
         <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
@@ -1302,31 +1384,31 @@
 
     <span class='doccomment'>/// Appends a translation to this rigid body.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append_translation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>t</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>append_translation_mut</span>(<span class='ident'>t</span>);
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append_translation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>t</span>: <span class='kw-2'>&amp;</span><span class='ident'>Translation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
+        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>translation</span> <span class='op'>=</span> <span class='ident'>t</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>translation</span>;
         <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
     }
 
     <span class='doccomment'>/// Prepends a translation to this rigid body.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>prepend_translation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>t</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>prepend_translation_mut</span>(<span class='ident'>t</span>);
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>prepend_translation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>t</span>: <span class='kw-2'>&amp;</span><span class='ident'>Translation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
+        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>translation</span> <span class='op'>*=</span> <span class='ident'>t</span>;
         <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
     }
 
 
     <span class='doccomment'>/// Stes the translation of this rigid body.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_translation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>set_translation</span>(<span class='ident'>t</span>);
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_translation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>Translation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
+        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>translation</span> <span class='op'>=</span> <span class='ident'>t</span>;
 
         <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
     }
 
     <span class='doccomment'>/// Appends a rotation to this rigid body.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append_rotation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>rot</span>: <span class='kw-2'>&amp;</span><span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>append_rotation_mut</span>(<span class='ident'>rot</span>);
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append_rotation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>rot</span>: <span class='kw-2'>&amp;</span><span class='ident'>Rotation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
+        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>rotation</span> <span class='op'>=</span> <span class='ident'>rot</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>rotation</span>;
 
         <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
         <span class='self'>self</span>.<span class='ident'>update_inertia_tensor</span>();
@@ -1334,8 +1416,8 @@
 
     <span class='doccomment'>/// Prepends a rotation to this rigid body.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>prepend_rotation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>rot</span>: <span class='kw-2'>&amp;</span><span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>prepend_rotation_mut</span>(<span class='ident'>rot</span>);
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>prepend_rotation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>rot</span>: <span class='kw-2'>&amp;</span><span class='ident'>Rotation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
+        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>rotation</span> <span class='op'>*=</span> <span class='ident'>rot</span>;
 
         <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
         <span class='self'>self</span>.<span class='ident'>update_inertia_tensor</span>();
@@ -1343,8 +1425,8 @@
 
     <span class='doccomment'>/// Sets the rotation of this rigid body.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_rotation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>r</span>: <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>set_rotation</span>(<span class='ident'>r</span>);
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_rotation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>rot</span>: <span class='ident'>Rotation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
+        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>rotation</span> <span class='op'>=</span> <span class='ident'>rot</span>;
 
         <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
         <span class='self'>self</span>.<span class='ident'>update_inertia_tensor</span>();
@@ -1390,16 +1472,16 @@
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>HasBoundingVolume</span><span class='op'>&lt;</span><span class='ident'>M</span>, <span class='ident'>BoundingSphere</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span>,
-          <span class='ident'>M</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> { <span class='comment'>// FIXME: avoiding `Copy` would be great.</span>
+    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Real</span>,
+          <span class='ident'>M</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> { <span class='comment'>// FIXME: avoiding `Copy` would be great.</span>
     <span class='kw'>fn</span> <span class='ident'>bounding_volume</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>) <span class='op'>-&gt;</span> <span class='ident'>BoundingSphere</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
         <span class='ident'>bounding_volume</span>::<span class='ident'>bounding_sphere</span>(<span class='self'>self</span>.<span class='ident'>shape</span>.<span class='ident'>as_ref</span>(), <span class='kw-2'>&amp;</span>(<span class='kw-2'>*</span><span class='ident'>m</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>local_to_world</span>)).<span class='ident'>loosened</span>(<span class='self'>self</span>.<span class='ident'>margin</span>())
     }
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>HasBoundingVolume</span><span class='op'>&lt;</span><span class='ident'>M</span>, <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span>,
-          <span class='ident'>M</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> { <span class='comment'>// FIXME: avoiding `Copy` would be great.</span>
+    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Real</span>,
+          <span class='ident'>M</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> { <span class='comment'>// FIXME: avoiding `Copy` would be great.</span>
     <span class='kw'>fn</span> <span class='ident'>bounding_volume</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>) <span class='op'>-&gt;</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
         <span class='ident'>bounding_volume</span>::<span class='ident'>aabb</span>(<span class='self'>self</span>.<span class='ident'>shape</span>.<span class='ident'>as_ref</span>(), <span class='kw-2'>&amp;</span>(<span class='kw-2'>*</span><span class='ident'>m</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>local_to_world</span>)).<span class='ident'>loosened</span>(<span class='self'>self</span>.<span class='ident'>margin</span>())
     }

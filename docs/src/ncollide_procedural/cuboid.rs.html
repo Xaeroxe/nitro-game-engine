@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_procedural-0.5.0/cuboid.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_procedural-0.6.0/cuboid.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>cuboid.rs.html -- source</title>
@@ -149,13 +149,12 @@
 <span id="104">104</span>
 <span id="105">105</span>
 <span id="106">106</span>
-<span id="107">107</span>
-<span id="108">108</span>
 </pre><pre class='rust '>
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
 <span class='kw'>use</span> <span class='ident'>na</span>;
 <span class='kw'>use</span> <span class='ident'>na</span>::{<span class='ident'>Vector3</span>, <span class='ident'>Point2</span>, <span class='ident'>Point3</span>};
 <span class='kw'>use</span> <span class='kw'>super</span>::{<span class='ident'>TriMesh</span>, <span class='ident'>IndexBuffer</span>, <span class='ident'>Polyline</span>};
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Scalar</span>, <span class='ident'>Point</span>, <span class='ident'>Vector</span>};
+<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
 
 <span class='doccomment'>/**
  * Generates a cuboid shape with a split index buffer.
@@ -163,10 +162,8 @@
  * # Arguments:
  * * `extents` - the extents of the cuboid.
  */</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cuboid</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>(<span class='ident'>extents</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vector3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>TriMesh</span><span class='op'>&lt;</span><span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cuboid</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='ident'>extents</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vector3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>TriMesh</span><span class='op'>&lt;</span><span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>cuboid</span> <span class='op'>=</span> <span class='ident'>unit_cuboid</span>();
-
     <span class='ident'>cuboid</span>.<span class='ident'>scale_by</span>(<span class='ident'>extents</span>);
 
     <span class='ident'>cuboid</span>
@@ -177,39 +174,38 @@
  *
  * The cuboid is centered at the origin, and has its half extents set to 0.5.
  */</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unit_cuboid</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>() <span class='op'>-&gt;</span> <span class='ident'>TriMesh</span><span class='op'>&lt;</span><span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unit_cuboid</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>() <span class='op'>-&gt;</span> <span class='ident'>TriMesh</span><span class='op'>&lt;</span><span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>coords</span>  <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>with_capacity</span>(<span class='number'>8</span>);
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>uvs</span>     <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>with_capacity</span>(<span class='number'>4</span>);
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>normals</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>with_capacity</span>(<span class='number'>6</span>);
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>faces</span>   <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>with_capacity</span>(<span class='number'>12</span>);
 
-    <span class='kw'>let</span> <span class='ident'>_0_5</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>0.5</span>);
-    <span class='kw'>let</span> <span class='ident'>m0_5</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='op'>-</span><span class='ident'>_0_5</span>;
-    <span class='kw'>let</span> <span class='ident'>_1</span>:   <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>one</span>();
-    <span class='kw'>let</span> <span class='ident'>m1</span>:   <span class='ident'>N</span> <span class='op'>=</span> <span class='op'>-</span><span class='ident'>_1</span>;
-    <span class='kw'>let</span> <span class='ident'>_0</span>:   <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
+    <span class='kw'>let</span> <span class='ident'>_0_5</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>0.5</span>);
+    <span class='kw'>let</span> <span class='ident'>m0_5</span>    <span class='op'>=</span> <span class='op'>-</span><span class='ident'>_0_5</span>;
+    <span class='kw'>let</span> <span class='ident'>_1</span>      <span class='op'>=</span> <span class='ident'>N</span>::<span class='ident'>one</span>();
+    <span class='kw'>let</span> <span class='ident'>m1</span>      <span class='op'>=</span> <span class='op'>-</span><span class='ident'>_1</span>;
+    <span class='kw'>let</span> <span class='ident'>_0</span>      <span class='op'>=</span> <span class='ident'>N</span>::<span class='ident'>zero</span>();
 
-    <span class='ident'>coords</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>m0_5</span>.<span class='ident'>clone</span>(), <span class='ident'>m0_5</span>.<span class='ident'>clone</span>(), <span class='ident'>_0_5</span>.<span class='ident'>clone</span>()));
-    <span class='ident'>coords</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>m0_5</span>.<span class='ident'>clone</span>(), <span class='ident'>m0_5</span>.<span class='ident'>clone</span>(), <span class='ident'>m0_5</span>.<span class='ident'>clone</span>()));
-    <span class='ident'>coords</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>_0_5</span>.<span class='ident'>clone</span>(), <span class='ident'>m0_5</span>.<span class='ident'>clone</span>(), <span class='ident'>m0_5</span>.<span class='ident'>clone</span>()));
-    <span class='ident'>coords</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>_0_5</span>.<span class='ident'>clone</span>(), <span class='ident'>m0_5</span>.<span class='ident'>clone</span>(), <span class='ident'>_0_5</span>.<span class='ident'>clone</span>()));
-    <span class='ident'>coords</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>m0_5</span>.<span class='ident'>clone</span>(), <span class='ident'>_0_5</span>.<span class='ident'>clone</span>(), <span class='ident'>_0_5</span>.<span class='ident'>clone</span>()));
-    <span class='ident'>coords</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>m0_5</span>.<span class='ident'>clone</span>(), <span class='ident'>_0_5</span>.<span class='ident'>clone</span>(), <span class='ident'>m0_5</span>.<span class='ident'>clone</span>()));
-    <span class='ident'>coords</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>_0_5</span>.<span class='ident'>clone</span>(), <span class='ident'>_0_5</span>.<span class='ident'>clone</span>(), <span class='ident'>m0_5</span>.<span class='ident'>clone</span>()));
-    <span class='ident'>coords</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>_0_5</span>.<span class='ident'>clone</span>(), <span class='ident'>_0_5</span>.<span class='ident'>clone</span>(), <span class='ident'>_0_5</span>.<span class='ident'>clone</span>()));
+    <span class='ident'>coords</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>m0_5</span>, <span class='ident'>m0_5</span>, <span class='ident'>_0_5</span>));
+    <span class='ident'>coords</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>m0_5</span>, <span class='ident'>m0_5</span>, <span class='ident'>m0_5</span>));
+    <span class='ident'>coords</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>_0_5</span>, <span class='ident'>m0_5</span>, <span class='ident'>m0_5</span>));
+    <span class='ident'>coords</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>_0_5</span>, <span class='ident'>m0_5</span>, <span class='ident'>_0_5</span>));
+    <span class='ident'>coords</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>m0_5</span>, <span class='ident'>_0_5</span>, <span class='ident'>_0_5</span>));
+    <span class='ident'>coords</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>m0_5</span>, <span class='ident'>_0_5</span>, <span class='ident'>m0_5</span>));
+    <span class='ident'>coords</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>_0_5</span>, <span class='ident'>_0_5</span>, <span class='ident'>m0_5</span>));
+    <span class='ident'>coords</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>_0_5</span>, <span class='ident'>_0_5</span>, <span class='ident'>_0_5</span>));
 
-    <span class='ident'>uvs</span>.<span class='ident'>push</span>(<span class='ident'>Point2</span>::<span class='ident'>new</span>(<span class='ident'>_0</span>.<span class='ident'>clone</span>(), <span class='ident'>_1</span>.<span class='ident'>clone</span>()));
-    <span class='ident'>uvs</span>.<span class='ident'>push</span>(<span class='ident'>Point2</span>::<span class='ident'>new</span>(<span class='ident'>_1</span>.<span class='ident'>clone</span>(), <span class='ident'>_1</span>.<span class='ident'>clone</span>()));
-    <span class='ident'>uvs</span>.<span class='ident'>push</span>(<span class='ident'>Point2</span>::<span class='ident'>new</span>(<span class='ident'>_0</span>.<span class='ident'>clone</span>(), <span class='ident'>_0</span>.<span class='ident'>clone</span>()));
-    <span class='ident'>uvs</span>.<span class='ident'>push</span>(<span class='ident'>Point2</span>::<span class='ident'>new</span>(<span class='ident'>_1</span>.<span class='ident'>clone</span>(), <span class='ident'>_0</span>.<span class='ident'>clone</span>()));
+    <span class='ident'>uvs</span>.<span class='ident'>push</span>(<span class='ident'>Point2</span>::<span class='ident'>new</span>(<span class='ident'>_0</span>, <span class='ident'>_1</span>));
+    <span class='ident'>uvs</span>.<span class='ident'>push</span>(<span class='ident'>Point2</span>::<span class='ident'>new</span>(<span class='ident'>_1</span>, <span class='ident'>_1</span>));
+    <span class='ident'>uvs</span>.<span class='ident'>push</span>(<span class='ident'>Point2</span>::<span class='ident'>new</span>(<span class='ident'>_0</span>, <span class='ident'>_0</span>));
+    <span class='ident'>uvs</span>.<span class='ident'>push</span>(<span class='ident'>Point2</span>::<span class='ident'>new</span>(<span class='ident'>_1</span>, <span class='ident'>_0</span>));
 
-    <span class='ident'>normals</span>.<span class='ident'>push</span>(<span class='ident'>Vector3</span>::<span class='ident'>new</span>(<span class='ident'>m1</span>.<span class='ident'>clone</span>(), <span class='ident'>_0</span>.<span class='ident'>clone</span>(), <span class='ident'>_0</span>.<span class='ident'>clone</span>()));
-    <span class='ident'>normals</span>.<span class='ident'>push</span>(<span class='ident'>Vector3</span>::<span class='ident'>new</span>(<span class='ident'>_0</span>.<span class='ident'>clone</span>(), <span class='ident'>_0</span>.<span class='ident'>clone</span>(), <span class='ident'>m1</span>.<span class='ident'>clone</span>()));
-    <span class='ident'>normals</span>.<span class='ident'>push</span>(<span class='ident'>Vector3</span>::<span class='ident'>new</span>(<span class='ident'>_1</span>.<span class='ident'>clone</span>(), <span class='ident'>_0</span>.<span class='ident'>clone</span>(), <span class='ident'>_0</span>.<span class='ident'>clone</span>()));
-    <span class='ident'>normals</span>.<span class='ident'>push</span>(<span class='ident'>Vector3</span>::<span class='ident'>new</span>(<span class='ident'>_0</span>.<span class='ident'>clone</span>(), <span class='ident'>_0</span>.<span class='ident'>clone</span>(), <span class='ident'>_1</span>.<span class='ident'>clone</span>()));
-    <span class='ident'>normals</span>.<span class='ident'>push</span>(<span class='ident'>Vector3</span>::<span class='ident'>new</span>(<span class='ident'>_0</span>.<span class='ident'>clone</span>(), <span class='ident'>m1</span>.<span class='ident'>clone</span>(), <span class='ident'>_0</span>.<span class='ident'>clone</span>()));
-    <span class='ident'>normals</span>.<span class='ident'>push</span>(<span class='ident'>Vector3</span>::<span class='ident'>new</span>(<span class='ident'>_0</span>.<span class='ident'>clone</span>(), <span class='ident'>_1</span>.<span class='ident'>clone</span>(), <span class='ident'>_0</span>.<span class='ident'>clone</span>()));
+    <span class='ident'>normals</span>.<span class='ident'>push</span>(<span class='ident'>Vector3</span>::<span class='ident'>new</span>(<span class='ident'>m1</span>, <span class='ident'>_0</span>, <span class='ident'>_0</span>));
+    <span class='ident'>normals</span>.<span class='ident'>push</span>(<span class='ident'>Vector3</span>::<span class='ident'>new</span>(<span class='ident'>_0</span>, <span class='ident'>_0</span>, <span class='ident'>m1</span>));
+    <span class='ident'>normals</span>.<span class='ident'>push</span>(<span class='ident'>Vector3</span>::<span class='ident'>new</span>(<span class='ident'>_1</span>, <span class='ident'>_0</span>, <span class='ident'>_0</span>));
+    <span class='ident'>normals</span>.<span class='ident'>push</span>(<span class='ident'>Vector3</span>::<span class='ident'>new</span>(<span class='ident'>_0</span>, <span class='ident'>_0</span>, <span class='ident'>_1</span>));
+    <span class='ident'>normals</span>.<span class='ident'>push</span>(<span class='ident'>Vector3</span>::<span class='ident'>new</span>(<span class='ident'>_0</span>, <span class='ident'>m1</span>, <span class='ident'>_0</span>));
+    <span class='ident'>normals</span>.<span class='ident'>push</span>(<span class='ident'>Vector3</span>::<span class='ident'>new</span>(<span class='ident'>_0</span>, <span class='ident'>_1</span>, <span class='ident'>_0</span>));
 
     <span class='ident'>faces</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='number'>4</span>, <span class='number'>0</span>, <span class='number'>0</span>), <span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='number'>5</span>, <span class='number'>0</span>, <span class='number'>1</span>), <span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>2</span>)));
     <span class='ident'>faces</span>.<span class='ident'>push</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='number'>5</span>, <span class='number'>0</span>, <span class='number'>1</span>), <span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>0</span>, <span class='number'>3</span>), <span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>2</span>)));
@@ -233,7 +229,7 @@
 }
 
 <span class='doccomment'>/// The contour of a cuboid lying on the x-y plane.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>rectangle</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(<span class='ident'>extents</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>::<span class='ident'>Vect</span>) <span class='op'>-&gt;</span> <span class='ident'>Polyline</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>rectangle</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(<span class='ident'>extents</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>::<span class='ident'>Vector</span>) <span class='op'>-&gt;</span> <span class='ident'>Polyline</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>
     <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span> {
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>rectangle</span> <span class='op'>=</span> <span class='ident'>unit_rectangle</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>();
 
@@ -245,18 +241,18 @@
 <span class='doccomment'>/// The contour of a unit cuboid lying on the x-y plane.</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unit_rectangle</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>() <span class='op'>-&gt;</span> <span class='ident'>Polyline</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>
     <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span> {
-    <span class='kw'>let</span> <span class='ident'>_0_5</span>: <span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>0.5</span>);
-    <span class='kw'>let</span> <span class='ident'>m0_5</span>: <span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span> <span class='op'>=</span> <span class='op'>-</span><span class='ident'>_0_5</span>;
+    <span class='kw'>let</span> <span class='ident'>_0_5</span>: <span class='ident'>P</span>::<span class='ident'>Real</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>0.5</span>);
+    <span class='kw'>let</span> <span class='ident'>m0_5</span>: <span class='ident'>P</span>::<span class='ident'>Real</span> <span class='op'>=</span> <span class='op'>-</span><span class='ident'>_0_5</span>;
 
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>p_ul</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>origin</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>();
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>p_ur</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>origin</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>();
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>p_dl</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>origin</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>();
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>p_dr</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>origin</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>();
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>p_ul</span> <span class='op'>=</span> <span class='ident'>P</span>::<span class='ident'>origin</span>();
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>p_ur</span> <span class='op'>=</span> <span class='ident'>P</span>::<span class='ident'>origin</span>();
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>p_dl</span> <span class='op'>=</span> <span class='ident'>P</span>::<span class='ident'>origin</span>();
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>p_dr</span> <span class='op'>=</span> <span class='ident'>P</span>::<span class='ident'>origin</span>();
 
-    <span class='ident'>p_dl</span>[<span class='number'>0</span>] <span class='op'>=</span> <span class='ident'>m0_5</span>.<span class='ident'>clone</span>(); <span class='ident'>p_dl</span>[<span class='number'>1</span>] <span class='op'>=</span> <span class='ident'>m0_5</span>.<span class='ident'>clone</span>();
-    <span class='ident'>p_dr</span>[<span class='number'>0</span>] <span class='op'>=</span> <span class='ident'>_0_5</span>.<span class='ident'>clone</span>(); <span class='ident'>p_dr</span>[<span class='number'>1</span>] <span class='op'>=</span> <span class='ident'>m0_5</span>.<span class='ident'>clone</span>();
-    <span class='ident'>p_ur</span>[<span class='number'>0</span>] <span class='op'>=</span> <span class='ident'>_0_5</span>.<span class='ident'>clone</span>(); <span class='ident'>p_ur</span>[<span class='number'>1</span>] <span class='op'>=</span> <span class='ident'>_0_5</span>.<span class='ident'>clone</span>();
-    <span class='ident'>p_ul</span>[<span class='number'>0</span>] <span class='op'>=</span> <span class='ident'>m0_5</span>.<span class='ident'>clone</span>(); <span class='ident'>p_ul</span>[<span class='number'>1</span>] <span class='op'>=</span> <span class='ident'>_0_5</span>.<span class='ident'>clone</span>();
+    <span class='ident'>p_dl</span>[<span class='number'>0</span>] <span class='op'>=</span> <span class='ident'>m0_5</span>; <span class='ident'>p_dl</span>[<span class='number'>1</span>] <span class='op'>=</span> <span class='ident'>m0_5</span>;
+    <span class='ident'>p_dr</span>[<span class='number'>0</span>] <span class='op'>=</span> <span class='ident'>_0_5</span>; <span class='ident'>p_dr</span>[<span class='number'>1</span>] <span class='op'>=</span> <span class='ident'>m0_5</span>;
+    <span class='ident'>p_ur</span>[<span class='number'>0</span>] <span class='op'>=</span> <span class='ident'>_0_5</span>; <span class='ident'>p_ur</span>[<span class='number'>1</span>] <span class='op'>=</span> <span class='ident'>_0_5</span>;
+    <span class='ident'>p_ul</span>[<span class='number'>0</span>] <span class='op'>=</span> <span class='ident'>m0_5</span>; <span class='ident'>p_ul</span>[<span class='number'>1</span>] <span class='op'>=</span> <span class='ident'>_0_5</span>;
 
     <span class='ident'>Polyline</span>::<span class='ident'>new</span>(<span class='macro'>vec</span><span class='macro'>!</span>(<span class='ident'>p_ur</span>, <span class='ident'>p_ul</span>, <span class='ident'>p_dl</span>, <span class='ident'>p_dr</span>), <span class='prelude-val'>None</span>)
 }

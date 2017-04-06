@@ -225,23 +225,6 @@
 <span id="180">180</span>
 <span id="181">181</span>
 <span id="182">182</span>
-<span id="183">183</span>
-<span id="184">184</span>
-<span id="185">185</span>
-<span id="186">186</span>
-<span id="187">187</span>
-<span id="188">188</span>
-<span id="189">189</span>
-<span id="190">190</span>
-<span id="191">191</span>
-<span id="192">192</span>
-<span id="193">193</span>
-<span id="194">194</span>
-<span id="195">195</span>
-<span id="196">196</span>
-<span id="197">197</span>
-<span id="198">198</span>
-<span id="199">199</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>app</span>;
 <span class='kw'>use</span> <span class='ident'>app</span>::<span class='ident'>App</span>;
@@ -255,8 +238,6 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>BTreeMap</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>replace</span>;
 <span class='kw'>use</span> <span class='ident'>nphysics2d</span>::<span class='ident'>object</span>::{<span class='ident'>RigidBody</span>, <span class='ident'>RigidBodyHandle</span>};
-<span class='kw'>use</span> <span class='ident'>nphysics2d</span>::<span class='ident'>math</span>::<span class='ident'>Matrix</span>;
-<span class='kw'>use</span> <span class='ident'>nalgebra</span>::{<span class='ident'>Rotation2</span>, <span class='ident'>Vector2</span>, <span class='ident'>Vector1</span>, <span class='ident'>Rotation</span>};
 
 <span class='doccomment'>/// GameObjects are the primary descriptor for things that are visible in the game world.</span>
 <span class='doccomment'>/// Players, items, enemies, and whatever else exists in your game world are typically GameObjects.</span>
@@ -418,28 +399,13 @@
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>copy_from_physics</span>(<span class='ident'>game_object</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameObject</span>) {
     <span class='kw'>if</span> <span class='kw'>let</span> <span class='kw-2'>&amp;</span><span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>body_box</span>) <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>game_object</span>.<span class='ident'>body</span> {
         <span class='kw'>let</span> <span class='ident'>body_borrow</span> <span class='op'>=</span> <span class='ident'>body_box</span>.<span class='ident'>borrow</span>();
-        <span class='kw-2'>*</span><span class='ident'>game_object</span>.<span class='ident'>transform</span>.<span class='ident'>mut_x</span>() <span class='op'>=</span> <span class='ident'>body_borrow</span>.<span class='ident'>position</span>().<span class='ident'>translation</span>.<span class='ident'>x</span>;
-        <span class='kw-2'>*</span><span class='ident'>game_object</span>.<span class='ident'>transform</span>.<span class='ident'>mut_y</span>() <span class='op'>=</span> <span class='ident'>body_borrow</span>.<span class='ident'>position</span>().<span class='ident'>translation</span>.<span class='ident'>y</span>;
-        <span class='kw-2'>*</span><span class='ident'>game_object</span>.<span class='ident'>transform</span>.<span class='ident'>mut_rotation</span>() <span class='op'>=</span> <span class='ident'>body_borrow</span>.<span class='ident'>position</span>()
-            .<span class='ident'>rotation</span>
-            .<span class='ident'>rotation</span>()
-            .<span class='ident'>x</span>;
+        <span class='ident'>game_object</span>.<span class='ident'>transform</span> <span class='op'>=</span> <span class='ident'>body_borrow</span>.<span class='ident'>position</span>().<span class='ident'>clone</span>();
     }
 }
 
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>copy_to_physics</span>(<span class='ident'>game_object</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>GameObject</span>) {
     <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>body_box</span>) <span class='op'>=</span> <span class='ident'>game_object</span>.<span class='ident'>body</span> {
-        <span class='ident'>body_box</span>.<span class='ident'>borrow_mut</span>()
-            .<span class='ident'>set_transformation</span>(<span class='ident'>Matrix</span>::<span class='op'>&lt;</span><span class='ident'>f32</span><span class='op'>&gt;</span> {
-                                    <span class='ident'>rotation</span>: <span class='ident'>Rotation2</span>::<span class='ident'>new</span>(<span class='ident'>Vector1</span> {
-                                                                 <span class='ident'>x</span>: <span class='kw-2'>*</span><span class='ident'>game_object</span>.<span class='ident'>transform</span>
-                                                                         .<span class='ident'>rotation</span>(),
-                                                             }),
-                                    <span class='ident'>translation</span>: <span class='ident'>Vector2</span> {
-                                        <span class='ident'>x</span>: <span class='kw-2'>*</span><span class='ident'>game_object</span>.<span class='ident'>transform</span>.<span class='ident'>x</span>(),
-                                        <span class='ident'>y</span>: <span class='kw-2'>*</span><span class='ident'>game_object</span>.<span class='ident'>transform</span>.<span class='ident'>y</span>(),
-                                    },
-                                });
+        <span class='ident'>body_box</span>.<span class='ident'>borrow_mut</span>().<span class='ident'>set_transformation</span>(<span class='ident'>game_object</span>.<span class='ident'>transform</span>.<span class='ident'>clone</span>());
     }
 }
 </pre>

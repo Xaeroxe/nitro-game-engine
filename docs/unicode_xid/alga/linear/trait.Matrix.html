@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Matrix` trait in crate `alga`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Matrix">
+
+    <title>alga::linear::Matrix - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>alga</a>::<wbr><a href='index.html'>linear</a></p><script>window.sidebarCurrent = {name: 'Matrix', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content trait">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>alga</a>::<wbr><a href='index.html'>linear</a>::<wbr><a class='trait' href=''>Matrix</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/alga/linear/matrix.rs.html#7-45' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Matrix: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html' title='core::ops::Mul'>Mul</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Row</a>, Output=Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Column</a>&gt; {
+    type <a href='#associatedtype.Field' class='type'>Field</a>: <a class='trait' href='../../alga/general/trait.Field.html' title='alga::general::Field'>Field</a>;
+    type <a href='#associatedtype.Row' class='type'>Row</a>: <a class='trait' href='../../alga/linear/trait.FiniteDimVectorSpace.html' title='alga::linear::FiniteDimVectorSpace'>FiniteDimVectorSpace</a>&lt;Field=Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Field</a>&gt;;
+    type <a href='#associatedtype.Column' class='type'>Column</a>: <a class='trait' href='../../alga/linear/trait.FiniteDimVectorSpace.html' title='alga::linear::FiniteDimVectorSpace'>FiniteDimVectorSpace</a>&lt;Field=Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Field</a>&gt;;
+    type <a href='#associatedtype.Transpose' class='type'>Transpose</a>: <a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Matrix</a>&lt;Field=Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Field</a>, Row=Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Column</a>, Column=Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Row</a>&gt;;
+    fn <a href='#tymethod.nrows' class='fnname'>nrows</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>;
+    fn <a href='#tymethod.ncolumns' class='fnname'>ncolumns</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>;
+    fn <a href='#tymethod.row' class='fnname'>row</a>(&amp;self, i: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Row</a>;
+    fn <a href='#tymethod.column' class='fnname'>column</a>(&amp;self, i: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Column</a>;
+    unsafe fn <a href='#tymethod.get_unchecked' class='fnname'>get_unchecked</a>(&amp;self, i: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, j: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Field</a>;
+    fn <a href='#tymethod.transpose' class='fnname'>transpose</a>(&amp;self) -&gt; Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Transpose</a>;
+
+    fn <a href='#method.get' class='fnname'>get</a>(&amp;self, i: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, j: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Field</a> { ... }
+}</pre><div class='docblock'><p>The space of all matrices.</p>
+</div>
+            <h2 id='associated-types'>Associated Types</h2>
+            <div class='methods'>
+        <h3 id='associatedtype.Field' class='method'><span id='Field.t' class='invisible'><code>type <a href='#associatedtype.Field' class='type'>Field</a>: <a class='trait' href='../../alga/general/trait.Field.html' title='alga::general::Field'>Field</a></code></span></h3><div class='docblock'><p>The underlying field.</p>
+</div><h3 id='associatedtype.Row' class='method'><span id='Row.t' class='invisible'><code>type <a href='#associatedtype.Row' class='type'>Row</a>: <a class='trait' href='../../alga/linear/trait.FiniteDimVectorSpace.html' title='alga::linear::FiniteDimVectorSpace'>FiniteDimVectorSpace</a>&lt;Field=Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Field</a>&gt;</code></span></h3><div class='docblock'><p>The type of rows of this matrix.</p>
+</div><h3 id='associatedtype.Column' class='method'><span id='Column.t' class='invisible'><code>type <a href='#associatedtype.Column' class='type'>Column</a>: <a class='trait' href='../../alga/linear/trait.FiniteDimVectorSpace.html' title='alga::linear::FiniteDimVectorSpace'>FiniteDimVectorSpace</a>&lt;Field=Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Field</a>&gt;</code></span></h3><div class='docblock'><p>The type of columns of this matrix.</p>
+</div><h3 id='associatedtype.Transpose' class='method'><span id='Transpose.t' class='invisible'><code>type <a href='#associatedtype.Transpose' class='type'>Transpose</a>: <a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Matrix</a>&lt;Field=Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Field</a>, Row=Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Column</a>, Column=Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Row</a>&gt;</code></span></h3><div class='docblock'><p>The type of the transposed matrix.</p>
+</div></div>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.nrows' class='method'><span id='nrows.v' class='invisible'><code>fn <a href='#tymethod.nrows' class='fnname'>nrows</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></span></h3><div class='docblock'><p>The number of rows of this matrix.</p>
+</div><h3 id='tymethod.ncolumns' class='method'><span id='ncolumns.v' class='invisible'><code>fn <a href='#tymethod.ncolumns' class='fnname'>ncolumns</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></span></h3><div class='docblock'><p>The number of columns of this matrix.</p>
+</div><h3 id='tymethod.row' class='method'><span id='row.v' class='invisible'><code>fn <a href='#tymethod.row' class='fnname'>row</a>(&amp;self, i: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Row</a></code></span></h3><div class='docblock'><p>The i-th row of this matrix.</p>
+</div><h3 id='tymethod.column' class='method'><span id='column.v' class='invisible'><code>fn <a href='#tymethod.column' class='fnname'>column</a>(&amp;self, i: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Column</a></code></span></h3><div class='docblock'><p>The i-th column of this matrix.</p>
+</div><h3 id='tymethod.get_unchecked' class='method'><span id='get_unchecked.v' class='invisible'><code>unsafe fn <a href='#tymethod.get_unchecked' class='fnname'>get_unchecked</a>(&amp;self, i: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, j: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Field</a></code></span></h3><div class='docblock'><p>Gets the component at row <code>i</code> and column <code>j</code> of this matrix without bound checking.</p>
+</div><h3 id='tymethod.transpose' class='method'><span id='transpose.v' class='invisible'><code>fn <a href='#tymethod.transpose' class='fnname'>transpose</a>(&amp;self) -&gt; Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Transpose</a></code></span></h3><div class='docblock'><p>Transposes this matrix.</p>
+</div></div>
+            <h2 id='provided-methods'>Provided Methods</h2>
+            <div class='methods'>
+        <h3 id='method.get' class='method'><span id='get.v' class='invisible'><code>fn <a href='#method.get' class='fnname'>get</a>(&amp;self, i: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, j: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; Self::<a class='trait' href='../../alga/linear/trait.Matrix.html' title='alga::linear::Matrix'>Field</a></code></span></h3><div class='docblock'><p>Gets the component at row <code>i</code> and column <code>j</code> of this matrix.</p>
+</div></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    </ul><script type="text/javascript" async
+                         src="../../implementors/alga/linear/trait.Matrix.js">
+                 </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "alga";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

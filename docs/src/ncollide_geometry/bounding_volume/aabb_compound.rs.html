@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.2.0/bounding_volume/aabb_compound.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.3.0/bounding_volume/aabb_compound.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>aabb_compound.rs.html -- source</title>
@@ -60,28 +60,20 @@
 <span id="15">15</span>
 <span id="16">16</span>
 <span id="17">17</span>
-<span id="18">18</span>
-<span id="19">19</span>
-<span id="20">20</span>
-<span id="21">21</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='ident'>Translation</span>, <span class='ident'>AbsoluteRotate</span>, <span class='ident'>Transform</span>, <span class='ident'>Translate</span>};
 <span class='kw'>use</span> <span class='ident'>na</span>;
 <span class='kw'>use</span> <span class='ident'>bounding_volume</span>::{<span class='ident'>AABB</span>, <span class='ident'>HasBoundingVolume</span>};
 <span class='kw'>use</span> <span class='ident'>shape</span>::<span class='ident'>Compound</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Vector</span>};
+<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Isometry</span>};
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>M2</span><span class='op'>&gt;</span> <span class='ident'>HasBoundingVolume</span><span class='op'>&lt;</span><span class='ident'>M2</span>, <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Compound</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span>,
-          <span class='ident'>P</span>::<span class='ident'>Vect</span>: <span class='ident'>Translate</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
-          <span class='ident'>M2</span>: <span class='ident'>Transform</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>AbsoluteRotate</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>, <span class='ident'>M2</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> <span class='ident'>HasBoundingVolume</span><span class='op'>&lt;</span><span class='ident'>M2</span>, <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Compound</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>bounding_volume</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M2</span>) <span class='op'>-&gt;</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>bv</span>              <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>bvt</span>().<span class='ident'>root_bounding_volume</span>().<span class='ident'>unwrap</span>();
-        <span class='kw'>let</span> <span class='ident'>ls_center</span>       <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>origin</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>() <span class='op'>+</span> <span class='ident'>bv</span>.<span class='ident'>translation</span>();
-        <span class='kw'>let</span> <span class='ident'>center</span>          <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>transform</span>(<span class='kw-2'>&amp;</span><span class='ident'>ls_center</span>);
-        <span class='kw'>let</span> <span class='ident'>half_extents</span>    <span class='op'>=</span> (<span class='kw-2'>*</span><span class='ident'>bv</span>.<span class='ident'>maxs</span>() <span class='op'>-</span> <span class='kw-2'>*</span><span class='ident'>bv</span>.<span class='ident'>mins</span>()) <span class='op'>/</span> <span class='ident'>na</span>::<span class='ident'>cast</span>::<span class='op'>&lt;</span><span class='ident'>f64</span>, <span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span><span class='op'>&gt;</span>(<span class='number'>2.0</span>);
-        <span class='kw'>let</span> <span class='ident'>ws_half_extents</span> <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>absolute_rotate</span>(<span class='kw-2'>&amp;</span><span class='ident'>half_extents</span>);
+        <span class='kw'>let</span> <span class='ident'>ls_center</span>       <span class='op'>=</span> <span class='ident'>bv</span>.<span class='ident'>center</span>();
+        <span class='kw'>let</span> <span class='ident'>center</span>          <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>transform_point</span>(<span class='kw-2'>&amp;</span><span class='ident'>ls_center</span>);
+        <span class='kw'>let</span> <span class='ident'>half_extents</span>    <span class='op'>=</span> (<span class='kw-2'>*</span><span class='ident'>bv</span>.<span class='ident'>maxs</span>() <span class='op'>-</span> <span class='kw-2'>*</span><span class='ident'>bv</span>.<span class='ident'>mins</span>()) <span class='op'>/</span> <span class='ident'>na</span>::<span class='ident'>convert</span>::<span class='op'>&lt;</span><span class='ident'>f64</span>, <span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='number'>2.0</span>);
+        <span class='kw'>let</span> <span class='ident'>ws_half_extents</span> <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>absolute_rotate_vector</span>(<span class='kw-2'>&amp;</span><span class='ident'>half_extents</span>);
 
         <span class='ident'>AABB</span>::<span class='ident'>new</span>(<span class='ident'>center</span> <span class='op'>+</span> (<span class='op'>-</span><span class='ident'>ws_half_extents</span>), <span class='ident'>center</span> <span class='op'>+</span> <span class='ident'>ws_half_extents</span>)
     }

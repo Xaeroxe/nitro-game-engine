@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.2.0/shape/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.3.0/shape/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -131,6 +131,8 @@
 <span id="86">86</span>
 <span id="87">87</span>
 <span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Collision shapes supported by ncollide.</span>
 
@@ -141,7 +143,9 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>cone</span>::<span class='ident'>Cone</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>cylinder</span>::<span class='ident'>Cylinder</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>convex</span>::<span class='ident'>ConvexHull</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>minkowski_sum</span>::{<span class='ident'>MinkowskiSum</span>, <span class='ident'>AnnotatedMinkowskiSum</span>, <span class='ident'>AnnotatedPoint</span>, <span class='ident'>cso_support_point</span>};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>minkowski_sum</span>::{<span class='ident'>MinkowskiSum</span>, <span class='ident'>AnnotatedMinkowskiSum</span>,
+                              <span class='ident'>CSO</span>, <span class='ident'>AnnotatedCSO</span>,
+                              <span class='ident'>AnnotatedPoint</span>, <span class='ident'>cso_support_point</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>reflection</span>::<span class='ident'>Reflection</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>compound</span>::<span class='ident'>Compound</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>base_mesh</span>::{<span class='ident'>BaseMesh</span>, <span class='ident'>BaseMeshElement</span>};

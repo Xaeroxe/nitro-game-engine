@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Channel` struct in crate `sdl2`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Channel">
+
+    <title>sdl2::mixer::Channel - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>sdl2</a>::<wbr><a href='index.html'>mixer</a></p><script>window.sidebarCurrent = {name: 'Channel', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>sdl2</a>::<wbr><a href='index.html'>mixer</a>::<wbr><a class='struct' href=''>Channel</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/sdl2/mixer/mod.rs.html#333' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Channel(_);</pre><div class='docblock'><p>Sound effect channel.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../sdl2/mixer/struct.Channel.html' title='sdl2::mixer::Channel'>Channel</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/sdl2/mixer/mod.rs.html#373-604' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.all' class='method'><span id='all.v' class='invisible'><code>fn <a href='#method.all' class='fnname'>all</a>() -&gt; <a class='struct' href='../../sdl2/mixer/struct.Channel.html' title='sdl2::mixer::Channel'>Channel</a></code></span></h4>
+<div class='docblock'><p>Represent for all channels (-1)</p>
+</div><h4 id='method.post' class='method'><span id='post.v' class='invisible'><code>fn <a href='#method.post' class='fnname'>post</a>() -&gt; <a class='struct' href='../../sdl2/mixer/struct.Channel.html' title='sdl2::mixer::Channel'>Channel</a></code></span></h4>
+<div class='docblock'><p>This is the MIX_CHANNEL_POST (-2)</p>
+</div><h4 id='method.set_volume' class='method'><span id='set_volume.v' class='invisible'><code>fn <a href='#method.set_volume' class='fnname'>set_volume</a>(self, volume: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a></code></span></h4>
+<div class='docblock'><p>Set the volume for any allocated channel.</p>
+</div><h4 id='method.get_volume' class='method'><span id='get_volume.v' class='invisible'><code>fn <a href='#method.get_volume' class='fnname'>get_volume</a>(self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a></code></span></h4>
+<div class='docblock'><p>Returns the channels volume on scale of 0 to 128.</p>
+</div><h4 id='method.play' class='method'><span id='play.v' class='invisible'><code>fn <a href='#method.play' class='fnname'>play</a>(self, chunk: &amp;<a class='struct' href='../../sdl2/mixer/struct.Chunk.html' title='sdl2::mixer::Chunk'>Chunk</a>, loops: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/mixer/struct.Channel.html' title='sdl2::mixer::Channel'>Channel</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h4>
+<div class='docblock'><p>Play chunk on channel, or if channel is -1, pick the first free unreserved channel.</p>
+</div><h4 id='method.play_timed' class='method'><span id='play_timed.v' class='invisible'><code>fn <a href='#method.play_timed' class='fnname'>play_timed</a>(self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chunk: &amp;<a class='struct' href='../../sdl2/mixer/struct.Chunk.html' title='sdl2::mixer::Chunk'>Chunk</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; loops: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ticks: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/mixer/struct.Channel.html' title='sdl2::mixer::Channel'>Channel</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h4>
+<h4 id='method.fade_in' class='method'><span id='fade_in.v' class='invisible'><code>fn <a href='#method.fade_in' class='fnname'>fade_in</a>(self, chunk: &amp;<a class='struct' href='../../sdl2/mixer/struct.Chunk.html' title='sdl2::mixer::Chunk'>Chunk</a>, loops: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>, ms: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/mixer/struct.Channel.html' title='sdl2::mixer::Channel'>Channel</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h4>
+<div class='docblock'><p>Play chunk on channel, or if channel is -1, pick the first free unreserved channel.</p>
+</div><h4 id='method.fade_in_timed' class='method'><span id='fade_in_timed.v' class='invisible'><code>fn <a href='#method.fade_in_timed' class='fnname'>fade_in_timed</a>(self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; chunk: &amp;<a class='struct' href='../../sdl2/mixer/struct.Chunk.html' title='sdl2::mixer::Chunk'>Chunk</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; loops: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ms: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ticks: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/mixer/struct.Channel.html' title='sdl2::mixer::Channel'>Channel</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h4>
+<h4 id='method.pause' class='method'><span id='pause.v' class='invisible'><code>fn <a href='#method.pause' class='fnname'>pause</a>(self)</code></span></h4>
+<div class='docblock'><p>Pause channel, or all playing channels if -1 is passed in.</p>
+</div><h4 id='method.resume' class='method'><span id='resume.v' class='invisible'><code>fn <a href='#method.resume' class='fnname'>resume</a>(self)</code></span></h4>
+<div class='docblock'><p>Unpause channel, or all playing and paused channels if -1 is passed in.</p>
+</div><h4 id='method.halt' class='method'><span id='halt.v' class='invisible'><code>fn <a href='#method.halt' class='fnname'>halt</a>(self)</code></span></h4>
+<div class='docblock'><p>Halt channel playback</p>
+</div><h4 id='method.expire' class='method'><span id='expire.v' class='invisible'><code>fn <a href='#method.expire' class='fnname'>expire</a>(self, ticks: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a></code></span></h4>
+<div class='docblock'><p>Halt channel playback, after ticks milliseconds.</p>
+</div><h4 id='method.fade_out' class='method'><span id='fade_out.v' class='invisible'><code>fn <a href='#method.fade_out' class='fnname'>fade_out</a>(self, ms: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a></code></span></h4>
+<div class='docblock'><p>Gradually fade out which channel over ms milliseconds starting from now.</p>
+</div><h4 id='method.is_playing' class='method'><span id='is_playing.v' class='invisible'><code>fn <a href='#method.is_playing' class='fnname'>is_playing</a>(self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>if channel is playing, or not.</p>
+</div><h4 id='method.is_paused' class='method'><span id='is_paused.v' class='invisible'><code>fn <a href='#method.is_paused' class='fnname'>is_paused</a>(self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>if channel is paused, or not.</p>
+</div><h4 id='method.get_fading' class='method'><span id='get_fading.v' class='invisible'><code>fn <a href='#method.get_fading' class='fnname'>get_fading</a>(self) -&gt; <a class='enum' href='../../sdl2/mixer/enum.Fading.html' title='sdl2::mixer::Fading'>Fading</a></code></span></h4>
+<div class='docblock'><p>if channel is fading in, out, or not</p>
+</div><h4 id='method.get_chunk' class='method'><span id='get_chunk.v' class='invisible'><code>fn <a href='#method.get_chunk' class='fnname'>get_chunk</a>(self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../sdl2/mixer/struct.Chunk.html' title='sdl2::mixer::Chunk'>Chunk</a>&gt;</code></span></h4>
+<div class='docblock'><p>Get the most recent sample chunk pointer played on channel.</p>
+</div><h4 id='method.unregister_all_effects' class='method'><span id='unregister_all_effects.v' class='invisible'><code>fn <a href='#method.unregister_all_effects' class='fnname'>unregister_all_effects</a>(self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h4>
+<div class='docblock'><p>This removes all effects registered to channel.</p>
+</div><h4 id='method.set_panning' class='method'><span id='set_panning.v' class='invisible'><code>fn <a href='#method.set_panning' class='fnname'>set_panning</a>(self, left: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>, right: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h4>
+<div class='docblock'><p>Sets a panning effect, where left and right is the volume of the left and right channels.
+They range from 0 (silence) to 255 (loud).</p>
+</div><h4 id='method.unset_panning' class='method'><span id='unset_panning.v' class='invisible'><code>fn <a href='#method.unset_panning' class='fnname'>unset_panning</a>(self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h4>
+<div class='docblock'><p>Unregisters panning effect.</p>
+</div><h4 id='method.set_distance' class='method'><span id='set_distance.v' class='invisible'><code>fn <a href='#method.set_distance' class='fnname'>set_distance</a>(self, distance: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h4>
+<div class='docblock'><p>This effect simulates a simple attenuation of volume due to distance.
+distance ranges from 0 (close/loud) to 255 (far/quiet).</p>
+</div><h4 id='method.unset_distance' class='method'><span id='unset_distance.v' class='invisible'><code>fn <a href='#method.unset_distance' class='fnname'>unset_distance</a>(self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h4>
+<div class='docblock'><p>Unregisters distance effect.</p>
+</div><h4 id='method.set_position' class='method'><span id='set_position.v' class='invisible'><code>fn <a href='#method.set_position' class='fnname'>set_position</a>(self, angle: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i16.html'>i16</a>, distance: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h4>
+<div class='docblock'><p>This effect emulates a simple 3D audio effect.
+angle ranges from 0 to 360 degrees going clockwise, where 0 is directly in front.
+distance ranges from 0 (close/loud) to 255 (far/quiet).</p>
+</div><h4 id='method.unset_position' class='method'><span id='unset_position.v' class='invisible'><code>fn <a href='#method.unset_position' class='fnname'>unset_position</a>(self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h4>
+<div class='docblock'><p>Unregisters position effect.</p>
+</div><h4 id='method.set_reverse_stereo' class='method'><span id='set_reverse_stereo.v' class='invisible'><code>fn <a href='#method.set_reverse_stereo' class='fnname'>set_reverse_stereo</a>(self, flip: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h4>
+<div class='docblock'><p>Simple reverse stereo, swaps left and right channel sound.
+true for reverse, false to unregister effect.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../sdl2/mixer/struct.Channel.html' title='sdl2::mixer::Channel'>Channel</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/sdl2/mixer/mod.rs.html#332' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> for <a class='struct' href='../../sdl2/mixer/struct.Channel.html' title='sdl2::mixer::Channel'>Channel</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/sdl2/mixer/mod.rs.html#332' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../../sdl2/mixer/struct.Channel.html' title='sdl2::mixer::Channel'>Channel</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/sdl2/mixer/mod.rs.html#332' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class='method'><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../../sdl2/mixer/struct.Channel.html' title='sdl2::mixer::Channel'>Channel</a></code></span></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class='method'><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='struct' href='../../sdl2/mixer/struct.Channel.html' title='sdl2::mixer::Channel'>Channel</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/sdl2/mixer/mod.rs.html#332' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class='method'><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../../sdl2/mixer/struct.Channel.html' title='sdl2::mixer::Channel'>Channel</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
+</div><h4 id='method.ne' class='method'><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../../sdl2/mixer/struct.Channel.html' title='sdl2::mixer::Channel'>Channel</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>This method tests for <code>!=</code>.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "sdl2";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

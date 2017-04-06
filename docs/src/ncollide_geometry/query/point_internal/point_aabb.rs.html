@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.2.0/query/point_internal/point_aabb.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.3.0/query/point_internal/point_aabb.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>point_aabb.rs.html -- source</title>
@@ -125,36 +125,32 @@
 <span id="80">80</span>
 <span id="81">81</span>
 <span id="82">82</span>
-<span id="83">83</span>
-<span id="84">84</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Zero</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='self'>self</span>, <span class='ident'>Transform</span>, <span class='ident'>Rotate</span>, <span class='ident'>Bounded</span>};
+<span class='kw'>use</span> <span class='ident'>num</span>::{<span class='ident'>Bounded</span>, <span class='ident'>Zero</span>};
+<span class='kw'>use</span> <span class='ident'>na</span>;
 <span class='kw'>use</span> <span class='ident'>query</span>::{<span class='ident'>PointQuery</span>, <span class='ident'>PointProjection</span>};
 <span class='kw'>use</span> <span class='ident'>bounding_volume</span>::<span class='ident'>AABB</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Vector</span>};
+<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Isometry</span>};
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>PointQuery</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span>,
-          <span class='ident'>M</span>: <span class='ident'>Transform</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Rotate</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> <span class='ident'>PointQuery</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>project_point</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>pt</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>, <span class='ident'>solid</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>PointProjection</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>ls_pt</span>   <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>inverse_transform</span>(<span class='ident'>pt</span>);
+        <span class='kw'>let</span> <span class='ident'>ls_pt</span>   <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>inverse_transform_point</span>(<span class='ident'>pt</span>);
         <span class='kw'>let</span> <span class='ident'>mins_pt</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>mins</span>() <span class='op'>-</span> <span class='ident'>ls_pt</span>;
         <span class='kw'>let</span> <span class='ident'>pt_maxs</span> <span class='op'>=</span> <span class='ident'>ls_pt</span> <span class='op'>-</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>maxs</span>();
         <span class='kw'>let</span> <span class='ident'>shift</span>   <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>sup</span>(<span class='kw-2'>&amp;</span><span class='ident'>na</span>::<span class='ident'>zero</span>(), <span class='kw-2'>&amp;</span><span class='ident'>mins_pt</span>) <span class='op'>-</span> <span class='ident'>na</span>::<span class='ident'>sup</span>(<span class='kw-2'>&amp;</span><span class='ident'>na</span>::<span class='ident'>zero</span>(), <span class='kw-2'>&amp;</span><span class='ident'>pt_maxs</span>);
 
-        <span class='kw'>let</span> <span class='ident'>inside</span> <span class='op'>=</span> <span class='ident'>shift</span>.<span class='ident'>is_zero</span>();
+        <span class='kw'>let</span> <span class='ident'>inside</span> <span class='op'>=</span> <span class='ident'>shift</span> <span class='op'>==</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
 
         <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>inside</span> <span class='op'>||</span> <span class='ident'>solid</span> {
-            <span class='ident'>PointProjection</span>::<span class='ident'>new</span>(<span class='ident'>inside</span>, <span class='kw-2'>*</span><span class='ident'>pt</span> <span class='op'>+</span> <span class='ident'>m</span>.<span class='ident'>rotate</span>(<span class='kw-2'>&amp;</span><span class='ident'>shift</span>))
+            <span class='ident'>PointProjection</span>::<span class='ident'>new</span>(<span class='ident'>inside</span>, <span class='kw-2'>*</span><span class='ident'>pt</span> <span class='op'>+</span> <span class='ident'>m</span>.<span class='ident'>rotate_vector</span>(<span class='kw-2'>&amp;</span><span class='ident'>shift</span>))
         }
         <span class='kw'>else</span> {
-            <span class='kw'>let</span> <span class='ident'>_max</span>: <span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span> <span class='op'>=</span> <span class='ident'>Bounded</span>::<span class='ident'>max_value</span>();
+            <span class='kw'>let</span> <span class='ident'>_max</span>: <span class='ident'>P</span>::<span class='ident'>Real</span> <span class='op'>=</span> <span class='ident'>Bounded</span>::<span class='ident'>max_value</span>();
             <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>best</span>    <span class='op'>=</span> <span class='op'>-</span><span class='ident'>_max</span>;
             <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>best_id</span> <span class='op'>=</span> <span class='number'>0isize</span>;
 
-            <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span><span class='op'>&gt;</span>() {
+            <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span>() {
                 <span class='kw'>let</span> <span class='ident'>mins_pt_i</span> <span class='op'>=</span> <span class='ident'>mins_pt</span>[<span class='ident'>i</span>];
                 <span class='kw'>let</span> <span class='ident'>pt_maxs_i</span> <span class='op'>=</span> <span class='ident'>pt_maxs</span>[<span class='ident'>i</span>];
 
@@ -170,7 +166,7 @@
                 }
             }
 
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>shift</span>: <span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
+            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>shift</span>: <span class='ident'>P</span>::<span class='ident'>Vector</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
 
             <span class='kw'>if</span> <span class='ident'>best_id</span> <span class='op'>&lt;</span> <span class='number'>0</span> {
                 <span class='ident'>shift</span>[(<span class='op'>-</span><span class='ident'>best_id</span>) <span class='kw'>as</span> <span class='ident'>usize</span>] <span class='op'>=</span> <span class='ident'>best</span>;
@@ -179,13 +175,13 @@
                 <span class='ident'>shift</span>[<span class='ident'>best_id</span> <span class='kw'>as</span> <span class='ident'>usize</span>] <span class='op'>=</span> <span class='op'>-</span><span class='ident'>best</span>;
             }
 
-            <span class='ident'>PointProjection</span>::<span class='ident'>new</span>(<span class='ident'>inside</span>, <span class='kw-2'>*</span><span class='ident'>pt</span> <span class='op'>+</span> <span class='ident'>m</span>.<span class='ident'>rotate</span>(<span class='kw-2'>&amp;</span><span class='ident'>shift</span>))
+            <span class='ident'>PointProjection</span>::<span class='ident'>new</span>(<span class='ident'>inside</span>, <span class='kw-2'>*</span><span class='ident'>pt</span> <span class='op'>+</span> <span class='ident'>m</span>.<span class='ident'>rotate_vector</span>(<span class='kw-2'>&amp;</span><span class='ident'>shift</span>))
         }
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>distance_to_point</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>pt</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>, <span class='ident'>solid</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span> {
-        <span class='kw'>let</span> <span class='ident'>ls_pt</span>   <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>inverse_transform</span>(<span class='ident'>pt</span>);
+    <span class='kw'>fn</span> <span class='ident'>distance_to_point</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>pt</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>, <span class='ident'>solid</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span>::<span class='ident'>Real</span> {
+        <span class='kw'>let</span> <span class='ident'>ls_pt</span>   <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>inverse_transform_point</span>(<span class='ident'>pt</span>);
         <span class='kw'>let</span> <span class='ident'>mins_pt</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>mins</span>() <span class='op'>-</span> <span class='ident'>ls_pt</span>;
         <span class='kw'>let</span> <span class='ident'>pt_maxs</span> <span class='op'>=</span> <span class='ident'>ls_pt</span> <span class='op'>-</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>maxs</span>();
         <span class='kw'>let</span> <span class='ident'>shift</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>sup</span>(<span class='kw-2'>&amp;</span><span class='ident'>na</span>::<span class='ident'>zero</span>(), <span class='kw-2'>&amp;</span><span class='ident'>na</span>::<span class='ident'>sup</span>(<span class='kw-2'>&amp;</span><span class='ident'>mins_pt</span>, <span class='kw-2'>&amp;</span><span class='ident'>pt_maxs</span>));
@@ -201,9 +197,9 @@
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>contains_point</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>pt</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>let</span> <span class='ident'>ls_pt</span> <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>inverse_transform</span>(<span class='ident'>pt</span>);
+        <span class='kw'>let</span> <span class='ident'>ls_pt</span> <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>inverse_transform_point</span>(<span class='ident'>pt</span>).<span class='ident'>coordinates</span>();
 
-        <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>() {
+        <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span>() {
             <span class='kw'>if</span> <span class='ident'>ls_pt</span>[<span class='ident'>i</span>] <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>mins</span>()[<span class='ident'>i</span>] <span class='op'>||</span> <span class='ident'>ls_pt</span>[<span class='ident'>i</span>] <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>maxs</span>()[<span class='ident'>i</span>] {
                 <span class='kw'>return</span> <span class='bool-val'>false</span>
             }

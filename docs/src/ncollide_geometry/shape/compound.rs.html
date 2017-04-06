@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.2.0/shape/compound.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.3.0/shape/compound.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>compound.rs.html -- source</title>
@@ -154,20 +154,19 @@
 <span id="109">109</span>
 <span id="110">110</span>
 <span id="111">111</span>
-<span id="112">112</span>
-<span id="113">113</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! Shape composed from the union of primitives.</span>
 <span class='doccomment'>//!</span>
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::<span class='ident'>Mul</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>::<span class='ident'>Translate</span>;
+
 <span class='kw'>use</span> <span class='ident'>na</span>;
+
 <span class='kw'>use</span> <span class='ident'>bounding_volume</span>::{<span class='ident'>AABB</span>, <span class='ident'>BoundingVolume</span>};
 <span class='kw'>use</span> <span class='ident'>partitioning</span>::<span class='ident'>BVT</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Isometry</span>};
 <span class='kw'>use</span> <span class='ident'>shape</span>::{<span class='ident'>CompositeShape</span>, <span class='ident'>ShapeHandle</span>, <span class='ident'>Shape</span>};
+<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Isometry</span>};
 
 <span class='doccomment'>/// A compound shape with an aabb bounding volume.</span>
 <span class='doccomment'>///</span>
@@ -190,10 +189,7 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>Compound</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>:       <span class='ident'>Point</span>,
-          <span class='ident'>P</span>::<span class='ident'>Vect</span>: <span class='ident'>Translate</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
-          <span class='ident'>M</span>:       <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> <span class='ident'>Compound</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Builds a new compound shape.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>shapes</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>M</span>, <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>)<span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Compound</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>bvs</span>    <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
@@ -201,7 +197,7 @@
 
         <span class='kw'>for</span> (<span class='ident'>i</span>, <span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>delta</span>, <span class='kw-2'>ref</span> <span class='ident'>shape</span>)) <span class='kw'>in</span> <span class='ident'>shapes</span>.<span class='ident'>iter</span>().<span class='ident'>enumerate</span>() {
             <span class='comment'>// loosen for better persistancy</span>
-            <span class='kw'>let</span> <span class='ident'>bv</span> <span class='op'>=</span> <span class='ident'>shape</span>.<span class='ident'>as_ref</span>().<span class='ident'>aabb</span>(<span class='ident'>delta</span>).<span class='ident'>loosened</span>(<span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>0.04f64</span>));
+            <span class='kw'>let</span> <span class='ident'>bv</span> <span class='op'>=</span> <span class='ident'>shape</span>.<span class='ident'>as_ref</span>().<span class='ident'>aabb</span>(<span class='ident'>delta</span>).<span class='ident'>loosened</span>(<span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>0.04f64</span>));
 
             <span class='ident'>bvs</span>.<span class='ident'>push</span>(<span class='ident'>bv</span>.<span class='ident'>clone</span>());
             <span class='ident'>leaves</span>.<span class='ident'>push</span>((<span class='ident'>i</span>, <span class='ident'>bv</span>));
@@ -210,9 +206,9 @@
         <span class='kw'>let</span> <span class='ident'>bvt</span> <span class='op'>=</span> <span class='ident'>BVT</span>::<span class='ident'>new_balanced</span>(<span class='ident'>leaves</span>);
 
         <span class='ident'>Compound</span> {
-            <span class='ident'>shapes</span>:  <span class='ident'>shapes</span>,
-            <span class='ident'>bvt</span>:     <span class='ident'>bvt</span>,
-            <span class='ident'>bvs</span>:     <span class='ident'>bvs</span>
+            <span class='ident'>shapes</span>: <span class='ident'>shapes</span>,
+            <span class='ident'>bvt</span>:    <span class='ident'>bvt</span>,
+            <span class='ident'>bvs</span>:    <span class='ident'>bvs</span>
         }
     }
 }
@@ -245,7 +241,7 @@
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>CompositeShape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Compound</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>
     <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span>,
-          <span class='ident'>M</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>M</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>M</span><span class='op'>&gt;</span> {
+          <span class='ident'>M</span>: <span class='ident'>Clone</span> <span class='op'>+</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>M</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>M</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>map_part_at</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>FnMut</span>(<span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>)) {
         <span class='kw'>let</span> <span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>m</span>, <span class='kw-2'>ref</span> <span class='ident'>g</span>) <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>shapes</span>()[<span class='ident'>i</span>];
@@ -257,7 +253,7 @@
     <span class='kw'>fn</span> <span class='ident'>map_transformed_part_at</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>FnMut</span>(<span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>)) {
         <span class='kw'>let</span> <span class='ident'>elt</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>shapes</span>()[<span class='ident'>i</span>];
 
-        <span class='ident'>f</span>(<span class='kw-2'>&amp;</span>(<span class='kw-2'>*</span><span class='ident'>m</span> <span class='op'>*</span> <span class='ident'>elt</span>.<span class='number'>0</span>), <span class='ident'>elt</span>.<span class='number'>1</span>.<span class='ident'>as_ref</span>())
+        <span class='ident'>f</span>(<span class='kw-2'>&amp;</span>(<span class='ident'>m</span>.<span class='ident'>clone</span>() <span class='op'>*</span> <span class='ident'>elt</span>.<span class='number'>0</span>.<span class='ident'>clone</span>()), <span class='ident'>elt</span>.<span class='number'>1</span>.<span class='ident'>as_ref</span>())
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>

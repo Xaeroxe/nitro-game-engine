@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_utils-0.5.0/median.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_utils-0.6.0/median.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>median.rs.html -- source</title>
@@ -62,12 +62,12 @@
 <span id="17">17</span>
 <span id="18">18</span>
 </pre><pre class='rust '>
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
 <span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Scalar</span>;
 
 <span class='doccomment'>/// Computes the median of a set of values.</span>
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>median</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span>(<span class='ident'>vals</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>N</span>]) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>median</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='ident'>vals</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>N</span>]) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
     <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>vals</span>.<span class='ident'>len</span>() <span class='op'>&gt;</span> <span class='number'>0</span>, <span class='string'>&quot;Cannot compute the median of zero values.&quot;</span>);
 
     <span class='ident'>vals</span>.<span class='ident'>sort_by</span>(<span class='op'>|</span><span class='ident'>a</span>, <span class='ident'>b</span><span class='op'>|</span> <span class='ident'>a</span>.<span class='ident'>partial_cmp</span>(<span class='ident'>b</span>).<span class='ident'>unwrap</span>() );
@@ -75,7 +75,7 @@
     <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='ident'>vals</span>.<span class='ident'>len</span>();
 
     <span class='kw'>if</span> <span class='ident'>n</span> <span class='op'>%</span> <span class='number'>2</span> <span class='op'>==</span> <span class='number'>0</span> {
-        (<span class='ident'>vals</span>[<span class='ident'>n</span> <span class='op'>/</span> <span class='number'>2</span> <span class='op'>-</span> <span class='number'>1</span>] <span class='op'>+</span> <span class='ident'>vals</span>[<span class='ident'>n</span> <span class='op'>/</span> <span class='number'>2</span>]) <span class='op'>/</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>2.0</span>)
+        (<span class='ident'>vals</span>[<span class='ident'>n</span> <span class='op'>/</span> <span class='number'>2</span> <span class='op'>-</span> <span class='number'>1</span>] <span class='op'>+</span> <span class='ident'>vals</span>[<span class='ident'>n</span> <span class='op'>/</span> <span class='number'>2</span>]) <span class='op'>/</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>2.0</span>)
     } <span class='kw'>else</span> {
         <span class='ident'>vals</span>[<span class='ident'>n</span> <span class='op'>/</span> <span class='number'>2</span>]
     }

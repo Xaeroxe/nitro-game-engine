@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.2.0/bounding_volume/aabb.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.3.0/bounding_volume/aabb.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>aabb.rs.html -- source</title>
@@ -229,13 +229,15 @@
 <span id="184">184</span>
 <span id="185">185</span>
 <span id="186">186</span>
+<span id="187">187</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Axis Aligned Bounding Box.</span>
 
-<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='ident'>Translation</span>, <span class='ident'>Translate</span>, <span class='ident'>Bounded</span>};
 <span class='kw'>use</span> <span class='ident'>na</span>;
+
+<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
+<span class='kw'>use</span> <span class='ident'>utils</span>;
 <span class='kw'>use</span> <span class='ident'>bounding_volume</span>::{<span class='ident'>BoundingVolume</span>, <span class='ident'>HasBoundingVolume</span>};
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Vector</span>};
 
 <span class='comment'>// Seems useful to help type inference. See issue #84.</span>
 <span class='doccomment'>/// Computes the axis-aligned bounding box of a shape `g` transformed by `m`.</span>
@@ -268,23 +270,7 @@
             <span class='ident'>maxs</span>: <span class='ident'>maxs</span>
         }
     }
-}
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates an invalid AABB with:</span>
-    <span class='doccomment'>/// * `mins = Bounded::max_value()`</span>
-    <span class='doccomment'>/// * `maxs = Bounded::max_value()`.</span>
-    <span class='doccomment'>/// This is useful to build aabb using merges.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_invalid</span>() <span class='op'>-&gt;</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>_max</span>: <span class='ident'>P</span> <span class='op'>=</span> <span class='ident'>Bounded</span>::<span class='ident'>max_value</span>();
-        <span class='ident'>AABB</span> {
-            <span class='ident'>mins</span>: <span class='ident'>Bounded</span>::<span class='ident'>max_value</span>(),
-            <span class='ident'>maxs</span>: <span class='op'>-</span><span class='ident'>_max</span>,
-        }
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Reference to the AABB point with the smallest components along each axis.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mins</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>P</span> {
@@ -296,10 +282,7 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>maxs</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>P</span> {
         <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>maxs</span>
     }
-}
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span> {
     <span class='doccomment'>/// The center of this AABB.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>center</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span> {
@@ -308,13 +291,32 @@
 
     <span class='doccomment'>/// The half extents of this AABB.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>half_extents</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span>::<span class='ident'>Vect</span> {
-        (<span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>mins</span>) <span class='op'>/</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>2.0f64</span>)
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>half_extents</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span>::<span class='ident'>Vector</span> {
+        (<span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>mins</span>) <span class='op'>/</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>2.0f64</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>BoundingVolume</span><span class='op'>&lt;&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span> {
+<span class='comment'>// XXX: we should not keep this</span>
+<span class='comment'>// impl&lt;P: Point&gt; AABB&lt;P&gt; {</span>
+<span class='comment'>//     /// Creates an invalid AABB with:</span>
+<span class='comment'>//     /// * `mins = Bounded::max_value()`</span>
+<span class='comment'>//     /// * `maxs = Bounded::max_value()`.</span>
+<span class='comment'>//     /// This is useful to build aabb using merges.</span>
+<span class='comment'>//     pub fn new_invalid() -&gt; AABB&lt;P&gt; {</span>
+<span class='comment'>//         let _max: P = Bounded::max_value();</span>
+<span class='comment'>//         AABB {</span>
+<span class='comment'>//             mins: Bounded::max_value(),</span>
+<span class='comment'>//             maxs: -_max,</span>
+<span class='comment'>//         }</span>
+<span class='comment'>//     }</span>
+<span class='comment'>// }</span>
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> <span class='ident'>BoundingVolume</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
+    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
+    <span class='kw'>fn</span> <span class='ident'>center</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>)<span class='op'>-&gt;</span> <span class='ident'>P</span> {
+        <span class='self'>self</span>.<span class='ident'>center</span>()
+    }
+
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>intersects</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='ident'>na</span>::<span class='ident'>partial_le</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>mins</span>, <span class='kw-2'>&amp;</span><span class='ident'>other</span>.<span class='ident'>maxs</span>) <span class='op'>&amp;&amp;</span>
@@ -342,80 +344,80 @@
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>loosen</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>amount</span>: <span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span>) {
+    <span class='kw'>fn</span> <span class='ident'>loosen</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>amount</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>) {
         <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>amount</span> <span class='op'>&gt;=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>(), <span class='string'>&quot;The loosening margin must be positive.&quot;</span>);
-        <span class='self'>self</span>.<span class='ident'>mins</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>mins</span> <span class='op'>+</span> <span class='ident'>na</span>::<span class='ident'>repeat</span>(<span class='op'>-</span><span class='ident'>amount</span>);
-        <span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>+</span> <span class='ident'>na</span>::<span class='ident'>repeat</span>(<span class='ident'>amount</span>);
+        <span class='self'>self</span>.<span class='ident'>mins</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>mins</span> <span class='op'>+</span> <span class='ident'>utils</span>::<span class='ident'>repeat</span>(<span class='op'>-</span><span class='ident'>amount</span>);
+        <span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>+</span> <span class='ident'>utils</span>::<span class='ident'>repeat</span>(<span class='ident'>amount</span>);
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>loosened</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>amount</span>: <span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span>) <span class='op'>-&gt;</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>loosened</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>amount</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>) <span class='op'>-&gt;</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
         <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>amount</span> <span class='op'>&gt;=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>(), <span class='string'>&quot;The loosening margin must be positive.&quot;</span>);
         <span class='ident'>AABB</span> {
-            <span class='ident'>mins</span>: <span class='self'>self</span>.<span class='ident'>mins</span> <span class='op'>+</span> <span class='ident'>na</span>::<span class='ident'>repeat</span>(<span class='op'>-</span><span class='ident'>amount</span>),
-            <span class='ident'>maxs</span>: <span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>+</span> <span class='ident'>na</span>::<span class='ident'>repeat</span>(<span class='ident'>amount</span>)
+            <span class='ident'>mins</span>: <span class='self'>self</span>.<span class='ident'>mins</span> <span class='op'>+</span> <span class='ident'>utils</span>::<span class='ident'>repeat</span>(<span class='op'>-</span><span class='ident'>amount</span>),
+            <span class='ident'>maxs</span>: <span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>+</span> <span class='ident'>utils</span>::<span class='ident'>repeat</span>(<span class='ident'>amount</span>)
         }
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>tighten</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>amount</span>: <span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span>) {
+    <span class='kw'>fn</span> <span class='ident'>tighten</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>amount</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>) {
         <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>amount</span> <span class='op'>&gt;=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>(), <span class='string'>&quot;The tightening margin must be positive.&quot;</span>);
-        <span class='self'>self</span>.<span class='ident'>mins</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>mins</span> <span class='op'>+</span> <span class='ident'>na</span>::<span class='ident'>repeat</span>(<span class='ident'>amount</span>);
-        <span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>+</span> <span class='ident'>na</span>::<span class='ident'>repeat</span>(<span class='op'>-</span><span class='ident'>amount</span>);
+        <span class='self'>self</span>.<span class='ident'>mins</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>mins</span> <span class='op'>+</span> <span class='ident'>utils</span>::<span class='ident'>repeat</span>(<span class='ident'>amount</span>);
+        <span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>+</span> <span class='ident'>utils</span>::<span class='ident'>repeat</span>(<span class='op'>-</span><span class='ident'>amount</span>);
         <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>na</span>::<span class='ident'>partial_le</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>mins</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>maxs</span>), <span class='string'>&quot;The tightening margin is to large.&quot;</span>);
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>tightened</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>amount</span>: <span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span>) <span class='op'>-&gt;</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>tightened</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>amount</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>) <span class='op'>-&gt;</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
         <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>amount</span> <span class='op'>&gt;=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>(), <span class='string'>&quot;The tightening margin must be positive.&quot;</span>);
 
-        <span class='ident'>AABB</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>mins</span> <span class='op'>+</span> <span class='ident'>na</span>::<span class='ident'>repeat</span>(<span class='ident'>amount</span>), <span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>+</span> <span class='ident'>na</span>::<span class='ident'>repeat</span>(<span class='op'>-</span><span class='ident'>amount</span>))
+        <span class='ident'>AABB</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>mins</span> <span class='op'>+</span> <span class='ident'>utils</span>::<span class='ident'>repeat</span>(<span class='ident'>amount</span>), <span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>+</span> <span class='ident'>utils</span>::<span class='ident'>repeat</span>(<span class='op'>-</span><span class='ident'>amount</span>))
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>Translation</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span>,
-          <span class='ident'>P</span>::<span class='ident'>Vect</span>: <span class='ident'>Translate</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>translation</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span>::<span class='ident'>Vect</span> {
-        <span class='ident'>na</span>::<span class='ident'>center</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>mins</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>maxs</span>).<span class='ident'>to_vector</span>()
-    }
-
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>inverse_translation</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span>::<span class='ident'>Vect</span> {
-        <span class='op'>-</span><span class='self'>self</span>.<span class='ident'>translation</span>()
-    }
-
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>append_translation_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>dv</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>::<span class='ident'>Vect</span>) {
-        <span class='self'>self</span>.<span class='ident'>mins</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>mins</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='ident'>dv</span>;
-        <span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='ident'>dv</span>;
-    }
-
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>append_translation</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>dv</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>::<span class='ident'>Vect</span>) <span class='op'>-&gt;</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='ident'>AABB</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>mins</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='ident'>dv</span>, <span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='ident'>dv</span>)
-    }
-
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>prepend_translation_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>dv</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>::<span class='ident'>Vect</span>) {
-        <span class='self'>self</span>.<span class='ident'>append_translation_mut</span>(<span class='ident'>dv</span>)
-    }
-
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>prepend_translation</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>dv</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>::<span class='ident'>Vect</span>) <span class='op'>-&gt;</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>append_translation</span>(<span class='ident'>dv</span>)
-    }
-
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>set_translation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>v</span>: <span class='ident'>P</span>::<span class='ident'>Vect</span>) {
-        <span class='kw'>let</span> <span class='ident'>center</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>translation</span>();
-        <span class='kw'>let</span> <span class='ident'>total_translation</span> <span class='op'>=</span> <span class='ident'>center</span> <span class='op'>+</span> <span class='ident'>v</span>;
-
-        <span class='self'>self</span>.<span class='ident'>mins</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>inverse_translate</span>(<span class='kw-2'>&amp;</span><span class='ident'>total_translation</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>mins</span>);
-        <span class='self'>self</span>.<span class='ident'>maxs</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>inverse_translate</span>(<span class='kw-2'>&amp;</span><span class='ident'>total_translation</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>maxs</span>);
-    }
-}
+<span class='comment'>// impl&lt;P&gt; Translation&lt;P::Vector&gt; for AABB&lt;P&gt;</span>
+<span class='comment'>//     where P: Point,</span>
+<span class='comment'>//           P::Vector: Translate&lt;P&gt; {</span>
+<span class='comment'>//     #[inline]</span>
+<span class='comment'>//     fn translation(&amp;self) -&gt; P::Vector {</span>
+<span class='comment'>//         na::center(&amp;self.mins, &amp;self.maxs).to_vector()</span>
+<span class='comment'>//     }</span>
+<span class='comment'>// </span>
+<span class='comment'>//     #[inline]</span>
+<span class='comment'>//     fn inverse_translation(&amp;self) -&gt; P::Vector {</span>
+<span class='comment'>//         -self.translation()</span>
+<span class='comment'>//     }</span>
+<span class='comment'>// </span>
+<span class='comment'>//     #[inline]</span>
+<span class='comment'>//     fn append_translation_mut(&amp;mut self, dv: &amp;P::Vector) {</span>
+<span class='comment'>//         self.mins = self.mins + *dv;</span>
+<span class='comment'>//         self.maxs = self.maxs + *dv;</span>
+<span class='comment'>//     }</span>
+<span class='comment'>// </span>
+<span class='comment'>//     #[inline]</span>
+<span class='comment'>//     fn append_translation(&amp;self, dv: &amp;P::Vector) -&gt; AABB&lt;P&gt; {</span>
+<span class='comment'>//         AABB::new(self.mins + *dv, self.maxs + *dv)</span>
+<span class='comment'>//     }</span>
+<span class='comment'>// </span>
+<span class='comment'>//     #[inline]</span>
+<span class='comment'>//     fn prepend_translation_mut(&amp;mut self, dv: &amp;P::Vector) {</span>
+<span class='comment'>//         self.append_translation_mut(dv)</span>
+<span class='comment'>//     }</span>
+<span class='comment'>// </span>
+<span class='comment'>//     #[inline]</span>
+<span class='comment'>//     fn prepend_translation(&amp;self, dv: &amp;P::Vector) -&gt; AABB&lt;P&gt; {</span>
+<span class='comment'>//         self.append_translation(dv)</span>
+<span class='comment'>//     }</span>
+<span class='comment'>// </span>
+<span class='comment'>//     #[inline]</span>
+<span class='comment'>//     fn set_translation(&amp;mut self, v: P::Vector) {</span>
+<span class='comment'>//         let center = self.translation();</span>
+<span class='comment'>//         let total_translation = center + v;</span>
+<span class='comment'>// </span>
+<span class='comment'>//         self.mins = na::inverse_translate(&amp;total_translation, &amp;self.mins);</span>
+<span class='comment'>//         self.maxs = na::inverse_translate(&amp;total_translation, &amp;self.maxs);</span>
+<span class='comment'>//     }</span>
+<span class='comment'>// }</span>
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

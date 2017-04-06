@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/nitro/app.rs.html#42-53' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/nitro/app.rs.html#47-58' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct App {
     pub input: <a class='struct' href='../nitro/input/struct.Input.html' title='nitro::input::Input'>Input</a>,
     pub camera: <a class='struct' href='../nitro/struct.Camera.html' title='nitro::Camera'>Camera</a>,
@@ -71,7 +71,7 @@ processing input, rendering the game and playing audio.</p>
                            </span></span><span class='stab '></span><span id='structfield.audio' class='structfield'>
                            <span id='audio.v' class='invisible'>
                            <code>audio: <a class='struct' href='../nitro/audio/struct.Audio.html' title='nitro::audio::Audio'>Audio</a></code>
-                           </span></span><span class='stab '></span><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../nitro/struct.App.html' title='nitro::App'>App</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/nitro/app.rs.html#55-328' title='goto source code'>[src]</a></span></h3>
+                           </span></span><span class='stab '></span><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../nitro/struct.App.html' title='nitro::App'>App</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/nitro/app.rs.html#60-341' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(name: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='struct' href='../nitro/struct.App.html' title='nitro::App'>App</a></code></span></h4>
 <div class='docblock'><p>Constructs a new App using the given name for the window title.</p>
 </div><h4 id='method.run' class='method'><span id='run.v' class='invisible'><code>fn <a href='#method.run' class='fnname'>run</a>(&amp;mut self)</code></span></h4>
@@ -84,6 +84,7 @@ processing input, rendering the game and playing audio.</p>
 <p>Signals that it&#39;s time to quit. Execution will stop at the end of the current frame.</p>
 </div><h4 id='method.camera' class='method'><span id='camera.v-1' class='invisible'><code>fn <a href='#method.camera' class='fnname'>camera</a>(&amp;self) -&gt; &amp;<a class='struct' href='../nitro/struct.Camera.html' title='nitro::Camera'>Camera</a></code></span></h4>
 <h4 id='method.camera_mut' class='method'><span id='camera_mut.v' class='invisible'><code>fn <a href='#method.camera_mut' class='fnname'>camera_mut</a>(&amp;mut self) -&gt; &amp;mut <a class='struct' href='../nitro/struct.Camera.html' title='nitro::Camera'>Camera</a></code></span></h4>
+<h4 id='method.world_mouse_pos' class='method'><span id='world_mouse_pos.v' class='invisible'><code>fn <a href='#method.world_mouse_pos' class='fnname'>world_mouse_pos</a>(&amp;self) -&gt; <a class='type' href='../nitro/math/type.Vector.html' title='nitro::math::Vector'>Vector</a></code></span></h4>
 <h4 id='method.new_gameobject' class='method'><span id='new_gameobject.v' class='invisible'><code>fn <a href='#method.new_gameobject' class='fnname'>new_gameobject</a>&lt;F&gt;(&amp;mut self, f: F) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a> <span class='where fmt-newline'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(&amp;mut <a class='struct' href='../nitro/struct.App.html' title='nitro::App'>App</a>, &amp;mut <a class='struct' href='../nitro/struct.GameObject.html' title='nitro::GameObject'>GameObject</a>)</span></code></span></h4>
 <div class='docblock'><p>Creates a new GameObject</p>
 
