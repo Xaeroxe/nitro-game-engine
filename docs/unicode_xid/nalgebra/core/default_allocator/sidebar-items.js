@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["DefaultAllocator","An allocator based on `GenericArray` and `MatrixVec` for statically-sized and dynamically-sized matrices respectively."]]});

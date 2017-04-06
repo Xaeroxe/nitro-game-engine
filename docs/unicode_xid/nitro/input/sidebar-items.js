@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["Button","A digital input, can be made to behave like an analog axis using nitro::input::Axis."]],"mod":[["keyboard",""],["mouse",""]],"struct":[["Axis","An input axis, could be bound to W and S, A and D, up and down, or left and right."],["Input","Allows you to query user input, and save and load keybindings and axes."]]});
