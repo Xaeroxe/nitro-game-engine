@@ -48,8 +48,8 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/ncollide_transformation/triangulate.rs.html#149-186' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn triangulate&lt;P&gt;(pts: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a>P<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='struct' href='../ncollide_procedural/trimesh/struct.TriMesh.html' title='ncollide_procedural::trimesh::TriMesh'>TriMesh</a>&lt;P&gt; <span class='where fmt-newline'>where P: <a class='trait' href='../ncollide_math/trait.Point.html' title='ncollide_math::Point'>Point</a></span></pre><div class='docblock'><p>Triangulates a set of point (sort of) lying on the same 2d plane.</p>
+               </span><a class='srclink' href='../src/ncollide_transformation/triangulate.rs.html#149-185' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn triangulate&lt;P:&nbsp;<a class='trait' href='../ncollide_math/point/trait.Point.html' title='ncollide_math::point::Point'>Point</a>&gt;(pts: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a>P<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='struct' href='../ncollide_procedural/trimesh/struct.TriMesh.html' title='ncollide_procedural::trimesh::TriMesh'>TriMesh</a>&lt;P&gt;</pre><div class='docblock'><p>Triangulates a set of point (sort of) lying on the same 2d plane.</p>
 
 <p>If the points do not lie on the same 2d plane, strange things might happends (triangle might be
 attached together in an unnatural way). Though, if they are only slighly perturbated on the

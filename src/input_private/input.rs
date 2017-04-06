@@ -1,9 +1,10 @@
 use sdl2::event::Event;
+use sdl2::mouse::MouseUtil;
 use input::keyboard::Key;
 use input::mouse::MouseButton;
+use input_private::mouse;
 use input::Button;
 use input::Axis;
-use math::IntVector;
 use std::io::Result as IOResult;
 use std::io::Error;
 use std::io::Write;
@@ -14,6 +15,7 @@ use std::collections::HashMap;
 use bincode::SizeLimit;
 use bincode::serde::{serialize, deserialize, DeserializeError};
 use num::FromPrimitive;
+use input::mouse::Mouse;
 
 /// Allows you to query user input, and save and load keybindings and axes.
 pub struct Input {
@@ -21,7 +23,7 @@ pub struct Input {
     previous_buttons_pressed: Vec<Button>, // buttons_pressed from last frame.
     axes: HashMap<i32, Axis>,
     actions: HashMap<i32, Button>,
-    mouse_pos: IntVector,
+    pub mouse: Mouse,
 }
 
 #[derive(Debug)]
@@ -43,16 +45,6 @@ impl From<DeserializeError> for ReadBincodeFileError {
 }
 
 impl Input {
-    pub fn new() -> Input {
-        Input {
-            buttons_pressed: vec![],
-            previous_buttons_pressed: vec![],
-            axes: HashMap::new(),
-            actions: HashMap::new(),
-            mouse_pos: IntVector::new(0, 0),
-        }
-    }
-
     pub fn load_bindings(&mut self, path: &str) -> Result<(), ReadBincodeFileError> {
         let mut f = File::open(path)?;
         let mut buf = Vec::new();
@@ -126,9 +118,15 @@ impl Input {
         !(&self.buttons_pressed).into_iter().any(|&b| b == button) &&
         (&self.previous_buttons_pressed).into_iter().any(|&b| b == button)
     }
+}
 
-    pub fn mouse_pos(&self) -> IntVector {
-        self.mouse_pos
+pub fn new(mouse_util: MouseUtil) -> Input {
+    Input {
+        buttons_pressed: vec![],
+        previous_buttons_pressed: vec![],
+        axes: HashMap::new(),
+        actions: HashMap::new(),
+        mouse: mouse::new(mouse_util),
     }
 }
 
@@ -168,8 +166,8 @@ pub fn process_event(input: &mut Input, input_event: &Event) {
                 input.buttons_pressed.swap_remove(i);
             }
         }
-        Event::MouseMotion{ x, y, .. } => {
-            input.mouse_pos = IntVector::new(x, y);
+        Event::MouseMotion{..} => {
+            mouse::process_event(&mut input.mouse, input_event);
         }
         _ => {}
     }

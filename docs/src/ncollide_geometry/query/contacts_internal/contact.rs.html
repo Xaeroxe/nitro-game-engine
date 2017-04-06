@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.2.0/query/contacts_internal/contact.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.3.0/query/contacts_internal/contact.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>contact.rs.html -- source</title>
@@ -85,7 +85,7 @@
 <span id="40">40</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Vector</span>};
+<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
 
 <span class='doccomment'>/// Geometric description of a contact.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Clone</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
@@ -97,16 +97,16 @@
     <span class='kw'>pub</span> <span class='ident'>world2</span>: <span class='ident'>P</span>,
 
     <span class='doccomment'>/// Contact normal</span>
-    <span class='kw'>pub</span> <span class='ident'>normal</span>: <span class='ident'>P</span>::<span class='ident'>Vect</span>,
+    <span class='kw'>pub</span> <span class='ident'>normal</span>: <span class='ident'>P</span>::<span class='ident'>Vector</span>,
 
     <span class='doccomment'>/// Penetration depth</span>
-    <span class='kw'>pub</span> <span class='ident'>depth</span>:  <span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span>
+    <span class='kw'>pub</span> <span class='ident'>depth</span>:  <span class='ident'>P</span>::<span class='ident'>Real</span>
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> <span class='ident'>Contact</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Creates a new contact.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>world1</span>: <span class='ident'>P</span>, <span class='ident'>world2</span>: <span class='ident'>P</span>, <span class='ident'>normal</span>: <span class='ident'>P</span>::<span class='ident'>Vect</span>, <span class='ident'>depth</span>: <span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span>) <span class='op'>-&gt;</span> <span class='ident'>Contact</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>world1</span>: <span class='ident'>P</span>, <span class='ident'>world2</span>: <span class='ident'>P</span>, <span class='ident'>normal</span>: <span class='ident'>P</span>::<span class='ident'>Vector</span>, <span class='ident'>depth</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>) <span class='op'>-&gt;</span> <span class='ident'>Contact</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
         <span class='ident'>Contact</span> {
             <span class='ident'>world1</span>: <span class='ident'>world1</span>,
             <span class='ident'>world2</span>: <span class='ident'>world2</span>,
@@ -121,7 +121,7 @@
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>flip</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='ident'>mem</span>::<span class='ident'>swap</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>world1</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>world2</span>);
-        <span class='self'>self</span>.<span class='ident'>normal</span> <span class='op'>=</span> <span class='op'>-</span><span class='self'>self</span>.<span class='ident'>normal</span>.<span class='ident'>clone</span>();
+        <span class='self'>self</span>.<span class='ident'>normal</span> <span class='op'>=</span> <span class='op'>-</span><span class='self'>self</span>.<span class='ident'>normal</span>;
     }
 }
 </pre>

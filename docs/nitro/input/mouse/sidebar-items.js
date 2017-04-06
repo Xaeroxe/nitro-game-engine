@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["MouseButton","Definitions for mouse buttons.  Intended to be used with nitro::input::Input."]]});
+initSidebarItems({"enum":[["MouseButton","Definitions for mouse buttons.  Intended to be used with nitro::input::Input."]],"fn":[["new",""],["process_event",""]],"struct":[["Mouse","Used to get input from the player's mouse, access from nitro::App.input.mouse"]]});

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_utils-0.5.0/derivatives.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_utils-0.6.0/derivatives.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>derivatives.rs.html -- source</title>
@@ -80,20 +80,20 @@
 <span id="35">35</span>
 <span id="36">36</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>na</span>::<span class='ident'>BaseFloat</span>;
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
+
 <span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Scalar</span>;
 
 <span class='doccomment'>/// Computes the n-th derivative of the cosinus function.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>dcos</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span>(<span class='ident'>n</span>: <span class='ident'>usize</span>, <span class='ident'>x</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-    <span class='kw'>let</span> <span class='ident'>n</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='ident'>n</span> <span class='kw'>as</span> <span class='ident'>f64</span>);
-    (<span class='ident'>x</span> <span class='op'>+</span> <span class='ident'>n</span> <span class='op'>*</span> <span class='ident'>BaseFloat</span>::<span class='ident'>frac_pi_2</span>()).<span class='ident'>cos</span>()
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>dcos</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='ident'>n</span>: <span class='ident'>usize</span>, <span class='ident'>x</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
+    <span class='kw'>let</span> <span class='ident'>n</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='ident'>n</span> <span class='kw'>as</span> <span class='ident'>f64</span>);
+    (<span class='ident'>x</span> <span class='op'>+</span> <span class='ident'>n</span> <span class='op'>*</span> <span class='ident'>N</span>::<span class='ident'>frac_pi_2</span>()).<span class='ident'>cos</span>()
 }
 
 <span class='doccomment'>/// Computes the n-th derivative of the sinus function.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>dsin</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span>(<span class='ident'>n</span>: <span class='ident'>usize</span>, <span class='ident'>x</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-    <span class='kw'>let</span> <span class='ident'>n</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='ident'>n</span> <span class='kw'>as</span> <span class='ident'>f64</span>);
-    (<span class='ident'>x</span> <span class='op'>+</span> <span class='ident'>n</span> <span class='op'>*</span> <span class='ident'>BaseFloat</span>::<span class='ident'>frac_pi_2</span>()).<span class='ident'>sin</span>()
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>dsin</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='ident'>n</span>: <span class='ident'>usize</span>, <span class='ident'>x</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
+    <span class='kw'>let</span> <span class='ident'>n</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='ident'>n</span> <span class='kw'>as</span> <span class='ident'>f64</span>);
+    (<span class='ident'>x</span> <span class='op'>+</span> <span class='ident'>n</span> <span class='op'>*</span> <span class='ident'>N</span>::<span class='ident'>frac_pi_2</span>()).<span class='ident'>sin</span>()
 }
 
 <span class='comment'>// FIXME: this has nothing to do here…</span>

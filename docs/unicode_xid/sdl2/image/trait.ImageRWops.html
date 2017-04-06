@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ImageRWops` trait in crate `sdl2`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ImageRWops">
+
+    <title>sdl2::image::ImageRWops - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>sdl2</a>::<wbr><a href='index.html'>image</a></p><script>window.sidebarCurrent = {name: 'ImageRWops', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content trait">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>sdl2</a>::<wbr><a href='index.html'>image</a>::<wbr><a class='trait' href=''>ImageRWops</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/sdl2/image/mod.rs.html#222-258' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait ImageRWops {
+    fn <a href='#tymethod.load' class='fnname'>load</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.load_typed' class='fnname'>load_typed</a>(&amp;self, _type: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.load_cur' class='fnname'>load_cur</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.load_ico' class='fnname'>load_ico</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.load_bmp' class='fnname'>load_bmp</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.load_pnm' class='fnname'>load_pnm</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.load_xpm' class='fnname'>load_xpm</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.load_xcf' class='fnname'>load_xcf</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.load_pcx' class='fnname'>load_pcx</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.load_gif' class='fnname'>load_gif</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.load_jpg' class='fnname'>load_jpg</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.load_tif' class='fnname'>load_tif</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.load_png' class='fnname'>load_png</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.load_tga' class='fnname'>load_tga</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.load_lbm' class='fnname'>load_lbm</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.load_xv' class='fnname'>load_xv</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.load_webp' class='fnname'>load_webp</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;;
+    fn <a href='#tymethod.is_cur' class='fnname'>is_cur</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.is_ico' class='fnname'>is_ico</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.is_bmp' class='fnname'>is_bmp</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.is_pnm' class='fnname'>is_pnm</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.is_xpm' class='fnname'>is_xpm</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.is_xcf' class='fnname'>is_xcf</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.is_pcx' class='fnname'>is_pcx</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.is_gif' class='fnname'>is_gif</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.is_jpg' class='fnname'>is_jpg</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.is_tif' class='fnname'>is_tif</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.is_png' class='fnname'>is_png</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.is_lbm' class='fnname'>is_lbm</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.is_xv' class='fnname'>is_xv</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.is_webp' class='fnname'>is_webp</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+}</pre>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.load' class='method'><span id='load.v' class='invisible'><code>fn <a href='#tymethod.load' class='fnname'>load</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><div class='docblock'><p>load as a surface. except TGA</p>
+</div><h3 id='tymethod.load_typed' class='method'><span id='load_typed.v' class='invisible'><code>fn <a href='#tymethod.load_typed' class='fnname'>load_typed</a>(&amp;self, _type: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><div class='docblock'><p>load as a surface. This can load all supported image formats.</p>
+</div><h3 id='tymethod.load_cur' class='method'><span id='load_cur.v' class='invisible'><code>fn <a href='#tymethod.load_cur' class='fnname'>load_cur</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><h3 id='tymethod.load_ico' class='method'><span id='load_ico.v' class='invisible'><code>fn <a href='#tymethod.load_ico' class='fnname'>load_ico</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><h3 id='tymethod.load_bmp' class='method'><span id='load_bmp.v' class='invisible'><code>fn <a href='#tymethod.load_bmp' class='fnname'>load_bmp</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><h3 id='tymethod.load_pnm' class='method'><span id='load_pnm.v' class='invisible'><code>fn <a href='#tymethod.load_pnm' class='fnname'>load_pnm</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><h3 id='tymethod.load_xpm' class='method'><span id='load_xpm.v' class='invisible'><code>fn <a href='#tymethod.load_xpm' class='fnname'>load_xpm</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><h3 id='tymethod.load_xcf' class='method'><span id='load_xcf.v' class='invisible'><code>fn <a href='#tymethod.load_xcf' class='fnname'>load_xcf</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><h3 id='tymethod.load_pcx' class='method'><span id='load_pcx.v' class='invisible'><code>fn <a href='#tymethod.load_pcx' class='fnname'>load_pcx</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><h3 id='tymethod.load_gif' class='method'><span id='load_gif.v' class='invisible'><code>fn <a href='#tymethod.load_gif' class='fnname'>load_gif</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><h3 id='tymethod.load_jpg' class='method'><span id='load_jpg.v' class='invisible'><code>fn <a href='#tymethod.load_jpg' class='fnname'>load_jpg</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><h3 id='tymethod.load_tif' class='method'><span id='load_tif.v' class='invisible'><code>fn <a href='#tymethod.load_tif' class='fnname'>load_tif</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><h3 id='tymethod.load_png' class='method'><span id='load_png.v' class='invisible'><code>fn <a href='#tymethod.load_png' class='fnname'>load_png</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><h3 id='tymethod.load_tga' class='method'><span id='load_tga.v' class='invisible'><code>fn <a href='#tymethod.load_tga' class='fnname'>load_tga</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><h3 id='tymethod.load_lbm' class='method'><span id='load_lbm.v' class='invisible'><code>fn <a href='#tymethod.load_lbm' class='fnname'>load_lbm</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><h3 id='tymethod.load_xv' class='method'><span id='load_xv.v' class='invisible'><code>fn <a href='#tymethod.load_xv' class='fnname'>load_xv</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><h3 id='tymethod.load_webp' class='method'><span id='load_webp.v' class='invisible'><code>fn <a href='#tymethod.load_webp' class='fnname'>load_webp</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../../sdl2/surface/struct.Surface.html' title='sdl2::surface::Surface'>Surface</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h3><h3 id='tymethod.is_cur' class='method'><span id='is_cur.v' class='invisible'><code>fn <a href='#tymethod.is_cur' class='fnname'>is_cur</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><h3 id='tymethod.is_ico' class='method'><span id='is_ico.v' class='invisible'><code>fn <a href='#tymethod.is_ico' class='fnname'>is_ico</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><h3 id='tymethod.is_bmp' class='method'><span id='is_bmp.v' class='invisible'><code>fn <a href='#tymethod.is_bmp' class='fnname'>is_bmp</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><h3 id='tymethod.is_pnm' class='method'><span id='is_pnm.v' class='invisible'><code>fn <a href='#tymethod.is_pnm' class='fnname'>is_pnm</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><h3 id='tymethod.is_xpm' class='method'><span id='is_xpm.v' class='invisible'><code>fn <a href='#tymethod.is_xpm' class='fnname'>is_xpm</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><h3 id='tymethod.is_xcf' class='method'><span id='is_xcf.v' class='invisible'><code>fn <a href='#tymethod.is_xcf' class='fnname'>is_xcf</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><h3 id='tymethod.is_pcx' class='method'><span id='is_pcx.v' class='invisible'><code>fn <a href='#tymethod.is_pcx' class='fnname'>is_pcx</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><h3 id='tymethod.is_gif' class='method'><span id='is_gif.v' class='invisible'><code>fn <a href='#tymethod.is_gif' class='fnname'>is_gif</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><h3 id='tymethod.is_jpg' class='method'><span id='is_jpg.v' class='invisible'><code>fn <a href='#tymethod.is_jpg' class='fnname'>is_jpg</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><h3 id='tymethod.is_tif' class='method'><span id='is_tif.v' class='invisible'><code>fn <a href='#tymethod.is_tif' class='fnname'>is_tif</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><h3 id='tymethod.is_png' class='method'><span id='is_png.v' class='invisible'><code>fn <a href='#tymethod.is_png' class='fnname'>is_png</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><h3 id='tymethod.is_lbm' class='method'><span id='is_lbm.v' class='invisible'><code>fn <a href='#tymethod.is_lbm' class='fnname'>is_lbm</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><h3 id='tymethod.is_xv' class='method'><span id='is_xv.v' class='invisible'><code>fn <a href='#tymethod.is_xv' class='fnname'>is_xv</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><h3 id='tymethod.is_webp' class='method'><span id='is_webp.v' class='invisible'><code>fn <a href='#tymethod.is_webp' class='fnname'>is_webp</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    <li><code>impl&lt;'a&gt; ImageRWops for <a class='struct' href='../../sdl2/rwops/struct.RWops.html' title='sdl2::rwops::RWops'>RWops</a>&lt;'a&gt;</code></li>
+</ul><script type="text/javascript" async
+                         src="../../implementors/sdl2/image/trait.ImageRWops.js">
+                 </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "sdl2";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

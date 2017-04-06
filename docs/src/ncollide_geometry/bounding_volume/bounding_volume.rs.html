@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.2.0/bounding_volume/bounding_volume.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.3.0/bounding_volume/bounding_volume.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>bounding_volume.rs.html -- source</title>
@@ -79,7 +79,16 @@
 <span id="34">34</span>
 <span id="35">35</span>
 <span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
 </pre><pre class='rust '>
+<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
+
 <span class='doccomment'>/// Traits of objects having a bounding volume.</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>HasBoundingVolume</span><span class='op'>&lt;</span><span class='ident'>M</span>, <span class='ident'>BV</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// The bounding volume of `self` transformed by `m`.</span>
@@ -91,7 +100,12 @@
 <span class='doccomment'>/// Bounding volumes are coarse approximations of shapes. It usually have constant time</span>
 <span class='doccomment'>/// intersection, inclusion test. Two bounding volume must also be mergeable into a bigger bounding</span>
 <span class='doccomment'>/// volume.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>BoundingVolume</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>BoundingVolume</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> {
+    <span class='comment'>// FIXME: keep that ? What about non-spacial bounding volumes (e.g. bounding cones, curvature</span>
+    <span class='comment'>// bounds, etc.) ?</span>
+    <span class='doccomment'>/// Returns a point inside of this bounding volume. This is ideally its center.</span>
+    <span class='kw'>fn</span> <span class='ident'>center</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span>;
+
     <span class='doccomment'>/// Checks if this bounding volume intersect with another one.</span>
     <span class='kw'>fn</span> <span class='ident'>intersects</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
 
@@ -105,16 +119,16 @@
     <span class='kw'>fn</span> <span class='ident'>merged</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
 
     <span class='doccomment'>/// Enlarges this bounding volume.</span>
-    <span class='kw'>fn</span> <span class='ident'>loosen</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>N</span>);
+    <span class='kw'>fn</span> <span class='ident'>loosen</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>P</span>::<span class='ident'>Real</span>);
 
     <span class='doccomment'>/// Creates a new, enlarged version, of this bounding volume.</span>
-    <span class='kw'>fn</span> <span class='ident'>loosened</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
+    <span class='kw'>fn</span> <span class='ident'>loosened</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>P</span>::<span class='ident'>Real</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
 
     <span class='doccomment'>/// Tighten this bounding volume.</span>
-    <span class='kw'>fn</span> <span class='ident'>tighten</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>N</span>);
+    <span class='kw'>fn</span> <span class='ident'>tighten</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>P</span>::<span class='ident'>Real</span>);
 
     <span class='doccomment'>/// Creates a new, tightened version, of this bounding volume.</span>
-    <span class='kw'>fn</span> <span class='ident'>tightened</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
+    <span class='kw'>fn</span> <span class='ident'>tightened</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>P</span>::<span class='ident'>Real</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
 }
 </pre>
 </section>

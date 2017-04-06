@@ -100,10 +100,10 @@
 
 <span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>PolarCoords</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Vector</span> {
     <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>polar</span>: <span class='ident'>PolarCoords</span>) <span class='op'>-&gt;</span> <span class='ident'>Vector</span> {
-        <span class='ident'>Vector</span> {
-            <span class='ident'>x</span>: <span class='ident'>polar</span>.<span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>polar</span>.<span class='ident'>rotation</span>.<span class='ident'>cos</span>(),
-            <span class='ident'>y</span>: <span class='ident'>polar</span>.<span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>polar</span>.<span class='ident'>rotation</span>.<span class='ident'>sin</span>(),
-        }
+        <span class='ident'>Vector</span>::<span class='ident'>new</span>(
+            <span class='ident'>polar</span>.<span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>polar</span>.<span class='ident'>rotation</span>.<span class='ident'>cos</span>(),
+            <span class='ident'>polar</span>.<span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>polar</span>.<span class='ident'>rotation</span>.<span class='ident'>sin</span>()
+        )
     }
 }
 </pre>

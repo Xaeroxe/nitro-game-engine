@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.5.0/src/detection/detector.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.6.1/src/detection/detector.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>detector.rs.html -- source</title>
@@ -59,11 +59,11 @@
 </pre><pre class='rust '>
 <span class='doccomment'>//! Collision detector.</span>
 
-<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>math</span>::<span class='ident'>Scalar</span>;
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
 <span class='kw'>use</span> <span class='ident'>detection</span>::<span class='ident'>activation_manager</span>::<span class='ident'>ActivationManager</span>;
 
 <span class='doccomment'>/// Trait implemented by collision detectors.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Detector</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span>, <span class='ident'>I</span>, <span class='ident'>BF</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Detector</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span>, <span class='ident'>I</span>, <span class='ident'>BF</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Updates the collision detector, given an (already updated) broad-phase, and an activation</span>
     <span class='doccomment'>/// manager.</span>
     <span class='kw'>fn</span> <span class='ident'>update</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>BF</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ActivationManager</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>);

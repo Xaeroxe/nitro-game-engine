@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_procedural-0.5.0/path/polyline_pattern.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_procedural-0.6.0/path/polyline_pattern.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>polyline_pattern.rs.html -- source</title>
@@ -178,16 +178,16 @@
 <span id="133">133</span>
 <span id="134">134</span>
 </pre><pre class='rust '>
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
 <span class='kw'>use</span> <span class='ident'>na</span>::{<span class='ident'>Point2</span>, <span class='ident'>Point3</span>, <span class='ident'>Vector3</span>, <span class='ident'>Isometry3</span>};
 <span class='kw'>use</span> <span class='ident'>na</span>;
 <span class='kw'>use</span> <span class='ident'>polyline</span>::<span class='ident'>Polyline</span>;
 <span class='kw'>use</span> <span class='ident'>trimesh</span>::{<span class='ident'>TriMesh</span>, <span class='ident'>IndexBuffer</span>};
 <span class='kw'>use</span> <span class='ident'>utils</span>;
 <span class='kw'>use</span> <span class='ident'>path</span>::{<span class='ident'>StrokePattern</span>, <span class='ident'>CurveSampler</span>, <span class='ident'>PathSample</span>};
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Scalar</span>;
 
 <span class='doccomment'>/// A pattern composed of polyline and two caps.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>PolylinePattern</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span>, <span class='ident'>C1</span>, <span class='ident'>C2</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>PolylinePattern</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span>, <span class='ident'>C1</span>, <span class='ident'>C2</span><span class='op'>&gt;</span> {
     <span class='ident'>pattern</span>:       <span class='ident'>Polyline</span><span class='op'>&lt;</span><span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>,
     <span class='ident'>closed</span>:        <span class='ident'>bool</span>,
     <span class='ident'>last_start_id</span>: <span class='ident'>u32</span>,
@@ -196,7 +196,7 @@
 }
 
 <span class='doccomment'>/// Trait to be implemented by caps compatible with a `PolylinePattern`.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>PolylineCompatibleCap</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>PolylineCompatibleCap</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Generates the mesh for the cap at the beginning of a path.</span>
     <span class='kw'>fn</span> <span class='ident'>gen_start_cap</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>,
                      <span class='ident'>attach_id</span>: <span class='ident'>u32</span>,
@@ -219,7 +219,7 @@
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>C1</span>, <span class='ident'>C2</span><span class='op'>&gt;</span> <span class='ident'>PolylinePattern</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>C1</span>, <span class='ident'>C2</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span>,
+    <span class='kw'>where</span> <span class='ident'>N</span>:  <span class='ident'>Real</span>,
           <span class='ident'>C1</span>: <span class='ident'>PolylineCompatibleCap</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
           <span class='ident'>C2</span>: <span class='ident'>PolylineCompatibleCap</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Creates a new polyline pattern.</span>
@@ -245,7 +245,7 @@
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>C1</span>, <span class='ident'>C2</span><span class='op'>&gt;</span> <span class='ident'>StrokePattern</span><span class='op'>&lt;</span><span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>PolylinePattern</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>C1</span>, <span class='ident'>C2</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span>,
+    <span class='kw'>where</span> <span class='ident'>N</span>:  <span class='ident'>Real</span>,
           <span class='ident'>C1</span>: <span class='ident'>PolylineCompatibleCap</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
           <span class='ident'>C2</span>: <span class='ident'>PolylineCompatibleCap</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>{
     <span class='kw'>fn</span> <span class='ident'>stroke</span><span class='op'>&lt;</span><span class='ident'>C</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>sampler</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>C</span>) <span class='op'>-&gt;</span> <span class='ident'>TriMesh</span><span class='op'>&lt;</span><span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>

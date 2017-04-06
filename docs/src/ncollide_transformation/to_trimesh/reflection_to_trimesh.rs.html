@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_transformation-0.5.0/to_trimesh/reflection_to_trimesh.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_transformation-0.6.0/to_trimesh/reflection_to_trimesh.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>reflection_to_trimesh.rs.html -- source</title>
@@ -60,7 +60,6 @@
 <span id="15">15</span>
 <span id="16">16</span>
 <span id="17">17</span>
-<span id="18">18</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>shape</span>::<span class='ident'>Reflection</span>;
 <span class='kw'>use</span> <span class='ident'>procedural</span>::<span class='ident'>TriMesh</span>;
@@ -68,8 +67,7 @@
 <span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
 
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>, <span class='ident'>G</span>: <span class='ident'>ToTriMesh</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>I</span><span class='op'>&gt;</span>, <span class='ident'>I</span><span class='op'>&gt;</span> <span class='ident'>ToTriMesh</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>I</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Reflection</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>G</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>G</span>: <span class='ident'>ToTriMesh</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>I</span><span class='op'>&gt;</span>, <span class='ident'>I</span><span class='op'>&gt;</span> <span class='ident'>ToTriMesh</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>I</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Reflection</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>G</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>to_trimesh</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>parameter</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='ident'>TriMesh</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>shape</span>().<span class='ident'>to_trimesh</span>(<span class='ident'>parameter</span>);
 

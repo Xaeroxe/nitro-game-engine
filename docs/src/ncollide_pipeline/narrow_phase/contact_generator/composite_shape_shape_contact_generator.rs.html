@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_pipeline-0.9.0/narrow_phase/contact_generator/composite_shape_shape_contact_generator.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_pipeline-0.10.0/narrow_phase/contact_generator/composite_shape_shape_contact_generator.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>composite_shape_shape_contact_generator.rs.html -- source</title>
@@ -218,20 +218,9 @@
 <span id="173">173</span>
 <span id="174">174</span>
 <span id="175">175</span>
-<span id="176">176</span>
-<span id="177">177</span>
-<span id="178">178</span>
-<span id="179">179</span>
-<span id="180">180</span>
-<span id="181">181</span>
-<span id="182">182</span>
-<span id="183">183</span>
-<span id="184">184</span>
-<span id="185">185</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>::<span class='ident'>Translate</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Vector</span>, <span class='ident'>Isometry</span>};
+<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Isometry</span>};
 <span class='kw'>use</span> <span class='ident'>utils</span>::<span class='ident'>data</span>::<span class='ident'>hash_map</span>::<span class='ident'>HashMap</span>;
 <span class='kw'>use</span> <span class='ident'>utils</span>::<span class='ident'>data</span>::<span class='ident'>hash</span>::<span class='ident'>UintTWHash</span>;
 <span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>bounding_volume</span>::{<span class='self'>self</span>, <span class='ident'>BoundingVolume</span>};
@@ -259,20 +248,17 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>CompositeShapeShapeContactGenerator</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>:  <span class='ident'>Point</span>,
-          <span class='ident'>P</span>::<span class='ident'>Vect</span>: <span class='ident'>Translate</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
-          <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> <span class='ident'>CompositeShapeShapeContactGenerator</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>do_update</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
                  <span class='ident'>dispatcher</span>: <span class='kw-2'>&amp;</span><span class='ident'>ContactDispatcher</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
                  <span class='ident'>m1</span>:         <span class='kw-2'>&amp;</span><span class='ident'>M</span>,
                  <span class='ident'>g1</span>:         <span class='kw-2'>&amp;</span><span class='ident'>CompositeShape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
                  <span class='ident'>m2</span>:         <span class='kw-2'>&amp;</span><span class='ident'>M</span>,
                  <span class='ident'>g2</span>:         <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
-                 <span class='ident'>prediction</span>: <span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span>,
+                 <span class='ident'>prediction</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>,
                  <span class='ident'>swap</span>:       <span class='ident'>bool</span>) {
         <span class='comment'>// Find new collisions</span>
-        <span class='kw'>let</span> <span class='ident'>ls_m2</span>    <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>inverse</span>(<span class='ident'>m1</span>).<span class='ident'>expect</span>(<span class='string'>&quot;The transformation `m1` must be inversible.&quot;</span>) <span class='op'>*</span> <span class='kw-2'>*</span><span class='ident'>m2</span>;
+        <span class='kw'>let</span> <span class='ident'>ls_m2</span>    <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>inverse</span>(<span class='ident'>m1</span>) <span class='op'>*</span> <span class='ident'>m2</span>.<span class='ident'>clone</span>();
         <span class='kw'>let</span> <span class='ident'>ls_aabb2</span> <span class='op'>=</span> <span class='ident'>bounding_volume</span>::<span class='ident'>aabb</span>(<span class='ident'>g2</span>, <span class='kw-2'>&amp;</span><span class='ident'>ls_m2</span>).<span class='ident'>loosened</span>(<span class='ident'>prediction</span>);
 
         {
@@ -345,17 +331,14 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>ContactGenerator</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>CompositeShapeShapeContactGenerator</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span>,
-          <span class='ident'>P</span>::<span class='ident'>Vect</span>: <span class='ident'>Translate</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
-          <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> <span class='ident'>ContactGenerator</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>CompositeShapeShapeContactGenerator</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>update</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
               <span class='ident'>d</span>:  <span class='kw-2'>&amp;</span><span class='ident'>ContactDispatcher</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
               <span class='ident'>ma</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>,
               <span class='ident'>a</span>:  <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
               <span class='ident'>mb</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>,
               <span class='ident'>b</span>:  <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
-              <span class='ident'>prediction</span>: <span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span>)
+              <span class='ident'>prediction</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>)
               <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>cs</span>) <span class='op'>=</span> <span class='ident'>a</span>.<span class='ident'>as_composite_shape</span>() {
             <span class='self'>self</span>.<span class='ident'>do_update</span>(<span class='ident'>d</span>, <span class='ident'>ma</span>, <span class='ident'>cs</span>, <span class='ident'>mb</span>, <span class='ident'>b</span>, <span class='ident'>prediction</span>, <span class='bool-val'>false</span>);
@@ -384,17 +367,14 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>ContactGenerator</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ShapeCompositeShapeContactGenerator</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span>,
-          <span class='ident'>P</span>::<span class='ident'>Vect</span>: <span class='ident'>Translate</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
-          <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> <span class='ident'>ContactGenerator</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ShapeCompositeShapeContactGenerator</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>update</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
               <span class='ident'>d</span>:  <span class='kw-2'>&amp;</span><span class='ident'>ContactDispatcher</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
               <span class='ident'>ma</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>,
               <span class='ident'>a</span>:  <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
               <span class='ident'>mb</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>,
               <span class='ident'>b</span>:  <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
-              <span class='ident'>prediction</span>: <span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span>)
+              <span class='ident'>prediction</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>)
               <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>cs</span>) <span class='op'>=</span> <span class='ident'>b</span>.<span class='ident'>as_composite_shape</span>() {
             <span class='self'>self</span>.<span class='ident'>sub_detector</span>.<span class='ident'>do_update</span>(<span class='ident'>d</span>, <span class='ident'>mb</span>, <span class='ident'>cs</span>, <span class='ident'>ma</span>, <span class='ident'>a</span>, <span class='ident'>prediction</span>, <span class='bool-val'>true</span>);

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.5.0/src/integration/body_smp_euler_integrator.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.6.1/src/integration/body_smp_euler_integrator.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>body_smp_euler_integrator.rs.html -- source</title>
@@ -84,8 +84,8 @@
 </pre><pre class='rust '>
 <span class='doccomment'>//! Semi-implicit Euler integrator.</span>
 
-<span class='kw'>use</span> <span class='ident'>na</span>::<span class='ident'>Transformation</span>;
-<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>math</span>::<span class='ident'>Scalar</span>;
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
+
 <span class='kw'>use</span> <span class='ident'>object</span>::<span class='ident'>RigidBody</span>;
 <span class='kw'>use</span> <span class='ident'>integration</span>::<span class='ident'>Integrator</span>;
 <span class='kw'>use</span> <span class='ident'>integration</span>::<span class='ident'>euler</span>;
@@ -101,7 +101,7 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='ident'>Integrator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>BodySmpEulerIntegrator</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>Integrator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>BodySmpEulerIntegrator</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>update</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>dt</span>: <span class='ident'>N</span>, <span class='ident'>rb</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
         <span class='kw'>if</span> <span class='ident'>rb</span>.<span class='ident'>can_move</span>() {
@@ -115,8 +115,8 @@
                 <span class='kw-2'>&amp;</span><span class='ident'>rb</span>.<span class='ident'>ang_acc</span>());
 
             <span class='ident'>rb</span>.<span class='ident'>append_transformation</span>(<span class='kw-2'>&amp;</span><span class='ident'>t</span>);
-            <span class='ident'>rb</span>.<span class='ident'>set_lin_vel</span>(<span class='ident'>lv</span>);
-            <span class='ident'>rb</span>.<span class='ident'>set_ang_vel</span>(<span class='ident'>av</span>);
+            <span class='ident'>rb</span>.<span class='ident'>set_lin_vel_internal</span>(<span class='ident'>lv</span>);
+            <span class='ident'>rb</span>.<span class='ident'>set_ang_vel_internal</span>(<span class='ident'>av</span>);
         }
     }
 }

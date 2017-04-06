@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_pipeline-0.9.0/narrow_phase/contact_generator/contact_generator.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_pipeline-0.10.0/narrow_phase/contact_generator/contact_generator.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>contact_generator.rs.html -- source</title>
@@ -77,7 +77,7 @@
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>shape</span>::<span class='ident'>Shape</span>;
 <span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>query</span>::<span class='ident'>Contact</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Vector</span>};
+<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
 
 <span class='doccomment'>/// Trait implemented algorithms that compute contact points, normals and penetration depths.</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ContactGenerator</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
@@ -90,7 +90,7 @@
               <span class='ident'>a</span>:          <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
               <span class='ident'>mb</span>:         <span class='kw-2'>&amp;</span><span class='ident'>M</span>,
               <span class='ident'>b</span>:          <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
-              <span class='ident'>prediction</span>: <span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span>)
+              <span class='ident'>prediction</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>)
               <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
 
     <span class='doccomment'>/// The number of contacts generated the last update.</span>

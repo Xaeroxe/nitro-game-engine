@@ -48,8 +48,13 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/nalgebra/lib.rs.html#182-194' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn clamp&lt;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html' title='core::cmp::PartialOrd'>PartialOrd</a>&gt;(val: T, min: T, max: T) -&gt; T</pre><div class='docblock'><p>Change the input value to ensure it is on the range <code>[min, max]</code>.</p>
+               </span><a class='srclink' href='../src/nalgebra/lib.rs.html#218-230' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn clamp&lt;T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html' title='core::cmp::PartialOrd'>PartialOrd</a>&gt;(val: T, min: T, max: T) -&gt; T</pre><div class='docblock'><p>Returns a reference to the input value clamped to the interval <code>[min, max]</code>.</p>
+
+<p>In particular:
+    * If <code>min &lt; val &lt; max</code>, this returns <code>val</code>.
+    * If <code>val &lt;= min</code>, this retuns <code>min</code>.
+    * If <code>val &gt;= max</code>, this retuns <code>max</code>.</p>
 </div></section>
     <section id='search' class="content hidden"></section>
 

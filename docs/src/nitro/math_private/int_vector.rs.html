@@ -57,9 +57,6 @@
 <span id="12">12</span>
 <span id="13">13</span>
 <span id="14">14</span>
-<span id="15">15</span>
-<span id="16">16</span>
-<span id="17">17</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>nphysics2d</span>;
 <span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Vector</span>;
@@ -72,10 +69,7 @@
 
 <span class='kw'>impl</span> <span class='ident'>IntVecConvert</span> <span class='kw'>for</span> <span class='ident'>IntVector</span> {
     <span class='kw'>fn</span> <span class='ident'>to_vec</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vector</span> {
-        <span class='ident'>Vector</span> {
-            <span class='ident'>x</span>: <span class='self'>self</span>.<span class='ident'>x</span> <span class='kw'>as</span> <span class='ident'>f32</span>,
-            <span class='ident'>y</span>: <span class='self'>self</span>.<span class='ident'>y</span> <span class='kw'>as</span> <span class='ident'>f32</span>,
-        }
+        <span class='ident'>Vector</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>x</span> <span class='kw'>as</span> <span class='ident'>f32</span>, <span class='self'>self</span>.<span class='ident'>y</span> <span class='kw'>as</span> <span class='ident'>f32</span>)
     }
 }
 </pre>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.2.0/query/algorithms/minkowski_sampling.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.3.0/query/algorithms/minkowski_sampling.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>minkowski_sampling.rs.html -- source</title>
@@ -194,26 +194,30 @@
 <span id="149">149</span>
 <span id="150">150</span>
 <span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Penetration depth computation algorithm approximating the Minkowskis sum.</span>
 
-<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Zero</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='ident'>Identity</span>, <span class='ident'>Norm</span>, <span class='ident'>Translation</span>, <span class='ident'>Translate</span>, <span class='ident'>Bounded</span>};
+<span class='kw'>use</span> <span class='ident'>num</span>::{<span class='ident'>Zero</span>, <span class='ident'>Bounded</span>};
+
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Id</span>;
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>linear</span>::{<span class='ident'>Translation</span>, <span class='ident'>NormedSpace</span>};
 <span class='kw'>use</span> <span class='ident'>na</span>;
+
 <span class='kw'>use</span> <span class='ident'>shape</span>::{<span class='ident'>MinkowskiSum</span>, <span class='ident'>AnnotatedPoint</span>, <span class='ident'>Reflection</span>};
 <span class='kw'>use</span> <span class='ident'>shape</span>::<span class='ident'>SupportMap</span>;
 <span class='kw'>use</span> <span class='ident'>query</span>::<span class='ident'>algorithms</span>::<span class='ident'>gjk</span>;
 <span class='kw'>use</span> <span class='ident'>query</span>::<span class='ident'>algorithms</span>::<span class='ident'>simplex</span>::<span class='ident'>Simplex</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
+<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Vector</span>, <span class='ident'>Isometry</span>};
 
 
 <span class='doccomment'>/// Computes the closest points between two implicit inter-penetrating shapes. Returns None if the</span>
 <span class='doccomment'>/// shapes are not in penetration. This can be used as a fallback algorithm for the GJK algorithm.</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>closest_points</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>S</span>, <span class='ident'>G1</span>: <span class='question-mark'>?</span><span class='ident'>Sized</span>, <span class='ident'>G2</span>: <span class='question-mark'>?</span><span class='ident'>Sized</span><span class='op'>&gt;</span>(
-                      <span class='ident'>m1</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>g1</span>: <span class='kw-2'>&amp;</span><span class='ident'>G1</span>, <span class='ident'>m2</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>g2</span>: <span class='kw-2'>&amp;</span><span class='ident'>G2</span>, <span class='ident'>simplex</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='ident'>P</span>, <span class='ident'>P</span>, <span class='ident'>P</span>::<span class='ident'>Vect</span>)<span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span>,
-          <span class='ident'>P</span>::<span class='ident'>Vect</span>: <span class='ident'>Translate</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
-          <span class='ident'>M</span>:  <span class='ident'>Translation</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span><span class='op'>&gt;</span>,
+                      <span class='ident'>m1</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>g1</span>: <span class='kw-2'>&amp;</span><span class='ident'>G1</span>, <span class='ident'>m2</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>g2</span>: <span class='kw-2'>&amp;</span><span class='ident'>G2</span>, <span class='ident'>simplex</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='ident'>P</span>, <span class='ident'>P</span>, <span class='ident'>P</span>::<span class='ident'>Vector</span>)<span class='op'>&gt;</span>
+    <span class='kw'>where</span> <span class='ident'>P</span>:  <span class='ident'>Point</span>,
+          <span class='ident'>M</span>:  <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
           <span class='ident'>S</span>:  <span class='ident'>Simplex</span><span class='op'>&lt;</span><span class='ident'>AnnotatedPoint</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span>,
           <span class='ident'>G1</span>: <span class='ident'>SupportMap</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
           <span class='ident'>G2</span>: <span class='ident'>SupportMap</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
@@ -221,12 +225,12 @@
     <span class='kw'>let</span> <span class='ident'>cso</span>      <span class='op'>=</span> <span class='ident'>MinkowskiSum</span>::<span class='ident'>new</span>(<span class='ident'>m1</span>, <span class='ident'>g1</span>, <span class='ident'>m2</span>, <span class='kw-2'>&amp;</span><span class='ident'>reflect2</span>);
 
     <span class='comment'>// find an approximation of the smallest penetration direction</span>
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>best_dir</span>: <span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>min_dist</span>          <span class='op'>=</span> <span class='ident'>Bounded</span>::<span class='ident'>max_value</span>();
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>best_dir</span>: <span class='ident'>P</span>::<span class='ident'>Vector</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>min_dist</span>            <span class='op'>=</span> <span class='ident'>Bounded</span>::<span class='ident'>max_value</span>();
 
-    <span class='ident'>na</span>::<span class='ident'>sample_sphere</span>(<span class='op'>|</span><span class='ident'>sample</span>: <span class='ident'>P</span>::<span class='ident'>Vect</span><span class='op'>|</span> {
-        <span class='kw'>let</span> <span class='ident'>support</span> <span class='op'>=</span> <span class='ident'>cso</span>.<span class='ident'>support_point</span>(<span class='kw-2'>&amp;</span><span class='ident'>Identity</span>::<span class='ident'>new</span>(), <span class='kw-2'>&amp;</span><span class='ident'>sample</span>);
-        <span class='kw'>let</span> <span class='ident'>distance</span>    <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>dot</span>(<span class='kw-2'>&amp;</span><span class='ident'>sample</span>, <span class='ident'>support</span>.<span class='ident'>as_vector</span>());
+    <span class='ident'>P</span>::<span class='ident'>Vector</span>::<span class='ident'>sample_sphere</span>(<span class='op'>|</span><span class='ident'>sample</span>: <span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>|</span> {
+        <span class='kw'>let</span> <span class='ident'>support</span>  <span class='op'>=</span> <span class='ident'>cso</span>.<span class='ident'>support_point</span>(<span class='kw-2'>&amp;</span><span class='ident'>Id</span>::<span class='ident'>new</span>(), <span class='kw-2'>&amp;</span><span class='ident'>sample</span>);
+        <span class='kw'>let</span> <span class='ident'>distance</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>dot</span>(<span class='kw-2'>&amp;</span><span class='ident'>sample</span>, <span class='kw-2'>&amp;</span><span class='ident'>support</span>.<span class='ident'>coordinates</span>());
 
         <span class='kw'>if</span> <span class='ident'>distance</span> <span class='op'>&lt;</span> <span class='ident'>min_dist</span> {
             <span class='ident'>best_dir</span> <span class='op'>=</span> <span class='ident'>sample</span>;
@@ -234,10 +238,10 @@
         }
     });
 
-    <span class='kw'>let</span> <span class='ident'>extra_shift</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>0.01f64</span>); <span class='comment'>// FIXME: do not hard-code the extra shift?</span>
+    <span class='kw'>let</span> <span class='ident'>extra_shift</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>0.01f64</span>); <span class='comment'>// FIXME: do not hard-code the extra shift?</span>
     <span class='kw'>let</span> <span class='ident'>shift</span>       <span class='op'>=</span> <span class='ident'>best_dir</span> <span class='op'>*</span> (<span class='ident'>min_dist</span> <span class='op'>+</span> <span class='ident'>extra_shift</span>);
 
-    <span class='kw'>let</span> <span class='ident'>tm2</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>append_translation</span>(<span class='ident'>m2</span>, <span class='kw-2'>&amp;</span><span class='ident'>shift</span>);
+    <span class='kw'>let</span> <span class='ident'>tm2</span> <span class='op'>=</span> <span class='ident'>m2</span>.<span class='ident'>append_translation</span>(<span class='kw-2'>&amp;</span><span class='ident'>M</span>::<span class='ident'>Translation</span>::<span class='ident'>from_vector</span>(<span class='ident'>shift</span>).<span class='ident'>unwrap</span>());
 
     <span class='ident'>simplex</span>.<span class='ident'>modify_pnts</span>(<span class='kw-2'>&amp;</span><span class='op'>|</span><span class='ident'>pt</span><span class='op'>|</span> <span class='ident'>pt</span>.<span class='ident'>translate_2</span>(<span class='kw-2'>&amp;</span>(<span class='op'>-</span><span class='ident'>shift</span>)));
 
@@ -304,16 +308,16 @@
 <span class='doccomment'>/// The origin is assumed to be inside of the shape.</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>project_origin</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>S</span>, <span class='ident'>G</span><span class='op'>&gt;</span>(<span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>g</span>: <span class='kw-2'>&amp;</span><span class='ident'>G</span>, <span class='ident'>simplex</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>
     <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span>,
-          <span class='ident'>M</span>: <span class='ident'>Translation</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span><span class='op'>&gt;</span>,
+          <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
           <span class='ident'>S</span>: <span class='ident'>Simplex</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
           <span class='ident'>G</span>: <span class='ident'>SupportMap</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
     <span class='comment'>// find an approximation of the smallest penetration direction</span>
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>best_dir</span>: <span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>min_dist</span>          <span class='op'>=</span> <span class='ident'>Bounded</span>::<span class='ident'>max_value</span>();
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>best_dir</span>: <span class='ident'>P</span>::<span class='ident'>Vector</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>min_dist</span>            <span class='op'>=</span> <span class='ident'>Bounded</span>::<span class='ident'>max_value</span>();
 
-    <span class='ident'>na</span>::<span class='ident'>sample_sphere</span>(<span class='op'>|</span><span class='ident'>sample</span>: <span class='ident'>P</span>::<span class='ident'>Vect</span><span class='op'>|</span> {
-        <span class='kw'>let</span> <span class='ident'>support</span> <span class='op'>=</span> <span class='ident'>g</span>.<span class='ident'>support_point</span>(<span class='ident'>m</span>, <span class='kw-2'>&amp;</span><span class='ident'>sample</span>);
-        <span class='kw'>let</span> <span class='ident'>distance</span>    <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>dot</span>(<span class='kw-2'>&amp;</span><span class='ident'>sample</span>, <span class='ident'>support</span>.<span class='ident'>as_vector</span>());
+    <span class='ident'>P</span>::<span class='ident'>Vector</span>::<span class='ident'>sample_sphere</span>(<span class='op'>|</span><span class='ident'>sample</span>: <span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>|</span> {
+        <span class='kw'>let</span> <span class='ident'>support</span>  <span class='op'>=</span> <span class='ident'>g</span>.<span class='ident'>support_point</span>(<span class='ident'>m</span>, <span class='kw-2'>&amp;</span><span class='ident'>sample</span>);
+        <span class='kw'>let</span> <span class='ident'>distance</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>dot</span>(<span class='kw-2'>&amp;</span><span class='ident'>sample</span>, <span class='kw-2'>&amp;</span><span class='ident'>support</span>.<span class='ident'>coordinates</span>());
 
         <span class='kw'>if</span> <span class='ident'>distance</span> <span class='op'>&lt;</span> <span class='ident'>min_dist</span> {
             <span class='ident'>best_dir</span> <span class='op'>=</span> <span class='ident'>sample</span>;
@@ -321,23 +325,23 @@
         }
     });
 
-    <span class='kw'>let</span> <span class='ident'>extra_shift</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>0.01f64</span>); <span class='comment'>// FIXME: do not hard-code the extra shift?</span>
+    <span class='kw'>let</span> <span class='ident'>extra_shift</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>0.01f64</span>); <span class='comment'>// FIXME: do not hard-code the extra shift?</span>
     <span class='kw'>let</span> <span class='ident'>shift</span>       <span class='op'>=</span> <span class='ident'>best_dir</span> <span class='op'>*</span> (<span class='ident'>min_dist</span> <span class='op'>+</span> <span class='ident'>extra_shift</span>);
 
-    <span class='kw'>let</span> <span class='ident'>tm</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>append_translation</span>(<span class='ident'>m</span>, <span class='kw-2'>&amp;</span><span class='op'>-</span><span class='ident'>shift</span>);
+    <span class='kw'>let</span> <span class='ident'>tm</span> <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>append_translation</span>(<span class='kw-2'>&amp;</span><span class='ident'>M</span>::<span class='ident'>Translation</span>::<span class='ident'>from_vector</span>(<span class='op'>-</span><span class='ident'>shift</span>).<span class='ident'>unwrap</span>());
 
     <span class='ident'>simplex</span>.<span class='ident'>modify_pnts</span>(<span class='kw-2'>&amp;</span><span class='op'>|</span><span class='ident'>pt</span><span class='op'>|</span> <span class='kw-2'>*</span><span class='ident'>pt</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>pt</span> <span class='op'>+</span> (<span class='op'>-</span><span class='ident'>shift</span>));
 
     <span class='kw'>match</span> <span class='ident'>gjk</span>::<span class='ident'>project_origin</span>(<span class='kw-2'>&amp;</span><span class='ident'>tm</span>, <span class='ident'>g</span>, <span class='ident'>simplex</span>) {
         <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>, <span class='comment'>// panic!(&quot;Internal error: the origin was inside of the Simplex during phase 1.&quot;),</span>
         <span class='prelude-val'>Some</span>(<span class='ident'>p</span>) <span class='op'>=&gt;</span> {
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>normal</span> <span class='op'>=</span> <span class='op'>-</span><span class='kw-2'>*</span><span class='ident'>p</span>.<span class='ident'>as_vector</span>();
+            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>normal</span> <span class='op'>=</span> <span class='op'>-</span><span class='ident'>p</span>.<span class='ident'>coordinates</span>();
             <span class='kw'>let</span> <span class='ident'>dist_err</span>   <span class='op'>=</span> <span class='ident'>normal</span>.<span class='ident'>normalize_mut</span>();
 
             <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>dist_err</span>.<span class='ident'>is_zero</span>() {
                 <span class='kw'>let</span> <span class='ident'>nmin_dist</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>dot</span>(<span class='kw-2'>&amp;</span><span class='ident'>normal</span>, <span class='kw-2'>&amp;</span><span class='ident'>best_dir</span>) <span class='op'>*</span> (<span class='ident'>min_dist</span> <span class='op'>+</span> <span class='ident'>extra_shift</span>);
 
-                <span class='prelude-val'>Some</span>(<span class='ident'>na</span>::<span class='ident'>origin</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>() <span class='op'>+</span> <span class='ident'>normal</span> <span class='op'>*</span> (<span class='ident'>nmin_dist</span> <span class='op'>-</span> <span class='ident'>dist_err</span>))
+                <span class='prelude-val'>Some</span>(<span class='ident'>P</span>::<span class='ident'>origin</span>() <span class='op'>+</span> <span class='ident'>normal</span> <span class='op'>*</span> (<span class='ident'>nmin_dist</span> <span class='op'>-</span> <span class='ident'>dist_err</span>))
             }
             <span class='kw'>else</span> {
                 <span class='comment'>// FIXME: something went wrong here.</span>

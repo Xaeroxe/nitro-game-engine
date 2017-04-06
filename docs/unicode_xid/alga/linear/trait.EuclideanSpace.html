@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `EuclideanSpace` trait in crate `alga`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, EuclideanSpace">
+
+    <title>alga::linear::EuclideanSpace - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>alga</a>::<wbr><a href='index.html'>linear</a></p><script>window.sidebarCurrent = {name: 'EuclideanSpace', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content trait">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>alga</a>::<wbr><a href='index.html'>linear</a>::<wbr><a class='trait' href=''>EuclideanSpace</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/alga/linear/vector.rs.html#146-214' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait EuclideanSpace: <a class='trait' href='../../alga/linear/trait.AffineSpace.html' title='alga::linear::AffineSpace'>AffineSpace</a>&lt;Translation=Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>&gt; + <a class='trait' href='../../alga/general/trait.ClosedMul.html' title='alga::general::ClosedMul'>ClosedMul</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a>&gt; + <a class='trait' href='../../alga/general/trait.ClosedDiv.html' title='alga::general::ClosedDiv'>ClosedDiv</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Neg.html' title='core::ops::Neg'>Neg</a>&lt;Output=Self&gt; {
+    type <a href='#associatedtype.Coordinates' class='type'>Coordinates</a>: <a class='trait' href='../../alga/linear/trait.FiniteDimInnerSpace.html' title='alga::linear::FiniteDimInnerSpace'>FiniteDimInnerSpace</a>&lt;Real=Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Add.html' title='core::ops::Add'>Add</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>, Output=Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.AddAssign.html' title='core::ops::AddAssign'>AddAssign</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Sub.html' title='core::ops::Sub'>Sub</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>, Output=Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.SubAssign.html' title='core::ops::SubAssign'>SubAssign</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html' title='core::ops::Mul'>Mul</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a>, Output=Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.MulAssign.html' title='core::ops::MulAssign'>MulAssign</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Div.html' title='core::ops::Div'>Div</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a>, Output=Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.DivAssign.html' title='core::ops::DivAssign'>DivAssign</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Neg.html' title='core::ops::Neg'>Neg</a>&lt;Output=Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>&gt;;
+    type <a href='#associatedtype.Real' class='type'>Real</a>: <a class='trait' href='../../alga/general/trait.Real.html' title='alga::general::Real'>Real</a>;
+    fn <a href='#tymethod.origin' class='fnname'>origin</a>() -&gt; Self;
+
+    fn <a href='#method.scale_by' class='fnname'>scale_by</a>(&amp;self, s: Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a>) -&gt; Self { ... }
+    fn <a href='#method.coordinates' class='fnname'>coordinates</a>(&amp;self) -&gt; Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a> { ... }
+    fn <a href='#method.from_coordinates' class='fnname'>from_coordinates</a>(coords: Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>) -&gt; Self { ... }
+    fn <a href='#method.distance_squared' class='fnname'>distance_squared</a>(&amp;self, b: &amp;Self) -&gt; Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a> { ... }
+    fn <a href='#method.distance' class='fnname'>distance</a>(&amp;self, b: &amp;Self) -&gt; Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a> { ... }
+}</pre><div class='docblock'><p>The finite-dimensional affine space based on the field of reals.</p>
+</div>
+            <h2 id='associated-types'>Associated Types</h2>
+            <div class='methods'>
+        <h3 id='associatedtype.Coordinates' class='method'><span id='Coordinates.t' class='invisible'><code>type <a href='#associatedtype.Coordinates' class='type'>Coordinates</a>: <a class='trait' href='../../alga/linear/trait.FiniteDimInnerSpace.html' title='alga::linear::FiniteDimInnerSpace'>FiniteDimInnerSpace</a>&lt;Real=Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Add.html' title='core::ops::Add'>Add</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>, Output=Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.AddAssign.html' title='core::ops::AddAssign'>AddAssign</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Sub.html' title='core::ops::Sub'>Sub</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>, Output=Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.SubAssign.html' title='core::ops::SubAssign'>SubAssign</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html' title='core::ops::Mul'>Mul</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a>, Output=Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.MulAssign.html' title='core::ops::MulAssign'>MulAssign</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Div.html' title='core::ops::Div'>Div</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a>, Output=Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.DivAssign.html' title='core::ops::DivAssign'>DivAssign</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a>&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Neg.html' title='core::ops::Neg'>Neg</a>&lt;Output=Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>&gt;</code></span></h3><div class='docblock'><p>The underlying finite vector space.</p>
+</div><h3 id='associatedtype.Real' class='method'><span id='Real.t' class='invisible'><code>type <a href='#associatedtype.Real' class='type'>Real</a>: <a class='trait' href='../../alga/general/trait.Real.html' title='alga::general::Real'>Real</a></code></span></h3><div class='docblock'><p>The underlying reals.</p>
+</div></div>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.origin' class='method'><span id='origin.v' class='invisible'><code>fn <a href='#tymethod.origin' class='fnname'>origin</a>() -&gt; Self</code></span></h3><div class='docblock'><p>The preferred origin of this euclidean space.</p>
+
+<p>Theoretically, an euclidean space has no clearly defined origin. Though it is almost always
+useful to have some reference point to express all the others as translations of it.</p>
+</div></div>
+            <h2 id='provided-methods'>Provided Methods</h2>
+            <div class='methods'>
+        <h3 id='method.scale_by' class='method'><span id='scale_by.v' class='invisible'><code>fn <a href='#method.scale_by' class='fnname'>scale_by</a>(&amp;self, s: Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Multiplies the distance of this point to <code>Self::origin()</code> by <code>s</code>.</p>
+
+<p>Same as self * s.</p>
+</div><h3 id='method.coordinates' class='method'><span id='coordinates.v' class='invisible'><code>fn <a href='#method.coordinates' class='fnname'>coordinates</a>(&amp;self) -&gt; Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a></code></span></h3><div class='docblock'><p>The coordinates of this point, i.e., the translation from the origin.</p>
+</div><h3 id='method.from_coordinates' class='method'><span id='from_coordinates.v' class='invisible'><code>fn <a href='#method.from_coordinates' class='fnname'>from_coordinates</a>(coords: Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Builds a point from its coordinates relative to the origin.</p>
+</div><h3 id='method.distance_squared' class='method'><span id='distance_squared.v' class='invisible'><code>fn <a href='#method.distance_squared' class='fnname'>distance_squared</a>(&amp;self, b: &amp;Self) -&gt; Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a></code></span></h3><div class='docblock'><p>The distance between two points.</p>
+</div><h3 id='method.distance' class='method'><span id='distance.v' class='invisible'><code>fn <a href='#method.distance' class='fnname'>distance</a>(&amp;self, b: &amp;Self) -&gt; Self::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Real</a></code></span></h3><div class='docblock'><p>The distance between two points.</p>
+</div></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    </ul><script type="text/javascript" async
+                         src="../../implementors/alga/linear/trait.EuclideanSpace.js">
+                 </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "alga";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

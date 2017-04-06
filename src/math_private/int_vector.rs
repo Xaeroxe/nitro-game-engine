@@ -9,9 +9,6 @@ pub trait IntVecConvert {
 
 impl IntVecConvert for IntVector {
     fn to_vec(&self) -> Vector {
-        Vector {
-            x: self.x as f32,
-            y: self.y as f32,
-        }
+        Vector::new(self.x as f32, self.y as f32)
     }
 }

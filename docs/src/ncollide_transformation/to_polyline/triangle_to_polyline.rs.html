@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_transformation-0.5.0/to_polyline/triangle_to_polyline.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_transformation-0.6.0/to_polyline/triangle_to_polyline.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>triangle_to_polyline.rs.html -- source</title>
@@ -55,15 +55,15 @@
 <span id="10">10</span>
 <span id="11">11</span>
 </pre><pre class='rust '>
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
 <span class='kw'>use</span> <span class='ident'>na</span>::<span class='ident'>Point2</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Scalar</span>;
 <span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>shape</span>::<span class='ident'>Triangle2</span>;
 <span class='kw'>use</span> <span class='ident'>procedural</span>::{<span class='ident'>Polyline</span>, <span class='ident'>Polyline2</span>};
 <span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>ToPolyline</span>;
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='ident'>ToPolyline</span><span class='op'>&lt;</span><span class='ident'>Point2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, ()<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Triangle2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>ToPolyline</span><span class='op'>&lt;</span><span class='ident'>Point2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, ()<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Triangle2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>to_polyline</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, _: ()) <span class='op'>-&gt;</span> <span class='ident'>Polyline2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='ident'>Polyline</span>::<span class='ident'>new</span>(<span class='macro'>vec</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>a</span>().<span class='ident'>clone</span>(), <span class='self'>self</span>.<span class='ident'>b</span>().<span class='ident'>clone</span>(), <span class='self'>self</span>.<span class='ident'>c</span>().<span class='ident'>clone</span>()), <span class='prelude-val'>None</span>)
+        <span class='ident'>Polyline</span>::<span class='ident'>new</span>(<span class='macro'>vec</span><span class='macro'>!</span>(<span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>a</span>(), <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>b</span>(), <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>c</span>()), <span class='prelude-val'>None</span>)
     }
 }
 </pre>

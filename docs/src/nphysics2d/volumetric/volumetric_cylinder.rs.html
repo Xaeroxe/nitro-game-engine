@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.5.0/src/volumetric/volumetric_cylinder.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.6.1/src/volumetric/volumetric_cylinder.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>volumetric_cylinder.rs.html -- source</title>
@@ -157,27 +157,31 @@
 <span id="112">112</span>
 <span id="113">113</span>
 <span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::<span class='ident'>IndexMut</span>;
 <span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Zero</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='ident'>BaseFloat</span>, <span class='ident'>Origin</span>, <span class='ident'>Point2</span>, <span class='ident'>Point3</span>, <span class='ident'>Matrix1</span>, <span class='ident'>Matrix3</span>};
+
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
+<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='ident'>Point2</span>, <span class='ident'>Point3</span>, <span class='ident'>Matrix1</span>, <span class='ident'>Matrix3</span>};
 <span class='kw'>use</span> <span class='ident'>na</span>;
 <span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>shape</span>::{<span class='ident'>Cylinder2</span>, <span class='ident'>Cylinder3</span>};
-<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>math</span>::<span class='ident'>Scalar</span>;
+<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>math</span>::<span class='ident'>Point</span>;
 <span class='kw'>use</span> <span class='ident'>volumetric</span>::<span class='ident'>Volumetric</span>;
 
 
 <span class='doccomment'>/// The volume of a cylinder.</span>
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cylinder_volume</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span>(<span class='ident'>dimension</span>: <span class='ident'>usize</span>, <span class='ident'>half_height</span>: <span class='ident'>N</span>, <span class='ident'>radius</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cylinder_volume</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='ident'>dimension</span>: <span class='ident'>usize</span>, <span class='ident'>half_height</span>: <span class='ident'>N</span>, <span class='ident'>radius</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
     <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>dimension</span> <span class='op'>==</span> <span class='number'>2</span> <span class='op'>||</span> <span class='ident'>dimension</span> <span class='op'>==</span> <span class='number'>3</span>);
 
     <span class='kw'>match</span> <span class='ident'>dimension</span> {
         <span class='number'>2</span> <span class='op'>=&gt;</span> {
-            <span class='ident'>half_height</span> <span class='op'>*</span> <span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>4.0f64</span>)
+            <span class='ident'>half_height</span> <span class='op'>*</span> <span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>4.0f64</span>)
         }
         <span class='number'>3</span> <span class='op'>=&gt;</span> {
-            <span class='ident'>half_height</span> <span class='op'>*</span> <span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>BaseFloat</span>::<span class='ident'>pi</span>() <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>2.0f64</span>)
+            <span class='ident'>half_height</span> <span class='op'>*</span> <span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>N</span>::<span class='ident'>pi</span>() <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>2.0f64</span>)
         }
         _ <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>()
     }
@@ -185,17 +189,17 @@
 
 <span class='doccomment'>/// The area of a cylinder.</span>
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cylinder_area</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span>(<span class='ident'>dimension</span>: <span class='ident'>usize</span>, <span class='ident'>half_height</span>: <span class='ident'>N</span>, <span class='ident'>radius</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cylinder_area</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='ident'>dimension</span>: <span class='ident'>usize</span>, <span class='ident'>half_height</span>: <span class='ident'>N</span>, <span class='ident'>radius</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
     <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>dimension</span> <span class='op'>==</span> <span class='number'>2</span> <span class='op'>||</span> <span class='ident'>dimension</span> <span class='op'>==</span> <span class='number'>3</span>);
 
     <span class='kw'>match</span> <span class='ident'>dimension</span> {
         <span class='number'>2</span> <span class='op'>=&gt;</span> {
-            (<span class='ident'>half_height</span> <span class='op'>+</span> <span class='ident'>radius</span>) <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>2.0f64</span>)
+            (<span class='ident'>half_height</span> <span class='op'>+</span> <span class='ident'>radius</span>) <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>2.0f64</span>)
         }
         <span class='number'>3</span> <span class='op'>=&gt;</span> {
-            <span class='kw'>let</span> <span class='ident'>_pi</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>BaseFloat</span>::<span class='ident'>pi</span>();
+            <span class='kw'>let</span> <span class='ident'>_pi</span>   <span class='op'>=</span> <span class='ident'>N</span>::<span class='ident'>pi</span>();
             <span class='kw'>let</span> <span class='ident'>basis</span> <span class='op'>=</span> <span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>_pi</span>;
-            <span class='kw'>let</span> <span class='ident'>side</span>  <span class='op'>=</span> <span class='ident'>_pi</span> <span class='op'>*</span> <span class='ident'>radius</span> <span class='op'>*</span> (<span class='ident'>half_height</span> <span class='op'>+</span> <span class='ident'>half_height</span>) <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>2.0f64</span>);
+            <span class='kw'>let</span> <span class='ident'>side</span>  <span class='op'>=</span> <span class='ident'>_pi</span> <span class='op'>*</span> <span class='ident'>radius</span> <span class='op'>*</span> (<span class='ident'>half_height</span> <span class='op'>+</span> <span class='ident'>half_height</span>) <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>2.0f64</span>);
 
             <span class='ident'>side</span> <span class='op'>+</span> <span class='ident'>basis</span> <span class='op'>+</span> <span class='ident'>basis</span>
         }
@@ -205,41 +209,41 @@
 
 <span class='doccomment'>/// The center of mass of a cylinder.</span>
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cylinder_center_of_mass</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Origin</span><span class='op'>&gt;</span>() <span class='op'>-&gt;</span> <span class='ident'>P</span> {
-    <span class='ident'>na</span>::<span class='ident'>origin</span>()
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cylinder_center_of_mass</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span>() <span class='op'>-&gt;</span> <span class='ident'>P</span> {
+    <span class='ident'>P</span>::<span class='ident'>origin</span>()
 }
 
 <span class='doccomment'>/// The unit angular inertia of a cylinder.</span>
 <span class='attribute'>#[<span class='ident'>inline</span>]</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cylinder_unit_angular_inertia</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>I</span><span class='op'>&gt;</span>(<span class='ident'>dimension</span>: <span class='ident'>usize</span>, <span class='ident'>half_height</span>: <span class='ident'>N</span>, <span class='ident'>radius</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='ident'>I</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span>,
+    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Real</span>,
           <span class='ident'>I</span>: <span class='ident'>Zero</span> <span class='op'>+</span> <span class='ident'>IndexMut</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>, <span class='ident'>usize</span>), <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>N</span><span class='op'>&gt;</span> {
     <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>dimension</span> <span class='op'>==</span> <span class='number'>2</span> <span class='op'>||</span> <span class='ident'>dimension</span> <span class='op'>==</span> <span class='number'>3</span>);
 
     <span class='kw'>match</span> <span class='ident'>dimension</span> {
         <span class='number'>2</span> <span class='op'>=&gt;</span> {
             <span class='comment'>// Same a the rectangle.</span>
-            <span class='kw'>let</span> <span class='ident'>_2</span>:   <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>2.0f64</span>);
-            <span class='kw'>let</span> <span class='ident'>_i12</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>1.0f64</span> <span class='op'>/</span> <span class='number'>12.0</span>);
+            <span class='kw'>let</span> <span class='ident'>_2</span>:   <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>2.0f64</span>);
+            <span class='kw'>let</span> <span class='ident'>_i12</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>1.0f64</span> <span class='op'>/</span> <span class='number'>12.0</span>);
             <span class='kw'>let</span> <span class='ident'>w</span>       <span class='op'>=</span> <span class='ident'>_i12</span> <span class='op'>*</span> <span class='ident'>_2</span> <span class='op'>*</span> <span class='ident'>_2</span>;
             <span class='kw'>let</span> <span class='ident'>ix</span>      <span class='op'>=</span> <span class='ident'>w</span> <span class='op'>*</span> <span class='ident'>half_height</span> <span class='op'>*</span> <span class='ident'>half_height</span>;
             <span class='kw'>let</span> <span class='ident'>iy</span>      <span class='op'>=</span> <span class='ident'>w</span> <span class='op'>*</span> <span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>radius</span>;
 
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>::<span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span>();
+            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>I</span>::<span class='ident'>zero</span>();
 
             <span class='ident'>res</span>[(<span class='number'>0</span>, <span class='number'>0</span>)] <span class='op'>=</span> <span class='ident'>ix</span> <span class='op'>+</span> <span class='ident'>iy</span>;
 
             <span class='ident'>res</span>
         }
         <span class='number'>3</span> <span class='op'>=&gt;</span> {
-            <span class='kw'>let</span> <span class='ident'>sq_radius</span> <span class='op'>=</span> <span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>radius</span>;
-            <span class='kw'>let</span> <span class='ident'>sq_height</span> <span class='op'>=</span> <span class='ident'>half_height</span> <span class='op'>*</span> <span class='ident'>half_height</span> <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>4.0f64</span>);
-            <span class='kw'>let</span> <span class='ident'>off_principal</span> <span class='op'>=</span> (<span class='ident'>sq_radius</span> <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>3.0f64</span>) <span class='op'>+</span> <span class='ident'>sq_height</span>) <span class='op'>/</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>12.0f64</span>);
+            <span class='kw'>let</span> <span class='ident'>sq_radius</span>     <span class='op'>=</span> <span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>radius</span>;
+            <span class='kw'>let</span> <span class='ident'>sq_height</span>     <span class='op'>=</span> <span class='ident'>half_height</span> <span class='op'>*</span> <span class='ident'>half_height</span> <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>4.0f64</span>);
+            <span class='kw'>let</span> <span class='ident'>off_principal</span> <span class='op'>=</span> (<span class='ident'>sq_radius</span> <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>3.0f64</span>) <span class='op'>+</span> <span class='ident'>sq_height</span>) <span class='op'>/</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>12.0f64</span>);
 
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>::<span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span>();
+            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>I</span>::<span class='ident'>zero</span>();
 
             <span class='ident'>res</span>[(<span class='number'>0</span>, <span class='number'>0</span>)] <span class='op'>=</span> <span class='ident'>off_principal</span>.<span class='ident'>clone</span>();
-            <span class='ident'>res</span>[(<span class='number'>1</span>, <span class='number'>1</span>)] <span class='op'>=</span> <span class='ident'>sq_radius</span> <span class='op'>/</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>2.0f64</span>);
+            <span class='ident'>res</span>[(<span class='number'>1</span>, <span class='number'>1</span>)] <span class='op'>=</span> <span class='ident'>sq_radius</span> <span class='op'>/</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>2.0f64</span>);
             <span class='ident'>res</span>[(<span class='number'>2</span>, <span class='number'>2</span>)] <span class='op'>=</span> <span class='ident'>off_principal</span>;
 
             <span class='ident'>res</span>
@@ -250,7 +254,7 @@
 
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>impl_volumetric_cylinder</span>(
     (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>: <span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>: <span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>p</span>: <span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span>: <span class='ident'>ident</span>) <span class='op'>=&gt;</span> (
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='ident'>Volumetric</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>p</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
+        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>Volumetric</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>p</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
             <span class='kw'>fn</span> <span class='ident'>area</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
                 <span class='ident'>cylinder_area</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>, <span class='self'>self</span>.<span class='ident'>half_height</span>(), <span class='self'>self</span>.<span class='ident'>radius</span>())
             }

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_transformation-0.5.0/to_trimesh/cone_to_trimesh.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_transformation-0.6.0/to_trimesh/cone_to_trimesh.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>cone_to_trimesh.rs.html -- source</title>
@@ -62,20 +62,20 @@
 <span id="17">17</span>
 <span id="18">18</span>
 </pre><pre class='rust '>
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
 <span class='kw'>use</span> <span class='ident'>na</span>::<span class='ident'>Point3</span>;
 <span class='kw'>use</span> <span class='ident'>na</span>;
 <span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>shape</span>::<span class='ident'>Cone3</span>;
 <span class='kw'>use</span> <span class='ident'>procedural</span>::<span class='ident'>TriMesh3</span>;
 <span class='kw'>use</span> <span class='ident'>procedural</span>;
 <span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>ToTriMesh</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Scalar</span>;
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='ident'>ToTriMesh</span><span class='op'>&lt;</span><span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>u32</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Cone3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>ToTriMesh</span><span class='op'>&lt;</span><span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>u32</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Cone3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>to_trimesh</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>nsubdiv</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='ident'>TriMesh3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
         <span class='comment'>// FIXME, inconsistancy we should be able to work directly with the radius.</span>
         <span class='comment'>// FIXME, inconsistancy we should be able to work directly with the half height.</span>
-        <span class='kw'>let</span> <span class='ident'>diameter</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>radius</span>() <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>2.0f64</span>);
-        <span class='kw'>let</span> <span class='ident'>height</span>   <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>half_height</span>() <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>2.0f64</span>);
+        <span class='kw'>let</span> <span class='ident'>diameter</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>radius</span>() <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>2.0f64</span>);
+        <span class='kw'>let</span> <span class='ident'>height</span>   <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>half_height</span>() <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>2.0f64</span>);
 
         <span class='ident'>procedural</span>::<span class='ident'>cone</span>(<span class='ident'>diameter</span>, <span class='ident'>height</span>, <span class='ident'>nsubdiv</span>)
     }

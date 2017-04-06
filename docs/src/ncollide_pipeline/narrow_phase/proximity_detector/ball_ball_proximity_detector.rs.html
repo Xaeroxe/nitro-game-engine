@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_pipeline-0.9.0/narrow_phase/proximity_detector/ball_ball_proximity_detector.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_pipeline-0.10.0/narrow_phase/proximity_detector/ball_ball_proximity_detector.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>ball_ball_proximity_detector.rs.html -- source</title>
@@ -109,11 +109,11 @@
 <span id="64">64</span>
 <span id="65">65</span>
 <span id="66">66</span>
-<span id="67">67</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>marker</span>::<span class='ident'>PhantomData</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Vector</span>, <span class='ident'>Isometry</span>};
+
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>linear</span>::<span class='ident'>Translation</span>;
+<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Isometry</span>};
 <span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>shape</span>::{<span class='ident'>Shape</span>, <span class='ident'>Ball</span>};
 <span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>query</span>::<span class='ident'>Proximity</span>;
 <span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>query</span>::<span class='ident'>proximity_internal</span>;
@@ -149,20 +149,18 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>ProximityDetector</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>BallBallProximityDetector</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span>,
-          <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> <span class='ident'>ProximityDetector</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>BallBallProximityDetector</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>update</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, _: <span class='kw-2'>&amp;</span><span class='ident'>ProximityDispatcher</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
               <span class='ident'>ma</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>a</span>: <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
               <span class='ident'>mb</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
-              <span class='ident'>margin</span>: <span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span>)
+              <span class='ident'>margin</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>)
               <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>if</span> <span class='kw'>let</span> (<span class='prelude-val'>Some</span>(<span class='ident'>a</span>), <span class='prelude-val'>Some</span>(<span class='ident'>b</span>)) <span class='op'>=</span> (<span class='ident'>a</span>.<span class='ident'>as_shape</span>::<span class='op'>&lt;</span><span class='ident'>Ball</span><span class='op'>&lt;&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span><span class='op'>&gt;&gt;</span>(),
-                                     <span class='ident'>b</span>.<span class='ident'>as_shape</span>::<span class='op'>&lt;</span><span class='ident'>Ball</span><span class='op'>&lt;&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span><span class='op'>&gt;&gt;</span>()) {
+        <span class='kw'>if</span> <span class='kw'>let</span> (<span class='prelude-val'>Some</span>(<span class='ident'>a</span>), <span class='prelude-val'>Some</span>(<span class='ident'>b</span>)) <span class='op'>=</span> (<span class='ident'>a</span>.<span class='ident'>as_shape</span>::<span class='op'>&lt;</span><span class='ident'>Ball</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;&gt;</span>(),
+                                     <span class='ident'>b</span>.<span class='ident'>as_shape</span>::<span class='op'>&lt;</span><span class='ident'>Ball</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;&gt;</span>()) {
             <span class='self'>self</span>.<span class='ident'>proximity</span> <span class='op'>=</span> <span class='ident'>proximity_internal</span>::<span class='ident'>ball_against_ball</span>(
-                <span class='kw-2'>&amp;</span><span class='ident'>ma</span>.<span class='ident'>translate</span>(<span class='kw-2'>&amp;</span><span class='ident'>na</span>::<span class='ident'>origin</span>()),
+                <span class='kw-2'>&amp;</span><span class='ident'>P</span>::<span class='ident'>from_coordinates</span>(<span class='ident'>ma</span>.<span class='ident'>translation</span>().<span class='ident'>to_vector</span>()),
                 <span class='ident'>a</span>,
-                <span class='kw-2'>&amp;</span><span class='ident'>mb</span>.<span class='ident'>translate</span>(<span class='kw-2'>&amp;</span><span class='ident'>na</span>::<span class='ident'>origin</span>()),
+                <span class='kw-2'>&amp;</span><span class='ident'>P</span>::<span class='ident'>from_coordinates</span>(<span class='ident'>mb</span>.<span class='ident'>translation</span>().<span class='ident'>to_vector</span>()),
                 <span class='ident'>b</span>,
                 <span class='ident'>margin</span>);
 

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.5.0/src/integration/integrator.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.6.1/src/integration/integrator.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>integrator.rs.html -- source</title>
@@ -57,12 +57,12 @@
 </pre><pre class='rust '>
 <span class='doccomment'>//! Trait implemented by every integrators.</span>
 
-<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>math</span>::<span class='ident'>Scalar</span>;
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
 
 <span class='doccomment'>/// Trait implemented by every integrator.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// An integrator is a structure capable of updating a dynamic body position and orientation after a given time-step.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Integrator</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span>, <span class='ident'>O</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Integrator</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span>, <span class='ident'>O</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Updates the position and orientation of the object `o` after a time step of `dt`.</span>
     <span class='kw'>fn</span> <span class='ident'>update</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>dt</span>: <span class='ident'>N</span>, <span class='ident'>o</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>O</span>);
 }

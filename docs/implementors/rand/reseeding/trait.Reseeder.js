@@ -1,7 +1,9 @@
 (function() {var implementors = {};
+implementors["alga"] = [];
 implementors["chrono"] = [];
 implementors["enum_primitive"] = [];
 implementors["libc"] = [];
+implementors["nalgebra"] = [];
 implementors["ncollide"] = [];
 implementors["num"] = [];
 implementors["rand"] = [];

@@ -48,8 +48,8 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/nphysics2d/resolution/constraint/contact_equation.rs.html#11-20' title='goto source code'>[src]</a></span></h1>
-<pre class='rust enum'>pub enum CorrectionMode&lt;N:&nbsp;<a class='trait' href='../../ncollide_math/trait.Scalar.html' title='ncollide_math::Scalar'>Scalar</a>&gt; {
+               </span><a class='srclink' href='../../src/nphysics2d/resolution/constraint/contact_equation.rs.html#14-23' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum CorrectionMode&lt;N:&nbsp;<a class='trait' href='../../alga/general/real/trait.Real.html' title='alga::general::real::Real'>Real</a>&gt; {
     Velocity(N),
     VelocityAndPosition(N,&nbsp;N,&nbsp;N),
     VelocityAndPositionThresold(N,&nbsp;N,&nbsp;N),
@@ -60,7 +60,7 @@
 </div><span id='variant.VelocityAndPositionThresold' class='variant'><span id='VelocityAndPositionThresold.v' class='invisible'><code>VelocityAndPositionThresold(N,&nbsp;N,&nbsp;N)</code></span></span><div class='docblock'><p>Penetration are solved by the penalty method together with a hard repositioning.</p>
 
 <p>The amount of velocity correction is bounded by threshold.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;N:&nbsp;<a class='trait' href='../../ncollide_math/trait.Scalar.html' title='ncollide_math::Scalar'>Scalar</a>&gt; <a class='enum' href='../../nphysics2d/resolution/enum.CorrectionMode.html' title='nphysics2d::resolution::CorrectionMode'>CorrectionMode</a>&lt;N&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/nphysics2d/resolution/constraint/contact_equation.rs.html#22-62' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;N:&nbsp;<a class='trait' href='../../alga/general/real/trait.Real.html' title='alga::general::real::Real'>Real</a>&gt; <a class='enum' href='../../nphysics2d/resolution/enum.CorrectionMode.html' title='nphysics2d::resolution::CorrectionMode'>CorrectionMode</a>&lt;N&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/nphysics2d/resolution/constraint/contact_equation.rs.html#25-65' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.vel_corr_factor' class='method'><span id='vel_corr_factor.v' class='invisible'><code>fn <a href='#method.vel_corr_factor' class='fnname'>vel_corr_factor</a>(&amp;self) -&gt; N</code></span></h4>
 <div class='docblock'><p>The velocity correction coefficient.</p>
 </div><h4 id='method.pos_corr_factor' class='method'><span id='pos_corr_factor.v' class='invisible'><code>fn <a href='#method.pos_corr_factor' class='fnname'>pos_corr_factor</a>(&amp;self) -&gt; N</code></span></h4>

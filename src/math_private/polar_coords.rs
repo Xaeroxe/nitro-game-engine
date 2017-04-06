@@ -23,9 +23,9 @@ impl From<Vector> for PolarCoords {
 
 impl From<PolarCoords> for Vector {
     fn from(polar: PolarCoords) -> Vector {
-        Vector {
-            x: polar.radius * polar.rotation.cos(),
-            y: polar.radius * polar.rotation.sin(),
-        }
+        Vector::new(
+            polar.radius * polar.rotation.cos(),
+            polar.radius * polar.rotation.sin()
+        )
     }
 }

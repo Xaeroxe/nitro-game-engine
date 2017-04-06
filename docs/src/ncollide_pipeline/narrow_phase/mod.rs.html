@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_pipeline-0.9.0/narrow_phase/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_pipeline-0.10.0/narrow_phase/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -97,9 +97,6 @@
 <span id="52">52</span>
 <span id="53">53</span>
 <span id="54">54</span>
-<span id="55">55</span>
-<span id="56">56</span>
-<span id="57">57</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Persistent collision detection algorithms to compute contact points.</span>
 
@@ -138,10 +135,7 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>contact_signal</span>::{<span class='ident'>ContactSignal</span>, <span class='ident'>ContactHandler</span>};
 <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>inline</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>proximity_signal</span>::{<span class='ident'>ProximitySignal</span>, <span class='ident'>ProximityHandler</span>};
-<span class='comment'>//</span>
-<span class='comment'>// use na::{Point2, Point3, Vector2, Vector3, Isometry2, Isometry3};</span>
 
-<span class='comment'>// FIXME: un-hide this and move everything to a folder.</span>
 <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>contact_generator</span>;
 <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>

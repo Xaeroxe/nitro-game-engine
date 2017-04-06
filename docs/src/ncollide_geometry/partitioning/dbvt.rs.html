@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.2.0/partitioning/dbvt.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/ncollide_geometry-0.3.0/partitioning/dbvt.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>dbvt.rs.html -- source</title>
@@ -498,7 +498,6 @@
 <span id="453">453</span>
 <span id="454">454</span>
 <span id="455">455</span>
-<span id="456">456</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! A Dynamic Bounding Volume Tree.</span>
 
@@ -507,11 +506,10 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ptr</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
 <span class='kw'>use</span> <span class='ident'>utils</span>::<span class='ident'>data</span>::<span class='ident'>owned_allocation_cache</span>::<span class='ident'>OwnedAllocationCache</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>::<span class='ident'>Translation</span>;
 <span class='kw'>use</span> <span class='ident'>na</span>;
 <span class='kw'>use</span> <span class='ident'>bounding_volume</span>::<span class='ident'>BoundingVolume</span>;
 <span class='kw'>use</span> <span class='ident'>partitioning</span>::<span class='ident'>bvt_visitor</span>::<span class='ident'>BVTVisitor</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Vector</span>};
+<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
 
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
@@ -542,7 +540,7 @@
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span> <span class='ident'>DBVT</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span>
     <span class='kw'>where</span> <span class='ident'>P</span>:  <span class='ident'>Point</span>,
-          <span class='ident'>BV</span>: <span class='lifetime'>&#39;static</span> <span class='op'>+</span> <span class='ident'>BoundingVolume</span><span class='op'>&lt;&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Translation</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Clone</span>,
+          <span class='ident'>BV</span>: <span class='lifetime'>&#39;static</span> <span class='op'>+</span> <span class='ident'>BoundingVolume</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Clone</span>,
           <span class='ident'>B</span>:  <span class='lifetime'>&#39;static</span> <span class='op'>+</span> <span class='ident'>Clone</span> {
     <span class='doccomment'>/// Removes a leaf from the tree. Fails if the tree is empty.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>remove</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>leaf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>DBVTLeaf</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>) {
@@ -615,7 +613,7 @@
     <span class='ident'>state</span>:           <span class='ident'>UpdateState</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>BV</span>: <span class='ident'>Translation</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span><span class='op'>&gt;</span>, <span class='ident'>B</span><span class='op'>&gt;</span> <span class='ident'>DBVTInternal</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>BV</span>: <span class='ident'>BoundingVolume</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>, <span class='ident'>B</span><span class='op'>&gt;</span> <span class='ident'>DBVTInternal</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Creates a new internal node.</span>
     <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>bounding_volume</span>: <span class='ident'>BV</span>,
            <span class='ident'>parent</span>:          <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>DBVTInternal</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span>,
@@ -623,7 +621,7 @@
            <span class='ident'>right</span>:           <span class='ident'>DBVTNode</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span>)
            <span class='op'>-&gt;</span> <span class='ident'>DBVTInternal</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span> {
         <span class='ident'>DBVTInternal</span> {
-            <span class='ident'>center</span>:          <span class='ident'>na</span>::<span class='ident'>origin</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>() <span class='op'>+</span> <span class='ident'>bounding_volume</span>.<span class='ident'>translation</span>(),
+            <span class='ident'>center</span>:          <span class='ident'>bounding_volume</span>.<span class='ident'>center</span>(),
             <span class='ident'>bounding_volume</span>: <span class='ident'>bounding_volume</span>,
             <span class='ident'>left</span>:            <span class='ident'>left</span>,
             <span class='ident'>right</span>:           <span class='ident'>right</span>,
@@ -716,11 +714,11 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>B</span>: <span class='lifetime'>&#39;static</span>, <span class='ident'>BV</span>: <span class='ident'>Translation</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> <span class='ident'>DBVTLeaf</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>B</span>: <span class='lifetime'>&#39;static</span>, <span class='ident'>BV</span>: <span class='ident'>BoundingVolume</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> <span class='ident'>DBVTLeaf</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Creates a new leaf.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>bounding_volume</span>: <span class='ident'>BV</span>, <span class='ident'>object</span>: <span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>DBVTLeaf</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span> {
         <span class='ident'>DBVTLeaf</span> {
-            <span class='ident'>center</span>:          <span class='ident'>na</span>::<span class='ident'>origin</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>() <span class='op'>+</span> <span class='ident'>bounding_volume</span>.<span class='ident'>translation</span>(),
+            <span class='ident'>center</span>:          <span class='ident'>bounding_volume</span>.<span class='ident'>center</span>(),
             <span class='ident'>bounding_volume</span>: <span class='ident'>bounding_volume</span>,
             <span class='ident'>object</span>:          <span class='ident'>object</span>,
             <span class='ident'>parent</span>:          <span class='ident'>DBVTLeafState</span>::<span class='ident'>Detached</span>
@@ -807,9 +805,9 @@
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>BV</span>, <span class='ident'>B</span><span class='op'>&gt;</span> <span class='ident'>DBVTNode</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span>
     <span class='kw'>where</span> <span class='ident'>P</span>:  <span class='ident'>Point</span>,
-          <span class='ident'>BV</span>: <span class='lifetime'>&#39;static</span> <span class='op'>+</span> <span class='ident'>BoundingVolume</span><span class='op'>&lt;&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span><span class='op'>&gt;</span>,
+          <span class='ident'>BV</span>: <span class='lifetime'>&#39;static</span> <span class='op'>+</span> <span class='ident'>BoundingVolume</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
           <span class='ident'>B</span>: <span class='lifetime'>&#39;static</span> {
-    <span class='kw'>fn</span> <span class='ident'>sqdist_to</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>to</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span> {
+    <span class='kw'>fn</span> <span class='ident'>sqdist_to</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>to</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span>::<span class='ident'>Real</span> {
         <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
             <span class='ident'>DBVTNode</span>::<span class='ident'>Internal</span>(<span class='kw-2'>ref</span> <span class='ident'>i</span>) <span class='op'>=&gt;</span> <span class='ident'>na</span>::<span class='ident'>distance_squared</span>(<span class='kw-2'>&amp;</span><span class='ident'>i</span>.<span class='ident'>center</span>, <span class='ident'>to</span>),
             <span class='ident'>DBVTNode</span>::<span class='ident'>Leaf</span>(<span class='kw-2'>ref</span> <span class='ident'>l</span>)     <span class='op'>=&gt;</span> {
@@ -823,7 +821,7 @@
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span> <span class='ident'>DBVTInternal</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span>
     <span class='kw'>where</span> <span class='ident'>P</span>:  <span class='ident'>Point</span>,
-          <span class='ident'>BV</span>: <span class='lifetime'>&#39;static</span> <span class='op'>+</span> <span class='ident'>Translation</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>BoundingVolume</span><span class='op'>&lt;&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span><span class='op'>&gt;</span>,
+          <span class='ident'>BV</span>: <span class='lifetime'>&#39;static</span> <span class='op'>+</span> <span class='ident'>BoundingVolume</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
           <span class='ident'>B</span>:  <span class='lifetime'>&#39;static</span> {
     <span class='kw'>fn</span> <span class='ident'>is_closest_to_left</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>pt</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='self'>self</span>.<span class='ident'>right</span>.<span class='ident'>sqdist_to</span>(<span class='ident'>pt</span>) <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>left</span>.<span class='ident'>sqdist_to</span>(<span class='ident'>pt</span>)
@@ -832,7 +830,7 @@
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>BV</span>, <span class='ident'>B</span><span class='op'>&gt;</span> <span class='ident'>DBVTNode</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span>
     <span class='kw'>where</span> <span class='ident'>P</span>:  <span class='ident'>Point</span>,
-          <span class='ident'>BV</span>: <span class='lifetime'>&#39;static</span> <span class='op'>+</span> <span class='ident'>Translation</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>BoundingVolume</span><span class='op'>&lt;&lt;</span><span class='ident'>P</span>::<span class='ident'>Vect</span> <span class='kw'>as</span> <span class='ident'>Vector</span><span class='op'>&gt;</span>::<span class='ident'>Scalar</span><span class='op'>&gt;</span>,
+          <span class='ident'>BV</span>: <span class='lifetime'>&#39;static</span> <span class='op'>+</span> <span class='ident'>BoundingVolume</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
           <span class='ident'>B</span>:  <span class='lifetime'>&#39;static</span> {
     <span class='doccomment'>/// Inserts a new leaf on this tree.</span>
     <span class='kw'>fn</span> <span class='ident'>insert</span>(<span class='self'>self</span>,

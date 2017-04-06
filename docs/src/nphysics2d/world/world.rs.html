@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.5.0/src/world/world.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/nphysics2d-0.6.1/src/world/world.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>world.rs.html -- source</title>
@@ -493,29 +493,31 @@
 <span id="448">448</span>
 <span id="449">449</span>
 <span id="450">450</span>
+<span id="451">451</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>slice</span>::<span class='ident'>Iter</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>::<span class='ident'>Map</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>RefCell</span>;
+
+<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
 <span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>math</span>::<span class='ident'>Scalar</span>;
 <span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>bounding_volume</span>::<span class='ident'>AABB</span>;
 <span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>utils</span>::<span class='ident'>data</span>::<span class='ident'>hash_map</span>::{<span class='ident'>HashMap</span>, <span class='ident'>Entry</span>};
 <span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>utils</span>::<span class='ident'>data</span>::<span class='ident'>hash</span>::<span class='ident'>UintTWHash</span>;
-<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>broad_phase</span>::{<span class='ident'>BroadPhase</span>, <span class='ident'>DBVTBroadPhase</span>, <span class='ident'>BroadPhasePairFilter</span>};
+<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>broad_phase</span>::{<span class='ident'>DBVTBroadPhase</span>, <span class='ident'>BroadPhasePairFilter</span>};
 <span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>narrow_phase</span>::{<span class='ident'>ContactHandler</span>, <span class='ident'>ProximityHandler</span>, <span class='ident'>DefaultNarrowPhase</span>,
                              <span class='ident'>DefaultContactDispatcher</span>, <span class='ident'>DefaultProximityDispatcher</span>,
                              <span class='ident'>ContactAlgorithm</span>};
 <span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>world</span>::{<span class='ident'>CollisionWorld</span>, <span class='ident'>CollisionObject</span>, <span class='ident'>GeometricQueryType</span>};
 <span class='kw'>use</span> <span class='ident'>integration</span>::{<span class='ident'>Integrator</span>, <span class='ident'>BodySmpEulerIntegrator</span>, <span class='ident'>BodyForceGenerator</span>,
                   <span class='ident'>TranslationalCCDMotionClamping</span>};
-<span class='kw'>use</span> <span class='ident'>detection</span>::{<span class='ident'>ActivationManager</span>, <span class='ident'>Detector</span>};
+<span class='kw'>use</span> <span class='ident'>detection</span>::<span class='ident'>ActivationManager</span>;
 <span class='kw'>use</span> <span class='ident'>detection</span>::<span class='ident'>constraint</span>::<span class='ident'>Constraint</span>;
 <span class='kw'>use</span> <span class='ident'>detection</span>::<span class='ident'>joint</span>::{<span class='ident'>JointManager</span>, <span class='ident'>BallInSocket</span>, <span class='ident'>Fixed</span>};
 <span class='kw'>use</span> <span class='ident'>resolution</span>::{<span class='ident'>Solver</span>, <span class='ident'>AccumulatedImpulseSolver</span>, <span class='ident'>CorrectionMode</span>};
 <span class='kw'>use</span> <span class='ident'>object</span>::{<span class='ident'>WorldObject</span>, <span class='ident'>RigidBody</span>, <span class='ident'>RigidBodyHandle</span>, <span class='ident'>Sensor</span>, <span class='ident'>SensorHandle</span>};
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Vector</span>, <span class='ident'>Matrix</span>};
+<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Vector</span>, <span class='ident'>Isometry</span>};
 
 <span class='doccomment'>/// The default broad phase.</span>
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>WorldBroadPhase</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>DBVTBroadPhase</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>WorldObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>;
@@ -527,16 +529,16 @@
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Sensors</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Map</span><span class='op'>&lt;</span><span class='ident'>Iter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Entry</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>SensorHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>, <span class='kw'>fn</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Entry</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>SensorHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>SensorHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>;
 
 <span class='doccomment'>/// Type of the collision world containing rigid bodies.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>RigidBodyCollisionWorld</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>CollisionWorld</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>WorldObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>;
+<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>RigidBodyCollisionWorld</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>CollisionWorld</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>WorldObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>;
 
 <span class='doccomment'>/// Type of a collision object containing `WorldObject` body as its data.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>WorldCollisionObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>WorldObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>;
+<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>WorldCollisionObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>WorldObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>;
 
 
 <span class='doccomment'>/// The physical world.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// This is the main structure of the physics engine.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>World</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>World</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> {
     <span class='ident'>cworld</span>:       <span class='ident'>RigidBodyCollisionWorld</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
     <span class='ident'>rigid_bodies</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>RigidBodyHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>UintTWHash</span><span class='op'>&gt;</span>,
     <span class='ident'>sensors</span>:      <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>SensorHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>UintTWHash</span><span class='op'>&gt;</span>,
@@ -549,14 +551,14 @@
     <span class='ident'>prediction</span>:   <span class='ident'>N</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='ident'>World</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>World</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Creates a new physics world.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>World</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
         <span class='comment'>/*
          * Setup the physics world
          */</span>
 
-        <span class='kw'>let</span> <span class='ident'>prediction</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>0.02f64</span>); <span class='comment'>// FIXME: do not hard-code the prediction margin.</span>
+        <span class='kw'>let</span> <span class='ident'>prediction</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>0.02f64</span>); <span class='comment'>// FIXME: do not hard-code the prediction margin.</span>
 
         <span class='comment'>// For the intergration</span>
         <span class='kw'>let</span> <span class='ident'>forces</span>     <span class='op'>=</span> <span class='ident'>BodyForceGenerator</span>::<span class='ident'>new</span>(<span class='ident'>na</span>::<span class='ident'>zero</span>(), <span class='ident'>na</span>::<span class='ident'>zero</span>());
@@ -578,7 +580,7 @@
         <span class='kw'>let</span> <span class='ident'>ccd</span> <span class='op'>=</span> <span class='ident'>TranslationalCCDMotionClamping</span>::<span class='ident'>new</span>();
 
         <span class='comment'>// Deactivation</span>
-        <span class='kw'>let</span> <span class='ident'>sleep</span> <span class='op'>=</span> <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>RefCell</span>::<span class='ident'>new</span>(<span class='ident'>ActivationManager</span>::<span class='ident'>new</span>(<span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>0.01f64</span>))));
+        <span class='kw'>let</span> <span class='ident'>sleep</span> <span class='op'>=</span> <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>RefCell</span>::<span class='ident'>new</span>(<span class='ident'>ActivationManager</span>::<span class='ident'>new</span>(<span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>0.01f64</span>))));
 
         <span class='comment'>// Setup contact handler to reactivate sleeping objects that loose contact.</span>
         <span class='kw'>let</span> <span class='ident'>handler</span> <span class='op'>=</span> <span class='ident'>ObjectActivationOnContactHandler</span> { <span class='ident'>sleep</span>: <span class='ident'>sleep</span>.<span class='ident'>clone</span>() };
@@ -597,10 +599,10 @@
          * For constraints resolution
          */</span>
         <span class='kw'>let</span> <span class='ident'>solver</span> <span class='op'>=</span> <span class='ident'>AccumulatedImpulseSolver</span>::<span class='ident'>new</span>(
-            <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>0.1f64</span>),
-            <span class='ident'>CorrectionMode</span>::<span class='ident'>VelocityAndPosition</span>(<span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>0.2f64</span>), <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>0.2f64</span>), <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>0.08f64</span>)),
-            <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>0.4f64</span>),
-            <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>1.0f64</span>),
+            <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>0.1f64</span>),
+            <span class='ident'>CorrectionMode</span>::<span class='ident'>VelocityAndPosition</span>(<span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>0.2f64</span>), <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>0.2f64</span>), <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>0.08f64</span>)),
+            <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>0.4f64</span>),
+            <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>1.0f64</span>),
             <span class='number'>10</span>,
             <span class='number'>10</span>);
 
@@ -678,7 +680,7 @@
         <span class='kw'>let</span> <span class='ident'>position</span> <span class='op'>=</span> <span class='ident'>rb</span>.<span class='ident'>position</span>().<span class='ident'>clone</span>();
         <span class='kw'>let</span> <span class='ident'>shape</span> <span class='op'>=</span> <span class='ident'>rb</span>.<span class='ident'>shape</span>().<span class='ident'>clone</span>();
         <span class='kw'>let</span> <span class='ident'>groups</span> <span class='op'>=</span> <span class='ident'>rb</span>.<span class='ident'>collision_groups</span>().<span class='ident'>as_collision_groups</span>().<span class='ident'>clone</span>();
-        <span class='kw'>let</span> <span class='ident'>collision_object_prediction</span> <span class='op'>=</span> <span class='ident'>rb</span>.<span class='ident'>margin</span>() <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>prediction</span> <span class='op'>/</span> <span class='ident'>na</span>::<span class='ident'>cast</span>(<span class='number'>2.0f64</span>);
+        <span class='kw'>let</span> <span class='ident'>collision_object_prediction</span> <span class='op'>=</span> <span class='ident'>rb</span>.<span class='ident'>margin</span>() <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>prediction</span> <span class='op'>/</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>2.0f64</span>);
         <span class='kw'>let</span> <span class='ident'>handle</span> <span class='op'>=</span> <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>RefCell</span>::<span class='ident'>new</span>(<span class='ident'>rb</span>));
         <span class='kw'>let</span> <span class='ident'>uid</span> <span class='op'>=</span> <span class='ident'>WorldObject</span>::<span class='ident'>rigid_body_uid</span>(<span class='kw-2'>&amp;</span><span class='ident'>handle</span>);
 
@@ -839,7 +841,7 @@
 
     <span class='doccomment'>/// An iterator visiting all rigid bodies on this world.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>rigid_bodies</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RigidBodies</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='kw'>fn</span> <span class='ident'>extract_value</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span>(<span class='ident'>e</span>: <span class='kw-2'>&amp;</span><span class='ident'>Entry</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>RigidBodyHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>RigidBodyHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>extract_value</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='ident'>e</span>: <span class='kw-2'>&amp;</span><span class='ident'>Entry</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>RigidBodyHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>RigidBodyHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
             <span class='kw-2'>&amp;</span><span class='ident'>e</span>.<span class='ident'>value</span>
         }
 
@@ -849,7 +851,7 @@
 
     <span class='doccomment'>/// An iterator visiting all sensors on this world.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sensors</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Sensors</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='kw'>fn</span> <span class='ident'>extract_value</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span>(<span class='ident'>e</span>: <span class='kw-2'>&amp;</span><span class='ident'>Entry</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>SensorHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>SensorHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
+        <span class='kw'>fn</span> <span class='ident'>extract_value</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='ident'>e</span>: <span class='kw-2'>&amp;</span><span class='ident'>Entry</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>SensorHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>SensorHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
             <span class='kw-2'>&amp;</span><span class='ident'>e</span>.<span class='ident'>value</span>
         }
 
@@ -864,7 +866,7 @@
     <span class='doccomment'>/// a non-trivial overhead during the next update as it will force re-detection of all</span>
     <span class='doccomment'>/// collision pairs.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_broad_phase_pair_filter</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>filter</span>: <span class='ident'>F</span>)
-        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>BroadPhasePairFilter</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>WorldObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
+        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>BroadPhasePairFilter</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>WorldObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
         <span class='self'>self</span>.<span class='ident'>cworld</span>.<span class='ident'>register_broad_phase_pair_filter</span>(<span class='ident'>name</span>, <span class='ident'>filter</span>)
     }
 
@@ -875,7 +877,7 @@
 
     <span class='doccomment'>/// Registers a handler for contact start/stop events.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_contact_handler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>)
-        <span class='kw'>where</span> <span class='ident'>H</span>: <span class='ident'>ContactHandler</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>WorldObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
+        <span class='kw'>where</span> <span class='ident'>H</span>: <span class='ident'>ContactHandler</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>WorldObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
         <span class='self'>self</span>.<span class='ident'>cworld</span>.<span class='ident'>register_contact_handler</span>(<span class='ident'>name</span>, <span class='ident'>handler</span>)
     }
 
@@ -886,7 +888,7 @@
 
     <span class='doccomment'>/// Registers a handler for proximity status change events.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_proximity_handler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>)
-        <span class='kw'>where</span> <span class='ident'>H</span>: <span class='ident'>ProximityHandler</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>WorldObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
+        <span class='kw'>where</span> <span class='ident'>H</span>: <span class='ident'>ProximityHandler</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>WorldObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
         <span class='self'>self</span>.<span class='ident'>cworld</span>.<span class='ident'>register_proximity_handler</span>(<span class='ident'>name</span>, <span class='ident'>handler</span>);
     }
 
@@ -896,17 +898,17 @@
     }
 }
 
-<span class='kw'>struct</span> <span class='ident'>ObjectActivationOnContactHandler</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> {
+<span class='kw'>struct</span> <span class='ident'>ObjectActivationOnContactHandler</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> {
     <span class='ident'>sleep</span>: <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>ActivationManager</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='ident'>ContactHandler</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>WorldObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>ContactHandler</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>WorldObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>
 <span class='kw'>for</span> <span class='ident'>ObjectActivationOnContactHandler</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>handle_contact_started</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
                               _: <span class='kw-2'>&amp;</span><span class='ident'>WorldCollisionObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
                               _: <span class='kw-2'>&amp;</span><span class='ident'>WorldCollisionObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-                              _: <span class='kw-2'>&amp;</span><span class='ident'>ContactAlgorithm</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>) {
+                              _: <span class='kw-2'>&amp;</span><span class='ident'>ContactAlgorithm</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>) {
         <span class='comment'>// Do nothing.</span>
     }
 
@@ -923,7 +925,7 @@
 
 <span class='kw'>struct</span> <span class='ident'>SensorsNotCollidingTheirParentPairFilter</span>;
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Scalar</span><span class='op'>&gt;</span> <span class='ident'>BroadPhasePairFilter</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>WorldObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>BroadPhasePairFilter</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>WorldObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>
 <span class='kw'>for</span> <span class='ident'>SensorsNotCollidingTheirParentPairFilter</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>is_pair_valid</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>b1</span>: <span class='kw-2'>&amp;</span><span class='ident'>WorldCollisionObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>b2</span>: <span class='kw-2'>&amp;</span><span class='ident'>WorldCollisionObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {

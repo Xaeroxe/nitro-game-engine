@@ -49,7 +49,7 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/ncollide_procedural/path/path.rs.html#18-21' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait CurveSampler&lt;P:&nbsp;<a class='trait' href='../../ncollide_math/trait.Point.html' title='ncollide_math::Point'>Point</a>&gt; {
+<pre class='rust trait'>pub trait CurveSampler&lt;P:&nbsp;<a class='trait' href='../../ncollide_math/point/trait.Point.html' title='ncollide_math::point::Point'>Point</a>&gt; {
     fn <a href='#tymethod.next' class='fnname'>next</a>(&amp;mut self) -&gt; <a class='enum' href='../../ncollide_procedural/path/enum.PathSample.html' title='ncollide_procedural::path::PathSample'>PathSample</a>&lt;P&gt;;
 }</pre><div class='docblock'><p>A curve sampler.</p>
 </div>
@@ -59,7 +59,7 @@
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;'a, P&gt; CurveSampler&lt;P&gt; for <a class='struct' href='../../ncollide_procedural/path/struct.PolylinePath.html' title='ncollide_procedural::path::PolylinePath'>PolylinePath</a>&lt;'a, P&gt; <span class='where fmt-newline'>where P: <a class='trait' href='../../ncollide_math/trait.Point.html' title='ncollide_math::Point'>Point</a></span></code></li>
+    <li><code>impl&lt;'a, P:&nbsp;<a class='trait' href='../../ncollide_math/point/trait.Point.html' title='ncollide_math::point::Point'>Point</a>&gt; CurveSampler&lt;P&gt; for <a class='struct' href='../../ncollide_procedural/path/struct.PolylinePath.html' title='ncollide_procedural::path::PolylinePath'>PolylinePath</a>&lt;'a, P&gt;</code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/ncollide_procedural/path/trait.CurveSampler.js">
                  </script></section>

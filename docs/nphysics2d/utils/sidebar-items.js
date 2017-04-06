@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["union_find","The union find algorithm."]],"struct":[["DeterministicState","A hasher builder that creates `SipHasher` with default keys."]]});
+initSidebarItems({"mod":[["union_find","The union find algorithm."]],"struct":[["DeterministicState","A hasher builder that creates `DefaultHasher` with default keys."]],"trait":[["GeneralizedCross","This is a non-standard generalization of the cross product design exclusively to group the 3D cross product and the 2D perpendicular product behind the same interface."]]});
