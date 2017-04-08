@@ -280,7 +280,9 @@ impl App {
             .window()
             .unwrap()
             .size();
-        self.camera.transform.translation.vector + (self.input.mouse.pos() - IntVector::new((screen_width / 2) as i32, (screen_height / 2) as i32)).to_vec()
+        let mut mouse_relative_pos = PolarCoords::from((self.input.mouse.pos() - IntVector::new((screen_width / 2) as i32, (screen_height / 2) as i32)).to_vec());
+        mouse_relative_pos.rotation += self.camera.transform.rotation.angle();
+        self.camera.transform.translation.vector + Vector::from(mouse_relative_pos)
     }
 
     /// Creates a new GameObject
