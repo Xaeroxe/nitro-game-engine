@@ -5,7 +5,6 @@ use input::mouse::MouseButton;
 use input_private::mouse;
 use input::Button;
 use input::Axis;
-use std::io::Result as IOResult;
 use std::io::Error;
 use std::io::Write;
 use std::io::Read;
@@ -13,7 +12,7 @@ use std::fs::File;
 use std::clone::Clone;
 use std::collections::HashMap;
 use bincode::SizeLimit;
-use bincode::serde::{serialize, deserialize, DeserializeError};
+use bincode::serde::{serialize, SerializeError, deserialize, DeserializeError};
 use num::FromPrimitive;
 use input::mouse::Mouse;
 
@@ -27,25 +26,32 @@ pub struct Input {
 }
 
 #[derive(Debug)]
-pub enum ReadBincodeFileError {
+pub enum BincodeIOError {
     IOError(Error),
-    BincodeError(DeserializeError),
+    DeserializeError(DeserializeError),
+    SerializeError(SerializeError),
 }
 
-impl From<Error> for ReadBincodeFileError {
-    fn from(err: Error) -> ReadBincodeFileError {
-        ReadBincodeFileError::IOError(err)
+impl From<Error> for BincodeIOError{
+    fn from(err: Error) -> BincodeIOError {
+        BincodeIOError::IOError(err)
     }
 }
 
-impl From<DeserializeError> for ReadBincodeFileError {
-    fn from(err: DeserializeError) -> ReadBincodeFileError {
-        ReadBincodeFileError::BincodeError(err)
+impl From<DeserializeError> for BincodeIOError {
+    fn from(err: DeserializeError) -> BincodeIOError {
+        BincodeIOError::DeserializeError(err)
+    }
+}
+
+impl From<SerializeError> for BincodeIOError {
+    fn from(err: SerializeError) -> BincodeIOError {
+        BincodeIOError::SerializeError(err)
     }
 }
 
 impl Input {
-    pub fn load_bindings(&mut self, path: &str) -> Result<(), ReadBincodeFileError> {
+    pub fn load_bindings(&mut self, path: &str) -> Result<(), BincodeIOError> {
         let mut f = File::open(path)?;
         let mut buf = Vec::new();
         f.read_to_end(&mut buf)?;
@@ -56,9 +62,9 @@ impl Input {
         Ok(())
     }
 
-    pub fn save_bindings(&mut self, path: &str) -> IOResult<()> {
+    pub fn save_bindings(&mut self, path: &str) -> Result<(), BincodeIOError> {
         let mut f = File::create(path)?;
-        let result = serialize(&(&self.axes, &self.actions), SizeLimit::Infinite).unwrap();
+        let result = serialize(&(&self.axes, &self.actions), SizeLimit::Infinite)?;
         f.write_all(result.as_slice())?;
         Ok(())
     }
