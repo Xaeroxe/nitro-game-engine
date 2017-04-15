@@ -96,7 +96,6 @@ impl App {
         use std::f32;
         let game_objs = &self.game_objects;
         let camera_transform = self.camera.transform;
-        // Clear the screen with grey.
         self.renderer.set_draw_color(Color::RGB(0, 0, 0));
         self.renderer.clear();
         let (screen_width, screen_height) = self.renderer
