@@ -7,13 +7,11 @@ use sdl2::rect::Rect;
 use sdl2::image::LoadTexture;
 use sdl2::render::Texture as SdlTexture;
 use sdl2::mixer;
-use OptionLoaned;
+use specs::World;
+use specs::Planner;
 use input_private;
 use input::Input;
 use input_private::input;
-use game_object::GameObject;
-use component::Message;
-use game_object;
 use graphics::Texture;
 use graphics_private::texture;
 use graphics::Sprite;
@@ -28,7 +26,7 @@ use audio_private::playlist;
 use math::Transform;
 use graphics::Canvas;
 use camera::Camera;
-use nphysics2d::world::World;
+use nphysics2d::world::World as PhysicsWorld;
 use nphysics2d::math::Translation;
 use nalgebra::geometry::UnitComplex;
 use std::sync::Arc;
@@ -48,12 +46,11 @@ pub struct App {
     exit: bool,
     renderer: Renderer<'static>,
     event_pump: EventPump,
-    game_objects: HashMap<u64, Option<Box<GameObject>>>,
     texture_cache: HashMap<String, Arc<SdlTexture>>,
-    next_game_object_id: u64,
+    planner: Planner,
     pub input: Input,
     pub camera: Camera,
-    pub world: World<f32>,
+    pub physics_world: PhysicsWorld<f32>,
     pub audio: Audio,
 }
 
@@ -86,7 +83,7 @@ impl App {
             audio: audio::new(audio, mixer),
             event_pump: sdl_context.event_pump().expect("Failed to initalize event pump."),
             camera: Camera { transform: Transform::new(Vector::new(0.0, 0.0), 0.0) },
-            world: World::new(),
+            physics_world: PhysicsWorld::new(),
         }
     }
 
@@ -94,7 +91,6 @@ impl App {
     /// Called every frame to paint the scene. Do not put game logic here, that goes in update.
     fn render(&mut self) {
         use std::f32;
-        let game_objs = &self.game_objects;
         let camera_transform = self.camera.transform;
         self.renderer.set_draw_color(Color::RGB(0, 0, 0));
         self.renderer.clear();
@@ -166,18 +162,6 @@ impl App {
                 }
             }
         }
-        {
-            let mut canvas = Canvas::new(&mut self.renderer);
-            for game_obj in game_objs.values() {
-                if let Some(ref game_obj) = *game_obj {
-                    for key in game_obj.component_keys() {
-                        if let OptionLoaned::Some(component) = game_obj.component(key) {
-                            component.render_gui(&mut canvas, game_obj);
-                        }
-                    }
-                }
-            }
-        }
         self.renderer.present();
     }
 
@@ -186,62 +170,16 @@ impl App {
     fn update(&mut self, delta_time: f32) {
         // Advance audio if necessary.
         playlist::advance_if_needed(&mut self.audio.playlist);
-        //Copy game_object to the physics world, step, then copy from physics to game_object
-        for mut game_object in self.game_objects.values_mut() {
-            if let Some(game_object) = game_object.as_mut() {
-                game_object::copy_to_physics(game_object);
-            }
-        }
         self.world.step(delta_time);
-        for mut game_object in self.game_objects.values_mut() {
-            if let Some(game_object) = game_object.as_mut() {
-                game_object::copy_from_physics(game_object);
-            }
-        }
-
-        //Send update messages
-        let keys = self.game_objects
-            .keys()
-            .map(|x| *x)
-            .collect::<Vec<u64>>();
-        for key in keys {
-            let mut game_obj_option = None;
-            if let Some(game_obj_ref) = self.game_objects.get_mut(&key) {
-                game_obj_option = replace(game_obj_ref, None);
-            }
-            if let Some(ref mut game_obj) = game_obj_option {
-                game_obj.update(self, delta_time);
-            }
-            if let Some(game_obj_ref) = self.game_objects.get_mut(&key) {
-                replace(game_obj_ref, game_obj_option);
-            }
-        }
-
-        // Drop any game objects that need to be dropped.
-        let mut dropped_keys = Vec::new();
-        for (key, game_obj) in self.game_objects.iter() {
-            if let Some(ref game_obj) = *game_obj {
-                if game_object::was_dropped(game_obj.borrow()) {
-                    dropped_keys.push(*key);
-                }
-            } else {
-                dropped_keys.push(*key);
-            }
-        }
-        for key in dropped_keys {
-            let removed = self.game_objects.remove(&key);
-            if let Some(Some(mut game_obj)) = removed {
-                game_obj.receive_message(self, &Message::OnDestroy);
-            }
-        }
-
         input_private::input::shift_frame(&mut self.input);
     }
 
     /// Begin execution of the game.
     ///
     /// This function won't return until the game has been quit.
-    pub fn run(&mut self) {
+    pub fn run(&mut self, f: F) 
+        where f: FnMut(&mut Planner)
+    {
         let mut last_frame_instant = Instant::now();
         while !self.exit {
             while let Some(e) = self.event_pump.poll_event() {
@@ -284,45 +222,6 @@ impl App {
         self.camera.transform.translation.vector + Vector::from(mouse_relative_pos)
     }
 
-    /// Creates a new GameObject
-    ///
-    /// GameObjects are typically physical objects in your game world, such as characters or
-    /// decorative objects.
-    ///
-    /// Parameter f will be called on the newly created GameObject, allowing you to initialize it.
-    /// Returns the id of the new GameObject, which can be used to retrieve this GameObject later.
-    pub fn new_gameobject<F>(&mut self, f: F) -> u64
-        where F: FnOnce(&mut App, &mut GameObject)
-    {
-        let mut game_object = Box::new(game_object::new(self));
-        f(self, &mut game_object);
-        let id = game_object.id();
-        self.game_objects.insert(id, Some(game_object));
-        id
-    }
-
-    /// Retrieves a reference to an existing GameObject by the GameObject's id.
-    ///
-    /// Returns Away if and only if the GameObject exists but is currently loaned out
-    /// in another borrow.
-    ///
-    /// Hint: That borrow is most likely in the game_object parameter of the receive_message
-    /// function.
-    pub fn game_object_by_id(&self, id: u64) -> OptionLoaned<&GameObject> {
-        OptionLoaned::from(self.game_objects.get(&id))
-    }
-
-    /// Retrieves a mutable reference to an existing GameObject by the GameObject's id.
-    ///
-    /// Returns Away if and only if the GameObject exists but is currently loaned out
-    /// in another borrow.
-    ///
-    /// Hint: That borrow is most likely in the game_object parameter of the receive_message
-    /// function.
-    pub fn game_object_by_id_mut(&mut self, id: u64) -> OptionLoaned<&mut GameObject> {
-        OptionLoaned::from(self.game_objects.get_mut(&id))
-    }
-
     /// Loads a texture and returns it for use.
     ///
     /// texture_name is the file name of the texture relative to assets/textures
@@ -341,8 +240,3 @@ impl App {
     }
 }
 
-// This function will never return 0.  0 can now be used as a null value.
-pub fn next_game_object_id(app: &mut App) -> u64 {
-    app.next_game_object_id += 1;
-    app.next_game_object_id
-}

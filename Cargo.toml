@@ -15,6 +15,7 @@ features = ["image", "mixer"]
 
 [dependencies]
 unborrow = "0.3.0"
+specs = "0.8.0"
 enum_primitive = "0.1.0"
 num = "0.1.0"
 rand = "0.3.0"

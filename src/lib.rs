@@ -11,6 +11,7 @@ extern crate rand;
 #[macro_use]
 extern crate unborrow;
 
+pub extern crate specs;
 pub extern crate ncollide;
 pub extern crate nphysics2d;
 pub extern crate nalgebra;
@@ -23,11 +24,6 @@ pub mod audio {
     pub use audio_private::audio::Audio;
     pub use audio_private::playlist::Playlist;
 }
-
-mod game_object;
-pub use game_object::GameObject;
-
-pub mod component;
 
 mod graphics_private;
 pub mod graphics {
@@ -62,8 +58,3 @@ pub mod input {
 
 mod camera;
 pub use camera::Camera;
-
-pub mod multiplayer;
-
-mod option_loaned;
-pub use option_loaned::OptionLoaned;
