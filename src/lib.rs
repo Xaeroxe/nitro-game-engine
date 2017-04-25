@@ -63,7 +63,5 @@ pub mod input {
 mod camera;
 pub use camera::Camera;
 
-pub mod multiplayer;
-
 mod option_loaned;
 pub use option_loaned::OptionLoaned;
