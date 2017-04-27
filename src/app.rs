@@ -96,7 +96,6 @@ impl App {
         use std::f32;
         let game_objs = &self.game_objects;
         let camera_transform = self.camera.transform;
-        // Clear the screen with black.
         self.renderer.set_draw_color(Color::RGB(0, 0, 0));
         self.renderer.clear();
         let (screen_width, screen_height) = self.renderer
@@ -283,7 +282,9 @@ impl App {
             .window()
             .unwrap()
             .size();
-        self.camera.transform.translation.vector + (self.input.mouse.pos() - IntVector::new((screen_width / 2) as i32, (screen_height / 2) as i32)).to_vec()
+        let mut mouse_relative_pos = PolarCoords::from((self.input.mouse.pos() - IntVector::new((screen_width / 2) as i32, (screen_height / 2) as i32)).to_vec());
+        mouse_relative_pos.rotation += self.camera.transform.rotation.angle();
+        self.camera.transform.translation.vector + Vector::from(mouse_relative_pos)
     }
 
     /// Creates a new GameObject

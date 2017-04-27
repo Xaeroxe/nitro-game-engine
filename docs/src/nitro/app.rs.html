@@ -390,6 +390,7 @@
 <span id="345">345</span>
 <span id="346">346</span>
 <span id="347">347</span>
+<span id="348">348</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>sdl2</span>;
 <span class='kw'>use</span> <span class='ident'>sdl2</span>::<span class='ident'>EventPump</span>;
@@ -489,7 +490,6 @@
         <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>f32</span>;
         <span class='kw'>let</span> <span class='ident'>game_objs</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>game_objects</span>;
         <span class='kw'>let</span> <span class='ident'>camera_transform</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>camera</span>.<span class='ident'>transform</span>;
-        <span class='comment'>// Clear the screen with grey.</span>
         <span class='self'>self</span>.<span class='ident'>renderer</span>.<span class='ident'>set_draw_color</span>(<span class='ident'>Color</span>::<span class='ident'>RGB</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>));
         <span class='self'>self</span>.<span class='ident'>renderer</span>.<span class='ident'>clear</span>();
         <span class='kw'>let</span> (<span class='ident'>screen_width</span>, <span class='ident'>screen_height</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>renderer</span>
@@ -673,7 +673,9 @@
             .<span class='ident'>window</span>()
             .<span class='ident'>unwrap</span>()
             .<span class='ident'>size</span>();
-        <span class='self'>self</span>.<span class='ident'>camera</span>.<span class='ident'>transform</span>.<span class='ident'>translation</span>.<span class='ident'>vector</span> <span class='op'>+</span> (<span class='self'>self</span>.<span class='ident'>input</span>.<span class='ident'>mouse</span>.<span class='ident'>pos</span>() <span class='op'>-</span> <span class='ident'>IntVector</span>::<span class='ident'>new</span>(<span class='ident'>screen_width</span> <span class='kw'>as</span> <span class='ident'>i32</span>, <span class='ident'>screen_height</span> <span class='kw'>as</span> <span class='ident'>i32</span>)).<span class='ident'>to_vec</span>()
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>mouse_relative_pos</span> <span class='op'>=</span> <span class='ident'>PolarCoords</span>::<span class='ident'>from</span>((<span class='self'>self</span>.<span class='ident'>input</span>.<span class='ident'>mouse</span>.<span class='ident'>pos</span>() <span class='op'>-</span> <span class='ident'>IntVector</span>::<span class='ident'>new</span>((<span class='ident'>screen_width</span> <span class='op'>/</span> <span class='number'>2</span>) <span class='kw'>as</span> <span class='ident'>i32</span>, (<span class='ident'>screen_height</span> <span class='op'>/</span> <span class='number'>2</span>) <span class='kw'>as</span> <span class='ident'>i32</span>)).<span class='ident'>to_vec</span>());
+        <span class='ident'>mouse_relative_pos</span>.<span class='ident'>rotation</span> <span class='op'>+=</span> <span class='self'>self</span>.<span class='ident'>camera</span>.<span class='ident'>transform</span>.<span class='ident'>rotation</span>.<span class='ident'>angle</span>();
+        <span class='self'>self</span>.<span class='ident'>camera</span>.<span class='ident'>transform</span>.<span class='ident'>translation</span>.<span class='ident'>vector</span> <span class='op'>+</span> <span class='ident'>Vector</span>::<span class='ident'>from</span>(<span class='ident'>mouse_relative_pos</span>)
     }
 
     <span class='doccomment'>/// Creates a new GameObject</span>

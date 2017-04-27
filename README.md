@@ -63,5 +63,5 @@ sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev
 # Contributing
 
 * We try and keep the issues list on this project up to date with any "requests for help" we might have.  If you don't know what to start working on you can look there.
-* If you spot issues please submit them.
+* If you spot issues please submit them.  Keep in mind that we only officially support the Rust stable channel, and we will not be adapting to changes in nightly or beta unless the rust project plans to move those changes to stable.
 * Small improvements can be made via PR without prior communication.  You're welcome to make larger PRs without prior communication as well, but be aware they may be rejected wholesale if they don't align with the project goals.  To avoid this, open up an issue for discussing the changes before you put too much work into them.
