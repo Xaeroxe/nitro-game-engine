@@ -11,8 +11,7 @@ use std::io::Read;
 use std::fs::File;
 use std::clone::Clone;
 use std::collections::HashMap;
-use bincode::SizeLimit;
-use bincode::serde::{serialize, SerializeError, deserialize, DeserializeError};
+use bincode::{Bounded, serialize, deserialize};
 use num::FromPrimitive;
 use input::mouse::Mouse;
 
@@ -64,7 +63,7 @@ impl Input {
 
     pub fn save_bindings(&mut self, path: &str) -> Result<(), BincodeIOError> {
         let mut f = File::create(path)?;
-        let result = serialize(&(&self.axes, &self.actions), SizeLimit::Infinite)?;
+        let result = serialize(&(&self.axes, &self.actions), Bounded(1000000000))?;
         f.write_all(result.as_slice())?;
         Ok(())
     }
