@@ -85,7 +85,7 @@ impl App {
             texture_cache: HashMap::new(),
             audio: audio::new(audio, mixer),
             event_pump: sdl_context.event_pump().expect("Failed to initalize event pump."),
-            camera: Camera { transform: Transform::new(Vector::new(0.0, 0.0), 0.0) },
+            camera: Camera { transform: Transform::new(Vector::new(0.0, 0.0), 0.0), zoom: 1.0 },
             world: World::new(),
         }
     }
@@ -111,18 +111,21 @@ impl App {
                     let mut polar = PolarCoords::from(render_transform.translation.vector.clone());
                     polar.rotation -= camera_transform.rotation.angle();
                     render_transform.translation = Translation::from_vector(Vector::from(polar));
+		    render_transform.translation.vector *= self.camera.zoom;
                     render_transform.translation.vector.x += (screen_width / 2) as f32;
                     render_transform.translation.vector.y += (screen_height / 2) as f32;
                     render_transform.rotation = UnitComplex::from_angle(render_transform.rotation.angle() - camera_transform.rotation.angle());
                     match *sprite {
                         Sprite::Texture(ref texture) => {
                             let (tex_width, tex_height) = texture::size(texture);
+			    let draw_width = (tex_width as f32 * self.camera.zoom) as u32;
+			    let draw_height = (tex_height as f32 * self.camera.zoom) as u32;
                             let render_rect = Rect::new((render_transform.translation.vector.x as i32) -
-                                                        (tex_width as i32 / 2),
+                                                        (draw_width as i32 / 2),
                                                         (render_transform.translation.vector.y as i32) -
-                                                        (tex_height as i32 / 2),
-                                                        tex_width,
-                                                        tex_height);
+                                                        (draw_height as i32 / 2),
+                                                        draw_width,
+                                                        draw_height);
                             let result = self.renderer.copy_ex(texture::get_raw(texture),
                                                                None,
                                                                Some(render_rect),
