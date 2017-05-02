@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -76,39 +76,39 @@
 <span id="31">31</span>
 <span id="32">32</span>
 <span id="33">33</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Abstract definition of a simplex usable by the GJK algorithm.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Abstract definition of a simplex usable by the GJK algorithm.</span>
 
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
+<span class="kw">use</span> <span class="ident">math</span>::<span class="ident">Point</span>;
 
-<span class='doccomment'>/// Trait of a simplex usable by the GJK algorithm.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Simplex</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Replace the point of the simplex by a single one. The simplex is reduced to be</span>
-    <span class='doccomment'>/// 0-dimensional.</span>
-    <span class='kw'>fn</span> <span class='ident'>reset</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>P</span>);
+<span class="doccomment">/// Trait of a simplex usable by the GJK algorithm.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Simplex</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Replace the point of the simplex by a single one. The simplex is reduced to be</span>
+    <span class="doccomment">/// 0-dimensional.</span>
+    <span class="kw">fn</span> <span class="ident">reset</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">P</span>);
 
-    <span class='doccomment'>/// Adds a point to the simplex.</span>
-    <span class='kw'>fn</span> <span class='ident'>add_point</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>P</span>);
+    <span class="doccomment">/// Adds a point to the simplex.</span>
+    <span class="kw">fn</span> <span class="ident">add_point</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">P</span>);
 
-    <span class='doccomment'>/// Project the origin on the simplex and remove any sub-simplex which does not contain the</span>
-    <span class='doccomment'>/// projection.</span>
-    <span class='kw'>fn</span> <span class='ident'>project_origin_and_reduce</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span>;
+    <span class="doccomment">/// Project the origin on the simplex and remove any sub-simplex which does not contain the</span>
+    <span class="doccomment">/// projection.</span>
+    <span class="kw">fn</span> <span class="ident">project_origin_and_reduce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">P</span>;
 
-    <span class='doccomment'>/// Projection the origin on the simplex. The simplex itself is unchanged, although it is</span>
-    <span class='doccomment'>/// mutable for optimization purpose.</span>
-    <span class='kw'>fn</span> <span class='ident'>project_origin</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span>;
+    <span class="doccomment">/// Projection the origin on the simplex. The simplex itself is unchanged, although it is</span>
+    <span class="doccomment">/// mutable for optimization purpose.</span>
+    <span class="kw">fn</span> <span class="ident">project_origin</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">P</span>;
 
-    <span class='doccomment'>/// Checks whether a given point is already part of the simplex points.</span>
-    <span class='kw'>fn</span> <span class='ident'>contains_point</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='kw-2'>&amp;</span><span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
+    <span class="doccomment">/// Checks whether a given point is already part of the simplex points.</span>
+    <span class="kw">fn</span> <span class="ident">contains_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
 
-    <span class='doccomment'>/// Dimension of the simplex. A simplex with `n` must be a `n - 1`-dimensional simplex.</span>
-    <span class='kw'>fn</span> <span class='ident'>dimension</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span>;
+    <span class="doccomment">/// Dimension of the simplex. A simplex with `n` must be a `n - 1`-dimensional simplex.</span>
+    <span class="kw">fn</span> <span class="ident">dimension</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span>;
 
-    <span class='doccomment'>/// The maximum among the simplex point squared lengths.</span>
-    <span class='kw'>fn</span> <span class='ident'>max_sq_len</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span>::<span class='ident'>Real</span>;
+    <span class="doccomment">/// The maximum among the simplex point squared lengths.</span>
+    <span class="kw">fn</span> <span class="ident">max_sq_len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">P</span>::<span class="ident">Real</span>;
 
-    <span class='doccomment'>/// Modifies the points contained by this simplex.</span>
-    <span class='kw'>fn</span> <span class='ident'>modify_pnts</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>P</span>));
+    <span class="doccomment">/// Modifies the points contained by this simplex.</span>
+    <span class="kw">fn</span> <span class="ident">modify_pnts</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">P</span>));
 }
 </pre>
 </section>

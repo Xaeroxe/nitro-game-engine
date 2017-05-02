@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -128,89 +128,89 @@
 <span id="83">83</span>
 <span id="84">84</span>
 <span id="85">85</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>marker</span>::<span class='ident'>PhantomData</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Isometry</span>};
-<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>shape</span>::{<span class='ident'>Shape</span>, <span class='ident'>Ball</span>, <span class='ident'>Plane</span>};
-<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>query</span>::<span class='ident'>algorithms</span>::<span class='ident'>johnson_simplex</span>::<span class='ident'>JohnsonSimplex</span>;
-<span class='kw'>use</span> <span class='ident'>narrow_phase</span>::{
-    <span class='ident'>ContactDispatcher</span>,
-    <span class='ident'>ContactAlgorithm</span>,
-    <span class='ident'>BallBallContactGenerator</span>,
-    <span class='ident'>PlaneSupportMapContactGenerator</span>,
-    <span class='ident'>SupportMapPlaneContactGenerator</span>,
-    <span class='ident'>SupportMapSupportMapContactGenerator</span>,
-    <span class='ident'>CompositeShapeShapeContactGenerator</span>,
-    <span class='ident'>ShapeCompositeShapeContactGenerator</span>,
-    <span class='ident'>OneShotContactManifoldGenerator</span>
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
+<span class="kw">use</span> <span class="ident">math</span>::{<span class="ident">Point</span>, <span class="ident">Isometry</span>};
+<span class="kw">use</span> <span class="ident">geometry</span>::<span class="ident">shape</span>::{<span class="ident">Shape</span>, <span class="ident">Ball</span>, <span class="ident">Plane</span>};
+<span class="kw">use</span> <span class="ident">geometry</span>::<span class="ident">query</span>::<span class="ident">algorithms</span>::<span class="ident">johnson_simplex</span>::<span class="ident">JohnsonSimplex</span>;
+<span class="kw">use</span> <span class="ident">narrow_phase</span>::{
+    <span class="ident">ContactDispatcher</span>,
+    <span class="ident">ContactAlgorithm</span>,
+    <span class="ident">BallBallContactGenerator</span>,
+    <span class="ident">PlaneSupportMapContactGenerator</span>,
+    <span class="ident">SupportMapPlaneContactGenerator</span>,
+    <span class="ident">SupportMapSupportMapContactGenerator</span>,
+    <span class="ident">CompositeShapeShapeContactGenerator</span>,
+    <span class="ident">ShapeCompositeShapeContactGenerator</span>,
+    <span class="ident">OneShotContactManifoldGenerator</span>
 };
 
-<span class='doccomment'>/// Collision dispatcher for shapes defined by `ncollide_entities`.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>DefaultContactDispatcher</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='ident'>_point_type</span>:  <span class='ident'>PhantomData</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
-    <span class='ident'>_matrix_type</span>: <span class='ident'>PhantomData</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// Collision dispatcher for shapes defined by `ncollide_entities`.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DefaultContactDispatcher</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="ident">_point_type</span>:  <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>,
+    <span class="ident">_matrix_type</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>DefaultContactDispatcher</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new basic collision dispatcher.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>DefaultContactDispatcher</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-        <span class='ident'>DefaultContactDispatcher</span> {
-            <span class='ident'>_point_type</span>:  <span class='ident'>PhantomData</span>,
-            <span class='ident'>_matrix_type</span>: <span class='ident'>PhantomData</span>,
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span><span class="op">&gt;</span> <span class="ident">DefaultContactDispatcher</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new basic collision dispatcher.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">DefaultContactDispatcher</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+        <span class="ident">DefaultContactDispatcher</span> {
+            <span class="ident">_point_type</span>:  <span class="ident">PhantomData</span>,
+            <span class="ident">_matrix_type</span>: <span class="ident">PhantomData</span>,
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> <span class='ident'>ContactDispatcher</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>DefaultContactDispatcher</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>get_contact_algorithm</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>a</span>: <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>, <span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>ContactAlgorithm</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>a_is_ball</span> <span class='op'>=</span> <span class='ident'>a</span>.<span class='ident'>is_shape</span>::<span class='op'>&lt;</span><span class='ident'>Ball</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;&gt;</span>();
-        <span class='kw'>let</span> <span class='ident'>b_is_ball</span> <span class='op'>=</span> <span class='ident'>b</span>.<span class='ident'>is_shape</span>::<span class='op'>&lt;</span><span class='ident'>Ball</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;&gt;</span>();
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>: <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;&gt;</span> <span class="ident">ContactDispatcher</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">DefaultContactDispatcher</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">get_contact_algorithm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ContactAlgorithm</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">let</span> <span class="ident">a_is_ball</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">is_shape</span>::<span class="op">&lt;</span><span class="ident">Ball</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Real</span><span class="op">&gt;&gt;</span>();
+        <span class="kw">let</span> <span class="ident">b_is_ball</span> <span class="op">=</span> <span class="ident">b</span>.<span class="ident">is_shape</span>::<span class="op">&lt;</span><span class="ident">Ball</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Real</span><span class="op">&gt;&gt;</span>();
 
-        <span class='kw'>if</span> <span class='ident'>a_is_ball</span> <span class='op'>&amp;&amp;</span> <span class='ident'>b_is_ball</span> {
-            <span class='prelude-val'>Some</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>BallBallContactGenerator</span>::<span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>::<span class='ident'>new</span>()))
+        <span class="kw">if</span> <span class="ident">a_is_ball</span> <span class="op">&amp;&amp;</span> <span class="ident">b_is_ball</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">BallBallContactGenerator</span>::<span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>::<span class="ident">new</span>()))
         }
-        <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>a</span>.<span class='ident'>is_shape</span>::<span class='op'>&lt;</span><span class='ident'>Plane</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;&gt;</span>() <span class='op'>&amp;&amp;</span> <span class='ident'>b</span>.<span class='ident'>is_support_map</span>() {
-            <span class='kw'>let</span> <span class='ident'>wo_manifold</span> <span class='op'>=</span> <span class='ident'>PlaneSupportMapContactGenerator</span>::<span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>::<span class='ident'>new</span>();
+        <span class="kw">else</span> <span class="kw">if</span> <span class="ident">a</span>.<span class="ident">is_shape</span>::<span class="op">&lt;</span><span class="ident">Plane</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Vector</span><span class="op">&gt;&gt;</span>() <span class="op">&amp;&amp;</span> <span class="ident">b</span>.<span class="ident">is_support_map</span>() {
+            <span class="kw">let</span> <span class="ident">wo_manifold</span> <span class="op">=</span> <span class="ident">PlaneSupportMapContactGenerator</span>::<span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>::<span class="ident">new</span>();
 
-            <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>b_is_ball</span> {
-                <span class='kw'>let</span> <span class='ident'>manifold</span> <span class='op'>=</span> <span class='ident'>OneShotContactManifoldGenerator</span>::<span class='ident'>new</span>(<span class='ident'>wo_manifold</span>);
-                <span class='prelude-val'>Some</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>manifold</span>))
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">b_is_ball</span> {
+                <span class="kw">let</span> <span class="ident">manifold</span> <span class="op">=</span> <span class="ident">OneShotContactManifoldGenerator</span>::<span class="ident">new</span>(<span class="ident">wo_manifold</span>);
+                <span class="prelude-val">Some</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">manifold</span>))
             }
-            <span class='kw'>else</span> {
-                <span class='prelude-val'>Some</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>wo_manifold</span>))
+            <span class="kw">else</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">wo_manifold</span>))
             }
         }
-        <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>b</span>.<span class='ident'>is_shape</span>::<span class='op'>&lt;</span><span class='ident'>Plane</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;&gt;</span>() <span class='op'>&amp;&amp;</span> <span class='ident'>a</span>.<span class='ident'>is_support_map</span>() {
-            <span class='kw'>let</span> <span class='ident'>wo_manifold</span> <span class='op'>=</span> <span class='ident'>SupportMapPlaneContactGenerator</span>::<span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>::<span class='ident'>new</span>();
+        <span class="kw">else</span> <span class="kw">if</span> <span class="ident">b</span>.<span class="ident">is_shape</span>::<span class="op">&lt;</span><span class="ident">Plane</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Vector</span><span class="op">&gt;&gt;</span>() <span class="op">&amp;&amp;</span> <span class="ident">a</span>.<span class="ident">is_support_map</span>() {
+            <span class="kw">let</span> <span class="ident">wo_manifold</span> <span class="op">=</span> <span class="ident">SupportMapPlaneContactGenerator</span>::<span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>::<span class="ident">new</span>();
 
-            <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>a_is_ball</span> {
-                <span class='kw'>let</span> <span class='ident'>manifold</span> <span class='op'>=</span> <span class='ident'>OneShotContactManifoldGenerator</span>::<span class='ident'>new</span>(<span class='ident'>wo_manifold</span>);
-                <span class='prelude-val'>Some</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>manifold</span>))
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">a_is_ball</span> {
+                <span class="kw">let</span> <span class="ident">manifold</span> <span class="op">=</span> <span class="ident">OneShotContactManifoldGenerator</span>::<span class="ident">new</span>(<span class="ident">wo_manifold</span>);
+                <span class="prelude-val">Some</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">manifold</span>))
             }
-            <span class='kw'>else</span> {
-                <span class='prelude-val'>Some</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>wo_manifold</span>))
+            <span class="kw">else</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">wo_manifold</span>))
             }
         }
-        <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>a</span>.<span class='ident'>is_support_map</span>() <span class='op'>&amp;&amp;</span> <span class='ident'>b</span>.<span class='ident'>is_support_map</span>() {
-            <span class='kw'>let</span> <span class='ident'>simplex</span>     <span class='op'>=</span> <span class='ident'>JohnsonSimplex</span>::<span class='ident'>new_w_tls</span>();
-            <span class='kw'>let</span> <span class='ident'>wo_manifold</span> <span class='op'>=</span> <span class='ident'>SupportMapSupportMapContactGenerator</span>::<span class='ident'>new</span>(<span class='ident'>simplex</span>);
+        <span class="kw">else</span> <span class="kw">if</span> <span class="ident">a</span>.<span class="ident">is_support_map</span>() <span class="op">&amp;&amp;</span> <span class="ident">b</span>.<span class="ident">is_support_map</span>() {
+            <span class="kw">let</span> <span class="ident">simplex</span>     <span class="op">=</span> <span class="ident">JohnsonSimplex</span>::<span class="ident">new_w_tls</span>();
+            <span class="kw">let</span> <span class="ident">wo_manifold</span> <span class="op">=</span> <span class="ident">SupportMapSupportMapContactGenerator</span>::<span class="ident">new</span>(<span class="ident">simplex</span>);
 
-            <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>a_is_ball</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='ident'>b_is_ball</span> {
-                <span class='kw'>let</span> <span class='ident'>manifold</span> <span class='op'>=</span> <span class='ident'>OneShotContactManifoldGenerator</span>::<span class='ident'>new</span>(<span class='ident'>wo_manifold</span>);
-                <span class='prelude-val'>Some</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>manifold</span>))
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">a_is_ball</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">b_is_ball</span> {
+                <span class="kw">let</span> <span class="ident">manifold</span> <span class="op">=</span> <span class="ident">OneShotContactManifoldGenerator</span>::<span class="ident">new</span>(<span class="ident">wo_manifold</span>);
+                <span class="prelude-val">Some</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">manifold</span>))
             }
-            <span class='kw'>else</span> {
-                <span class='prelude-val'>Some</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>wo_manifold</span>))
+            <span class="kw">else</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">wo_manifold</span>))
             }
         }
-        <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>a</span>.<span class='ident'>is_composite_shape</span>() {
-            <span class='prelude-val'>Some</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>CompositeShapeShapeContactGenerator</span>::<span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>::<span class='ident'>new</span>()))
+        <span class="kw">else</span> <span class="kw">if</span> <span class="ident">a</span>.<span class="ident">is_composite_shape</span>() {
+            <span class="prelude-val">Some</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">CompositeShapeShapeContactGenerator</span>::<span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>::<span class="ident">new</span>()))
         }
-        <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>b</span>.<span class='ident'>is_composite_shape</span>() {
-            <span class='prelude-val'>Some</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>ShapeCompositeShapeContactGenerator</span>::<span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>::<span class='ident'>new</span>()))
+        <span class="kw">else</span> <span class="kw">if</span> <span class="ident">b</span>.<span class="ident">is_composite_shape</span>() {
+            <span class="prelude-val">Some</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">ShapeCompositeShapeContactGenerator</span>::<span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>::<span class="ident">new</span>()))
         }
-        <span class='kw'>else</span> {
-            <span class='prelude-val'>None</span>
+        <span class="kw">else</span> {
+            <span class="prelude-val">None</span>
         }
     }
 }

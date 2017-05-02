@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -147,109 +147,109 @@
 <span id="102">102</span>
 <span id="103">103</span>
 <span id="104">104</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>Ref</span>;
-<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Bounded</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">Ref</span>;
+<span class="kw">use</span> <span class="ident">num</span>::<span class="ident">Bounded</span>;
 
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='self'>self</span>, <span class='ident'>U1</span>};
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Vector</span>};
-<span class='kw'>use</span> <span class='ident'>utils</span>::<span class='ident'>GeneralizedCross</span>;
-<span class='kw'>use</span> <span class='ident'>object</span>::<span class='ident'>RigidBody</span>;
-<span class='kw'>use</span> <span class='ident'>detection</span>::<span class='ident'>joint</span>::{<span class='ident'>Anchor</span>, <span class='ident'>BallInSocket</span>, <span class='ident'>Joint</span>};
-<span class='kw'>use</span> <span class='ident'>resolution</span>::<span class='ident'>constraint</span>::<span class='ident'>velocity_constraint</span>::<span class='ident'>VelocityConstraint</span>;
-<span class='kw'>use</span> <span class='ident'>resolution</span>::<span class='ident'>constraint</span>::<span class='ident'>contact_equation</span>::<span class='ident'>CorrectionParameters</span>;
-<span class='kw'>use</span> <span class='ident'>resolution</span>::<span class='ident'>constraint</span>::<span class='ident'>contact_equation</span>;
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::<span class="ident">Real</span>;
+<span class="kw">use</span> <span class="ident">na</span>::{<span class="self">self</span>, <span class="ident">U1</span>};
+<span class="kw">use</span> <span class="ident">math</span>::{<span class="ident">Point</span>, <span class="ident">Vector</span>};
+<span class="kw">use</span> <span class="ident">utils</span>::<span class="ident">GeneralizedCross</span>;
+<span class="kw">use</span> <span class="ident">object</span>::<span class="ident">RigidBody</span>;
+<span class="kw">use</span> <span class="ident">detection</span>::<span class="ident">joint</span>::{<span class="ident">Anchor</span>, <span class="ident">BallInSocket</span>, <span class="ident">Joint</span>};
+<span class="kw">use</span> <span class="ident">resolution</span>::<span class="ident">constraint</span>::<span class="ident">velocity_constraint</span>::<span class="ident">VelocityConstraint</span>;
+<span class="kw">use</span> <span class="ident">resolution</span>::<span class="ident">constraint</span>::<span class="ident">contact_equation</span>::<span class="ident">CorrectionParameters</span>;
+<span class="kw">use</span> <span class="ident">resolution</span>::<span class="ident">constraint</span>::<span class="ident">contact_equation</span>;
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>fill_second_order_equation</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='ident'>dt</span>:          <span class='ident'>N</span>,
-                                           <span class='ident'>joint</span>:       <span class='kw-2'>&amp;</span><span class='ident'>BallInSocket</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-                                           <span class='ident'>constraints</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>VelocityConstraint</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>],
-                                           <span class='ident'>correction</span>:  <span class='kw-2'>&amp;</span><span class='ident'>CorrectionParameters</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-    <span class='ident'>cancel_relative_linear_motion</span>(
-        <span class='ident'>dt</span>,
-        <span class='kw-2'>&amp;</span><span class='ident'>joint</span>.<span class='ident'>anchor1_pos</span>(),
-        <span class='kw-2'>&amp;</span><span class='ident'>joint</span>.<span class='ident'>anchor2_pos</span>(),
-        <span class='ident'>joint</span>.<span class='ident'>anchor1</span>(),
-        <span class='ident'>joint</span>.<span class='ident'>anchor2</span>(),
-        <span class='ident'>constraints</span>,
-        <span class='ident'>correction</span>);
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fill_second_order_equation</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span>(<span class="ident">dt</span>:          <span class="ident">N</span>,
+                                           <span class="ident">joint</span>:       <span class="kw-2">&amp;</span><span class="ident">BallInSocket</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+                                           <span class="ident">constraints</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">VelocityConstraint</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>],
+                                           <span class="ident">correction</span>:  <span class="kw-2">&amp;</span><span class="ident">CorrectionParameters</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+    <span class="ident">cancel_relative_linear_motion</span>(
+        <span class="ident">dt</span>,
+        <span class="kw-2">&amp;</span><span class="ident">joint</span>.<span class="ident">anchor1_pos</span>(),
+        <span class="kw-2">&amp;</span><span class="ident">joint</span>.<span class="ident">anchor2_pos</span>(),
+        <span class="ident">joint</span>.<span class="ident">anchor1</span>(),
+        <span class="ident">joint</span>.<span class="ident">anchor2</span>(),
+        <span class="ident">constraints</span>,
+        <span class="ident">correction</span>);
 }
 
-<span class='comment'>// FIXME: move this on another file. Something like &quot;joint_equation_helper.rs&quot;</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cancel_relative_linear_motion</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span>, <span class='ident'>P</span><span class='op'>&gt;</span>(
-                                     <span class='ident'>dt</span>:          <span class='ident'>N</span>,
-                                     <span class='ident'>global1</span>:     <span class='kw-2'>&amp;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-                                     <span class='ident'>global2</span>:     <span class='kw-2'>&amp;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-                                     <span class='ident'>anchor1</span>:     <span class='kw-2'>&amp;</span><span class='ident'>Anchor</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>P</span><span class='op'>&gt;</span>,
-                                     <span class='ident'>anchor2</span>:     <span class='kw-2'>&amp;</span><span class='ident'>Anchor</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>P</span><span class='op'>&gt;</span>,
-                                     <span class='ident'>constraints</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>VelocityConstraint</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>],
-                                     <span class='ident'>correction</span>:  <span class='kw-2'>&amp;</span><span class='ident'>CorrectionParameters</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-    <span class='kw'>let</span> <span class='ident'>error</span>      <span class='op'>=</span> (<span class='kw-2'>*</span><span class='ident'>global2</span> <span class='op'>-</span> <span class='kw-2'>*</span><span class='ident'>global1</span>) <span class='op'>*</span> <span class='ident'>correction</span>.<span class='ident'>joint_corr</span>;
-    <span class='kw'>let</span> <span class='ident'>rot_axis1</span>  <span class='op'>=</span> (<span class='kw-2'>*</span><span class='ident'>global1</span> <span class='op'>-</span> <span class='ident'>anchor1</span>.<span class='ident'>center_of_mass</span>()).<span class='ident'>gcross_matrix</span>();
-    <span class='kw'>let</span> <span class='ident'>rot_axis2</span>  <span class='op'>=</span> (<span class='kw-2'>*</span><span class='ident'>global2</span> <span class='op'>-</span> <span class='ident'>anchor2</span>.<span class='ident'>center_of_mass</span>()).<span class='ident'>gcross_matrix</span>();
+<span class="comment">// FIXME: move this on another file. Something like &quot;joint_equation_helper.rs&quot;</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cancel_relative_linear_motion</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span>, <span class="ident">P</span><span class="op">&gt;</span>(
+                                     <span class="ident">dt</span>:          <span class="ident">N</span>,
+                                     <span class="ident">global1</span>:     <span class="kw-2">&amp;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+                                     <span class="ident">global2</span>:     <span class="kw-2">&amp;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+                                     <span class="ident">anchor1</span>:     <span class="kw-2">&amp;</span><span class="ident">Anchor</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">P</span><span class="op">&gt;</span>,
+                                     <span class="ident">anchor2</span>:     <span class="kw-2">&amp;</span><span class="ident">Anchor</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">P</span><span class="op">&gt;</span>,
+                                     <span class="ident">constraints</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">VelocityConstraint</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>],
+                                     <span class="ident">correction</span>:  <span class="kw-2">&amp;</span><span class="ident">CorrectionParameters</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+    <span class="kw">let</span> <span class="ident">error</span>      <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">global2</span> <span class="op">-</span> <span class="kw-2">*</span><span class="ident">global1</span>) <span class="op">*</span> <span class="ident">correction</span>.<span class="ident">joint_corr</span>;
+    <span class="kw">let</span> <span class="ident">rot_axis1</span>  <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">global1</span> <span class="op">-</span> <span class="ident">anchor1</span>.<span class="ident">center_of_mass</span>()).<span class="ident">gcross_matrix</span>();
+    <span class="kw">let</span> <span class="ident">rot_axis2</span>  <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">global2</span> <span class="op">-</span> <span class="ident">anchor2</span>.<span class="ident">center_of_mass</span>()).<span class="ident">gcross_matrix</span>();
 
-    <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0usize</span> .. <span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>() {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>lin_axis</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
-        <span class='kw'>let</span> <span class='ident'>constraint</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>constraints</span>[<span class='ident'>i</span>];
+    <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0usize</span> .. <span class="ident">na</span>::<span class="ident">dimension</span>::<span class="op">&lt;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>() {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">lin_axis</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">zero</span>();
+        <span class="kw">let</span> <span class="ident">constraint</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">constraints</span>[<span class="ident">i</span>];
 
-        <span class='ident'>lin_axis</span>[<span class='ident'>i</span>] <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>one</span>();
+        <span class="ident">lin_axis</span>[<span class="ident">i</span>] <span class="op">=</span> <span class="ident">na</span>::<span class="ident">one</span>();
 
-        <span class='kw'>let</span> <span class='ident'>opt_rb1</span> <span class='op'>=</span> <span class='ident'>write_anchor_id</span>(<span class='ident'>anchor1</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>constraint</span>.<span class='ident'>id1</span>);
-        <span class='kw'>let</span> <span class='ident'>opt_rb2</span> <span class='op'>=</span> <span class='ident'>write_anchor_id</span>(<span class='ident'>anchor2</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>constraint</span>.<span class='ident'>id2</span>);
+        <span class="kw">let</span> <span class="ident">opt_rb1</span> <span class="op">=</span> <span class="ident">write_anchor_id</span>(<span class="ident">anchor1</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">constraint</span>.<span class="ident">id1</span>);
+        <span class="kw">let</span> <span class="ident">opt_rb2</span> <span class="op">=</span> <span class="ident">write_anchor_id</span>(<span class="ident">anchor2</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">constraint</span>.<span class="ident">id2</span>);
 
-        <span class='kw'>let</span> <span class='ident'>rot_axis1</span> <span class='op'>=</span> <span class='op'>-</span><span class='ident'>rot_axis1</span>.<span class='ident'>fixed_columns</span>::<span class='op'>&lt;</span><span class='ident'>U1</span><span class='op'>&gt;</span>(<span class='ident'>i</span>);
-        <span class='kw'>let</span> <span class='ident'>rot_axis2</span> <span class='op'>=</span>  <span class='ident'>rot_axis2</span>.<span class='ident'>fixed_columns</span>::<span class='op'>&lt;</span><span class='ident'>U1</span><span class='op'>&gt;</span>(<span class='ident'>i</span>).<span class='ident'>into_owned</span>();
+        <span class="kw">let</span> <span class="ident">rot_axis1</span> <span class="op">=</span> <span class="op">-</span><span class="ident">rot_axis1</span>.<span class="ident">fixed_columns</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>(<span class="ident">i</span>);
+        <span class="kw">let</span> <span class="ident">rot_axis2</span> <span class="op">=</span>  <span class="ident">rot_axis2</span>.<span class="ident">fixed_columns</span>::<span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>(<span class="ident">i</span>).<span class="ident">into_owned</span>();
 
-        <span class='kw'>let</span> <span class='ident'>dvel</span> <span class='op'>=</span> <span class='ident'>contact_equation</span>::<span class='ident'>relative_velocity</span>(
-            <span class='kw-2'>&amp;</span><span class='ident'>opt_rb1</span>.<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>r</span><span class='op'>|</span> <span class='kw-2'>&amp;</span><span class='kw-2'>*</span><span class='kw-2'>*</span><span class='ident'>r</span>),
-            <span class='kw-2'>&amp;</span><span class='ident'>opt_rb2</span>.<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>r</span><span class='op'>|</span> <span class='kw-2'>&amp;</span><span class='kw-2'>*</span><span class='kw-2'>*</span><span class='ident'>r</span>),
-            <span class='kw-2'>&amp;</span><span class='ident'>lin_axis</span>, 
-            <span class='kw-2'>&amp;</span><span class='ident'>rot_axis1</span>,
-            <span class='kw-2'>&amp;</span><span class='ident'>rot_axis2</span>,
-            <span class='kw-2'>&amp;</span><span class='ident'>dt</span>);
+        <span class="kw">let</span> <span class="ident">dvel</span> <span class="op">=</span> <span class="ident">contact_equation</span>::<span class="ident">relative_velocity</span>(
+            <span class="kw-2">&amp;</span><span class="ident">opt_rb1</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">r</span>),
+            <span class="kw-2">&amp;</span><span class="ident">opt_rb2</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">r</span>),
+            <span class="kw-2">&amp;</span><span class="ident">lin_axis</span>, 
+            <span class="kw-2">&amp;</span><span class="ident">rot_axis1</span>,
+            <span class="kw-2">&amp;</span><span class="ident">rot_axis2</span>,
+            <span class="kw-2">&amp;</span><span class="ident">dt</span>);
 
-        <span class='ident'>contact_equation</span>::<span class='ident'>fill_constraint_geometry</span>(
-            <span class='ident'>lin_axis</span>,
-            <span class='ident'>rot_axis1</span>,
-            <span class='ident'>rot_axis2</span>,
-            <span class='kw-2'>&amp;</span><span class='ident'>opt_rb1</span>.<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>r</span><span class='op'>|</span> <span class='kw-2'>&amp;</span><span class='kw-2'>*</span><span class='kw-2'>*</span><span class='ident'>r</span>),
-            <span class='kw-2'>&amp;</span><span class='ident'>opt_rb2</span>.<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>r</span><span class='op'>|</span> <span class='kw-2'>&amp;</span><span class='kw-2'>*</span><span class='kw-2'>*</span><span class='ident'>r</span>),
-            <span class='ident'>constraint</span>
+        <span class="ident">contact_equation</span>::<span class="ident">fill_constraint_geometry</span>(
+            <span class="ident">lin_axis</span>,
+            <span class="ident">rot_axis1</span>,
+            <span class="ident">rot_axis2</span>,
+            <span class="kw-2">&amp;</span><span class="ident">opt_rb1</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">r</span>),
+            <span class="kw-2">&amp;</span><span class="ident">opt_rb2</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">r</span>),
+            <span class="ident">constraint</span>
         );
 
-        <span class='kw'>let</span> <span class='ident'>_max</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>Bounded</span>::<span class='ident'>max_value</span>();
-        <span class='ident'>constraint</span>.<span class='ident'>lobound</span>   <span class='op'>=</span> <span class='op'>-</span><span class='ident'>_max</span>;
-        <span class='ident'>constraint</span>.<span class='ident'>hibound</span>   <span class='op'>=</span> <span class='ident'>_max</span>;
-        <span class='ident'>constraint</span>.<span class='ident'>objective</span> <span class='op'>=</span> <span class='op'>-</span><span class='ident'>dvel</span> <span class='op'>-</span> <span class='ident'>error</span>[<span class='ident'>i</span>] <span class='op'>/</span> <span class='ident'>dt</span>;
-        <span class='ident'>constraint</span>.<span class='ident'>impulse</span>   <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>(); <span class='comment'>// FIXME: cache</span>
+        <span class="kw">let</span> <span class="ident">_max</span>: <span class="ident">N</span> <span class="op">=</span> <span class="ident">Bounded</span>::<span class="ident">max_value</span>();
+        <span class="ident">constraint</span>.<span class="ident">lobound</span>   <span class="op">=</span> <span class="op">-</span><span class="ident">_max</span>;
+        <span class="ident">constraint</span>.<span class="ident">hibound</span>   <span class="op">=</span> <span class="ident">_max</span>;
+        <span class="ident">constraint</span>.<span class="ident">objective</span> <span class="op">=</span> <span class="op">-</span><span class="ident">dvel</span> <span class="op">-</span> <span class="ident">error</span>[<span class="ident">i</span>] <span class="op">/</span> <span class="ident">dt</span>;
+        <span class="ident">constraint</span>.<span class="ident">impulse</span>   <span class="op">=</span> <span class="ident">na</span>::<span class="ident">zero</span>(); <span class="comment">// FIXME: cache</span>
     }
 }
 
-<span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>write_anchor_id</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>N</span>: <span class='ident'>Real</span>, <span class='ident'>P</span><span class='op'>&gt;</span>(<span class='ident'>anchor</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Anchor</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>P</span><span class='op'>&gt;</span>, <span class='ident'>id</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>isize</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Ref</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> {
-    <span class='kw'>match</span> <span class='ident'>anchor</span>.<span class='ident'>body</span> {
-        <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>b</span>) <span class='op'>=&gt;</span> {
-            <span class='kw'>let</span> <span class='ident'>rb</span> <span class='op'>=</span> <span class='ident'>b</span>.<span class='ident'>borrow</span>();
-            <span class='kw'>let</span> <span class='ident'>can_move</span>;
-            <span class='kw'>let</span> <span class='ident'>rid</span>;
+<span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_anchor_id</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Real</span>, <span class="ident">P</span><span class="op">&gt;</span>(<span class="ident">anchor</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Anchor</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">P</span><span class="op">&gt;</span>, <span class="ident">id</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">isize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ref</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">match</span> <span class="ident">anchor</span>.<span class="ident">body</span> {
+        <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">b</span>) <span class="op">=&gt;</span> {
+            <span class="kw">let</span> <span class="ident">rb</span> <span class="op">=</span> <span class="ident">b</span>.<span class="ident">borrow</span>();
+            <span class="kw">let</span> <span class="ident">can_move</span>;
+            <span class="kw">let</span> <span class="ident">rid</span>;
 
             {
-                <span class='ident'>can_move</span> <span class='op'>=</span> <span class='ident'>rb</span>.<span class='ident'>can_move</span>();
-                <span class='ident'>rid</span>      <span class='op'>=</span> <span class='ident'>rb</span>.<span class='ident'>index</span>();
+                <span class="ident">can_move</span> <span class="op">=</span> <span class="ident">rb</span>.<span class="ident">can_move</span>();
+                <span class="ident">rid</span>      <span class="op">=</span> <span class="ident">rb</span>.<span class="ident">index</span>();
             }
 
-            <span class='kw'>if</span> <span class='ident'>can_move</span> {
-                <span class='kw-2'>*</span><span class='ident'>id</span> <span class='op'>=</span> <span class='ident'>rid</span>;
+            <span class="kw">if</span> <span class="ident">can_move</span> {
+                <span class="kw-2">*</span><span class="ident">id</span> <span class="op">=</span> <span class="ident">rid</span>;
 
-                <span class='prelude-val'>Some</span>(<span class='ident'>rb</span>)
+                <span class="prelude-val">Some</span>(<span class="ident">rb</span>)
             }
-            <span class='kw'>else</span> {
-                <span class='kw-2'>*</span><span class='ident'>id</span> <span class='op'>=</span> <span class='op'>-</span><span class='number'>1</span>;
+            <span class="kw">else</span> {
+                <span class="kw-2">*</span><span class="ident">id</span> <span class="op">=</span> <span class="op">-</span><span class="number">1</span>;
 
-                <span class='prelude-val'>None</span>
+                <span class="prelude-val">None</span>
             }
         },
-        <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> { <span class='kw-2'>*</span><span class='ident'>id</span> <span class='op'>=</span> <span class='op'>-</span><span class='number'>1</span>; <span class='prelude-val'>None</span> }
+        <span class="prelude-val">None</span> <span class="op">=&gt;</span> { <span class="kw-2">*</span><span class="ident">id</span> <span class="op">=</span> <span class="op">-</span><span class="number">1</span>; <span class="prelude-val">None</span> }
     }
 }
 </pre>

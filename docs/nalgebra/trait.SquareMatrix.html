@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,17 +43,17 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>nalgebra</a>::<wbr><a class='trait' href=''>SquareMatrix</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>nalgebra</a>::<wbr><a class="trait" href=''>SquareMatrix</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/nalgebra/traits/structure.rs.html#78-81' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait SquareMatrix&lt;N, V:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html' title='core::ops::Mul'>Mul</a>&lt;Self, Output=V&gt;&gt;: <a class='trait' href='../nalgebra/trait.Matrix.html' title='nalgebra::Matrix'>Matrix</a>&lt;N, V, V&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html' title='core::ops::Mul'>Mul</a>&lt;Self, Output=Self&gt; + <a class='trait' href='../nalgebra/trait.Eye.html' title='nalgebra::Eye'>Eye</a> + <a class='trait' href='../nalgebra/trait.Transpose.html' title='nalgebra::Transpose'>Transpose</a> + <a class='trait' href='../nalgebra/trait.Diagonal.html' title='nalgebra::Diagonal'>Diagonal</a>&lt;V&gt; + <a class='trait' href='../nalgebra/trait.Inverse.html' title='nalgebra::Inverse'>Inverse</a> + <a class='trait' href='../nalgebra/trait.Dimension.html' title='nalgebra::Dimension'>Dimension</a> + <a class='trait' href='../num_traits/identities/trait.One.html' title='num_traits::identities::One'>One</a> { }</pre><div class='docblock'><p>Trait implemented by square matrices.</p>
+<pre class='rust trait'>pub trait SquareMatrix&lt;N, V:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html" title="trait core::ops::Mul">Mul</a>&lt;Self, Output=V&gt;&gt;: <a class="trait" href="../nalgebra/trait.Matrix.html" title="trait nalgebra::Matrix">Matrix</a>&lt;N, V, V&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html" title="trait core::ops::Mul">Mul</a>&lt;Self, Output=Self&gt; + <a class="trait" href="../nalgebra/trait.Eye.html" title="trait nalgebra::Eye">Eye</a> + <a class="trait" href="../nalgebra/trait.Transpose.html" title="trait nalgebra::Transpose">Transpose</a> + <a class="trait" href="../nalgebra/trait.Diagonal.html" title="trait nalgebra::Diagonal">Diagonal</a>&lt;V&gt; + <a class="trait" href="../nalgebra/trait.Inverse.html" title="trait nalgebra::Inverse">Inverse</a> + <a class="trait" href="../nalgebra/trait.Dimension.html" title="trait nalgebra::Dimension">Dimension</a> + <a class="trait" href="../num_traits/identities/trait.One.html" title="trait num_traits::identities::One">One</a> { }</pre><div class='docblock'><p>Trait implemented by square matrices.</p>
 </div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;N, V, M&gt; SquareMatrix&lt;N, V&gt; for M <span class='where fmt-newline'>where M: <a class='trait' href='../nalgebra/trait.Matrix.html' title='nalgebra::Matrix'>Matrix</a>&lt;N, V, V&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html' title='core::ops::Mul'>Mul</a>&lt;M, Output=M&gt; + <a class='trait' href='../nalgebra/trait.Eye.html' title='nalgebra::Eye'>Eye</a> + <a class='trait' href='../nalgebra/trait.Transpose.html' title='nalgebra::Transpose'>Transpose</a> + <a class='trait' href='../nalgebra/trait.Diagonal.html' title='nalgebra::Diagonal'>Diagonal</a>&lt;V&gt; + <a class='trait' href='../nalgebra/trait.Inverse.html' title='nalgebra::Inverse'>Inverse</a> + <a class='trait' href='../nalgebra/trait.Dimension.html' title='nalgebra::Dimension'>Dimension</a> + <a class='trait' href='../num_traits/identities/trait.One.html' title='num_traits::identities::One'>One</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;V: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html' title='core::ops::Mul'>Mul</a>&lt;M, Output=V&gt;</span></code></li>
+    <li><code>impl&lt;N, V, M&gt; SquareMatrix&lt;N, V&gt; for M <span class="where fmt-newline">where M: <a class="trait" href="../nalgebra/trait.Matrix.html" title="trait nalgebra::Matrix">Matrix</a>&lt;N, V, V&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html" title="trait core::ops::Mul">Mul</a>&lt;M, Output=M&gt; + <a class="trait" href="../nalgebra/trait.Eye.html" title="trait nalgebra::Eye">Eye</a> + <a class="trait" href="../nalgebra/trait.Transpose.html" title="trait nalgebra::Transpose">Transpose</a> + <a class="trait" href="../nalgebra/trait.Diagonal.html" title="trait nalgebra::Diagonal">Diagonal</a>&lt;V&gt; + <a class="trait" href="../nalgebra/trait.Inverse.html" title="trait nalgebra::Inverse">Inverse</a> + <a class="trait" href="../nalgebra/trait.Dimension.html" title="trait nalgebra::Dimension">Dimension</a> + <a class="trait" href="../num_traits/identities/trait.One.html" title="trait num_traits::identities::One">One</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;V: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html" title="trait core::ops::Mul">Mul</a>&lt;M, Output=V&gt;</span></code></li>
 </ul><script type="text/javascript" async
                          src="../implementors/nalgebra/trait.SquareMatrix.js">
                  </script></section>

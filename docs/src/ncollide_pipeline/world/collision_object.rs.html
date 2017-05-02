@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -143,104 +143,104 @@
 <span id="98"> 98</span>
 <span id="99"> 99</span>
 <span id="100">100</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::<span class="ident">Real</span>;
 
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
-<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>shape</span>::<span class='ident'>ShapeHandle</span>;
-<span class='kw'>use</span> <span class='ident'>world</span>::<span class='ident'>CollisionGroups</span>;
+<span class="kw">use</span> <span class="ident">math</span>::<span class="ident">Point</span>;
+<span class="kw">use</span> <span class="ident">geometry</span>::<span class="ident">shape</span>::<span class="ident">ShapeHandle</span>;
+<span class="kw">use</span> <span class="ident">world</span>::<span class="ident">CollisionGroups</span>;
 
-<span class='doccomment'>/// The kind of query a CollisionObject may be involved on.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// The following queries are executed for a given pair of `GeometricQueryType` associated with two</span>
-<span class='doccomment'>/// collision objects:</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// * Contacts + Contacts = exact contact point coputation.</span>
-<span class='doccomment'>/// * Contacts + Proximity = proximity test only.</span>
-<span class='doccomment'>/// * Proximity + Proximity = proximity test only.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>GeometricQueryType</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// This objects can respond to both contact point computation and proximity queries.</span>
-    <span class='ident'>Contacts</span>(<span class='ident'>N</span>),
-    <span class='doccomment'>/// This object can respond to proximity tests only.</span>
-    <span class='ident'>Proximity</span>(<span class='ident'>N</span>),
-    <span class='comment'>// FIXME: not yet implemented: Distance</span>
+<span class="doccomment">/// The kind of query a CollisionObject may be involved on.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The following queries are executed for a given pair of `GeometricQueryType` associated with two</span>
+<span class="doccomment">/// collision objects:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// * Contacts + Contacts = exact contact point coputation.</span>
+<span class="doccomment">/// * Contacts + Proximity = proximity test only.</span>
+<span class="doccomment">/// * Proximity + Proximity = proximity test only.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">GeometricQueryType</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// This objects can respond to both contact point computation and proximity queries.</span>
+    <span class="ident">Contacts</span>(<span class="ident">N</span>),
+    <span class="doccomment">/// This object can respond to proximity tests only.</span>
+    <span class="ident">Proximity</span>(<span class="ident">N</span>),
+    <span class="comment">// FIXME: not yet implemented: Distance</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>GeometricQueryType</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The numerical limit of relevance for this query.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If two objects are separated by a distance greater than the sum of their respective</span>
-    <span class='doccomment'>/// `query_limit`, the corresponding query will not by performed. For proximity queries,</span>
-    <span class='doccomment'>/// non-intersecting object closer than a distance equal to the sum of their `query_limit` will</span>
-    <span class='doccomment'>/// be reported as `Proximity::WithinMargin`.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>query_limit</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>GeometricQueryType</span>::<span class='ident'>Contacts</span>(<span class='kw-2'>ref</span> <span class='ident'>val</span>)  <span class='op'>=&gt;</span> <span class='kw-2'>*</span><span class='ident'>val</span>,
-            <span class='ident'>GeometricQueryType</span>::<span class='ident'>Proximity</span>(<span class='kw-2'>ref</span> <span class='ident'>val</span>) <span class='op'>=&gt;</span> <span class='kw-2'>*</span><span class='ident'>val</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span> <span class="ident">GeometricQueryType</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The numerical limit of relevance for this query.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If two objects are separated by a distance greater than the sum of their respective</span>
+    <span class="doccomment">/// `query_limit`, the corresponding query will not by performed. For proximity queries,</span>
+    <span class="doccomment">/// non-intersecting object closer than a distance equal to the sum of their `query_limit` will</span>
+    <span class="doccomment">/// be reported as `Proximity::WithinMargin`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">query_limit</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">GeometricQueryType</span>::<span class="ident">Contacts</span>(<span class="kw-2">ref</span> <span class="ident">val</span>)  <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="ident">val</span>,
+            <span class="ident">GeometricQueryType</span>::<span class="ident">Proximity</span>(<span class="kw-2">ref</span> <span class="ident">val</span>) <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="ident">val</span>
         }
     }
 
-    <span class='doccomment'>/// Returns `true` if this is a contacts query type.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_contacts_query</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>GeometricQueryType</span>::<span class='ident'>Contacts</span>(_) <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='bool-val'>true</span>
+    <span class="doccomment">/// Returns `true` if this is a contacts query type.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_contacts_query</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">GeometricQueryType</span>::<span class="ident">Contacts</span>(_) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="bool-val">true</span>
         }
-        <span class='kw'>else</span> {
-            <span class='bool-val'>false</span>
+        <span class="kw">else</span> {
+            <span class="bool-val">false</span>
         }
     }
 
-    <span class='doccomment'>/// Returns `true` if this is a proximity query type.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_proximity_query</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>GeometricQueryType</span>::<span class='ident'>Proximity</span>(_) <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='bool-val'>true</span>
+    <span class="doccomment">/// Returns `true` if this is a proximity query type.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_proximity_query</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">GeometricQueryType</span>::<span class="ident">Proximity</span>(_) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="bool-val">true</span>
         }
-        <span class='kw'>else</span> {
-            <span class='bool-val'>false</span>
+        <span class="kw">else</span> {
+            <span class="bool-val">false</span>
         }
     }
 }
 
-<span class='comment'>// FIXME: really keep all the fields public?</span>
-<span class='doccomment'>/// A stand-alone object that has a position and a shape.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The collsion object unique identifier.</span>
-    <span class='kw'>pub</span> <span class='ident'>uid</span>: <span class='ident'>usize</span>,
-    <span class='doccomment'>/// The collision object position.</span>
-    <span class='kw'>pub</span> <span class='ident'>position</span>: <span class='ident'>M</span>,
-    <span class='doccomment'>/// The collision object shape.</span>
-    <span class='kw'>pub</span> <span class='ident'>shape</span>: <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
-    <span class='doccomment'>/// The collision groups of the collision object.</span>
-    <span class='kw'>pub</span> <span class='ident'>collision_groups</span>: <span class='ident'>CollisionGroups</span>,
-    <span class='doccomment'>/// The kind of queries this collision object is expected to .</span>
-    <span class='kw'>pub</span> <span class='ident'>query_type</span>: <span class='ident'>GeometricQueryType</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;</span>,
-    <span class='doccomment'>/// The user-defined data associated to this object.</span>
-    <span class='kw'>pub</span> <span class='ident'>data</span>: <span class='ident'>T</span>,
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>usize</span>
+<span class="comment">// FIXME: really keep all the fields public?</span>
+<span class="doccomment">/// A stand-alone object that has a position and a shape.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The collsion object unique identifier.</span>
+    <span class="kw">pub</span> <span class="ident">uid</span>: <span class="ident">usize</span>,
+    <span class="doccomment">/// The collision object position.</span>
+    <span class="kw">pub</span> <span class="ident">position</span>: <span class="ident">M</span>,
+    <span class="doccomment">/// The collision object shape.</span>
+    <span class="kw">pub</span> <span class="ident">shape</span>: <span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// The collision groups of the collision object.</span>
+    <span class="kw">pub</span> <span class="ident">collision_groups</span>: <span class="ident">CollisionGroups</span>,
+    <span class="doccomment">/// The kind of queries this collision object is expected to .</span>
+    <span class="kw">pub</span> <span class="ident">query_type</span>: <span class="ident">GeometricQueryType</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Real</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// The user-defined data associated to this object.</span>
+    <span class="kw">pub</span> <span class="ident">data</span>: <span class="ident">T</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">usize</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new collision object.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>uid</span>:        <span class='ident'>usize</span>,
-               <span class='ident'>position</span>:   <span class='ident'>M</span>,
-               <span class='ident'>shape</span>:      <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
-               <span class='ident'>groups</span>:     <span class='ident'>CollisionGroups</span>,
-               <span class='ident'>query_type</span>: <span class='ident'>GeometricQueryType</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;</span>,
-               <span class='ident'>data</span>:       <span class='ident'>T</span>)
-               <span class='op'>-&gt;</span> <span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>CollisionObject</span> {
-            <span class='ident'>uid</span>:              <span class='ident'>uid</span>,
-            <span class='ident'>position</span>:         <span class='ident'>position</span>,
-            <span class='ident'>shape</span>:            <span class='ident'>shape</span>,
-            <span class='ident'>collision_groups</span>: <span class='ident'>groups</span>,
-            <span class='ident'>data</span>:             <span class='ident'>data</span>,
-            <span class='ident'>query_type</span>:       <span class='ident'>query_type</span>,
-            <span class='ident'>timestamp</span>:        <span class='number'>0</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new collision object.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">uid</span>:        <span class="ident">usize</span>,
+               <span class="ident">position</span>:   <span class="ident">M</span>,
+               <span class="ident">shape</span>:      <span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>,
+               <span class="ident">groups</span>:     <span class="ident">CollisionGroups</span>,
+               <span class="ident">query_type</span>: <span class="ident">GeometricQueryType</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Real</span><span class="op">&gt;</span>,
+               <span class="ident">data</span>:       <span class="ident">T</span>)
+               <span class="op">-&gt;</span> <span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">CollisionObject</span> {
+            <span class="ident">uid</span>:              <span class="ident">uid</span>,
+            <span class="ident">position</span>:         <span class="ident">position</span>,
+            <span class="ident">shape</span>:            <span class="ident">shape</span>,
+            <span class="ident">collision_groups</span>: <span class="ident">groups</span>,
+            <span class="ident">data</span>:             <span class="ident">data</span>,
+            <span class="ident">query_type</span>:       <span class="ident">query_type</span>,
+            <span class="ident">timestamp</span>:        <span class="number">0</span>
         }
     }
 }

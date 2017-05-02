@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc struct">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,8 +43,8 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../../../index.html'>ncollide</a>::<wbr><a href='../../index.html'>utils</a>::<wbr><a href='../index.html'>data</a>::<wbr><a href='index.html'>owned_allocation_cache</a>::<wbr><a class='struct' href=''>OwnedAllocationCache</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../../../index.html'>ncollide</a>::<wbr><a href='../../index.html'>utils</a>::<wbr><a href='../index.html'>data</a>::<wbr><a href='index.html'>owned_allocation_cache</a>::<wbr><a class="struct" href=''>OwnedAllocationCache</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
@@ -52,14 +52,14 @@
 <pre class='rust struct'>pub struct OwnedAllocationCache&lt;T&gt; { /* fields omitted */ }</pre><div class='docblock'><p>Cache for owned objects.</p>
 
 <p>Useful if fast allocation/deallocation of small owned objects is needed.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T&gt; <a class='struct' href='../../../../ncollide/utils/data/owned_allocation_cache/struct.OwnedAllocationCache.html' title='ncollide::utils::data::owned_allocation_cache::OwnedAllocationCache'>OwnedAllocationCache</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../../src/ncollide_utils/data/owned_allocation_cache.rs.html#11-45' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../../../../ncollide/utils/data/owned_allocation_cache/struct.OwnedAllocationCache.html' title='ncollide::utils::data::owned_allocation_cache::OwnedAllocationCache'>OwnedAllocationCache</a>&lt;T&gt;</code></span></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T&gt; <a class="struct" href="../../../../ncollide/utils/data/owned_allocation_cache/struct.OwnedAllocationCache.html" title="struct ncollide::utils::data::owned_allocation_cache::OwnedAllocationCache">OwnedAllocationCache</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../../src/ncollide_utils/data/owned_allocation_cache.rs.html#11-45' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="struct" href="../../../../ncollide/utils/data/owned_allocation_cache/struct.OwnedAllocationCache.html" title="struct ncollide::utils::data::owned_allocation_cache::OwnedAllocationCache">OwnedAllocationCache</a>&lt;T&gt;</code></span></h4>
 <div class='docblock'><p>Initializes the cache.</p>
-</div><h4 id='method.alloc' class='method'><span id='alloc.v' class='invisible'><code>fn <a href='#method.alloc' class='fnname'>alloc</a>(&amp;mut self, value: T) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;T&gt;</code></span></h4>
+</div><h4 id='method.alloc' class="method"><span id='alloc.v' class='invisible'><code>fn <a href='#method.alloc' class='fnname'>alloc</a>(&amp;mut self, value: T) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;T&gt;</code></span></h4>
 <div class='docblock'><p>Box a value into a potentially already allocated box.</p>
-</div><h4 id='method.retain' class='method'><span id='retain.v' class='invisible'><code>fn <a href='#method.retain' class='fnname'>retain</a>(&amp;mut self, elem: <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;T&gt;)</code></span></h4>
+</div><h4 id='method.retain' class="method"><span id='retain.v' class='invisible'><code>fn <a href='#method.retain' class='fnname'>retain</a>(&amp;mut self, elem: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;T&gt;)</code></span></h4>
 <div class='docblock'><p>Retains a box which can be re-used by the <code>box</code> method.</p>
-</div><h4 id='method.clear' class='method'><span id='clear.v' class='invisible'><code>fn <a href='#method.clear' class='fnname'>clear</a>(&amp;mut self)</code></span></h4>
+</div><h4 id='method.clear' class="method"><span id='clear.v' class='invisible'><code>fn <a href='#method.clear' class='fnname'>clear</a>(&amp;mut self)</code></span></h4>
 <div class='docblock'><p>Clears the cache, destroying any stored pointer.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>

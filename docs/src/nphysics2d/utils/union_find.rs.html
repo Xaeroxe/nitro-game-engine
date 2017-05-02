@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -104,66 +104,66 @@
 <span id="59">59</span>
 <span id="60">60</span>
 <span id="61">61</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! The union find algorithm.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! The union find algorithm.</span>
 
-<span class='doccomment'>/// An element used by the union-find algorithm.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>UnionFindSet</span> {
-    <span class='doccomment'>/// The parent of this union find element.</span>
-    <span class='ident'>parent</span>: <span class='ident'>usize</span>,
-    <span class='doccomment'>/// The rank of this union find element.</span>
-    <span class='ident'>rank</span>:   <span class='ident'>usize</span>
+<span class="doccomment">/// An element used by the union-find algorithm.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UnionFindSet</span> {
+    <span class="doccomment">/// The parent of this union find element.</span>
+    <span class="ident">parent</span>: <span class="ident">usize</span>,
+    <span class="doccomment">/// The rank of this union find element.</span>
+    <span class="ident">rank</span>:   <span class="ident">usize</span>
 }
 
-<span class='kw'>impl</span> <span class='ident'>UnionFindSet</span> {
-    <span class='doccomment'>/// Creates a new `UnionFindSet`.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>key</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>UnionFindSet</span> {
-        <span class='ident'>UnionFindSet</span> {
-            <span class='ident'>parent</span>: <span class='ident'>key</span>,
-            <span class='ident'>rank</span>:   <span class='number'>0</span>
+<span class="kw">impl</span> <span class="ident">UnionFindSet</span> {
+    <span class="doccomment">/// Creates a new `UnionFindSet`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">key</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">UnionFindSet</span> {
+        <span class="ident">UnionFindSet</span> {
+            <span class="ident">parent</span>: <span class="ident">key</span>,
+            <span class="ident">rank</span>:   <span class="number">0</span>
         }
     }
 
-    <span class='doccomment'>/// Reinitialize this set.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>reinit</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>key</span>: <span class='ident'>usize</span>) {
-        <span class='self'>self</span>.<span class='ident'>parent</span> <span class='op'>=</span> <span class='ident'>key</span>;
-        <span class='self'>self</span>.<span class='ident'>rank</span>   <span class='op'>=</span> <span class='number'>0</span>;
+    <span class="doccomment">/// Reinitialize this set.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reinit</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="ident">usize</span>) {
+        <span class="self">self</span>.<span class="ident">parent</span> <span class="op">=</span> <span class="ident">key</span>;
+        <span class="self">self</span>.<span class="ident">rank</span>   <span class="op">=</span> <span class="number">0</span>;
     }
 }
 
-<span class='doccomment'>/// Performs the `find` part of the union-find algorithm.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>find</span>(<span class='ident'>x</span>: <span class='ident'>usize</span>, <span class='ident'>sets</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>UnionFindSet</span>]) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-    <span class='kw'>if</span> <span class='ident'>sets</span>[<span class='ident'>x</span>].<span class='ident'>parent</span> <span class='op'>!=</span> <span class='ident'>x</span> {
-        <span class='ident'>sets</span>[<span class='ident'>x</span>].<span class='ident'>parent</span> <span class='op'>=</span> <span class='ident'>find</span>(<span class='ident'>sets</span>[<span class='ident'>x</span>].<span class='ident'>parent</span>, <span class='ident'>sets</span>);
+<span class="doccomment">/// Performs the `find` part of the union-find algorithm.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">find</span>(<span class="ident">x</span>: <span class="ident">usize</span>, <span class="ident">sets</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">UnionFindSet</span>]) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">if</span> <span class="ident">sets</span>[<span class="ident">x</span>].<span class="ident">parent</span> <span class="op">!=</span> <span class="ident">x</span> {
+        <span class="ident">sets</span>[<span class="ident">x</span>].<span class="ident">parent</span> <span class="op">=</span> <span class="ident">find</span>(<span class="ident">sets</span>[<span class="ident">x</span>].<span class="ident">parent</span>, <span class="ident">sets</span>);
     }
 
-    <span class='ident'>sets</span>[<span class='ident'>x</span>].<span class='ident'>parent</span>
+    <span class="ident">sets</span>[<span class="ident">x</span>].<span class="ident">parent</span>
 }
  
-<span class='doccomment'>/// Performs the `union` part of the union-find algorithm.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>union</span>(<span class='ident'>x</span>: <span class='ident'>usize</span>, <span class='ident'>y</span>: <span class='ident'>usize</span>, <span class='ident'>sets</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>UnionFindSet</span>]) {
-     <span class='kw'>let</span> <span class='ident'>x_root</span> <span class='op'>=</span> <span class='ident'>find</span>(<span class='ident'>x</span>, <span class='ident'>sets</span>);
-     <span class='kw'>let</span> <span class='ident'>y_root</span> <span class='op'>=</span> <span class='ident'>find</span>(<span class='ident'>y</span>, <span class='ident'>sets</span>);
+<span class="doccomment">/// Performs the `union` part of the union-find algorithm.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">union</span>(<span class="ident">x</span>: <span class="ident">usize</span>, <span class="ident">y</span>: <span class="ident">usize</span>, <span class="ident">sets</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">UnionFindSet</span>]) {
+     <span class="kw">let</span> <span class="ident">x_root</span> <span class="op">=</span> <span class="ident">find</span>(<span class="ident">x</span>, <span class="ident">sets</span>);
+     <span class="kw">let</span> <span class="ident">y_root</span> <span class="op">=</span> <span class="ident">find</span>(<span class="ident">y</span>, <span class="ident">sets</span>);
 
-     <span class='kw'>if</span> <span class='ident'>x_root</span> <span class='op'>==</span> <span class='ident'>y_root</span> {
-         <span class='kw'>return</span>
+     <span class="kw">if</span> <span class="ident">x_root</span> <span class="op">==</span> <span class="ident">y_root</span> {
+         <span class="kw">return</span>
      }
 
-     <span class='kw'>let</span> <span class='ident'>rankx</span> <span class='op'>=</span> <span class='ident'>sets</span>[<span class='ident'>x_root</span>].<span class='ident'>rank</span>;
-     <span class='kw'>let</span> <span class='ident'>ranky</span> <span class='op'>=</span> <span class='ident'>sets</span>[<span class='ident'>y_root</span>].<span class='ident'>rank</span>;
+     <span class="kw">let</span> <span class="ident">rankx</span> <span class="op">=</span> <span class="ident">sets</span>[<span class="ident">x_root</span>].<span class="ident">rank</span>;
+     <span class="kw">let</span> <span class="ident">ranky</span> <span class="op">=</span> <span class="ident">sets</span>[<span class="ident">y_root</span>].<span class="ident">rank</span>;
 
-     <span class='kw'>if</span> <span class='ident'>rankx</span> <span class='op'>&lt;</span> <span class='ident'>ranky</span> {
-         <span class='ident'>sets</span>[<span class='ident'>x_root</span>].<span class='ident'>parent</span> <span class='op'>=</span> <span class='ident'>y_root</span>
+     <span class="kw">if</span> <span class="ident">rankx</span> <span class="op">&lt;</span> <span class="ident">ranky</span> {
+         <span class="ident">sets</span>[<span class="ident">x_root</span>].<span class="ident">parent</span> <span class="op">=</span> <span class="ident">y_root</span>
      }
-     <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>rankx</span> <span class='op'>&gt;</span> <span class='ident'>ranky</span> {
-         <span class='ident'>sets</span>[<span class='ident'>y_root</span>].<span class='ident'>parent</span> <span class='op'>=</span> <span class='ident'>x_root</span>
+     <span class="kw">else</span> <span class="kw">if</span> <span class="ident">rankx</span> <span class="op">&gt;</span> <span class="ident">ranky</span> {
+         <span class="ident">sets</span>[<span class="ident">y_root</span>].<span class="ident">parent</span> <span class="op">=</span> <span class="ident">x_root</span>
      }
-     <span class='kw'>else</span> {
-         <span class='ident'>sets</span>[<span class='ident'>y_root</span>].<span class='ident'>parent</span> <span class='op'>=</span> <span class='ident'>x_root</span>;
-         <span class='ident'>sets</span>[<span class='ident'>x_root</span>].<span class='ident'>rank</span>   <span class='op'>=</span> <span class='ident'>rankx</span> <span class='op'>+</span> <span class='number'>1</span>
+     <span class="kw">else</span> {
+         <span class="ident">sets</span>[<span class="ident">y_root</span>].<span class="ident">parent</span> <span class="op">=</span> <span class="ident">x_root</span>;
+         <span class="ident">sets</span>[<span class="ident">x_root</span>].<span class="ident">rank</span>   <span class="op">=</span> <span class="ident">rankx</span> <span class="op">+</span> <span class="number">1</span>
      }
 }
 </pre>

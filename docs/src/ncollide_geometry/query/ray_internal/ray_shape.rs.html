@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -76,38 +76,38 @@
 <span id="31">31</span>
 <span id="32">32</span>
 <span id="33">33</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Isometry</span>};
-<span class='kw'>use</span> <span class='ident'>shape</span>::<span class='ident'>Shape</span>;
-<span class='kw'>use</span> <span class='ident'>query</span>::{<span class='ident'>RayCast</span>, <span class='ident'>Ray</span>, <span class='ident'>RayIntersection</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">math</span>::{<span class="ident">Point</span>, <span class="ident">Isometry</span>};
+<span class="kw">use</span> <span class="ident">shape</span>::<span class="ident">Shape</span>;
+<span class="kw">use</span> <span class="ident">query</span>::{<span class="ident">RayCast</span>, <span class="ident">Ray</span>, <span class="ident">RayIntersection</span>};
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> <span class='ident'>RayCast</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>toi_with_ray</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>ray</span>: <span class='kw-2'>&amp;</span><span class='ident'>Ray</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>, <span class='ident'>solid</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>as_ray_cast</span>()
-            .<span class='ident'>expect</span>(<span class='string'>&quot;No RayCast implementation for the underlying shape.&quot;</span>)
-            .<span class='ident'>toi_with_ray</span>(<span class='ident'>m</span>, <span class='ident'>ray</span>, <span class='ident'>solid</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>: <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;&gt;</span> <span class="ident">RayCast</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">toi_with_ray</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>, <span class="ident">ray</span>: <span class="kw-2">&amp;</span><span class="ident">Ray</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>, <span class="ident">solid</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Real</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">as_ray_cast</span>()
+            .<span class="ident">expect</span>(<span class="string">&quot;No RayCast implementation for the underlying shape.&quot;</span>)
+            .<span class="ident">toi_with_ray</span>(<span class="ident">m</span>, <span class="ident">ray</span>, <span class="ident">solid</span>)
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>toi_and_normal_with_ray</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>ray</span>: <span class='kw-2'>&amp;</span><span class='ident'>Ray</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>, <span class='ident'>solid</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>RayIntersection</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>as_ray_cast</span>()
-            .<span class='ident'>expect</span>(<span class='string'>&quot;No RayCast implementation for the underlying shape.&quot;</span>)
-            .<span class='ident'>toi_and_normal_with_ray</span>(<span class='ident'>m</span>, <span class='ident'>ray</span>, <span class='ident'>solid</span>)
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">toi_and_normal_with_ray</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>, <span class="ident">ray</span>: <span class="kw-2">&amp;</span><span class="ident">Ray</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>, <span class="ident">solid</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RayIntersection</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Vector</span><span class="op">&gt;&gt;</span> {
+        <span class="self">self</span>.<span class="ident">as_ray_cast</span>()
+            .<span class="ident">expect</span>(<span class="string">&quot;No RayCast implementation for the underlying shape.&quot;</span>)
+            .<span class="ident">toi_and_normal_with_ray</span>(<span class="ident">m</span>, <span class="ident">ray</span>, <span class="ident">solid</span>)
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>toi_and_normal_and_uv_with_ray</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>ray</span>: <span class='kw-2'>&amp;</span><span class='ident'>Ray</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>, <span class='ident'>solid</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>RayIntersection</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>as_ray_cast</span>()
-            .<span class='ident'>expect</span>(<span class='string'>&quot;No RayCast implementation for the underlying shape.&quot;</span>)
-            .<span class='ident'>toi_and_normal_and_uv_with_ray</span>(<span class='ident'>m</span>, <span class='ident'>ray</span>, <span class='ident'>solid</span>)
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">toi_and_normal_and_uv_with_ray</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>, <span class="ident">ray</span>: <span class="kw-2">&amp;</span><span class="ident">Ray</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>, <span class="ident">solid</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RayIntersection</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Vector</span><span class="op">&gt;&gt;</span> {
+        <span class="self">self</span>.<span class="ident">as_ray_cast</span>()
+            .<span class="ident">expect</span>(<span class="string">&quot;No RayCast implementation for the underlying shape.&quot;</span>)
+            .<span class="ident">toi_and_normal_and_uv_with_ray</span>(<span class="ident">m</span>, <span class="ident">ray</span>, <span class="ident">solid</span>)
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>intersects_ray</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>ray</span>: <span class='kw-2'>&amp;</span><span class='ident'>Ray</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>as_ray_cast</span>()
-            .<span class='ident'>expect</span>(<span class='string'>&quot;No RayCast implementation for the underlying shape.&quot;</span>)
-            .<span class='ident'>intersects_ray</span>(<span class='ident'>m</span>, <span class='ident'>ray</span>)
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">intersects_ray</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>, <span class="ident">ray</span>: <span class="kw-2">&amp;</span><span class="ident">Ray</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">as_ray_cast</span>()
+            .<span class="ident">expect</span>(<span class="string">&quot;No RayCast implementation for the underlying shape.&quot;</span>)
+            .<span class="ident">intersects_ray</span>(<span class="ident">m</span>, <span class="ident">ray</span>)
     }
 }
 </pre>

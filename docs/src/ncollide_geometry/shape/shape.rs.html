@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -192,154 +192,154 @@
 <span id="147">147</span>
 <span id="148">148</span>
 <span id="149">149</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::{<span class='ident'>Any</span>, <span class='ident'>TypeId</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::<span class='ident'>Deref</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>Arc</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::{<span class="ident">Any</span>, <span class="ident">TypeId</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::<span class="ident">Deref</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
 
-<span class='kw'>use</span> <span class='ident'>na</span>;
+<span class="kw">use</span> <span class="ident">na</span>;
 
-<span class='comment'>// Repr.</span>
-<span class='kw'>use</span> <span class='ident'>shape</span>::{<span class='ident'>CompositeShape</span>, <span class='ident'>SupportMap</span>};
-<span class='comment'>// Queries.</span>
-<span class='kw'>use</span> <span class='ident'>bounding_volume</span>::{<span class='ident'>AABB</span>, <span class='ident'>BoundingSphere</span>};
-<span class='kw'>use</span> <span class='ident'>query</span>::{<span class='ident'>RayCast</span>, <span class='ident'>PointQuery</span>};
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
+<span class="comment">// Repr.</span>
+<span class="kw">use</span> <span class="ident">shape</span>::{<span class="ident">CompositeShape</span>, <span class="ident">SupportMap</span>};
+<span class="comment">// Queries.</span>
+<span class="kw">use</span> <span class="ident">bounding_volume</span>::{<span class="ident">AABB</span>, <span class="ident">BoundingSphere</span>};
+<span class="kw">use</span> <span class="ident">query</span>::{<span class="ident">RayCast</span>, <span class="ident">PointQuery</span>};
+<span class="kw">use</span> <span class="ident">math</span>::<span class="ident">Point</span>;
 
-<span class='doccomment'>/// Trait implemented by all shapes supported by ncollide.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This allows dynamic inspection of the shape capabilities.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span><span class='op'>&gt;</span> : <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='ident'>Any</span> <span class='op'>+</span> <span class='ident'>GetTypeId</span> {
-    <span class='doccomment'>/// The AABB of `self`.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>aabb</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>) <span class='op'>-&gt;</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>;
+<span class="doccomment">/// Trait implemented by all shapes supported by ncollide.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This allows dynamic inspection of the shape capabilities.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span><span class="op">&gt;</span> : <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="ident">Any</span> <span class="op">+</span> <span class="ident">GetTypeId</span> {
+    <span class="doccomment">/// The AABB of `self`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">aabb</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>) <span class="op">-&gt;</span> <span class="ident">AABB</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>;
 
-    <span class='doccomment'>/// The bounding sphere of `self`.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>bounding_sphere</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>) <span class='op'>-&gt;</span> <span class='ident'>BoundingSphere</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>aabb</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>aabb</span>(<span class='ident'>m</span>);
+    <span class="doccomment">/// The bounding sphere of `self`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">bounding_sphere</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>) <span class="op">-&gt;</span> <span class="ident">BoundingSphere</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">aabb</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">aabb</span>(<span class="ident">m</span>);
 
-        <span class='ident'>BoundingSphere</span>::<span class='ident'>new</span>(<span class='ident'>aabb</span>.<span class='ident'>center</span>(), <span class='ident'>na</span>::<span class='ident'>norm_squared</span>(<span class='kw-2'>&amp;</span><span class='ident'>aabb</span>.<span class='ident'>half_extents</span>()))
+        <span class="ident">BoundingSphere</span>::<span class="ident">new</span>(<span class="ident">aabb</span>.<span class="ident">center</span>(), <span class="ident">na</span>::<span class="ident">norm_squared</span>(<span class="kw-2">&amp;</span><span class="ident">aabb</span>.<span class="ident">half_extents</span>()))
     }
 
-    <span class='doccomment'>/// The `RayCast` implementation of `self`.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>as_ray_cast</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>RayCast</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;&gt;</span> {
-        <span class='prelude-val'>None</span>
+    <span class="doccomment">/// The `RayCast` implementation of `self`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">as_ray_cast</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">RayCast</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;&gt;</span> {
+        <span class="prelude-val">None</span>
     }
 
-    <span class='doccomment'>/// The `PointQuery` implementation of `self`.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>as_point_query</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>PointQuery</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;&gt;</span> {
-        <span class='prelude-val'>None</span>
+    <span class="doccomment">/// The `PointQuery` implementation of `self`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">as_point_query</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">PointQuery</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;&gt;</span> {
+        <span class="prelude-val">None</span>
     }
 
 
-    <span class='doccomment'>/// The support mapping of `self` if applicable.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>as_support_map</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>SupportMap</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;&gt;</span> {
-        <span class='prelude-val'>None</span>
+    <span class="doccomment">/// The support mapping of `self` if applicable.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">as_support_map</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">SupportMap</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;&gt;</span> {
+        <span class="prelude-val">None</span>
     }
 
-    <span class='doccomment'>/// The composite shape representation of `self` if applicable.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>as_composite_shape</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>CompositeShape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;&gt;</span> {
-        <span class='prelude-val'>None</span>
+    <span class="doccomment">/// The composite shape representation of `self` if applicable.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">as_composite_shape</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">CompositeShape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;&gt;</span> {
+        <span class="prelude-val">None</span>
     }
 
-    <span class='doccomment'>/// Whether `self` uses a supportmapping-based representation.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>is_support_map</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>as_support_map</span>().<span class='ident'>is_some</span>()
+    <span class="doccomment">/// Whether `self` uses a supportmapping-based representation.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">is_support_map</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">as_support_map</span>().<span class="ident">is_some</span>()
     }
 
-    <span class='doccomment'>/// Whether `self` uses a composite shape-based representation.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>is_composite_shape</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>as_composite_shape</span>().<span class='ident'>is_some</span>()
+    <span class="doccomment">/// Whether `self` uses a composite shape-based representation.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">is_composite_shape</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">as_composite_shape</span>().<span class="ident">is_some</span>()
     }
 }
 
-<span class='comment'>// Define our own because it is unstable.</span>
-<span class='doccomment'>/// Raw representation of a trait-object.</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>)]</span>
-<span class='kw'>struct</span> <span class='ident'>TraitObject</span> {
-    <span class='doccomment'>/// Raw pointer to the trait object data.</span>
-    <span class='kw'>pub</span> <span class='ident'>data</span>:   <span class='kw-2'>*</span><span class='kw-2'>mut</span> (),
-    <span class='doccomment'>/// Raw pointer to the trait object virtual table.</span>
-    <span class='kw'>pub</span> <span class='ident'>vtable</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> ()
+<span class="comment">// Define our own because it is unstable.</span>
+<span class="doccomment">/// Raw representation of a trait-object.</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">struct</span> <span class="ident">TraitObject</span> {
+    <span class="doccomment">/// Raw pointer to the trait object data.</span>
+    <span class="kw">pub</span> <span class="ident">data</span>:   <span class="kw-2">*</span><span class="kw-2">mut</span> (),
+    <span class="doccomment">/// Raw pointer to the trait object virtual table.</span>
+    <span class="kw">pub</span> <span class="ident">vtable</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> ()
 }
 
-<span class='doccomment'>/// Trait for casting shapes to its exact represetation.</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> <span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Tests if this shape has a specific type `T`.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_shape</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>type_id</span>() <span class='op'>==</span> <span class='ident'>TypeId</span>::<span class='ident'>of</span>::<span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>()
+<span class="doccomment">/// Trait for casting shapes to its exact represetation.</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>: <span class="lifetime">&#39;static</span><span class="op">&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Tests if this shape has a specific type `T`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_shape</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">type_id</span>() <span class="op">==</span> <span class="ident">TypeId</span>::<span class="ident">of</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>()
     }
 
-    <span class='doccomment'>/// Performs the cast.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_shape</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>is_shape</span>::<span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>() {
-            <span class='kw'>unsafe</span> {
-                <span class='kw'>let</span> <span class='ident'>to</span>: <span class='ident'>TraitObject</span> <span class='op'>=</span> <span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='self'>self</span>);
-                <span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='ident'>to</span>.<span class='ident'>data</span>)
+    <span class="doccomment">/// Performs the cast.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_shape</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_shape</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>() {
+            <span class="kw">unsafe</span> {
+                <span class="kw">let</span> <span class="ident">to</span>: <span class="ident">TraitObject</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="self">self</span>);
+                <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">to</span>.<span class="ident">data</span>)
             }
         }
-        <span class='kw'>else</span> {
-            <span class='prelude-val'>None</span>
+        <span class="kw">else</span> {
+            <span class="prelude-val">None</span>
         }
     }
 }
 
-<span class='doccomment'>/// A shared immutable handle to an abstract shape.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='ident'>handle</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>
+<span class="doccomment">/// A shared immutable handle to an abstract shape.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="ident">handle</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a sharable shape handle from a shape.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;&gt;</span>(<span class='ident'>shape</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-        <span class='ident'>ShapeHandle</span> {
-            <span class='ident'>handle</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>shape</span>) <span class='kw'>as</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;&gt;</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span><span class="op">&gt;</span> <span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a sharable shape handle from a shape.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;&gt;</span>(<span class="ident">shape</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+        <span class="ident">ShapeHandle</span> {
+            <span class="ident">handle</span>: <span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">shape</span>) <span class="kw">as</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;&gt;</span>)
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>as_ref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>deref</span>()
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span><span class="op">&gt;</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">deref</span>()
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>Deref</span> <span class='kw'>for</span> <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Target</span> <span class='op'>=</span> <span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span><span class="op">&gt;</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>;
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>deref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-        <span class='kw-2'>&amp;</span><span class='kw-2'>*</span><span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>handle</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+        <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>.<span class="ident">handle</span>
     }
 }
 
-<span class='doccomment'>/// Trait to retrieve the `TypeId` of a shape.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This exists only because `Any::get_type_id()` is unstable.</span>
-<span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>trait</span> <span class='ident'>GetTypeId</span> {
-    <span class='doccomment'>/// Gets the dynamic type identifier of this shape.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>type_id</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>TypeId</span>;
+<span class="doccomment">/// Trait to retrieve the `TypeId` of a shape.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This exists only because `Any::get_type_id()` is unstable.</span>
+<span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">trait</span> <span class="ident">GetTypeId</span> {
+    <span class="doccomment">/// Gets the dynamic type identifier of this shape.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">type_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">TypeId</span>;
 }
 
-<span class='kw'>unsafe</span> <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Any</span><span class='op'>&gt;</span> <span class='ident'>GetTypeId</span> <span class='kw'>for</span> <span class='ident'>T</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>type_id</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>TypeId</span> {
-        <span class='ident'>TypeId</span>::<span class='ident'>of</span>::<span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span>()
+<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Any</span><span class="op">&gt;</span> <span class="ident">GetTypeId</span> <span class="kw">for</span> <span class="ident">T</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">type_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">TypeId</span> {
+        <span class="ident">TypeId</span>::<span class="ident">of</span>::<span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>()
     }
 }
 </pre>

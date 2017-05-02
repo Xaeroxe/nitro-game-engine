@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -338,300 +338,300 @@
 <span id="293">293</span>
 <span id="294">294</span>
 <span id="295">295</span>
-</pre><pre class='rust '>
-<span class='comment'>// Adapted from libsyntax.</span>
+</pre><pre class="rust ">
+<span class="comment">// Adapted from libsyntax.</span>
 
-<span class='doccomment'>//! AST walker. Each overridden visit method has full control over what</span>
-<span class='doccomment'>//! happens with its node, it can do its own traversal of the node&#39;s children,</span>
-<span class='doccomment'>//! call `visit::walk_*` to apply the default traversal algorithm, or prevent</span>
-<span class='doccomment'>//! deeper traversal by doing nothing.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Note: it is an important invariant that the default visitor walks the body</span>
-<span class='doccomment'>//! of a function in &quot;execution order&quot; (more concretely, reverse post-order</span>
-<span class='doccomment'>//! with respect to the CFG implied by the AST), meaning that if AST node A may</span>
-<span class='doccomment'>//! execute before AST node B, then A is visited first.  The borrow checker in</span>
-<span class='doccomment'>//! particular relies on this property.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Note: walking an AST before macro expansion is probably a bad idea. For</span>
-<span class='doccomment'>//! instance, a walker looking for item names in a module will miss all of</span>
-<span class='doccomment'>//! those that are created by the expansion of a macro.</span>
+<span class="doccomment">//! AST walker. Each overridden visit method has full control over what</span>
+<span class="doccomment">//! happens with its node, it can do its own traversal of the node&#39;s children,</span>
+<span class="doccomment">//! call `visit::walk_*` to apply the default traversal algorithm, or prevent</span>
+<span class="doccomment">//! deeper traversal by doing nothing.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Note: it is an important invariant that the default visitor walks the body</span>
+<span class="doccomment">//! of a function in &quot;execution order&quot; (more concretely, reverse post-order</span>
+<span class="doccomment">//! with respect to the CFG implied by the AST), meaning that if AST node A may</span>
+<span class="doccomment">//! execute before AST node B, then A is visited first.  The borrow checker in</span>
+<span class="doccomment">//! particular relies on this property.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Note: walking an AST before macro expansion is probably a bad idea. For</span>
+<span class="doccomment">//! instance, a walker looking for item names in a module will miss all of</span>
+<span class="doccomment">//! those that are created by the expansion of a macro.</span>
 
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='kw-2'>*</span>;
+<span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
 
-<span class='doccomment'>/// Each method of the Visitor trait is a hook to be potentially</span>
-<span class='doccomment'>/// overridden.  Each method&#39;s default implementation recursively visits</span>
-<span class='doccomment'>/// the substructure of the input via the corresponding `walk` method;</span>
-<span class='doccomment'>/// e.g. the `visit_mod` method by default calls `visit::walk_mod`.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// If you want to ensure that your code handles every variant</span>
-<span class='doccomment'>/// explicitly, you need to override each method.  (And you also need</span>
-<span class='doccomment'>/// to monitor future changes to `Visitor` in case a new method with a</span>
-<span class='doccomment'>/// new default implementation gets introduced.)</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Visitor</span>: <span class='ident'>Sized</span> {
-    <span class='kw'>fn</span> <span class='ident'>visit_ident</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>_ident</span>: <span class='kw-2'>&amp;</span><span class='ident'>Ident</span>) {}
-    <span class='kw'>fn</span> <span class='ident'>visit_macro_input</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>macro_input</span>: <span class='kw-2'>&amp;</span><span class='ident'>MacroInput</span>) {
-        <span class='ident'>walk_macro_input</span>(<span class='self'>self</span>, <span class='ident'>macro_input</span>)
+<span class="doccomment">/// Each method of the Visitor trait is a hook to be potentially</span>
+<span class="doccomment">/// overridden.  Each method&#39;s default implementation recursively visits</span>
+<span class="doccomment">/// the substructure of the input via the corresponding `walk` method;</span>
+<span class="doccomment">/// e.g. the `visit_mod` method by default calls `visit::walk_mod`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If you want to ensure that your code handles every variant</span>
+<span class="doccomment">/// explicitly, you need to override each method.  (And you also need</span>
+<span class="doccomment">/// to monitor future changes to `Visitor` in case a new method with a</span>
+<span class="doccomment">/// new default implementation gets introduced.)</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Visitor</span>: <span class="ident">Sized</span> {
+    <span class="kw">fn</span> <span class="ident">visit_ident</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_ident</span>: <span class="kw-2">&amp;</span><span class="ident">Ident</span>) {}
+    <span class="kw">fn</span> <span class="ident">visit_macro_input</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">macro_input</span>: <span class="kw-2">&amp;</span><span class="ident">MacroInput</span>) {
+        <span class="ident">walk_macro_input</span>(<span class="self">self</span>, <span class="ident">macro_input</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>visit_ty</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>ty</span>: <span class='kw-2'>&amp;</span><span class='ident'>Ty</span>) {
-        <span class='ident'>walk_ty</span>(<span class='self'>self</span>, <span class='ident'>ty</span>)
+    <span class="kw">fn</span> <span class="ident">visit_ty</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">Ty</span>) {
+        <span class="ident">walk_ty</span>(<span class="self">self</span>, <span class="ident">ty</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>visit_generics</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>generics</span>: <span class='kw-2'>&amp;</span><span class='ident'>Generics</span>) {
-        <span class='ident'>walk_generics</span>(<span class='self'>self</span>, <span class='ident'>generics</span>)
+    <span class="kw">fn</span> <span class="ident">visit_generics</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">generics</span>: <span class="kw-2">&amp;</span><span class="ident">Generics</span>) {
+        <span class="ident">walk_generics</span>(<span class="self">self</span>, <span class="ident">generics</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>visit_ty_param_bound</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>bound</span>: <span class='kw-2'>&amp;</span><span class='ident'>TyParamBound</span>) {
-        <span class='ident'>walk_ty_param_bound</span>(<span class='self'>self</span>, <span class='ident'>bound</span>)
+    <span class="kw">fn</span> <span class="ident">visit_ty_param_bound</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bound</span>: <span class="kw-2">&amp;</span><span class="ident">TyParamBound</span>) {
+        <span class="ident">walk_ty_param_bound</span>(<span class="self">self</span>, <span class="ident">bound</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>visit_poly_trait_ref</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>trait_ref</span>: <span class='kw-2'>&amp;</span><span class='ident'>PolyTraitRef</span>, <span class='ident'>modifier</span>: <span class='kw-2'>&amp;</span><span class='ident'>TraitBoundModifier</span>) {
-        <span class='ident'>walk_poly_trait_ref</span>(<span class='self'>self</span>, <span class='ident'>trait_ref</span>, <span class='ident'>modifier</span>)
+    <span class="kw">fn</span> <span class="ident">visit_poly_trait_ref</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">trait_ref</span>: <span class="kw-2">&amp;</span><span class="ident">PolyTraitRef</span>, <span class="ident">modifier</span>: <span class="kw-2">&amp;</span><span class="ident">TraitBoundModifier</span>) {
+        <span class="ident">walk_poly_trait_ref</span>(<span class="self">self</span>, <span class="ident">trait_ref</span>, <span class="ident">modifier</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>visit_variant_data</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='ident'>VariantData</span>, <span class='ident'>_ident</span>: <span class='kw-2'>&amp;</span><span class='ident'>Ident</span>, <span class='ident'>_generics</span>: <span class='kw-2'>&amp;</span><span class='ident'>Generics</span>) {
-        <span class='ident'>walk_variant_data</span>(<span class='self'>self</span>, <span class='ident'>data</span>)
+    <span class="kw">fn</span> <span class="ident">visit_variant_data</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">VariantData</span>, <span class="ident">_ident</span>: <span class="kw-2">&amp;</span><span class="ident">Ident</span>, <span class="ident">_generics</span>: <span class="kw-2">&amp;</span><span class="ident">Generics</span>) {
+        <span class="ident">walk_variant_data</span>(<span class="self">self</span>, <span class="ident">data</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>visit_field</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>field</span>: <span class='kw-2'>&amp;</span><span class='ident'>Field</span>) {
-        <span class='ident'>walk_field</span>(<span class='self'>self</span>, <span class='ident'>field</span>)
+    <span class="kw">fn</span> <span class="ident">visit_field</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">field</span>: <span class="kw-2">&amp;</span><span class="ident">Field</span>) {
+        <span class="ident">walk_field</span>(<span class="self">self</span>, <span class="ident">field</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>visit_variant</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>variant</span>: <span class='kw-2'>&amp;</span><span class='ident'>Variant</span>, <span class='ident'>generics</span>: <span class='kw-2'>&amp;</span><span class='ident'>Generics</span>) {
-        <span class='ident'>walk_variant</span>(<span class='self'>self</span>, <span class='ident'>variant</span>, <span class='ident'>generics</span>)
+    <span class="kw">fn</span> <span class="ident">visit_variant</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">variant</span>: <span class="kw-2">&amp;</span><span class="ident">Variant</span>, <span class="ident">generics</span>: <span class="kw-2">&amp;</span><span class="ident">Generics</span>) {
+        <span class="ident">walk_variant</span>(<span class="self">self</span>, <span class="ident">variant</span>, <span class="ident">generics</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>visit_lifetime</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>_lifetime</span>: <span class='kw-2'>&amp;</span><span class='ident'>Lifetime</span>) {}
-    <span class='kw'>fn</span> <span class='ident'>visit_lifetime_def</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>lifetime</span>: <span class='kw-2'>&amp;</span><span class='ident'>LifetimeDef</span>) {
-        <span class='ident'>walk_lifetime_def</span>(<span class='self'>self</span>, <span class='ident'>lifetime</span>)
+    <span class="kw">fn</span> <span class="ident">visit_lifetime</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_lifetime</span>: <span class="kw-2">&amp;</span><span class="ident">Lifetime</span>) {}
+    <span class="kw">fn</span> <span class="ident">visit_lifetime_def</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">lifetime</span>: <span class="kw-2">&amp;</span><span class="ident">LifetimeDef</span>) {
+        <span class="ident">walk_lifetime_def</span>(<span class="self">self</span>, <span class="ident">lifetime</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>visit_path</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>path</span>: <span class='kw-2'>&amp;</span><span class='ident'>Path</span>) {
-        <span class='ident'>walk_path</span>(<span class='self'>self</span>, <span class='ident'>path</span>)
+    <span class="kw">fn</span> <span class="ident">visit_path</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) {
+        <span class="ident">walk_path</span>(<span class="self">self</span>, <span class="ident">path</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>visit_path_segment</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>path_segment</span>: <span class='kw-2'>&amp;</span><span class='ident'>PathSegment</span>) {
-        <span class='ident'>walk_path_segment</span>(<span class='self'>self</span>, <span class='ident'>path_segment</span>)
+    <span class="kw">fn</span> <span class="ident">visit_path_segment</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">path_segment</span>: <span class="kw-2">&amp;</span><span class="ident">PathSegment</span>) {
+        <span class="ident">walk_path_segment</span>(<span class="self">self</span>, <span class="ident">path_segment</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>visit_path_parameters</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>path_parameters</span>: <span class='kw-2'>&amp;</span><span class='ident'>PathParameters</span>) {
-        <span class='ident'>walk_path_parameters</span>(<span class='self'>self</span>, <span class='ident'>path_parameters</span>)
+    <span class="kw">fn</span> <span class="ident">visit_path_parameters</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">path_parameters</span>: <span class="kw-2">&amp;</span><span class="ident">PathParameters</span>) {
+        <span class="ident">walk_path_parameters</span>(<span class="self">self</span>, <span class="ident">path_parameters</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>visit_assoc_type_binding</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>type_binding</span>: <span class='kw-2'>&amp;</span><span class='ident'>TypeBinding</span>) {
-        <span class='ident'>walk_assoc_type_binding</span>(<span class='self'>self</span>, <span class='ident'>type_binding</span>)
+    <span class="kw">fn</span> <span class="ident">visit_assoc_type_binding</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">type_binding</span>: <span class="kw-2">&amp;</span><span class="ident">TypeBinding</span>) {
+        <span class="ident">walk_assoc_type_binding</span>(<span class="self">self</span>, <span class="ident">type_binding</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>visit_attribute</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>_attr</span>: <span class='kw-2'>&amp;</span><span class='ident'>Attribute</span>) {}
-    <span class='kw'>fn</span> <span class='ident'>visit_fn_ret_ty</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>ret_ty</span>: <span class='kw-2'>&amp;</span><span class='ident'>FunctionRetTy</span>) {
-        <span class='ident'>walk_fn_ret_ty</span>(<span class='self'>self</span>, <span class='ident'>ret_ty</span>)
+    <span class="kw">fn</span> <span class="ident">visit_attribute</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_attr</span>: <span class="kw-2">&amp;</span><span class="ident">Attribute</span>) {}
+    <span class="kw">fn</span> <span class="ident">visit_fn_ret_ty</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ret_ty</span>: <span class="kw-2">&amp;</span><span class="ident">FunctionRetTy</span>) {
+        <span class="ident">walk_fn_ret_ty</span>(<span class="self">self</span>, <span class="ident">ret_ty</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>visit_const_expr</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>expr</span>: <span class='kw-2'>&amp;</span><span class='ident'>ConstExpr</span>) {
-        <span class='ident'>walk_const_expr</span>(<span class='self'>self</span>, <span class='ident'>expr</span>)
+    <span class="kw">fn</span> <span class="ident">visit_const_expr</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">expr</span>: <span class="kw-2">&amp;</span><span class="ident">ConstExpr</span>) {
+        <span class="ident">walk_const_expr</span>(<span class="self">self</span>, <span class="ident">expr</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>visit_lit</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>_lit</span>: <span class='kw-2'>&amp;</span><span class='ident'>Lit</span>) {}
+    <span class="kw">fn</span> <span class="ident">visit_lit</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_lit</span>: <span class="kw-2">&amp;</span><span class="ident">Lit</span>) {}
 }
 
-<span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>walk_list</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>visitor</span>: <span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>method</span>: <span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>list</span>: <span class='ident'>expr</span>) <span class='op'>=&gt;</span> {
-        <span class='kw'>for</span> <span class='ident'>elem</span> <span class='kw'>in</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>list</span> {
-            <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>visitor</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>method</span>(<span class='ident'>elem</span>)
+<span class="attribute">#[<span class="ident">macro_export</span>]</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">walk_list</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">visitor</span>: <span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">list</span>: <span class="ident">expr</span>) <span class="op">=&gt;</span> {
+        <span class="kw">for</span> <span class="ident">elem</span> <span class="kw">in</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">list</span> {
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visitor</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>(<span class="ident">elem</span>)
         }
     };
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>visitor</span>: <span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>method</span>: <span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>list</span>: <span class='ident'>expr</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>extra_args</span>: <span class='ident'>expr</span>),<span class='kw-2'>*</span>) <span class='op'>=&gt;</span> {
-        <span class='kw'>for</span> <span class='ident'>elem</span> <span class='kw'>in</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>list</span> {
-            <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>visitor</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>method</span>(<span class='ident'>elem</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>extra_args</span>,)<span class='kw-2'>*</span>)
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">visitor</span>: <span class="ident">expr</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">list</span>: <span class="ident">expr</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">extra_args</span>: <span class="ident">expr</span>),<span class="kw-2">*</span>) <span class="op">=&gt;</span> {
+        <span class="kw">for</span> <span class="ident">elem</span> <span class="kw">in</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">list</span> {
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visitor</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>(<span class="ident">elem</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">extra_args</span>,)<span class="kw-2">*</span>)
         }
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>walk_opt_ident</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>Visitor</span><span class='op'>&gt;</span>(<span class='ident'>visitor</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span>, <span class='ident'>opt_ident</span>: <span class='kw-2'>&amp;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Ident</span><span class='op'>&gt;</span>) {
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>ident</span>) <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>opt_ident</span> {
-        <span class='ident'>visitor</span>.<span class='ident'>visit_ident</span>(<span class='ident'>ident</span>);
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">walk_opt_ident</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&gt;</span>(<span class="ident">visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span>, <span class="ident">opt_ident</span>: <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ident</span><span class="op">&gt;</span>) {
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">ident</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="ident">opt_ident</span> {
+        <span class="ident">visitor</span>.<span class="ident">visit_ident</span>(<span class="ident">ident</span>);
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>walk_lifetime_def</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>Visitor</span><span class='op'>&gt;</span>(<span class='ident'>visitor</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span>, <span class='ident'>lifetime_def</span>: <span class='kw-2'>&amp;</span><span class='ident'>LifetimeDef</span>) {
-    <span class='ident'>visitor</span>.<span class='ident'>visit_lifetime</span>(<span class='kw-2'>&amp;</span><span class='ident'>lifetime_def</span>.<span class='ident'>lifetime</span>);
-    <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_lifetime</span>, <span class='kw-2'>&amp;</span><span class='ident'>lifetime_def</span>.<span class='ident'>bounds</span>);
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">walk_lifetime_def</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&gt;</span>(<span class="ident">visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span>, <span class="ident">lifetime_def</span>: <span class="kw-2">&amp;</span><span class="ident">LifetimeDef</span>) {
+    <span class="ident">visitor</span>.<span class="ident">visit_lifetime</span>(<span class="kw-2">&amp;</span><span class="ident">lifetime_def</span>.<span class="ident">lifetime</span>);
+    <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_lifetime</span>, <span class="kw-2">&amp;</span><span class="ident">lifetime_def</span>.<span class="ident">bounds</span>);
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>walk_poly_trait_ref</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>(<span class='ident'>visitor</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span>, <span class='ident'>trait_ref</span>: <span class='kw-2'>&amp;</span><span class='ident'>PolyTraitRef</span>, _: <span class='kw-2'>&amp;</span><span class='ident'>TraitBoundModifier</span>)
-    <span class='kw'>where</span> <span class='ident'>V</span>: <span class='ident'>Visitor</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">walk_poly_trait_ref</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="ident">visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span>, <span class="ident">trait_ref</span>: <span class="kw-2">&amp;</span><span class="ident">PolyTraitRef</span>, _: <span class="kw-2">&amp;</span><span class="ident">TraitBoundModifier</span>)
+    <span class="kw">where</span> <span class="ident">V</span>: <span class="ident">Visitor</span>
 {
-    <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_lifetime_def</span>, <span class='kw-2'>&amp;</span><span class='ident'>trait_ref</span>.<span class='ident'>bound_lifetimes</span>);
-    <span class='ident'>visitor</span>.<span class='ident'>visit_path</span>(<span class='kw-2'>&amp;</span><span class='ident'>trait_ref</span>.<span class='ident'>trait_ref</span>);
+    <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_lifetime_def</span>, <span class="kw-2">&amp;</span><span class="ident">trait_ref</span>.<span class="ident">bound_lifetimes</span>);
+    <span class="ident">visitor</span>.<span class="ident">visit_path</span>(<span class="kw-2">&amp;</span><span class="ident">trait_ref</span>.<span class="ident">trait_ref</span>);
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>walk_macro_input</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>Visitor</span><span class='op'>&gt;</span>(<span class='ident'>visitor</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span>, <span class='ident'>macro_input</span>: <span class='kw-2'>&amp;</span><span class='ident'>MacroInput</span>) {
-    <span class='ident'>visitor</span>.<span class='ident'>visit_ident</span>(<span class='kw-2'>&amp;</span><span class='ident'>macro_input</span>.<span class='ident'>ident</span>);
-    <span class='ident'>visitor</span>.<span class='ident'>visit_generics</span>(<span class='kw-2'>&amp;</span><span class='ident'>macro_input</span>.<span class='ident'>generics</span>);
-    <span class='kw'>match</span> <span class='ident'>macro_input</span>.<span class='ident'>body</span> {
-        <span class='ident'>Body</span>::<span class='ident'>Enum</span>(<span class='kw-2'>ref</span> <span class='ident'>variants</span>) <span class='op'>=&gt;</span> {
-            <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_variant</span>, <span class='ident'>variants</span>, <span class='kw-2'>&amp;</span><span class='ident'>macro_input</span>.<span class='ident'>generics</span>);
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">walk_macro_input</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&gt;</span>(<span class="ident">visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span>, <span class="ident">macro_input</span>: <span class="kw-2">&amp;</span><span class="ident">MacroInput</span>) {
+    <span class="ident">visitor</span>.<span class="ident">visit_ident</span>(<span class="kw-2">&amp;</span><span class="ident">macro_input</span>.<span class="ident">ident</span>);
+    <span class="ident">visitor</span>.<span class="ident">visit_generics</span>(<span class="kw-2">&amp;</span><span class="ident">macro_input</span>.<span class="ident">generics</span>);
+    <span class="kw">match</span> <span class="ident">macro_input</span>.<span class="ident">body</span> {
+        <span class="ident">Body</span>::<span class="ident">Enum</span>(<span class="kw-2">ref</span> <span class="ident">variants</span>) <span class="op">=&gt;</span> {
+            <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_variant</span>, <span class="ident">variants</span>, <span class="kw-2">&amp;</span><span class="ident">macro_input</span>.<span class="ident">generics</span>);
         }
-        <span class='ident'>Body</span>::<span class='ident'>Struct</span>(<span class='kw-2'>ref</span> <span class='ident'>variant_data</span>) <span class='op'>=&gt;</span> {
-            <span class='ident'>visitor</span>.<span class='ident'>visit_variant_data</span>(<span class='ident'>variant_data</span>, <span class='kw-2'>&amp;</span><span class='ident'>macro_input</span>.<span class='ident'>ident</span>, <span class='kw-2'>&amp;</span><span class='ident'>macro_input</span>.<span class='ident'>generics</span>);
+        <span class="ident">Body</span>::<span class="ident">Struct</span>(<span class="kw-2">ref</span> <span class="ident">variant_data</span>) <span class="op">=&gt;</span> {
+            <span class="ident">visitor</span>.<span class="ident">visit_variant_data</span>(<span class="ident">variant_data</span>, <span class="kw-2">&amp;</span><span class="ident">macro_input</span>.<span class="ident">ident</span>, <span class="kw-2">&amp;</span><span class="ident">macro_input</span>.<span class="ident">generics</span>);
         }
     }
-    <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_attribute</span>, <span class='kw-2'>&amp;</span><span class='ident'>macro_input</span>.<span class='ident'>attrs</span>);
+    <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_attribute</span>, <span class="kw-2">&amp;</span><span class="ident">macro_input</span>.<span class="ident">attrs</span>);
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>walk_variant</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>(<span class='ident'>visitor</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span>, <span class='ident'>variant</span>: <span class='kw-2'>&amp;</span><span class='ident'>Variant</span>, <span class='ident'>generics</span>: <span class='kw-2'>&amp;</span><span class='ident'>Generics</span>)
-    <span class='kw'>where</span> <span class='ident'>V</span>: <span class='ident'>Visitor</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">walk_variant</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="ident">visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span>, <span class="ident">variant</span>: <span class="kw-2">&amp;</span><span class="ident">Variant</span>, <span class="ident">generics</span>: <span class="kw-2">&amp;</span><span class="ident">Generics</span>)
+    <span class="kw">where</span> <span class="ident">V</span>: <span class="ident">Visitor</span>
 {
-    <span class='ident'>visitor</span>.<span class='ident'>visit_ident</span>(<span class='kw-2'>&amp;</span><span class='ident'>variant</span>.<span class='ident'>ident</span>);
-    <span class='ident'>visitor</span>.<span class='ident'>visit_variant_data</span>(<span class='kw-2'>&amp;</span><span class='ident'>variant</span>.<span class='ident'>data</span>, <span class='kw-2'>&amp;</span><span class='ident'>variant</span>.<span class='ident'>ident</span>, <span class='ident'>generics</span>);
-    <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_attribute</span>, <span class='kw-2'>&amp;</span><span class='ident'>variant</span>.<span class='ident'>attrs</span>);
+    <span class="ident">visitor</span>.<span class="ident">visit_ident</span>(<span class="kw-2">&amp;</span><span class="ident">variant</span>.<span class="ident">ident</span>);
+    <span class="ident">visitor</span>.<span class="ident">visit_variant_data</span>(<span class="kw-2">&amp;</span><span class="ident">variant</span>.<span class="ident">data</span>, <span class="kw-2">&amp;</span><span class="ident">variant</span>.<span class="ident">ident</span>, <span class="ident">generics</span>);
+    <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_attribute</span>, <span class="kw-2">&amp;</span><span class="ident">variant</span>.<span class="ident">attrs</span>);
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>walk_ty</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>Visitor</span><span class='op'>&gt;</span>(<span class='ident'>visitor</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span>, <span class='ident'>ty</span>: <span class='kw-2'>&amp;</span><span class='ident'>Ty</span>) {
-    <span class='kw'>match</span> <span class='kw-2'>*</span><span class='ident'>ty</span> {
-        <span class='ident'>Ty</span>::<span class='ident'>Slice</span>(<span class='kw-2'>ref</span> <span class='ident'>inner</span>) <span class='op'>|</span>
-        <span class='ident'>Ty</span>::<span class='ident'>Paren</span>(<span class='kw-2'>ref</span> <span class='ident'>inner</span>) <span class='op'>=&gt;</span> <span class='ident'>visitor</span>.<span class='ident'>visit_ty</span>(<span class='ident'>inner</span>),
-        <span class='ident'>Ty</span>::<span class='ident'>Ptr</span>(<span class='kw-2'>ref</span> <span class='ident'>mutable_type</span>) <span class='op'>=&gt;</span> <span class='ident'>visitor</span>.<span class='ident'>visit_ty</span>(<span class='kw-2'>&amp;</span><span class='ident'>mutable_type</span>.<span class='ident'>ty</span>),
-        <span class='ident'>Ty</span>::<span class='ident'>Rptr</span>(<span class='kw-2'>ref</span> <span class='ident'>opt_lifetime</span>, <span class='kw-2'>ref</span> <span class='ident'>mutable_type</span>) <span class='op'>=&gt;</span> {
-            <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_lifetime</span>, <span class='ident'>opt_lifetime</span>);
-            <span class='ident'>visitor</span>.<span class='ident'>visit_ty</span>(<span class='kw-2'>&amp;</span><span class='ident'>mutable_type</span>.<span class='ident'>ty</span>)
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">walk_ty</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&gt;</span>(<span class="ident">visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span>, <span class="ident">ty</span>: <span class="kw-2">&amp;</span><span class="ident">Ty</span>) {
+    <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">ty</span> {
+        <span class="ident">Ty</span>::<span class="ident">Slice</span>(<span class="kw-2">ref</span> <span class="ident">inner</span>) <span class="op">|</span>
+        <span class="ident">Ty</span>::<span class="ident">Paren</span>(<span class="kw-2">ref</span> <span class="ident">inner</span>) <span class="op">=&gt;</span> <span class="ident">visitor</span>.<span class="ident">visit_ty</span>(<span class="ident">inner</span>),
+        <span class="ident">Ty</span>::<span class="ident">Ptr</span>(<span class="kw-2">ref</span> <span class="ident">mutable_type</span>) <span class="op">=&gt;</span> <span class="ident">visitor</span>.<span class="ident">visit_ty</span>(<span class="kw-2">&amp;</span><span class="ident">mutable_type</span>.<span class="ident">ty</span>),
+        <span class="ident">Ty</span>::<span class="ident">Rptr</span>(<span class="kw-2">ref</span> <span class="ident">opt_lifetime</span>, <span class="kw-2">ref</span> <span class="ident">mutable_type</span>) <span class="op">=&gt;</span> {
+            <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_lifetime</span>, <span class="ident">opt_lifetime</span>);
+            <span class="ident">visitor</span>.<span class="ident">visit_ty</span>(<span class="kw-2">&amp;</span><span class="ident">mutable_type</span>.<span class="ident">ty</span>)
         }
-        <span class='ident'>Ty</span>::<span class='ident'>Never</span> <span class='op'>|</span> <span class='ident'>Ty</span>::<span class='ident'>Infer</span> <span class='op'>=&gt;</span> {}
-        <span class='ident'>Ty</span>::<span class='ident'>Tup</span>(<span class='kw-2'>ref</span> <span class='ident'>tuple_element_types</span>) <span class='op'>=&gt;</span> {
-            <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_ty</span>, <span class='ident'>tuple_element_types</span>);
+        <span class="ident">Ty</span>::<span class="ident">Never</span> <span class="op">|</span> <span class="ident">Ty</span>::<span class="ident">Infer</span> <span class="op">=&gt;</span> {}
+        <span class="ident">Ty</span>::<span class="ident">Tup</span>(<span class="kw-2">ref</span> <span class="ident">tuple_element_types</span>) <span class="op">=&gt;</span> {
+            <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_ty</span>, <span class="ident">tuple_element_types</span>);
         }
-        <span class='ident'>Ty</span>::<span class='ident'>BareFn</span>(<span class='kw-2'>ref</span> <span class='ident'>bare_fn</span>) <span class='op'>=&gt;</span> {
-            <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_lifetime_def</span>, <span class='kw-2'>&amp;</span><span class='ident'>bare_fn</span>.<span class='ident'>lifetimes</span>);
-            <span class='kw'>for</span> <span class='ident'>argument</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='ident'>bare_fn</span>.<span class='ident'>inputs</span> {
-                <span class='ident'>walk_opt_ident</span>(<span class='ident'>visitor</span>, <span class='kw-2'>&amp;</span><span class='ident'>argument</span>.<span class='ident'>name</span>);
-                <span class='ident'>visitor</span>.<span class='ident'>visit_ty</span>(<span class='kw-2'>&amp;</span><span class='ident'>argument</span>.<span class='ident'>ty</span>)
+        <span class="ident">Ty</span>::<span class="ident">BareFn</span>(<span class="kw-2">ref</span> <span class="ident">bare_fn</span>) <span class="op">=&gt;</span> {
+            <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_lifetime_def</span>, <span class="kw-2">&amp;</span><span class="ident">bare_fn</span>.<span class="ident">lifetimes</span>);
+            <span class="kw">for</span> <span class="ident">argument</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">bare_fn</span>.<span class="ident">inputs</span> {
+                <span class="ident">walk_opt_ident</span>(<span class="ident">visitor</span>, <span class="kw-2">&amp;</span><span class="ident">argument</span>.<span class="ident">name</span>);
+                <span class="ident">visitor</span>.<span class="ident">visit_ty</span>(<span class="kw-2">&amp;</span><span class="ident">argument</span>.<span class="ident">ty</span>)
             }
-            <span class='ident'>visitor</span>.<span class='ident'>visit_fn_ret_ty</span>(<span class='kw-2'>&amp;</span><span class='ident'>bare_fn</span>.<span class='ident'>output</span>)
+            <span class="ident">visitor</span>.<span class="ident">visit_fn_ret_ty</span>(<span class="kw-2">&amp;</span><span class="ident">bare_fn</span>.<span class="ident">output</span>)
         }
-        <span class='ident'>Ty</span>::<span class='ident'>Path</span>(<span class='kw-2'>ref</span> <span class='ident'>maybe_qself</span>, <span class='kw-2'>ref</span> <span class='ident'>path</span>) <span class='op'>=&gt;</span> {
-            <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>qself</span>) <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>maybe_qself</span> {
-                <span class='ident'>visitor</span>.<span class='ident'>visit_ty</span>(<span class='kw-2'>&amp;</span><span class='ident'>qself</span>.<span class='ident'>ty</span>);
+        <span class="ident">Ty</span>::<span class="ident">Path</span>(<span class="kw-2">ref</span> <span class="ident">maybe_qself</span>, <span class="kw-2">ref</span> <span class="ident">path</span>) <span class="op">=&gt;</span> {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">qself</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="ident">maybe_qself</span> {
+                <span class="ident">visitor</span>.<span class="ident">visit_ty</span>(<span class="kw-2">&amp;</span><span class="ident">qself</span>.<span class="ident">ty</span>);
             }
-            <span class='ident'>visitor</span>.<span class='ident'>visit_path</span>(<span class='ident'>path</span>);
+            <span class="ident">visitor</span>.<span class="ident">visit_path</span>(<span class="ident">path</span>);
         }
-        <span class='ident'>Ty</span>::<span class='ident'>ObjectSum</span>(<span class='kw-2'>ref</span> <span class='ident'>inner</span>, <span class='kw-2'>ref</span> <span class='ident'>bounds</span>) <span class='op'>=&gt;</span> {
-            <span class='ident'>visitor</span>.<span class='ident'>visit_ty</span>(<span class='ident'>inner</span>);
-            <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_ty_param_bound</span>, <span class='ident'>bounds</span>);
+        <span class="ident">Ty</span>::<span class="ident">ObjectSum</span>(<span class="kw-2">ref</span> <span class="ident">inner</span>, <span class="kw-2">ref</span> <span class="ident">bounds</span>) <span class="op">=&gt;</span> {
+            <span class="ident">visitor</span>.<span class="ident">visit_ty</span>(<span class="ident">inner</span>);
+            <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_ty_param_bound</span>, <span class="ident">bounds</span>);
         }
-        <span class='ident'>Ty</span>::<span class='ident'>Array</span>(<span class='kw-2'>ref</span> <span class='ident'>inner</span>, <span class='kw-2'>ref</span> <span class='ident'>len</span>) <span class='op'>=&gt;</span> {
-            <span class='ident'>visitor</span>.<span class='ident'>visit_ty</span>(<span class='ident'>inner</span>);
-            <span class='ident'>visitor</span>.<span class='ident'>visit_const_expr</span>(<span class='ident'>len</span>);
+        <span class="ident">Ty</span>::<span class="ident">Array</span>(<span class="kw-2">ref</span> <span class="ident">inner</span>, <span class="kw-2">ref</span> <span class="ident">len</span>) <span class="op">=&gt;</span> {
+            <span class="ident">visitor</span>.<span class="ident">visit_ty</span>(<span class="ident">inner</span>);
+            <span class="ident">visitor</span>.<span class="ident">visit_const_expr</span>(<span class="ident">len</span>);
         }
-        <span class='ident'>Ty</span>::<span class='ident'>PolyTraitRef</span>(<span class='kw-2'>ref</span> <span class='ident'>bounds</span>) <span class='op'>|</span>
-        <span class='ident'>Ty</span>::<span class='ident'>ImplTrait</span>(<span class='kw-2'>ref</span> <span class='ident'>bounds</span>) <span class='op'>=&gt;</span> {
-            <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_ty_param_bound</span>, <span class='ident'>bounds</span>);
+        <span class="ident">Ty</span>::<span class="ident">PolyTraitRef</span>(<span class="kw-2">ref</span> <span class="ident">bounds</span>) <span class="op">|</span>
+        <span class="ident">Ty</span>::<span class="ident">ImplTrait</span>(<span class="kw-2">ref</span> <span class="ident">bounds</span>) <span class="op">=&gt;</span> {
+            <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_ty_param_bound</span>, <span class="ident">bounds</span>);
         }
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>walk_path</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>Visitor</span><span class='op'>&gt;</span>(<span class='ident'>visitor</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span>, <span class='ident'>path</span>: <span class='kw-2'>&amp;</span><span class='ident'>Path</span>) {
-    <span class='kw'>for</span> <span class='ident'>segment</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='ident'>path</span>.<span class='ident'>segments</span> {
-        <span class='ident'>visitor</span>.<span class='ident'>visit_path_segment</span>(<span class='ident'>segment</span>);
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">walk_path</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&gt;</span>(<span class="ident">visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">Path</span>) {
+    <span class="kw">for</span> <span class="ident">segment</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">segments</span> {
+        <span class="ident">visitor</span>.<span class="ident">visit_path_segment</span>(<span class="ident">segment</span>);
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>walk_path_segment</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>Visitor</span><span class='op'>&gt;</span>(<span class='ident'>visitor</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span>, <span class='ident'>segment</span>: <span class='kw-2'>&amp;</span><span class='ident'>PathSegment</span>) {
-    <span class='ident'>visitor</span>.<span class='ident'>visit_ident</span>(<span class='kw-2'>&amp;</span><span class='ident'>segment</span>.<span class='ident'>ident</span>);
-    <span class='ident'>visitor</span>.<span class='ident'>visit_path_parameters</span>(<span class='kw-2'>&amp;</span><span class='ident'>segment</span>.<span class='ident'>parameters</span>);
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">walk_path_segment</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&gt;</span>(<span class="ident">visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span>, <span class="ident">segment</span>: <span class="kw-2">&amp;</span><span class="ident">PathSegment</span>) {
+    <span class="ident">visitor</span>.<span class="ident">visit_ident</span>(<span class="kw-2">&amp;</span><span class="ident">segment</span>.<span class="ident">ident</span>);
+    <span class="ident">visitor</span>.<span class="ident">visit_path_parameters</span>(<span class="kw-2">&amp;</span><span class="ident">segment</span>.<span class="ident">parameters</span>);
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>walk_path_parameters</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>(<span class='ident'>visitor</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span>, <span class='ident'>path_parameters</span>: <span class='kw-2'>&amp;</span><span class='ident'>PathParameters</span>)
-    <span class='kw'>where</span> <span class='ident'>V</span>: <span class='ident'>Visitor</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">walk_path_parameters</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="ident">visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span>, <span class="ident">path_parameters</span>: <span class="kw-2">&amp;</span><span class="ident">PathParameters</span>)
+    <span class="kw">where</span> <span class="ident">V</span>: <span class="ident">Visitor</span>
 {
-    <span class='kw'>match</span> <span class='kw-2'>*</span><span class='ident'>path_parameters</span> {
-        <span class='ident'>PathParameters</span>::<span class='ident'>AngleBracketed</span>(<span class='kw-2'>ref</span> <span class='ident'>data</span>) <span class='op'>=&gt;</span> {
-            <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_ty</span>, <span class='kw-2'>&amp;</span><span class='ident'>data</span>.<span class='ident'>types</span>);
-            <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_lifetime</span>, <span class='kw-2'>&amp;</span><span class='ident'>data</span>.<span class='ident'>lifetimes</span>);
-            <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_assoc_type_binding</span>, <span class='kw-2'>&amp;</span><span class='ident'>data</span>.<span class='ident'>bindings</span>);
+    <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">path_parameters</span> {
+        <span class="ident">PathParameters</span>::<span class="ident">AngleBracketed</span>(<span class="kw-2">ref</span> <span class="ident">data</span>) <span class="op">=&gt;</span> {
+            <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_ty</span>, <span class="kw-2">&amp;</span><span class="ident">data</span>.<span class="ident">types</span>);
+            <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_lifetime</span>, <span class="kw-2">&amp;</span><span class="ident">data</span>.<span class="ident">lifetimes</span>);
+            <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_assoc_type_binding</span>, <span class="kw-2">&amp;</span><span class="ident">data</span>.<span class="ident">bindings</span>);
         }
-        <span class='ident'>PathParameters</span>::<span class='ident'>Parenthesized</span>(<span class='kw-2'>ref</span> <span class='ident'>data</span>) <span class='op'>=&gt;</span> {
-            <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_ty</span>, <span class='kw-2'>&amp;</span><span class='ident'>data</span>.<span class='ident'>inputs</span>);
-            <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_ty</span>, <span class='kw-2'>&amp;</span><span class='ident'>data</span>.<span class='ident'>output</span>);
-        }
-    }
-}
-
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>walk_assoc_type_binding</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>Visitor</span><span class='op'>&gt;</span>(<span class='ident'>visitor</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span>, <span class='ident'>type_binding</span>: <span class='kw-2'>&amp;</span><span class='ident'>TypeBinding</span>) {
-    <span class='ident'>visitor</span>.<span class='ident'>visit_ident</span>(<span class='kw-2'>&amp;</span><span class='ident'>type_binding</span>.<span class='ident'>ident</span>);
-    <span class='ident'>visitor</span>.<span class='ident'>visit_ty</span>(<span class='kw-2'>&amp;</span><span class='ident'>type_binding</span>.<span class='ident'>ty</span>);
-}
-
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>walk_ty_param_bound</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>Visitor</span><span class='op'>&gt;</span>(<span class='ident'>visitor</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span>, <span class='ident'>bound</span>: <span class='kw-2'>&amp;</span><span class='ident'>TyParamBound</span>) {
-    <span class='kw'>match</span> <span class='kw-2'>*</span><span class='ident'>bound</span> {
-        <span class='ident'>TyParamBound</span>::<span class='ident'>Trait</span>(<span class='kw-2'>ref</span> <span class='ident'>ty</span>, <span class='kw-2'>ref</span> <span class='ident'>modifier</span>) <span class='op'>=&gt;</span> {
-            <span class='ident'>visitor</span>.<span class='ident'>visit_poly_trait_ref</span>(<span class='ident'>ty</span>, <span class='ident'>modifier</span>);
-        }
-        <span class='ident'>TyParamBound</span>::<span class='ident'>Region</span>(<span class='kw-2'>ref</span> <span class='ident'>lifetime</span>) <span class='op'>=&gt;</span> {
-            <span class='ident'>visitor</span>.<span class='ident'>visit_lifetime</span>(<span class='ident'>lifetime</span>);
+        <span class="ident">PathParameters</span>::<span class="ident">Parenthesized</span>(<span class="kw-2">ref</span> <span class="ident">data</span>) <span class="op">=&gt;</span> {
+            <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_ty</span>, <span class="kw-2">&amp;</span><span class="ident">data</span>.<span class="ident">inputs</span>);
+            <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_ty</span>, <span class="kw-2">&amp;</span><span class="ident">data</span>.<span class="ident">output</span>);
         }
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>walk_generics</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>Visitor</span><span class='op'>&gt;</span>(<span class='ident'>visitor</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span>, <span class='ident'>generics</span>: <span class='kw-2'>&amp;</span><span class='ident'>Generics</span>) {
-    <span class='kw'>for</span> <span class='ident'>param</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='ident'>generics</span>.<span class='ident'>ty_params</span> {
-        <span class='ident'>visitor</span>.<span class='ident'>visit_ident</span>(<span class='kw-2'>&amp;</span><span class='ident'>param</span>.<span class='ident'>ident</span>);
-        <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_ty_param_bound</span>, <span class='kw-2'>&amp;</span><span class='ident'>param</span>.<span class='ident'>bounds</span>);
-        <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_ty</span>, <span class='kw-2'>&amp;</span><span class='ident'>param</span>.<span class='ident'>default</span>);
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">walk_assoc_type_binding</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&gt;</span>(<span class="ident">visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span>, <span class="ident">type_binding</span>: <span class="kw-2">&amp;</span><span class="ident">TypeBinding</span>) {
+    <span class="ident">visitor</span>.<span class="ident">visit_ident</span>(<span class="kw-2">&amp;</span><span class="ident">type_binding</span>.<span class="ident">ident</span>);
+    <span class="ident">visitor</span>.<span class="ident">visit_ty</span>(<span class="kw-2">&amp;</span><span class="ident">type_binding</span>.<span class="ident">ty</span>);
+}
+
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">walk_ty_param_bound</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&gt;</span>(<span class="ident">visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span>, <span class="ident">bound</span>: <span class="kw-2">&amp;</span><span class="ident">TyParamBound</span>) {
+    <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">bound</span> {
+        <span class="ident">TyParamBound</span>::<span class="ident">Trait</span>(<span class="kw-2">ref</span> <span class="ident">ty</span>, <span class="kw-2">ref</span> <span class="ident">modifier</span>) <span class="op">=&gt;</span> {
+            <span class="ident">visitor</span>.<span class="ident">visit_poly_trait_ref</span>(<span class="ident">ty</span>, <span class="ident">modifier</span>);
+        }
+        <span class="ident">TyParamBound</span>::<span class="ident">Region</span>(<span class="kw-2">ref</span> <span class="ident">lifetime</span>) <span class="op">=&gt;</span> {
+            <span class="ident">visitor</span>.<span class="ident">visit_lifetime</span>(<span class="ident">lifetime</span>);
+        }
     }
-    <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_lifetime_def</span>, <span class='kw-2'>&amp;</span><span class='ident'>generics</span>.<span class='ident'>lifetimes</span>);
-    <span class='kw'>for</span> <span class='ident'>predicate</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='ident'>generics</span>.<span class='ident'>where_clause</span>.<span class='ident'>predicates</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='ident'>predicate</span> {
-            <span class='ident'>WherePredicate</span>::<span class='ident'>BoundPredicate</span>(<span class='ident'>WhereBoundPredicate</span> { <span class='kw-2'>ref</span> <span class='ident'>bounded_ty</span>,
-                                                                 <span class='kw-2'>ref</span> <span class='ident'>bounds</span>,
-                                                                 <span class='kw-2'>ref</span> <span class='ident'>bound_lifetimes</span>,
-                                                                 .. }) <span class='op'>=&gt;</span> {
-                <span class='ident'>visitor</span>.<span class='ident'>visit_ty</span>(<span class='ident'>bounded_ty</span>);
-                <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_ty_param_bound</span>, <span class='ident'>bounds</span>);
-                <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_lifetime_def</span>, <span class='ident'>bound_lifetimes</span>);
+}
+
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">walk_generics</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&gt;</span>(<span class="ident">visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span>, <span class="ident">generics</span>: <span class="kw-2">&amp;</span><span class="ident">Generics</span>) {
+    <span class="kw">for</span> <span class="ident">param</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">generics</span>.<span class="ident">ty_params</span> {
+        <span class="ident">visitor</span>.<span class="ident">visit_ident</span>(<span class="kw-2">&amp;</span><span class="ident">param</span>.<span class="ident">ident</span>);
+        <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_ty_param_bound</span>, <span class="kw-2">&amp;</span><span class="ident">param</span>.<span class="ident">bounds</span>);
+        <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_ty</span>, <span class="kw-2">&amp;</span><span class="ident">param</span>.<span class="ident">default</span>);
+    }
+    <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_lifetime_def</span>, <span class="kw-2">&amp;</span><span class="ident">generics</span>.<span class="ident">lifetimes</span>);
+    <span class="kw">for</span> <span class="ident">predicate</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">generics</span>.<span class="ident">where_clause</span>.<span class="ident">predicates</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">predicate</span> {
+            <span class="ident">WherePredicate</span>::<span class="ident">BoundPredicate</span>(<span class="ident">WhereBoundPredicate</span> { <span class="kw-2">ref</span> <span class="ident">bounded_ty</span>,
+                                                                 <span class="kw-2">ref</span> <span class="ident">bounds</span>,
+                                                                 <span class="kw-2">ref</span> <span class="ident">bound_lifetimes</span>,
+                                                                 .. }) <span class="op">=&gt;</span> {
+                <span class="ident">visitor</span>.<span class="ident">visit_ty</span>(<span class="ident">bounded_ty</span>);
+                <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_ty_param_bound</span>, <span class="ident">bounds</span>);
+                <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_lifetime_def</span>, <span class="ident">bound_lifetimes</span>);
             }
-            <span class='ident'>WherePredicate</span>::<span class='ident'>RegionPredicate</span>(<span class='ident'>WhereRegionPredicate</span> { <span class='kw-2'>ref</span> <span class='ident'>lifetime</span>,
-                                                                   <span class='kw-2'>ref</span> <span class='ident'>bounds</span>,
-                                                                   .. }) <span class='op'>=&gt;</span> {
-                <span class='ident'>visitor</span>.<span class='ident'>visit_lifetime</span>(<span class='ident'>lifetime</span>);
-                <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_lifetime</span>, <span class='ident'>bounds</span>);
+            <span class="ident">WherePredicate</span>::<span class="ident">RegionPredicate</span>(<span class="ident">WhereRegionPredicate</span> { <span class="kw-2">ref</span> <span class="ident">lifetime</span>,
+                                                                   <span class="kw-2">ref</span> <span class="ident">bounds</span>,
+                                                                   .. }) <span class="op">=&gt;</span> {
+                <span class="ident">visitor</span>.<span class="ident">visit_lifetime</span>(<span class="ident">lifetime</span>);
+                <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_lifetime</span>, <span class="ident">bounds</span>);
             }
         }
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>walk_fn_ret_ty</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>Visitor</span><span class='op'>&gt;</span>(<span class='ident'>visitor</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span>, <span class='ident'>ret_ty</span>: <span class='kw-2'>&amp;</span><span class='ident'>FunctionRetTy</span>) {
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>FunctionRetTy</span>::<span class='ident'>Ty</span>(<span class='kw-2'>ref</span> <span class='ident'>output_ty</span>) <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>ret_ty</span> {
-        <span class='ident'>visitor</span>.<span class='ident'>visit_ty</span>(<span class='ident'>output_ty</span>)
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">walk_fn_ret_ty</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&gt;</span>(<span class="ident">visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span>, <span class="ident">ret_ty</span>: <span class="kw-2">&amp;</span><span class="ident">FunctionRetTy</span>) {
+    <span class="kw">if</span> <span class="kw">let</span> <span class="ident">FunctionRetTy</span>::<span class="ident">Ty</span>(<span class="kw-2">ref</span> <span class="ident">output_ty</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="ident">ret_ty</span> {
+        <span class="ident">visitor</span>.<span class="ident">visit_ty</span>(<span class="ident">output_ty</span>)
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>walk_variant_data</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>Visitor</span><span class='op'>&gt;</span>(<span class='ident'>visitor</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span>, <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='ident'>VariantData</span>) {
-    <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_field</span>, <span class='ident'>data</span>.<span class='ident'>fields</span>());
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">walk_variant_data</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&gt;</span>(<span class="ident">visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span>, <span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="ident">VariantData</span>) {
+    <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_field</span>, <span class="ident">data</span>.<span class="ident">fields</span>());
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>walk_field</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>Visitor</span><span class='op'>&gt;</span>(<span class='ident'>visitor</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span>, <span class='ident'>field</span>: <span class='kw-2'>&amp;</span><span class='ident'>Field</span>) {
-    <span class='ident'>walk_opt_ident</span>(<span class='ident'>visitor</span>, <span class='kw-2'>&amp;</span><span class='ident'>field</span>.<span class='ident'>ident</span>);
-    <span class='ident'>visitor</span>.<span class='ident'>visit_ty</span>(<span class='kw-2'>&amp;</span><span class='ident'>field</span>.<span class='ident'>ty</span>);
-    <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_attribute</span>, <span class='kw-2'>&amp;</span><span class='ident'>field</span>.<span class='ident'>attrs</span>);
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">walk_field</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&gt;</span>(<span class="ident">visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span>, <span class="ident">field</span>: <span class="kw-2">&amp;</span><span class="ident">Field</span>) {
+    <span class="ident">walk_opt_ident</span>(<span class="ident">visitor</span>, <span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">ident</span>);
+    <span class="ident">visitor</span>.<span class="ident">visit_ty</span>(<span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">ty</span>);
+    <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_attribute</span>, <span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">attrs</span>);
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>walk_const_expr</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>Visitor</span><span class='op'>&gt;</span>(<span class='ident'>visitor</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>V</span>, <span class='ident'>len</span>: <span class='kw-2'>&amp;</span><span class='ident'>ConstExpr</span>) {
-    <span class='kw'>match</span> <span class='kw-2'>*</span><span class='ident'>len</span> {
-        <span class='ident'>ConstExpr</span>::<span class='ident'>Call</span>(<span class='kw-2'>ref</span> <span class='ident'>function</span>, <span class='kw-2'>ref</span> <span class='ident'>args</span>) <span class='op'>=&gt;</span> {
-            <span class='ident'>visitor</span>.<span class='ident'>visit_const_expr</span>(<span class='ident'>function</span>);
-            <span class='macro'>walk_list</span><span class='macro'>!</span>(<span class='ident'>visitor</span>, <span class='ident'>visit_const_expr</span>, <span class='ident'>args</span>);
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">walk_const_expr</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&gt;</span>(<span class="ident">visitor</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">V</span>, <span class="ident">len</span>: <span class="kw-2">&amp;</span><span class="ident">ConstExpr</span>) {
+    <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">len</span> {
+        <span class="ident">ConstExpr</span>::<span class="ident">Call</span>(<span class="kw-2">ref</span> <span class="ident">function</span>, <span class="kw-2">ref</span> <span class="ident">args</span>) <span class="op">=&gt;</span> {
+            <span class="ident">visitor</span>.<span class="ident">visit_const_expr</span>(<span class="ident">function</span>);
+            <span class="macro">walk_list</span><span class="macro">!</span>(<span class="ident">visitor</span>, <span class="ident">visit_const_expr</span>, <span class="ident">args</span>);
         }
-        <span class='ident'>ConstExpr</span>::<span class='ident'>Binary</span>(<span class='ident'>_op</span>, <span class='kw-2'>ref</span> <span class='ident'>left</span>, <span class='kw-2'>ref</span> <span class='ident'>right</span>) <span class='op'>=&gt;</span> {
-            <span class='ident'>visitor</span>.<span class='ident'>visit_const_expr</span>(<span class='ident'>left</span>);
-            <span class='ident'>visitor</span>.<span class='ident'>visit_const_expr</span>(<span class='ident'>right</span>);
+        <span class="ident">ConstExpr</span>::<span class="ident">Binary</span>(<span class="ident">_op</span>, <span class="kw-2">ref</span> <span class="ident">left</span>, <span class="kw-2">ref</span> <span class="ident">right</span>) <span class="op">=&gt;</span> {
+            <span class="ident">visitor</span>.<span class="ident">visit_const_expr</span>(<span class="ident">left</span>);
+            <span class="ident">visitor</span>.<span class="ident">visit_const_expr</span>(<span class="ident">right</span>);
         }
-        <span class='ident'>ConstExpr</span>::<span class='ident'>Unary</span>(<span class='ident'>_op</span>, <span class='kw-2'>ref</span> <span class='ident'>v</span>) <span class='op'>=&gt;</span> {
-            <span class='ident'>visitor</span>.<span class='ident'>visit_const_expr</span>(<span class='ident'>v</span>);
+        <span class="ident">ConstExpr</span>::<span class="ident">Unary</span>(<span class="ident">_op</span>, <span class="kw-2">ref</span> <span class="ident">v</span>) <span class="op">=&gt;</span> {
+            <span class="ident">visitor</span>.<span class="ident">visit_const_expr</span>(<span class="ident">v</span>);
         }
-        <span class='ident'>ConstExpr</span>::<span class='ident'>Lit</span>(<span class='kw-2'>ref</span> <span class='ident'>lit</span>) <span class='op'>=&gt;</span> {
-            <span class='ident'>visitor</span>.<span class='ident'>visit_lit</span>(<span class='ident'>lit</span>);
+        <span class="ident">ConstExpr</span>::<span class="ident">Lit</span>(<span class="kw-2">ref</span> <span class="ident">lit</span>) <span class="op">=&gt;</span> {
+            <span class="ident">visitor</span>.<span class="ident">visit_lit</span>(<span class="ident">lit</span>);
         }
-        <span class='ident'>ConstExpr</span>::<span class='ident'>Cast</span>(<span class='kw-2'>ref</span> <span class='ident'>expr</span>, <span class='kw-2'>ref</span> <span class='ident'>ty</span>) <span class='op'>=&gt;</span> {
-            <span class='ident'>visitor</span>.<span class='ident'>visit_const_expr</span>(<span class='ident'>expr</span>);
-            <span class='ident'>visitor</span>.<span class='ident'>visit_ty</span>(<span class='ident'>ty</span>);
+        <span class="ident">ConstExpr</span>::<span class="ident">Cast</span>(<span class="kw-2">ref</span> <span class="ident">expr</span>, <span class="kw-2">ref</span> <span class="ident">ty</span>) <span class="op">=&gt;</span> {
+            <span class="ident">visitor</span>.<span class="ident">visit_const_expr</span>(<span class="ident">expr</span>);
+            <span class="ident">visitor</span>.<span class="ident">visit_ty</span>(<span class="ident">ty</span>);
         }
-        <span class='ident'>ConstExpr</span>::<span class='ident'>Path</span>(<span class='kw-2'>ref</span> <span class='ident'>path</span>) <span class='op'>=&gt;</span> {
-            <span class='ident'>visitor</span>.<span class='ident'>visit_path</span>(<span class='ident'>path</span>);
+        <span class="ident">ConstExpr</span>::<span class="ident">Path</span>(<span class="kw-2">ref</span> <span class="ident">path</span>) <span class="op">=&gt;</span> {
+            <span class="ident">visitor</span>.<span class="ident">visit_path</span>(<span class="ident">path</span>);
         }
-        <span class='ident'>ConstExpr</span>::<span class='ident'>Index</span>(<span class='kw-2'>ref</span> <span class='ident'>expr</span>, <span class='kw-2'>ref</span> <span class='ident'>index</span>) <span class='op'>=&gt;</span> {
-            <span class='ident'>visitor</span>.<span class='ident'>visit_const_expr</span>(<span class='ident'>expr</span>);
-            <span class='ident'>visitor</span>.<span class='ident'>visit_const_expr</span>(<span class='ident'>index</span>);
+        <span class="ident">ConstExpr</span>::<span class="ident">Index</span>(<span class="kw-2">ref</span> <span class="ident">expr</span>, <span class="kw-2">ref</span> <span class="ident">index</span>) <span class="op">=&gt;</span> {
+            <span class="ident">visitor</span>.<span class="ident">visit_const_expr</span>(<span class="ident">expr</span>);
+            <span class="ident">visitor</span>.<span class="ident">visit_const_expr</span>(<span class="ident">index</span>);
         }
-        <span class='ident'>ConstExpr</span>::<span class='ident'>Paren</span>(<span class='kw-2'>ref</span> <span class='ident'>expr</span>) <span class='op'>=&gt;</span> {
-            <span class='ident'>visitor</span>.<span class='ident'>visit_const_expr</span>(<span class='ident'>expr</span>);
+        <span class="ident">ConstExpr</span>::<span class="ident">Paren</span>(<span class="kw-2">ref</span> <span class="ident">expr</span>) <span class="op">=&gt;</span> {
+            <span class="ident">visitor</span>.<span class="ident">visit_const_expr</span>(<span class="ident">expr</span>);
         }
-        <span class='ident'>ConstExpr</span>::<span class='ident'>Other</span>(_) <span class='op'>=&gt;</span> {}
+        <span class="ident">ConstExpr</span>::<span class="ident">Other</span>(_) <span class="op">=&gt;</span> {}
     }
 }
 </pre>

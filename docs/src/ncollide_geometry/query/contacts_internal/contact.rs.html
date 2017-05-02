@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -83,45 +83,45 @@
 <span id="38">38</span>
 <span id="39">39</span>
 <span id="40">40</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
+<span class="kw">use</span> <span class="ident">math</span>::<span class="ident">Point</span>;
 
-<span class='doccomment'>/// Geometric description of a contact.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Clone</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Contact</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Position of the contact on the first object. The position is expressed in world space.</span>
-    <span class='kw'>pub</span> <span class='ident'>world1</span>: <span class='ident'>P</span>,
+<span class="doccomment">/// Geometric description of a contact.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Clone</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Contact</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Position of the contact on the first object. The position is expressed in world space.</span>
+    <span class="kw">pub</span> <span class="ident">world1</span>: <span class="ident">P</span>,
 
-    <span class='doccomment'>/// Position of the contact on the second object. The position is expressed in world space.</span>
-    <span class='kw'>pub</span> <span class='ident'>world2</span>: <span class='ident'>P</span>,
+    <span class="doccomment">/// Position of the contact on the second object. The position is expressed in world space.</span>
+    <span class="kw">pub</span> <span class="ident">world2</span>: <span class="ident">P</span>,
 
-    <span class='doccomment'>/// Contact normal</span>
-    <span class='kw'>pub</span> <span class='ident'>normal</span>: <span class='ident'>P</span>::<span class='ident'>Vector</span>,
+    <span class="doccomment">/// Contact normal</span>
+    <span class="kw">pub</span> <span class="ident">normal</span>: <span class="ident">P</span>::<span class="ident">Vector</span>,
 
-    <span class='doccomment'>/// Penetration depth</span>
-    <span class='kw'>pub</span> <span class='ident'>depth</span>:  <span class='ident'>P</span>::<span class='ident'>Real</span>
+    <span class="doccomment">/// Penetration depth</span>
+    <span class="kw">pub</span> <span class="ident">depth</span>:  <span class="ident">P</span>::<span class="ident">Real</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> <span class='ident'>Contact</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new contact.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>world1</span>: <span class='ident'>P</span>, <span class='ident'>world2</span>: <span class='ident'>P</span>, <span class='ident'>normal</span>: <span class='ident'>P</span>::<span class='ident'>Vector</span>, <span class='ident'>depth</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>) <span class='op'>-&gt;</span> <span class='ident'>Contact</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='ident'>Contact</span> {
-            <span class='ident'>world1</span>: <span class='ident'>world1</span>,
-            <span class='ident'>world2</span>: <span class='ident'>world2</span>,
-            <span class='ident'>normal</span>: <span class='ident'>normal</span>,
-            <span class='ident'>depth</span>:  <span class='ident'>depth</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span> <span class="ident">Contact</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new contact.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">world1</span>: <span class="ident">P</span>, <span class="ident">world2</span>: <span class="ident">P</span>, <span class="ident">normal</span>: <span class="ident">P</span>::<span class="ident">Vector</span>, <span class="ident">depth</span>: <span class="ident">P</span>::<span class="ident">Real</span>) <span class="op">-&gt;</span> <span class="ident">Contact</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+        <span class="ident">Contact</span> {
+            <span class="ident">world1</span>: <span class="ident">world1</span>,
+            <span class="ident">world2</span>: <span class="ident">world2</span>,
+            <span class="ident">normal</span>: <span class="ident">normal</span>,
+            <span class="ident">depth</span>:  <span class="ident">depth</span>
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> <span class='ident'>Contact</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Reverts the contact normal and swaps `world1` and `world2`.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>flip</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='ident'>mem</span>::<span class='ident'>swap</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>world1</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>world2</span>);
-        <span class='self'>self</span>.<span class='ident'>normal</span> <span class='op'>=</span> <span class='op'>-</span><span class='self'>self</span>.<span class='ident'>normal</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span> <span class="ident">Contact</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Reverts the contact normal and swaps `world1` and `world2`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">flip</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="ident">mem</span>::<span class="ident">swap</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">world1</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">world2</span>);
+        <span class="self">self</span>.<span class="ident">normal</span> <span class="op">=</span> <span class="op">-</span><span class="self">self</span>.<span class="ident">normal</span>;
     }
 }
 </pre>

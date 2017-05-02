@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -519,482 +519,482 @@
 <span id="474">474</span>
 <span id="475">475</span>
 <span id="476">476</span>
-</pre><pre class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>non_camel_case_types</span>, <span class='ident'>non_snake_case</span>)]</span>
-<span class='kw'>use</span> <span class='ident'>libc</span>::{<span class='ident'>c_float</span>, <span class='ident'>c_int</span>, <span class='ident'>c_char</span>, <span class='ident'>c_uint</span>, <span class='ident'>c_void</span>, <span class='ident'>int16_t</span>,
-           <span class='ident'>int32_t</span>, <span class='ident'>uint8_t</span>, <span class='ident'>uint16_t</span>, <span class='ident'>uint32_t</span>};
-<span class='kw'>use</span> <span class='ident'>gesture</span>::<span class='ident'>SDL_GestureID</span>;
-<span class='kw'>use</span> <span class='ident'>keyboard</span>::<span class='ident'>SDL_Keysym</span>;
-<span class='kw'>use</span> <span class='ident'>touch</span>::<span class='ident'>SDL_FingerID</span>;
-<span class='kw'>use</span> <span class='ident'>touch</span>::<span class='ident'>SDL_TouchID</span>;
-<span class='kw'>use</span> <span class='ident'>sdl</span>::<span class='ident'>SDL_bool</span>;
+</pre><pre class="rust ">
+<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">non_camel_case_types</span>, <span class="ident">non_snake_case</span>)]</span>
+<span class="kw">use</span> <span class="ident">libc</span>::{<span class="ident">c_float</span>, <span class="ident">c_int</span>, <span class="ident">c_char</span>, <span class="ident">c_uint</span>, <span class="ident">c_void</span>, <span class="ident">int16_t</span>,
+           <span class="ident">int32_t</span>, <span class="ident">uint8_t</span>, <span class="ident">uint16_t</span>, <span class="ident">uint32_t</span>};
+<span class="kw">use</span> <span class="ident">gesture</span>::<span class="ident">SDL_GestureID</span>;
+<span class="kw">use</span> <span class="ident">keyboard</span>::<span class="ident">SDL_Keysym</span>;
+<span class="kw">use</span> <span class="ident">touch</span>::<span class="ident">SDL_FingerID</span>;
+<span class="kw">use</span> <span class="ident">touch</span>::<span class="ident">SDL_TouchID</span>;
+<span class="kw">use</span> <span class="ident">sdl</span>::<span class="ident">SDL_bool</span>;
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;no_std&quot;</span>)]</span>
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>prelude</span>::<span class='kw-2'>*</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no_std&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 
-<span class='comment'>// SDL_events.h</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>SDL_State</span> <span class='op'>=</span> <span class='ident'>c_int</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_DISABLE</span>: <span class='ident'>SDL_State</span> <span class='op'>=</span> <span class='number'>0</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_ENABLE</span>: <span class='ident'>SDL_State</span> <span class='op'>=</span> <span class='number'>1</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_QUERY</span>: <span class='ident'>SDL_State</span> <span class='op'>=</span> <span class='op'>-</span><span class='number'>1</span>;
+<span class="comment">// SDL_events.h</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SDL_State</span> <span class="op">=</span> <span class="ident">c_int</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_DISABLE</span>: <span class="ident">SDL_State</span> <span class="op">=</span> <span class="number">0</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_ENABLE</span>: <span class="ident">SDL_State</span> <span class="op">=</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_QUERY</span>: <span class="ident">SDL_State</span> <span class="op">=</span> <span class="op">-</span><span class="number">1</span>;
 
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>SDL_KeyState</span> <span class='op'>=</span> <span class='ident'>uint8_t</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_RELEASED</span>: <span class='ident'>SDL_KeyState</span> <span class='op'>=</span> <span class='number'>0</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PRESSED</span>: <span class='ident'>SDL_KeyState</span> <span class='op'>=</span> <span class='number'>1</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SDL_KeyState</span> <span class="op">=</span> <span class="ident">uint8_t</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_RELEASED</span>: <span class="ident">SDL_KeyState</span> <span class="op">=</span> <span class="number">0</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PRESSED</span>: <span class="ident">SDL_KeyState</span> <span class="op">=</span> <span class="number">1</span>;
 
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>SDL_SysWMmsg</span> <span class='op'>=</span> <span class='ident'>c_void</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SDL_SysWMmsg</span> <span class="op">=</span> <span class="ident">c_void</span>;
 
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='ident'>c_uint</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_FIRSTEVENT</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>0</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_QUIT</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>256</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_APP_TERMINATING</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>257</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_APP_LOWMEMORY</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>258</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_APP_WILLENTERBACKGROUND</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>259</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_APP_DIDENTERBACKGROUND</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>260</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_APP_WILLENTERFOREGROUND</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>261</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_APP_DIDENTERFOREGROUND</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>262</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_WINDOWEVENT</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>512</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_SYSWMEVENT</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>513</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_KEYDOWN</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>768</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_KEYUP</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>769</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_TEXTEDITING</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>770</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_TEXTINPUT</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>771</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_MOUSEMOTION</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1024</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_MOUSEBUTTONDOWN</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1025</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_MOUSEBUTTONUP</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1026</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_MOUSEWHEEL</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1027</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_JOYAXISMOTION</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1536</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_JOYBALLMOTION</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1537</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_JOYHATMOTION</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1538</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_JOYBUTTONDOWN</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1539</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_JOYBUTTONUP</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1540</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_JOYDEVICEADDED</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1541</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_JOYDEVICEREMOVED</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1542</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_CONTROLLERAXISMOTION</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1616</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_CONTROLLERBUTTONDOWN</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1617</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_CONTROLLERBUTTONUP</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1618</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_CONTROLLERDEVICEADDED</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1619</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_CONTROLLERDEVICEREMOVED</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1620</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_CONTROLLERDEVICEREMAPPED</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1621</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_FINGERDOWN</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1792</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_FINGERUP</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1793</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_FINGERMOTION</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>1794</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_DOLLARGESTURE</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>2048</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_DOLLARRECORD</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>2049</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_MULTIGESTURE</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>2050</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_CLIPBOARDUPDATE</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>2304</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_DROPFILE</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>4096</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_USEREVENT</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>32768</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_LASTEVENT</span>: <span class='ident'>SDL_EventType</span> <span class='op'>=</span> <span class='number'>65535</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="ident">c_uint</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_FIRSTEVENT</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">0</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_QUIT</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">256</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_APP_TERMINATING</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">257</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_APP_LOWMEMORY</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">258</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_APP_WILLENTERBACKGROUND</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">259</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_APP_DIDENTERBACKGROUND</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">260</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_APP_WILLENTERFOREGROUND</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">261</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_APP_DIDENTERFOREGROUND</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">262</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_WINDOWEVENT</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">512</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_SYSWMEVENT</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">513</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_KEYDOWN</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">768</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_KEYUP</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">769</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_TEXTEDITING</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">770</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_TEXTINPUT</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">771</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_MOUSEMOTION</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1024</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_MOUSEBUTTONDOWN</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1025</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_MOUSEBUTTONUP</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1026</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_MOUSEWHEEL</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1027</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_JOYAXISMOTION</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1536</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_JOYBALLMOTION</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1537</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_JOYHATMOTION</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1538</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_JOYBUTTONDOWN</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1539</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_JOYBUTTONUP</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1540</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_JOYDEVICEADDED</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1541</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_JOYDEVICEREMOVED</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1542</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_CONTROLLERAXISMOTION</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1616</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_CONTROLLERBUTTONDOWN</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1617</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_CONTROLLERBUTTONUP</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1618</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_CONTROLLERDEVICEADDED</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1619</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_CONTROLLERDEVICEREMOVED</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1620</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_CONTROLLERDEVICEREMAPPED</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1621</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_FINGERDOWN</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1792</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_FINGERUP</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1793</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_FINGERMOTION</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">1794</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_DOLLARGESTURE</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">2048</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_DOLLARRECORD</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">2049</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_MULTIGESTURE</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">2050</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_CLIPBOARDUPDATE</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">2304</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_DROPFILE</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">4096</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_USEREVENT</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">32768</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_LASTEVENT</span>: <span class="ident">SDL_EventType</span> <span class="op">=</span> <span class="number">65535</span>;
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_CommonEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_CommonEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_WindowEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>windowID</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>event</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding1</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding2</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding3</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>data1</span>: <span class='ident'>int32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>data2</span>: <span class='ident'>int32_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_WindowEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">windowID</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">event</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding1</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding2</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding3</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">data1</span>: <span class="ident">int32_t</span>,
+    <span class="kw">pub</span> <span class="ident">data2</span>: <span class="ident">int32_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_KeyboardEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>windowID</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>state</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>repeat</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding2</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding3</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>keysym</span>: <span class='ident'>SDL_Keysym</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_KeyboardEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">windowID</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">state</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">repeat</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding2</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding3</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">keysym</span>: <span class="ident">SDL_Keysym</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_TextEditingEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>windowID</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>text</span>: [<span class='ident'>c_char</span>; <span class='number'>32</span>],
-    <span class='kw'>pub</span> <span class='ident'>start</span>: <span class='ident'>int32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>length</span>: <span class='ident'>int32_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_TextEditingEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">windowID</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">text</span>: [<span class="ident">c_char</span>; <span class="number">32</span>],
+    <span class="kw">pub</span> <span class="ident">start</span>: <span class="ident">int32_t</span>,
+    <span class="kw">pub</span> <span class="ident">length</span>: <span class="ident">int32_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_TextInputEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>windowID</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>text</span>: [<span class='ident'>c_char</span>; <span class='number'>32</span>],
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_TextInputEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">windowID</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">text</span>: [<span class="ident">c_char</span>; <span class="number">32</span>],
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_MouseMotionEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>windowID</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>which</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>state</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>x</span>: <span class='ident'>int32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>y</span>: <span class='ident'>int32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>xrel</span>: <span class='ident'>int32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>yrel</span>: <span class='ident'>int32_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_MouseMotionEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">windowID</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">which</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">state</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">x</span>: <span class="ident">int32_t</span>,
+    <span class="kw">pub</span> <span class="ident">y</span>: <span class="ident">int32_t</span>,
+    <span class="kw">pub</span> <span class="ident">xrel</span>: <span class="ident">int32_t</span>,
+    <span class="kw">pub</span> <span class="ident">yrel</span>: <span class="ident">int32_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_MouseButtonEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>windowID</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>which</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>button</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>state</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding1</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding2</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>x</span>: <span class='ident'>int32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>y</span>: <span class='ident'>int32_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_MouseButtonEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">windowID</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">which</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">button</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">state</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding1</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding2</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">x</span>: <span class="ident">int32_t</span>,
+    <span class="kw">pub</span> <span class="ident">y</span>: <span class="ident">int32_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_MouseWheelEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>windowID</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>which</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>x</span>: <span class='ident'>int32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>y</span>: <span class='ident'>int32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>direction</span>: <span class='ident'>uint32_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_MouseWheelEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">windowID</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">which</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">x</span>: <span class="ident">int32_t</span>,
+    <span class="kw">pub</span> <span class="ident">y</span>: <span class="ident">int32_t</span>,
+    <span class="kw">pub</span> <span class="ident">direction</span>: <span class="ident">uint32_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_JoyAxisEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>which</span>: <span class='ident'>int32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>axis</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding1</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding2</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding3</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>value</span>: <span class='ident'>int16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding4</span>: <span class='ident'>uint16_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_JoyAxisEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">which</span>: <span class="ident">int32_t</span>,
+    <span class="kw">pub</span> <span class="ident">axis</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding1</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding2</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding3</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">value</span>: <span class="ident">int16_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding4</span>: <span class="ident">uint16_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_JoyBallEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>which</span>: <span class='ident'>int32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>ball</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding1</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding2</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding3</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>xrel</span>: <span class='ident'>int16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>yrel</span>: <span class='ident'>int16_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_JoyBallEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">which</span>: <span class="ident">int32_t</span>,
+    <span class="kw">pub</span> <span class="ident">ball</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding1</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding2</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding3</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">xrel</span>: <span class="ident">int16_t</span>,
+    <span class="kw">pub</span> <span class="ident">yrel</span>: <span class="ident">int16_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_JoyHatEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>which</span>: <span class='ident'>int32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>hat</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>value</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding1</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding2</span>: <span class='ident'>uint8_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_JoyHatEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">which</span>: <span class="ident">int32_t</span>,
+    <span class="kw">pub</span> <span class="ident">hat</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">value</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding1</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding2</span>: <span class="ident">uint8_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_JoyButtonEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>which</span>: <span class='ident'>int32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>button</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>state</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding1</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding2</span>: <span class='ident'>uint8_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_JoyButtonEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">which</span>: <span class="ident">int32_t</span>,
+    <span class="kw">pub</span> <span class="ident">button</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">state</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding1</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding2</span>: <span class="ident">uint8_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_JoyDeviceEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>which</span>: <span class='ident'>int32_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_JoyDeviceEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">which</span>: <span class="ident">int32_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_ControllerAxisEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>which</span>: <span class='ident'>int32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>axis</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding1</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding2</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding3</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>value</span>: <span class='ident'>int16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding4</span>: <span class='ident'>uint16_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_ControllerAxisEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">which</span>: <span class="ident">int32_t</span>,
+    <span class="kw">pub</span> <span class="ident">axis</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding1</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding2</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding3</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">value</span>: <span class="ident">int16_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding4</span>: <span class="ident">uint16_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_ControllerButtonEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>which</span>: <span class='ident'>int32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>button</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>state</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding1</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding2</span>: <span class='ident'>uint8_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_ControllerButtonEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">which</span>: <span class="ident">int32_t</span>,
+    <span class="kw">pub</span> <span class="ident">button</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">state</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding1</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding2</span>: <span class="ident">uint8_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_ControllerDeviceEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>which</span>: <span class='ident'>int32_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_ControllerDeviceEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">which</span>: <span class="ident">int32_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_TouchFingerEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>touchId</span>: <span class='ident'>SDL_TouchID</span>,
-    <span class='kw'>pub</span> <span class='ident'>fingerId</span>: <span class='ident'>SDL_FingerID</span>,
-    <span class='kw'>pub</span> <span class='ident'>x</span>: <span class='ident'>c_float</span>,
-    <span class='kw'>pub</span> <span class='ident'>y</span>: <span class='ident'>c_float</span>,
-    <span class='kw'>pub</span> <span class='ident'>dx</span>: <span class='ident'>c_float</span>,
-    <span class='kw'>pub</span> <span class='ident'>dy</span>: <span class='ident'>c_float</span>,
-    <span class='kw'>pub</span> <span class='ident'>pressure</span>: <span class='ident'>c_float</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_TouchFingerEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">touchId</span>: <span class="ident">SDL_TouchID</span>,
+    <span class="kw">pub</span> <span class="ident">fingerId</span>: <span class="ident">SDL_FingerID</span>,
+    <span class="kw">pub</span> <span class="ident">x</span>: <span class="ident">c_float</span>,
+    <span class="kw">pub</span> <span class="ident">y</span>: <span class="ident">c_float</span>,
+    <span class="kw">pub</span> <span class="ident">dx</span>: <span class="ident">c_float</span>,
+    <span class="kw">pub</span> <span class="ident">dy</span>: <span class="ident">c_float</span>,
+    <span class="kw">pub</span> <span class="ident">pressure</span>: <span class="ident">c_float</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_MultiGestureEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>touchId</span>: <span class='ident'>SDL_TouchID</span>,
-    <span class='kw'>pub</span> <span class='ident'>dTheta</span>: <span class='ident'>c_float</span>,
-    <span class='kw'>pub</span> <span class='ident'>dDist</span>: <span class='ident'>c_float</span>,
-    <span class='kw'>pub</span> <span class='ident'>x</span>: <span class='ident'>c_float</span>,
-    <span class='kw'>pub</span> <span class='ident'>y</span>: <span class='ident'>c_float</span>,
-    <span class='kw'>pub</span> <span class='ident'>numFingers</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding</span>: <span class='ident'>uint16_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_MultiGestureEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">touchId</span>: <span class="ident">SDL_TouchID</span>,
+    <span class="kw">pub</span> <span class="ident">dTheta</span>: <span class="ident">c_float</span>,
+    <span class="kw">pub</span> <span class="ident">dDist</span>: <span class="ident">c_float</span>,
+    <span class="kw">pub</span> <span class="ident">x</span>: <span class="ident">c_float</span>,
+    <span class="kw">pub</span> <span class="ident">y</span>: <span class="ident">c_float</span>,
+    <span class="kw">pub</span> <span class="ident">numFingers</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding</span>: <span class="ident">uint16_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_DollarGestureEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>touchId</span>: <span class='ident'>SDL_TouchID</span>,
-    <span class='kw'>pub</span> <span class='ident'>gestureId</span>: <span class='ident'>SDL_GestureID</span>,
-    <span class='kw'>pub</span> <span class='ident'>numFingers</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>error</span>: <span class='ident'>c_float</span>,
-    <span class='kw'>pub</span> <span class='ident'>x</span>: <span class='ident'>c_float</span>,
-    <span class='kw'>pub</span> <span class='ident'>y</span>: <span class='ident'>c_float</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_DollarGestureEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">touchId</span>: <span class="ident">SDL_TouchID</span>,
+    <span class="kw">pub</span> <span class="ident">gestureId</span>: <span class="ident">SDL_GestureID</span>,
+    <span class="kw">pub</span> <span class="ident">numFingers</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">error</span>: <span class="ident">c_float</span>,
+    <span class="kw">pub</span> <span class="ident">x</span>: <span class="ident">c_float</span>,
+    <span class="kw">pub</span> <span class="ident">y</span>: <span class="ident">c_float</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_copy_implementations</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_DropEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>file</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>,
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_copy_implementations</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_DropEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">file</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_QuitEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_QuitEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_OSEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_OSEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_copy_implementations</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_UserEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>windowID</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>code</span>: <span class='ident'>int32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>data1</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>,
-    <span class='kw'>pub</span> <span class='ident'>data2</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>,
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_copy_implementations</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_UserEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">windowID</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">code</span>: <span class="ident">int32_t</span>,
+    <span class="kw">pub</span> <span class="ident">data1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
+    <span class="kw">pub</span> <span class="ident">data2</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_copy_implementations</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_SysWMEvent</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>timestamp</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>msg</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_SysWMmsg</span>,
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_copy_implementations</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_SysWMEvent</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">timestamp</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">msg</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_SysWMmsg</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_copy_implementations</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_Event</span> {
-    <span class='kw'>pub</span> <span class='ident'>data</span>: [<span class='ident'>uint8_t</span>; <span class='number'>56</span>],
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_copy_implementations</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_Event</span> {
+    <span class="kw">pub</span> <span class="ident">data</span>: [<span class="ident">uint8_t</span>; <span class="number">56</span>],
 }
 
-<span class='kw'>impl</span> <span class='ident'>SDL_Event</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>type_</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint32_t</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+<span class="kw">impl</span> <span class="ident">SDL_Event</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">type_</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint32_t</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>common</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_CommonEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">common</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_CommonEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>window</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_WindowEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">window</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_WindowEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>key</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_KeyboardEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">key</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_KeyboardEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>edit</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_TextEditingEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">edit</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_TextEditingEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>text</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_TextInputEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">text</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_TextInputEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>motion</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_MouseMotionEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">motion</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_MouseMotionEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>button</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_MouseButtonEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">button</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_MouseButtonEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wheel</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_MouseWheelEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wheel</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_MouseWheelEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>jaxis</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_JoyAxisEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">jaxis</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_JoyAxisEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>jball</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_JoyBallEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">jball</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_JoyBallEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>jhat</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_JoyHatEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">jhat</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_JoyHatEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>jbutton</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_JoyButtonEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">jbutton</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_JoyButtonEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>jdevice</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_JoyDeviceEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">jdevice</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_JoyDeviceEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>caxis</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_ControllerAxisEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">caxis</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_ControllerAxisEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cbutton</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_ControllerButtonEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cbutton</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_ControllerButtonEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cdevice</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_ControllerDeviceEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cdevice</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_ControllerDeviceEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>quit</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_QuitEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quit</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_QuitEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>user</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_UserEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">user</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_UserEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>syswm</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_SysWMEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">syswm</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_SysWMEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>tfinger</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_TouchFingerEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tfinger</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_TouchFingerEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mgesture</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_MultiGestureEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mgesture</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_MultiGestureEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>dgesture</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_DollarGestureEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dgesture</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_DollarGestureEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_DropEvent</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_DropEvent</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>SDL_eventaction</span> <span class='op'>=</span> <span class='ident'>c_uint</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_ADDEVENT</span>: <span class='ident'>SDL_eventaction</span> <span class='op'>=</span> <span class='number'>0</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PEEKEVENT</span>: <span class='ident'>SDL_eventaction</span> <span class='op'>=</span> <span class='number'>1</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_GETEVENT</span>: <span class='ident'>SDL_eventaction</span> <span class='op'>=</span> <span class='number'>2</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>SDL_EventFilter</span> <span class='op'>=</span>
-    <span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span>(<span class='ident'>userdata</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>, <span class='ident'>event</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Event</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SDL_eventaction</span> <span class="op">=</span> <span class="ident">c_uint</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_ADDEVENT</span>: <span class="ident">SDL_eventaction</span> <span class="op">=</span> <span class="number">0</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PEEKEVENT</span>: <span class="ident">SDL_eventaction</span> <span class="op">=</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_GETEVENT</span>: <span class="ident">SDL_eventaction</span> <span class="op">=</span> <span class="number">2</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SDL_EventFilter</span> <span class="op">=</span>
+    <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">userdata</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">event</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Event</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
 
-<span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_free</span>(<span class='ident'>mem</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_PumpEvents</span>();
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_PeepEvents</span>(<span class='ident'>events</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Event</span>, <span class='ident'>numevents</span>: <span class='ident'>c_int</span>,
-                                <span class='ident'>action</span>: <span class='ident'>SDL_eventaction</span>,
-                                <span class='ident'>minType</span>: <span class='ident'>uint32_t</span>, <span class='ident'>maxType</span>: <span class='ident'>uint32_t</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HasEvent</span>(<span class='ident'>type_</span>: <span class='ident'>uint32_t</span>) <span class='op'>-&gt;</span> <span class='ident'>SDL_bool</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HasEvents</span>(<span class='ident'>minType</span>: <span class='ident'>uint32_t</span>, <span class='ident'>maxType</span>: <span class='ident'>uint32_t</span>) <span class='op'>-&gt;</span>
-              <span class='ident'>SDL_bool</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_FlushEvent</span>(<span class='ident'>type_</span>: <span class='ident'>uint32_t</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_FlushEvents</span>(<span class='ident'>minType</span>: <span class='ident'>uint32_t</span>, <span class='ident'>maxType</span>: <span class='ident'>uint32_t</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_PollEvent</span>(<span class='ident'>event</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Event</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_WaitEvent</span>(<span class='ident'>event</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Event</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_WaitEventTimeout</span>(<span class='ident'>event</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Event</span>, <span class='ident'>timeout</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span>
-              <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_PushEvent</span>(<span class='ident'>event</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Event</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_SetEventFilter</span>(<span class='ident'>filter</span>: <span class='ident'>SDL_EventFilter</span>,
-                                    <span class='ident'>userdata</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>);
-    <span class='comment'>/*pub fn SDL_GetEventFilter(filter: *SDL_EventFilter,
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_free</span>(<span class="ident">mem</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_PumpEvents</span>();
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_PeepEvents</span>(<span class="ident">events</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Event</span>, <span class="ident">numevents</span>: <span class="ident">c_int</span>,
+                                <span class="ident">action</span>: <span class="ident">SDL_eventaction</span>,
+                                <span class="ident">minType</span>: <span class="ident">uint32_t</span>, <span class="ident">maxType</span>: <span class="ident">uint32_t</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HasEvent</span>(<span class="ident">type_</span>: <span class="ident">uint32_t</span>) <span class="op">-&gt;</span> <span class="ident">SDL_bool</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HasEvents</span>(<span class="ident">minType</span>: <span class="ident">uint32_t</span>, <span class="ident">maxType</span>: <span class="ident">uint32_t</span>) <span class="op">-&gt;</span>
+              <span class="ident">SDL_bool</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_FlushEvent</span>(<span class="ident">type_</span>: <span class="ident">uint32_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_FlushEvents</span>(<span class="ident">minType</span>: <span class="ident">uint32_t</span>, <span class="ident">maxType</span>: <span class="ident">uint32_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_PollEvent</span>(<span class="ident">event</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Event</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_WaitEvent</span>(<span class="ident">event</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Event</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_WaitEventTimeout</span>(<span class="ident">event</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Event</span>, <span class="ident">timeout</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span>
+              <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_PushEvent</span>(<span class="ident">event</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Event</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_SetEventFilter</span>(<span class="ident">filter</span>: <span class="ident">SDL_EventFilter</span>,
+                                    <span class="ident">userdata</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>);
+    <span class="comment">/*pub fn SDL_GetEventFilter(filter: *SDL_EventFilter,
                                     userdata: **c_void) -&gt; SDL_bool;*/</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_AddEventWatch</span>(<span class='ident'>filter</span>: <span class='ident'>SDL_EventFilter</span>, <span class='ident'>userdata</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_DelEventWatch</span>(<span class='ident'>filter</span>: <span class='ident'>SDL_EventFilter</span>, <span class='ident'>userdata</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_FilterEvents</span>(<span class='ident'>filter</span>: <span class='ident'>SDL_EventFilter</span>, <span class='ident'>userdata</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_EventState</span>(<span class='ident'>type_</span>: <span class='ident'>uint32_t</span>, <span class='ident'>state</span>: <span class='ident'>SDL_State</span>) <span class='op'>-&gt;</span> <span class='ident'>SDL_State</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_RegisterEvents</span>(<span class='ident'>numevents</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>uint32_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_AddEventWatch</span>(<span class="ident">filter</span>: <span class="ident">SDL_EventFilter</span>, <span class="ident">userdata</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_DelEventWatch</span>(<span class="ident">filter</span>: <span class="ident">SDL_EventFilter</span>, <span class="ident">userdata</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_FilterEvents</span>(<span class="ident">filter</span>: <span class="ident">SDL_EventFilter</span>, <span class="ident">userdata</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_EventState</span>(<span class="ident">type_</span>: <span class="ident">uint32_t</span>, <span class="ident">state</span>: <span class="ident">SDL_State</span>) <span class="op">-&gt;</span> <span class="ident">SDL_State</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_RegisterEvents</span>(<span class="ident">numevents</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">uint32_t</span>;
 }
 </pre>
 </section>

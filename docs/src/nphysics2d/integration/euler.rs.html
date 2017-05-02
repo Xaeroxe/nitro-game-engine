@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -109,72 +109,72 @@
 <span id="64">64</span>
 <span id="65">65</span>
 <span id="66">66</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Euler integration functions.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Euler integration functions.</span>
 
-<span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Vector</span>, <span class='ident'>Orientation</span>, <span class='ident'>Rotation</span>, <span class='ident'>Translation</span>, <span class='ident'>Isometry</span>};
+<span class="kw">use</span> <span class="ident">na</span>;
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::<span class="ident">Real</span>;
+<span class="kw">use</span> <span class="ident">math</span>::{<span class="ident">Point</span>, <span class="ident">Vector</span>, <span class="ident">Orientation</span>, <span class="ident">Rotation</span>, <span class="ident">Translation</span>, <span class="ident">Isometry</span>};
 
-<span class='doccomment'>/// Explicit Euler integrator.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>explicit_integrate</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='ident'>dt</span>: <span class='ident'>N</span>,
-                                   <span class='ident'>p</span>:  <span class='kw-2'>&amp;</span><span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>c</span>:  <span class='kw-2'>&amp;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-                                   <span class='ident'>lv</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>av</span>: <span class='kw-2'>&amp;</span><span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-                                   <span class='ident'>lf</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>af</span>: <span class='kw-2'>&amp;</span><span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>)
-                                   <span class='op'>-&gt;</span> (<span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
+<span class="doccomment">/// Explicit Euler integrator.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">explicit_integrate</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span>(<span class="ident">dt</span>: <span class="ident">N</span>,
+                                   <span class="ident">p</span>:  <span class="kw-2">&amp;</span><span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">c</span>:  <span class="kw-2">&amp;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+                                   <span class="ident">lv</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">av</span>: <span class="kw-2">&amp;</span><span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+                                   <span class="ident">lf</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">af</span>: <span class="kw-2">&amp;</span><span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>)
+                                   <span class="op">-&gt;</span> (<span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
     (
-        <span class='ident'>displacement</span>(<span class='ident'>dt</span>.<span class='ident'>clone</span>(), <span class='ident'>p</span>, <span class='ident'>c</span>, <span class='ident'>lv</span>, <span class='ident'>av</span>), 
-        <span class='kw-2'>*</span><span class='ident'>lv</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='ident'>lf</span> <span class='op'>*</span> <span class='ident'>dt</span>,
-        <span class='kw-2'>*</span><span class='ident'>av</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='ident'>af</span> <span class='op'>*</span> <span class='ident'>dt</span>
+        <span class="ident">displacement</span>(<span class="ident">dt</span>.<span class="ident">clone</span>(), <span class="ident">p</span>, <span class="ident">c</span>, <span class="ident">lv</span>, <span class="ident">av</span>), 
+        <span class="kw-2">*</span><span class="ident">lv</span> <span class="op">+</span> <span class="kw-2">*</span><span class="ident">lf</span> <span class="op">*</span> <span class="ident">dt</span>,
+        <span class="kw-2">*</span><span class="ident">av</span> <span class="op">+</span> <span class="kw-2">*</span><span class="ident">af</span> <span class="op">*</span> <span class="ident">dt</span>
     )
 }
 
-<span class='doccomment'>/// Explicit Euler integrator. This will not update the rotational components.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>explicit_integrate_wo_rotation</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='ident'>dt</span>: <span class='ident'>N</span>, <span class='ident'>p</span>: <span class='kw-2'>&amp;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>lv</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>lf</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>)
-                                               <span class='op'>-&gt;</span> (<span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
+<span class="doccomment">/// Explicit Euler integrator. This will not update the rotational components.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">explicit_integrate_wo_rotation</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span>(<span class="ident">dt</span>: <span class="ident">N</span>, <span class="ident">p</span>: <span class="kw-2">&amp;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">lv</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">lf</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>)
+                                               <span class="op">-&gt;</span> (<span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
     (
-        <span class='kw-2'>*</span><span class='ident'>p</span>  <span class='op'>+</span> <span class='kw-2'>*</span><span class='ident'>lv</span> <span class='op'>*</span> <span class='ident'>dt</span>, 
-        <span class='kw-2'>*</span><span class='ident'>lv</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='ident'>lf</span> <span class='op'>*</span> <span class='ident'>dt</span>
+        <span class="kw-2">*</span><span class="ident">p</span>  <span class="op">+</span> <span class="kw-2">*</span><span class="ident">lv</span> <span class="op">*</span> <span class="ident">dt</span>, 
+        <span class="kw-2">*</span><span class="ident">lv</span> <span class="op">+</span> <span class="kw-2">*</span><span class="ident">lf</span> <span class="op">*</span> <span class="ident">dt</span>
     )
 }
 
-<span class='doccomment'>/// Semi-implicit Euler integrator.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>semi_implicit_integrate</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='ident'>dt</span>: <span class='ident'>N</span>,
-                                        <span class='ident'>p</span>:     <span class='kw-2'>&amp;</span><span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>c</span>:     <span class='kw-2'>&amp;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-                                        <span class='ident'>lv</span>:    <span class='kw-2'>&amp;</span><span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>av</span>:    <span class='kw-2'>&amp;</span><span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-                                        <span class='ident'>l_acc</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>a_acc</span>: <span class='kw-2'>&amp;</span><span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>)
-                                        <span class='op'>-&gt;</span> (<span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-    <span class='kw'>let</span> <span class='ident'>nlv</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>lv</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='ident'>l_acc</span> <span class='op'>*</span> <span class='ident'>dt</span>;
-    <span class='kw'>let</span> <span class='ident'>nav</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>av</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='ident'>a_acc</span> <span class='op'>*</span> <span class='ident'>dt</span>;
+<span class="doccomment">/// Semi-implicit Euler integrator.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">semi_implicit_integrate</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span>(<span class="ident">dt</span>: <span class="ident">N</span>,
+                                        <span class="ident">p</span>:     <span class="kw-2">&amp;</span><span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">c</span>:     <span class="kw-2">&amp;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+                                        <span class="ident">lv</span>:    <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">av</span>:    <span class="kw-2">&amp;</span><span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+                                        <span class="ident">l_acc</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">a_acc</span>: <span class="kw-2">&amp;</span><span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>)
+                                        <span class="op">-&gt;</span> (<span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+    <span class="kw">let</span> <span class="ident">nlv</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">lv</span> <span class="op">+</span> <span class="kw-2">*</span><span class="ident">l_acc</span> <span class="op">*</span> <span class="ident">dt</span>;
+    <span class="kw">let</span> <span class="ident">nav</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">av</span> <span class="op">+</span> <span class="kw-2">*</span><span class="ident">a_acc</span> <span class="op">*</span> <span class="ident">dt</span>;
 
     (
-        <span class='ident'>displacement</span>(<span class='ident'>dt</span>.<span class='ident'>clone</span>(), <span class='ident'>p</span>, <span class='ident'>c</span>, <span class='kw-2'>&amp;</span><span class='ident'>nlv</span>, <span class='kw-2'>&amp;</span><span class='ident'>nav</span>),
-        <span class='ident'>nlv</span>,
-        <span class='ident'>nav</span>
+        <span class="ident">displacement</span>(<span class="ident">dt</span>.<span class="ident">clone</span>(), <span class="ident">p</span>, <span class="ident">c</span>, <span class="kw-2">&amp;</span><span class="ident">nlv</span>, <span class="kw-2">&amp;</span><span class="ident">nav</span>),
+        <span class="ident">nlv</span>,
+        <span class="ident">nav</span>
     )
 }
 
-<span class='doccomment'>/// Semi-implicit Euler integrator. This will not update the rotational components.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>semi_implicit_integrate_wo_rotation</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='ident'>dt</span>: <span class='ident'>N</span>, <span class='ident'>p</span>: <span class='kw-2'>&amp;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>lv</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>lf</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>)
-                                                    <span class='op'>-&gt;</span> (<span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-    <span class='kw'>let</span> <span class='ident'>nlv</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>lv</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='ident'>lf</span> <span class='op'>*</span> <span class='ident'>dt</span>;
+<span class="doccomment">/// Semi-implicit Euler integrator. This will not update the rotational components.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">semi_implicit_integrate_wo_rotation</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span>(<span class="ident">dt</span>: <span class="ident">N</span>, <span class="ident">p</span>: <span class="kw-2">&amp;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">lv</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">lf</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>)
+                                                    <span class="op">-&gt;</span> (<span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+    <span class="kw">let</span> <span class="ident">nlv</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">lv</span> <span class="op">+</span> <span class="kw-2">*</span><span class="ident">lf</span> <span class="op">*</span> <span class="ident">dt</span>;
 
     (
-        <span class='kw-2'>*</span><span class='ident'>p</span> <span class='op'>+</span> <span class='ident'>nlv</span> <span class='op'>*</span> <span class='ident'>dt</span>,
-        <span class='ident'>nlv</span>
+        <span class="kw-2">*</span><span class="ident">p</span> <span class="op">+</span> <span class="ident">nlv</span> <span class="op">*</span> <span class="ident">dt</span>,
+        <span class="ident">nlv</span>
     )
 }
 
-<span class='doccomment'>/// Computes the transformation matrix required to move an object with a `lin_vel` linear velocity,</span>
-<span class='doccomment'>/// a `ang_vil` angular velocity, and a center of mass `center_of_mass`, during the time step `dt`.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>displacement</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='ident'>dt</span>: <span class='ident'>N</span>, _: <span class='kw-2'>&amp;</span><span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>center_of_mass</span>: <span class='kw-2'>&amp;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-                             <span class='ident'>lin_vel</span>: <span class='kw-2'>&amp;</span><span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>ang_vel</span>: <span class='kw-2'>&amp;</span><span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>one</span>();
-    <span class='kw'>let</span> <span class='ident'>rot</span> <span class='op'>=</span> <span class='ident'>Rotation</span>::<span class='ident'>from_scaled_axis</span>(<span class='ident'>ang_vel</span> <span class='op'>*</span> <span class='ident'>dt</span>);
-    <span class='ident'>res</span>.<span class='ident'>append_rotation_wrt_point_mut</span>(<span class='kw-2'>&amp;</span><span class='ident'>rot</span>, <span class='ident'>center_of_mass</span>);
-    <span class='ident'>res</span>.<span class='ident'>append_translation_mut</span>(<span class='kw-2'>&amp;</span><span class='ident'>Translation</span>::<span class='ident'>from_vector</span>(<span class='ident'>lin_vel</span> <span class='op'>*</span> <span class='ident'>dt</span>));
+<span class="doccomment">/// Computes the transformation matrix required to move an object with a `lin_vel` linear velocity,</span>
+<span class="doccomment">/// a `ang_vil` angular velocity, and a center of mass `center_of_mass`, during the time step `dt`.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">displacement</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span>(<span class="ident">dt</span>: <span class="ident">N</span>, _: <span class="kw-2">&amp;</span><span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">center_of_mass</span>: <span class="kw-2">&amp;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+                             <span class="ident">lin_vel</span>: <span class="kw-2">&amp;</span><span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">ang_vel</span>: <span class="kw-2">&amp;</span><span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span>: <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">one</span>();
+    <span class="kw">let</span> <span class="ident">rot</span> <span class="op">=</span> <span class="ident">Rotation</span>::<span class="ident">from_scaled_axis</span>(<span class="ident">ang_vel</span> <span class="op">*</span> <span class="ident">dt</span>);
+    <span class="ident">res</span>.<span class="ident">append_rotation_wrt_point_mut</span>(<span class="kw-2">&amp;</span><span class="ident">rot</span>, <span class="ident">center_of_mass</span>);
+    <span class="ident">res</span>.<span class="ident">append_translation_mut</span>(<span class="kw-2">&amp;</span><span class="ident">Translation</span>::<span class="ident">from_vector</span>(<span class="ident">lin_vel</span> <span class="op">*</span> <span class="ident">dt</span>));
 
-    <span class='ident'>res</span>
+    <span class="ident">res</span>
 }
 </pre>
 </section>

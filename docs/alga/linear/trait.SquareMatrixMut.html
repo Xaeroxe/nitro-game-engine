@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,27 +43,27 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>alga</a>::<wbr><a href='index.html'>linear</a>::<wbr><a class='trait' href=''>SquareMatrixMut</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>alga</a>::<wbr><a href='index.html'>linear</a>::<wbr><a class="trait" href=''>SquareMatrixMut</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/alga/linear/matrix.rs.html#117-134' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait SquareMatrixMut: <a class='trait' href='../../alga/linear/trait.SquareMatrix.html' title='alga::linear::SquareMatrix'>SquareMatrix</a> + <a class='trait' href='../../alga/linear/trait.MatrixMut.html' title='alga::linear::MatrixMut'>MatrixMut</a>&lt;Row=Self::<a class='trait' href='../../alga/linear/trait.SquareMatrix.html' title='alga::linear::SquareMatrix'>Vector</a>, Column=Self::<a class='trait' href='../../alga/linear/trait.SquareMatrix.html' title='alga::linear::SquareMatrix'>Vector</a>, Transpose=Self&gt; {
-    fn <a href='#tymethod.from_diagonal' class='fnname'>from_diagonal</a>(diag: &amp;Self::<a class='trait' href='../../alga/linear/trait.SquareMatrix.html' title='alga::linear::SquareMatrix'>Vector</a>) -&gt; Self;
-    fn <a href='#tymethod.set_diagonal_mut' class='fnname'>set_diagonal_mut</a>(&amp;mut self, diag: &amp;Self::<a class='trait' href='../../alga/linear/trait.SquareMatrix.html' title='alga::linear::SquareMatrix'>Vector</a>);
+<pre class='rust trait'>pub trait SquareMatrixMut: <a class="trait" href="../../alga/linear/trait.SquareMatrix.html" title="trait alga::linear::SquareMatrix">SquareMatrix</a> + <a class="trait" href="../../alga/linear/trait.MatrixMut.html" title="trait alga::linear::MatrixMut">MatrixMut</a>&lt;Row=Self::<a class="trait" href="../../alga/linear/trait.SquareMatrix.html" title="trait alga::linear::SquareMatrix">Vector</a>, Column=Self::<a class="trait" href="../../alga/linear/trait.SquareMatrix.html" title="trait alga::linear::SquareMatrix">Vector</a>, Transpose=Self&gt; {
+    fn <a href='#tymethod.from_diagonal' class='fnname'>from_diagonal</a>(diag: &amp;Self::<a class="trait" href="../../alga/linear/trait.SquareMatrix.html" title="trait alga::linear::SquareMatrix">Vector</a>) -&gt; Self;
+    fn <a href='#tymethod.set_diagonal_mut' class='fnname'>set_diagonal_mut</a>(&amp;mut self, diag: &amp;Self::<a class="trait" href="../../alga/linear/trait.SquareMatrix.html" title="trait alga::linear::SquareMatrix">Vector</a>);
 
-    fn <a href='#method.set_diagonal' class='fnname'>set_diagonal</a>(&amp;self, diag: &amp;Self::<a class='trait' href='../../alga/linear/trait.SquareMatrix.html' title='alga::linear::SquareMatrix'>Vector</a>) -&gt; Self { ... }
+    fn <a href='#method.set_diagonal' class='fnname'>set_diagonal</a>(&amp;self, diag: &amp;Self::<a class="trait" href="../../alga/linear/trait.SquareMatrix.html" title="trait alga::linear::SquareMatrix">Vector</a>) -&gt; Self { ... }
 }</pre><div class='docblock'><p>The monoid of all mutable square matrices that are stable under modification of its diagonal.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.from_diagonal' class='method'><span id='from_diagonal.v' class='invisible'><code>fn <a href='#tymethod.from_diagonal' class='fnname'>from_diagonal</a>(diag: &amp;Self::<a class='trait' href='../../alga/linear/trait.SquareMatrix.html' title='alga::linear::SquareMatrix'>Vector</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Constructs a new diagonal matrix.</p>
-</div><h3 id='tymethod.set_diagonal_mut' class='method'><span id='set_diagonal_mut.v' class='invisible'><code>fn <a href='#tymethod.set_diagonal_mut' class='fnname'>set_diagonal_mut</a>(&amp;mut self, diag: &amp;Self::<a class='trait' href='../../alga/linear/trait.SquareMatrix.html' title='alga::linear::SquareMatrix'>Vector</a>)</code></span></h3><div class='docblock'><p>In-place sets the matrix diagonal.</p>
+        <h3 id='tymethod.from_diagonal' class='method'><span id='from_diagonal.v' class='invisible'><code>fn <a href='#tymethod.from_diagonal' class='fnname'>from_diagonal</a>(diag: &amp;Self::<a class="trait" href="../../alga/linear/trait.SquareMatrix.html" title="trait alga::linear::SquareMatrix">Vector</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Constructs a new diagonal matrix.</p>
+</div><h3 id='tymethod.set_diagonal_mut' class='method'><span id='set_diagonal_mut.v' class='invisible'><code>fn <a href='#tymethod.set_diagonal_mut' class='fnname'>set_diagonal_mut</a>(&amp;mut self, diag: &amp;Self::<a class="trait" href="../../alga/linear/trait.SquareMatrix.html" title="trait alga::linear::SquareMatrix">Vector</a>)</code></span></h3><div class='docblock'><p>In-place sets the matrix diagonal.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.set_diagonal' class='method'><span id='set_diagonal.v' class='invisible'><code>fn <a href='#method.set_diagonal' class='fnname'>set_diagonal</a>(&amp;self, diag: &amp;Self::<a class='trait' href='../../alga/linear/trait.SquareMatrix.html' title='alga::linear::SquareMatrix'>Vector</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Sets the matrix diagonal.</p>
+        <h3 id='method.set_diagonal' class='method'><span id='set_diagonal.v' class='invisible'><code>fn <a href='#method.set_diagonal' class='fnname'>set_diagonal</a>(&amp;self, diag: &amp;Self::<a class="trait" href="../../alga/linear/trait.SquareMatrix.html" title="trait alga::linear::SquareMatrix">Vector</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Sets the matrix diagonal.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>

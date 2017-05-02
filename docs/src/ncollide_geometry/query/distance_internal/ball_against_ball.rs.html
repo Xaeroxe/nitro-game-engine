@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -67,29 +67,29 @@
 <span id="22">22</span>
 <span id="23">23</span>
 <span id="24">24</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
-<span class='kw'>use</span> <span class='ident'>shape</span>::<span class='ident'>Ball</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::<span class="ident">Real</span>;
+<span class="kw">use</span> <span class="ident">na</span>;
+<span class="kw">use</span> <span class="ident">math</span>::<span class="ident">Point</span>;
+<span class="kw">use</span> <span class="ident">shape</span>::<span class="ident">Ball</span>;
 
-<span class='doccomment'>/// Distance between balls.</span>
-<span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>ball_against_ball</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(<span class='ident'>center1</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>, <span class='ident'>b1</span>: <span class='kw-2'>&amp;</span><span class='ident'>Ball</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;</span>,
-                            <span class='ident'>center2</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>, <span class='ident'>b2</span>: <span class='kw-2'>&amp;</span><span class='ident'>Ball</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;</span>)
-                            <span class='op'>-&gt;</span> <span class='ident'>P</span>::<span class='ident'>Real</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span> {
-    <span class='kw'>let</span> <span class='ident'>r1</span>         <span class='op'>=</span> <span class='ident'>b1</span>.<span class='ident'>radius</span>();
-    <span class='kw'>let</span> <span class='ident'>r2</span>         <span class='op'>=</span> <span class='ident'>b2</span>.<span class='ident'>radius</span>();
-    <span class='kw'>let</span> <span class='ident'>delta_pos</span>  <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>center2</span> <span class='op'>-</span> <span class='kw-2'>*</span><span class='ident'>center1</span>;
-    <span class='kw'>let</span> <span class='ident'>distance_squared</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>norm_squared</span>(<span class='kw-2'>&amp;</span><span class='ident'>delta_pos</span>);
-    <span class='kw'>let</span> <span class='ident'>sum_radius</span> <span class='op'>=</span> <span class='ident'>r1</span> <span class='op'>+</span> <span class='ident'>r2</span>;
+<span class="doccomment">/// Distance between balls.</span>
+<span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ball_against_ball</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>(<span class="ident">center1</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>, <span class="ident">b1</span>: <span class="kw-2">&amp;</span><span class="ident">Ball</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Real</span><span class="op">&gt;</span>,
+                            <span class="ident">center2</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>, <span class="ident">b2</span>: <span class="kw-2">&amp;</span><span class="ident">Ball</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Real</span><span class="op">&gt;</span>)
+                            <span class="op">-&gt;</span> <span class="ident">P</span>::<span class="ident">Real</span>
+    <span class="kw">where</span> <span class="ident">P</span>: <span class="ident">Point</span> {
+    <span class="kw">let</span> <span class="ident">r1</span>         <span class="op">=</span> <span class="ident">b1</span>.<span class="ident">radius</span>();
+    <span class="kw">let</span> <span class="ident">r2</span>         <span class="op">=</span> <span class="ident">b2</span>.<span class="ident">radius</span>();
+    <span class="kw">let</span> <span class="ident">delta_pos</span>  <span class="op">=</span> <span class="kw-2">*</span><span class="ident">center2</span> <span class="op">-</span> <span class="kw-2">*</span><span class="ident">center1</span>;
+    <span class="kw">let</span> <span class="ident">distance_squared</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">norm_squared</span>(<span class="kw-2">&amp;</span><span class="ident">delta_pos</span>);
+    <span class="kw">let</span> <span class="ident">sum_radius</span> <span class="op">=</span> <span class="ident">r1</span> <span class="op">+</span> <span class="ident">r2</span>;
 
-    <span class='kw'>if</span> <span class='ident'>distance_squared</span> <span class='op'>&lt;=</span> <span class='ident'>sum_radius</span> <span class='op'>*</span> <span class='ident'>sum_radius</span> {
-        <span class='ident'>na</span>::<span class='ident'>zero</span>()
+    <span class="kw">if</span> <span class="ident">distance_squared</span> <span class="op">&lt;=</span> <span class="ident">sum_radius</span> <span class="op">*</span> <span class="ident">sum_radius</span> {
+        <span class="ident">na</span>::<span class="ident">zero</span>()
     }
-    <span class='kw'>else</span> {
-        <span class='ident'>distance_squared</span>.<span class='ident'>sqrt</span>() <span class='op'>-</span> <span class='ident'>sum_radius</span>
+    <span class="kw">else</span> {
+        <span class="ident">distance_squared</span>.<span class="ident">sqrt</span>() <span class="op">-</span> <span class="ident">sum_radius</span>
     }
 }
 </pre>

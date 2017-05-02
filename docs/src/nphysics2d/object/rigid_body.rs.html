@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -764,726 +764,726 @@
 <span id="719">719</span>
 <span id="720">720</span>
 <span id="721">721</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::<span class='ident'>Mul</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>RefCell</span>;
-<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Bounded</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::<span class="ident">Any</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::<span class="ident">Mul</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">RefCell</span>;
+<span class="kw">use</span> <span class="ident">num</span>::<span class="ident">Bounded</span>;
 
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>bounding_volume</span>::{<span class='self'>self</span>, <span class='ident'>HasBoundingVolume</span>, <span class='ident'>BoundingVolume</span>, <span class='ident'>AABB</span>, <span class='ident'>BoundingSphere</span>};
-<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>shape</span>::{<span class='ident'>Shape</span>, <span class='ident'>ShapeHandle</span>};
-<span class='kw'>use</span> <span class='ident'>utils</span>::<span class='ident'>GeneralizedCross</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Vector</span>, <span class='ident'>Orientation</span>, <span class='ident'>Rotation</span>, <span class='ident'>Translation</span>, <span class='ident'>Isometry</span>, <span class='ident'>AngularInertia</span>};
-<span class='kw'>use</span> <span class='ident'>volumetric</span>::{<span class='ident'>InertiaTensor</span>, <span class='ident'>Volumetric</span>};
-<span class='kw'>use</span> <span class='ident'>object</span>::<span class='ident'>RigidBodyCollisionGroups</span>;
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::<span class="ident">Real</span>;
+<span class="kw">use</span> <span class="ident">na</span>;
+<span class="kw">use</span> <span class="ident">ncollide</span>::<span class="ident">bounding_volume</span>::{<span class="self">self</span>, <span class="ident">HasBoundingVolume</span>, <span class="ident">BoundingVolume</span>, <span class="ident">AABB</span>, <span class="ident">BoundingSphere</span>};
+<span class="kw">use</span> <span class="ident">ncollide</span>::<span class="ident">shape</span>::{<span class="ident">Shape</span>, <span class="ident">ShapeHandle</span>};
+<span class="kw">use</span> <span class="ident">utils</span>::<span class="ident">GeneralizedCross</span>;
+<span class="kw">use</span> <span class="ident">math</span>::{<span class="ident">Point</span>, <span class="ident">Vector</span>, <span class="ident">Orientation</span>, <span class="ident">Rotation</span>, <span class="ident">Translation</span>, <span class="ident">Isometry</span>, <span class="ident">AngularInertia</span>};
+<span class="kw">use</span> <span class="ident">volumetric</span>::{<span class="ident">InertiaTensor</span>, <span class="ident">Volumetric</span>};
+<span class="kw">use</span> <span class="ident">object</span>::<span class="ident">RigidBodyCollisionGroups</span>;
 
-<span class='doccomment'>/// A shared, mutable, rigid body.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>RigidBodyHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>;
+<span class="doccomment">/// A shared, mutable, rigid body.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">RigidBodyHandle</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>;
 
-<span class='comment'>// FIXME: is this still useful (the same information is given by `self.inv_mass.is_zero()` ?</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Clone</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
-<span class='doccomment'>/// The movement state of a rigid body.</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>RigidBodyState</span> { <span class='comment'>// FIXME: rename this to &quot;RigidBodyKind&quot;?</span>
-    <span class='doccomment'>/// The rigid body cannot move.</span>
-    <span class='ident'>Static</span>,
-    <span class='doccomment'>/// The rigid body can move.</span>
-    <span class='ident'>Dynamic</span>
+<span class="comment">// FIXME: is this still useful (the same information is given by `self.inv_mass.is_zero()` ?</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Clone</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>)]</span>
+<span class="doccomment">/// The movement state of a rigid body.</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">RigidBodyState</span> { <span class="comment">// FIXME: rename this to &quot;RigidBodyKind&quot;?</span>
+    <span class="doccomment">/// The rigid body cannot move.</span>
+    <span class="ident">Static</span>,
+    <span class="doccomment">/// The rigid body can move.</span>
+    <span class="ident">Dynamic</span>
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Clone</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
-<span class='doccomment'>/// The activation state of a rigid body.</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ActivationState</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The rigid body is active with a not-zero energy.</span>
-    <span class='ident'>Active</span>(<span class='ident'>N</span>),
-    <span class='doccomment'>/// The rigid body is inactive.</span>
-    <span class='ident'>Inactive</span>,
-    <span class='doccomment'>/// The rigid body has been removed from the physics engine.</span>
-    <span class='ident'>Deleted</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Clone</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>)]</span>
+<span class="doccomment">/// The activation state of a rigid body.</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ActivationState</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The rigid body is active with a not-zero energy.</span>
+    <span class="ident">Active</span>(<span class="ident">N</span>),
+    <span class="doccomment">/// The rigid body is inactive.</span>
+    <span class="ident">Inactive</span>,
+    <span class="doccomment">/// The rigid body has been removed from the physics engine.</span>
+    <span class="ident">Deleted</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>ActivationState</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The energy accumulated other several frames.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>energy</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>ActivationState</span>::<span class='ident'>Active</span>(<span class='ident'>n</span>) <span class='op'>=&gt;</span> <span class='ident'>n</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>ActivationState</span>::<span class='ident'>Inactive</span>  <span class='op'>=&gt;</span> <span class='ident'>na</span>::<span class='ident'>zero</span>(),
-            <span class='ident'>ActivationState</span>::<span class='ident'>Deleted</span>   <span class='op'>=&gt;</span> <span class='ident'>na</span>::<span class='ident'>zero</span>()
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span> <span class="ident">ActivationState</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The energy accumulated other several frames.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">energy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">ActivationState</span>::<span class="ident">Active</span>(<span class="ident">n</span>) <span class="op">=&gt;</span> <span class="ident">n</span>.<span class="ident">clone</span>(),
+            <span class="ident">ActivationState</span>::<span class="ident">Inactive</span>  <span class="op">=&gt;</span> <span class="ident">na</span>::<span class="ident">zero</span>(),
+            <span class="ident">ActivationState</span>::<span class="ident">Deleted</span>   <span class="op">=&gt;</span> <span class="ident">na</span>::<span class="ident">zero</span>()
         }
     }
 }
 
-<span class='doccomment'>/// The rigid body structure.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This is the structure describing an object on the physics world.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> {
-    <span class='ident'>state</span>:                <span class='ident'>RigidBodyState</span>,
-    <span class='ident'>shape</span>:                <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>local_to_world</span>:       <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-    <span class='ident'>lin_vel</span>:              <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-    <span class='ident'>ang_vel</span>:              <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-    <span class='ident'>inv_mass</span>:             <span class='ident'>N</span>,
-    <span class='ident'>ls_inv_inertia</span>:       <span class='ident'>AngularInertia</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-    <span class='ident'>inv_inertia</span>:          <span class='ident'>AngularInertia</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-    <span class='ident'>ls_center_of_mass</span>:    <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-    <span class='ident'>center_of_mass</span>:       <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-    <span class='ident'>lin_acc</span>:              <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-    <span class='ident'>ang_acc</span>:              <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-    <span class='ident'>gravity</span>:              <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-    <span class='ident'>lin_force</span>:            <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-    <span class='ident'>ang_force</span>:            <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-    <span class='ident'>restitution</span>:          <span class='ident'>N</span>,
-    <span class='ident'>friction</span>:             <span class='ident'>N</span>,
-    <span class='ident'>index</span>:                <span class='ident'>isize</span>,
-    <span class='ident'>activation_state</span>:     <span class='ident'>ActivationState</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-    <span class='ident'>sleep_threshold</span>:      <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-    <span class='ident'>lin_acc_scale</span>:        <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,      <span class='comment'>// FIXME: find a better way of doing that.</span>
-    <span class='ident'>ang_acc_scale</span>:        <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='comment'>// FIXME: find a better way of doing that.</span>
-    <span class='ident'>margin</span>:               <span class='ident'>N</span>,
-    <span class='ident'>collision_groups</span>:     <span class='ident'>RigidBodyCollisionGroups</span>,
-    <span class='ident'>user_data</span>:            <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span>
+<span class="doccomment">/// The rigid body structure.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is the structure describing an object on the physics world.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span> {
+    <span class="ident">state</span>:                <span class="ident">RigidBodyState</span>,
+    <span class="ident">shape</span>:                <span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">local_to_world</span>:       <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+    <span class="ident">lin_vel</span>:              <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+    <span class="ident">ang_vel</span>:              <span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+    <span class="ident">inv_mass</span>:             <span class="ident">N</span>,
+    <span class="ident">ls_inv_inertia</span>:       <span class="ident">AngularInertia</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+    <span class="ident">inv_inertia</span>:          <span class="ident">AngularInertia</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+    <span class="ident">ls_center_of_mass</span>:    <span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+    <span class="ident">center_of_mass</span>:       <span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+    <span class="ident">lin_acc</span>:              <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+    <span class="ident">ang_acc</span>:              <span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+    <span class="ident">gravity</span>:              <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+    <span class="ident">lin_force</span>:            <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+    <span class="ident">ang_force</span>:            <span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+    <span class="ident">restitution</span>:          <span class="ident">N</span>,
+    <span class="ident">friction</span>:             <span class="ident">N</span>,
+    <span class="ident">index</span>:                <span class="ident">isize</span>,
+    <span class="ident">activation_state</span>:     <span class="ident">ActivationState</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+    <span class="ident">sleep_threshold</span>:      <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+    <span class="ident">lin_acc_scale</span>:        <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,      <span class="comment">// FIXME: find a better way of doing that.</span>
+    <span class="ident">ang_acc_scale</span>:        <span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="comment">// FIXME: find a better way of doing that.</span>
+    <span class="ident">margin</span>:               <span class="ident">N</span>,
+    <span class="ident">collision_groups</span>:     <span class="ident">RigidBodyCollisionGroups</span>,
+    <span class="ident">user_data</span>:            <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Any</span><span class="op">&gt;&gt;</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>Clone</span> <span class='kw'>for</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Clones this rigid body but not its associated user-data.</span>
-    <span class='kw'>fn</span> <span class='ident'>clone</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='ident'>RigidBody</span> {
-            <span class='ident'>state</span>:             <span class='self'>self</span>.<span class='ident'>state</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>shape</span>:             <span class='self'>self</span>.<span class='ident'>shape</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>local_to_world</span>:    <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>lin_vel</span>:           <span class='self'>self</span>.<span class='ident'>lin_vel</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>ang_vel</span>:           <span class='self'>self</span>.<span class='ident'>ang_vel</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>inv_mass</span>:          <span class='self'>self</span>.<span class='ident'>inv_mass</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>ls_inv_inertia</span>:    <span class='self'>self</span>.<span class='ident'>ls_inv_inertia</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>inv_inertia</span>:       <span class='self'>self</span>.<span class='ident'>inv_inertia</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>ls_center_of_mass</span>: <span class='self'>self</span>.<span class='ident'>ls_center_of_mass</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>center_of_mass</span>:    <span class='self'>self</span>.<span class='ident'>center_of_mass</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>lin_acc</span>:           <span class='self'>self</span>.<span class='ident'>lin_acc</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>ang_acc</span>:           <span class='self'>self</span>.<span class='ident'>ang_acc</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>gravity</span>:           <span class='self'>self</span>.<span class='ident'>gravity</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>lin_force</span>:         <span class='self'>self</span>.<span class='ident'>lin_force</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>ang_force</span>:         <span class='self'>self</span>.<span class='ident'>ang_force</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>restitution</span>:       <span class='self'>self</span>.<span class='ident'>restitution</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>friction</span>:          <span class='self'>self</span>.<span class='ident'>friction</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>index</span>:             <span class='self'>self</span>.<span class='ident'>index</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>activation_state</span>:  <span class='self'>self</span>.<span class='ident'>activation_state</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>sleep_threshold</span>:   <span class='self'>self</span>.<span class='ident'>sleep_threshold</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>lin_acc_scale</span>:     <span class='self'>self</span>.<span class='ident'>lin_acc_scale</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>ang_acc_scale</span>:     <span class='self'>self</span>.<span class='ident'>ang_acc_scale</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>margin</span>:            <span class='self'>self</span>.<span class='ident'>margin</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>collision_groups</span>:  <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>user_data</span>:         <span class='prelude-val'>None</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Clones this rigid body but not its associated user-data.</span>
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="ident">RigidBody</span> {
+            <span class="ident">state</span>:             <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">clone</span>(),
+            <span class="ident">shape</span>:             <span class="self">self</span>.<span class="ident">shape</span>.<span class="ident">clone</span>(),
+            <span class="ident">local_to_world</span>:    <span class="self">self</span>.<span class="ident">local_to_world</span>.<span class="ident">clone</span>(),
+            <span class="ident">lin_vel</span>:           <span class="self">self</span>.<span class="ident">lin_vel</span>.<span class="ident">clone</span>(),
+            <span class="ident">ang_vel</span>:           <span class="self">self</span>.<span class="ident">ang_vel</span>.<span class="ident">clone</span>(),
+            <span class="ident">inv_mass</span>:          <span class="self">self</span>.<span class="ident">inv_mass</span>.<span class="ident">clone</span>(),
+            <span class="ident">ls_inv_inertia</span>:    <span class="self">self</span>.<span class="ident">ls_inv_inertia</span>.<span class="ident">clone</span>(),
+            <span class="ident">inv_inertia</span>:       <span class="self">self</span>.<span class="ident">inv_inertia</span>.<span class="ident">clone</span>(),
+            <span class="ident">ls_center_of_mass</span>: <span class="self">self</span>.<span class="ident">ls_center_of_mass</span>.<span class="ident">clone</span>(),
+            <span class="ident">center_of_mass</span>:    <span class="self">self</span>.<span class="ident">center_of_mass</span>.<span class="ident">clone</span>(),
+            <span class="ident">lin_acc</span>:           <span class="self">self</span>.<span class="ident">lin_acc</span>.<span class="ident">clone</span>(),
+            <span class="ident">ang_acc</span>:           <span class="self">self</span>.<span class="ident">ang_acc</span>.<span class="ident">clone</span>(),
+            <span class="ident">gravity</span>:           <span class="self">self</span>.<span class="ident">gravity</span>.<span class="ident">clone</span>(),
+            <span class="ident">lin_force</span>:         <span class="self">self</span>.<span class="ident">lin_force</span>.<span class="ident">clone</span>(),
+            <span class="ident">ang_force</span>:         <span class="self">self</span>.<span class="ident">ang_force</span>.<span class="ident">clone</span>(),
+            <span class="ident">restitution</span>:       <span class="self">self</span>.<span class="ident">restitution</span>.<span class="ident">clone</span>(),
+            <span class="ident">friction</span>:          <span class="self">self</span>.<span class="ident">friction</span>.<span class="ident">clone</span>(),
+            <span class="ident">index</span>:             <span class="self">self</span>.<span class="ident">index</span>.<span class="ident">clone</span>(),
+            <span class="ident">activation_state</span>:  <span class="self">self</span>.<span class="ident">activation_state</span>.<span class="ident">clone</span>(),
+            <span class="ident">sleep_threshold</span>:   <span class="self">self</span>.<span class="ident">sleep_threshold</span>.<span class="ident">clone</span>(),
+            <span class="ident">lin_acc_scale</span>:     <span class="self">self</span>.<span class="ident">lin_acc_scale</span>.<span class="ident">clone</span>(),
+            <span class="ident">ang_acc_scale</span>:     <span class="self">self</span>.<span class="ident">ang_acc_scale</span>.<span class="ident">clone</span>(),
+            <span class="ident">margin</span>:            <span class="self">self</span>.<span class="ident">margin</span>.<span class="ident">clone</span>(),
+            <span class="ident">collision_groups</span>:  <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">clone</span>(),
+            <span class="ident">user_data</span>:         <span class="prelude-val">None</span>
         }
     }
 }
 
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>deactivate</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>lin_vel</span>          <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
-        <span class='self'>self</span>.<span class='ident'>ang_vel</span>          <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
-        <span class='self'>self</span>.<span class='ident'>activation_state</span> <span class='op'>=</span> <span class='ident'>ActivationState</span>::<span class='ident'>Inactive</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span> <span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">deactivate</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">lin_vel</span>          <span class="op">=</span> <span class="ident">na</span>::<span class="ident">zero</span>();
+        <span class="self">self</span>.<span class="ident">ang_vel</span>          <span class="op">=</span> <span class="ident">na</span>::<span class="ident">zero</span>();
+        <span class="self">self</span>.<span class="ident">activation_state</span> <span class="op">=</span> <span class="ident">ActivationState</span>::<span class="ident">Inactive</span>;
     }
 
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>delete</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>activation_state</span> <span class='op'>=</span> <span class='ident'>ActivationState</span>::<span class='ident'>Deleted</span>;
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delete</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">activation_state</span> <span class="op">=</span> <span class="ident">ActivationState</span>::<span class="ident">Deleted</span>;
     }
 
-    <span class='doccomment'>/// Updates the inertia tensor of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>update_inertia_tensor</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='comment'>// FIXME: the inverse inertia should be computed lazily (use a @mut ?).</span>
-        <span class='self'>self</span>.<span class='ident'>inv_inertia</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>ls_inv_inertia</span>.<span class='ident'>to_world_space</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>local_to_world</span>);
+    <span class="doccomment">/// Updates the inertia tensor of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">update_inertia_tensor</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="comment">// FIXME: the inverse inertia should be computed lazily (use a @mut ?).</span>
+        <span class="self">self</span>.<span class="ident">inv_inertia</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ls_inv_inertia</span>.<span class="ident">to_world_space</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">local_to_world</span>);
     }
 
-    <span class='doccomment'>/// Updates the center of mass of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>update_center_of_mass</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>center_of_mass</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>local_to_world</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>ls_center_of_mass</span>;
+    <span class="doccomment">/// Updates the center of mass of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">update_center_of_mass</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">center_of_mass</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">local_to_world</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">ls_center_of_mass</span>;
     }
 
-    <span class='doccomment'>/// Gets a reference to this body&#39;s transform.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>position</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>local_to_world</span>
+    <span class="doccomment">/// Gets a reference to this body&#39;s transform.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">local_to_world</span>
     }
 
-    <span class='doccomment'>/// The center given by this object&#39;s position. May not be the same as its center of mass.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This is the point with coordinates `self.position().translation.vector`.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>position_center</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='ident'>Point</span>::<span class='ident'>from_coordinates</span>(<span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>translation</span>.<span class='ident'>vector</span>)
+    <span class="doccomment">/// The center given by this object&#39;s position. May not be the same as its center of mass.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is the point with coordinates `self.position().translation.vector`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">position_center</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="ident">Point</span>::<span class="ident">from_coordinates</span>(<span class="self">self</span>.<span class="ident">local_to_world</span>.<span class="ident">translation</span>.<span class="ident">vector</span>)
     }
 
-    <span class='doccomment'>/// A reference to this body&#39;s shape handle.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>shape</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>shape</span>
+    <span class="doccomment">/// A reference to this body&#39;s shape handle.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shape</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">shape</span>
     }
 
-    <span class='doccomment'>/// The margin surrounding this object&#39;s shape.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>margin</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-        <span class='self'>self</span>.<span class='ident'>margin</span>.<span class='ident'>clone</span>()
+    <span class="doccomment">/// The margin surrounding this object&#39;s shape.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">margin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+        <span class="self">self</span>.<span class="ident">margin</span>.<span class="ident">clone</span>()
     }
 
-    <span class='doccomment'>/// Sets the margin surrounding this object&#39;s shape.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_margin</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>margin</span>: <span class='ident'>N</span>) {
-        <span class='self'>self</span>.<span class='ident'>margin</span> <span class='op'>=</span> <span class='ident'>margin</span>;
+    <span class="doccomment">/// Sets the margin surrounding this object&#39;s shape.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_margin</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">margin</span>: <span class="ident">N</span>) {
+        <span class="self">self</span>.<span class="ident">margin</span> <span class="op">=</span> <span class="ident">margin</span>;
     }
 
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>index</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>isize</span> {
-        <span class='self'>self</span>.<span class='ident'>index</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">isize</span> {
+        <span class="self">self</span>.<span class="ident">index</span>
     }
 
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_index</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>id</span>: <span class='ident'>isize</span>) {
-        <span class='self'>self</span>.<span class='ident'>index</span> <span class='op'>=</span> <span class='ident'>id</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_index</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">id</span>: <span class="ident">isize</span>) {
+        <span class="self">self</span>.<span class="ident">index</span> <span class="op">=</span> <span class="ident">id</span>
     }
 
-    <span class='doccomment'>/// Gets a reference to this body&#39;s center of mass.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>center_of_mass</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>center_of_mass</span>
+    <span class="doccomment">/// Gets a reference to this body&#39;s center of mass.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">center_of_mass</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">center_of_mass</span>
     }
 
-    <span class='doccomment'>/// Gets this body&#39;s mass, if it has one.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mass</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>inv_mass</span> <span class='op'>==</span> <span class='ident'>na</span>::<span class='ident'>zero</span>() {
-            <span class='prelude-val'>None</span>
-        } <span class='kw'>else</span> {
-            <span class='kw'>let</span> <span class='ident'>_1</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>one</span>();
-            <span class='prelude-val'>Some</span>(<span class='ident'>_1</span> <span class='op'>/</span> <span class='self'>self</span>.<span class='ident'>inv_mass</span>)
+    <span class="doccomment">/// Gets this body&#39;s mass, if it has one.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mass</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">inv_mass</span> <span class="op">==</span> <span class="ident">na</span>::<span class="ident">zero</span>() {
+            <span class="prelude-val">None</span>
+        } <span class="kw">else</span> {
+            <span class="kw">let</span> <span class="ident">_1</span>: <span class="ident">N</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">one</span>();
+            <span class="prelude-val">Some</span>(<span class="ident">_1</span> <span class="op">/</span> <span class="self">self</span>.<span class="ident">inv_mass</span>)
         }
     }
 
-    <span class='doccomment'>/// Gets this body&#39;s restitution coefficent.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The actual restitution coefficient of a contact is computed averaging the two bodies</span>
-    <span class='doccomment'>/// restitution coefficient.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>restitution</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-        <span class='self'>self</span>.<span class='ident'>restitution</span>.<span class='ident'>clone</span>()
+    <span class="doccomment">/// Gets this body&#39;s restitution coefficent.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The actual restitution coefficient of a contact is computed averaging the two bodies</span>
+    <span class="doccomment">/// restitution coefficient.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">restitution</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+        <span class="self">self</span>.<span class="ident">restitution</span>.<span class="ident">clone</span>()
     }
 
-    <span class='doccomment'>/// Gets this body&#39;s friction coefficient.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The actual friction coefficient of a contact is computed averaging the two bodies friction</span>
-    <span class='doccomment'>/// coefficient.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>friction</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-        <span class='self'>self</span>.<span class='ident'>friction</span>.<span class='ident'>clone</span>()
+    <span class="doccomment">/// Gets this body&#39;s friction coefficient.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The actual friction coefficient of a contact is computed averaging the two bodies friction</span>
+    <span class="doccomment">/// coefficient.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">friction</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+        <span class="self">self</span>.<span class="ident">friction</span>.<span class="ident">clone</span>()
     }
 
-    <span class='doccomment'>/// Indicates whether or not this rigid body is active.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// An inactive rigid body is a body that did not move for some time. It is not longer</span>
-    <span class='doccomment'>/// simulated by the physics engine as long as no other object touches it. It is automatically</span>
-    <span class='doccomment'>/// activated by the physics engine.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_active</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>activation_state</span> {
-            <span class='ident'>ActivationState</span>::<span class='ident'>Active</span>(_) <span class='op'>=&gt;</span> <span class='bool-val'>true</span>,
-            _ <span class='op'>=&gt;</span> <span class='bool-val'>false</span>
+    <span class="doccomment">/// Indicates whether or not this rigid body is active.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// An inactive rigid body is a body that did not move for some time. It is not longer</span>
+    <span class="doccomment">/// simulated by the physics engine as long as no other object touches it. It is automatically</span>
+    <span class="doccomment">/// activated by the physics engine.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_active</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">activation_state</span> {
+            <span class="ident">ActivationState</span>::<span class="ident">Active</span>(_) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>
         }
     }
 
-    <span class='doccomment'>/// The velocity threshold bellow whith the rigid body might be deactivated.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If None, the object cannot be deactivated.</span>
-    <span class='doccomment'>/// If the total squared velocity (i-e: v^2 + w^2) falls bellow this threshold for a long</span>
-    <span class='doccomment'>/// enough time, the rigid body will fall asleep (i-e be &quot;frozen&quot;) for performance reasons.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>deactivation_threshold</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>sleep_threshold</span>.<span class='ident'>clone</span>()
+    <span class="doccomment">/// The velocity threshold bellow whith the rigid body might be deactivated.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If None, the object cannot be deactivated.</span>
+    <span class="doccomment">/// If the total squared velocity (i-e: v^2 + w^2) falls bellow this threshold for a long</span>
+    <span class="doccomment">/// enough time, the rigid body will fall asleep (i-e be &quot;frozen&quot;) for performance reasons.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">deactivation_threshold</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">sleep_threshold</span>.<span class="ident">clone</span>()
     }
 
-    <span class='doccomment'>/// Set the velocity threshold bellow whith the rigid body might be deactivated.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If None, the object cannot be deactivated.</span>
-    <span class='doccomment'>/// If the total squared velocity (i-e: v^2 + w^2) falls bellow this threshold for a long</span>
-    <span class='doccomment'>/// enough time, the rigid body will fall asleep (i-e be &quot;frozen&quot;) for performance reasons.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_deactivation_threshold</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>threshold</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>sleep_threshold</span> <span class='op'>=</span> <span class='ident'>threshold</span>
+    <span class="doccomment">/// Set the velocity threshold bellow whith the rigid body might be deactivated.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If None, the object cannot be deactivated.</span>
+    <span class="doccomment">/// If the total squared velocity (i-e: v^2 + w^2) falls bellow this threshold for a long</span>
+    <span class="doccomment">/// enough time, the rigid body will fall asleep (i-e be &quot;frozen&quot;) for performance reasons.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_deactivation_threshold</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">threshold</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">sleep_threshold</span> <span class="op">=</span> <span class="ident">threshold</span>
     }
 
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>activation_state</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>ActivationState</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>activation_state</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">activation_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">ActivationState</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">activation_state</span>
     }
 
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>activate</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>energy</span>: <span class='ident'>N</span>) {
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>activation_state</span> <span class='op'>!=</span> <span class='ident'>ActivationState</span>::<span class='ident'>Deleted</span> {
-            <span class='self'>self</span>.<span class='ident'>activation_state</span> <span class='op'>=</span> <span class='ident'>ActivationState</span>::<span class='ident'>Active</span>(<span class='ident'>energy</span>);
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">activate</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">energy</span>: <span class="ident">N</span>) {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">activation_state</span> <span class="op">!=</span> <span class="ident">ActivationState</span>::<span class="ident">Deleted</span> {
+            <span class="self">self</span>.<span class="ident">activation_state</span> <span class="op">=</span> <span class="ident">ActivationState</span>::<span class="ident">Active</span>(<span class="ident">energy</span>);
         }
     }
 
-    <span class='doccomment'>/// Creates a new rigid body that can move.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_dynamic</span><span class='op'>&lt;</span><span class='ident'>G</span><span class='op'>&gt;</span>(<span class='ident'>shape</span>: <span class='ident'>G</span>, <span class='ident'>density</span>: <span class='ident'>N</span>, <span class='ident'>restitution</span>: <span class='ident'>N</span>, <span class='ident'>friction</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>G</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='op'>+</span> <span class='ident'>Volumetric</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>AngularInertia</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>props</span> <span class='op'>=</span> <span class='ident'>shape</span>.<span class='ident'>mass_properties</span>(<span class='ident'>density</span>);
+    <span class="doccomment">/// Creates a new rigid body that can move.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_dynamic</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>(<span class="ident">shape</span>: <span class="ident">G</span>, <span class="ident">density</span>: <span class="ident">N</span>, <span class="ident">restitution</span>: <span class="ident">N</span>, <span class="ident">friction</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="ident">G</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="op">+</span> <span class="ident">Volumetric</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">AngularInertia</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">let</span> <span class="ident">props</span> <span class="op">=</span> <span class="ident">shape</span>.<span class="ident">mass_properties</span>(<span class="ident">density</span>);
 
-        <span class='ident'>RigidBody</span>::<span class='ident'>new</span>(<span class='ident'>ShapeHandle</span>::<span class='ident'>new</span>(<span class='ident'>shape</span>), <span class='prelude-val'>Some</span>(<span class='ident'>props</span>), <span class='ident'>restitution</span>, <span class='ident'>friction</span>)
+        <span class="ident">RigidBody</span>::<span class="ident">new</span>(<span class="ident">ShapeHandle</span>::<span class="ident">new</span>(<span class="ident">shape</span>), <span class="prelude-val">Some</span>(<span class="ident">props</span>), <span class="ident">restitution</span>, <span class="ident">friction</span>)
     }
 
-    <span class='doccomment'>/// Creates a new rigid body that cannot move.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_static</span><span class='op'>&lt;</span><span class='ident'>G</span><span class='op'>&gt;</span>(<span class='ident'>shape</span>: <span class='ident'>G</span>, <span class='ident'>restitution</span>: <span class='ident'>N</span>, <span class='ident'>friction</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>G</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
+    <span class="doccomment">/// Creates a new rigid body that cannot move.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_static</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>(<span class="ident">shape</span>: <span class="ident">G</span>, <span class="ident">restitution</span>: <span class="ident">N</span>, <span class="ident">friction</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="ident">G</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> {
 
-        <span class='ident'>RigidBody</span>::<span class='ident'>new</span>(<span class='ident'>ShapeHandle</span>::<span class='ident'>new</span>(<span class='ident'>shape</span>), <span class='prelude-val'>None</span>, <span class='ident'>restitution</span>, <span class='ident'>friction</span>)
+        <span class="ident">RigidBody</span>::<span class="ident">new</span>(<span class="ident">ShapeHandle</span>::<span class="ident">new</span>(<span class="ident">shape</span>), <span class="prelude-val">None</span>, <span class="ident">restitution</span>, <span class="ident">friction</span>)
     }
 
-    <span class='doccomment'>/// Creates a new rigid body with a given shape.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Use this if the shape is shared by multiple rigid bodies.</span>
-    <span class='doccomment'>/// Set `mass_properties` to `None` if the rigid body is to be static.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>shape</span>:           <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>,
-               <span class='ident'>mass_properties</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='ident'>N</span>, <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>AngularInertia</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>)<span class='op'>&gt;</span>,
-               <span class='ident'>restitution</span>:     <span class='ident'>N</span>,
-               <span class='ident'>friction</span>:        <span class='ident'>N</span>)
-               <span class='op'>-&gt;</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> (<span class='ident'>inv_mass</span>, <span class='ident'>center_of_mass</span>, <span class='ident'>inv_inertia</span>, <span class='ident'>active</span>, <span class='ident'>state</span>, <span class='ident'>groups</span>) <span class='op'>=</span>
-            <span class='kw'>match</span> <span class='ident'>mass_properties</span> {
-                <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> (<span class='ident'>na</span>::<span class='ident'>zero</span>(), <span class='ident'>na</span>::<span class='ident'>origin</span>(), <span class='ident'>na</span>::<span class='ident'>zero</span>(),
-                         <span class='ident'>ActivationState</span>::<span class='ident'>Inactive</span>, <span class='ident'>RigidBodyState</span>::<span class='ident'>Static</span>,
-                         <span class='ident'>RigidBodyCollisionGroups</span>::<span class='ident'>new_static</span>()),
-                <span class='prelude-val'>Some</span>((<span class='ident'>mass</span>, <span class='ident'>com</span>, <span class='ident'>inertia</span>)) <span class='op'>=&gt;</span> {
-                    <span class='kw'>if</span> <span class='ident'>mass</span>.<span class='ident'>is_zero</span>() {
-                        <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;A dynamic body must not have a zero volume.&quot;</span>)
+    <span class="doccomment">/// Creates a new rigid body with a given shape.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Use this if the shape is shared by multiple rigid bodies.</span>
+    <span class="doccomment">/// Set `mass_properties` to `None` if the rigid body is to be static.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">shape</span>:           <span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>,
+               <span class="ident">mass_properties</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">N</span>, <span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">AngularInertia</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>)<span class="op">&gt;</span>,
+               <span class="ident">restitution</span>:     <span class="ident">N</span>,
+               <span class="ident">friction</span>:        <span class="ident">N</span>)
+               <span class="op">-&gt;</span> <span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> (<span class="ident">inv_mass</span>, <span class="ident">center_of_mass</span>, <span class="ident">inv_inertia</span>, <span class="ident">active</span>, <span class="ident">state</span>, <span class="ident">groups</span>) <span class="op">=</span>
+            <span class="kw">match</span> <span class="ident">mass_properties</span> {
+                <span class="prelude-val">None</span> <span class="op">=&gt;</span> (<span class="ident">na</span>::<span class="ident">zero</span>(), <span class="ident">na</span>::<span class="ident">origin</span>(), <span class="ident">na</span>::<span class="ident">zero</span>(),
+                         <span class="ident">ActivationState</span>::<span class="ident">Inactive</span>, <span class="ident">RigidBodyState</span>::<span class="ident">Static</span>,
+                         <span class="ident">RigidBodyCollisionGroups</span>::<span class="ident">new_static</span>()),
+                <span class="prelude-val">Some</span>((<span class="ident">mass</span>, <span class="ident">com</span>, <span class="ident">inertia</span>)) <span class="op">=&gt;</span> {
+                    <span class="kw">if</span> <span class="ident">mass</span>.<span class="ident">is_zero</span>() {
+                        <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;A dynamic body must not have a zero volume.&quot;</span>)
                     }
 
-                    <span class='kw'>let</span> <span class='ident'>ii</span>: <span class='ident'>AngularInertia</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>;
+                    <span class="kw">let</span> <span class="ident">ii</span>: <span class="ident">AngularInertia</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>;
 
-                    <span class='kw'>match</span> <span class='ident'>inertia</span>.<span class='ident'>try_inverse</span>() {
-                        <span class='prelude-val'>Some</span>(<span class='ident'>i</span>) <span class='op'>=&gt;</span> <span class='ident'>ii</span> <span class='op'>=</span> <span class='ident'>i</span>,
-                        <span class='prelude-val'>None</span>    <span class='op'>=&gt;</span> <span class='ident'>ii</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>()
+                    <span class="kw">match</span> <span class="ident">inertia</span>.<span class="ident">try_inverse</span>() {
+                        <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=&gt;</span> <span class="ident">ii</span> <span class="op">=</span> <span class="ident">i</span>,
+                        <span class="prelude-val">None</span>    <span class="op">=&gt;</span> <span class="ident">ii</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">zero</span>()
                     }
 
-                    <span class='comment'>// Will be set to a sensible value later.</span>
-                    <span class='kw'>let</span> <span class='ident'>active</span> <span class='op'>=</span> <span class='ident'>ActivationState</span>::<span class='ident'>Active</span>(<span class='ident'>Bounded</span>::<span class='ident'>max_value</span>());
-                    <span class='kw'>let</span> <span class='ident'>groups</span> <span class='op'>=</span> <span class='ident'>RigidBodyCollisionGroups</span>::<span class='ident'>new_dynamic</span>();
-                    <span class='kw'>let</span> <span class='ident'>_1</span>: <span class='ident'>N</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>one</span>();
+                    <span class="comment">// Will be set to a sensible value later.</span>
+                    <span class="kw">let</span> <span class="ident">active</span> <span class="op">=</span> <span class="ident">ActivationState</span>::<span class="ident">Active</span>(<span class="ident">Bounded</span>::<span class="ident">max_value</span>());
+                    <span class="kw">let</span> <span class="ident">groups</span> <span class="op">=</span> <span class="ident">RigidBodyCollisionGroups</span>::<span class="ident">new_dynamic</span>();
+                    <span class="kw">let</span> <span class="ident">_1</span>: <span class="ident">N</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">one</span>();
 
-                    (<span class='ident'>_1</span> <span class='op'>/</span> <span class='ident'>mass</span>, <span class='ident'>com</span>, <span class='ident'>ii</span>, <span class='ident'>active</span>, <span class='ident'>RigidBodyState</span>::<span class='ident'>Dynamic</span>, <span class='ident'>groups</span>)
+                    (<span class="ident">_1</span> <span class="op">/</span> <span class="ident">mass</span>, <span class="ident">com</span>, <span class="ident">ii</span>, <span class="ident">active</span>, <span class="ident">RigidBodyState</span>::<span class="ident">Dynamic</span>, <span class="ident">groups</span>)
                 },
             };
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> <span class='op'>=</span>
-            <span class='ident'>RigidBody</span> {
-                <span class='ident'>state</span>:             <span class='ident'>state</span>,
-                <span class='ident'>shape</span>:             <span class='ident'>shape</span>,
-                <span class='ident'>local_to_world</span>:    <span class='ident'>na</span>::<span class='ident'>one</span>(),
-                <span class='ident'>lin_vel</span>:           <span class='ident'>na</span>::<span class='ident'>zero</span>(),
-                <span class='ident'>ang_vel</span>:           <span class='ident'>na</span>::<span class='ident'>zero</span>(),
-                <span class='ident'>inv_mass</span>:          <span class='ident'>inv_mass</span>,
-                <span class='ident'>ls_inv_inertia</span>:    <span class='ident'>inv_inertia</span>.<span class='ident'>clone</span>(),
-                <span class='ident'>inv_inertia</span>:       <span class='ident'>inv_inertia</span>,
-                <span class='ident'>ls_center_of_mass</span>: <span class='ident'>center_of_mass</span>,
-                <span class='ident'>center_of_mass</span>:    <span class='ident'>na</span>::<span class='ident'>origin</span>(),
-                <span class='ident'>lin_acc</span>:           <span class='ident'>na</span>::<span class='ident'>zero</span>(),
-                <span class='ident'>ang_acc</span>:           <span class='ident'>na</span>::<span class='ident'>zero</span>(),
-                <span class='ident'>gravity</span>:           <span class='ident'>na</span>::<span class='ident'>zero</span>(),
-                <span class='ident'>lin_force</span>:         <span class='ident'>na</span>::<span class='ident'>zero</span>(),
-                <span class='ident'>ang_force</span>:         <span class='ident'>na</span>::<span class='ident'>zero</span>(),
-                <span class='ident'>friction</span>:          <span class='ident'>friction</span>,
-                <span class='ident'>restitution</span>:       <span class='ident'>restitution</span>,
-                <span class='ident'>index</span>:             <span class='number'>0</span>,
-                <span class='ident'>activation_state</span>:  <span class='ident'>active</span>,
-                <span class='ident'>sleep_threshold</span>:   <span class='prelude-val'>Some</span>(<span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>0.1f64</span>)),
-                <span class='ident'>lin_acc_scale</span>:     <span class='ident'>Vector</span>::<span class='ident'>from_element</span>(<span class='ident'>N</span>::<span class='ident'>one</span>()),
-                <span class='ident'>ang_acc_scale</span>:     <span class='ident'>Orientation</span>::<span class='ident'>from_element</span>(<span class='ident'>N</span>::<span class='ident'>one</span>()),
-                <span class='ident'>margin</span>:            <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>0.04f64</span>), <span class='comment'>// FIXME: do not hard-code this.</span>
-                <span class='ident'>collision_groups</span>:  <span class='ident'>groups</span>,
-                <span class='ident'>user_data</span>:         <span class='prelude-val'>None</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span>
+            <span class="ident">RigidBody</span> {
+                <span class="ident">state</span>:             <span class="ident">state</span>,
+                <span class="ident">shape</span>:             <span class="ident">shape</span>,
+                <span class="ident">local_to_world</span>:    <span class="ident">na</span>::<span class="ident">one</span>(),
+                <span class="ident">lin_vel</span>:           <span class="ident">na</span>::<span class="ident">zero</span>(),
+                <span class="ident">ang_vel</span>:           <span class="ident">na</span>::<span class="ident">zero</span>(),
+                <span class="ident">inv_mass</span>:          <span class="ident">inv_mass</span>,
+                <span class="ident">ls_inv_inertia</span>:    <span class="ident">inv_inertia</span>.<span class="ident">clone</span>(),
+                <span class="ident">inv_inertia</span>:       <span class="ident">inv_inertia</span>,
+                <span class="ident">ls_center_of_mass</span>: <span class="ident">center_of_mass</span>,
+                <span class="ident">center_of_mass</span>:    <span class="ident">na</span>::<span class="ident">origin</span>(),
+                <span class="ident">lin_acc</span>:           <span class="ident">na</span>::<span class="ident">zero</span>(),
+                <span class="ident">ang_acc</span>:           <span class="ident">na</span>::<span class="ident">zero</span>(),
+                <span class="ident">gravity</span>:           <span class="ident">na</span>::<span class="ident">zero</span>(),
+                <span class="ident">lin_force</span>:         <span class="ident">na</span>::<span class="ident">zero</span>(),
+                <span class="ident">ang_force</span>:         <span class="ident">na</span>::<span class="ident">zero</span>(),
+                <span class="ident">friction</span>:          <span class="ident">friction</span>,
+                <span class="ident">restitution</span>:       <span class="ident">restitution</span>,
+                <span class="ident">index</span>:             <span class="number">0</span>,
+                <span class="ident">activation_state</span>:  <span class="ident">active</span>,
+                <span class="ident">sleep_threshold</span>:   <span class="prelude-val">Some</span>(<span class="ident">na</span>::<span class="ident">convert</span>(<span class="number">0.1f64</span>)),
+                <span class="ident">lin_acc_scale</span>:     <span class="ident">Vector</span>::<span class="ident">from_element</span>(<span class="ident">N</span>::<span class="ident">one</span>()),
+                <span class="ident">ang_acc_scale</span>:     <span class="ident">Orientation</span>::<span class="ident">from_element</span>(<span class="ident">N</span>::<span class="ident">one</span>()),
+                <span class="ident">margin</span>:            <span class="ident">na</span>::<span class="ident">convert</span>(<span class="number">0.04f64</span>), <span class="comment">// FIXME: do not hard-code this.</span>
+                <span class="ident">collision_groups</span>:  <span class="ident">groups</span>,
+                <span class="ident">user_data</span>:         <span class="prelude-val">None</span>
             };
 
-        <span class='ident'>res</span>.<span class='ident'>update_center_of_mass</span>();
-        <span class='ident'>res</span>.<span class='ident'>update_inertia_tensor</span>();
+        <span class="ident">res</span>.<span class="ident">update_center_of_mass</span>();
+        <span class="ident">res</span>.<span class="ident">update_inertia_tensor</span>();
 
-        <span class='ident'>res</span>
+        <span class="ident">res</span>
     }
 
-    <span class='doccomment'>/// Indicates whether this rigid body is static or dynamic.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>can_move</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>state</span> {
-            <span class='ident'>RigidBodyState</span>::<span class='ident'>Dynamic</span> <span class='op'>=&gt;</span> <span class='bool-val'>true</span>,
-            _ <span class='op'>=&gt;</span> <span class='bool-val'>false</span>
+    <span class="doccomment">/// Indicates whether this rigid body is static or dynamic.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">can_move</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">state</span> {
+            <span class="ident">RigidBodyState</span>::<span class="ident">Dynamic</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>
         }
     }
 
-    <span class='doccomment'>/// Gets the linear acceleraction scale of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>lin_acc_scale</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>lin_acc_scale</span>.<span class='ident'>clone</span>()
+    <span class="doccomment">/// Gets the linear acceleraction scale of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lin_acc_scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">lin_acc_scale</span>.<span class="ident">clone</span>()
     }
 
-    <span class='doccomment'>/// Sets the linear acceleration scale of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_lin_acc_scale</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>scale</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>lin_acc_scale</span> <span class='op'>=</span> <span class='ident'>scale</span>;
-        <span class='self'>self</span>.<span class='ident'>update_lin_acc</span>();
-        <span class='self'>self</span>.<span class='ident'>wake_up</span>();
+    <span class="doccomment">/// Sets the linear acceleration scale of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_lin_acc_scale</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">scale</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">lin_acc_scale</span> <span class="op">=</span> <span class="ident">scale</span>;
+        <span class="self">self</span>.<span class="ident">update_lin_acc</span>();
+        <span class="self">self</span>.<span class="ident">wake_up</span>();
     }
 
-    <span class='doccomment'>/// Gets the angular acceleration scale of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>ang_acc_scale</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>ang_acc_scale</span>.<span class='ident'>clone</span>()
+    <span class="doccomment">/// Gets the angular acceleration scale of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ang_acc_scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">ang_acc_scale</span>.<span class="ident">clone</span>()
     }
 
-    <span class='doccomment'>/// Sets the angular acceleration scale of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_ang_acc_scale</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>scale</span>: <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>ang_acc_scale</span> <span class='op'>=</span> <span class='ident'>scale</span>;
-        <span class='self'>self</span>.<span class='ident'>update_ang_acc</span>();
-        <span class='self'>self</span>.<span class='ident'>wake_up</span>();
+    <span class="doccomment">/// Sets the angular acceleration scale of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_ang_acc_scale</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">scale</span>: <span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">ang_acc_scale</span> <span class="op">=</span> <span class="ident">scale</span>;
+        <span class="self">self</span>.<span class="ident">update_ang_acc</span>();
+        <span class="self">self</span>.<span class="ident">wake_up</span>();
     }
 
-    <span class='doccomment'>/// Get the linear velocity of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>lin_vel</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>lin_vel</span>.<span class='ident'>clone</span>()
+    <span class="doccomment">/// Get the linear velocity of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lin_vel</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">lin_vel</span>.<span class="ident">clone</span>()
     }
 
-    <span class='doccomment'>/// Sets the linear velocity of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_lin_vel</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>lv</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>set_lin_vel_internal</span>(<span class='ident'>lv</span>);
-        <span class='self'>self</span>.<span class='ident'>wake_up</span>();
+    <span class="doccomment">/// Sets the linear velocity of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_lin_vel</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">lv</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">set_lin_vel_internal</span>(<span class="ident">lv</span>);
+        <span class="self">self</span>.<span class="ident">wake_up</span>();
     }
 
-    <span class='doccomment'>/// Sets the linear velocity of this rigid body but does not wake it up.</span>
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_lin_vel_internal</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>lv</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>lin_vel</span> <span class='op'>=</span> <span class='ident'>lv</span>
+    <span class="doccomment">/// Sets the linear velocity of this rigid body but does not wake it up.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_lin_vel_internal</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">lv</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">lin_vel</span> <span class="op">=</span> <span class="ident">lv</span>
     }
 
-    <span class='doccomment'>/// Gets the linear acceleration of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>lin_acc</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>lin_acc</span>
+    <span class="doccomment">/// Gets the linear acceleration of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lin_acc</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">lin_acc</span>
     }
 
-    <span class='doccomment'>/// Sets the linear acceleration of this rigid body.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Note that this might be reset by the physics engine automatically.</span>
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_lin_acc</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>lf</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>lin_acc</span> <span class='op'>=</span> <span class='ident'>lf</span>
+    <span class="doccomment">/// Sets the linear acceleration of this rigid body.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Note that this might be reset by the physics engine automatically.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_lin_acc</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">lf</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">lin_acc</span> <span class="op">=</span> <span class="ident">lf</span>
     }
 
-    <span class='doccomment'>/// Gets the angular velocity of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>ang_vel</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>ang_vel</span>.<span class='ident'>clone</span>()
+    <span class="doccomment">/// Gets the angular velocity of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ang_vel</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">ang_vel</span>.<span class="ident">clone</span>()
     }
 
-    <span class='doccomment'>/// Sets the angular velocity of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_ang_vel</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>av</span>: <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>set_ang_vel_internal</span>(<span class='ident'>av</span>);
-        <span class='self'>self</span>.<span class='ident'>wake_up</span>();
+    <span class="doccomment">/// Sets the angular velocity of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_ang_vel</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">av</span>: <span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">set_ang_vel_internal</span>(<span class="ident">av</span>);
+        <span class="self">self</span>.<span class="ident">wake_up</span>();
     }
 
-    <span class='doccomment'>/// Sets the angular velocity of this rigid body but does not wake it up.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_ang_vel_internal</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>av</span>: <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>ang_vel</span> <span class='op'>=</span> <span class='ident'>av</span>
+    <span class="doccomment">/// Sets the angular velocity of this rigid body but does not wake it up.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_ang_vel_internal</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">av</span>: <span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">ang_vel</span> <span class="op">=</span> <span class="ident">av</span>
     }
 
-    <span class='doccomment'>/// Gets the angular acceleration of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>ang_acc</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>ang_acc</span>.<span class='ident'>clone</span>()
+    <span class="doccomment">/// Gets the angular acceleration of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ang_acc</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">ang_acc</span>.<span class="ident">clone</span>()
     }
 
-    <span class='doccomment'>/// Sets the angular acceleration of this rigid body.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Note that this might be reset by the physics engine automatically.</span>
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_ang_acc</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>af</span>: <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>ang_acc</span> <span class='op'>=</span> <span class='ident'>af</span>
+    <span class="doccomment">/// Sets the angular acceleration of this rigid body.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Note that this might be reset by the physics engine automatically.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_ang_acc</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">af</span>: <span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">ang_acc</span> <span class="op">=</span> <span class="ident">af</span>
     }
 
-    <span class='doccomment'>/// Sets the gravity for this RigidBody. It&#39;s internally called from BodyForceGenerator,</span>
-    <span class='doccomment'>/// don&#39;t use manually.</span>
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_gravity</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>gravity</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>gravity</span> <span class='op'>=</span> <span class='ident'>gravity</span>;
-        <span class='self'>self</span>.<span class='ident'>update_lin_acc</span>();
+    <span class="doccomment">/// Sets the gravity for this RigidBody. It&#39;s internally called from BodyForceGenerator,</span>
+    <span class="doccomment">/// don&#39;t use manually.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_gravity</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">gravity</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">gravity</span> <span class="op">=</span> <span class="ident">gravity</span>;
+        <span class="self">self</span>.<span class="ident">update_lin_acc</span>();
     }
 
-    <span class='doccomment'>/// Resets linear and angular force.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clear_forces</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>clear_linear_force</span>();
-        <span class='self'>self</span>.<span class='ident'>clear_angular_force</span>();
+    <span class="doccomment">/// Resets linear and angular force.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear_forces</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">clear_linear_force</span>();
+        <span class="self">self</span>.<span class="ident">clear_angular_force</span>();
     }
 
-    <span class='doccomment'>/// Resets linear force.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clear_linear_force</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>lin_force</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
-        <span class='self'>self</span>.<span class='ident'>update_lin_acc</span>();
-        <span class='self'>self</span>.<span class='ident'>wake_up</span>();
+    <span class="doccomment">/// Resets linear force.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear_linear_force</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">lin_force</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">zero</span>();
+        <span class="self">self</span>.<span class="ident">update_lin_acc</span>();
+        <span class="self">self</span>.<span class="ident">wake_up</span>();
     }
 
-    <span class='doccomment'>/// Resets angular force.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clear_angular_force</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>ang_force</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
-        <span class='self'>self</span>.<span class='ident'>update_ang_acc</span>();
-        <span class='self'>self</span>.<span class='ident'>wake_up</span>();
+    <span class="doccomment">/// Resets angular force.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear_angular_force</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">ang_force</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">zero</span>();
+        <span class="self">self</span>.<span class="ident">update_ang_acc</span>();
+        <span class="self">self</span>.<span class="ident">wake_up</span>();
     }
 
-    <span class='doccomment'>/// Adds an additional linear force.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append_lin_force</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>force</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>lin_force</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>lin_force</span> <span class='op'>+</span> <span class='ident'>force</span>;
-        <span class='self'>self</span>.<span class='ident'>update_lin_acc</span>();
-        <span class='self'>self</span>.<span class='ident'>wake_up</span>();
+    <span class="doccomment">/// Adds an additional linear force.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">append_lin_force</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">force</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">lin_force</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">lin_force</span> <span class="op">+</span> <span class="ident">force</span>;
+        <span class="self">self</span>.<span class="ident">update_lin_acc</span>();
+        <span class="self">self</span>.<span class="ident">wake_up</span>();
     }
 
-    <span class='doccomment'>/// Adds an additional angular force.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append_ang_force</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>force</span>: <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>ang_force</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>ang_force</span> <span class='op'>+</span> <span class='ident'>force</span>;
-        <span class='self'>self</span>.<span class='ident'>update_ang_acc</span>();
-        <span class='self'>self</span>.<span class='ident'>wake_up</span>();
+    <span class="doccomment">/// Adds an additional angular force.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">append_ang_force</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">force</span>: <span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">ang_force</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ang_force</span> <span class="op">+</span> <span class="ident">force</span>;
+        <span class="self">self</span>.<span class="ident">update_ang_acc</span>();
+        <span class="self">self</span>.<span class="ident">wake_up</span>();
     }
 
-    <span class='doccomment'>/// Adds an additional force acting at a point different to the center of mass.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The ```pnt_to_com``` vector has to point from the center of mass to</span>
-    <span class='doccomment'>/// the point where the force acts.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append_force_wrt_point</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>force</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>pnt_to_com</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>append_lin_force</span>(<span class='ident'>force</span>);
-        <span class='self'>self</span>.<span class='ident'>append_ang_force</span>(<span class='ident'>pnt_to_com</span>.<span class='ident'>gcross</span>(<span class='kw-2'>&amp;</span><span class='ident'>force</span>));
+    <span class="doccomment">/// Adds an additional force acting at a point different to the center of mass.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The ```pnt_to_com``` vector has to point from the center of mass to</span>
+    <span class="doccomment">/// the point where the force acts.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">append_force_wrt_point</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">force</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">pnt_to_com</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">append_lin_force</span>(<span class="ident">force</span>);
+        <span class="self">self</span>.<span class="ident">append_ang_force</span>(<span class="ident">pnt_to_com</span>.<span class="ident">gcross</span>(<span class="kw-2">&amp;</span><span class="ident">force</span>));
     }
 
-    <span class='doccomment'>/// Update the linear acceleraction from the applied forces.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>update_lin_acc</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>lin_acc</span> <span class='op'>=</span> (<span class='self'>self</span>.<span class='ident'>lin_force</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>inv_mass</span> <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>gravity</span>).<span class='ident'>component_mul</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>lin_acc_scale</span>);
+    <span class="doccomment">/// Update the linear acceleraction from the applied forces.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">update_lin_acc</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">lin_acc</span> <span class="op">=</span> (<span class="self">self</span>.<span class="ident">lin_force</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">inv_mass</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">gravity</span>).<span class="ident">component_mul</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">lin_acc_scale</span>);
     }
-    <span class='doccomment'>/// Update the angular acceleraction from the applied forces.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>update_ang_acc</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>ang_acc</span> <span class='op'>=</span> (<span class='self'>self</span>.<span class='ident'>inv_inertia</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>ang_force</span>).<span class='ident'>component_mul</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>ang_acc_scale</span>);
+    <span class="doccomment">/// Update the angular acceleraction from the applied forces.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">update_ang_acc</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">ang_acc</span> <span class="op">=</span> (<span class="self">self</span>.<span class="ident">inv_inertia</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">ang_force</span>).<span class="ident">component_mul</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">ang_acc_scale</span>);
     }
 
-    <span class='doccomment'>/// Forces the body to respond to any impulses before the next tick.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>wake_up</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>deactivation_threshold</span>().<span class='ident'>is_some</span>() {
-            <span class='self'>self</span>.<span class='ident'>activate</span>(<span class='ident'>Bounded</span>::<span class='ident'>max_value</span>())
+    <span class="doccomment">/// Forces the body to respond to any impulses before the next tick.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wake_up</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">deactivation_threshold</span>().<span class="ident">is_some</span>() {
+            <span class="self">self</span>.<span class="ident">activate</span>(<span class="ident">Bounded</span>::<span class="ident">max_value</span>())
         }
     }
 
-    <span class='doccomment'>/// Applies a one-time central impulse.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>apply_central_impulse</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>impulse</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>){
-        <span class='kw'>let</span> <span class='ident'>current_velocity</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>lin_vel</span>();
-        <span class='kw'>let</span> <span class='ident'>inverted_mass</span>    <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>inv_mass</span>();
-        <span class='self'>self</span>.<span class='ident'>set_lin_vel</span>(<span class='ident'>current_velocity</span> <span class='op'>+</span> <span class='ident'>impulse</span> <span class='op'>*</span> <span class='ident'>inverted_mass</span>);
+    <span class="doccomment">/// Applies a one-time central impulse.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">apply_central_impulse</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">impulse</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>){
+        <span class="kw">let</span> <span class="ident">current_velocity</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">lin_vel</span>();
+        <span class="kw">let</span> <span class="ident">inverted_mass</span>    <span class="op">=</span> <span class="self">self</span>.<span class="ident">inv_mass</span>();
+        <span class="self">self</span>.<span class="ident">set_lin_vel</span>(<span class="ident">current_velocity</span> <span class="op">+</span> <span class="ident">impulse</span> <span class="op">*</span> <span class="ident">inverted_mass</span>);
     }
 
-    <span class='doccomment'>/// Applies a one-time angular impulse.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>apply_angular_momentum</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>ang_moment</span>: <span class='ident'>Orientation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>){
-        <span class='kw'>let</span> <span class='ident'>current_ang_velocity</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>ang_vel</span>();
-        <span class='kw'>let</span> <span class='ident'>inverted_tensor</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>inv_inertia</span>().<span class='ident'>clone</span>();
-        <span class='self'>self</span>.<span class='ident'>set_ang_vel</span>(<span class='ident'>current_ang_velocity</span> <span class='op'>+</span> <span class='ident'>inverted_tensor</span> <span class='op'>*</span> <span class='ident'>ang_moment</span>);
+    <span class="doccomment">/// Applies a one-time angular impulse.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">apply_angular_momentum</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ang_moment</span>: <span class="ident">Orientation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>){
+        <span class="kw">let</span> <span class="ident">current_ang_velocity</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ang_vel</span>();
+        <span class="kw">let</span> <span class="ident">inverted_tensor</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inv_inertia</span>().<span class="ident">clone</span>();
+        <span class="self">self</span>.<span class="ident">set_ang_vel</span>(<span class="ident">current_ang_velocity</span> <span class="op">+</span> <span class="ident">inverted_tensor</span> <span class="op">*</span> <span class="ident">ang_moment</span>);
     }
 
-    <span class='doccomment'>/// Applies a one-time impulse to a point relative to the center of mass.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The `pnt_to_com` vector has to point from the center of mass to the</span>
-    <span class='doccomment'>/// point where the impulse acts.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>apply_impulse_wrt_point</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>impulse</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>pnt_to_com</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>){
-        <span class='self'>self</span>.<span class='ident'>apply_central_impulse</span>(<span class='ident'>impulse</span>);
-        <span class='self'>self</span>.<span class='ident'>apply_angular_momentum</span>(<span class='ident'>pnt_to_com</span>.<span class='ident'>gcross</span>(<span class='kw-2'>&amp;</span><span class='ident'>impulse</span>));
+    <span class="doccomment">/// Applies a one-time impulse to a point relative to the center of mass.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The `pnt_to_com` vector has to point from the center of mass to the</span>
+    <span class="doccomment">/// point where the impulse acts.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">apply_impulse_wrt_point</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">impulse</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">pnt_to_com</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>){
+        <span class="self">self</span>.<span class="ident">apply_central_impulse</span>(<span class="ident">impulse</span>);
+        <span class="self">self</span>.<span class="ident">apply_angular_momentum</span>(<span class="ident">pnt_to_com</span>.<span class="ident">gcross</span>(<span class="kw-2">&amp;</span><span class="ident">impulse</span>));
     }
 
-    <span class='doccomment'>/// Gets the inverse mass of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>inv_mass</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-        <span class='self'>self</span>.<span class='ident'>inv_mass</span>.<span class='ident'>clone</span>()
+    <span class="doccomment">/// Gets the inverse mass of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inv_mass</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+        <span class="self">self</span>.<span class="ident">inv_mass</span>.<span class="ident">clone</span>()
     }
 
-    <span class='doccomment'>/// Sets the inverse mass of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_inv_mass</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>m</span>: <span class='ident'>N</span>) {
-        <span class='self'>self</span>.<span class='ident'>inv_mass</span> <span class='op'>=</span> <span class='ident'>m</span>
+    <span class="doccomment">/// Sets the inverse mass of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_inv_mass</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">m</span>: <span class="ident">N</span>) {
+        <span class="self">self</span>.<span class="ident">inv_mass</span> <span class="op">=</span> <span class="ident">m</span>
     }
 
-    <span class='doccomment'>/// Gets the inverse inertia tensor of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>inv_inertia</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>AngularInertia</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>inv_inertia</span>
+    <span class="doccomment">/// Gets the inverse inertia tensor of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inv_inertia</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">AngularInertia</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inv_inertia</span>
     }
 
-    <span class='doccomment'>/// Sets the inverse inertia tensor of this rigid body.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Not that this is reset at every update by the physics engine.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_inv_inertia</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>ii</span>: <span class='ident'>AngularInertia</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>inv_inertia</span> <span class='op'>=</span> <span class='ident'>ii</span>
+    <span class="doccomment">/// Sets the inverse inertia tensor of this rigid body.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Not that this is reset at every update by the physics engine.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_inv_inertia</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ii</span>: <span class="ident">AngularInertia</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">inv_inertia</span> <span class="op">=</span> <span class="ident">ii</span>
     }
 
-    <span class='doccomment'>/// Appends a transformation to this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append_transformation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>to_append</span>: <span class='kw-2'>&amp;</span><span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>local_to_world</span> <span class='op'>=</span> <span class='ident'>to_append</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>local_to_world</span>;
+    <span class="doccomment">/// Appends a transformation to this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">append_transformation</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">to_append</span>: <span class="kw-2">&amp;</span><span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">local_to_world</span> <span class="op">=</span> <span class="ident">to_append</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">local_to_world</span>;
 
-        <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
-        <span class='self'>self</span>.<span class='ident'>update_inertia_tensor</span>();
+        <span class="self">self</span>.<span class="ident">update_center_of_mass</span>();
+        <span class="self">self</span>.<span class="ident">update_inertia_tensor</span>();
     }
 
-    <span class='doccomment'>/// Prepends a transformation to this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>prepend_transformation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>to_prepend</span>: <span class='kw-2'>&amp;</span><span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>local_to_world</span> <span class='op'>*=</span> <span class='ident'>to_prepend</span>;
+    <span class="doccomment">/// Prepends a transformation to this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">prepend_transformation</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">to_prepend</span>: <span class="kw-2">&amp;</span><span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">local_to_world</span> <span class="op">*=</span> <span class="ident">to_prepend</span>;
 
-        <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
-        <span class='self'>self</span>.<span class='ident'>update_inertia_tensor</span>();
+        <span class="self">self</span>.<span class="ident">update_center_of_mass</span>();
+        <span class="self">self</span>.<span class="ident">update_inertia_tensor</span>();
     }
 
-    <span class='doccomment'>/// Sets the transformation of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_transformation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>m</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>local_to_world</span> <span class='op'>=</span> <span class='ident'>m</span>;
+    <span class="doccomment">/// Sets the transformation of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_transformation</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">m</span>: <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">local_to_world</span> <span class="op">=</span> <span class="ident">m</span>;
 
-        <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
-        <span class='self'>self</span>.<span class='ident'>update_inertia_tensor</span>();
+        <span class="self">self</span>.<span class="ident">update_center_of_mass</span>();
+        <span class="self">self</span>.<span class="ident">update_inertia_tensor</span>();
     }
 
-    <span class='doccomment'>/// Appends a translation to this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append_translation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>t</span>: <span class='kw-2'>&amp;</span><span class='ident'>Translation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>translation</span> <span class='op'>=</span> <span class='ident'>t</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>translation</span>;
-        <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
+    <span class="doccomment">/// Appends a translation to this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">append_translation</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">t</span>: <span class="kw-2">&amp;</span><span class="ident">Translation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">local_to_world</span>.<span class="ident">translation</span> <span class="op">=</span> <span class="ident">t</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">local_to_world</span>.<span class="ident">translation</span>;
+        <span class="self">self</span>.<span class="ident">update_center_of_mass</span>();
     }
 
-    <span class='doccomment'>/// Prepends a translation to this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>prepend_translation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>t</span>: <span class='kw-2'>&amp;</span><span class='ident'>Translation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>translation</span> <span class='op'>*=</span> <span class='ident'>t</span>;
-        <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
+    <span class="doccomment">/// Prepends a translation to this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">prepend_translation</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">t</span>: <span class="kw-2">&amp;</span><span class="ident">Translation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">local_to_world</span>.<span class="ident">translation</span> <span class="op">*=</span> <span class="ident">t</span>;
+        <span class="self">self</span>.<span class="ident">update_center_of_mass</span>();
     }
 
 
-    <span class='doccomment'>/// Stes the translation of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_translation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>Translation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>translation</span> <span class='op'>=</span> <span class='ident'>t</span>;
+    <span class="doccomment">/// Stes the translation of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_translation</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">t</span>: <span class="ident">Translation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">local_to_world</span>.<span class="ident">translation</span> <span class="op">=</span> <span class="ident">t</span>;
 
-        <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
+        <span class="self">self</span>.<span class="ident">update_center_of_mass</span>();
     }
 
-    <span class='doccomment'>/// Appends a rotation to this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>append_rotation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>rot</span>: <span class='kw-2'>&amp;</span><span class='ident'>Rotation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>rotation</span> <span class='op'>=</span> <span class='ident'>rot</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>rotation</span>;
+    <span class="doccomment">/// Appends a rotation to this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">append_rotation</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rot</span>: <span class="kw-2">&amp;</span><span class="ident">Rotation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">local_to_world</span>.<span class="ident">rotation</span> <span class="op">=</span> <span class="ident">rot</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">local_to_world</span>.<span class="ident">rotation</span>;
 
-        <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
-        <span class='self'>self</span>.<span class='ident'>update_inertia_tensor</span>();
+        <span class="self">self</span>.<span class="ident">update_center_of_mass</span>();
+        <span class="self">self</span>.<span class="ident">update_inertia_tensor</span>();
     }
 
-    <span class='doccomment'>/// Prepends a rotation to this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>prepend_rotation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>rot</span>: <span class='kw-2'>&amp;</span><span class='ident'>Rotation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>rotation</span> <span class='op'>*=</span> <span class='ident'>rot</span>;
+    <span class="doccomment">/// Prepends a rotation to this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">prepend_rotation</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rot</span>: <span class="kw-2">&amp;</span><span class="ident">Rotation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">local_to_world</span>.<span class="ident">rotation</span> <span class="op">*=</span> <span class="ident">rot</span>;
 
-        <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
-        <span class='self'>self</span>.<span class='ident'>update_inertia_tensor</span>();
+        <span class="self">self</span>.<span class="ident">update_center_of_mass</span>();
+        <span class="self">self</span>.<span class="ident">update_inertia_tensor</span>();
     }
 
-    <span class='doccomment'>/// Sets the rotation of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_rotation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>rot</span>: <span class='ident'>Rotation</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>local_to_world</span>.<span class='ident'>rotation</span> <span class='op'>=</span> <span class='ident'>rot</span>;
+    <span class="doccomment">/// Sets the rotation of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_rotation</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rot</span>: <span class="ident">Rotation</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">local_to_world</span>.<span class="ident">rotation</span> <span class="op">=</span> <span class="ident">rot</span>;
 
-        <span class='self'>self</span>.<span class='ident'>update_center_of_mass</span>();
-        <span class='self'>self</span>.<span class='ident'>update_inertia_tensor</span>();
+        <span class="self">self</span>.<span class="ident">update_center_of_mass</span>();
+        <span class="self">self</span>.<span class="ident">update_inertia_tensor</span>();
     }
 
-    <span class='doccomment'>/// Reference to the collision groups of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>collision_groups</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>RigidBodyCollisionGroups</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>collision_groups</span>
+    <span class="doccomment">/// Reference to the collision groups of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">collision_groups</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">RigidBodyCollisionGroups</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">collision_groups</span>
     }
 
-    <span class='doccomment'>/// Set the new collisions groups of this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_collision_groups</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>new_groups</span>: <span class='ident'>RigidBodyCollisionGroups</span>) {
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>can_move</span>() <span class='op'>&amp;&amp;</span> <span class='ident'>new_groups</span>.<span class='ident'>is_static</span>() {
-            <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Attempted to assign collision groups for static rigid bodies to a dynamic rigid body. \
+    <span class="doccomment">/// Set the new collisions groups of this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_collision_groups</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">new_groups</span>: <span class="ident">RigidBodyCollisionGroups</span>) {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">can_move</span>() <span class="op">&amp;&amp;</span> <span class="ident">new_groups</span>.<span class="ident">is_static</span>() {
+            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Attempted to assign collision groups for static rigid bodies to a dynamic rigid body. \
                     TIP: use RigidBodyCollisionGroups::new_dynamic() to create one.&quot;</span>);
         }
-        <span class='kw'>if</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>can_move</span>() <span class='op'>&amp;&amp;</span> <span class='ident'>new_groups</span>.<span class='ident'>is_dynamic</span>() {
-            <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Attempted to assign collision groups for dynamic rigid bodies to a static rigid body. \
+        <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">can_move</span>() <span class="op">&amp;&amp;</span> <span class="ident">new_groups</span>.<span class="ident">is_dynamic</span>() {
+            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Attempted to assign collision groups for dynamic rigid bodies to a static rigid body. \
                     TIP: use RigidBodyCollisionGroups::new_static() to create one.&quot;</span>);
         }
 
-        <span class='self'>self</span>.<span class='ident'>collision_groups</span> <span class='op'>=</span> <span class='ident'>new_groups</span>;
+        <span class="self">self</span>.<span class="ident">collision_groups</span> <span class="op">=</span> <span class="ident">new_groups</span>;
     }
 
-    <span class='doccomment'>/// Reference to user-defined data attached to this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>user_data</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>user_data</span>.<span class='ident'>as_ref</span>()
+    <span class="doccomment">/// Reference to user-defined data attached to this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">user_data</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Any</span><span class="op">&gt;&gt;</span> {
+        <span class="self">self</span>.<span class="ident">user_data</span>.<span class="ident">as_ref</span>()
     }
 
-    <span class='doccomment'>/// Mutable reference to user-defined data attached to this rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>user_data_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>user_data</span>.<span class='ident'>as_mut</span>()
+    <span class="doccomment">/// Mutable reference to user-defined data attached to this rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">user_data_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Any</span><span class="op">&gt;&gt;</span> {
+        <span class="self">self</span>.<span class="ident">user_data</span>.<span class="ident">as_mut</span>()
     }
 
-    <span class='doccomment'>/// Attach some user-defined data to this rigid body and return the old one.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_user_data</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>user_data</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>mem</span>::<span class='ident'>replace</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>user_data</span>, <span class='ident'>user_data</span>)
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>HasBoundingVolume</span><span class='op'>&lt;</span><span class='ident'>M</span>, <span class='ident'>BoundingSphere</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Real</span>,
-          <span class='ident'>M</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> { <span class='comment'>// FIXME: avoiding `Copy` would be great.</span>
-    <span class='kw'>fn</span> <span class='ident'>bounding_volume</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>) <span class='op'>-&gt;</span> <span class='ident'>BoundingSphere</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>bounding_volume</span>::<span class='ident'>bounding_sphere</span>(<span class='self'>self</span>.<span class='ident'>shape</span>.<span class='ident'>as_ref</span>(), <span class='kw-2'>&amp;</span>(<span class='kw-2'>*</span><span class='ident'>m</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>local_to_world</span>)).<span class='ident'>loosened</span>(<span class='self'>self</span>.<span class='ident'>margin</span>())
+    <span class="doccomment">/// Attach some user-defined data to this rigid body and return the old one.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_user_data</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">user_data</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Any</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Any</span><span class="op">&gt;&gt;</span> {
+        <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">user_data</span>, <span class="ident">user_data</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>HasBoundingVolume</span><span class='op'>&lt;</span><span class='ident'>M</span>, <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Real</span>,
-          <span class='ident'>M</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> { <span class='comment'>// FIXME: avoiding `Copy` would be great.</span>
-    <span class='kw'>fn</span> <span class='ident'>bounding_volume</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>) <span class='op'>-&gt;</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>bounding_volume</span>::<span class='ident'>aabb</span>(<span class='self'>self</span>.<span class='ident'>shape</span>.<span class='ident'>as_ref</span>(), <span class='kw-2'>&amp;</span>(<span class='kw-2'>*</span><span class='ident'>m</span> <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>local_to_world</span>)).<span class='ident'>loosened</span>(<span class='self'>self</span>.<span class='ident'>margin</span>())
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">M</span><span class="op">&gt;</span> <span class="ident">HasBoundingVolume</span><span class="op">&lt;</span><span class="ident">M</span>, <span class="ident">BoundingSphere</span><span class="op">&lt;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Real</span>,
+          <span class="ident">M</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> { <span class="comment">// FIXME: avoiding `Copy` would be great.</span>
+    <span class="kw">fn</span> <span class="ident">bounding_volume</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>) <span class="op">-&gt;</span> <span class="ident">BoundingSphere</span><span class="op">&lt;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> {
+        <span class="ident">bounding_volume</span>::<span class="ident">bounding_sphere</span>(<span class="self">self</span>.<span class="ident">shape</span>.<span class="ident">as_ref</span>(), <span class="kw-2">&amp;</span>(<span class="kw-2">*</span><span class="ident">m</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">local_to_world</span>)).<span class="ident">loosened</span>(<span class="self">self</span>.<span class="ident">margin</span>())
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">M</span><span class="op">&gt;</span> <span class="ident">HasBoundingVolume</span><span class="op">&lt;</span><span class="ident">M</span>, <span class="ident">AABB</span><span class="op">&lt;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Real</span>,
+          <span class="ident">M</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> { <span class="comment">// FIXME: avoiding `Copy` would be great.</span>
+    <span class="kw">fn</span> <span class="ident">bounding_volume</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>) <span class="op">-&gt;</span> <span class="ident">AABB</span><span class="op">&lt;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> {
+        <span class="ident">bounding_volume</span>::<span class="ident">aabb</span>(<span class="self">self</span>.<span class="ident">shape</span>.<span class="ident">as_ref</span>(), <span class="kw-2">&amp;</span>(<span class="kw-2">*</span><span class="ident">m</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">local_to_world</span>)).<span class="ident">loosened</span>(<span class="self">self</span>.<span class="ident">margin</span>())
     }
 }
 </pre>

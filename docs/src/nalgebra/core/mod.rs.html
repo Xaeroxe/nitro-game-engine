@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -86,50 +86,50 @@
 <span id="41">41</span>
 <span id="42">42</span>
 <span id="43">43</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! [Reexported at the root of this crate.] Data structures for vector and matrix computations.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! [Reexported at the root of this crate.] Data structures for vector and matrix computations.</span>
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>dimension</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>constraint</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>allocator</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>storage</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>coordinates</span>;
-<span class='kw'>mod</span> <span class='ident'>ops</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>iter</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>default_allocator</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">dimension</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">constraint</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">allocator</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">storage</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">coordinates</span>;
+<span class="kw">mod</span> <span class="ident">ops</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">iter</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">default_allocator</span>;
 
-<span class='kw'>mod</span> <span class='ident'>scalar</span>;
-<span class='kw'>mod</span> <span class='ident'>matrix</span>;
-<span class='kw'>mod</span> <span class='ident'>construction</span>;
-<span class='kw'>mod</span> <span class='ident'>properties</span>;
-<span class='kw'>mod</span> <span class='ident'>alias</span>;
-<span class='kw'>mod</span> <span class='ident'>matrix_alga</span>;
-<span class='kw'>mod</span> <span class='ident'>determinant</span>;
-<span class='kw'>mod</span> <span class='ident'>inverse</span>;
-<span class='kw'>mod</span> <span class='ident'>conversion</span>;
-<span class='kw'>mod</span> <span class='ident'>matrix_slice</span>;
-<span class='kw'>mod</span> <span class='ident'>matrix_array</span>;
-<span class='kw'>mod</span> <span class='ident'>matrix_vec</span>;
-<span class='kw'>mod</span> <span class='ident'>cg</span>;
-<span class='kw'>mod</span> <span class='ident'>unit</span>;
-<span class='kw'>mod</span> <span class='ident'>componentwise</span>;
+<span class="kw">mod</span> <span class="ident">scalar</span>;
+<span class="kw">mod</span> <span class="ident">matrix</span>;
+<span class="kw">mod</span> <span class="ident">construction</span>;
+<span class="kw">mod</span> <span class="ident">properties</span>;
+<span class="kw">mod</span> <span class="ident">alias</span>;
+<span class="kw">mod</span> <span class="ident">matrix_alga</span>;
+<span class="kw">mod</span> <span class="ident">determinant</span>;
+<span class="kw">mod</span> <span class="ident">inverse</span>;
+<span class="kw">mod</span> <span class="ident">conversion</span>;
+<span class="kw">mod</span> <span class="ident">matrix_slice</span>;
+<span class="kw">mod</span> <span class="ident">matrix_array</span>;
+<span class="kw">mod</span> <span class="ident">matrix_vec</span>;
+<span class="kw">mod</span> <span class="ident">cg</span>;
+<span class="kw">mod</span> <span class="ident">unit</span>;
+<span class="kw">mod</span> <span class="ident">componentwise</span>;
 
-<span class='kw'>mod</span> <span class='ident'>decompositions</span>;
+<span class="kw">mod</span> <span class="ident">decompositions</span>;
 
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>helper</span>;
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">helper</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>scalar</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>matrix</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>unit</span>::<span class='kw-2'>*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">scalar</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">matrix</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">unit</span>::<span class="kw-2">*</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>dimension</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>default_allocator</span>::<span class='kw-2'>*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">dimension</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">default_allocator</span>::<span class="kw-2">*</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>alias</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>matrix_slice</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>matrix_array</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>matrix_vec</span>::<span class='kw-2'>*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">alias</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">matrix_slice</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">matrix_array</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">matrix_vec</span>::<span class="kw-2">*</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

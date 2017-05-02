@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -111,73 +111,73 @@
 <span id="66">66</span>
 <span id="67">67</span>
 <span id="68">68</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>linear</span>::<span class='ident'>NormedSpace</span>;
-<span class='kw'>use</span> <span class='ident'>path</span>::{<span class='ident'>PathSample</span>, <span class='ident'>CurveSampler</span>};
-<span class='kw'>use</span> <span class='ident'>polyline</span>::<span class='ident'>Polyline</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">linear</span>::<span class="ident">NormedSpace</span>;
+<span class="kw">use</span> <span class="ident">path</span>::{<span class="ident">PathSample</span>, <span class="ident">CurveSampler</span>};
+<span class="kw">use</span> <span class="ident">polyline</span>::<span class="ident">Polyline</span>;
+<span class="kw">use</span> <span class="ident">math</span>::<span class="ident">Point</span>;
 
-<span class='doccomment'>/// A path with its sample points given by a polyline.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This will return sequencially each vertex of the polyline.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>PolylinePath</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>: <span class='lifetime'>&#39;a</span> <span class='op'>+</span> <span class='ident'>Point</span><span class='op'>&gt;</span> {
-    <span class='ident'>curr_len</span>:               <span class='ident'>P</span>::<span class='ident'>Real</span>,
-    <span class='ident'>curr_dir</span>:               <span class='ident'>P</span>::<span class='ident'>Vector</span>,
-    <span class='ident'>curr_pt_id</span>:             <span class='ident'>usize</span>,
-    <span class='ident'>curr_pt</span>:                <span class='ident'>P</span>,
-    <span class='ident'>polyline</span>:               <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Polyline</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>
+<span class="doccomment">/// A path with its sample points given by a polyline.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This will return sequencially each vertex of the polyline.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PolylinePath</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Point</span><span class="op">&gt;</span> {
+    <span class="ident">curr_len</span>:               <span class="ident">P</span>::<span class="ident">Real</span>,
+    <span class="ident">curr_dir</span>:               <span class="ident">P</span>::<span class="ident">Vector</span>,
+    <span class="ident">curr_pt_id</span>:             <span class="ident">usize</span>,
+    <span class="ident">curr_pt</span>:                <span class="ident">P</span>,
+    <span class="ident">polyline</span>:               <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Polyline</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> <span class='ident'>PolylinePath</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new polyline-based path.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>polyline</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Polyline</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>PolylinePath</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>polyline</span>.<span class='ident'>coords</span>().<span class='ident'>len</span>() <span class='op'>&gt;</span> <span class='number'>1</span>, <span class='string'>&quot;The polyline must have at least two points.&quot;</span>);
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span> <span class="ident">PolylinePath</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new polyline-based path.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">polyline</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Polyline</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">PolylinePath</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span><span class="op">&gt;</span> {
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">polyline</span>.<span class="ident">coords</span>().<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">1</span>, <span class="string">&quot;The polyline must have at least two points.&quot;</span>);
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>dir</span>: <span class='ident'>P</span>::<span class='ident'>Vector</span>  <span class='op'>=</span> <span class='ident'>polyline</span>.<span class='ident'>coords</span>()[<span class='number'>1</span>] <span class='op'>-</span> <span class='ident'>polyline</span>.<span class='ident'>coords</span>()[<span class='number'>0</span>];
-        <span class='kw'>let</span> <span class='ident'>len</span>: <span class='ident'>P</span>::<span class='ident'>Real</span> <span class='op'>=</span> <span class='ident'>dir</span>.<span class='ident'>normalize_mut</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dir</span>: <span class="ident">P</span>::<span class="ident">Vector</span>  <span class="op">=</span> <span class="ident">polyline</span>.<span class="ident">coords</span>()[<span class="number">1</span>] <span class="op">-</span> <span class="ident">polyline</span>.<span class="ident">coords</span>()[<span class="number">0</span>];
+        <span class="kw">let</span> <span class="ident">len</span>: <span class="ident">P</span>::<span class="ident">Real</span> <span class="op">=</span> <span class="ident">dir</span>.<span class="ident">normalize_mut</span>();
 
-        <span class='ident'>PolylinePath</span> {
-            <span class='ident'>curr_len</span>:   <span class='ident'>len</span>,
-            <span class='ident'>curr_dir</span>:   <span class='ident'>dir</span>,
-            <span class='ident'>curr_pt_id</span>: <span class='number'>0</span>,
-            <span class='ident'>curr_pt</span>:    <span class='ident'>polyline</span>.<span class='ident'>coords</span>()[<span class='number'>0</span>].<span class='ident'>clone</span>(),
-            <span class='ident'>polyline</span>:   <span class='ident'>polyline</span>
+        <span class="ident">PolylinePath</span> {
+            <span class="ident">curr_len</span>:   <span class="ident">len</span>,
+            <span class="ident">curr_dir</span>:   <span class="ident">dir</span>,
+            <span class="ident">curr_pt_id</span>: <span class="number">0</span>,
+            <span class="ident">curr_pt</span>:    <span class="ident">polyline</span>.<span class="ident">coords</span>()[<span class="number">0</span>].<span class="ident">clone</span>(),
+            <span class="ident">polyline</span>:   <span class="ident">polyline</span>
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> <span class='ident'>CurveSampler</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>PolylinePath</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>PathSample</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>poly_coords</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>polyline</span>.<span class='ident'>coords</span>();
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span> <span class="ident">CurveSampler</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PolylinePath</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">PathSample</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">poly_coords</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">polyline</span>.<span class="ident">coords</span>();
 
-        <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span>
-            <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>curr_pt_id</span> <span class='op'>==</span> <span class='number'>0</span> {
-                <span class='ident'>PathSample</span>::<span class='ident'>StartPoint</span>(<span class='self'>self</span>.<span class='ident'>curr_pt</span>.<span class='ident'>clone</span>(), <span class='self'>self</span>.<span class='ident'>curr_dir</span>.<span class='ident'>clone</span>())
+        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span>
+            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">curr_pt_id</span> <span class="op">==</span> <span class="number">0</span> {
+                <span class="ident">PathSample</span>::<span class="ident">StartPoint</span>(<span class="self">self</span>.<span class="ident">curr_pt</span>.<span class="ident">clone</span>(), <span class="self">self</span>.<span class="ident">curr_dir</span>.<span class="ident">clone</span>())
             }
-            <span class='kw'>else</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>curr_pt_id</span> <span class='op'>&lt;</span> <span class='ident'>poly_coords</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='number'>1</span> {
-                <span class='ident'>PathSample</span>::<span class='ident'>InnerPoint</span>(<span class='self'>self</span>.<span class='ident'>curr_pt</span>.<span class='ident'>clone</span>(), <span class='self'>self</span>.<span class='ident'>curr_dir</span>.<span class='ident'>clone</span>())
+            <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">curr_pt_id</span> <span class="op">&lt;</span> <span class="ident">poly_coords</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span> {
+                <span class="ident">PathSample</span>::<span class="ident">InnerPoint</span>(<span class="self">self</span>.<span class="ident">curr_pt</span>.<span class="ident">clone</span>(), <span class="self">self</span>.<span class="ident">curr_dir</span>.<span class="ident">clone</span>())
             }
-            <span class='kw'>else</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>curr_pt_id</span> <span class='op'>==</span> <span class='ident'>poly_coords</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='number'>1</span> {
-                <span class='ident'>PathSample</span>::<span class='ident'>EndPoint</span>(<span class='self'>self</span>.<span class='ident'>curr_pt</span>.<span class='ident'>clone</span>(), <span class='self'>self</span>.<span class='ident'>curr_dir</span>.<span class='ident'>clone</span>())
+            <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">curr_pt_id</span> <span class="op">==</span> <span class="ident">poly_coords</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span> {
+                <span class="ident">PathSample</span>::<span class="ident">EndPoint</span>(<span class="self">self</span>.<span class="ident">curr_pt</span>.<span class="ident">clone</span>(), <span class="self">self</span>.<span class="ident">curr_dir</span>.<span class="ident">clone</span>())
             }
-            <span class='kw'>else</span> {
-                <span class='ident'>PathSample</span>::<span class='ident'>EndOfSample</span>
+            <span class="kw">else</span> {
+                <span class="ident">PathSample</span>::<span class="ident">EndOfSample</span>
             };
 
-        <span class='self'>self</span>.<span class='ident'>curr_pt_id</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>curr_pt_id</span> <span class='op'>+</span> <span class='number'>1</span>;
+        <span class="self">self</span>.<span class="ident">curr_pt_id</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">curr_pt_id</span> <span class="op">+</span> <span class="number">1</span>;
 
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>curr_pt_id</span> <span class='op'>&lt;</span> <span class='ident'>poly_coords</span>.<span class='ident'>len</span>() {
-            <span class='self'>self</span>.<span class='ident'>curr_pt</span> <span class='op'>=</span> <span class='ident'>poly_coords</span>[<span class='self'>self</span>.<span class='ident'>curr_pt_id</span>].<span class='ident'>clone</span>();
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">curr_pt_id</span> <span class="op">&lt;</span> <span class="ident">poly_coords</span>.<span class="ident">len</span>() {
+            <span class="self">self</span>.<span class="ident">curr_pt</span> <span class="op">=</span> <span class="ident">poly_coords</span>[<span class="self">self</span>.<span class="ident">curr_pt_id</span>].<span class="ident">clone</span>();
 
-            <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>curr_pt_id</span> <span class='op'>&lt;</span> <span class='ident'>poly_coords</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='number'>1</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>curr_diff</span> <span class='op'>=</span> <span class='ident'>poly_coords</span>[<span class='self'>self</span>.<span class='ident'>curr_pt_id</span> <span class='op'>+</span> <span class='number'>1</span>] <span class='op'>-</span>
-                                    <span class='ident'>poly_coords</span>[<span class='self'>self</span>.<span class='ident'>curr_pt_id</span>];
-                <span class='self'>self</span>.<span class='ident'>curr_len</span> <span class='op'>=</span> <span class='ident'>curr_diff</span>.<span class='ident'>normalize_mut</span>();
-                <span class='self'>self</span>.<span class='ident'>curr_dir</span> <span class='op'>=</span> <span class='ident'>curr_diff</span>;
+            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">curr_pt_id</span> <span class="op">&lt;</span> <span class="ident">poly_coords</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">curr_diff</span> <span class="op">=</span> <span class="ident">poly_coords</span>[<span class="self">self</span>.<span class="ident">curr_pt_id</span> <span class="op">+</span> <span class="number">1</span>] <span class="op">-</span>
+                                    <span class="ident">poly_coords</span>[<span class="self">self</span>.<span class="ident">curr_pt_id</span>];
+                <span class="self">self</span>.<span class="ident">curr_len</span> <span class="op">=</span> <span class="ident">curr_diff</span>.<span class="ident">normalize_mut</span>();
+                <span class="self">self</span>.<span class="ident">curr_dir</span> <span class="op">=</span> <span class="ident">curr_diff</span>;
             }
         }
 
-        <span class='ident'>result</span>
+        <span class="ident">result</span>
     }
 }
 </pre>

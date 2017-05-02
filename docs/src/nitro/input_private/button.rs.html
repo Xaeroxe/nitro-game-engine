@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -52,15 +52,15 @@
 <span id="7">7</span>
 <span id="8">8</span>
 <span id="9">9</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>input</span>::<span class='ident'>keyboard</span>::<span class='ident'>Key</span>;
-<span class='kw'>use</span> <span class='ident'>input</span>::<span class='ident'>mouse</span>::<span class='ident'>MouseButton</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">input</span>::<span class="ident">keyboard</span>::<span class="ident">Key</span>;
+<span class="kw">use</span> <span class="ident">input</span>::<span class="ident">mouse</span>::<span class="ident">MouseButton</span>;
 
-<span class='doccomment'>/// A digital input, can be made to behave like an analog axis using nitro::input::Axis.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Serialize</span>, <span class='ident'>Deserialize</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Button</span> {
-    <span class='ident'>Keyboard</span>(<span class='ident'>Key</span>),
-    <span class='ident'>Mouse</span>(<span class='ident'>MouseButton</span>),
+<span class="doccomment">/// A digital input, can be made to behave like an analog axis using nitro::input::Axis.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Serialize</span>, <span class="ident">Deserialize</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Button</span> {
+    <span class="ident">Keyboard</span>(<span class="ident">Key</span>),
+    <span class="ident">Mouse</span>(<span class="ident">MouseButton</span>),
 }
 </pre>
 </section>

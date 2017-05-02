@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -154,116 +154,116 @@
 <span id="109">109</span>
 <span id="110">110</span>
 <span id="111">111</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Shape composed from the union of primitives.</span>
-<span class='doccomment'>//!</span>
+</pre><pre class="rust ">
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Shape composed from the union of primitives.</span>
+<span class="doccomment">//!</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::<span class='ident'>Mul</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::<span class="ident">Mul</span>;
 
-<span class='kw'>use</span> <span class='ident'>na</span>;
+<span class="kw">use</span> <span class="ident">na</span>;
 
-<span class='kw'>use</span> <span class='ident'>bounding_volume</span>::{<span class='ident'>AABB</span>, <span class='ident'>BoundingVolume</span>};
-<span class='kw'>use</span> <span class='ident'>partitioning</span>::<span class='ident'>BVT</span>;
-<span class='kw'>use</span> <span class='ident'>shape</span>::{<span class='ident'>CompositeShape</span>, <span class='ident'>ShapeHandle</span>, <span class='ident'>Shape</span>};
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Isometry</span>};
+<span class="kw">use</span> <span class="ident">bounding_volume</span>::{<span class="ident">AABB</span>, <span class="ident">BoundingVolume</span>};
+<span class="kw">use</span> <span class="ident">partitioning</span>::<span class="ident">BVT</span>;
+<span class="kw">use</span> <span class="ident">shape</span>::{<span class="ident">CompositeShape</span>, <span class="ident">ShapeHandle</span>, <span class="ident">Shape</span>};
+<span class="kw">use</span> <span class="ident">math</span>::{<span class="ident">Point</span>, <span class="ident">Isometry</span>};
 
-<span class='doccomment'>/// A compound shape with an aabb bounding volume.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// A compound shape is a shape composed of the union of several simpler shape. This is</span>
-<span class='doccomment'>/// the main way of creating a concave shape from convex parts. Each parts can have its own</span>
-<span class='doccomment'>/// delta transformation to shift or rotate it with regard to the other shapes.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Compound</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='ident'>shapes</span>:  <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>M</span>, <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>)<span class='op'>&gt;</span>,
-    <span class='ident'>bvt</span>:     <span class='ident'>BVT</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>bvs</span>:     <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span>
+<span class="doccomment">/// A compound shape with an aabb bounding volume.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// A compound shape is a shape composed of the union of several simpler shape. This is</span>
+<span class="doccomment">/// the main way of creating a concave shape from convex parts. Each parts can have its own</span>
+<span class="doccomment">/// delta transformation to shift or rotate it with regard to the other shapes.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Compound</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="ident">shapes</span>:  <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">M</span>, <span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>)<span class="op">&gt;</span>,
+    <span class="ident">bvt</span>:     <span class="ident">BVT</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">AABB</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">bvs</span>:     <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">AABB</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;&gt;</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='ident'>Clone</span><span class='op'>&gt;</span> <span class='ident'>Clone</span> <span class='kw'>for</span> <span class='ident'>Compound</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>clone</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Compound</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-        <span class='ident'>Compound</span> {
-            <span class='ident'>shapes</span>: <span class='self'>self</span>.<span class='ident'>shapes</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>bvt</span>:    <span class='self'>self</span>.<span class='ident'>bvt</span>.<span class='ident'>clone</span>(),
-            <span class='ident'>bvs</span>:    <span class='self'>self</span>.<span class='ident'>bvs</span>.<span class='ident'>clone</span>()
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>: <span class="ident">Clone</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Compound</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Compound</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+        <span class="ident">Compound</span> {
+            <span class="ident">shapes</span>: <span class="self">self</span>.<span class="ident">shapes</span>.<span class="ident">clone</span>(),
+            <span class="ident">bvt</span>:    <span class="self">self</span>.<span class="ident">bvt</span>.<span class="ident">clone</span>(),
+            <span class="ident">bvs</span>:    <span class="self">self</span>.<span class="ident">bvs</span>.<span class="ident">clone</span>()
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> <span class='ident'>Compound</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Builds a new compound shape.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>shapes</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>M</span>, <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>)<span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Compound</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>bvs</span>    <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>leaves</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>: <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;&gt;</span> <span class="ident">Compound</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Builds a new compound shape.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">shapes</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">M</span>, <span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>)<span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Compound</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bvs</span>    <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">leaves</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 
-        <span class='kw'>for</span> (<span class='ident'>i</span>, <span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>delta</span>, <span class='kw-2'>ref</span> <span class='ident'>shape</span>)) <span class='kw'>in</span> <span class='ident'>shapes</span>.<span class='ident'>iter</span>().<span class='ident'>enumerate</span>() {
-            <span class='comment'>// loosen for better persistancy</span>
-            <span class='kw'>let</span> <span class='ident'>bv</span> <span class='op'>=</span> <span class='ident'>shape</span>.<span class='ident'>as_ref</span>().<span class='ident'>aabb</span>(<span class='ident'>delta</span>).<span class='ident'>loosened</span>(<span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>0.04f64</span>));
+        <span class="kw">for</span> (<span class="ident">i</span>, <span class="kw-2">&amp;</span>(<span class="kw-2">ref</span> <span class="ident">delta</span>, <span class="kw-2">ref</span> <span class="ident">shape</span>)) <span class="kw">in</span> <span class="ident">shapes</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
+            <span class="comment">// loosen for better persistancy</span>
+            <span class="kw">let</span> <span class="ident">bv</span> <span class="op">=</span> <span class="ident">shape</span>.<span class="ident">as_ref</span>().<span class="ident">aabb</span>(<span class="ident">delta</span>).<span class="ident">loosened</span>(<span class="ident">na</span>::<span class="ident">convert</span>(<span class="number">0.04f64</span>));
 
-            <span class='ident'>bvs</span>.<span class='ident'>push</span>(<span class='ident'>bv</span>.<span class='ident'>clone</span>());
-            <span class='ident'>leaves</span>.<span class='ident'>push</span>((<span class='ident'>i</span>, <span class='ident'>bv</span>));
+            <span class="ident">bvs</span>.<span class="ident">push</span>(<span class="ident">bv</span>.<span class="ident">clone</span>());
+            <span class="ident">leaves</span>.<span class="ident">push</span>((<span class="ident">i</span>, <span class="ident">bv</span>));
         }
 
-        <span class='kw'>let</span> <span class='ident'>bvt</span> <span class='op'>=</span> <span class='ident'>BVT</span>::<span class='ident'>new_balanced</span>(<span class='ident'>leaves</span>);
+        <span class="kw">let</span> <span class="ident">bvt</span> <span class="op">=</span> <span class="ident">BVT</span>::<span class="ident">new_balanced</span>(<span class="ident">leaves</span>);
 
-        <span class='ident'>Compound</span> {
-            <span class='ident'>shapes</span>: <span class='ident'>shapes</span>,
-            <span class='ident'>bvt</span>:    <span class='ident'>bvt</span>,
-            <span class='ident'>bvs</span>:    <span class='ident'>bvs</span>
+        <span class="ident">Compound</span> {
+            <span class="ident">shapes</span>: <span class="ident">shapes</span>,
+            <span class="ident">bvt</span>:    <span class="ident">bvt</span>,
+            <span class="ident">bvs</span>:    <span class="ident">bvs</span>
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>Compound</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The shapes of this compound shape.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>shapes</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span>[(<span class='ident'>M</span>, <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>)] {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>shapes</span>[..]
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span><span class="op">&gt;</span> <span class="ident">Compound</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The shapes of this compound shape.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shapes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[(<span class="ident">M</span>, <span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>)] {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">shapes</span>[..]
     }
 
-    <span class='doccomment'>/// The optimization structure used by this compound shape.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bvt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>BVT</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>bvt</span>
+    <span class="doccomment">/// The optimization structure used by this compound shape.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bvt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">BVT</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">AABB</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;&gt;</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bvt</span>
     }
 
-    <span class='doccomment'>/// The shapes bounding volumes.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bounding_volumes</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span>[<span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>] {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>bvs</span>[..]
+    <span class="doccomment">/// The shapes bounding volumes.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bounding_volumes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">AABB</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>] {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bvs</span>[..]
     }
 
-    <span class='doccomment'>/// The AABB of the i-th shape compositing this compound.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>aabb_at</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>bvs</span>[<span class='ident'>i</span>]
+    <span class="doccomment">/// The AABB of the i-th shape compositing this compound.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">aabb_at</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">AABB</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bvs</span>[<span class="ident">i</span>]
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>CompositeShape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Compound</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span>,
-          <span class='ident'>M</span>: <span class='ident'>Clone</span> <span class='op'>+</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>M</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>map_part_at</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>FnMut</span>(<span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>)) {
-        <span class='kw'>let</span> <span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>m</span>, <span class='kw-2'>ref</span> <span class='ident'>g</span>) <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>shapes</span>()[<span class='ident'>i</span>];
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> <span class="ident">CompositeShape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Compound</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">P</span>: <span class="ident">Point</span>,
+          <span class="ident">M</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">M</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">map_part_at</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="ident">M</span>, <span class="kw-2">&amp;</span><span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>)) {
+        <span class="kw">let</span> <span class="kw-2">&amp;</span>(<span class="kw-2">ref</span> <span class="ident">m</span>, <span class="kw-2">ref</span> <span class="ident">g</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">shapes</span>()[<span class="ident">i</span>];
 
-        <span class='ident'>f</span>(<span class='ident'>m</span>, <span class='ident'>g</span>.<span class='ident'>as_ref</span>())
+        <span class="ident">f</span>(<span class="ident">m</span>, <span class="ident">g</span>.<span class="ident">as_ref</span>())
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>map_transformed_part_at</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>FnMut</span>(<span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>)) {
-        <span class='kw'>let</span> <span class='ident'>elt</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>shapes</span>()[<span class='ident'>i</span>];
+    <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">map_transformed_part_at</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="ident">M</span>, <span class="kw-2">&amp;</span><span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>)) {
+        <span class="kw">let</span> <span class="ident">elt</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">shapes</span>()[<span class="ident">i</span>];
 
-        <span class='ident'>f</span>(<span class='kw-2'>&amp;</span>(<span class='ident'>m</span>.<span class='ident'>clone</span>() <span class='op'>*</span> <span class='ident'>elt</span>.<span class='number'>0</span>.<span class='ident'>clone</span>()), <span class='ident'>elt</span>.<span class='number'>1</span>.<span class='ident'>as_ref</span>())
+        <span class="ident">f</span>(<span class="kw-2">&amp;</span>(<span class="ident">m</span>.<span class="ident">clone</span>() <span class="op">*</span> <span class="ident">elt</span>.<span class="number">0</span>.<span class="ident">clone</span>()), <span class="ident">elt</span>.<span class="number">1</span>.<span class="ident">as_ref</span>())
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>aabb_at</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>bounding_volumes</span>()[<span class='ident'>i</span>].<span class='ident'>clone</span>()
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">aabb_at</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">AABB</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">bounding_volumes</span>()[<span class="ident">i</span>].<span class="ident">clone</span>()
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>bvt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>BVT</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>bvt</span>()
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">bvt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">BVT</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">AABB</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;&gt;</span> {
+        <span class="self">self</span>.<span class="ident">bvt</span>()
     }
 }
 </pre>

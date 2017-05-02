@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -284,246 +284,246 @@
 <span id="239">239</span>
 <span id="240">240</span>
 <span id="241">241</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>error</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ffi</span>::{<span class='ident'>CString</span>, <span class='ident'>NulError</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ptr</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>raw</span>::{<span class='ident'>c_char</span>,<span class='ident'>c_int</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::{<span class="ident">CString</span>, <span class="ident">NulError</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::{<span class="ident">c_char</span>,<span class="ident">c_int</span>};
 
-<span class='kw'>use</span> <span class='ident'>video</span>::<span class='ident'>WindowRef</span>;
-<span class='kw'>use</span> <span class='ident'>get_error</span>;
+<span class="kw">use</span> <span class="ident">video</span>::<span class="ident">WindowRef</span>;
+<span class="kw">use</span> <span class="ident">get_error</span>;
 
-<span class='kw'>use</span> <span class='ident'>sys</span>::<span class='ident'>messagebox</span> <span class='kw'>as</span> <span class='ident'>ll</span>;
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">messagebox</span> <span class="kw">as</span> <span class="ident">ll</span>;
 
-<span class='macro'>bitflags</span><span class='macro'>!</span> {
-    <span class='kw'>pub</span> <span class='ident'>flags</span> <span class='ident'>MessageBoxFlag</span>: <span class='ident'>u32</span> {
-        <span class='kw'>const</span> <span class='ident'>MESSAGEBOX_ERROR</span> <span class='op'>=</span>
-            ::<span class='ident'>sys</span>::<span class='ident'>messagebox</span>::<span class='ident'>SDL_MessageBoxFlags</span>::<span class='ident'>SDL_MESSAGEBOX_ERROR</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-        <span class='kw'>const</span> <span class='ident'>MESSAGEBOX_WARNING</span> <span class='op'>=</span>
-            ::<span class='ident'>sys</span>::<span class='ident'>messagebox</span>::<span class='ident'>SDL_MessageBoxFlags</span>::<span class='ident'>SDL_MESSAGEBOX_WARNING</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-        <span class='kw'>const</span> <span class='ident'>MESSAGEBOX_INFORMATION</span> <span class='op'>=</span>
-            ::<span class='ident'>sys</span>::<span class='ident'>messagebox</span>::<span class='ident'>SDL_MessageBoxFlags</span>::<span class='ident'>SDL_MESSAGEBOX_INFORMATION</span> <span class='kw'>as</span> <span class='ident'>u32</span>
+<span class="macro">bitflags</span><span class="macro">!</span> {
+    <span class="kw">pub</span> <span class="ident">flags</span> <span class="ident">MessageBoxFlag</span>: <span class="ident">u32</span> {
+        <span class="kw">const</span> <span class="ident">MESSAGEBOX_ERROR</span> <span class="op">=</span>
+            ::<span class="ident">sys</span>::<span class="ident">messagebox</span>::<span class="ident">SDL_MessageBoxFlags</span>::<span class="ident">SDL_MESSAGEBOX_ERROR</span> <span class="kw">as</span> <span class="ident">u32</span>,
+        <span class="kw">const</span> <span class="ident">MESSAGEBOX_WARNING</span> <span class="op">=</span>
+            ::<span class="ident">sys</span>::<span class="ident">messagebox</span>::<span class="ident">SDL_MessageBoxFlags</span>::<span class="ident">SDL_MESSAGEBOX_WARNING</span> <span class="kw">as</span> <span class="ident">u32</span>,
+        <span class="kw">const</span> <span class="ident">MESSAGEBOX_INFORMATION</span> <span class="op">=</span>
+            ::<span class="ident">sys</span>::<span class="ident">messagebox</span>::<span class="ident">SDL_MessageBoxFlags</span>::<span class="ident">SDL_MESSAGEBOX_INFORMATION</span> <span class="kw">as</span> <span class="ident">u32</span>
     }
 }
 
-<span class='macro'>bitflags</span><span class='macro'>!</span> {
-    <span class='kw'>pub</span> <span class='ident'>flags</span> <span class='ident'>MessageBoxButtonFlag</span>: <span class='ident'>u32</span> {
-        <span class='kw'>const</span> <span class='ident'>MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT</span> <span class='op'>=</span>
-            ::<span class='ident'>sys</span>::<span class='ident'>messagebox</span>::<span class='ident'>SDL_MessageBoxButtonFlags</span>::<span class='ident'>SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-        <span class='kw'>const</span> <span class='ident'>MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT</span> <span class='op'>=</span>
-            ::<span class='ident'>sys</span>::<span class='ident'>messagebox</span>::<span class='ident'>SDL_MessageBoxButtonFlags</span>::<span class='ident'>SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-        <span class='kw'>const</span> <span class='ident'>MESSAGEBOX_BUTTON_NOTHING</span> <span class='op'>=</span> <span class='number'>0</span>
+<span class="macro">bitflags</span><span class="macro">!</span> {
+    <span class="kw">pub</span> <span class="ident">flags</span> <span class="ident">MessageBoxButtonFlag</span>: <span class="ident">u32</span> {
+        <span class="kw">const</span> <span class="ident">MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT</span> <span class="op">=</span>
+            ::<span class="ident">sys</span>::<span class="ident">messagebox</span>::<span class="ident">SDL_MessageBoxButtonFlags</span>::<span class="ident">SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT</span> <span class="kw">as</span> <span class="ident">u32</span>,
+        <span class="kw">const</span> <span class="ident">MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT</span> <span class="op">=</span>
+            ::<span class="ident">sys</span>::<span class="ident">messagebox</span>::<span class="ident">SDL_MessageBoxButtonFlags</span>::<span class="ident">SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT</span> <span class="kw">as</span> <span class="ident">u32</span>,
+        <span class="kw">const</span> <span class="ident">MESSAGEBOX_BUTTON_NOTHING</span> <span class="op">=</span> <span class="number">0</span>
     }
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>MessageBoxColorScheme</span> {
-    <span class='kw'>pub</span> <span class='ident'>background</span>:(<span class='ident'>u8</span>,<span class='ident'>u8</span>,<span class='ident'>u8</span>),
-    <span class='kw'>pub</span> <span class='ident'>text</span>:(<span class='ident'>u8</span>,<span class='ident'>u8</span>,<span class='ident'>u8</span>),
-    <span class='kw'>pub</span> <span class='ident'>button_border</span>:(<span class='ident'>u8</span>,<span class='ident'>u8</span>,<span class='ident'>u8</span>),
-    <span class='kw'>pub</span> <span class='ident'>button_background</span>:(<span class='ident'>u8</span>,<span class='ident'>u8</span>,<span class='ident'>u8</span>),
-    <span class='kw'>pub</span> <span class='ident'>button_selected</span>:(<span class='ident'>u8</span>,<span class='ident'>u8</span>,<span class='ident'>u8</span>)
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MessageBoxColorScheme</span> {
+    <span class="kw">pub</span> <span class="ident">background</span>:(<span class="ident">u8</span>,<span class="ident">u8</span>,<span class="ident">u8</span>),
+    <span class="kw">pub</span> <span class="ident">text</span>:(<span class="ident">u8</span>,<span class="ident">u8</span>,<span class="ident">u8</span>),
+    <span class="kw">pub</span> <span class="ident">button_border</span>:(<span class="ident">u8</span>,<span class="ident">u8</span>,<span class="ident">u8</span>),
+    <span class="kw">pub</span> <span class="ident">button_background</span>:(<span class="ident">u8</span>,<span class="ident">u8</span>,<span class="ident">u8</span>),
+    <span class="kw">pub</span> <span class="ident">button_selected</span>:(<span class="ident">u8</span>,<span class="ident">u8</span>,<span class="ident">u8</span>)
 }
 
-<span class='kw'>impl</span> <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>ll</span>::<span class='ident'>SDL_MessageBoxColorScheme</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MessageBoxColorScheme</span> {
-    <span class='kw'>fn</span> <span class='ident'>into</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ll</span>::<span class='ident'>SDL_MessageBoxColorScheme</span> {
-        <span class='ident'>ll</span>::<span class='ident'>SDL_MessageBoxColorScheme</span> { <span class='ident'>colors</span>: <span class='self'>self</span>.<span class='ident'>into</span>() }
+<span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">ll</span>::<span class="ident">SDL_MessageBoxColorScheme</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MessageBoxColorScheme</span> {
+    <span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ll</span>::<span class="ident">SDL_MessageBoxColorScheme</span> {
+        <span class="ident">ll</span>::<span class="ident">SDL_MessageBoxColorScheme</span> { <span class="ident">colors</span>: <span class="self">self</span>.<span class="ident">into</span>() }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>ll</span>::<span class='ident'>SDL_MessageBoxColorScheme</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MessageBoxColorScheme</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>prim</span>: <span class='ident'>ll</span>::<span class='ident'>SDL_MessageBoxColorScheme</span>) <span class='op'>-&gt;</span> <span class='ident'>MessageBoxColorScheme</span> {
-        <span class='ident'>prim</span>.<span class='ident'>colors</span>.<span class='ident'>into</span>()
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ll</span>::<span class="ident">SDL_MessageBoxColorScheme</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MessageBoxColorScheme</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">prim</span>: <span class="ident">ll</span>::<span class="ident">SDL_MessageBoxColorScheme</span>) <span class="op">-&gt;</span> <span class="ident">MessageBoxColorScheme</span> {
+        <span class="ident">prim</span>.<span class="ident">colors</span>.<span class="ident">into</span>()
     }
 }
 
-<span class='doccomment'>/// button_id is the integer that will be returned</span>
-<span class='doccomment'>/// by show_message_box. It is not sed by SDL2,</span>
-<span class='doccomment'>/// and should only be used to know which button has been triggered</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>ButtonData</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span> <span class='ident'>flags</span>:<span class='ident'>MessageBoxButtonFlag</span>,
-    <span class='kw'>pub</span> <span class='ident'>button_id</span>:<span class='ident'>i32</span>,
-    <span class='kw'>pub</span> <span class='ident'>text</span>:<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>
+<span class="doccomment">/// button_id is the integer that will be returned</span>
+<span class="doccomment">/// by show_message_box. It is not sed by SDL2,</span>
+<span class="doccomment">/// and should only be used to know which button has been triggered</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ButtonData</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="ident">flags</span>:<span class="ident">MessageBoxButtonFlag</span>,
+    <span class="kw">pub</span> <span class="ident">button_id</span>:<span class="ident">i32</span>,
+    <span class="kw">pub</span> <span class="ident">text</span>:<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ClickedButton</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>CloseButton</span>,
-    <span class='ident'>CustomButton</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>ButtonData</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>)
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ClickedButton</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">CloseButton</span>,
+    <span class="ident">CustomButton</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ButtonData</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>)
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>MessageBoxColorScheme</span><span class='op'>&gt;</span> <span class='kw'>for</span> [<span class='ident'>ll</span>::<span class='ident'>SDL_MessageBoxColor</span> ; <span class='number'>5</span>] {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>scheme</span>:<span class='ident'>MessageBoxColorScheme</span>) <span class='op'>-&gt;</span> [<span class='ident'>ll</span>::<span class='ident'>SDL_MessageBoxColor</span> ; <span class='number'>5</span>] {
-        <span class='kw'>fn</span> <span class='ident'>to_message_box_color</span>(<span class='ident'>t</span>:(<span class='ident'>u8</span>,<span class='ident'>u8</span>,<span class='ident'>u8</span>)) <span class='op'>-&gt;</span> <span class='ident'>ll</span>::<span class='ident'>SDL_MessageBoxColor</span> {
-            <span class='ident'>ll</span>::<span class='ident'>SDL_MessageBoxColor</span> {
-                <span class='ident'>r</span>:<span class='ident'>t</span>.<span class='number'>0</span>,
-                <span class='ident'>g</span>:<span class='ident'>t</span>.<span class='number'>1</span>,
-                <span class='ident'>b</span>:<span class='ident'>t</span>.<span class='number'>2</span>
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">MessageBoxColorScheme</span><span class="op">&gt;</span> <span class="kw">for</span> [<span class="ident">ll</span>::<span class="ident">SDL_MessageBoxColor</span> ; <span class="number">5</span>] {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">scheme</span>:<span class="ident">MessageBoxColorScheme</span>) <span class="op">-&gt;</span> [<span class="ident">ll</span>::<span class="ident">SDL_MessageBoxColor</span> ; <span class="number">5</span>] {
+        <span class="kw">fn</span> <span class="ident">to_message_box_color</span>(<span class="ident">t</span>:(<span class="ident">u8</span>,<span class="ident">u8</span>,<span class="ident">u8</span>)) <span class="op">-&gt;</span> <span class="ident">ll</span>::<span class="ident">SDL_MessageBoxColor</span> {
+            <span class="ident">ll</span>::<span class="ident">SDL_MessageBoxColor</span> {
+                <span class="ident">r</span>:<span class="ident">t</span>.<span class="number">0</span>,
+                <span class="ident">g</span>:<span class="ident">t</span>.<span class="number">1</span>,
+                <span class="ident">b</span>:<span class="ident">t</span>.<span class="number">2</span>
             }
         };
-        [<span class='ident'>to_message_box_color</span>(<span class='ident'>scheme</span>.<span class='ident'>background</span>),
-        <span class='ident'>to_message_box_color</span>(<span class='ident'>scheme</span>.<span class='ident'>text</span>),
-        <span class='ident'>to_message_box_color</span>(<span class='ident'>scheme</span>.<span class='ident'>button_border</span>),
-        <span class='ident'>to_message_box_color</span>(<span class='ident'>scheme</span>.<span class='ident'>button_background</span>),
-        <span class='ident'>to_message_box_color</span>(<span class='ident'>scheme</span>.<span class='ident'>button_selected</span>)]
+        [<span class="ident">to_message_box_color</span>(<span class="ident">scheme</span>.<span class="ident">background</span>),
+        <span class="ident">to_message_box_color</span>(<span class="ident">scheme</span>.<span class="ident">text</span>),
+        <span class="ident">to_message_box_color</span>(<span class="ident">scheme</span>.<span class="ident">button_border</span>),
+        <span class="ident">to_message_box_color</span>(<span class="ident">scheme</span>.<span class="ident">button_background</span>),
+        <span class="ident">to_message_box_color</span>(<span class="ident">scheme</span>.<span class="ident">button_selected</span>)]
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>MessageBoxColorScheme</span><span class='op'>&gt;</span> <span class='kw'>for</span> [<span class='ident'>ll</span>::<span class='ident'>SDL_MessageBoxColor</span> ; <span class='number'>5</span>] {
-    <span class='kw'>fn</span> <span class='ident'>into</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>MessageBoxColorScheme</span> {
-        <span class='kw'>fn</span> <span class='ident'>from_message_box_color</span>(<span class='ident'>prim_color</span>: <span class='ident'>ll</span>::<span class='ident'>SDL_MessageBoxColor</span>) <span class='op'>-&gt;</span> (<span class='ident'>u8</span>, <span class='ident'>u8</span>, <span class='ident'>u8</span>) {
-            (<span class='ident'>prim_color</span>.<span class='ident'>r</span>, <span class='ident'>prim_color</span>.<span class='ident'>g</span>, <span class='ident'>prim_color</span>.<span class='ident'>b</span>)
+<span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">MessageBoxColorScheme</span><span class="op">&gt;</span> <span class="kw">for</span> [<span class="ident">ll</span>::<span class="ident">SDL_MessageBoxColor</span> ; <span class="number">5</span>] {
+    <span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MessageBoxColorScheme</span> {
+        <span class="kw">fn</span> <span class="ident">from_message_box_color</span>(<span class="ident">prim_color</span>: <span class="ident">ll</span>::<span class="ident">SDL_MessageBoxColor</span>) <span class="op">-&gt;</span> (<span class="ident">u8</span>, <span class="ident">u8</span>, <span class="ident">u8</span>) {
+            (<span class="ident">prim_color</span>.<span class="ident">r</span>, <span class="ident">prim_color</span>.<span class="ident">g</span>, <span class="ident">prim_color</span>.<span class="ident">b</span>)
         };
-        <span class='ident'>MessageBoxColorScheme</span>{
-            <span class='ident'>background</span>: <span class='ident'>from_message_box_color</span>(<span class='self'>self</span>[<span class='number'>0</span>]),
-            <span class='ident'>text</span>: <span class='ident'>from_message_box_color</span>(<span class='self'>self</span>[<span class='number'>1</span>]),
-            <span class='ident'>button_border</span>: <span class='ident'>from_message_box_color</span>(<span class='self'>self</span>[<span class='number'>2</span>]),
-            <span class='ident'>button_background</span>: <span class='ident'>from_message_box_color</span>(<span class='self'>self</span>[<span class='number'>3</span>]),
-            <span class='ident'>button_selected</span>: <span class='ident'>from_message_box_color</span>(<span class='self'>self</span>[<span class='number'>4</span>]),
+        <span class="ident">MessageBoxColorScheme</span>{
+            <span class="ident">background</span>: <span class="ident">from_message_box_color</span>(<span class="self">self</span>[<span class="number">0</span>]),
+            <span class="ident">text</span>: <span class="ident">from_message_box_color</span>(<span class="self">self</span>[<span class="number">1</span>]),
+            <span class="ident">button_border</span>: <span class="ident">from_message_box_color</span>(<span class="self">self</span>[<span class="number">2</span>]),
+            <span class="ident">button_background</span>: <span class="ident">from_message_box_color</span>(<span class="self">self</span>[<span class="number">3</span>]),
+            <span class="ident">button_selected</span>: <span class="ident">from_message_box_color</span>(<span class="self">self</span>[<span class="number">4</span>]),
         }
     }
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ShowMessageError</span> {
-    <span class='ident'>InvalidTitle</span>(<span class='ident'>NulError</span>),
-    <span class='ident'>InvalidMessage</span>(<span class='ident'>NulError</span>),
-    <span class='doccomment'>/// Second argument of the tuple (i32) corresponds to the</span>
-    <span class='doccomment'>/// first button_id having an error</span>
-    <span class='ident'>InvalidButton</span>(<span class='ident'>NulError</span>,<span class='ident'>i32</span>),
-    <span class='ident'>SdlError</span>(<span class='ident'>String</span>),
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ShowMessageError</span> {
+    <span class="ident">InvalidTitle</span>(<span class="ident">NulError</span>),
+    <span class="ident">InvalidMessage</span>(<span class="ident">NulError</span>),
+    <span class="doccomment">/// Second argument of the tuple (i32) corresponds to the</span>
+    <span class="doccomment">/// first button_id having an error</span>
+    <span class="ident">InvalidButton</span>(<span class="ident">NulError</span>,<span class="ident">i32</span>),
+    <span class="ident">SdlError</span>(<span class="ident">String</span>),
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>ShowMessageError</span> {
-    <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-        <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>ShowMessageError</span>::<span class='kw-2'>*</span>;
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ShowMessageError</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ShowMessageError</span>::<span class="kw-2">*</span>;
 
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>InvalidTitle</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;Invalid title: {}&quot;</span>, <span class='ident'>e</span>),
-            <span class='ident'>InvalidMessage</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;Invalid message: {}&quot;</span>, <span class='ident'>e</span>),
-            <span class='ident'>InvalidButton</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>, <span class='ident'>value</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>,
-                <span class='string'>&quot;Invalid button ({}): {}&quot;</span>, <span class='ident'>value</span>, <span class='ident'>e</span>),
-            <span class='ident'>SdlError</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;SDL error: {}&quot;</span>, <span class='ident'>e</span>)
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">InvalidTitle</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid title: {}&quot;</span>, <span class="ident">e</span>),
+            <span class="ident">InvalidMessage</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid message: {}&quot;</span>, <span class="ident">e</span>),
+            <span class="ident">InvalidButton</span>(<span class="kw-2">ref</span> <span class="ident">e</span>, <span class="ident">value</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>,
+                <span class="string">&quot;Invalid button ({}): {}&quot;</span>, <span class="ident">value</span>, <span class="ident">e</span>),
+            <span class="ident">SdlError</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;SDL error: {}&quot;</span>, <span class="ident">e</span>)
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>error</span>::<span class='ident'>Error</span> <span class='kw'>for</span> <span class='ident'>ShowMessageError</span> {
-    <span class='kw'>fn</span> <span class='ident'>description</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>ShowMessageError</span>::<span class='kw-2'>*</span>;
+<span class="kw">impl</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">ShowMessageError</span> {
+    <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ShowMessageError</span>::<span class="kw-2">*</span>;
 
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>InvalidTitle</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;invalid title&quot;</span>,
-            <span class='ident'>InvalidMessage</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;invalid message&quot;</span>,
-            <span class='ident'>InvalidButton</span>(..) <span class='op'>=&gt;</span> <span class='string'>&quot;invalid button&quot;</span>,
-            <span class='ident'>SdlError</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='ident'>e</span>
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">InvalidTitle</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;invalid title&quot;</span>,
+            <span class="ident">InvalidMessage</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;invalid message&quot;</span>,
+            <span class="ident">InvalidButton</span>(..) <span class="op">=&gt;</span> <span class="string">&quot;invalid button&quot;</span>,
+            <span class="ident">SdlError</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="ident">e</span>
         }
     }
 }
 
-<span class='doccomment'>/// Show a simple message box, meant to be informative only.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// There is no way to know if the user clicked &quot;Ok&quot; or closed the message box,</span>
-<span class='doccomment'>/// If you want to retrieve which button was clicked and customize a bit more</span>
-<span class='doccomment'>/// your message box, use `show_message_box` instead.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>show_simple_message_box</span>(<span class='ident'>flags</span>: <span class='ident'>MessageBoxFlag</span>, <span class='ident'>title</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>,
-        <span class='ident'>message</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>window</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>WindowRef</span><span class='op'>&gt;</span>)
-        <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>ShowMessageError</span><span class='op'>&gt;</span> {
-    <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>ShowMessageError</span>::<span class='kw-2'>*</span>;
-    <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='kw'>unsafe</span> {
-        <span class='kw'>let</span> <span class='ident'>title</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='ident'>title</span>) {
-            <span class='prelude-val'>Ok</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>,
-            <span class='prelude-val'>Err</span>(<span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>InvalidTitle</span>(<span class='ident'>err</span>)),
+<span class="doccomment">/// Show a simple message box, meant to be informative only.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// There is no way to know if the user clicked &quot;Ok&quot; or closed the message box,</span>
+<span class="doccomment">/// If you want to retrieve which button was clicked and customize a bit more</span>
+<span class="doccomment">/// your message box, use `show_message_box` instead.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">show_simple_message_box</span>(<span class="ident">flags</span>: <span class="ident">MessageBoxFlag</span>, <span class="ident">title</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">message</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">window</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">WindowRef</span><span class="op">&gt;</span>)
+        <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">ShowMessageError</span><span class="op">&gt;</span> {
+    <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ShowMessageError</span>::<span class="kw-2">*</span>;
+    <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+        <span class="kw">let</span> <span class="ident">title</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">title</span>) {
+            <span class="prelude-val">Ok</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>,
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InvalidTitle</span>(<span class="ident">err</span>)),
         };
-        <span class='kw'>let</span> <span class='ident'>message</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='ident'>message</span>) {
-            <span class='prelude-val'>Ok</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>,
-            <span class='prelude-val'>Err</span>(<span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>InvalidMessage</span>(<span class='ident'>err</span>)),
+        <span class="kw">let</span> <span class="ident">message</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">message</span>) {
+            <span class="prelude-val">Ok</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>,
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InvalidMessage</span>(<span class="ident">err</span>)),
         };
-        <span class='ident'>ll</span>::<span class='ident'>SDL_ShowSimpleMessageBox</span>(
-            <span class='ident'>flags</span>.<span class='ident'>bits</span>(),
-            <span class='ident'>title</span>.<span class='ident'>as_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>,
-            <span class='ident'>message</span>.<span class='ident'>as_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>,
-            <span class='ident'>window</span>.<span class='ident'>map_or</span>(<span class='ident'>ptr</span>::<span class='ident'>null_mut</span>(), <span class='op'>|</span><span class='ident'>win</span><span class='op'>|</span> <span class='ident'>win</span>.<span class='ident'>raw</span>())
+        <span class="ident">ll</span>::<span class="ident">SDL_ShowSimpleMessageBox</span>(
+            <span class="ident">flags</span>.<span class="ident">bits</span>(),
+            <span class="ident">title</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
+            <span class="ident">message</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
+            <span class="ident">window</span>.<span class="ident">map_or</span>(<span class="ident">ptr</span>::<span class="ident">null_mut</span>(), <span class="op">|</span><span class="ident">win</span><span class="op">|</span> <span class="ident">win</span>.<span class="ident">raw</span>())
         )
-    } <span class='op'>==</span> <span class='number'>0</span>;
+    } <span class="op">==</span> <span class="number">0</span>;
 
-    <span class='kw'>if</span> <span class='ident'>result</span> {
-        <span class='prelude-val'>Ok</span>(())
-    } <span class='kw'>else</span> {
-        <span class='prelude-val'>Err</span>(<span class='ident'>SdlError</span>(<span class='ident'>get_error</span>()))
+    <span class="kw">if</span> <span class="ident">result</span> {
+        <span class="prelude-val">Ok</span>(())
+    } <span class="kw">else</span> {
+        <span class="prelude-val">Err</span>(<span class="ident">SdlError</span>(<span class="ident">get_error</span>()))
     }
 }
 
-<span class='doccomment'>/// Show a customizable message box.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// An array of buttons is required for it to work. The array can be empty,</span>
-<span class='doccomment'>/// but it will have no button beside the close button.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// On success, it will return either the button clicked or the close button.</span>
-<span class='doccomment'>/// Note that the variant of the `ClickedButton` enum will also be returned if the message box</span>
-<span class='doccomment'>/// has been forcefully closed (Alt-F4, ...)</span>
-<span class='doccomment'>///</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>show_message_box</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='ident'>flags</span>:<span class='ident'>MessageBoxFlag</span>, <span class='ident'>buttons</span>:<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>ButtonData</span>], <span class='ident'>title</span>:<span class='kw-2'>&amp;</span><span class='ident'>str</span>,
-    <span class='ident'>message</span>:<span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>window</span>:<span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>WindowRef</span><span class='op'>&gt;</span>, <span class='ident'>scheme</span>:<span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>MessageBoxColorScheme</span><span class='op'>&gt;</span>)
-    <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>ClickedButton</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>,<span class='ident'>ShowMessageError</span><span class='op'>&gt;</span> {
-    <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>ShowMessageError</span>::<span class='kw-2'>*</span>;
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>button_id</span> : <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>0</span>;
-    <span class='kw'>let</span> <span class='ident'>title</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='ident'>title</span>) {
-        <span class='prelude-val'>Ok</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>,
-        <span class='prelude-val'>Err</span>(<span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>InvalidTitle</span>(<span class='ident'>err</span>)),
+<span class="doccomment">/// Show a customizable message box.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// An array of buttons is required for it to work. The array can be empty,</span>
+<span class="doccomment">/// but it will have no button beside the close button.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// On success, it will return either the button clicked or the close button.</span>
+<span class="doccomment">/// Note that the variant of the `ClickedButton` enum will also be returned if the message box</span>
+<span class="doccomment">/// has been forcefully closed (Alt-F4, ...)</span>
+<span class="doccomment">///</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">show_message_box</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">flags</span>:<span class="ident">MessageBoxFlag</span>, <span class="ident">buttons</span>:<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">ButtonData</span>], <span class="ident">title</span>:<span class="kw-2">&amp;</span><span class="ident">str</span>,
+    <span class="ident">message</span>:<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">window</span>:<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">WindowRef</span><span class="op">&gt;</span>, <span class="ident">scheme</span>:<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MessageBoxColorScheme</span><span class="op">&gt;</span>)
+    <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ClickedButton</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,<span class="ident">ShowMessageError</span><span class="op">&gt;</span> {
+    <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ShowMessageError</span>::<span class="kw-2">*</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">button_id</span> : <span class="ident">c_int</span> <span class="op">=</span> <span class="number">0</span>;
+    <span class="kw">let</span> <span class="ident">title</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">title</span>) {
+        <span class="prelude-val">Ok</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>,
+        <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InvalidTitle</span>(<span class="ident">err</span>)),
     };
-    <span class='kw'>let</span> <span class='ident'>message</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='ident'>message</span>) {
-        <span class='prelude-val'>Ok</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>,
-        <span class='prelude-val'>Err</span>(<span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>InvalidMessage</span>(<span class='ident'>err</span>)),
+    <span class="kw">let</span> <span class="ident">message</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">message</span>) {
+        <span class="prelude-val">Ok</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>,
+        <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InvalidMessage</span>(<span class="ident">err</span>)),
     };
-    <span class='kw'>let</span> <span class='ident'>button_texts</span> : <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;</span>,(_,<span class='ident'>i32</span>)<span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>buttons</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>b</span><span class='op'>|</span>{
-        <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='ident'>b</span>.<span class='ident'>text</span>).<span class='ident'>map_err</span>(<span class='op'>|</span><span class='ident'>e</span><span class='op'>|</span>(<span class='ident'>e</span>,<span class='ident'>b</span>.<span class='ident'>button_id</span>))
-    }).<span class='ident'>collect</span>(); <span class='comment'>// Create CString for every button; and catch any CString Error</span>
-    <span class='kw'>let</span> <span class='ident'>button_texts</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>button_texts</span> {
-        <span class='prelude-val'>Ok</span>(<span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='ident'>b</span>,
-        <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>InvalidButton</span>(<span class='ident'>e</span>.<span class='number'>0</span>,<span class='ident'>e</span>.<span class='number'>1</span>))
+    <span class="kw">let</span> <span class="ident">button_texts</span> : <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;</span>,(_,<span class="ident">i32</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">buttons</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span>{
+        <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">b</span>.<span class="ident">text</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span>(<span class="ident">e</span>,<span class="ident">b</span>.<span class="ident">button_id</span>))
+    }).<span class="ident">collect</span>(); <span class="comment">// Create CString for every button; and catch any CString Error</span>
+    <span class="kw">let</span> <span class="ident">button_texts</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">button_texts</span> {
+        <span class="prelude-val">Ok</span>(<span class="ident">b</span>) <span class="op">=&gt;</span> <span class="ident">b</span>,
+        <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InvalidButton</span>(<span class="ident">e</span>.<span class="number">0</span>,<span class="ident">e</span>.<span class="number">1</span>))
     };
-    <span class='kw'>let</span> <span class='ident'>raw_buttons</span> : <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>ll</span>::<span class='ident'>SDL_MessageBoxButtonData</span><span class='op'>&gt;</span> <span class='op'>=</span> 
-        <span class='ident'>buttons</span>.<span class='ident'>iter</span>().<span class='ident'>zip</span>(<span class='ident'>button_texts</span>.<span class='ident'>iter</span>()).<span class='ident'>map</span>(<span class='op'>|</span>(<span class='ident'>b</span>,<span class='ident'>b_text</span>)<span class='op'>|</span>{
-        <span class='ident'>ll</span>::<span class='ident'>SDL_MessageBoxButtonData</span> {
-            <span class='ident'>flags</span>:<span class='ident'>b</span>.<span class='ident'>flags</span>.<span class='ident'>bits</span>(),
-            <span class='ident'>buttonid</span>:<span class='ident'>b</span>.<span class='ident'>button_id</span> <span class='kw'>as</span> <span class='ident'>c_int</span>,
-            <span class='ident'>text</span>:<span class='ident'>b_text</span>.<span class='ident'>as_ptr</span>()
+    <span class="kw">let</span> <span class="ident">raw_buttons</span> : <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ll</span>::<span class="ident">SDL_MessageBoxButtonData</span><span class="op">&gt;</span> <span class="op">=</span> 
+        <span class="ident">buttons</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">button_texts</span>.<span class="ident">iter</span>()).<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">b</span>,<span class="ident">b_text</span>)<span class="op">|</span>{
+        <span class="ident">ll</span>::<span class="ident">SDL_MessageBoxButtonData</span> {
+            <span class="ident">flags</span>:<span class="ident">b</span>.<span class="ident">flags</span>.<span class="ident">bits</span>(),
+            <span class="ident">buttonid</span>:<span class="ident">b</span>.<span class="ident">button_id</span> <span class="kw">as</span> <span class="ident">c_int</span>,
+            <span class="ident">text</span>:<span class="ident">b_text</span>.<span class="ident">as_ptr</span>()
         }
-    }).<span class='ident'>collect</span>();
-    <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='kw'>unsafe</span> {
-        <span class='kw'>let</span> <span class='ident'>msg_box_data</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_MessageBoxData</span> {
-            <span class='ident'>flags</span>:<span class='ident'>flags</span>.<span class='ident'>bits</span>(),
-            <span class='ident'>window</span>:<span class='ident'>window</span>.<span class='ident'>map_or</span>(<span class='ident'>ptr</span>::<span class='ident'>null_mut</span>(), <span class='op'>|</span><span class='ident'>win</span><span class='op'>|</span> <span class='ident'>win</span>.<span class='ident'>raw</span>()),
-            <span class='ident'>title</span>: <span class='ident'>title</span>.<span class='ident'>as_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>,
-            <span class='ident'>message</span>: <span class='ident'>message</span>.<span class='ident'>as_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>,
-            <span class='ident'>numbuttons</span>: <span class='ident'>raw_buttons</span>.<span class='ident'>len</span>() <span class='kw'>as</span> <span class='ident'>c_int</span>,
-            <span class='ident'>buttons</span>: <span class='ident'>raw_buttons</span>.<span class='ident'>as_ptr</span>(),
-            <span class='ident'>color_scheme</span>: <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>scheme</span>) <span class='op'>=</span> <span class='ident'>scheme</span> {
-                <span class='kw-2'>&amp;</span><span class='ident'>ll</span>::<span class='ident'>SDL_MessageBoxColorScheme</span> {
-                    <span class='ident'>colors</span>:<span class='ident'>From</span>::<span class='ident'>from</span>(<span class='ident'>scheme</span>)
-                } <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _
-            } <span class='kw'>else</span> {
-                <span class='ident'>ptr</span>::<span class='ident'>null</span>()
+    }).<span class="ident">collect</span>();
+    <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+        <span class="kw">let</span> <span class="ident">msg_box_data</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_MessageBoxData</span> {
+            <span class="ident">flags</span>:<span class="ident">flags</span>.<span class="ident">bits</span>(),
+            <span class="ident">window</span>:<span class="ident">window</span>.<span class="ident">map_or</span>(<span class="ident">ptr</span>::<span class="ident">null_mut</span>(), <span class="op">|</span><span class="ident">win</span><span class="op">|</span> <span class="ident">win</span>.<span class="ident">raw</span>()),
+            <span class="ident">title</span>: <span class="ident">title</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
+            <span class="ident">message</span>: <span class="ident">message</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
+            <span class="ident">numbuttons</span>: <span class="ident">raw_buttons</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">c_int</span>,
+            <span class="ident">buttons</span>: <span class="ident">raw_buttons</span>.<span class="ident">as_ptr</span>(),
+            <span class="ident">color_scheme</span>: <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">scheme</span>) <span class="op">=</span> <span class="ident">scheme</span> {
+                <span class="kw-2">&amp;</span><span class="ident">ll</span>::<span class="ident">SDL_MessageBoxColorScheme</span> {
+                    <span class="ident">colors</span>:<span class="ident">From</span>::<span class="ident">from</span>(<span class="ident">scheme</span>)
+                } <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _
+            } <span class="kw">else</span> {
+                <span class="ident">ptr</span>::<span class="ident">null</span>()
             }
         };
-        <span class='ident'>ll</span>::<span class='ident'>SDL_ShowMessageBox</span>(
-            <span class='kw-2'>&amp;</span><span class='ident'>msg_box_data</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _,
-            <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>button_id</span> <span class='kw'>as</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> _
+        <span class="ident">ll</span>::<span class="ident">SDL_ShowMessageBox</span>(
+            <span class="kw-2">&amp;</span><span class="ident">msg_box_data</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _,
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">button_id</span> <span class="kw">as</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> _
         )
-    } <span class='op'>==</span> <span class='number'>0</span>;
-    <span class='kw'>if</span> <span class='ident'>result</span> {
-        <span class='kw'>match</span> <span class='ident'>button_id</span> {
-            <span class='op'>-</span><span class='number'>1</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='ident'>ClickedButton</span>::<span class='ident'>CloseButton</span>),
-            <span class='ident'>id</span> <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>button</span> <span class='op'>=</span> <span class='ident'>buttons</span>.<span class='ident'>iter</span>().<span class='ident'>find</span>(<span class='op'>|</span><span class='ident'>b</span><span class='op'>|</span> <span class='ident'>b</span>.<span class='ident'>button_id</span> <span class='op'>==</span> <span class='ident'>id</span>);
-                <span class='prelude-val'>Ok</span>(<span class='ident'>ClickedButton</span>::<span class='ident'>CustomButton</span>(<span class='ident'>button</span>.<span class='ident'>unwrap</span>()))
+    } <span class="op">==</span> <span class="number">0</span>;
+    <span class="kw">if</span> <span class="ident">result</span> {
+        <span class="kw">match</span> <span class="ident">button_id</span> {
+            <span class="op">-</span><span class="number">1</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">ClickedButton</span>::<span class="ident">CloseButton</span>),
+            <span class="ident">id</span> <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="ident">button</span> <span class="op">=</span> <span class="ident">buttons</span>.<span class="ident">iter</span>().<span class="ident">find</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="ident">b</span>.<span class="ident">button_id</span> <span class="op">==</span> <span class="ident">id</span>);
+                <span class="prelude-val">Ok</span>(<span class="ident">ClickedButton</span>::<span class="ident">CustomButton</span>(<span class="ident">button</span>.<span class="ident">unwrap</span>()))
             }
         }
-    } <span class='kw'>else</span> {
-        <span class='prelude-val'>Err</span>(<span class='ident'>SdlError</span>(<span class='ident'>get_error</span>()))
+    } <span class="kw">else</span> {
+        <span class="prelude-val">Err</span>(<span class="ident">SdlError</span>(<span class="ident">get_error</span>()))
     }
 }
 </pre>

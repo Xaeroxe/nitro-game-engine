@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,22 +43,22 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../../index.html'>nphysics2d</a>::<wbr><a href='../index.html'>detection</a>::<wbr><a href='index.html'>detector</a>::<wbr><a class='trait' href=''>Detector</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../../index.html'>nphysics2d</a>::<wbr><a href='../index.html'>detection</a>::<wbr><a href='index.html'>detector</a>::<wbr><a class="trait" href=''>Detector</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../../src/nphysics2d/detection/detector.rs.html#7-13' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Detector&lt;N:&nbsp;<a class='trait' href='../../../alga/general/real/trait.Real.html' title='alga::general::real::Real'>Real</a>, I, BF&gt; {
-    fn <a href='#tymethod.update' class='fnname'>update</a>(&amp;mut self, _: &amp;mut BF, _: &amp;mut <a class='struct' href='../../../nphysics2d/detection/struct.ActivationManager.html' title='nphysics2d::detection::ActivationManager'>ActivationManager</a>&lt;N&gt;);
-    fn <a href='#tymethod.interferences' class='fnname'>interferences</a>(&amp;mut self, _: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;I&gt;, _: &amp;mut BF);
+<pre class='rust trait'>pub trait Detector&lt;N:&nbsp;<a class="trait" href="../../../alga/general/real/trait.Real.html" title="trait alga::general::real::Real">Real</a>, I, BF&gt; {
+    fn <a href='#tymethod.update' class='fnname'>update</a>(&amp;mut self, _: &amp;mut BF, _: &amp;mut <a class="struct" href="../../../nphysics2d/detection/struct.ActivationManager.html" title="struct nphysics2d::detection::ActivationManager">ActivationManager</a>&lt;N&gt;);
+    fn <a href='#tymethod.interferences' class='fnname'>interferences</a>(&amp;mut self, _: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;I&gt;, _: &amp;mut BF);
 }</pre><div class='docblock'><p>Trait implemented by collision detectors.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.update' class='method'><span id='update.v' class='invisible'><code>fn <a href='#tymethod.update' class='fnname'>update</a>(&amp;mut self, _: &amp;mut BF, _: &amp;mut <a class='struct' href='../../../nphysics2d/detection/struct.ActivationManager.html' title='nphysics2d::detection::ActivationManager'>ActivationManager</a>&lt;N&gt;)</code></span></h3><div class='docblock'><p>Updates the collision detector, given an (already updated) broad-phase, and an activation
+        <h3 id='tymethod.update' class='method'><span id='update.v' class='invisible'><code>fn <a href='#tymethod.update' class='fnname'>update</a>(&amp;mut self, _: &amp;mut BF, _: &amp;mut <a class="struct" href="../../../nphysics2d/detection/struct.ActivationManager.html" title="struct nphysics2d::detection::ActivationManager">ActivationManager</a>&lt;N&gt;)</code></span></h3><div class='docblock'><p>Updates the collision detector, given an (already updated) broad-phase, and an activation
 manager.</p>
-</div><h3 id='tymethod.interferences' class='method'><span id='interferences.v' class='invisible'><code>fn <a href='#tymethod.interferences' class='fnname'>interferences</a>(&amp;mut self, _: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;I&gt;, _: &amp;mut BF)</code></span></h3><div class='docblock'><p>Collects every interferences detected by this collision detector.</p>
+</div><h3 id='tymethod.interferences' class='method'><span id='interferences.v' class='invisible'><code>fn <a href='#tymethod.interferences' class='fnname'>interferences</a>(&amp;mut self, _: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;I&gt;, _: &amp;mut BF)</code></span></h3><div class='docblock'><p>Collects every interferences detected by this collision detector.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>

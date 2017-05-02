@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -88,52 +88,52 @@
 <span id="43">43</span>
 <span id="44">44</span>
 <span id="45">45</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>world</span>::<span class='ident'>CollisionGroups</span>;
-<span class='kw'>use</span> <span class='ident'>object</span>::{<span class='ident'>STATIC_GROUP_ID</span>, <span class='ident'>SENSOR_GROUP_ID</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">ncollide</span>::<span class="ident">world</span>::<span class="ident">CollisionGroups</span>;
+<span class="kw">use</span> <span class="ident">object</span>::{<span class="ident">STATIC_GROUP_ID</span>, <span class="ident">SENSOR_GROUP_ID</span>};
 
-<span class='doccomment'>/// Groups of collision used to filter which object collide with which other one.</span>
-<span class='doccomment'>/// nphysics use a specific group for its own purposes (i.e. the group of static objects).</span>
-<span class='doccomment'>/// The `group 29` is reserved and you cannot use it.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Copy</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SensorCollisionGroups</span> {
-    <span class='ident'>collision_groups</span>: <span class='ident'>CollisionGroups</span>
+<span class="doccomment">/// Groups of collision used to filter which object collide with which other one.</span>
+<span class="doccomment">/// nphysics use a specific group for its own purposes (i.e. the group of static objects).</span>
+<span class="doccomment">/// The `group 29` is reserved and you cannot use it.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SensorCollisionGroups</span> {
+    <span class="ident">collision_groups</span>: <span class="ident">CollisionGroups</span>
 }
 
-<span class='kw'>impl</span> <span class='ident'>SensorCollisionGroups</span> {
-    <span class='doccomment'>/// Creates a new `SensorCollisionGroups` that enables collisions with every user-defined</span>
-    <span class='doccomment'>/// groups. Static objects and sensors are blacklisted by default and self-collision is disabled.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>SensorCollisionGroups</span> {
-        <span class='comment'>// All memberships + all whitelists activated.</span>
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>groups</span> <span class='op'>=</span> <span class='ident'>CollisionGroups</span>::<span class='ident'>new</span>();
+<span class="kw">impl</span> <span class="ident">SensorCollisionGroups</span> {
+    <span class="doccomment">/// Creates a new `SensorCollisionGroups` that enables collisions with every user-defined</span>
+    <span class="doccomment">/// groups. Static objects and sensors are blacklisted by default and self-collision is disabled.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">SensorCollisionGroups</span> {
+        <span class="comment">// All memberships + all whitelists activated.</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">groups</span> <span class="op">=</span> <span class="ident">CollisionGroups</span>::<span class="ident">new</span>();
 
-        <span class='ident'>groups</span>.<span class='ident'>modify_membership</span>(<span class='ident'>STATIC_GROUP_ID</span>, <span class='bool-val'>false</span>);
-        <span class='ident'>groups</span>.<span class='ident'>modify_membership</span>(<span class='ident'>SENSOR_GROUP_ID</span>, <span class='bool-val'>true</span>);
-        <span class='ident'>groups</span>.<span class='ident'>modify_whitelist</span>(<span class='ident'>STATIC_GROUP_ID</span>,  <span class='bool-val'>false</span>);
-        <span class='ident'>groups</span>.<span class='ident'>modify_whitelist</span>(<span class='ident'>SENSOR_GROUP_ID</span>,  <span class='bool-val'>false</span>);
+        <span class="ident">groups</span>.<span class="ident">modify_membership</span>(<span class="ident">STATIC_GROUP_ID</span>, <span class="bool-val">false</span>);
+        <span class="ident">groups</span>.<span class="ident">modify_membership</span>(<span class="ident">SENSOR_GROUP_ID</span>, <span class="bool-val">true</span>);
+        <span class="ident">groups</span>.<span class="ident">modify_whitelist</span>(<span class="ident">STATIC_GROUP_ID</span>,  <span class="bool-val">false</span>);
+        <span class="ident">groups</span>.<span class="ident">modify_whitelist</span>(<span class="ident">SENSOR_GROUP_ID</span>,  <span class="bool-val">false</span>);
 
-        <span class='ident'>groups</span>.<span class='ident'>modify_blacklist</span>(<span class='ident'>STATIC_GROUP_ID</span>, <span class='bool-val'>true</span>);
-        <span class='ident'>groups</span>.<span class='ident'>modify_blacklist</span>(<span class='ident'>SENSOR_GROUP_ID</span>, <span class='bool-val'>true</span>);
+        <span class="ident">groups</span>.<span class="ident">modify_blacklist</span>(<span class="ident">STATIC_GROUP_ID</span>, <span class="bool-val">true</span>);
+        <span class="ident">groups</span>.<span class="ident">modify_blacklist</span>(<span class="ident">SENSOR_GROUP_ID</span>, <span class="bool-val">true</span>);
 
-        <span class='ident'>SensorCollisionGroups</span>{
-            <span class='ident'>collision_groups</span>: <span class='ident'>groups</span>
+        <span class="ident">SensorCollisionGroups</span>{
+            <span class="ident">collision_groups</span>: <span class="ident">groups</span>
         }
     }
 
 
-    <span class='comment'>/*
+    <span class="comment">/*
      * For compatibility with the implementation macro.
      */</span>
-    <span class='kw'>fn</span> <span class='ident'>configure_reserved_flags</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, _: <span class='ident'>bool</span>) {
+    <span class="kw">fn</span> <span class="ident">configure_reserved_flags</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, _: <span class="ident">bool</span>) {
     }
 
-    <span class='kw'>fn</span> <span class='ident'>is_dynamic</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='bool-val'>true</span>
+    <span class="kw">fn</span> <span class="ident">is_dynamic</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="bool-val">true</span>
     }
 }
 
-<span class='macro'>collision_groups_wrapper_impl</span><span class='macro'>!</span>(<span class='ident'>SensorCollisionGroups</span>);
+<span class="macro">collision_groups_wrapper_impl</span><span class="macro">!</span>(<span class="ident">SensorCollisionGroups</span>);
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

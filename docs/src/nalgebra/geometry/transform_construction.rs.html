@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -79,40 +79,40 @@
 <span id="34">34</span>
 <span id="35">35</span>
 <span id="36">36</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>num</span>::{<span class='ident'>Zero</span>, <span class='ident'>One</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">num</span>::{<span class="ident">Zero</span>, <span class="ident">One</span>};
 
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Field</span>;
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::<span class="ident">Field</span>;
 
-<span class='kw'>use</span> <span class='ident'>core</span>::{<span class='ident'>Scalar</span>, <span class='ident'>OwnedSquareMatrix</span>};
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>dimension</span>::{<span class='ident'>DimNameAdd</span>, <span class='ident'>DimNameSum</span>, <span class='ident'>U1</span>};
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>storage</span>::<span class='ident'>OwnedStorage</span>;
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>allocator</span>::<span class='ident'>OwnedAllocator</span>;
+<span class="kw">use</span> <span class="ident">core</span>::{<span class="ident">Scalar</span>, <span class="ident">OwnedSquareMatrix</span>};
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">dimension</span>::{<span class="ident">DimNameAdd</span>, <span class="ident">DimNameSum</span>, <span class="ident">U1</span>};
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">storage</span>::<span class="ident">OwnedStorage</span>;
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">allocator</span>::<span class="ident">OwnedAllocator</span>;
 
-<span class='kw'>use</span> <span class='ident'>geometry</span>::{<span class='ident'>TransformBase</span>, <span class='ident'>TCategory</span>};
+<span class="kw">use</span> <span class="ident">geometry</span>::{<span class="ident">TransformBase</span>, <span class="ident">TCategory</span>};
 
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>S</span>, <span class='ident'>C</span>: <span class='ident'>TCategory</span><span class='op'>&gt;</span> <span class='ident'>TransformBase</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>S</span>, <span class='ident'>C</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>Zero</span> <span class='op'>+</span> <span class='ident'>One</span>,
-          <span class='ident'>D</span>: <span class='ident'>DimNameAdd</span><span class='op'>&lt;</span><span class='ident'>U1</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>DimNameSum</span><span class='op'>&lt;</span><span class='ident'>D</span>, <span class='ident'>U1</span><span class='op'>&gt;</span>, <span class='ident'>DimNameSum</span><span class='op'>&lt;</span><span class='ident'>D</span>, <span class='ident'>U1</span><span class='op'>&gt;&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>DimNameSum</span><span class='op'>&lt;</span><span class='ident'>D</span>, <span class='ident'>U1</span><span class='op'>&gt;</span>, <span class='ident'>DimNameSum</span><span class='op'>&lt;</span><span class='ident'>D</span>, <span class='ident'>U1</span><span class='op'>&gt;</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new identity transform.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>identity</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>Self</span>::<span class='ident'>from_matrix_unchecked</span>(<span class='ident'>OwnedSquareMatrix</span>::<span class='op'>&lt;</span><span class='ident'>N</span>, _, <span class='ident'>S</span>::<span class='ident'>Alloc</span><span class='op'>&gt;</span>::<span class='ident'>identity</span>())
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span>, <span class="ident">C</span>: <span class="ident">TCategory</span><span class="op">&gt;</span> <span class="ident">TransformBase</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span>, <span class="ident">C</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">Zero</span> <span class="op">+</span> <span class="ident">One</span>,
+          <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new identity transform.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">identity</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>::<span class="ident">from_matrix_unchecked</span>(<span class="ident">OwnedSquareMatrix</span>::<span class="op">&lt;</span><span class="ident">N</span>, _, <span class="ident">S</span>::<span class="ident">Alloc</span><span class="op">&gt;</span>::<span class="ident">identity</span>())
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>S</span>, <span class='ident'>C</span>: <span class='ident'>TCategory</span><span class='op'>&gt;</span> <span class='ident'>One</span> <span class='kw'>for</span> <span class='ident'>TransformBase</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>S</span>, <span class='ident'>C</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>Field</span>,
-          <span class='ident'>D</span>: <span class='ident'>DimNameAdd</span><span class='op'>&lt;</span><span class='ident'>U1</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>DimNameSum</span><span class='op'>&lt;</span><span class='ident'>D</span>, <span class='ident'>U1</span><span class='op'>&gt;</span>, <span class='ident'>DimNameSum</span><span class='op'>&lt;</span><span class='ident'>D</span>, <span class='ident'>U1</span><span class='op'>&gt;&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>DimNameSum</span><span class='op'>&lt;</span><span class='ident'>D</span>, <span class='ident'>U1</span><span class='op'>&gt;</span>, <span class='ident'>DimNameSum</span><span class='op'>&lt;</span><span class='ident'>D</span>, <span class='ident'>U1</span><span class='op'>&gt;</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new identity transform.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>one</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>Self</span>::<span class='ident'>identity</span>()
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span>, <span class="ident">C</span>: <span class="ident">TCategory</span><span class="op">&gt;</span> <span class="ident">One</span> <span class="kw">for</span> <span class="ident">TransformBase</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span>, <span class="ident">C</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">Field</span>,
+          <span class="ident">D</span>: <span class="ident">DimNameAdd</span><span class="op">&lt;</span><span class="ident">U1</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">DimNameSum</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new identity transform.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">one</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>::<span class="ident">identity</span>()
     }
 }
 

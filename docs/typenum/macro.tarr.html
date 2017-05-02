@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc macro">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,31 +43,31 @@
         </form>
     </nav>
 
-    <section id='main' class="content macro">
-<h1 class='fqn'><span class='in-band'>Macro <a href='index.html'>typenum</a>::<wbr><a class='macro' href=''>tarr</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Macro <a href='index.html'>typenum</a>::<wbr><a class="macro" href=''>tarr</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/typenum/array.rs.html#42-48' title='goto source code'>[src]</a></span></h1>
-<pre class='rust macro'>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>tarr</span> {
-    () <span class='op'>=&gt;</span> { ... };
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>:<span class='ident'>ty</span>) <span class='op'>=&gt;</span> { ... };
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>:<span class='ident'>ty</span>,) <span class='op'>=&gt;</span> { ... };
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>:<span class='ident'>ty</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tail</span>:<span class='ident'>ty</span>),<span class='op'>+</span>) <span class='op'>=&gt;</span> { ... };
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>:<span class='ident'>ty</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tail</span>:<span class='ident'>ty</span>),<span class='op'>+</span>,) <span class='op'>=&gt;</span> { ... };
+<pre class="rust macro">
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">tarr</span> {
+    () <span class="op">=&gt;</span> { ... };
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>:<span class="ident">ty</span>) <span class="op">=&gt;</span> { ... };
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>:<span class="ident">ty</span>,) <span class="op">=&gt;</span> { ... };
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>:<span class="ident">ty</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tail</span>:<span class="ident">ty</span>),<span class="op">+</span>) <span class="op">=&gt;</span> { ... };
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>:<span class="ident">ty</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tail</span>:<span class="ident">ty</span>),<span class="op">+</span>,) <span class="op">=&gt;</span> { ... };
 }</pre>
 <div class='docblock'><p>Create a new type-level arrray. Only usable on Rust 1.13.0 or newer.</p>
 
 <p>There&#39;s not a whole lot you can do with it right now.</p>
 
 <h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
-<pre class='rust rust-example-rendered'>
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>typenum</span>;
-<span class='kw'>use</span> <span class='ident'>typenum</span>::<span class='ident'>consts</span>::<span class='kw-2'>*</span>;
+<pre class="rust rust-example-rendered">
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">typenum</span>;
+<span class="kw">use</span> <span class="ident">typenum</span>::<span class="ident">consts</span>::<span class="kw-2">*</span>;
 
-<span class='kw'>type</span> <span class='ident'>Array</span> <span class='op'>=</span> <span class='macro'>tarr</span><span class='macro'>!</span>[<span class='ident'>P3</span>, <span class='ident'>N4</span>, <span class='ident'>Z0</span>, <span class='ident'>P38</span>];</pre>
+<span class="kw">type</span> <span class="ident">Array</span> <span class="op">=</span> <span class="macro">tarr</span><span class="macro">!</span>[<span class="ident">P3</span>, <span class="ident">N4</span>, <span class="ident">Z0</span>, <span class="ident">P38</span>];</pre>
 </div></section>
     <section id='search' class="content hidden"></section>
 

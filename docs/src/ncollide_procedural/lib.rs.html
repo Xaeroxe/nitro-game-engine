@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -96,60 +96,60 @@
 <span id="51">51</span>
 <span id="52">52</span>
 <span id="53">53</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Procedural mesh generation.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Procedural mesh generation.</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>non_camel_case_types</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>unused_parens</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>non_upper_case_globals</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>unused_qualifications</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>missing_docs</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>unused_results</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>warn</span>(<span class='ident'>unused_imports</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>missing_copy_implementations</span>)]</span> <span class='comment'>// FIXME: deny this.</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_root_url</span> <span class='op'>=</span> <span class='string'>&quot;http://ncollide.org/rustdoc&quot;</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">non_camel_case_types</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">unused_parens</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">non_upper_case_globals</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">unused_qualifications</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">unused_results</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">warn</span>(<span class="ident">unused_imports</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">missing_copy_implementations</span>)]</span> <span class="comment">// FIXME: deny this.</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;http://ncollide.org/rustdoc&quot;</span>)]</span>
 
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustc_serialize</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>num_traits</span> <span class='kw'>as</span> <span class='ident'>num</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>alga</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>nalgebra</span> <span class='kw'>as</span> <span class='ident'>na</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>ncollide_math</span> <span class='kw'>as</span> <span class='ident'>math</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>ncollide_utils</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rustc_serialize</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num_traits</span> <span class="kw">as</span> <span class="ident">num</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">alga</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">nalgebra</span> <span class="kw">as</span> <span class="ident">na</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">ncollide_math</span> <span class="kw">as</span> <span class="ident">math</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">ncollide_utils</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>trimesh</span>::{<span class='ident'>TriMesh</span>, <span class='ident'>IndexBuffer</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>polyline</span>::<span class='ident'>Polyline</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>bezier</span>::{<span class='ident'>bezier_surface</span>, <span class='ident'>bezier_curve</span>, <span class='ident'>bezier_surface_at</span>, <span class='ident'>bezier_curve_at</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>capsule</span>::<span class='ident'>capsule</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>cone</span>::{<span class='ident'>unit_cone</span>, <span class='ident'>cone</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>cuboid</span>::{<span class='ident'>cuboid</span>, <span class='ident'>unit_cuboid</span>, <span class='ident'>rectangle</span>, <span class='ident'>unit_rectangle</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>cylinder</span>::{<span class='ident'>unit_cylinder</span>, <span class='ident'>cylinder</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>quad</span>::{<span class='ident'>quad</span>, <span class='ident'>unit_quad</span>, <span class='ident'>quad_with_vertices</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>sphere</span>::{<span class='ident'>sphere</span>, <span class='ident'>unit_sphere</span>, <span class='ident'>circle</span>, <span class='ident'>unit_circle</span>, <span class='ident'>unit_hemisphere</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">trimesh</span>::{<span class="ident">TriMesh</span>, <span class="ident">IndexBuffer</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">polyline</span>::<span class="ident">Polyline</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">bezier</span>::{<span class="ident">bezier_surface</span>, <span class="ident">bezier_curve</span>, <span class="ident">bezier_surface_at</span>, <span class="ident">bezier_curve_at</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">capsule</span>::<span class="ident">capsule</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">cone</span>::{<span class="ident">unit_cone</span>, <span class="ident">cone</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">cuboid</span>::{<span class="ident">cuboid</span>, <span class="ident">unit_cuboid</span>, <span class="ident">rectangle</span>, <span class="ident">unit_rectangle</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">cylinder</span>::{<span class="ident">unit_cylinder</span>, <span class="ident">cylinder</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">quad</span>::{<span class="ident">quad</span>, <span class="ident">unit_quad</span>, <span class="ident">quad_with_vertices</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sphere</span>::{<span class="ident">sphere</span>, <span class="ident">unit_sphere</span>, <span class="ident">circle</span>, <span class="ident">unit_circle</span>, <span class="ident">unit_hemisphere</span>};
 
-<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='ident'>Point2</span>, <span class='ident'>Point3</span>};
+<span class="kw">use</span> <span class="ident">na</span>::{<span class="ident">Point2</span>, <span class="ident">Point3</span>};
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>utils</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>path</span>;
-<span class='kw'>mod</span> <span class='ident'>trimesh</span>;
-<span class='kw'>mod</span> <span class='ident'>polyline</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">utils</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">path</span>;
+<span class="kw">mod</span> <span class="ident">trimesh</span>;
+<span class="kw">mod</span> <span class="ident">polyline</span>;
 
-<span class='kw'>mod</span> <span class='ident'>sphere</span>;
-<span class='kw'>mod</span> <span class='ident'>capsule</span>;
-<span class='kw'>mod</span> <span class='ident'>cone</span>;
-<span class='kw'>mod</span> <span class='ident'>cuboid</span>;
-<span class='kw'>mod</span> <span class='ident'>cylinder</span>;
-<span class='kw'>mod</span> <span class='ident'>quad</span>;
-<span class='kw'>mod</span> <span class='ident'>bezier</span>;
+<span class="kw">mod</span> <span class="ident">sphere</span>;
+<span class="kw">mod</span> <span class="ident">capsule</span>;
+<span class="kw">mod</span> <span class="ident">cone</span>;
+<span class="kw">mod</span> <span class="ident">cuboid</span>;
+<span class="kw">mod</span> <span class="ident">cylinder</span>;
+<span class="kw">mod</span> <span class="ident">quad</span>;
+<span class="kw">mod</span> <span class="ident">bezier</span>;
 
-<span class='doccomment'>/// A 3D triangle mesh.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>TriMesh3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>TriMesh</span><span class='op'>&lt;</span><span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>;
-<span class='doccomment'>/// A 3D polyline.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Polyline3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Polyline</span><span class='op'>&lt;</span><span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>;
+<span class="doccomment">/// A 3D triangle mesh.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">TriMesh3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">TriMesh</span><span class="op">&lt;</span><span class="ident">Point3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>;
+<span class="doccomment">/// A 3D polyline.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Polyline3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Polyline</span><span class="op">&lt;</span><span class="ident">Point3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>;
 
-<span class='doccomment'>/// A 2D triangle mesh.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>TriMesh2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>TriMesh</span><span class='op'>&lt;</span><span class='ident'>Point2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>;
-<span class='doccomment'>/// A 2D polyline.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Polyline2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Polyline</span><span class='op'>&lt;</span><span class='ident'>Point2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>;
+<span class="doccomment">/// A 2D triangle mesh.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">TriMesh2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">TriMesh</span><span class="op">&lt;</span><span class="ident">Point2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>;
+<span class="doccomment">/// A 2D polyline.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Polyline2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Polyline</span><span class="op">&lt;</span><span class="ident">Point2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

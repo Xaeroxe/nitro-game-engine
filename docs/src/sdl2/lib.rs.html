@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -99,63 +99,63 @@
 <span id="54">54</span>
 <span id="55">55</span>
 <span id="56">56</span>
-</pre><pre class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_name</span> <span class='op'>=</span> <span class='string'>&quot;sdl2&quot;</span>]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_type</span> <span class='op'>=</span> <span class='string'>&quot;lib&quot;</span>]</span>
+</pre><pre class="rust ">
+<span class="attribute">#<span class="op">!</span>[<span class="ident">crate_name</span> <span class="op">=</span> <span class="string">&quot;sdl2&quot;</span>]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">crate_type</span> <span class="op">=</span> <span class="string">&quot;lib&quot;</span>]</span>
 
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>num</span>;
-<span class='kw'>pub</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>libc</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num</span>;
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">libc</span>;
 
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>lazy_static</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">lazy_static</span>;
 
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>bitflags</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>sdl2_sys</span> <span class='kw'>as</span> <span class='ident'>sys</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">bitflags</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">sdl2_sys</span> <span class="kw">as</span> <span class="ident">sys</span>;
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;gfx&quot;</span>)]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>c_vec</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gfx&quot;</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">c_vec</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>sdl</span>::<span class='kw-2'>*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sdl</span>::<span class="kw-2">*</span>;
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>clipboard</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>cpuinfo</span>;
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>macros</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>event</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>filesystem</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>gesture</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>touch</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>joystick</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>controller</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>haptic</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>keyboard</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>mouse</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>rect</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>surface</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>pixels</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>video</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>timer</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>render</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>rwops</span>;
-<span class='kw'>mod</span> <span class='ident'>sdl</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>audio</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>version</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>messagebox</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>hint</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">clipboard</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">cpuinfo</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span> <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">macros</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">event</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">filesystem</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">gesture</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">touch</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">joystick</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">controller</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">haptic</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">keyboard</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">mouse</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">rect</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">surface</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">pixels</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">video</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">timer</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">render</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">rwops</span>;
+<span class="kw">mod</span> <span class="ident">sdl</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">audio</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">version</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">messagebox</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">hint</span>;
 
-<span class='comment'>// modules</span>
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;ttf&quot;</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>ttf</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;image&quot;</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>image</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;mixer&quot;</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>mixer</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;gfx&quot;</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>gfx</span>;
+<span class="comment">// modules</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;ttf&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ttf</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;image&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">image</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;mixer&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">mixer</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;gfx&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">gfx</span>;
 
-<span class='kw'>mod</span> <span class='ident'>common</span>;
-<span class='comment'>// Export return types and such from the common module.</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>common</span>::<span class='ident'>IntegerOrSdlError</span>;
+<span class="kw">mod</span> <span class="ident">common</span>;
+<span class="comment">// Export return types and such from the common module.</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">common</span>::<span class="ident">IntegerOrSdlError</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

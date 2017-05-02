@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -102,66 +102,66 @@
 <span id="57">57</span>
 <span id="58">58</span>
 <span id="59">59</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Miscelaneous elementary geometric utilities.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Miscelaneous elementary geometric utilities.</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>non_camel_case_types</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>unused_parens</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>non_upper_case_globals</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>unused_qualifications</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>missing_docs</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>unused_results</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>warn</span>(<span class='ident'>unused_imports</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>missing_copy_implementations</span>)]</span> <span class='comment'>// FIXME: deny this.</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_root_url</span> <span class='op'>=</span> <span class='string'>&quot;http://ncollide.org/rustdoc&quot;</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">non_camel_case_types</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">unused_parens</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">non_upper_case_globals</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">unused_qualifications</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">unused_results</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">warn</span>(<span class="ident">unused_imports</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">missing_copy_implementations</span>)]</span> <span class="comment">// FIXME: deny this.</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;http://ncollide.org/rustdoc&quot;</span>)]</span>
 
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rand</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustc_serialize</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>num_traits</span> <span class='kw'>as</span> <span class='ident'>num</span>;
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>approx</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>alga</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>nalgebra</span> <span class='kw'>as</span> <span class='ident'>na</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>ncollide_math</span> <span class='kw'>as</span> <span class='ident'>math</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rand</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rustc_serialize</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num_traits</span> <span class="kw">as</span> <span class="ident">num</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">approx</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">alga</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">nalgebra</span> <span class="kw">as</span> <span class="ident">na</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">ncollide_math</span> <span class="kw">as</span> <span class="ident">math</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>center</span>::<span class='ident'>center</span>;
-<span class='comment'>// pub use project_homogeneous::{project_homogeneous, project_homogeneous_to};</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>triangle</span>::{<span class='ident'>circumcircle</span>, <span class='ident'>is_affinely_dependent_triangle3</span>,
-                   <span class='ident'>is_point_in_triangle</span>, <span class='ident'>triangle_area</span>,
-                   <span class='ident'>triangle_center</span>, <span class='ident'>triangle_perimeter</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>tetrahedron</span>::{<span class='ident'>tetrahedron_volume</span>, <span class='ident'>tetrahedron_signed_volume</span>, <span class='ident'>tetrahedron_center</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>cleanup</span>::<span class='ident'>remove_unused_points</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>derivatives</span>::{<span class='ident'>dcos</span>, <span class='ident'>dsin</span>, <span class='ident'>binom</span>};
-<span class='comment'>// pub use optimization::{maximize_with_newton, newton, minimize_with_bfgs, bfgs,</span>
-<span class='comment'>//                        LineSearch, BacktrackingLineSearch};</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hashable_partial_eq</span>::<span class='ident'>HashablePartialEq</span>;
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>inline</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>as_bytes</span>::<span class='ident'>AsBytes</span>;
-<span class='comment'>// pub use cov::{cov, cov_and_center, center_reduce};</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>median</span>::<span class='ident'>median</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>sort</span>::<span class='ident'>sort3</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>cross3</span>::<span class='ident'>cross3</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>point_cloud_support_point</span>::<span class='ident'>point_cloud_support_point</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>repeat</span>::<span class='ident'>repeat</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">center</span>::<span class="ident">center</span>;
+<span class="comment">// pub use project_homogeneous::{project_homogeneous, project_homogeneous_to};</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">triangle</span>::{<span class="ident">circumcircle</span>, <span class="ident">is_affinely_dependent_triangle3</span>,
+                   <span class="ident">is_point_in_triangle</span>, <span class="ident">triangle_area</span>,
+                   <span class="ident">triangle_center</span>, <span class="ident">triangle_perimeter</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">tetrahedron</span>::{<span class="ident">tetrahedron_volume</span>, <span class="ident">tetrahedron_signed_volume</span>, <span class="ident">tetrahedron_center</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">cleanup</span>::<span class="ident">remove_unused_points</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">derivatives</span>::{<span class="ident">dcos</span>, <span class="ident">dsin</span>, <span class="ident">binom</span>};
+<span class="comment">// pub use optimization::{maximize_with_newton, newton, minimize_with_bfgs, bfgs,</span>
+<span class="comment">//                        LineSearch, BacktrackingLineSearch};</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hashable_partial_eq</span>::<span class="ident">HashablePartialEq</span>;
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">as_bytes</span>::<span class="ident">AsBytes</span>;
+<span class="comment">// pub use cov::{cov, cov_and_center, center_reduce};</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">median</span>::<span class="ident">median</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sort</span>::<span class="ident">sort3</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">cross3</span>::<span class="ident">cross3</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">point_cloud_support_point</span>::<span class="ident">point_cloud_support_point</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">repeat</span>::<span class="ident">repeat</span>;
 
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>data</span>;
-<span class='kw'>mod</span> <span class='ident'>center</span>;
-<span class='comment'>// mod project_homogeneous;</span>
-<span class='kw'>mod</span> <span class='ident'>tetrahedron</span>;
-<span class='kw'>mod</span> <span class='ident'>triangle</span>;
-<span class='kw'>mod</span> <span class='ident'>cleanup</span>;
-<span class='kw'>mod</span> <span class='ident'>derivatives</span>;
-<span class='comment'>// mod optimization;</span>
-<span class='kw'>mod</span> <span class='ident'>hashable_partial_eq</span>;
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>as_bytes</span>;
-<span class='comment'>// mod cov;</span>
-<span class='kw'>mod</span> <span class='ident'>median</span>;
-<span class='kw'>mod</span> <span class='ident'>sort</span>;
-<span class='kw'>mod</span> <span class='ident'>cross3</span>;
-<span class='kw'>mod</span> <span class='ident'>point_cloud_support_point</span>;
-<span class='kw'>mod</span> <span class='ident'>repeat</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">data</span>;
+<span class="kw">mod</span> <span class="ident">center</span>;
+<span class="comment">// mod project_homogeneous;</span>
+<span class="kw">mod</span> <span class="ident">tetrahedron</span>;
+<span class="kw">mod</span> <span class="ident">triangle</span>;
+<span class="kw">mod</span> <span class="ident">cleanup</span>;
+<span class="kw">mod</span> <span class="ident">derivatives</span>;
+<span class="comment">// mod optimization;</span>
+<span class="kw">mod</span> <span class="ident">hashable_partial_eq</span>;
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">as_bytes</span>;
+<span class="comment">// mod cov;</span>
+<span class="kw">mod</span> <span class="ident">median</span>;
+<span class="kw">mod</span> <span class="ident">sort</span>;
+<span class="kw">mod</span> <span class="ident">cross3</span>;
+<span class="kw">mod</span> <span class="ident">point_cloud_support_point</span>;
+<span class="kw">mod</span> <span class="ident">repeat</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

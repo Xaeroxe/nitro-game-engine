@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -245,209 +245,209 @@
 <span id="200">200</span>
 <span id="201">201</span>
 <span id="202">202</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::{<span class='ident'>RefCell</span>, <span class='ident'>Ref</span>, <span class='ident'>RefMut</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::{<span class="ident">RefCell</span>, <span class="ident">Ref</span>, <span class="ident">RefMut</span>};
 
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
-<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>shape</span>::<span class='ident'>ShapeHandle</span>;
-<span class='kw'>use</span> <span class='ident'>object</span>::{<span class='ident'>RigidBody</span>, <span class='ident'>Sensor</span>, <span class='ident'>RigidBodyHandle</span>, <span class='ident'>SensorHandle</span>};
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Isometry</span>, <span class='ident'>Point</span>};
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::<span class="ident">Real</span>;
+<span class="kw">use</span> <span class="ident">ncollide</span>::<span class="ident">shape</span>::<span class="ident">ShapeHandle</span>;
+<span class="kw">use</span> <span class="ident">object</span>::{<span class="ident">RigidBody</span>, <span class="ident">Sensor</span>, <span class="ident">RigidBodyHandle</span>, <span class="ident">SensorHandle</span>};
+<span class="kw">use</span> <span class="ident">math</span>::{<span class="ident">Isometry</span>, <span class="ident">Point</span>};
 
-<span class='doccomment'>/// An object that has been added to a World.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>WorldObject</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// A rigid body handle.</span>
-    <span class='ident'>RigidBody</span>(<span class='ident'>RigidBodyHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>),
-    <span class='doccomment'>/// A sensor handle.</span>
-    <span class='ident'>Sensor</span>(<span class='ident'>SensorHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>)
+<span class="doccomment">/// An object that has been added to a World.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">WorldObject</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// A rigid body handle.</span>
+    <span class="ident">RigidBody</span>(<span class="ident">RigidBodyHandle</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>),
+    <span class="doccomment">/// A sensor handle.</span>
+    <span class="ident">Sensor</span>(<span class="ident">SensorHandle</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>)
 }
 
-<span class='doccomment'>/// Reference to a world object.</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>WorldObjectBorrowed</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// A borrowed rigid body handle.</span>
-    <span class='ident'>RigidBody</span>(<span class='ident'>Ref</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>),
-    <span class='doccomment'>/// A borrowed sensor handle.</span>
-    <span class='ident'>Sensor</span>(<span class='ident'>Ref</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Sensor</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>)
+<span class="doccomment">/// Reference to a world object.</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">WorldObjectBorrowed</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// A borrowed rigid body handle.</span>
+    <span class="ident">RigidBody</span>(<span class="ident">Ref</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>),
+    <span class="doccomment">/// A borrowed sensor handle.</span>
+    <span class="ident">Sensor</span>(<span class="ident">Ref</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sensor</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>)
 }
 
-<span class='doccomment'>/// Mutable reference to a world object.</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>WorldObjectBorrowedMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// A mutably borrowed rigid body handle.</span>
-    <span class='ident'>RigidBody</span>(<span class='ident'>RefMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>),
-    <span class='doccomment'>/// A mutably borrowed sensor handle.</span>
-    <span class='ident'>Sensor</span>(<span class='ident'>RefMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>Sensor</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>)
+<span class="doccomment">/// Mutable reference to a world object.</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">WorldObjectBorrowedMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// A mutably borrowed rigid body handle.</span>
+    <span class="ident">RigidBody</span>(<span class="ident">RefMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>),
+    <span class="doccomment">/// A mutably borrowed sensor handle.</span>
+    <span class="ident">Sensor</span>(<span class="ident">RefMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sensor</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>)
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>WorldObject</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The unique identifier a rigid body would have if it was wrapped on a `WorldObject`.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This identifier remains unique and will not change as long as `rb` is kept alive in memory.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>rigid_body_uid</span>(<span class='ident'>rb</span>: <span class='kw-2'>&amp;</span><span class='ident'>RigidBodyHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='kw-2'>&amp;</span><span class='kw-2'>*</span><span class='kw-2'>*</span><span class='ident'>rb</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='kw'>as</span> <span class='ident'>usize</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span> <span class="ident">WorldObject</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The unique identifier a rigid body would have if it was wrapped on a `WorldObject`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This identifier remains unique and will not change as long as `rb` is kept alive in memory.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rigid_body_uid</span>(<span class="ident">rb</span>: <span class="kw-2">&amp;</span><span class="ident">RigidBodyHandle</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">rb</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="kw">as</span> <span class="ident">usize</span>
     }
 
-    <span class='doccomment'>/// The unique identifier a sensor would have if it was wrapped on a `WorldObject`.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This identifier remains unique and will not change as long as `s` is kept alive in memory.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sensor_uid</span>(<span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='ident'>SensorHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='kw-2'>&amp;</span><span class='kw-2'>*</span><span class='kw-2'>*</span><span class='ident'>s</span>  <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>Sensor</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='kw'>as</span> <span class='ident'>usize</span>
+    <span class="doccomment">/// The unique identifier a sensor would have if it was wrapped on a `WorldObject`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This identifier remains unique and will not change as long as `s` is kept alive in memory.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sensor_uid</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">SensorHandle</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">s</span>  <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">Sensor</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="kw">as</span> <span class="ident">usize</span>
     }
 
-    <span class='doccomment'>/// Whether or not this is a rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_rigid_body</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>WorldObject</span>::<span class='ident'>RigidBody</span>(_) <span class='op'>=&gt;</span> <span class='bool-val'>true</span>,
-            _                         <span class='op'>=&gt;</span> <span class='bool-val'>false</span>
+    <span class="doccomment">/// Whether or not this is a rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_rigid_body</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">WorldObject</span>::<span class="ident">RigidBody</span>(_) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            _                         <span class="op">=&gt;</span> <span class="bool-val">false</span>
         }
     }
 
-    <span class='doccomment'>/// Whether or not this is a sensor.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_sensor</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>WorldObject</span>::<span class='ident'>Sensor</span>(_) <span class='op'>=&gt;</span> <span class='bool-val'>true</span>,
-            _                      <span class='op'>=&gt;</span> <span class='bool-val'>false</span>
+    <span class="doccomment">/// Whether or not this is a sensor.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_sensor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">WorldObject</span>::<span class="ident">Sensor</span>(_) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            _                      <span class="op">=&gt;</span> <span class="bool-val">false</span>
         }
     }
 
-    <span class='doccomment'>/// Unwraps this object as a sensor or fails.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unwrap_sensor</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>SensorHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='ident'>WorldObject</span>::<span class='ident'>Sensor</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>,
-            _                      <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;This world object is not a sensor.&quot;</span>)
+    <span class="doccomment">/// Unwraps this object as a sensor or fails.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unwrap_sensor</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">SensorHandle</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">WorldObject</span>::<span class="ident">Sensor</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>,
+            _                      <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;This world object is not a sensor.&quot;</span>)
         }
     }
 
-    <span class='doccomment'>/// Unwraps this object as a rigid body or fails.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unwrap_rigid_body</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RigidBodyHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='ident'>WorldObject</span>::<span class='ident'>RigidBody</span>(<span class='ident'>rb</span>) <span class='op'>=&gt;</span> <span class='ident'>rb</span>.<span class='ident'>clone</span>(),
-            _                          <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;This world object is not a rigid body.&quot;</span>)
+    <span class="doccomment">/// Unwraps this object as a rigid body or fails.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unwrap_rigid_body</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RigidBodyHandle</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">WorldObject</span>::<span class="ident">RigidBody</span>(<span class="ident">rb</span>) <span class="op">=&gt;</span> <span class="ident">rb</span>.<span class="ident">clone</span>(),
+            _                          <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;This world object is not a rigid body.&quot;</span>)
         }
     }
 
-    <span class='doccomment'>/// Returns a unique id for this world object.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>uid</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>WorldObject</span>::<span class='ident'>RigidBody</span>(<span class='kw-2'>ref</span> <span class='ident'>rb</span>) <span class='op'>=&gt;</span> <span class='ident'>WorldObject</span>::<span class='ident'>rigid_body_uid</span>(<span class='ident'>rb</span>),
-            <span class='ident'>WorldObject</span>::<span class='ident'>Sensor</span>(<span class='kw-2'>ref</span> <span class='ident'>s</span>)     <span class='op'>=&gt;</span> <span class='ident'>WorldObject</span>::<span class='ident'>sensor_uid</span>(<span class='ident'>s</span>)
+    <span class="doccomment">/// Returns a unique id for this world object.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">uid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">WorldObject</span>::<span class="ident">RigidBody</span>(<span class="kw-2">ref</span> <span class="ident">rb</span>) <span class="op">=&gt;</span> <span class="ident">WorldObject</span>::<span class="ident">rigid_body_uid</span>(<span class="ident">rb</span>),
+            <span class="ident">WorldObject</span>::<span class="ident">Sensor</span>(<span class="kw-2">ref</span> <span class="ident">s</span>)     <span class="op">=&gt;</span> <span class="ident">WorldObject</span>::<span class="ident">sensor_uid</span>(<span class="ident">s</span>)
         }
     }
 
-    <span class='doccomment'>/// Borrows this world object.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>borrow</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>WorldObjectBorrowed</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>WorldObject</span>::<span class='ident'>RigidBody</span>(<span class='kw-2'>ref</span> <span class='ident'>rb</span>) <span class='op'>=&gt;</span> <span class='ident'>WorldObjectBorrowed</span>::<span class='ident'>RigidBody</span>(<span class='ident'>rb</span>.<span class='ident'>borrow</span>()),
-            <span class='ident'>WorldObject</span>::<span class='ident'>Sensor</span>(<span class='kw-2'>ref</span> <span class='ident'>s</span>)     <span class='op'>=&gt;</span> <span class='ident'>WorldObjectBorrowed</span>::<span class='ident'>Sensor</span>(<span class='ident'>s</span>.<span class='ident'>borrow</span>())
+    <span class="doccomment">/// Borrows this world object.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">borrow</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">WorldObjectBorrowed</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">WorldObject</span>::<span class="ident">RigidBody</span>(<span class="kw-2">ref</span> <span class="ident">rb</span>) <span class="op">=&gt;</span> <span class="ident">WorldObjectBorrowed</span>::<span class="ident">RigidBody</span>(<span class="ident">rb</span>.<span class="ident">borrow</span>()),
+            <span class="ident">WorldObject</span>::<span class="ident">Sensor</span>(<span class="kw-2">ref</span> <span class="ident">s</span>)     <span class="op">=&gt;</span> <span class="ident">WorldObjectBorrowed</span>::<span class="ident">Sensor</span>(<span class="ident">s</span>.<span class="ident">borrow</span>())
         }
     }
 
-    <span class='doccomment'>/// Borrows this world object as a sensor.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>borrow_sensor</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Ref</span><span class='op'>&lt;</span><span class='ident'>Sensor</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>WorldObject</span>::<span class='ident'>Sensor</span>(<span class='kw-2'>ref</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>borrow</span>(),
-            _                          <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;This world object is not a sensor.&quot;</span>)
+    <span class="doccomment">/// Borrows this world object as a sensor.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">borrow_sensor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Ref</span><span class="op">&lt;</span><span class="ident">Sensor</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">WorldObject</span>::<span class="ident">Sensor</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">borrow</span>(),
+            _                          <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;This world object is not a sensor.&quot;</span>)
         }
     }
 
-    <span class='doccomment'>/// Borrows this world object as a rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>borrow_rigid_body</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Ref</span><span class='op'>&lt;</span><span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>WorldObject</span>::<span class='ident'>RigidBody</span>(<span class='kw-2'>ref</span> <span class='ident'>rb</span>) <span class='op'>=&gt;</span> <span class='ident'>rb</span>.<span class='ident'>borrow</span>(),
-            _                              <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;This world object is not a rigid body.&quot;</span>)
+    <span class="doccomment">/// Borrows this world object as a rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">borrow_rigid_body</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Ref</span><span class="op">&lt;</span><span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">WorldObject</span>::<span class="ident">RigidBody</span>(<span class="kw-2">ref</span> <span class="ident">rb</span>) <span class="op">=&gt;</span> <span class="ident">rb</span>.<span class="ident">borrow</span>(),
+            _                              <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;This world object is not a rigid body.&quot;</span>)
         }
     }
 
-    <span class='doccomment'>/// Mutably borrows this world object.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>borrow_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>WorldObjectBorrowedMut</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>WorldObject</span>::<span class='ident'>RigidBody</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>rb</span>) <span class='op'>=&gt;</span> <span class='ident'>WorldObjectBorrowedMut</span>::<span class='ident'>RigidBody</span>(<span class='ident'>rb</span>.<span class='ident'>borrow_mut</span>()),
-            <span class='ident'>WorldObject</span>::<span class='ident'>Sensor</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>)     <span class='op'>=&gt;</span> <span class='ident'>WorldObjectBorrowedMut</span>::<span class='ident'>Sensor</span>(<span class='ident'>s</span>.<span class='ident'>borrow_mut</span>())
+    <span class="doccomment">/// Mutably borrows this world object.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">borrow_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">WorldObjectBorrowedMut</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">WorldObject</span>::<span class="ident">RigidBody</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">rb</span>) <span class="op">=&gt;</span> <span class="ident">WorldObjectBorrowedMut</span>::<span class="ident">RigidBody</span>(<span class="ident">rb</span>.<span class="ident">borrow_mut</span>()),
+            <span class="ident">WorldObject</span>::<span class="ident">Sensor</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">s</span>)     <span class="op">=&gt;</span> <span class="ident">WorldObjectBorrowedMut</span>::<span class="ident">Sensor</span>(<span class="ident">s</span>.<span class="ident">borrow_mut</span>())
         }
     }
 
-    <span class='doccomment'>/// Mutably borrows this world object as a sensor.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>borrow_mut_sensor</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RefMut</span><span class='op'>&lt;</span><span class='ident'>Sensor</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>WorldObject</span>::<span class='ident'>Sensor</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>borrow_mut</span>(),
-            _                              <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;This world object is not a sensor.&quot;</span>)
+    <span class="doccomment">/// Mutably borrows this world object as a sensor.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">borrow_mut_sensor</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RefMut</span><span class="op">&lt;</span><span class="ident">Sensor</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">WorldObject</span>::<span class="ident">Sensor</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">borrow_mut</span>(),
+            _                              <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;This world object is not a sensor.&quot;</span>)
         }
     }
 
-    <span class='doccomment'>/// Mutably borrows this world object as a rigid body.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>borrow_mut_rigid_body</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RefMut</span><span class='op'>&lt;</span><span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>WorldObject</span>::<span class='ident'>RigidBody</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>rb</span>) <span class='op'>=&gt;</span> <span class='ident'>rb</span>.<span class='ident'>borrow_mut</span>(),
-            _                                  <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;This world object is not a rigid body.&quot;</span>)
+    <span class="doccomment">/// Mutably borrows this world object as a rigid body.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">borrow_mut_rigid_body</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RefMut</span><span class="op">&lt;</span><span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">WorldObject</span>::<span class="ident">RigidBody</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">rb</span>) <span class="op">=&gt;</span> <span class="ident">rb</span>.<span class="ident">borrow_mut</span>(),
+            _                                  <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;This world object is not a rigid body.&quot;</span>)
         }
     }
 }
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>impl_getters</span>(
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>: <span class='ident'>ident</span>) <span class='op'>=&gt;</span> (
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='doccomment'>/// This object&#39;s position.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>position</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-                    <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>::<span class='ident'>RigidBody</span>(<span class='kw-2'>ref</span> <span class='ident'>rb</span>) <span class='op'>=&gt;</span> <span class='ident'>rb</span>.<span class='ident'>position</span>().<span class='ident'>clone</span>(),
-                    <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>::<span class='ident'>Sensor</span>(<span class='kw-2'>ref</span> <span class='ident'>s</span>)     <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>position</span>()
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_getters</span>(
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>: <span class="ident">ident</span>) <span class="op">=&gt;</span> (
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="doccomment">/// This object&#39;s position.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>::<span class="ident">RigidBody</span>(<span class="kw-2">ref</span> <span class="ident">rb</span>) <span class="op">=&gt;</span> <span class="ident">rb</span>.<span class="ident">position</span>().<span class="ident">clone</span>(),
+                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>::<span class="ident">Sensor</span>(<span class="kw-2">ref</span> <span class="ident">s</span>)     <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">position</span>()
                 }
             }
 
-            <span class='doccomment'>/// A reference to this object geometrical shape.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>shape</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
-                <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-                    <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>::<span class='ident'>RigidBody</span>(<span class='kw-2'>ref</span> <span class='ident'>rb</span>) <span class='op'>=&gt;</span> <span class='ident'>rb</span>.<span class='ident'>shape</span>(),
-                    <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>::<span class='ident'>Sensor</span>(<span class='kw-2'>ref</span> <span class='ident'>s</span>)     <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>shape</span>()
+            <span class="doccomment">/// A reference to this object geometrical shape.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shape</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> {
+                <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>::<span class="ident">RigidBody</span>(<span class="kw-2">ref</span> <span class="ident">rb</span>) <span class="op">=&gt;</span> <span class="ident">rb</span>.<span class="ident">shape</span>(),
+                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>::<span class="ident">Sensor</span>(<span class="kw-2">ref</span> <span class="ident">s</span>)     <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">shape</span>()
                 }
             }
 
-            <span class='doccomment'>/// This object margin.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>margin</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-                <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-                    <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>::<span class='ident'>RigidBody</span>(<span class='kw-2'>ref</span> <span class='ident'>rb</span>) <span class='op'>=&gt;</span> <span class='ident'>rb</span>.<span class='ident'>margin</span>(),
-                    <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>::<span class='ident'>Sensor</span>(<span class='kw-2'>ref</span> <span class='ident'>s</span>)     <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>margin</span>()
+            <span class="doccomment">/// This object margin.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">margin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+                <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>::<span class="ident">RigidBody</span>(<span class="kw-2">ref</span> <span class="ident">rb</span>) <span class="op">=&gt;</span> <span class="ident">rb</span>.<span class="ident">margin</span>(),
+                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>::<span class="ident">Sensor</span>(<span class="kw-2">ref</span> <span class="ident">s</span>)     <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">margin</span>()
                 }
             }
 
-            <span class='doccomment'>/// Whether or not this is a rigid body.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_rigid_body</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-                    <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>::<span class='ident'>RigidBody</span>(_) <span class='op'>=&gt;</span> <span class='bool-val'>true</span>,
-                    _                <span class='op'>=&gt;</span> <span class='bool-val'>false</span>
+            <span class="doccomment">/// Whether or not this is a rigid body.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_rigid_body</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>::<span class="ident">RigidBody</span>(_) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+                    _                <span class="op">=&gt;</span> <span class="bool-val">false</span>
                 }
             }
 
-            <span class='doccomment'>/// Whether or not this is a sensor.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_sensor</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-                    <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>::<span class='ident'>Sensor</span>(_) <span class='op'>=&gt;</span> <span class='bool-val'>true</span>,
-                    _             <span class='op'>=&gt;</span> <span class='bool-val'>false</span>
+            <span class="doccomment">/// Whether or not this is a sensor.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_sensor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+                    <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>::<span class="ident">Sensor</span>(_) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+                    _             <span class="op">=&gt;</span> <span class="bool-val">false</span>
                 }
             }
         }
     )
 );
 
-<span class='macro'>impl_getters</span><span class='macro'>!</span>(<span class='ident'>WorldObjectBorrowed</span>);
-<span class='macro'>impl_getters</span><span class='macro'>!</span>(<span class='ident'>WorldObjectBorrowedMut</span>);
+<span class="macro">impl_getters</span><span class="macro">!</span>(<span class="ident">WorldObjectBorrowed</span>);
+<span class="macro">impl_getters</span><span class="macro">!</span>(<span class="ident">WorldObjectBorrowedMut</span>);
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

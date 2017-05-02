@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -228,190 +228,190 @@
 <span id="183">183</span>
 <span id="184">184</span>
 <span id="185">185</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>RefCell</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::<span class="ident">Any</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">RefCell</span>;
 
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>shape</span>::{<span class='ident'>Shape</span>, <span class='ident'>ShapeHandle</span>};
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Isometry</span>};
-<span class='kw'>use</span> <span class='ident'>object</span>::{<span class='ident'>RigidBodyHandle</span>, <span class='ident'>SensorCollisionGroups</span>};
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::<span class="ident">Real</span>;
+<span class="kw">use</span> <span class="ident">na</span>;
+<span class="kw">use</span> <span class="ident">ncollide</span>::<span class="ident">shape</span>::{<span class="ident">Shape</span>, <span class="ident">ShapeHandle</span>};
+<span class="kw">use</span> <span class="ident">math</span>::{<span class="ident">Point</span>, <span class="ident">Isometry</span>};
+<span class="kw">use</span> <span class="ident">object</span>::{<span class="ident">RigidBodyHandle</span>, <span class="ident">SensorCollisionGroups</span>};
 
-<span class='doccomment'>/// A shared, mutable, sensor.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>SensorHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>Sensor</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>;
+<span class="doccomment">/// A shared, mutable, sensor.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SensorHandle</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">Sensor</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>;
 
-<span class='doccomment'>/// An object capable of detecting interferances with other entities without interacting with them.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Sensor</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> {
-    <span class='ident'>parent</span>:              <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>RigidBodyHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>relative_position</span>:   <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>,
-    <span class='ident'>shape</span>:               <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>margin</span>:              <span class='ident'>N</span>,
-    <span class='ident'>collision_groups</span>:    <span class='ident'>SensorCollisionGroups</span>,
-    <span class='ident'>parent_prox</span>:         <span class='ident'>bool</span>,
-    <span class='ident'>user_data</span>:           <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>interfering_bodies</span>:  <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>RigidBodyHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>interfering_sensors</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>SensorHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>
+<span class="doccomment">/// An object capable of detecting interferances with other entities without interacting with them.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Sensor</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span> {
+    <span class="ident">parent</span>:              <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RigidBodyHandle</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">relative_position</span>:   <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>,
+    <span class="ident">shape</span>:               <span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">margin</span>:              <span class="ident">N</span>,
+    <span class="ident">collision_groups</span>:    <span class="ident">SensorCollisionGroups</span>,
+    <span class="ident">parent_prox</span>:         <span class="ident">bool</span>,
+    <span class="ident">user_data</span>:           <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Any</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">interfering_bodies</span>:  <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">RigidBodyHandle</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">interfering_sensors</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">SensorHandle</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>Sensor</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new sensor.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// A sensor may either be attached to the rigid body `parent`, or be attached to the ground.</span>
-    <span class='doccomment'>/// If it has a parent, it will have a position relative to it. If the parent moves, the sensor</span>
-    <span class='doccomment'>/// will automatically move as well. By default, a sensor does not trigger any proximity event</span>
-    <span class='doccomment'>/// when it intersects its own parent.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// A sensor has a default margin equal to zero.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span><span class='op'>&lt;</span><span class='ident'>G</span><span class='op'>&gt;</span>(<span class='ident'>shape</span>: <span class='ident'>G</span>, <span class='ident'>parent</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>RigidBodyHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Sensor</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>G</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>Sensor</span>::<span class='ident'>new_with_shared_shape</span>(<span class='ident'>ShapeHandle</span>::<span class='ident'>new</span>(<span class='ident'>shape</span>), <span class='ident'>parent</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span> <span class="ident">Sensor</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new sensor.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// A sensor may either be attached to the rigid body `parent`, or be attached to the ground.</span>
+    <span class="doccomment">/// If it has a parent, it will have a position relative to it. If the parent moves, the sensor</span>
+    <span class="doccomment">/// will automatically move as well. By default, a sensor does not trigger any proximity event</span>
+    <span class="doccomment">/// when it intersects its own parent.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// A sensor has a default margin equal to zero.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>(<span class="ident">shape</span>: <span class="ident">G</span>, <span class="ident">parent</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RigidBodyHandle</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Sensor</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="ident">G</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> {
+        <span class="ident">Sensor</span>::<span class="ident">new_with_shared_shape</span>(<span class="ident">ShapeHandle</span>::<span class="ident">new</span>(<span class="ident">shape</span>), <span class="ident">parent</span>)
     }
 
-    <span class='doccomment'>/// Creates a new senson with a given shared shape.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_with_shared_shape</span>(<span class='ident'>shape</span>:  <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>,
-                                 <span class='ident'>parent</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>RigidBodyHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>)
-                                 <span class='op'>-&gt;</span> <span class='ident'>Sensor</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='ident'>Sensor</span> {
-            <span class='ident'>parent</span>:              <span class='ident'>parent</span>,
-            <span class='ident'>relative_position</span>:   <span class='ident'>na</span>::<span class='ident'>one</span>(),
-            <span class='ident'>shape</span>:               <span class='ident'>shape</span>,
-            <span class='ident'>margin</span>:              <span class='ident'>na</span>::<span class='ident'>zero</span>(),
-            <span class='ident'>collision_groups</span>:    <span class='ident'>SensorCollisionGroups</span>::<span class='ident'>new</span>(),
-            <span class='ident'>parent_prox</span>:         <span class='bool-val'>false</span>,
-            <span class='ident'>user_data</span>:           <span class='prelude-val'>None</span>,
-            <span class='ident'>interfering_bodies</span>:  <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
-            <span class='ident'>interfering_sensors</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>()
+    <span class="doccomment">/// Creates a new senson with a given shared shape.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_with_shared_shape</span>(<span class="ident">shape</span>:  <span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>,
+                                 <span class="ident">parent</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RigidBodyHandle</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>)
+                                 <span class="op">-&gt;</span> <span class="ident">Sensor</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="ident">Sensor</span> {
+            <span class="ident">parent</span>:              <span class="ident">parent</span>,
+            <span class="ident">relative_position</span>:   <span class="ident">na</span>::<span class="ident">one</span>(),
+            <span class="ident">shape</span>:               <span class="ident">shape</span>,
+            <span class="ident">margin</span>:              <span class="ident">na</span>::<span class="ident">zero</span>(),
+            <span class="ident">collision_groups</span>:    <span class="ident">SensorCollisionGroups</span>::<span class="ident">new</span>(),
+            <span class="ident">parent_prox</span>:         <span class="bool-val">false</span>,
+            <span class="ident">user_data</span>:           <span class="prelude-val">None</span>,
+            <span class="ident">interfering_bodies</span>:  <span class="ident">Vec</span>::<span class="ident">new</span>(),
+            <span class="ident">interfering_sensors</span>: <span class="ident">Vec</span>::<span class="ident">new</span>()
         }
     }
 
-    <span class='doccomment'>/// Reference to user-defined data attached to this sensor.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>user_data</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>user_data</span>.<span class='ident'>as_ref</span>()
+    <span class="doccomment">/// Reference to user-defined data attached to this sensor.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">user_data</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Any</span><span class="op">&gt;&gt;</span> {
+        <span class="self">self</span>.<span class="ident">user_data</span>.<span class="ident">as_ref</span>()
     }
 
-    <span class='doccomment'>/// Mutable reference to user-defined data attached to this sensor.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>user_data_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>user_data</span>.<span class='ident'>as_mut</span>()
+    <span class="doccomment">/// Mutable reference to user-defined data attached to this sensor.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">user_data_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Any</span><span class="op">&gt;&gt;</span> {
+        <span class="self">self</span>.<span class="ident">user_data</span>.<span class="ident">as_mut</span>()
     }
 
-    <span class='doccomment'>/// Attach some user-defined data to this sensor and return the old one.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_user_data</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>user_data</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>mem</span>::<span class='ident'>replace</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>user_data</span>, <span class='ident'>user_data</span>)
+    <span class="doccomment">/// Attach some user-defined data to this sensor and return the old one.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_user_data</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">user_data</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Any</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Any</span><span class="op">&gt;&gt;</span> {
+        <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">user_data</span>, <span class="ident">user_data</span>)
     }
 
-    <span class='doccomment'>/// List of rigid bodies geometrically intersecting this sensor.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>interfering_bodies</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span>[<span class='ident'>RigidBodyHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>] {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>interfering_bodies</span>[..]
+    <span class="doccomment">/// List of rigid bodies geometrically intersecting this sensor.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interfering_bodies</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">RigidBodyHandle</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>] {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">interfering_bodies</span>[..]
     }
 
-    <span class='doccomment'>/// List of sensors geometrically intersecting this sensor.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>interfering_sensors</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span>[<span class='ident'>SensorHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>] {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>interfering_sensors</span>[..]
+    <span class="doccomment">/// List of sensors geometrically intersecting this sensor.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interfering_sensors</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">SensorHandle</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>] {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">interfering_sensors</span>[..]
     }
 
-    <span class='doccomment'>/// This sensor&#39;s position relative to `self.parent()`.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If this sensor has no parent, then this relative position is actually the sensor absolute</span>
-    <span class='doccomment'>/// position.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>relative_position</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>relative_position</span>
+    <span class="doccomment">/// This sensor&#39;s position relative to `self.parent()`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If this sensor has no parent, then this relative position is actually the sensor absolute</span>
+    <span class="doccomment">/// position.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">relative_position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">relative_position</span>
     }
 
-    <span class='doccomment'>/// Sets the sensor position relative to `self.parent()`.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If `self.parent()` is `None`, then this sets the sensor&#39;s absolute position.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_relative_position</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>rel_pos</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='self'>self</span>.<span class='ident'>relative_position</span> <span class='op'>=</span> <span class='ident'>rel_pos</span>
+    <span class="doccomment">/// Sets the sensor position relative to `self.parent()`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If `self.parent()` is `None`, then this sets the sensor&#39;s absolute position.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_relative_position</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rel_pos</span>: <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">relative_position</span> <span class="op">=</span> <span class="ident">rel_pos</span>
     }
 
-    <span class='doccomment'>/// This sensor&#39;s absolute position.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>position</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>parent</span> {
-            <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>rb</span>) <span class='op'>=&gt;</span> <span class='kw-2'>*</span><span class='ident'>rb</span>.<span class='ident'>borrow</span>().<span class='ident'>position</span>() <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>relative_position</span>,
-            <span class='prelude-val'>None</span>         <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>relative_position</span>.<span class='ident'>clone</span>()
+    <span class="doccomment">/// This sensor&#39;s absolute position.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">position</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">parent</span> {
+            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">rb</span>) <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="ident">rb</span>.<span class="ident">borrow</span>().<span class="ident">position</span>() <span class="op">*</span> <span class="self">self</span>.<span class="ident">relative_position</span>,
+            <span class="prelude-val">None</span>         <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">relative_position</span>.<span class="ident">clone</span>()
         }
     }
 
-    <span class='doccomment'>/// Sets the sensor absolute position.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If `self.parent()` is not `None`, then this automatically computes the relevant relative</span>
-    <span class='doccomment'>/// position and updates it.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_position</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>abs_pos</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>parent</span> {
-            <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>rb</span>) <span class='op'>=&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>relative_position</span> <span class='op'>=</span> <span class='ident'>rb</span>.<span class='ident'>borrow</span>().<span class='ident'>position</span>().<span class='ident'>inverse</span>() <span class='op'>*</span> <span class='ident'>abs_pos</span>
+    <span class="doccomment">/// Sets the sensor absolute position.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If `self.parent()` is not `None`, then this automatically computes the relevant relative</span>
+    <span class="doccomment">/// position and updates it.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_position</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">abs_pos</span>: <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">parent</span> {
+            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">rb</span>) <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">relative_position</span> <span class="op">=</span> <span class="ident">rb</span>.<span class="ident">borrow</span>().<span class="ident">position</span>().<span class="ident">inverse</span>() <span class="op">*</span> <span class="ident">abs_pos</span>
             }
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>relative_position</span> <span class='op'>=</span> <span class='ident'>abs_pos</span>
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">relative_position</span> <span class="op">=</span> <span class="ident">abs_pos</span>
         }
     }
 
-    <span class='doccomment'>/// This sensor position&#39;s translational component.</span>
-    <span class='doccomment'>/// </span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>center</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>parent</span> {
-            <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>rb</span>) <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>coords</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>relative_position</span>.<span class='ident'>translation</span>.<span class='ident'>vector</span>;
-                <span class='kw-2'>*</span><span class='ident'>rb</span>.<span class='ident'>borrow</span>().<span class='ident'>position</span>() <span class='op'>*</span> <span class='ident'>Point</span>::<span class='ident'>from_coordinates</span>(<span class='ident'>coords</span>)
+    <span class="doccomment">/// This sensor position&#39;s translational component.</span>
+    <span class="doccomment">/// </span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">center</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">parent</span> {
+            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">rb</span>) <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="ident">coords</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">relative_position</span>.<span class="ident">translation</span>.<span class="ident">vector</span>;
+                <span class="kw-2">*</span><span class="ident">rb</span>.<span class="ident">borrow</span>().<span class="ident">position</span>() <span class="op">*</span> <span class="ident">Point</span>::<span class="ident">from_coordinates</span>(<span class="ident">coords</span>)
             },
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='ident'>Point</span>::<span class='ident'>from_coordinates</span>(<span class='self'>self</span>.<span class='ident'>relative_position</span>.<span class='ident'>translation</span>.<span class='ident'>vector</span>)
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">Point</span>::<span class="ident">from_coordinates</span>(<span class="self">self</span>.<span class="ident">relative_position</span>.<span class="ident">translation</span>.<span class="ident">vector</span>)
         }
     }
 
-    <span class='doccomment'>/// The collision margin of this sensor&#39;s shape.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This is set to zero by default.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>margin</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-        <span class='self'>self</span>.<span class='ident'>margin</span>
+    <span class="doccomment">/// The collision margin of this sensor&#39;s shape.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This is set to zero by default.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">margin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+        <span class="self">self</span>.<span class="ident">margin</span>
     }
 
-    <span class='doccomment'>/// Whether or not proximity detection between this sensor and its parent is enabled.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>proximity_with_parent_enabled</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>parent_prox</span>
+    <span class="doccomment">/// Whether or not proximity detection between this sensor and its parent is enabled.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">proximity_with_parent_enabled</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">parent_prox</span>
     }
 
-    <span class='doccomment'>/// Enables proximity detection between this sensor and its parent if it has one.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>enable_proximity_with_parent</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>parent_prox</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
+    <span class="doccomment">/// Enables proximity detection between this sensor and its parent if it has one.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">enable_proximity_with_parent</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">parent_prox</span> <span class="op">=</span> <span class="bool-val">true</span>;
     }
 
-    <span class='doccomment'>/// Disables proximity detection between this sensor and its parent if it has one.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>disable_proximity_with_parent</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>parent_prox</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
+    <span class="doccomment">/// Disables proximity detection between this sensor and its parent if it has one.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">disable_proximity_with_parent</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">parent_prox</span> <span class="op">=</span> <span class="bool-val">false</span>;
     }
 
-    <span class='doccomment'>/// The rigid body to which this sensor is kinematically attached.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Returns `None` if this sensor is directly attached to the scene.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>parent</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>RigidBodyHandle</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>parent</span>.<span class='ident'>as_ref</span>()
+    <span class="doccomment">/// The rigid body to which this sensor is kinematically attached.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns `None` if this sensor is directly attached to the scene.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parent</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">RigidBodyHandle</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> {
+        <span class="self">self</span>.<span class="ident">parent</span>.<span class="ident">as_ref</span>()
     }
 
-    <span class='doccomment'>/// A reference of this sensor&#39;s shared shape.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>shape</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>shape</span>
+    <span class="doccomment">/// A reference of this sensor&#39;s shared shape.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shape</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">shape</span>
     }
 
-    <span class='doccomment'>/// This sensor&#39;s collision groups.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>collision_groups</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>SensorCollisionGroups</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>collision_groups</span>
+    <span class="doccomment">/// This sensor&#39;s collision groups.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">collision_groups</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">SensorCollisionGroups</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">collision_groups</span>
     }
 }
 </pre>

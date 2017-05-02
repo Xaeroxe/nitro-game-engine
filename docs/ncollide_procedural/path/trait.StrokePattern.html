@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,25 +43,25 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>ncollide_procedural</a>::<wbr><a href='index.html'>path</a>::<wbr><a class='trait' href=''>StrokePattern</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>ncollide_procedural</a>::<wbr><a href='index.html'>path</a>::<wbr><a class="trait" href=''>StrokePattern</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/ncollide_procedural/path/path.rs.html#26-29' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait StrokePattern&lt;P:&nbsp;<a class='trait' href='../../ncollide_math/point/trait.Point.html' title='ncollide_math::point::Point'>Point</a>&gt; {
-    fn <a href='#tymethod.stroke' class='fnname'>stroke</a>&lt;C:&nbsp;<a class='trait' href='../../ncollide_procedural/path/trait.CurveSampler.html' title='ncollide_procedural::path::CurveSampler'>CurveSampler</a>&lt;P&gt;&gt;(&amp;mut self, sampler: &amp;mut C) -&gt; <a class='struct' href='../../ncollide_procedural/struct.TriMesh.html' title='ncollide_procedural::TriMesh'>TriMesh</a>&lt;P&gt;;
+<pre class='rust trait'>pub trait StrokePattern&lt;P:&nbsp;<a class="trait" href="../../ncollide_math/point/trait.Point.html" title="trait ncollide_math::point::Point">Point</a>&gt; {
+    fn <a href='#tymethod.stroke' class='fnname'>stroke</a>&lt;C:&nbsp;<a class="trait" href="../../ncollide_procedural/path/trait.CurveSampler.html" title="trait ncollide_procedural::path::CurveSampler">CurveSampler</a>&lt;P&gt;&gt;(&amp;mut self, sampler: &amp;mut C) -&gt; <a class="struct" href="../../ncollide_procedural/struct.TriMesh.html" title="struct ncollide_procedural::TriMesh">TriMesh</a>&lt;P&gt;;
 }</pre><div class='docblock'><p>A pattern that is replicated along a path.</p>
 
 <p>It is responsible of the generation of the whole mesh.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.stroke' class='method'><span id='stroke.v' class='invisible'><code>fn <a href='#tymethod.stroke' class='fnname'>stroke</a>&lt;C:&nbsp;<a class='trait' href='../../ncollide_procedural/path/trait.CurveSampler.html' title='ncollide_procedural::path::CurveSampler'>CurveSampler</a>&lt;P&gt;&gt;(&amp;mut self, sampler: &amp;mut C) -&gt; <a class='struct' href='../../ncollide_procedural/struct.TriMesh.html' title='ncollide_procedural::TriMesh'>TriMesh</a>&lt;P&gt;</code></span></h3><div class='docblock'><p>Generates the mesh using this pattern and the curve sampled by <code>sampler</code>.</p>
+        <h3 id='tymethod.stroke' class='method'><span id='stroke.v' class='invisible'><code>fn <a href='#tymethod.stroke' class='fnname'>stroke</a>&lt;C:&nbsp;<a class="trait" href="../../ncollide_procedural/path/trait.CurveSampler.html" title="trait ncollide_procedural::path::CurveSampler">CurveSampler</a>&lt;P&gt;&gt;(&amp;mut self, sampler: &amp;mut C) -&gt; <a class="struct" href="../../ncollide_procedural/struct.TriMesh.html" title="struct ncollide_procedural::TriMesh">TriMesh</a>&lt;P&gt;</code></span></h3><div class='docblock'><p>Generates the mesh using this pattern and the curve sampled by <code>sampler</code>.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;N, C1, C2&gt; StrokePattern&lt;<a class='type' href='../../nalgebra/geometry/point_alias/type.Point3.html' title='nalgebra::geometry::point_alias::Point3'>Point3</a>&lt;N&gt;&gt; for <a class='struct' href='../../ncollide_procedural/path/struct.PolylinePattern.html' title='ncollide_procedural::path::PolylinePattern'>PolylinePattern</a>&lt;N, C1, C2&gt; <span class='where fmt-newline'>where N: <a class='trait' href='../../alga/general/real/trait.Real.html' title='alga::general::real::Real'>Real</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C1: <a class='trait' href='../../ncollide_procedural/path/trait.PolylineCompatibleCap.html' title='ncollide_procedural::path::PolylineCompatibleCap'>PolylineCompatibleCap</a>&lt;N&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C2: <a class='trait' href='../../ncollide_procedural/path/trait.PolylineCompatibleCap.html' title='ncollide_procedural::path::PolylineCompatibleCap'>PolylineCompatibleCap</a>&lt;N&gt;</span></code></li>
+    <li><code>impl&lt;N, C1, C2&gt; StrokePattern&lt;<a class="type" href="../../nalgebra/geometry/point_alias/type.Point3.html" title="type nalgebra::geometry::point_alias::Point3">Point3</a>&lt;N&gt;&gt; for <a class="struct" href="../../ncollide_procedural/path/struct.PolylinePattern.html" title="struct ncollide_procedural::path::PolylinePattern">PolylinePattern</a>&lt;N, C1, C2&gt; <span class="where fmt-newline">where N: <a class="trait" href="../../alga/general/real/trait.Real.html" title="trait alga::general::real::Real">Real</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C1: <a class="trait" href="../../ncollide_procedural/path/trait.PolylineCompatibleCap.html" title="trait ncollide_procedural::path::PolylineCompatibleCap">PolylineCompatibleCap</a>&lt;N&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C2: <a class="trait" href="../../ncollide_procedural/path/trait.PolylineCompatibleCap.html" title="trait ncollide_procedural::path::PolylineCompatibleCap">PolylineCompatibleCap</a>&lt;N&gt;</span></code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/ncollide_procedural/path/trait.StrokePattern.js">
                  </script></section>

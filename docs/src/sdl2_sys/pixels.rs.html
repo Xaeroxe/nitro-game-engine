@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -140,103 +140,103 @@
 <span id="95">95</span>
 <span id="96">96</span>
 <span id="97">97</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>libc</span>::{<span class='ident'>c_int</span>, <span class='ident'>uint8_t</span>, <span class='ident'>uint32_t</span>};
-<span class='kw'>use</span> <span class='ident'>sdl</span>::<span class='ident'>SDL_bool</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">libc</span>::{<span class="ident">c_int</span>, <span class="ident">uint8_t</span>, <span class="ident">uint32_t</span>};
+<span class="kw">use</span> <span class="ident">sdl</span>::<span class="ident">SDL_bool</span>;
 
-<span class='comment'>//SDL_pixels.h</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_Color</span> {
-    <span class='kw'>pub</span> <span class='ident'>r</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>g</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>b</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>a</span>: <span class='ident'>uint8_t</span>,
+<span class="comment">//SDL_pixels.h</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_Color</span> {
+    <span class="kw">pub</span> <span class="ident">r</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">g</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">b</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">a</span>: <span class="ident">uint8_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_copy_implementations</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_Palette</span> {
-    <span class='kw'>pub</span> <span class='ident'>ncolors</span>: <span class='ident'>c_int</span>,
-    <span class='kw'>pub</span> <span class='ident'>colors</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Color</span>,
-    <span class='kw'>pub</span> <span class='ident'>version</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>refcount</span>: <span class='ident'>c_int</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_copy_implementations</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_Palette</span> {
+    <span class="kw">pub</span> <span class="ident">ncolors</span>: <span class="ident">c_int</span>,
+    <span class="kw">pub</span> <span class="ident">colors</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Color</span>,
+    <span class="kw">pub</span> <span class="ident">version</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">refcount</span>: <span class="ident">c_int</span>
 }
 
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>non_snake_case</span>, <span class='ident'>missing_copy_implementations</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_PixelFormat</span> {
-    <span class='kw'>pub</span> <span class='ident'>format</span>: <span class='ident'>SDL_PixelFormatEnum</span>,
-    <span class='kw'>pub</span> <span class='ident'>palette</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Palette</span>,
-    <span class='kw'>pub</span> <span class='ident'>BitsPerPixel</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>BytesPerPixel</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding</span>: [<span class='ident'>uint8_t</span>; <span class='number'>2</span>],
-    <span class='kw'>pub</span> <span class='ident'>Rmask</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>Gmask</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>Bmask</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>Amask</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>Rloss</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>Gloss</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>Bloss</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>Aloss</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>Rshift</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>Gshift</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>Bshift</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>Ashift</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>refcount</span>: <span class='ident'>c_int</span>,
-    <span class='kw'>pub</span> <span class='ident'>next</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_PixelFormat</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_snake_case</span>, <span class="ident">missing_copy_implementations</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_PixelFormat</span> {
+    <span class="kw">pub</span> <span class="ident">format</span>: <span class="ident">SDL_PixelFormatEnum</span>,
+    <span class="kw">pub</span> <span class="ident">palette</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Palette</span>,
+    <span class="kw">pub</span> <span class="ident">BitsPerPixel</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">BytesPerPixel</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding</span>: [<span class="ident">uint8_t</span>; <span class="number">2</span>],
+    <span class="kw">pub</span> <span class="ident">Rmask</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">Gmask</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">Bmask</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">Amask</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">Rloss</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">Gloss</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">Bloss</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">Aloss</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">Rshift</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">Gshift</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">Bshift</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">Ashift</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">refcount</span>: <span class="ident">c_int</span>,
+    <span class="kw">pub</span> <span class="ident">next</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_PixelFormat</span>
 }
 
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='ident'>uint32_t</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_UNKNOWN</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x0</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_INDEX1LSB</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x11100100</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_INDEX1MSB</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x11200100</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_INDEX4LSB</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x12100400</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_INDEX4MSB</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x12200400</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_INDEX8</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x13000801</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_RGB332</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x14110801</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_RGB444</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x15120c02</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_RGB555</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x15130f02</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_BGR555</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x15530f02</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_ARGB4444</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x15321002</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_RGBA4444</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x15421002</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_ABGR4444</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x15721002</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_BGRA4444</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x15821002</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_ARGB1555</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x15331002</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_RGBA5551</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x15441002</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_ABGR1555</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x15731002</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_BGRA5551</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x15841002</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_RGB565</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x15151002</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_BGR565</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x15551002</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_RGB24</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x17101803</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_BGR24</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x17401803</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_RGB888</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x16161804</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_RGBX8888</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x16261804</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_BGR888</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x16561804</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_BGRX8888</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x16661804</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_ARGB8888</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x16362004</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_RGBA8888</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x16462004</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_ABGR8888</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x16762004</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_BGRA8888</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x16862004</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_ARGB2101010</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x16372004</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_YV12</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x32315659</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_IYUV</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x56555949</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_YUY2</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x32595559</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_UYVY</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x59565955</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_PIXELFORMAT_YVYU</span>: <span class='ident'>SDL_PixelFormatEnum</span> <span class='op'>=</span> <span class='number'>0x55595659</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="ident">uint32_t</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_UNKNOWN</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x0</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_INDEX1LSB</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x11100100</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_INDEX1MSB</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x11200100</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_INDEX4LSB</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x12100400</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_INDEX4MSB</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x12200400</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_INDEX8</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x13000801</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_RGB332</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x14110801</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_RGB444</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x15120c02</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_RGB555</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x15130f02</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_BGR555</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x15530f02</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_ARGB4444</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x15321002</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_RGBA4444</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x15421002</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_ABGR4444</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x15721002</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_BGRA4444</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x15821002</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_ARGB1555</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x15331002</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_RGBA5551</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x15441002</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_ABGR1555</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x15731002</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_BGRA5551</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x15841002</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_RGB565</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x15151002</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_BGR565</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x15551002</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_RGB24</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x17101803</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_BGR24</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x17401803</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_RGB888</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x16161804</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_RGBX8888</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x16261804</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_BGR888</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x16561804</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_BGRX8888</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x16661804</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_ARGB8888</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x16362004</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_RGBA8888</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x16462004</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_ABGR8888</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x16762004</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_BGRA8888</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x16862004</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_ARGB2101010</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x16372004</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_YV12</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x32315659</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_IYUV</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x56555949</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_YUY2</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x32595559</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_UYVY</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x59565955</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_PIXELFORMAT_YVYU</span>: <span class="ident">SDL_PixelFormatEnum</span> <span class="op">=</span> <span class="number">0x55595659</span>;
 
-<span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_GetRGB</span>(<span class='ident'>pixel</span>: <span class='ident'>uint32_t</span>, <span class='ident'>format</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_PixelFormat</span>, <span class='ident'>r</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint8_t</span>, <span class='ident'>g</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint8_t</span>, <span class='ident'>b</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint8_t</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_GetRGBA</span>(<span class='ident'>pixel</span>: <span class='ident'>uint32_t</span>, <span class='ident'>format</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_PixelFormat</span>, <span class='ident'>r</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint8_t</span>, <span class='ident'>g</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint8_t</span>, <span class='ident'>b</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint8_t</span>, <span class='ident'>a</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint8_t</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_MapRGB</span>(<span class='ident'>format</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_PixelFormat</span>, <span class='ident'>r</span>: <span class='ident'>uint8_t</span>, <span class='ident'>g</span>: <span class='ident'>uint8_t</span>, <span class='ident'>b</span>: <span class='ident'>uint8_t</span>) <span class='op'>-&gt;</span> <span class='ident'>uint32_t</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_MapRGBA</span>(<span class='ident'>format</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_PixelFormat</span>, <span class='ident'>r</span>: <span class='ident'>uint8_t</span>, <span class='ident'>g</span>: <span class='ident'>uint8_t</span>, <span class='ident'>b</span>: <span class='ident'>uint8_t</span>, <span class='ident'>a</span>: <span class='ident'>uint8_t</span>) <span class='op'>-&gt;</span> <span class='ident'>uint32_t</span>;
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_GetRGB</span>(<span class="ident">pixel</span>: <span class="ident">uint32_t</span>, <span class="ident">format</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_PixelFormat</span>, <span class="ident">r</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint8_t</span>, <span class="ident">g</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint8_t</span>, <span class="ident">b</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint8_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_GetRGBA</span>(<span class="ident">pixel</span>: <span class="ident">uint32_t</span>, <span class="ident">format</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_PixelFormat</span>, <span class="ident">r</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint8_t</span>, <span class="ident">g</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint8_t</span>, <span class="ident">b</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint8_t</span>, <span class="ident">a</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint8_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_MapRGB</span>(<span class="ident">format</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_PixelFormat</span>, <span class="ident">r</span>: <span class="ident">uint8_t</span>, <span class="ident">g</span>: <span class="ident">uint8_t</span>, <span class="ident">b</span>: <span class="ident">uint8_t</span>) <span class="op">-&gt;</span> <span class="ident">uint32_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_MapRGBA</span>(<span class="ident">format</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_PixelFormat</span>, <span class="ident">r</span>: <span class="ident">uint8_t</span>, <span class="ident">g</span>: <span class="ident">uint8_t</span>, <span class="ident">b</span>: <span class="ident">uint8_t</span>, <span class="ident">a</span>: <span class="ident">uint8_t</span>) <span class="op">-&gt;</span> <span class="ident">uint32_t</span>;
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_PixelFormatEnumToMasks</span>(<span class='ident'>format</span>: <span class='ident'>uint32_t</span>, <span class='ident'>bpp</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_int</span>, <span class='ident'>rmask</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint32_t</span>, <span class='ident'>gmask</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint32_t</span>, <span class='ident'>bmask</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint32_t</span>, <span class='ident'>amask</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint32_t</span>) <span class='op'>-&gt;</span> <span class='ident'>SDL_bool</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_MasksToPixelFormatEnum</span>(<span class='ident'>bpp</span>: <span class='ident'>c_int</span>, <span class='ident'>rmask</span>: <span class='ident'>uint32_t</span>, <span class='ident'>gmask</span>: <span class='ident'>uint32_t</span>, <span class='ident'>bmask</span>: <span class='ident'>uint32_t</span>, <span class='ident'>amask</span>: <span class='ident'>uint32_t</span>) <span class='op'>-&gt;</span> <span class='ident'>uint32_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_PixelFormatEnumToMasks</span>(<span class="ident">format</span>: <span class="ident">uint32_t</span>, <span class="ident">bpp</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_int</span>, <span class="ident">rmask</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint32_t</span>, <span class="ident">gmask</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint32_t</span>, <span class="ident">bmask</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint32_t</span>, <span class="ident">amask</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint32_t</span>) <span class="op">-&gt;</span> <span class="ident">SDL_bool</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_MasksToPixelFormatEnum</span>(<span class="ident">bpp</span>: <span class="ident">c_int</span>, <span class="ident">rmask</span>: <span class="ident">uint32_t</span>, <span class="ident">gmask</span>: <span class="ident">uint32_t</span>, <span class="ident">bmask</span>: <span class="ident">uint32_t</span>, <span class="ident">amask</span>: <span class="ident">uint32_t</span>) <span class="op">-&gt;</span> <span class="ident">uint32_t</span>;
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_AllocPalette</span>(<span class='ident'>ncolors</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Palette</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_FreePalette</span>(<span class='ident'>palette</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Palette</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_SetPaletteColors</span>(<span class='ident'>palette</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Palette</span>, <span class='ident'>colors</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>SDL_Color</span>, <span class='ident'>firstcolor</span>: <span class='ident'>c_int</span>, <span class='ident'>ncolors</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_AllocPalette</span>(<span class="ident">ncolors</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Palette</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_FreePalette</span>(<span class="ident">palette</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Palette</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_SetPaletteColors</span>(<span class="ident">palette</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Palette</span>, <span class="ident">colors</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">SDL_Color</span>, <span class="ident">firstcolor</span>: <span class="ident">c_int</span>, <span class="ident">ncolors</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
 }
 </pre>
 </section>

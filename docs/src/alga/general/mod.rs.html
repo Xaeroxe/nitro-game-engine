@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -225,189 +225,189 @@
 <span id="180">180</span>
 <span id="181">181</span>
 <span id="182">182</span>
-</pre><pre class='rust '>
-<span class='comment'>// Copyright 2013-2014 The Algebra Developers.</span>
-<span class='comment'>//</span>
-<span class='comment'>// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
-<span class='comment'>// you may not use this file except in compliance with the License.</span>
-<span class='comment'>// You may obtain a copy of the License at</span>
-<span class='comment'>//</span>
-<span class='comment'>//     http://www.apache.org/licenses/LICENSE-2.0</span>
-<span class='comment'>//</span>
-<span class='comment'>// Unless required by applicable law or agreed to in writing, software</span>
-<span class='comment'>// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
-<span class='comment'>// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
-<span class='comment'>// See the License for the specific language governing permissions and</span>
-<span class='comment'>// limitations under the License.</span>
+</pre><pre class="rust ">
+<span class="comment">// Copyright 2013-2014 The Algebra Developers.</span>
+<span class="comment">//</span>
+<span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="comment">// you may not use this file except in compliance with the License.</span>
+<span class="comment">// You may obtain a copy of the License at</span>
+<span class="comment">//</span>
+<span class="comment">//     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="comment">//</span>
+<span class="comment">// Unless required by applicable law or agreed to in writing, software</span>
+<span class="comment">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="comment">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="comment">// See the License for the specific language governing permissions and</span>
+<span class="comment">// limitations under the License.</span>
 
-<span class='doccomment'>//! Fundamental algebraic structures.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! For most applications requiring an abstraction over the reals, `Real`</span>
-<span class='doccomment'>//! should be sufficient.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ## Algebraic properties</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! The goal of algebraic structures is to allow elements of sets to be combined together using one</span>
-<span class='doccomment'>//! or several operators. The number and properties of those operators characterize the algebraic</span>
-<span class='doccomment'>//! structure. Abstract operators are usually noted `∘`, `+`, or `×`. The last two are preferred</span>
-<span class='doccomment'>//! when their behavior conform with the usual meaning of addition and multiplication of reals.</span>
-<span class='doccomment'>//! Let `Self` be a set. Here is a list of the most common properties those operator may fulfill:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ~~~notrust</span>
-<span class='doccomment'>//! (Closure)       a, b ∈ Self ⇒ a ∘ b ∈ Self,</span>
-<span class='doccomment'>//! (Divisibility)  ∀ a, b ∈ Self, ∃! r, l ∈ Self such that l ∘ a = b and a ∘ r = b</span>
-<span class='doccomment'>//! (Invertibility) ∃ e ∈ Self, ∀ a ∈ Self, ∃ r, l ∈ Self such that l ∘ a = a ∘ r = e</span>
-<span class='doccomment'>//!                 If the right and left inverse are equal they are usually noted r = l = a⁻¹.</span>
-<span class='doccomment'>//! (Associativity) ∀ a, b, c ∈ Self, (a ∘ b) ∘ c = a ∘ (b ∘ c)</span>
-<span class='doccomment'>//! (Neutral Elt.)  ∃ e ∈ Self, ∀ a ∈ Self, e ∘ a = a ∘ e = a</span>
-<span class='doccomment'>//! (Commutativity) ∀ a, b ∈ Self, a ∘ b = b ∘ a</span>
-<span class='doccomment'>//! ~~~</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ## Identity elements</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Two traits are provided that allow the definition of the additive and</span>
-<span class='doccomment'>//! multiplicative identity elements:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! - `IdentityAdditive`</span>
-<span class='doccomment'>//! - `IdentityMultiplicative`</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ## AbstractGroup-like structures</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! These structures are provided for both the addition and multiplication.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ~~~notrust</span>
-<span class='doccomment'>//!            AbstractMagma</span>
-<span class='doccomment'>//!                 |</span>
-<span class='doccomment'>//!         _______/ \______</span>
-<span class='doccomment'>//!        /                \</span>
-<span class='doccomment'>//!  divisibility       associativity</span>
-<span class='doccomment'>//!       |                  |</span>
-<span class='doccomment'>//!       V                  V</span>
-<span class='doccomment'>//! AbstractQuasigroup AbstractSemigroup</span>
-<span class='doccomment'>//!       |                  |</span>
-<span class='doccomment'>//!   identity            identity</span>
-<span class='doccomment'>//!       |                  |</span>
-<span class='doccomment'>//!       V                  V</span>
-<span class='doccomment'>//!  AbstractLoop       AbstractMonoid</span>
-<span class='doccomment'>//!       |                  |</span>
-<span class='doccomment'>//!  associativity     invertibility</span>
-<span class='doccomment'>//!        \______   _______/</span>
-<span class='doccomment'>//!               \ /</span>
-<span class='doccomment'>//!                |</span>
-<span class='doccomment'>//!                V</span>
-<span class='doccomment'>//!          AbstractGroup</span>
-<span class='doccomment'>//!                |</span>
-<span class='doccomment'>//!          commutativity</span>
-<span class='doccomment'>//!                |</span>
-<span class='doccomment'>//!                V</span>
-<span class='doccomment'>//!      AbstractGroupAbelian</span>
-<span class='doccomment'>//! ~~~</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! The following traits are provided:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! - (`Abstract`|`Additive`|`Multiplicative`)`Magma`</span>
-<span class='doccomment'>//! - (`Abstract`|`Additive`|`Multiplicative`)`Quasigroup`</span>
-<span class='doccomment'>//! - (`Abstract`|`Additive`|`Multiplicative`)`Loop`</span>
-<span class='doccomment'>//! - (`Abstract`|`Additive`|`Multiplicative`)`Semigroup`</span>
-<span class='doccomment'>//! - (`Abstract`|`Additive`|`Multiplicative`)`Monoid`</span>
-<span class='doccomment'>//! - (`Abstract`|`Additive`|`Multiplicative`)`Group`</span>
-<span class='doccomment'>//! - (`Abstract`|`Additive`|`Multiplicative`)`GroupAbelian`</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ## Ring-like structures</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ~~~notrust</span>
-<span class='doccomment'>//!      GroupAbelian           Monoid</span>
-<span class='doccomment'>//!           \________   ________/</span>
-<span class='doccomment'>//!                    \ /</span>
-<span class='doccomment'>//!                     |</span>
-<span class='doccomment'>//!                     V</span>
-<span class='doccomment'>//!                    Ring</span>
-<span class='doccomment'>//!                     |</span>
-<span class='doccomment'>//!            commutativity_of_mul</span>
-<span class='doccomment'>//!                     |</span>
-<span class='doccomment'>//!                     V</span>
-<span class='doccomment'>//!              RingCommutative           GroupAbelian</span>
-<span class='doccomment'>//!                      \_______   ___________/</span>
-<span class='doccomment'>//!                              \ /</span>
-<span class='doccomment'>//!                               |</span>
-<span class='doccomment'>//!                               V</span>
-<span class='doccomment'>//!                             Field</span>
-<span class='doccomment'>//! ~~~</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! The following traits are provided:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! -            `Ring`</span>
-<span class='doccomment'>//! - `RingCommutative`</span>
-<span class='doccomment'>//! -           `Field`</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ## Module-like structures</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ~~~notrust</span>
-<span class='doccomment'>//!     GroupAbelian         RingCommutative</span>
-<span class='doccomment'>//!           \______         _____/</span>
-<span class='doccomment'>//!                  \       /</span>
-<span class='doccomment'>//!                   |     |</span>
-<span class='doccomment'>//!                   V     V</span>
-<span class='doccomment'>//!                Module&lt;Scalar&gt;          Field</span>
-<span class='doccomment'>//!                    \______         _____/</span>
-<span class='doccomment'>//!                           \       /</span>
-<span class='doccomment'>//!                            |     |</span>
-<span class='doccomment'>//!                            V     V</span>
-<span class='doccomment'>//!                      VectorSpace&lt;Scalar&gt;</span>
-<span class='doccomment'>//! ~~~</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! The following traits are provided:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! - `Module`</span>
-<span class='doccomment'>//! - `VectorSpace`</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! # Quickcheck properties</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Functions are provided to test that algebraic properties like</span>
-<span class='doccomment'>//! assciociativity and commutativity hold for a given set of arguments.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! For example:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ~~~.ignore</span>
-<span class='doccomment'>//! use algebra::general::SemigroupMultiplicative;</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! quickcheck! (</span>
-<span class='doccomment'>//!     fn prop_mul_is_associative(args: (i32, i32, i32)) -&gt; bool {</span>
-<span class='doccomment'>//!         SemigroupMultiplicative::prop_mul_is_associative(args)</span>
-<span class='doccomment'>//!     }</span>
-<span class='doccomment'>//! );</span>
-<span class='doccomment'>//! ~~~</span>
+<span class="doccomment">//! Fundamental algebraic structures.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! For most applications requiring an abstraction over the reals, `Real`</span>
+<span class="doccomment">//! should be sufficient.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Algebraic properties</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The goal of algebraic structures is to allow elements of sets to be combined together using one</span>
+<span class="doccomment">//! or several operators. The number and properties of those operators characterize the algebraic</span>
+<span class="doccomment">//! structure. Abstract operators are usually noted `∘`, `+`, or `×`. The last two are preferred</span>
+<span class="doccomment">//! when their behavior conform with the usual meaning of addition and multiplication of reals.</span>
+<span class="doccomment">//! Let `Self` be a set. Here is a list of the most common properties those operator may fulfill:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ~~~notrust</span>
+<span class="doccomment">//! (Closure)       a, b ∈ Self ⇒ a ∘ b ∈ Self,</span>
+<span class="doccomment">//! (Divisibility)  ∀ a, b ∈ Self, ∃! r, l ∈ Self such that l ∘ a = b and a ∘ r = b</span>
+<span class="doccomment">//! (Invertibility) ∃ e ∈ Self, ∀ a ∈ Self, ∃ r, l ∈ Self such that l ∘ a = a ∘ r = e</span>
+<span class="doccomment">//!                 If the right and left inverse are equal they are usually noted r = l = a⁻¹.</span>
+<span class="doccomment">//! (Associativity) ∀ a, b, c ∈ Self, (a ∘ b) ∘ c = a ∘ (b ∘ c)</span>
+<span class="doccomment">//! (Neutral Elt.)  ∃ e ∈ Self, ∀ a ∈ Self, e ∘ a = a ∘ e = a</span>
+<span class="doccomment">//! (Commutativity) ∀ a, b ∈ Self, a ∘ b = b ∘ a</span>
+<span class="doccomment">//! ~~~</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Identity elements</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Two traits are provided that allow the definition of the additive and</span>
+<span class="doccomment">//! multiplicative identity elements:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! - `IdentityAdditive`</span>
+<span class="doccomment">//! - `IdentityMultiplicative`</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## AbstractGroup-like structures</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! These structures are provided for both the addition and multiplication.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ~~~notrust</span>
+<span class="doccomment">//!            AbstractMagma</span>
+<span class="doccomment">//!                 |</span>
+<span class="doccomment">//!         _______/ \______</span>
+<span class="doccomment">//!        /                \</span>
+<span class="doccomment">//!  divisibility       associativity</span>
+<span class="doccomment">//!       |                  |</span>
+<span class="doccomment">//!       V                  V</span>
+<span class="doccomment">//! AbstractQuasigroup AbstractSemigroup</span>
+<span class="doccomment">//!       |                  |</span>
+<span class="doccomment">//!   identity            identity</span>
+<span class="doccomment">//!       |                  |</span>
+<span class="doccomment">//!       V                  V</span>
+<span class="doccomment">//!  AbstractLoop       AbstractMonoid</span>
+<span class="doccomment">//!       |                  |</span>
+<span class="doccomment">//!  associativity     invertibility</span>
+<span class="doccomment">//!        \______   _______/</span>
+<span class="doccomment">//!               \ /</span>
+<span class="doccomment">//!                |</span>
+<span class="doccomment">//!                V</span>
+<span class="doccomment">//!          AbstractGroup</span>
+<span class="doccomment">//!                |</span>
+<span class="doccomment">//!          commutativity</span>
+<span class="doccomment">//!                |</span>
+<span class="doccomment">//!                V</span>
+<span class="doccomment">//!      AbstractGroupAbelian</span>
+<span class="doccomment">//! ~~~</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The following traits are provided:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! - (`Abstract`|`Additive`|`Multiplicative`)`Magma`</span>
+<span class="doccomment">//! - (`Abstract`|`Additive`|`Multiplicative`)`Quasigroup`</span>
+<span class="doccomment">//! - (`Abstract`|`Additive`|`Multiplicative`)`Loop`</span>
+<span class="doccomment">//! - (`Abstract`|`Additive`|`Multiplicative`)`Semigroup`</span>
+<span class="doccomment">//! - (`Abstract`|`Additive`|`Multiplicative`)`Monoid`</span>
+<span class="doccomment">//! - (`Abstract`|`Additive`|`Multiplicative`)`Group`</span>
+<span class="doccomment">//! - (`Abstract`|`Additive`|`Multiplicative`)`GroupAbelian`</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Ring-like structures</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ~~~notrust</span>
+<span class="doccomment">//!      GroupAbelian           Monoid</span>
+<span class="doccomment">//!           \________   ________/</span>
+<span class="doccomment">//!                    \ /</span>
+<span class="doccomment">//!                     |</span>
+<span class="doccomment">//!                     V</span>
+<span class="doccomment">//!                    Ring</span>
+<span class="doccomment">//!                     |</span>
+<span class="doccomment">//!            commutativity_of_mul</span>
+<span class="doccomment">//!                     |</span>
+<span class="doccomment">//!                     V</span>
+<span class="doccomment">//!              RingCommutative           GroupAbelian</span>
+<span class="doccomment">//!                      \_______   ___________/</span>
+<span class="doccomment">//!                              \ /</span>
+<span class="doccomment">//!                               |</span>
+<span class="doccomment">//!                               V</span>
+<span class="doccomment">//!                             Field</span>
+<span class="doccomment">//! ~~~</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The following traits are provided:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! -            `Ring`</span>
+<span class="doccomment">//! - `RingCommutative`</span>
+<span class="doccomment">//! -           `Field`</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Module-like structures</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ~~~notrust</span>
+<span class="doccomment">//!     GroupAbelian         RingCommutative</span>
+<span class="doccomment">//!           \______         _____/</span>
+<span class="doccomment">//!                  \       /</span>
+<span class="doccomment">//!                   |     |</span>
+<span class="doccomment">//!                   V     V</span>
+<span class="doccomment">//!                Module&lt;Scalar&gt;          Field</span>
+<span class="doccomment">//!                    \______         _____/</span>
+<span class="doccomment">//!                           \       /</span>
+<span class="doccomment">//!                            |     |</span>
+<span class="doccomment">//!                            V     V</span>
+<span class="doccomment">//!                      VectorSpace&lt;Scalar&gt;</span>
+<span class="doccomment">//! ~~~</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The following traits are provided:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! - `Module`</span>
+<span class="doccomment">//! - `VectorSpace`</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Quickcheck properties</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Functions are provided to test that algebraic properties like</span>
+<span class="doccomment">//! assciociativity and commutativity hold for a given set of arguments.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! For example:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ~~~.ignore</span>
+<span class="doccomment">//! use algebra::general::SemigroupMultiplicative;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! quickcheck! (</span>
+<span class="doccomment">//!     fn prop_mul_is_associative(args: (i32, i32, i32)) -&gt; bool {</span>
+<span class="doccomment">//!         SemigroupMultiplicative::prop_mul_is_associative(args)</span>
+<span class="doccomment">//!     }</span>
+<span class="doccomment">//! );</span>
+<span class="doccomment">//! ~~~</span>
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>operator</span>::{<span class='ident'>Inverse</span>, <span class='ident'>Operator</span>, <span class='ident'>Multiplicative</span>, <span class='ident'>Additive</span>,
-                         <span class='ident'>ClosedAdd</span>, <span class='ident'>ClosedMul</span>, <span class='ident'>ClosedSub</span>, <span class='ident'>ClosedNeg</span>, <span class='ident'>ClosedDiv</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>identity</span>::{<span class='ident'>Identity</span>, <span class='ident'>Id</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>subset</span>::{<span class='ident'>SubsetOf</span>, <span class='ident'>SupersetOf</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">operator</span>::{<span class="ident">Inverse</span>, <span class="ident">Operator</span>, <span class="ident">Multiplicative</span>, <span class="ident">Additive</span>,
+                         <span class="ident">ClosedAdd</span>, <span class="ident">ClosedMul</span>, <span class="ident">ClosedSub</span>, <span class="ident">ClosedNeg</span>, <span class="ident">ClosedDiv</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">identity</span>::{<span class="ident">Identity</span>, <span class="ident">Id</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">subset</span>::{<span class="ident">SubsetOf</span>, <span class="ident">SupersetOf</span>};
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>one_operator</span>::{<span class='ident'>AbstractMagma</span>, <span class='ident'>AbstractQuasigroup</span>, <span class='ident'>AbstractLoop</span>, <span class='ident'>AbstractSemigroup</span>,
-                             <span class='ident'>AbstractMonoid</span>, <span class='ident'>AbstractGroup</span>, <span class='ident'>AbstractGroupAbelian</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>two_operators</span>::{<span class='ident'>AbstractRing</span>, <span class='ident'>AbstractRingCommutative</span>, <span class='ident'>AbstractField</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>module</span>::<span class='ident'>AbstractModule</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>lattice</span>::{<span class='ident'>MeetSemilattice</span>, <span class='ident'>JoinSemilattice</span>, <span class='ident'>Lattice</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>specialized</span>::{
-    <span class='ident'>AdditiveMagma</span>, <span class='ident'>AdditiveQuasigroup</span>, <span class='ident'>AdditiveLoop</span>, <span class='ident'>AdditiveSemigroup</span>,
-    <span class='ident'>AdditiveMonoid</span>, <span class='ident'>AdditiveGroup</span>, <span class='ident'>AdditiveGroupAbelian</span>,
-    <span class='ident'>MultiplicativeMagma</span>, <span class='ident'>MultiplicativeQuasigroup</span>, <span class='ident'>MultiplicativeLoop</span>, <span class='ident'>MultiplicativeSemigroup</span>,
-    <span class='ident'>MultiplicativeMonoid</span>, <span class='ident'>MultiplicativeGroup</span>, <span class='ident'>MultiplicativeGroupAbelian</span>,
-    <span class='ident'>Ring</span>, <span class='ident'>RingCommutative</span>, <span class='ident'>Field</span>, <span class='ident'>Module</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>real</span>::<span class='ident'>Real</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">one_operator</span>::{<span class="ident">AbstractMagma</span>, <span class="ident">AbstractQuasigroup</span>, <span class="ident">AbstractLoop</span>, <span class="ident">AbstractSemigroup</span>,
+                             <span class="ident">AbstractMonoid</span>, <span class="ident">AbstractGroup</span>, <span class="ident">AbstractGroupAbelian</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">two_operators</span>::{<span class="ident">AbstractRing</span>, <span class="ident">AbstractRingCommutative</span>, <span class="ident">AbstractField</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">module</span>::<span class="ident">AbstractModule</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">lattice</span>::{<span class="ident">MeetSemilattice</span>, <span class="ident">JoinSemilattice</span>, <span class="ident">Lattice</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">specialized</span>::{
+    <span class="ident">AdditiveMagma</span>, <span class="ident">AdditiveQuasigroup</span>, <span class="ident">AdditiveLoop</span>, <span class="ident">AdditiveSemigroup</span>,
+    <span class="ident">AdditiveMonoid</span>, <span class="ident">AdditiveGroup</span>, <span class="ident">AdditiveGroupAbelian</span>,
+    <span class="ident">MultiplicativeMagma</span>, <span class="ident">MultiplicativeQuasigroup</span>, <span class="ident">MultiplicativeLoop</span>, <span class="ident">MultiplicativeSemigroup</span>,
+    <span class="ident">MultiplicativeMonoid</span>, <span class="ident">MultiplicativeGroup</span>, <span class="ident">MultiplicativeGroupAbelian</span>,
+    <span class="ident">Ring</span>, <span class="ident">RingCommutative</span>, <span class="ident">Field</span>, <span class="ident">Module</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">real</span>::<span class="ident">Real</span>;
 
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>mod</span> <span class='ident'>one_operator</span>;
-<span class='kw'>mod</span> <span class='ident'>two_operators</span>;
-<span class='kw'>mod</span> <span class='ident'>module</span>;
-<span class='kw'>mod</span> <span class='ident'>identity</span>;
-<span class='kw'>mod</span> <span class='ident'>operator</span>;
-<span class='kw'>mod</span> <span class='ident'>real</span>;
-<span class='kw'>mod</span> <span class='ident'>lattice</span>;
-<span class='kw'>mod</span> <span class='ident'>subset</span>;
-<span class='kw'>mod</span> <span class='ident'>specialized</span>;
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>wrapper</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">mod</span> <span class="ident">one_operator</span>;
+<span class="kw">mod</span> <span class="ident">two_operators</span>;
+<span class="kw">mod</span> <span class="ident">module</span>;
+<span class="kw">mod</span> <span class="ident">identity</span>;
+<span class="kw">mod</span> <span class="ident">operator</span>;
+<span class="kw">mod</span> <span class="ident">real</span>;
+<span class="kw">mod</span> <span class="ident">lattice</span>;
+<span class="kw">mod</span> <span class="ident">subset</span>;
+<span class="kw">mod</span> <span class="ident">specialized</span>;
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">wrapper</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

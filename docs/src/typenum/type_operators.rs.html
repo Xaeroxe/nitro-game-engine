@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -327,290 +327,290 @@
 <span id="282">282</span>
 <span id="283">283</span>
 <span id="284">284</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! This module provides useful **type operators** that are not defined in `core`.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! This module provides useful **type operators** that are not defined in `core`.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!</span>
 
-<span class='doccomment'>/// A **type operator** that ensures that `Rhs` is the same as `Self`, it is mainly useful</span>
-<span class='doccomment'>/// for writing macros that can take arbitrary binary or unary operators.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// `Same` is implemented generically for all types; it should never need to be implemented</span>
-<span class='doccomment'>/// for anything else.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Note that Rust lazily evaluates types, so this will only fail for two different types if</span>
-<span class='doccomment'>/// the `Output` is used.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Example</span>
-<span class='doccomment'>/// ```rust</span>
-<span class='doccomment'>/// use typenum::{Same, U4, U5, Unsigned};</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// assert_eq!(&lt;U5 as Same&lt;U5&gt;&gt;::Output::to_u32(), 5);</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// // Only an error if we use it:</span>
-<span class='doccomment'>/// type Undefined = &lt;U5 as Same&lt;U4&gt;&gt;::Output;</span>
-<span class='doccomment'>/// // Compiler error:</span>
-<span class='doccomment'>/// // Undefined::to_u32();</span>
-<span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Same</span><span class='op'>&lt;</span><span class='ident'>Rhs</span> <span class='op'>=</span> <span class='self'>Self</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Should always be `Self`</span>
-    <span class='kw'>type</span> <span class='ident'>Output</span>;
+<span class="doccomment">/// A **type operator** that ensures that `Rhs` is the same as `Self`, it is mainly useful</span>
+<span class="doccomment">/// for writing macros that can take arbitrary binary or unary operators.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// `Same` is implemented generically for all types; it should never need to be implemented</span>
+<span class="doccomment">/// for anything else.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Note that Rust lazily evaluates types, so this will only fail for two different types if</span>
+<span class="doccomment">/// the `Output` is used.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Example</span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// use typenum::{Same, U4, U5, Unsigned};</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// assert_eq!(&lt;U5 as Same&lt;U5&gt;&gt;::Output::to_u32(), 5);</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// // Only an error if we use it:</span>
+<span class="doccomment">/// type Undefined = &lt;U5 as Same&lt;U4&gt;&gt;::Output;</span>
+<span class="doccomment">/// // Compiler error:</span>
+<span class="doccomment">/// // Undefined::to_u32();</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Same</span><span class="op">&lt;</span><span class="ident">Rhs</span> <span class="op">=</span> <span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Should always be `Self`</span>
+    <span class="kw">type</span> <span class="ident">Output</span>;
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Same</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>T</span> {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>T</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Same</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">T</span> {
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">T</span>;
 }
 
-<span class='doccomment'>/// A **type operator** that provides exponentiation by repeated squaring.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Example</span>
-<span class='doccomment'>/// ```rust</span>
-<span class='doccomment'>/// use typenum::{Pow, N3, P3, Integer};</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// assert_eq!(&lt;N3 as Pow&lt;P3&gt;&gt;::Output::to_i32(), -27);</span>
-<span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Pow</span><span class='op'>&lt;</span><span class='ident'>Exp</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The result of the exponentiation.</span>
-    <span class='kw'>type</span> <span class='ident'>Output</span>;
-    <span class='doccomment'>/// This function isn&#39;t used in this crate, but may be useful for others.</span>
-    <span class='doccomment'>/// It is implemented for primitives.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Example</span>
-    <span class='doccomment'>/// ```rust</span>
-    <span class='doccomment'>/// use typenum::{Pow, U3};</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let a = 7u32.powi(U3::new());</span>
-    <span class='doccomment'>/// let b = 7u32.pow(3);</span>
-    <span class='doccomment'>/// assert_eq!(a, b);</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let x = 3.0.powi(U3::new());</span>
-    <span class='doccomment'>/// let y = 27.0;</span>
-    <span class='doccomment'>/// assert_eq!(x, y);</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>fn</span> <span class='ident'>powi</span>(<span class='self'>self</span>, <span class='ident'>exp</span>: <span class='ident'>Exp</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span>;
+<span class="doccomment">/// A **type operator** that provides exponentiation by repeated squaring.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Example</span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// use typenum::{Pow, N3, P3, Integer};</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// assert_eq!(&lt;N3 as Pow&lt;P3&gt;&gt;::Output::to_i32(), -27);</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Pow</span><span class="op">&lt;</span><span class="ident">Exp</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The result of the exponentiation.</span>
+    <span class="kw">type</span> <span class="ident">Output</span>;
+    <span class="doccomment">/// This function isn&#39;t used in this crate, but may be useful for others.</span>
+    <span class="doccomment">/// It is implemented for primitives.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// use typenum::{Pow, U3};</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let a = 7u32.powi(U3::new());</span>
+    <span class="doccomment">/// let b = 7u32.pow(3);</span>
+    <span class="doccomment">/// assert_eq!(a, b);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let x = 3.0.powi(U3::new());</span>
+    <span class="doccomment">/// let y = 27.0;</span>
+    <span class="doccomment">/// assert_eq!(x, y);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="ident">Exp</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span>;
 }
 
-<span class='kw'>use</span> {<span class='ident'>Unsigned</span>, <span class='ident'>Bit</span>, <span class='ident'>UInt</span>, <span class='ident'>PInt</span>, <span class='ident'>NonZero</span>, <span class='ident'>UTerm</span>, <span class='ident'>Z0</span>};
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>impl_pow_f</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>: <span class='ident'>ty</span>) <span class='op'>=&gt;</span> (
-        <span class='kw'>impl</span> <span class='ident'>Pow</span><span class='op'>&lt;</span><span class='ident'>UTerm</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span> {
-            <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>;
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>powi</span>(<span class='self'>self</span>, _: <span class='ident'>UTerm</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-                <span class='number'>1.0</span>
+<span class="kw">use</span> {<span class="ident">Unsigned</span>, <span class="ident">Bit</span>, <span class="ident">UInt</span>, <span class="ident">PInt</span>, <span class="ident">NonZero</span>, <span class="ident">UTerm</span>, <span class="ident">Z0</span>};
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_pow_f</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>: <span class="ident">ty</span>) <span class="op">=&gt;</span> (
+        <span class="kw">impl</span> <span class="ident">Pow</span><span class="op">&lt;</span><span class="ident">UTerm</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
+            <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>;
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, _: <span class="ident">UTerm</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+                <span class="number">1.0</span>
             }
         }
 
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>U</span>: <span class='ident'>Unsigned</span>, <span class='ident'>B</span>: <span class='ident'>Bit</span><span class='op'>&gt;</span> <span class='ident'>Pow</span><span class='op'>&lt;</span><span class='ident'>UInt</span><span class='op'>&lt;</span><span class='ident'>U</span>, <span class='ident'>B</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span> {
-            <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>;
-            <span class='comment'>// powi is unstable in core, so we have to write this function ourselves.</span>
-            <span class='comment'>// copied from num::pow::pow</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>powi</span>(<span class='self'>self</span>, _: <span class='ident'>UInt</span><span class='op'>&lt;</span><span class='ident'>U</span>, <span class='ident'>B</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>exp</span> <span class='op'>=</span> <span class='op'>&lt;</span><span class='ident'>UInt</span><span class='op'>&lt;</span><span class='ident'>U</span>, <span class='ident'>B</span><span class='op'>&gt;</span> <span class='kw'>as</span> <span class='ident'>Unsigned</span><span class='op'>&gt;</span>::<span class='ident'>to_u32</span>();
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>base</span> <span class='op'>=</span> <span class='self'>self</span>;
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">U</span>: <span class="ident">Unsigned</span>, <span class="ident">B</span>: <span class="ident">Bit</span><span class="op">&gt;</span> <span class="ident">Pow</span><span class="op">&lt;</span><span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">U</span>, <span class="ident">B</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
+            <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>;
+            <span class="comment">// powi is unstable in core, so we have to write this function ourselves.</span>
+            <span class="comment">// copied from num::pow::pow</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, _: <span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">U</span>, <span class="ident">B</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">exp</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">U</span>, <span class="ident">B</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">Unsigned</span><span class="op">&gt;</span>::<span class="ident">to_u32</span>();
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">base</span> <span class="op">=</span> <span class="self">self</span>;
 
-                <span class='kw'>if</span> <span class='ident'>exp</span> <span class='op'>==</span> <span class='number'>0</span> { <span class='kw'>return</span> <span class='number'>1.0</span> }
+                <span class="kw">if</span> <span class="ident">exp</span> <span class="op">==</span> <span class="number">0</span> { <span class="kw">return</span> <span class="number">1.0</span> }
 
-                <span class='kw'>while</span> <span class='ident'>exp</span> <span class='op'>&amp;</span> <span class='number'>1</span> <span class='op'>==</span> <span class='number'>0</span> {
-                    <span class='ident'>base</span> <span class='op'>*=</span> <span class='ident'>base</span>;
-                    <span class='ident'>exp</span> <span class='op'>&gt;&gt;=</span> <span class='number'>1</span>;
+                <span class="kw">while</span> <span class="ident">exp</span> <span class="op">&amp;</span> <span class="number">1</span> <span class="op">==</span> <span class="number">0</span> {
+                    <span class="ident">base</span> <span class="op">*=</span> <span class="ident">base</span>;
+                    <span class="ident">exp</span> <span class="op">&gt;&gt;=</span> <span class="number">1</span>;
                 }
-                <span class='kw'>if</span> <span class='ident'>exp</span> <span class='op'>==</span> <span class='number'>1</span> { <span class='kw'>return</span> <span class='ident'>base</span> }
+                <span class="kw">if</span> <span class="ident">exp</span> <span class="op">==</span> <span class="number">1</span> { <span class="kw">return</span> <span class="ident">base</span> }
 
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>acc</span> <span class='op'>=</span> <span class='ident'>base</span>.<span class='ident'>clone</span>();
-                <span class='kw'>while</span> <span class='ident'>exp</span> <span class='op'>&gt;</span> <span class='number'>1</span> {
-                    <span class='ident'>exp</span> <span class='op'>&gt;&gt;=</span> <span class='number'>1</span>;
-                    <span class='ident'>base</span> <span class='op'>*=</span> <span class='ident'>base</span>;
-                    <span class='kw'>if</span> <span class='ident'>exp</span> <span class='op'>&amp;</span> <span class='number'>1</span> <span class='op'>==</span> <span class='number'>1</span> {
-                        <span class='ident'>acc</span> <span class='op'>*=</span> <span class='ident'>base</span>.<span class='ident'>clone</span>();
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">acc</span> <span class="op">=</span> <span class="ident">base</span>.<span class="ident">clone</span>();
+                <span class="kw">while</span> <span class="ident">exp</span> <span class="op">&gt;</span> <span class="number">1</span> {
+                    <span class="ident">exp</span> <span class="op">&gt;&gt;=</span> <span class="number">1</span>;
+                    <span class="ident">base</span> <span class="op">*=</span> <span class="ident">base</span>;
+                    <span class="kw">if</span> <span class="ident">exp</span> <span class="op">&amp;</span> <span class="number">1</span> <span class="op">==</span> <span class="number">1</span> {
+                        <span class="ident">acc</span> <span class="op">*=</span> <span class="ident">base</span>.<span class="ident">clone</span>();
                     }
                 }
-                <span class='ident'>acc</span>
+                <span class="ident">acc</span>
             }
         }
 
-        <span class='kw'>impl</span> <span class='ident'>Pow</span><span class='op'>&lt;</span><span class='ident'>Z0</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span> {
-            <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>;
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>powi</span>(<span class='self'>self</span>, _: <span class='ident'>Z0</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-                <span class='number'>1.0</span>
+        <span class="kw">impl</span> <span class="ident">Pow</span><span class="op">&lt;</span><span class="ident">Z0</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
+            <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>;
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, _: <span class="ident">Z0</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+                <span class="number">1.0</span>
             }
         }
 
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>U</span>: <span class='ident'>Unsigned</span> <span class='op'>+</span> <span class='ident'>NonZero</span><span class='op'>&gt;</span> <span class='ident'>Pow</span><span class='op'>&lt;</span><span class='ident'>PInt</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span> {
-            <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>;
-            <span class='comment'>// powi is unstable in core, so we have to write this function ourselves.</span>
-            <span class='comment'>// copied from num::pow::pow</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>powi</span>(<span class='self'>self</span>, _: <span class='ident'>PInt</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>exp</span> <span class='op'>=</span> <span class='ident'>U</span>::<span class='ident'>to_u32</span>();
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>base</span> <span class='op'>=</span> <span class='self'>self</span>;
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">U</span>: <span class="ident">Unsigned</span> <span class="op">+</span> <span class="ident">NonZero</span><span class="op">&gt;</span> <span class="ident">Pow</span><span class="op">&lt;</span><span class="ident">PInt</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
+            <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>;
+            <span class="comment">// powi is unstable in core, so we have to write this function ourselves.</span>
+            <span class="comment">// copied from num::pow::pow</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, _: <span class="ident">PInt</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">exp</span> <span class="op">=</span> <span class="ident">U</span>::<span class="ident">to_u32</span>();
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">base</span> <span class="op">=</span> <span class="self">self</span>;
 
-                <span class='kw'>if</span> <span class='ident'>exp</span> <span class='op'>==</span> <span class='number'>0</span> { <span class='kw'>return</span> <span class='number'>1.0</span> }
+                <span class="kw">if</span> <span class="ident">exp</span> <span class="op">==</span> <span class="number">0</span> { <span class="kw">return</span> <span class="number">1.0</span> }
 
-                <span class='kw'>while</span> <span class='ident'>exp</span> <span class='op'>&amp;</span> <span class='number'>1</span> <span class='op'>==</span> <span class='number'>0</span> {
-                    <span class='ident'>base</span> <span class='op'>*=</span> <span class='ident'>base</span>;
-                    <span class='ident'>exp</span> <span class='op'>&gt;&gt;=</span> <span class='number'>1</span>;
+                <span class="kw">while</span> <span class="ident">exp</span> <span class="op">&amp;</span> <span class="number">1</span> <span class="op">==</span> <span class="number">0</span> {
+                    <span class="ident">base</span> <span class="op">*=</span> <span class="ident">base</span>;
+                    <span class="ident">exp</span> <span class="op">&gt;&gt;=</span> <span class="number">1</span>;
                 }
-                <span class='kw'>if</span> <span class='ident'>exp</span> <span class='op'>==</span> <span class='number'>1</span> { <span class='kw'>return</span> <span class='ident'>base</span> }
+                <span class="kw">if</span> <span class="ident">exp</span> <span class="op">==</span> <span class="number">1</span> { <span class="kw">return</span> <span class="ident">base</span> }
 
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>acc</span> <span class='op'>=</span> <span class='ident'>base</span>.<span class='ident'>clone</span>();
-                <span class='kw'>while</span> <span class='ident'>exp</span> <span class='op'>&gt;</span> <span class='number'>1</span> {
-                    <span class='ident'>exp</span> <span class='op'>&gt;&gt;=</span> <span class='number'>1</span>;
-                    <span class='ident'>base</span> <span class='op'>*=</span> <span class='ident'>base</span>;
-                    <span class='kw'>if</span> <span class='ident'>exp</span> <span class='op'>&amp;</span> <span class='number'>1</span> <span class='op'>==</span> <span class='number'>1</span> {
-                        <span class='ident'>acc</span> <span class='op'>*=</span> <span class='ident'>base</span>.<span class='ident'>clone</span>();
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">acc</span> <span class="op">=</span> <span class="ident">base</span>.<span class="ident">clone</span>();
+                <span class="kw">while</span> <span class="ident">exp</span> <span class="op">&gt;</span> <span class="number">1</span> {
+                    <span class="ident">exp</span> <span class="op">&gt;&gt;=</span> <span class="number">1</span>;
+                    <span class="ident">base</span> <span class="op">*=</span> <span class="ident">base</span>;
+                    <span class="kw">if</span> <span class="ident">exp</span> <span class="op">&amp;</span> <span class="number">1</span> <span class="op">==</span> <span class="number">1</span> {
+                        <span class="ident">acc</span> <span class="op">*=</span> <span class="ident">base</span>.<span class="ident">clone</span>();
                     }
                 }
-                <span class='ident'>acc</span>
+                <span class="ident">acc</span>
             }
         }
     );
 }
 
-<span class='macro'>impl_pow_f</span><span class='macro'>!</span>(<span class='ident'>f32</span>);
-<span class='macro'>impl_pow_f</span><span class='macro'>!</span>(<span class='ident'>f64</span>);
+<span class="macro">impl_pow_f</span><span class="macro">!</span>(<span class="ident">f32</span>);
+<span class="macro">impl_pow_f</span><span class="macro">!</span>(<span class="ident">f64</span>);
 
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>impl_pow_i</span> {
-    () <span class='op'>=&gt;</span> ();
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>: <span class='ident'>ty</span> $(, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tail</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>) <span class='op'>=&gt;</span> (
-        <span class='kw'>impl</span> <span class='ident'>Pow</span><span class='op'>&lt;</span><span class='ident'>UTerm</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span> {
-            <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>;
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>powi</span>(<span class='self'>self</span>, _: <span class='ident'>UTerm</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-                <span class='number'>1</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_pow_i</span> {
+    () <span class="op">=&gt;</span> ();
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>: <span class="ident">ty</span> $(, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tail</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>) <span class="op">=&gt;</span> (
+        <span class="kw">impl</span> <span class="ident">Pow</span><span class="op">&lt;</span><span class="ident">UTerm</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
+            <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>;
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, _: <span class="ident">UTerm</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+                <span class="number">1</span>
             }
         }
 
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>U</span>: <span class='ident'>Unsigned</span>, <span class='ident'>B</span>: <span class='ident'>Bit</span><span class='op'>&gt;</span> <span class='ident'>Pow</span><span class='op'>&lt;</span><span class='ident'>UInt</span><span class='op'>&lt;</span><span class='ident'>U</span>, <span class='ident'>B</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span> {
-            <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>;
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>powi</span>(<span class='self'>self</span>, _: <span class='ident'>UInt</span><span class='op'>&lt;</span><span class='ident'>U</span>, <span class='ident'>B</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-                <span class='self'>self</span>.<span class='ident'>pow</span>(<span class='op'>&lt;</span><span class='ident'>UInt</span><span class='op'>&lt;</span><span class='ident'>U</span>, <span class='ident'>B</span><span class='op'>&gt;</span> <span class='kw'>as</span> <span class='ident'>Unsigned</span><span class='op'>&gt;</span>::<span class='ident'>to_u32</span>())
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">U</span>: <span class="ident">Unsigned</span>, <span class="ident">B</span>: <span class="ident">Bit</span><span class="op">&gt;</span> <span class="ident">Pow</span><span class="op">&lt;</span><span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">U</span>, <span class="ident">B</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
+            <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>;
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, _: <span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">U</span>, <span class="ident">B</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+                <span class="self">self</span>.<span class="ident">pow</span>(<span class="op">&lt;</span><span class="ident">UInt</span><span class="op">&lt;</span><span class="ident">U</span>, <span class="ident">B</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">Unsigned</span><span class="op">&gt;</span>::<span class="ident">to_u32</span>())
             }
         }
 
-        <span class='kw'>impl</span> <span class='ident'>Pow</span><span class='op'>&lt;</span><span class='ident'>Z0</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span> {
-            <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>;
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>powi</span>(<span class='self'>self</span>, _: <span class='ident'>Z0</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-                <span class='number'>1</span>
+        <span class="kw">impl</span> <span class="ident">Pow</span><span class="op">&lt;</span><span class="ident">Z0</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
+            <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>;
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, _: <span class="ident">Z0</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+                <span class="number">1</span>
             }
         }
 
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>U</span>: <span class='ident'>Unsigned</span> <span class='op'>+</span> <span class='ident'>NonZero</span><span class='op'>&gt;</span> <span class='ident'>Pow</span><span class='op'>&lt;</span><span class='ident'>PInt</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span> {
-            <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>;
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>powi</span>(<span class='self'>self</span>, _: <span class='ident'>PInt</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-                <span class='self'>self</span>.<span class='ident'>pow</span>(<span class='ident'>U</span>::<span class='ident'>to_u32</span>())
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">U</span>: <span class="ident">Unsigned</span> <span class="op">+</span> <span class="ident">NonZero</span><span class="op">&gt;</span> <span class="ident">Pow</span><span class="op">&lt;</span><span class="ident">PInt</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
+            <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>;
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, _: <span class="ident">PInt</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+                <span class="self">self</span>.<span class="ident">pow</span>(<span class="ident">U</span>::<span class="ident">to_u32</span>())
             }
         }
 
-        <span class='macro'>impl_pow_i</span><span class='macro'>!</span>($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tail</span>),<span class='kw-2'>*</span>);
+        <span class="macro">impl_pow_i</span><span class="macro">!</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tail</span>),<span class="kw-2">*</span>);
     );
 }
 
-<span class='macro'>impl_pow_i</span><span class='macro'>!</span>(<span class='ident'>u8</span>, <span class='ident'>u16</span>, <span class='ident'>u32</span>, <span class='ident'>u64</span>, <span class='ident'>usize</span>, <span class='ident'>i8</span>, <span class='ident'>i16</span>, <span class='ident'>i32</span>, <span class='ident'>i64</span>, <span class='ident'>isize</span>);
+<span class="macro">impl_pow_i</span><span class="macro">!</span>(<span class="ident">u8</span>, <span class="ident">u16</span>, <span class="ident">u32</span>, <span class="ident">u64</span>, <span class="ident">usize</span>, <span class="ident">i8</span>, <span class="ident">i16</span>, <span class="ident">i32</span>, <span class="ident">i64</span>, <span class="ident">isize</span>);
 
-<span class='attribute'>#[<span class='ident'>test</span>]</span>
-<span class='kw'>fn</span> <span class='ident'>pow_test</span>() {
-    <span class='kw'>use</span> <span class='ident'>consts</span>::<span class='kw-2'>*</span>;
-    <span class='kw'>let</span> <span class='ident'>z0</span> <span class='op'>=</span> <span class='ident'>Z0</span>::<span class='ident'>new</span>();
-    <span class='kw'>let</span> <span class='ident'>p3</span> <span class='op'>=</span> <span class='ident'>P3</span>::<span class='ident'>new</span>();
+<span class="attribute">#[<span class="ident">test</span>]</span>
+<span class="kw">fn</span> <span class="ident">pow_test</span>() {
+    <span class="kw">use</span> <span class="ident">consts</span>::<span class="kw-2">*</span>;
+    <span class="kw">let</span> <span class="ident">z0</span> <span class="op">=</span> <span class="ident">Z0</span>::<span class="ident">new</span>();
+    <span class="kw">let</span> <span class="ident">p3</span> <span class="op">=</span> <span class="ident">P3</span>::<span class="ident">new</span>();
 
-    <span class='kw'>let</span> <span class='ident'>u0</span> <span class='op'>=</span> <span class='ident'>U0</span>::<span class='ident'>new</span>();
-    <span class='kw'>let</span> <span class='ident'>u3</span> <span class='op'>=</span> <span class='ident'>U3</span>::<span class='ident'>new</span>();
+    <span class="kw">let</span> <span class="ident">u0</span> <span class="op">=</span> <span class="ident">U0</span>::<span class="ident">new</span>();
+    <span class="kw">let</span> <span class="ident">u3</span> <span class="op">=</span> <span class="ident">U3</span>::<span class="ident">new</span>();
 
-    <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>check</span> {
-        (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>:<span class='ident'>ident</span>) <span class='op'>=&gt;</span> (
-            <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>.<span class='ident'>powi</span>(<span class='ident'>z0</span>), <span class='number'>1</span>);
-            <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>.<span class='ident'>powi</span>(<span class='ident'>u0</span>), <span class='number'>1</span>);
+    <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">check</span> {
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>:<span class="ident">ident</span>) <span class="op">=&gt;</span> (
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>.<span class="ident">powi</span>(<span class="ident">z0</span>), <span class="number">1</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>.<span class="ident">powi</span>(<span class="ident">u0</span>), <span class="number">1</span>);
 
-            <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>.<span class='ident'>powi</span>(<span class='ident'>p3</span>), <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span><span class='kw-2'>*</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span><span class='kw-2'>*</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>);
-            <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>.<span class='ident'>powi</span>(<span class='ident'>u3</span>), <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span><span class='kw-2'>*</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span><span class='kw-2'>*</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>.<span class="ident">powi</span>(<span class="ident">p3</span>), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span><span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span><span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>);
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>.<span class="ident">powi</span>(<span class="ident">u3</span>), <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span><span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span><span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>);
         );
-        (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>:<span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>f</span>:<span class='ident'>ident</span>) <span class='op'>=&gt;</span> (
-            <span class='macro'>assert</span><span class='macro'>!</span>((<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>f</span> <span class='kw'>as</span> <span class='ident'>Pow</span><span class='op'>&lt;</span><span class='ident'>Z0</span><span class='op'>&gt;&gt;</span>::<span class='ident'>powi</span>(<span class='kw-2'>*</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>, <span class='ident'>z0</span>) <span class='op'>-</span> <span class='number'>1.0</span>).<span class='ident'>abs</span>() <span class='op'>&lt;</span> ::<span class='ident'>core</span>::<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>f</span>::<span class='ident'>EPSILON</span>);
-            <span class='macro'>assert</span><span class='macro'>!</span>((<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>f</span> <span class='kw'>as</span> <span class='ident'>Pow</span><span class='op'>&lt;</span><span class='ident'>U0</span><span class='op'>&gt;&gt;</span>::<span class='ident'>powi</span>(<span class='kw-2'>*</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>, <span class='ident'>u0</span>) <span class='op'>-</span> <span class='number'>1.0</span>).<span class='ident'>abs</span>() <span class='op'>&lt;</span> ::<span class='ident'>core</span>::<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>f</span>::<span class='ident'>EPSILON</span>);
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>:<span class="ident">ident</span>) <span class="op">=&gt;</span> (
+            <span class="macro">assert</span><span class="macro">!</span>((<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span> <span class="kw">as</span> <span class="ident">Pow</span><span class="op">&lt;</span><span class="ident">Z0</span><span class="op">&gt;&gt;</span>::<span class="ident">powi</span>(<span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>, <span class="ident">z0</span>) <span class="op">-</span> <span class="number">1.0</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> ::<span class="ident">core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>::<span class="ident">EPSILON</span>);
+            <span class="macro">assert</span><span class="macro">!</span>((<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span> <span class="kw">as</span> <span class="ident">Pow</span><span class="op">&lt;</span><span class="ident">U0</span><span class="op">&gt;&gt;</span>::<span class="ident">powi</span>(<span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>, <span class="ident">u0</span>) <span class="op">-</span> <span class="number">1.0</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> ::<span class="ident">core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>::<span class="ident">EPSILON</span>);
 
-            <span class='macro'>assert</span><span class='macro'>!</span>((<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>f</span> <span class='kw'>as</span> <span class='ident'>Pow</span><span class='op'>&lt;</span><span class='ident'>P3</span><span class='op'>&gt;&gt;</span>::<span class='ident'>powi</span>(<span class='kw-2'>*</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>, <span class='ident'>p3</span>) <span class='op'>-</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span><span class='kw-2'>*</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span><span class='kw-2'>*</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>).<span class='ident'>abs</span>() <span class='op'>&lt;</span> ::<span class='ident'>core</span>::<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>f</span>::<span class='ident'>EPSILON</span>);
-            <span class='macro'>assert</span><span class='macro'>!</span>((<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>f</span> <span class='kw'>as</span> <span class='ident'>Pow</span><span class='op'>&lt;</span><span class='ident'>U3</span><span class='op'>&gt;&gt;</span>::<span class='ident'>powi</span>(<span class='kw-2'>*</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>, <span class='ident'>u3</span>) <span class='op'>-</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span><span class='kw-2'>*</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span><span class='kw-2'>*</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>x</span>).<span class='ident'>abs</span>() <span class='op'>&lt;</span> ::<span class='ident'>core</span>::<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>f</span>::<span class='ident'>EPSILON</span>);
+            <span class="macro">assert</span><span class="macro">!</span>((<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span> <span class="kw">as</span> <span class="ident">Pow</span><span class="op">&lt;</span><span class="ident">P3</span><span class="op">&gt;&gt;</span>::<span class="ident">powi</span>(<span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>, <span class="ident">p3</span>) <span class="op">-</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span><span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span><span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> ::<span class="ident">core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>::<span class="ident">EPSILON</span>);
+            <span class="macro">assert</span><span class="macro">!</span>((<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span> <span class="kw">as</span> <span class="ident">Pow</span><span class="op">&lt;</span><span class="ident">U3</span><span class="op">&gt;&gt;</span>::<span class="ident">powi</span>(<span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>, <span class="ident">u3</span>) <span class="op">-</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span><span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span><span class="kw-2">*</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">x</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> ::<span class="ident">core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">f</span>::<span class="ident">EPSILON</span>);
         );
     }
 
-    <span class='kw'>for</span> <span class='ident'>x</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span>[<span class='number'>0i8</span>, <span class='op'>-</span><span class='number'>3</span>, <span class='number'>2</span>] {
-        <span class='macro'>check</span><span class='macro'>!</span>(<span class='ident'>x</span>);
+    <span class="kw">for</span> <span class="ident">x</span> <span class="kw">in</span> <span class="kw-2">&amp;</span>[<span class="number">0i8</span>, <span class="op">-</span><span class="number">3</span>, <span class="number">2</span>] {
+        <span class="macro">check</span><span class="macro">!</span>(<span class="ident">x</span>);
     }
-    <span class='kw'>for</span> <span class='ident'>x</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span>[<span class='number'>0u8</span>, <span class='number'>1</span>, <span class='number'>5</span>] {
-        <span class='macro'>check</span><span class='macro'>!</span>(<span class='ident'>x</span>);
+    <span class="kw">for</span> <span class="ident">x</span> <span class="kw">in</span> <span class="kw-2">&amp;</span>[<span class="number">0u8</span>, <span class="number">1</span>, <span class="number">5</span>] {
+        <span class="macro">check</span><span class="macro">!</span>(<span class="ident">x</span>);
     }
-    <span class='kw'>for</span> <span class='ident'>x</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span>[<span class='number'>0usize</span>, <span class='number'>1</span>, <span class='number'>5</span>, <span class='number'>40</span>] {
-        <span class='macro'>check</span><span class='macro'>!</span>(<span class='ident'>x</span>);
+    <span class="kw">for</span> <span class="ident">x</span> <span class="kw">in</span> <span class="kw-2">&amp;</span>[<span class="number">0usize</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">40</span>] {
+        <span class="macro">check</span><span class="macro">!</span>(<span class="ident">x</span>);
     }
-    <span class='kw'>for</span> <span class='ident'>x</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span>[<span class='number'>0isize</span>, <span class='number'>1</span>, <span class='number'>2</span>, <span class='op'>-</span><span class='number'>30</span>, <span class='op'>-</span><span class='number'>22</span>, <span class='number'>48</span>] {
-        <span class='macro'>check</span><span class='macro'>!</span>(<span class='ident'>x</span>);
+    <span class="kw">for</span> <span class="ident">x</span> <span class="kw">in</span> <span class="kw-2">&amp;</span>[<span class="number">0isize</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="op">-</span><span class="number">30</span>, <span class="op">-</span><span class="number">22</span>, <span class="number">48</span>] {
+        <span class="macro">check</span><span class="macro">!</span>(<span class="ident">x</span>);
     }
-    <span class='kw'>for</span> <span class='ident'>x</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span>[<span class='number'>0.0f32</span>, <span class='number'>2.2</span>, <span class='op'>-</span><span class='number'>3.5</span>, <span class='number'>378.223</span>] {
-        <span class='macro'>check</span><span class='macro'>!</span>(<span class='ident'>x</span>, <span class='ident'>f32</span>);
+    <span class="kw">for</span> <span class="ident">x</span> <span class="kw">in</span> <span class="kw-2">&amp;</span>[<span class="number">0.0f32</span>, <span class="number">2.2</span>, <span class="op">-</span><span class="number">3.5</span>, <span class="number">378.223</span>] {
+        <span class="macro">check</span><span class="macro">!</span>(<span class="ident">x</span>, <span class="ident">f32</span>);
     }
-    <span class='kw'>for</span> <span class='ident'>x</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span>[<span class='number'>0.0f64</span>, <span class='number'>2.2</span>, <span class='op'>-</span><span class='number'>3.5</span>, <span class='op'>-</span><span class='number'>2387.2</span>, <span class='number'>234.22</span>] {
-        <span class='macro'>check</span><span class='macro'>!</span>(<span class='ident'>x</span>, <span class='ident'>f64</span>);
+    <span class="kw">for</span> <span class="ident">x</span> <span class="kw">in</span> <span class="kw-2">&amp;</span>[<span class="number">0.0f64</span>, <span class="number">2.2</span>, <span class="op">-</span><span class="number">3.5</span>, <span class="op">-</span><span class="number">2387.2</span>, <span class="number">234.22</span>] {
+        <span class="macro">check</span><span class="macro">!</span>(<span class="ident">x</span>, <span class="ident">f64</span>);
     }
 }
 
 
-<span class='doccomment'>/// A **type operator** for comparing `Self` and `Rhs`. It provides a similar functionality to</span>
-<span class='doccomment'>/// the function</span>
-<span class='doccomment'>/// [`core::cmp::Ord::cmp`](https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html#tymethod.cmp)</span>
-<span class='doccomment'>/// but for types.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Example</span>
-<span class='doccomment'>/// ```rust</span>
-<span class='doccomment'>/// use typenum::{Cmp, Ord, Greater, Less, Equal, N3, P2, P5};</span>
-<span class='doccomment'>/// use std::cmp::Ordering;</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// assert_eq!(&lt;P2 as Cmp&lt;N3&gt;&gt;::Output::to_ordering(), Ordering::Greater);</span>
-<span class='doccomment'>/// assert_eq!(&lt;P2 as Cmp&lt;P2&gt;&gt;::Output::to_ordering(), Ordering::Equal);</span>
-<span class='doccomment'>/// assert_eq!(&lt;P2 as Cmp&lt;P5&gt;&gt;::Output::to_ordering(), Ordering::Less);</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Cmp</span><span class='op'>&lt;</span><span class='ident'>Rhs</span> <span class='op'>=</span> <span class='self'>Self</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The result of the comparison. It should only ever be one of `Greater`, `Less`, or `Equal`.</span>
-    <span class='kw'>type</span> <span class='ident'>Output</span>;
+<span class="doccomment">/// A **type operator** for comparing `Self` and `Rhs`. It provides a similar functionality to</span>
+<span class="doccomment">/// the function</span>
+<span class="doccomment">/// [`core::cmp::Ord::cmp`](https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html#tymethod.cmp)</span>
+<span class="doccomment">/// but for types.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Example</span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// use typenum::{Cmp, Ord, Greater, Less, Equal, N3, P2, P5};</span>
+<span class="doccomment">/// use std::cmp::Ordering;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// assert_eq!(&lt;P2 as Cmp&lt;N3&gt;&gt;::Output::to_ordering(), Ordering::Greater);</span>
+<span class="doccomment">/// assert_eq!(&lt;P2 as Cmp&lt;P2&gt;&gt;::Output::to_ordering(), Ordering::Equal);</span>
+<span class="doccomment">/// assert_eq!(&lt;P2 as Cmp&lt;P5&gt;&gt;::Output::to_ordering(), Ordering::Less);</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Cmp</span><span class="op">&lt;</span><span class="ident">Rhs</span> <span class="op">=</span> <span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The result of the comparison. It should only ever be one of `Greater`, `Less`, or `Equal`.</span>
+    <span class="kw">type</span> <span class="ident">Output</span>;
 }
 
-<span class='doccomment'>/// A **type operator** that gives the length of an `Array` or the number of bits in a `UInt`.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Len</span> {
-    <span class='doccomment'>/// The length as a type-level unsigned integer.</span>
-    <span class='kw'>type</span> <span class='ident'>Output</span>: ::<span class='ident'>Unsigned</span>;
-    <span class='doccomment'>/// This function isn&#39;t used in this crate, but may be useful for others.</span>
-    <span class='kw'>fn</span> <span class='ident'>len</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span>;
+<span class="doccomment">/// A **type operator** that gives the length of an `Array` or the number of bits in a `UInt`.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Len</span> {
+    <span class="doccomment">/// The length as a type-level unsigned integer.</span>
+    <span class="kw">type</span> <span class="ident">Output</span>: ::<span class="ident">Unsigned</span>;
+    <span class="doccomment">/// This function isn&#39;t used in this crate, but may be useful for others.</span>
+    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span>;
 }
 
-<span class='doccomment'>/// Division as a partial function. This **type operator** performs division just as `Div`, but is</span>
-<span class='doccomment'>/// only defined when the result is an integer (i.e. there is no remainder).</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>PartialDiv</span><span class='op'>&lt;</span><span class='ident'>Rhs</span> <span class='op'>=</span> <span class='self'>Self</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The type of the result of the division</span>
-    <span class='kw'>type</span> <span class='ident'>Output</span>;
-    <span class='doccomment'>/// Method for performing the division</span>
-    <span class='kw'>fn</span> <span class='ident'>partial_div</span>(<span class='self'>self</span>, _: <span class='ident'>Rhs</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span>;
+<span class="doccomment">/// Division as a partial function. This **type operator** performs division just as `Div`, but is</span>
+<span class="doccomment">/// only defined when the result is an integer (i.e. there is no remainder).</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">PartialDiv</span><span class="op">&lt;</span><span class="ident">Rhs</span> <span class="op">=</span> <span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The type of the result of the division</span>
+    <span class="kw">type</span> <span class="ident">Output</span>;
+    <span class="doccomment">/// Method for performing the division</span>
+    <span class="kw">fn</span> <span class="ident">partial_div</span>(<span class="self">self</span>, _: <span class="ident">Rhs</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span>;
 }
 
 
-<span class='doccomment'>/// A **type operator** that returns the minimum of `Self` and `Rhs`.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Min</span><span class='op'>&lt;</span><span class='ident'>Rhs</span> <span class='op'>=</span> <span class='self'>Self</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The type of the minimum of `Self` and `Rhs`</span>
-    <span class='kw'>type</span> <span class='ident'>Output</span>;
-    <span class='doccomment'>/// Method returning the minimum</span>
-    <span class='kw'>fn</span> <span class='ident'>min</span>(<span class='self'>self</span>, <span class='ident'>rhs</span>: <span class='ident'>Rhs</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span>;
+<span class="doccomment">/// A **type operator** that returns the minimum of `Self` and `Rhs`.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Min</span><span class="op">&lt;</span><span class="ident">Rhs</span> <span class="op">=</span> <span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The type of the minimum of `Self` and `Rhs`</span>
+    <span class="kw">type</span> <span class="ident">Output</span>;
+    <span class="doccomment">/// Method returning the minimum</span>
+    <span class="kw">fn</span> <span class="ident">min</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">Rhs</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span>;
 }
 
-<span class='doccomment'>/// A **type operator** that returns the maximum of `Self` and `Rhs`.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Max</span><span class='op'>&lt;</span><span class='ident'>Rhs</span> <span class='op'>=</span> <span class='self'>Self</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The type of the maximum of `Self` and `Rhs`</span>
-    <span class='kw'>type</span> <span class='ident'>Output</span>;
-    <span class='doccomment'>/// Method returning the maximum</span>
-    <span class='kw'>fn</span> <span class='ident'>max</span>(<span class='self'>self</span>, <span class='ident'>rhs</span>: <span class='ident'>Rhs</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span>;
+<span class="doccomment">/// A **type operator** that returns the maximum of `Self` and `Rhs`.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Max</span><span class="op">&lt;</span><span class="ident">Rhs</span> <span class="op">=</span> <span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The type of the maximum of `Self` and `Rhs`</span>
+    <span class="kw">type</span> <span class="ident">Output</span>;
+    <span class="doccomment">/// Method returning the maximum</span>
+    <span class="kw">fn</span> <span class="ident">max</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="ident">Rhs</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span>;
 }
 </pre>
 </section>

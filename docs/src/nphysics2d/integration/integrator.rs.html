@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -54,17 +54,17 @@
 <span id="9"> 9</span>
 <span id="10">10</span>
 <span id="11">11</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Trait implemented by every integrators.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Trait implemented by every integrators.</span>
 
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::<span class="ident">Real</span>;
 
-<span class='doccomment'>/// Trait implemented by every integrator.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// An integrator is a structure capable of updating a dynamic body position and orientation after a given time-step.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Integrator</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span>, <span class='ident'>O</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Updates the position and orientation of the object `o` after a time step of `dt`.</span>
-    <span class='kw'>fn</span> <span class='ident'>update</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>dt</span>: <span class='ident'>N</span>, <span class='ident'>o</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>O</span>);
+<span class="doccomment">/// Trait implemented by every integrator.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// An integrator is a structure capable of updating a dynamic body position and orientation after a given time-step.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Integrator</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span>, <span class="ident">O</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Updates the position and orientation of the object `o` after a time step of `dt`.</span>
+    <span class="kw">fn</span> <span class="ident">update</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dt</span>: <span class="ident">N</span>, <span class="ident">o</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">O</span>);
 }
 </pre>
 </section>

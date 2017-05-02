@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -453,415 +453,415 @@
 <span id="408">408</span>
 <span id="409">409</span>
 <span id="410">410</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>vec</span>::<span class='ident'>IntoIter</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Isometry</span>};
-<span class='kw'>use</span> <span class='ident'>utils</span>::<span class='ident'>data</span>::<span class='ident'>uid_remap</span>::{<span class='ident'>UidRemap</span>, <span class='ident'>FastKey</span>};
-<span class='kw'>use</span> <span class='ident'>utils</span>::<span class='ident'>data</span>::<span class='ident'>vec_map</span>::<span class='ident'>Values</span>;
-<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>bounding_volume</span>::{<span class='self'>self</span>, <span class='ident'>BoundingVolume</span>, <span class='ident'>AABB</span>};
-<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>shape</span>::<span class='ident'>ShapeHandle</span>;
-<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>query</span>::{<span class='ident'>RayCast</span>, <span class='ident'>Ray</span>, <span class='ident'>RayIntersection</span>, <span class='ident'>PointQuery</span>};
-<span class='kw'>use</span> <span class='ident'>narrow_phase</span>::{<span class='ident'>NarrowPhase</span>, <span class='ident'>DefaultNarrowPhase</span>, <span class='ident'>DefaultContactDispatcher</span>, <span class='ident'>DefaultProximityDispatcher</span>,
-                   <span class='ident'>ContactHandler</span>, <span class='ident'>ContactPairs</span>, <span class='ident'>Contacts</span>, <span class='ident'>ContactSignal</span>, <span class='ident'>ProximityHandler</span>,
-                   <span class='ident'>ProximitySignal</span>, <span class='ident'>ProximityPairs</span>};
-<span class='kw'>use</span> <span class='ident'>broad_phase</span>::{<span class='ident'>BroadPhase</span>, <span class='ident'>DBVTBroadPhase</span>, <span class='ident'>BroadPhasePairFilter</span>, <span class='ident'>BroadPhasePairFilters</span>};
-<span class='kw'>use</span> <span class='ident'>world</span>::{<span class='ident'>CollisionObject</span>, <span class='ident'>GeometricQueryType</span>, <span class='ident'>CollisionGroups</span>, <span class='ident'>CollisionGroupsPairFilter</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">vec</span>::<span class="ident">IntoIter</span>;
+<span class="kw">use</span> <span class="ident">math</span>::{<span class="ident">Point</span>, <span class="ident">Isometry</span>};
+<span class="kw">use</span> <span class="ident">utils</span>::<span class="ident">data</span>::<span class="ident">uid_remap</span>::{<span class="ident">UidRemap</span>, <span class="ident">FastKey</span>};
+<span class="kw">use</span> <span class="ident">utils</span>::<span class="ident">data</span>::<span class="ident">vec_map</span>::<span class="ident">Values</span>;
+<span class="kw">use</span> <span class="ident">geometry</span>::<span class="ident">bounding_volume</span>::{<span class="self">self</span>, <span class="ident">BoundingVolume</span>, <span class="ident">AABB</span>};
+<span class="kw">use</span> <span class="ident">geometry</span>::<span class="ident">shape</span>::<span class="ident">ShapeHandle</span>;
+<span class="kw">use</span> <span class="ident">geometry</span>::<span class="ident">query</span>::{<span class="ident">RayCast</span>, <span class="ident">Ray</span>, <span class="ident">RayIntersection</span>, <span class="ident">PointQuery</span>};
+<span class="kw">use</span> <span class="ident">narrow_phase</span>::{<span class="ident">NarrowPhase</span>, <span class="ident">DefaultNarrowPhase</span>, <span class="ident">DefaultContactDispatcher</span>, <span class="ident">DefaultProximityDispatcher</span>,
+                   <span class="ident">ContactHandler</span>, <span class="ident">ContactPairs</span>, <span class="ident">Contacts</span>, <span class="ident">ContactSignal</span>, <span class="ident">ProximityHandler</span>,
+                   <span class="ident">ProximitySignal</span>, <span class="ident">ProximityPairs</span>};
+<span class="kw">use</span> <span class="ident">broad_phase</span>::{<span class="ident">BroadPhase</span>, <span class="ident">DBVTBroadPhase</span>, <span class="ident">BroadPhasePairFilter</span>, <span class="ident">BroadPhasePairFilters</span>};
+<span class="kw">use</span> <span class="ident">world</span>::{<span class="ident">CollisionObject</span>, <span class="ident">GeometricQueryType</span>, <span class="ident">CollisionGroups</span>, <span class="ident">CollisionGroupsPairFilter</span>};
 
-<span class='doccomment'>/// Type of the narrow phase trait-object used by the collision world.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>NarrowPhaseObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>NarrowPhase</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>;
-<span class='doccomment'>/// Type of the broad phase trait-object used by the collision world.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>BroadPhaseObject</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>BroadPhase</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>, <span class='ident'>FastKey</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>;
+<span class="doccomment">/// Type of the narrow phase trait-object used by the collision world.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">NarrowPhaseObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">NarrowPhase</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>;
+<span class="doccomment">/// Type of the broad phase trait-object used by the collision world.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">BroadPhaseObject</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">BroadPhase</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">AABB</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>, <span class="ident">FastKey</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>;
 
-<span class='doccomment'>/// A world that handles collision objects.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>CollisionWorld</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='ident'>objects</span>:           <span class='ident'>UidRemap</span><span class='op'>&lt;</span><span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>broad_phase</span>:       <span class='ident'>BroadPhaseObject</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
-    <span class='ident'>narrow_phase</span>:      <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>NarrowPhase</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>contact_signal</span>:    <span class='ident'>ContactSignal</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span>,
-    <span class='ident'>proximity_signal</span>:  <span class='ident'>ProximitySignal</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span>,
-    <span class='ident'>pair_filters</span>:      <span class='ident'>BroadPhasePairFilters</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span>,
-    <span class='ident'>pos_to_update</span>:     <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>FastKey</span>, <span class='ident'>M</span>)<span class='op'>&gt;</span>,
-    <span class='ident'>objects_to_remove</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>,
-    <span class='ident'>objects_to_add</span>:    <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>timestamp</span>:         <span class='ident'>usize</span>
-    <span class='comment'>// FIXME: allow modification of the other properties too.</span>
+<span class="doccomment">/// A world that handles collision objects.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CollisionWorld</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="ident">objects</span>:           <span class="ident">UidRemap</span><span class="op">&lt;</span><span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">broad_phase</span>:       <span class="ident">BroadPhaseObject</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>,
+    <span class="ident">narrow_phase</span>:      <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">NarrowPhase</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">contact_signal</span>:    <span class="ident">ContactSignal</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">proximity_signal</span>:  <span class="ident">ProximitySignal</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">pair_filters</span>:      <span class="ident">BroadPhasePairFilters</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">pos_to_update</span>:     <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">FastKey</span>, <span class="ident">M</span>)<span class="op">&gt;</span>,
+    <span class="ident">objects_to_remove</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
+    <span class="ident">objects_to_add</span>:    <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">timestamp</span>:         <span class="ident">usize</span>
+    <span class="comment">// FIXME: allow modification of the other properties too.</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>CollisionWorld</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new collision world.</span>
-    <span class='comment'>// FIXME: use default values for `margin` and allow its modification by the user ?</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>margin</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>, <span class='ident'>small_uids</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>CollisionWorld</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>objects</span>          <span class='op'>=</span> <span class='ident'>UidRemap</span>::<span class='ident'>new</span>(<span class='ident'>small_uids</span>);
-        <span class='kw'>let</span> <span class='ident'>coll_dispatcher</span>  <span class='op'>=</span> <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>DefaultContactDispatcher</span>::<span class='ident'>new</span>());
-        <span class='kw'>let</span> <span class='ident'>prox_dispatcher</span>  <span class='op'>=</span> <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>DefaultProximityDispatcher</span>::<span class='ident'>new</span>());
-        <span class='kw'>let</span> <span class='ident'>broad_phase</span>      <span class='op'>=</span> <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>DBVTBroadPhase</span>::<span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>, <span class='ident'>FastKey</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>margin</span>, <span class='bool-val'>true</span>));
-        <span class='kw'>let</span> <span class='ident'>narrow_phase</span>     <span class='op'>=</span> <span class='ident'>DefaultNarrowPhase</span>::<span class='ident'>new</span>(<span class='ident'>coll_dispatcher</span>, <span class='ident'>prox_dispatcher</span>);
-        <span class='kw'>let</span> <span class='ident'>contact_signal</span>   <span class='op'>=</span> <span class='ident'>ContactSignal</span>::<span class='ident'>new</span>();
-        <span class='kw'>let</span> <span class='ident'>proximity_signal</span> <span class='op'>=</span> <span class='ident'>ProximitySignal</span>::<span class='ident'>new</span>();
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>: <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">CollisionWorld</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new collision world.</span>
+    <span class="comment">// FIXME: use default values for `margin` and allow its modification by the user ?</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">margin</span>: <span class="ident">P</span>::<span class="ident">Real</span>, <span class="ident">small_uids</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">CollisionWorld</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">objects</span>          <span class="op">=</span> <span class="ident">UidRemap</span>::<span class="ident">new</span>(<span class="ident">small_uids</span>);
+        <span class="kw">let</span> <span class="ident">coll_dispatcher</span>  <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">DefaultContactDispatcher</span>::<span class="ident">new</span>());
+        <span class="kw">let</span> <span class="ident">prox_dispatcher</span>  <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">DefaultProximityDispatcher</span>::<span class="ident">new</span>());
+        <span class="kw">let</span> <span class="ident">broad_phase</span>      <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">DBVTBroadPhase</span>::<span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">AABB</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>, <span class="ident">FastKey</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">margin</span>, <span class="bool-val">true</span>));
+        <span class="kw">let</span> <span class="ident">narrow_phase</span>     <span class="op">=</span> <span class="ident">DefaultNarrowPhase</span>::<span class="ident">new</span>(<span class="ident">coll_dispatcher</span>, <span class="ident">prox_dispatcher</span>);
+        <span class="kw">let</span> <span class="ident">contact_signal</span>   <span class="op">=</span> <span class="ident">ContactSignal</span>::<span class="ident">new</span>();
+        <span class="kw">let</span> <span class="ident">proximity_signal</span> <span class="op">=</span> <span class="ident">ProximitySignal</span>::<span class="ident">new</span>();
 
-        <span class='ident'>CollisionWorld</span> {
-            <span class='ident'>contact_signal</span>:    <span class='ident'>contact_signal</span>,
-            <span class='ident'>proximity_signal</span>:  <span class='ident'>proximity_signal</span>,
-            <span class='ident'>objects</span>:           <span class='ident'>objects</span>,
-            <span class='ident'>broad_phase</span>:       <span class='ident'>broad_phase</span>,
-            <span class='ident'>narrow_phase</span>:      <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>narrow_phase</span>),
-            <span class='ident'>pair_filters</span>:      <span class='ident'>BroadPhasePairFilters</span>::<span class='ident'>new</span>(),
-            <span class='ident'>pos_to_update</span>:     <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
-            <span class='ident'>objects_to_remove</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
-            <span class='ident'>objects_to_add</span>:    <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
-            <span class='ident'>timestamp</span>:         <span class='number'>0</span>
+        <span class="ident">CollisionWorld</span> {
+            <span class="ident">contact_signal</span>:    <span class="ident">contact_signal</span>,
+            <span class="ident">proximity_signal</span>:  <span class="ident">proximity_signal</span>,
+            <span class="ident">objects</span>:           <span class="ident">objects</span>,
+            <span class="ident">broad_phase</span>:       <span class="ident">broad_phase</span>,
+            <span class="ident">narrow_phase</span>:      <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">narrow_phase</span>),
+            <span class="ident">pair_filters</span>:      <span class="ident">BroadPhasePairFilters</span>::<span class="ident">new</span>(),
+            <span class="ident">pos_to_update</span>:     <span class="ident">Vec</span>::<span class="ident">new</span>(),
+            <span class="ident">objects_to_remove</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
+            <span class="ident">objects_to_add</span>:    <span class="ident">Vec</span>::<span class="ident">new</span>(),
+            <span class="ident">timestamp</span>:         <span class="number">0</span>
         }
     }
 
-    <span class='doccomment'>/// Adds a collision object to the world.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>deferred_add</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
-               <span class='ident'>uid</span>:              <span class='ident'>usize</span>,
-               <span class='ident'>position</span>:         <span class='ident'>M</span>,
-               <span class='ident'>shape</span>:            <span class='ident'>ShapeHandle</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
-               <span class='ident'>collision_groups</span>: <span class='ident'>CollisionGroups</span>,
-               <span class='ident'>query_type</span>:       <span class='ident'>GeometricQueryType</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;</span>,
-               <span class='ident'>data</span>:             <span class='ident'>T</span>) {
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='self'>self</span>.<span class='ident'>objects</span>.<span class='ident'>contains_key</span>(<span class='ident'>uid</span>), <span class='string'>&quot;Unable to add a collision object with the same uid twice.&quot;</span>);
+    <span class="doccomment">/// Adds a collision object to the world.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">deferred_add</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+               <span class="ident">uid</span>:              <span class="ident">usize</span>,
+               <span class="ident">position</span>:         <span class="ident">M</span>,
+               <span class="ident">shape</span>:            <span class="ident">ShapeHandle</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>,
+               <span class="ident">collision_groups</span>: <span class="ident">CollisionGroups</span>,
+               <span class="ident">query_type</span>:       <span class="ident">GeometricQueryType</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Real</span><span class="op">&gt;</span>,
+               <span class="ident">data</span>:             <span class="ident">T</span>) {
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="self">self</span>.<span class="ident">objects</span>.<span class="ident">contains_key</span>(<span class="ident">uid</span>), <span class="string">&quot;Unable to add a collision object with the same uid twice.&quot;</span>);
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>collision_object</span> <span class='op'>=</span> <span class='ident'>CollisionObject</span>::<span class='ident'>new</span>(<span class='ident'>uid</span>, <span class='ident'>position</span>, <span class='ident'>shape</span>, <span class='ident'>collision_groups</span>, <span class='ident'>query_type</span>, <span class='ident'>data</span>);
-        <span class='ident'>collision_object</span>.<span class='ident'>timestamp</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>timestamp</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">collision_object</span> <span class="op">=</span> <span class="ident">CollisionObject</span>::<span class="ident">new</span>(<span class="ident">uid</span>, <span class="ident">position</span>, <span class="ident">shape</span>, <span class="ident">collision_groups</span>, <span class="ident">query_type</span>, <span class="ident">data</span>);
+        <span class="ident">collision_object</span>.<span class="ident">timestamp</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">timestamp</span>;
 
-        <span class='self'>self</span>.<span class='ident'>objects_to_add</span>.<span class='ident'>push</span>((<span class='ident'>collision_object</span>));
+        <span class="self">self</span>.<span class="ident">objects_to_add</span>.<span class="ident">push</span>((<span class="ident">collision_object</span>));
     }
 
-    <span class='doccomment'>/// Updates the collision world.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This executes the whole collision detection pipeline: the broad phase first, then the</span>
-    <span class='doccomment'>/// narrow phase.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>update</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>perform_position_update</span>();
-        <span class='self'>self</span>.<span class='ident'>perform_additions_removals_and_broad_phase</span>(); <span class='comment'>// this will perform the Broad Phase as well.</span>
-        <span class='self'>self</span>.<span class='ident'>perform_narrow_phase</span>();
+    <span class="doccomment">/// Updates the collision world.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This executes the whole collision detection pipeline: the broad phase first, then the</span>
+    <span class="doccomment">/// narrow phase.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">update</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">perform_position_update</span>();
+        <span class="self">self</span>.<span class="ident">perform_additions_removals_and_broad_phase</span>(); <span class="comment">// this will perform the Broad Phase as well.</span>
+        <span class="self">self</span>.<span class="ident">perform_narrow_phase</span>();
     }
 
-    <span class='doccomment'>/// Marks a collision object for removal from the world during the next update.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>deferred_remove</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>uid</span>: <span class='ident'>usize</span>) {
-        <span class='comment'>// Mark the object to be removed.</span>
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>objects</span>.<span class='ident'>contains_key</span>(<span class='ident'>uid</span>) {
-            <span class='self'>self</span>.<span class='ident'>objects_to_remove</span>.<span class='ident'>push</span>(<span class='ident'>uid</span>);
+    <span class="doccomment">/// Marks a collision object for removal from the world during the next update.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">deferred_remove</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">uid</span>: <span class="ident">usize</span>) {
+        <span class="comment">// Mark the object to be removed.</span>
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">objects</span>.<span class="ident">contains_key</span>(<span class="ident">uid</span>) {
+            <span class="self">self</span>.<span class="ident">objects_to_remove</span>.<span class="ident">push</span>(<span class="ident">uid</span>);
         }
-        <span class='kw'>else</span> {
-            <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Attempting to remove an unknown object. \
+        <span class="kw">else</span> {
+            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Attempting to remove an unknown object. \
                     Did you forgot to call `.update()` after `.deferred_add()`-ing your objects?&quot;</span>);
         }
     }
 
-    <span class='doccomment'>/// Sets the position the collision object attached to the specified object will have during</span>
-    <span class='doccomment'>/// the next update.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>deferred_set_position</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>uid</span>: <span class='ident'>usize</span>, <span class='ident'>pos</span>: <span class='ident'>M</span>) {
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>fk</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>objects</span>.<span class='ident'>get_fast_key</span>(<span class='ident'>uid</span>) {
-            <span class='self'>self</span>.<span class='ident'>pos_to_update</span>.<span class='ident'>push</span>((<span class='ident'>fk</span>, <span class='ident'>pos</span>))
+    <span class="doccomment">/// Sets the position the collision object attached to the specified object will have during</span>
+    <span class="doccomment">/// the next update.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">deferred_set_position</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">uid</span>: <span class="ident">usize</span>, <span class="ident">pos</span>: <span class="ident">M</span>) {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">fk</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">objects</span>.<span class="ident">get_fast_key</span>(<span class="ident">uid</span>) {
+            <span class="self">self</span>.<span class="ident">pos_to_update</span>.<span class="ident">push</span>((<span class="ident">fk</span>, <span class="ident">pos</span>))
         }
-        <span class='kw'>else</span> {
-            <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Attempting to set the position of an unknown object. \
+        <span class="kw">else</span> {
+            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Attempting to set the position of an unknown object. \
                     Did you forgot to call `.update()` after `.deferred_add()`-ing your objects?&quot;</span>);
         }
     }
 
-    <span class='doccomment'>/// Adds a filter that tells if a potential collision pair should be ignored or not.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// The proximity filter returns `false` for a given pair of collision objects if they should</span>
-    <span class='doccomment'>/// be ignored by the narrow phase. Keep in mind that modifying the proximity filter will have</span>
-    <span class='doccomment'>/// a non-trivial overhead during the next update as it will force re-detection of all</span>
-    <span class='doccomment'>/// collision pairs.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_broad_phase_pair_filter</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>filter</span>: <span class='ident'>F</span>)
-        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>BroadPhasePairFilter</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
-        <span class='self'>self</span>.<span class='ident'>pair_filters</span>.<span class='ident'>register_collision_filter</span>(<span class='ident'>name</span>, <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>filter</span>));
-        <span class='self'>self</span>.<span class='ident'>broad_phase</span>.<span class='ident'>deferred_recompute_all_proximities</span>();
+    <span class="doccomment">/// Adds a filter that tells if a potential collision pair should be ignored or not.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// The proximity filter returns `false` for a given pair of collision objects if they should</span>
+    <span class="doccomment">/// be ignored by the narrow phase. Keep in mind that modifying the proximity filter will have</span>
+    <span class="doccomment">/// a non-trivial overhead during the next update as it will force re-detection of all</span>
+    <span class="doccomment">/// collision pairs.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_broad_phase_pair_filter</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">filter</span>: <span class="ident">F</span>)
+        <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">BroadPhasePairFilter</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> {
+        <span class="self">self</span>.<span class="ident">pair_filters</span>.<span class="ident">register_collision_filter</span>(<span class="ident">name</span>, <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">filter</span>));
+        <span class="self">self</span>.<span class="ident">broad_phase</span>.<span class="ident">deferred_recompute_all_proximities</span>();
     }
 
-    <span class='doccomment'>/// Removes the pair filter named `name`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unregister_broad_phase_pair_filter</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>pair_filters</span>.<span class='ident'>unregister_collision_filter</span>(<span class='ident'>name</span>) {
-            <span class='self'>self</span>.<span class='ident'>broad_phase</span>.<span class='ident'>deferred_recompute_all_proximities</span>();
+    <span class="doccomment">/// Removes the pair filter named `name`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unregister_broad_phase_pair_filter</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">pair_filters</span>.<span class="ident">unregister_collision_filter</span>(<span class="ident">name</span>) {
+            <span class="self">self</span>.<span class="ident">broad_phase</span>.<span class="ident">deferred_recompute_all_proximities</span>();
         }
     }
 
-    <span class='doccomment'>/// Registers a handler for contact start/stop events.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_contact_handler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>)
-        <span class='kw'>where</span> <span class='ident'>H</span>: <span class='ident'>ContactHandler</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
-        <span class='self'>self</span>.<span class='ident'>contact_signal</span>.<span class='ident'>register_contact_handler</span>(<span class='ident'>name</span>, <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>handler</span>));
+    <span class="doccomment">/// Registers a handler for contact start/stop events.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_contact_handler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">handler</span>: <span class="ident">H</span>)
+        <span class="kw">where</span> <span class="ident">H</span>: <span class="ident">ContactHandler</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> {
+        <span class="self">self</span>.<span class="ident">contact_signal</span>.<span class="ident">register_contact_handler</span>(<span class="ident">name</span>, <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">handler</span>));
     }
 
-    <span class='doccomment'>/// Unregisters a handler for contact start/stop events.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unregister_contact_handler</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
-        <span class='self'>self</span>.<span class='ident'>contact_signal</span>.<span class='ident'>unregister_contact_handler</span>(<span class='ident'>name</span>);
+    <span class="doccomment">/// Unregisters a handler for contact start/stop events.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unregister_contact_handler</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+        <span class="self">self</span>.<span class="ident">contact_signal</span>.<span class="ident">unregister_contact_handler</span>(<span class="ident">name</span>);
     }
 
-    <span class='doccomment'>/// Registers a handler for proximity status change events.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_proximity_handler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>)
-        <span class='kw'>where</span> <span class='ident'>H</span>: <span class='ident'>ProximityHandler</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
-        <span class='self'>self</span>.<span class='ident'>proximity_signal</span>.<span class='ident'>register_proximity_handler</span>(<span class='ident'>name</span>, <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>handler</span>));
+    <span class="doccomment">/// Registers a handler for proximity status change events.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_proximity_handler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">handler</span>: <span class="ident">H</span>)
+        <span class="kw">where</span> <span class="ident">H</span>: <span class="ident">ProximityHandler</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> {
+        <span class="self">self</span>.<span class="ident">proximity_signal</span>.<span class="ident">register_proximity_handler</span>(<span class="ident">name</span>, <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">handler</span>));
     }
 
-    <span class='doccomment'>/// Unregisters a handler for proximity status change events.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unregister_proximity_handler</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
-        <span class='self'>self</span>.<span class='ident'>proximity_signal</span>.<span class='ident'>unregister_proximity_handler</span>(<span class='ident'>name</span>);
+    <span class="doccomment">/// Unregisters a handler for proximity status change events.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unregister_proximity_handler</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+        <span class="self">self</span>.<span class="ident">proximity_signal</span>.<span class="ident">unregister_proximity_handler</span>(<span class="ident">name</span>);
     }
 
-    <span class='doccomment'>/// Executes the position updates.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>perform_position_update</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='kw'>for</span> <span class='kw-2'>&amp;</span>(<span class='kw-2'>ref</span> <span class='ident'>fk</span>, <span class='kw-2'>ref</span> <span class='ident'>pos</span>) <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>pos_to_update</span>.<span class='ident'>iter</span>() {
-            <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>co</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>objects</span>.<span class='ident'>get_fast_mut</span>(<span class='ident'>fk</span>) {
-                <span class='ident'>co</span>.<span class='ident'>position</span> <span class='op'>=</span> <span class='ident'>pos</span>.<span class='ident'>clone</span>();
-                <span class='ident'>co</span>.<span class='ident'>timestamp</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>timestamp</span>;
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>aabb</span> <span class='op'>=</span> <span class='ident'>bounding_volume</span>::<span class='ident'>aabb</span>(<span class='ident'>co</span>.<span class='ident'>shape</span>.<span class='ident'>as_ref</span>(), <span class='ident'>pos</span>);
-                <span class='ident'>aabb</span>.<span class='ident'>loosen</span>(<span class='ident'>co</span>.<span class='ident'>query_type</span>.<span class='ident'>query_limit</span>());
-                <span class='self'>self</span>.<span class='ident'>broad_phase</span>.<span class='ident'>deferred_set_bounding_volume</span>(<span class='ident'>fk</span>.<span class='ident'>uid</span>(), <span class='ident'>aabb</span>);
+    <span class="doccomment">/// Executes the position updates.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">perform_position_update</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw">for</span> <span class="kw-2">&amp;</span>(<span class="kw-2">ref</span> <span class="ident">fk</span>, <span class="kw-2">ref</span> <span class="ident">pos</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">pos_to_update</span>.<span class="ident">iter</span>() {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">co</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">objects</span>.<span class="ident">get_fast_mut</span>(<span class="ident">fk</span>) {
+                <span class="ident">co</span>.<span class="ident">position</span> <span class="op">=</span> <span class="ident">pos</span>.<span class="ident">clone</span>();
+                <span class="ident">co</span>.<span class="ident">timestamp</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">timestamp</span>;
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">aabb</span> <span class="op">=</span> <span class="ident">bounding_volume</span>::<span class="ident">aabb</span>(<span class="ident">co</span>.<span class="ident">shape</span>.<span class="ident">as_ref</span>(), <span class="ident">pos</span>);
+                <span class="ident">aabb</span>.<span class="ident">loosen</span>(<span class="ident">co</span>.<span class="ident">query_type</span>.<span class="ident">query_limit</span>());
+                <span class="self">self</span>.<span class="ident">broad_phase</span>.<span class="ident">deferred_set_bounding_volume</span>(<span class="ident">fk</span>.<span class="ident">uid</span>(), <span class="ident">aabb</span>);
             }
         }
 
-        <span class='self'>self</span>.<span class='ident'>pos_to_update</span>.<span class='ident'>clear</span>();
+        <span class="self">self</span>.<span class="ident">pos_to_update</span>.<span class="ident">clear</span>();
     }
 
 
-    <span class='doccomment'>/// Actually adds or removes all the objects marked by `.deferred_add(...)` or</span>
-    <span class='doccomment'>/// `.deferred_remove(...)` and updates the broad phase.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>perform_additions_removals_and_broad_phase</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='comment'>// Add objects.</span>
-        <span class='kw'>for</span> <span class='ident'>co</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>objects_to_add</span>.<span class='ident'>drain</span>(..) {
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>aabb</span> <span class='op'>=</span> <span class='ident'>bounding_volume</span>::<span class='ident'>aabb</span>(<span class='ident'>co</span>.<span class='ident'>shape</span>.<span class='ident'>as_ref</span>(), <span class='kw-2'>&amp;</span><span class='ident'>co</span>.<span class='ident'>position</span>);
-            <span class='ident'>aabb</span>.<span class='ident'>loosen</span>(<span class='ident'>co</span>.<span class='ident'>query_type</span>.<span class='ident'>query_limit</span>());
-            <span class='kw'>let</span> <span class='ident'>fk</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>objects</span>.<span class='ident'>insert</span>(<span class='ident'>co</span>.<span class='ident'>uid</span>, <span class='ident'>co</span>).<span class='number'>0</span>;
-            <span class='self'>self</span>.<span class='ident'>broad_phase</span>.<span class='ident'>deferred_add</span>(<span class='ident'>fk</span>.<span class='ident'>uid</span>(), <span class='ident'>aabb</span>, <span class='ident'>fk</span>)
+    <span class="doccomment">/// Actually adds or removes all the objects marked by `.deferred_add(...)` or</span>
+    <span class="doccomment">/// `.deferred_remove(...)` and updates the broad phase.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">perform_additions_removals_and_broad_phase</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="comment">// Add objects.</span>
+        <span class="kw">for</span> <span class="ident">co</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">objects_to_add</span>.<span class="ident">drain</span>(..) {
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">aabb</span> <span class="op">=</span> <span class="ident">bounding_volume</span>::<span class="ident">aabb</span>(<span class="ident">co</span>.<span class="ident">shape</span>.<span class="ident">as_ref</span>(), <span class="kw-2">&amp;</span><span class="ident">co</span>.<span class="ident">position</span>);
+            <span class="ident">aabb</span>.<span class="ident">loosen</span>(<span class="ident">co</span>.<span class="ident">query_type</span>.<span class="ident">query_limit</span>());
+            <span class="kw">let</span> <span class="ident">fk</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">objects</span>.<span class="ident">insert</span>(<span class="ident">co</span>.<span class="ident">uid</span>, <span class="ident">co</span>).<span class="number">0</span>;
+            <span class="self">self</span>.<span class="ident">broad_phase</span>.<span class="ident">deferred_add</span>(<span class="ident">fk</span>.<span class="ident">uid</span>(), <span class="ident">aabb</span>, <span class="ident">fk</span>)
         }
 
-        <span class='self'>self</span>.<span class='ident'>objects_to_add</span>.<span class='ident'>shrink_to_fit</span>();
+        <span class="self">self</span>.<span class="ident">objects_to_add</span>.<span class="ident">shrink_to_fit</span>();
 
 
-        <span class='comment'>// Clean up objects that have been marked as removed</span>
-        <span class='kw'>for</span> <span class='ident'>uid</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>objects_to_remove</span>.<span class='ident'>iter</span>() {
-            <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>fk</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>objects</span>.<span class='ident'>get_fast_key</span>(<span class='kw-2'>*</span><span class='ident'>uid</span>) {
-                <span class='self'>self</span>.<span class='ident'>broad_phase</span>.<span class='ident'>deferred_remove</span>(<span class='ident'>fk</span>.<span class='ident'>uid</span>());
+        <span class="comment">// Clean up objects that have been marked as removed</span>
+        <span class="kw">for</span> <span class="ident">uid</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">objects_to_remove</span>.<span class="ident">iter</span>() {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">fk</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">objects</span>.<span class="ident">get_fast_key</span>(<span class="kw-2">*</span><span class="ident">uid</span>) {
+                <span class="self">self</span>.<span class="ident">broad_phase</span>.<span class="ident">deferred_remove</span>(<span class="ident">fk</span>.<span class="ident">uid</span>());
             }
         }
 
-        <span class='self'>self</span>.<span class='ident'>perform_broad_phase</span>();
+        <span class="self">self</span>.<span class="ident">perform_broad_phase</span>();
 
-        <span class='comment'>// clean up objects that have been marked as removed</span>
-        <span class='kw'>while</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>uid</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>objects_to_remove</span>.<span class='ident'>pop</span>() {
-            <span class='kw'>let</span> _ <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>objects</span>.<span class='ident'>remove</span>(<span class='ident'>uid</span>);
+        <span class="comment">// clean up objects that have been marked as removed</span>
+        <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">uid</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">objects_to_remove</span>.<span class="ident">pop</span>() {
+            <span class="kw">let</span> _ <span class="op">=</span> <span class="self">self</span>.<span class="ident">objects</span>.<span class="ident">remove</span>(<span class="ident">uid</span>);
         }
     }
 
-    <span class='doccomment'>/// Executes the broad phase of the collision detection pipeline.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Note that this does not take in account the changes made to the collision updates after the</span>
-    <span class='doccomment'>/// last `.perform_position_update()` call.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>perform_broad_phase</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='kw'>let</span> <span class='ident'>bf</span>    <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>broad_phase</span>;
-        <span class='kw'>let</span> <span class='ident'>nf</span>    <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>narrow_phase</span>;
-        <span class='kw'>let</span> <span class='ident'>sig</span>   <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>contact_signal</span>;
-        <span class='kw'>let</span> <span class='ident'>prox</span>  <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>proximity_signal</span>;
-        <span class='kw'>let</span> <span class='ident'>filts</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>pair_filters</span>;
-        <span class='kw'>let</span> <span class='ident'>objs</span>  <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>objects</span>;
+    <span class="doccomment">/// Executes the broad phase of the collision detection pipeline.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Note that this does not take in account the changes made to the collision updates after the</span>
+    <span class="doccomment">/// last `.perform_position_update()` call.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">perform_broad_phase</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw">let</span> <span class="ident">bf</span>    <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">broad_phase</span>;
+        <span class="kw">let</span> <span class="ident">nf</span>    <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">narrow_phase</span>;
+        <span class="kw">let</span> <span class="ident">sig</span>   <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">contact_signal</span>;
+        <span class="kw">let</span> <span class="ident">prox</span>  <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">proximity_signal</span>;
+        <span class="kw">let</span> <span class="ident">filts</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">pair_filters</span>;
+        <span class="kw">let</span> <span class="ident">objs</span>  <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">objects</span>;
 
-        <span class='ident'>bf</span>.<span class='ident'>update</span>(
-            <span class='comment'>// Filter:</span>
-            <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='op'>|</span><span class='ident'>b1</span>, <span class='ident'>b2</span><span class='op'>|</span> <span class='ident'>CollisionWorld</span>::<span class='ident'>filter_collision</span>(<span class='ident'>filts</span>, <span class='ident'>objs</span>, <span class='ident'>b1</span>, <span class='ident'>b2</span>),
-            <span class='comment'>// Handler:</span>
-            <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='op'>|</span><span class='ident'>b1</span>, <span class='ident'>b2</span>, <span class='ident'>started</span><span class='op'>|</span> <span class='ident'>nf</span>.<span class='ident'>handle_interaction</span>(<span class='ident'>sig</span>, <span class='ident'>prox</span>, <span class='ident'>objs</span>, <span class='ident'>b1</span>, <span class='ident'>b2</span>, <span class='ident'>started</span>));
+        <span class="ident">bf</span>.<span class="ident">update</span>(
+            <span class="comment">// Filter:</span>
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="op">|</span><span class="ident">b1</span>, <span class="ident">b2</span><span class="op">|</span> <span class="ident">CollisionWorld</span>::<span class="ident">filter_collision</span>(<span class="ident">filts</span>, <span class="ident">objs</span>, <span class="ident">b1</span>, <span class="ident">b2</span>),
+            <span class="comment">// Handler:</span>
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="op">|</span><span class="ident">b1</span>, <span class="ident">b2</span>, <span class="ident">started</span><span class="op">|</span> <span class="ident">nf</span>.<span class="ident">handle_interaction</span>(<span class="ident">sig</span>, <span class="ident">prox</span>, <span class="ident">objs</span>, <span class="ident">b1</span>, <span class="ident">b2</span>, <span class="ident">started</span>));
     }
 
-    <span class='doccomment'>/// Executes the narrow phase of the collision detection pipeline.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>perform_narrow_phase</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>narrow_phase</span>.<span class='ident'>update</span>(
-            <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>objects</span>,
-            <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>contact_signal</span>,
-            <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>proximity_signal</span>,
-            <span class='self'>self</span>.<span class='ident'>timestamp</span>);
-        <span class='self'>self</span>.<span class='ident'>timestamp</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>timestamp</span> <span class='op'>+</span> <span class='number'>1</span>;
+    <span class="doccomment">/// Executes the narrow phase of the collision detection pipeline.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">perform_narrow_phase</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">narrow_phase</span>.<span class="ident">update</span>(
+            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">objects</span>,
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">contact_signal</span>,
+            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">proximity_signal</span>,
+            <span class="self">self</span>.<span class="ident">timestamp</span>);
+        <span class="self">self</span>.<span class="ident">timestamp</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">timestamp</span> <span class="op">+</span> <span class="number">1</span>;
     }
 
-    <span class='doccomment'>/// Sets a new narrow phase and returns the previous one.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Keep in mind that modifying the narrow-pase will have a non-trivial overhead during the</span>
-    <span class='doccomment'>/// next update as it will force re-detection of all collision pairs and their associated</span>
-    <span class='doccomment'>/// contacts.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_narrow_phase</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>narrow_phase</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>NarrowPhase</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>NarrowPhase</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>old</span> <span class='op'>=</span> <span class='ident'>mem</span>::<span class='ident'>replace</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>narrow_phase</span>, <span class='ident'>narrow_phase</span>);
-        <span class='self'>self</span>.<span class='ident'>broad_phase</span>.<span class='ident'>deferred_recompute_all_proximities</span>();
+    <span class="doccomment">/// Sets a new narrow phase and returns the previous one.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Keep in mind that modifying the narrow-pase will have a non-trivial overhead during the</span>
+    <span class="doccomment">/// next update as it will force re-detection of all collision pairs and their associated</span>
+    <span class="doccomment">/// contacts.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_narrow_phase</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">narrow_phase</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">NarrowPhase</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">NarrowPhase</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">let</span> <span class="ident">old</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">replace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">narrow_phase</span>, <span class="ident">narrow_phase</span>);
+        <span class="self">self</span>.<span class="ident">broad_phase</span>.<span class="ident">deferred_recompute_all_proximities</span>();
 
-        <span class='ident'>old</span>
+        <span class="ident">old</span>
     }
 
-    <span class='doccomment'>/// Iterates through all the contact pairs detected since the last update.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>contact_pairs</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ContactPairs</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>narrow_phase</span>.<span class='ident'>contact_pairs</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>objects</span>)
+    <span class="doccomment">/// Iterates through all the contact pairs detected since the last update.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contact_pairs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ContactPairs</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">narrow_phase</span>.<span class="ident">contact_pairs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">objects</span>)
     }
 
-    <span class='doccomment'>/// Iterates through all the proximity pairs detected since the last update.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>proximity_pairs</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ProximityPairs</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>narrow_phase</span>.<span class='ident'>proximity_pairs</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>objects</span>)
+    <span class="doccomment">/// Iterates through all the proximity pairs detected since the last update.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">proximity_pairs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ProximityPairs</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">narrow_phase</span>.<span class="ident">proximity_pairs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">objects</span>)
     }
 
-    <span class='doccomment'>/// Iterates through every contact detected since the last update.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>contacts</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Contacts</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>narrow_phase</span>.<span class='ident'>contact_pairs</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>objects</span>).<span class='ident'>contacts</span>()
+    <span class="doccomment">/// Iterates through every contact detected since the last update.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contacts</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Contacts</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">narrow_phase</span>.<span class="ident">contact_pairs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">objects</span>).<span class="ident">contacts</span>()
     }
 
-    <span class='doccomment'>/// Iterates through all collision objects.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>collision_objects</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Values</span><span class='op'>&lt;</span><span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>objects</span>.<span class='ident'>values</span>()
+    <span class="doccomment">/// Iterates through all collision objects.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">collision_objects</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Values</span><span class="op">&lt;</span><span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> {
+        <span class="self">self</span>.<span class="ident">objects</span>.<span class="ident">values</span>()
     }
 
-    <span class='doccomment'>/// Returns a reference to the collision object identified by `uid`.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>collision_object</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>uid</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>objects</span>.<span class='ident'>get</span>(<span class='ident'>uid</span>)
+    <span class="doccomment">/// Returns a reference to the collision object identified by `uid`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">collision_object</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">uid</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> {
+        <span class="self">self</span>.<span class="ident">objects</span>.<span class="ident">get</span>(<span class="ident">uid</span>)
     }
 
-    <span class='doccomment'>/// Computes the interferences between every rigid bodies on this world and a ray.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>interferences_with_ray</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>ray</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Ray</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>, <span class='ident'>groups</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>CollisionGroups</span>)
-        <span class='op'>-&gt;</span> <span class='ident'>InterferencesWithRay</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='comment'>// FIXME: avoid allocation.</span>
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>fks</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+    <span class="doccomment">/// Computes the interferences between every rigid bodies on this world and a ray.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interferences_with_ray</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">ray</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Ray</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>, <span class="ident">groups</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">CollisionGroups</span>)
+        <span class="op">-&gt;</span> <span class="ident">InterferencesWithRay</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="comment">// FIXME: avoid allocation.</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fks</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 
-        <span class='self'>self</span>.<span class='ident'>broad_phase</span>.<span class='ident'>interferences_with_ray</span>(<span class='ident'>ray</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fks</span>);
+        <span class="self">self</span>.<span class="ident">broad_phase</span>.<span class="ident">interferences_with_ray</span>(<span class="ident">ray</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fks</span>);
 
-        <span class='ident'>InterferencesWithRay</span> {
-            <span class='ident'>ray</span>:     <span class='ident'>ray</span>,
-            <span class='ident'>groups</span>:  <span class='ident'>groups</span>,
-            <span class='ident'>objects</span>: <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>objects</span>,
-            <span class='ident'>idx</span>:     <span class='ident'>fks</span>.<span class='ident'>into_iter</span>()
+        <span class="ident">InterferencesWithRay</span> {
+            <span class="ident">ray</span>:     <span class="ident">ray</span>,
+            <span class="ident">groups</span>:  <span class="ident">groups</span>,
+            <span class="ident">objects</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">objects</span>,
+            <span class="ident">idx</span>:     <span class="ident">fks</span>.<span class="ident">into_iter</span>()
         }
     }
 
-    <span class='doccomment'>/// Computes the interferences between every rigid bodies of a given broad phase, and a point.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>interferences_with_point</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>point</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>P</span>, <span class='ident'>groups</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>CollisionGroups</span>)
-        <span class='op'>-&gt;</span> <span class='ident'>InterferencesWithPoint</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='comment'>// FIXME: avoid allocation.</span>
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>fks</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+    <span class="doccomment">/// Computes the interferences between every rigid bodies of a given broad phase, and a point.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interferences_with_point</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">point</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">P</span>, <span class="ident">groups</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">CollisionGroups</span>)
+        <span class="op">-&gt;</span> <span class="ident">InterferencesWithPoint</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="comment">// FIXME: avoid allocation.</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fks</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 
-        <span class='self'>self</span>.<span class='ident'>broad_phase</span>.<span class='ident'>interferences_with_point</span>(<span class='ident'>point</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fks</span>);
+        <span class="self">self</span>.<span class="ident">broad_phase</span>.<span class="ident">interferences_with_point</span>(<span class="ident">point</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fks</span>);
 
-        <span class='ident'>InterferencesWithPoint</span> {
-            <span class='ident'>point</span>:   <span class='ident'>point</span>,
-            <span class='ident'>groups</span>:  <span class='ident'>groups</span>,
-            <span class='ident'>objects</span>: <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>objects</span>,
-            <span class='ident'>idx</span>:     <span class='ident'>fks</span>.<span class='ident'>into_iter</span>()
+        <span class="ident">InterferencesWithPoint</span> {
+            <span class="ident">point</span>:   <span class="ident">point</span>,
+            <span class="ident">groups</span>:  <span class="ident">groups</span>,
+            <span class="ident">objects</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">objects</span>,
+            <span class="ident">idx</span>:     <span class="ident">fks</span>.<span class="ident">into_iter</span>()
         }
     }
 
-    <span class='doccomment'>/// Computes the interferences between every rigid bodies of a given broad phase, and a aabb.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>interferences_with_aabb</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>aabb</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>AABB</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>, <span class='ident'>groups</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>CollisionGroups</span>)
-        <span class='op'>-&gt;</span> <span class='ident'>InterferencesWithAABB</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='comment'>// FIXME: avoid allocation.</span>
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>fks</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+    <span class="doccomment">/// Computes the interferences between every rigid bodies of a given broad phase, and a aabb.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interferences_with_aabb</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">aabb</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">AABB</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>, <span class="ident">groups</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">CollisionGroups</span>)
+        <span class="op">-&gt;</span> <span class="ident">InterferencesWithAABB</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="comment">// FIXME: avoid allocation.</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fks</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 
-        <span class='self'>self</span>.<span class='ident'>broad_phase</span>.<span class='ident'>interferences_with_bounding_volume</span>(<span class='ident'>aabb</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fks</span>);
+        <span class="self">self</span>.<span class="ident">broad_phase</span>.<span class="ident">interferences_with_bounding_volume</span>(<span class="ident">aabb</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fks</span>);
 
-        <span class='ident'>InterferencesWithAABB</span> {
-            <span class='ident'>groups</span>:  <span class='ident'>groups</span>,
-            <span class='ident'>objects</span>: <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>objects</span>,
-            <span class='ident'>idx</span>:     <span class='ident'>fks</span>.<span class='ident'>into_iter</span>()
+        <span class="ident">InterferencesWithAABB</span> {
+            <span class="ident">groups</span>:  <span class="ident">groups</span>,
+            <span class="ident">objects</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">objects</span>,
+            <span class="ident">idx</span>:     <span class="ident">fks</span>.<span class="ident">into_iter</span>()
         }
     }
 
-    <span class='comment'>// Filters by group and by the user-provided callback.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>filter_collision</span>(<span class='ident'>filters</span>: <span class='kw-2'>&amp;</span><span class='ident'>BroadPhasePairFilters</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span>,
-                        <span class='ident'>objects</span>: <span class='kw-2'>&amp;</span><span class='ident'>UidRemap</span><span class='op'>&lt;</span><span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;&gt;</span>,
-                        <span class='ident'>fk1</span>:     <span class='kw-2'>&amp;</span><span class='ident'>FastKey</span>,
-                        <span class='ident'>fk2</span>:     <span class='kw-2'>&amp;</span><span class='ident'>FastKey</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>let</span> <span class='ident'>o1</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>objects</span>[<span class='kw-2'>*</span><span class='ident'>fk1</span>];
-        <span class='kw'>let</span> <span class='ident'>o2</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>objects</span>[<span class='kw-2'>*</span><span class='ident'>fk2</span>];
-        <span class='kw'>let</span> <span class='ident'>filter_by_groups</span> <span class='op'>=</span> <span class='ident'>CollisionGroupsPairFilter</span>;
+    <span class="comment">// Filters by group and by the user-provided callback.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">filter_collision</span>(<span class="ident">filters</span>: <span class="kw-2">&amp;</span><span class="ident">BroadPhasePairFilters</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span>,
+                        <span class="ident">objects</span>: <span class="kw-2">&amp;</span><span class="ident">UidRemap</span><span class="op">&lt;</span><span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span>,
+                        <span class="ident">fk1</span>:     <span class="kw-2">&amp;</span><span class="ident">FastKey</span>,
+                        <span class="ident">fk2</span>:     <span class="kw-2">&amp;</span><span class="ident">FastKey</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">let</span> <span class="ident">o1</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">objects</span>[<span class="kw-2">*</span><span class="ident">fk1</span>];
+        <span class="kw">let</span> <span class="ident">o2</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">objects</span>[<span class="kw-2">*</span><span class="ident">fk2</span>];
+        <span class="kw">let</span> <span class="ident">filter_by_groups</span> <span class="op">=</span> <span class="ident">CollisionGroupsPairFilter</span>;
 
-        <span class='ident'>filter_by_groups</span>.<span class='ident'>is_pair_valid</span>(<span class='ident'>o1</span>, <span class='ident'>o2</span>) <span class='op'>&amp;&amp;</span> <span class='ident'>filters</span>.<span class='ident'>is_pair_valid</span>(<span class='ident'>o1</span>, <span class='ident'>o2</span>)
+        <span class="ident">filter_by_groups</span>.<span class="ident">is_pair_valid</span>(<span class="ident">o1</span>, <span class="ident">o2</span>) <span class="op">&amp;&amp;</span> <span class="ident">filters</span>.<span class="ident">is_pair_valid</span>(<span class="ident">o1</span>, <span class="ident">o2</span>)
     }
 }
 
 
-<span class='doccomment'>/// Iterator through all the objects on the world that intersect a specific ray.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>InterferencesWithRay</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>: <span class='lifetime'>&#39;a</span> <span class='op'>+</span> <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>: <span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>ray</span>:     <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Ray</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
-    <span class='ident'>objects</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>UidRemap</span><span class='op'>&lt;</span><span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>groups</span>:  <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>CollisionGroups</span>,
-    <span class='ident'>idx</span>:     <span class='ident'>IntoIter</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>FastKey</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// Iterator through all the objects on the world that intersect a specific ray.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InterferencesWithRay</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Point</span>, <span class="ident">M</span>: <span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">ray</span>:     <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Ray</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>,
+    <span class="ident">objects</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">UidRemap</span><span class="op">&lt;</span><span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">groups</span>:  <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">CollisionGroups</span>,
+    <span class="ident">idx</span>:     <span class="ident">IntoIter</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">FastKey</span><span class="op">&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>InterferencesWithRay</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> (<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>RayIntersection</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span>);
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>: <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">InterferencesWithRay</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> (<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">RayIntersection</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Vector</span><span class="op">&gt;</span>);
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Item</span><span class='op'>&gt;</span> {
-        <span class='kw'>while</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>id</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>idx</span>.<span class='ident'>next</span>() {
-            <span class='kw'>let</span> <span class='ident'>co</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>objects</span>[<span class='kw-2'>*</span><span class='ident'>id</span>];
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+        <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">id</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">idx</span>.<span class="ident">next</span>() {
+            <span class="kw">let</span> <span class="ident">co</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">objects</span>[<span class="kw-2">*</span><span class="ident">id</span>];
 
-            <span class='kw'>if</span> <span class='ident'>co</span>.<span class='ident'>collision_groups</span>.<span class='ident'>can_interact_with_groups</span>(<span class='self'>self</span>.<span class='ident'>groups</span>) {
-                <span class='kw'>let</span> <span class='ident'>inter</span> <span class='op'>=</span> <span class='ident'>co</span>.<span class='ident'>shape</span>.<span class='ident'>toi_and_normal_with_ray</span>(<span class='kw-2'>&amp;</span><span class='ident'>co</span>.<span class='ident'>position</span>, <span class='self'>self</span>.<span class='ident'>ray</span>, <span class='bool-val'>true</span>);
+            <span class="kw">if</span> <span class="ident">co</span>.<span class="ident">collision_groups</span>.<span class="ident">can_interact_with_groups</span>(<span class="self">self</span>.<span class="ident">groups</span>) {
+                <span class="kw">let</span> <span class="ident">inter</span> <span class="op">=</span> <span class="ident">co</span>.<span class="ident">shape</span>.<span class="ident">toi_and_normal_with_ray</span>(<span class="kw-2">&amp;</span><span class="ident">co</span>.<span class="ident">position</span>, <span class="self">self</span>.<span class="ident">ray</span>, <span class="bool-val">true</span>);
 
-                <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>inter</span>) <span class='op'>=</span> <span class='ident'>inter</span> {
-                    <span class='kw'>return</span> <span class='prelude-val'>Some</span>((<span class='ident'>co</span>, <span class='ident'>inter</span>))
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">inter</span>) <span class="op">=</span> <span class="ident">inter</span> {
+                    <span class="kw">return</span> <span class="prelude-val">Some</span>((<span class="ident">co</span>, <span class="ident">inter</span>))
                 }
             }
         }
 
-        <span class='prelude-val'>None</span>
+        <span class="prelude-val">None</span>
     }
 }
 
-<span class='doccomment'>/// Iterator through all the objects on the world that intersect a specific point.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>InterferencesWithPoint</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>: <span class='lifetime'>&#39;a</span> <span class='op'>+</span> <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>: <span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>point</span>:   <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>P</span>,
-    <span class='ident'>objects</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>UidRemap</span><span class='op'>&lt;</span><span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>groups</span>:  <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>CollisionGroups</span>,
-    <span class='ident'>idx</span>:     <span class='ident'>IntoIter</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>FastKey</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// Iterator through all the objects on the world that intersect a specific point.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InterferencesWithPoint</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Point</span>, <span class="ident">M</span>: <span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">point</span>:   <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">P</span>,
+    <span class="ident">objects</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">UidRemap</span><span class="op">&lt;</span><span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">groups</span>:  <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">CollisionGroups</span>,
+    <span class="ident">idx</span>:     <span class="ident">IntoIter</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">FastKey</span><span class="op">&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>InterferencesWithPoint</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>: <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">InterferencesWithPoint</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Item</span><span class='op'>&gt;</span> {
-        <span class='kw'>while</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>id</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>idx</span>.<span class='ident'>next</span>() {
-            <span class='kw'>let</span> <span class='ident'>co</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>objects</span>[<span class='kw-2'>*</span><span class='ident'>id</span>];
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+        <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">id</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">idx</span>.<span class="ident">next</span>() {
+            <span class="kw">let</span> <span class="ident">co</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">objects</span>[<span class="kw-2">*</span><span class="ident">id</span>];
 
-            <span class='kw'>if</span> <span class='ident'>co</span>.<span class='ident'>collision_groups</span>.<span class='ident'>can_interact_with_groups</span>(<span class='self'>self</span>.<span class='ident'>groups</span>) <span class='op'>&amp;&amp;</span>
-               <span class='ident'>co</span>.<span class='ident'>shape</span>.<span class='ident'>contains_point</span>(<span class='kw-2'>&amp;</span><span class='ident'>co</span>.<span class='ident'>position</span>, <span class='self'>self</span>.<span class='ident'>point</span>) {
-                <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>co</span>)
+            <span class="kw">if</span> <span class="ident">co</span>.<span class="ident">collision_groups</span>.<span class="ident">can_interact_with_groups</span>(<span class="self">self</span>.<span class="ident">groups</span>) <span class="op">&amp;&amp;</span>
+               <span class="ident">co</span>.<span class="ident">shape</span>.<span class="ident">contains_point</span>(<span class="kw-2">&amp;</span><span class="ident">co</span>.<span class="ident">position</span>, <span class="self">self</span>.<span class="ident">point</span>) {
+                <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">co</span>)
             }
         }
 
-        <span class='prelude-val'>None</span>
+        <span class="prelude-val">None</span>
     }
 }
 
-<span class='doccomment'>/// Iterator through all the objects on the world which bounding volume intersects a specific AABB.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>InterferencesWithAABB</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>: <span class='lifetime'>&#39;a</span> <span class='op'>+</span> <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>: <span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>objects</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>UidRemap</span><span class='op'>&lt;</span><span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>groups</span>:  <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>CollisionGroups</span>,
-    <span class='ident'>idx</span>:     <span class='ident'>IntoIter</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>FastKey</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// Iterator through all the objects on the world which bounding volume intersects a specific AABB.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InterferencesWithAABB</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Point</span>, <span class="ident">M</span>: <span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">objects</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">UidRemap</span><span class="op">&lt;</span><span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">groups</span>:  <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">CollisionGroups</span>,
+    <span class="ident">idx</span>:     <span class="ident">IntoIter</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">FastKey</span><span class="op">&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>InterferencesWithAABB</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">InterferencesWithAABB</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Item</span><span class='op'>&gt;</span> {
-        <span class='kw'>while</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>id</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>idx</span>.<span class='ident'>next</span>() {
-            <span class='kw'>let</span> <span class='ident'>co</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>objects</span>[<span class='kw-2'>*</span><span class='ident'>id</span>];
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+        <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">id</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">idx</span>.<span class="ident">next</span>() {
+            <span class="kw">let</span> <span class="ident">co</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">objects</span>[<span class="kw-2">*</span><span class="ident">id</span>];
 
-            <span class='kw'>if</span> <span class='ident'>co</span>.<span class='ident'>collision_groups</span>.<span class='ident'>can_interact_with_groups</span>(<span class='self'>self</span>.<span class='ident'>groups</span>) {
-                <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>co</span>)
+            <span class="kw">if</span> <span class="ident">co</span>.<span class="ident">collision_groups</span>.<span class="ident">can_interact_with_groups</span>(<span class="self">self</span>.<span class="ident">groups</span>) {
+                <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">co</span>)
             }
         }
 
-        <span class='prelude-val'>None</span>
+        <span class="prelude-val">None</span>
     }
 }
 </pre>

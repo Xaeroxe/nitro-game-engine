@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -421,383 +421,383 @@
 <span id="376">376</span>
 <span id="377">377</span>
 <span id="378">378</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! A binding for the library `SDL2_image`</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! </span>
-<span class='doccomment'>//! Note that you need to build with the</span>
-<span class='doccomment'>//! feature `image` for this module to be enabled,</span>
-<span class='doccomment'>//! like so:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```bash</span>
-<span class='doccomment'>//! $ cargo build --features &quot;image&quot;</span>
-<span class='doccomment'>//! ```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! If you want to use this with from inside your own</span>
-<span class='doccomment'>//! crate, you will need to add this in your Cargo.toml</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```toml</span>
-<span class='doccomment'>//! [dependencies.sdl2]</span>
-<span class='doccomment'>//! version = ...</span>
-<span class='doccomment'>//! default-features = false</span>
-<span class='doccomment'>//! features = [&quot;image&quot;]</span>
-<span class='doccomment'>//! ```</span>
+</pre><pre class="rust ">
+<span class="doccomment">//!</span>
+<span class="doccomment">//! A binding for the library `SDL2_image`</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! </span>
+<span class="doccomment">//! Note that you need to build with the</span>
+<span class="doccomment">//! feature `image` for this module to be enabled,</span>
+<span class="doccomment">//! like so:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```bash</span>
+<span class="doccomment">//! $ cargo build --features &quot;image&quot;</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! If you want to use this with from inside your own</span>
+<span class="doccomment">//! crate, you will need to add this in your Cargo.toml</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```toml</span>
+<span class="doccomment">//! [dependencies.sdl2]</span>
+<span class="doccomment">//! version = ...</span>
+<span class="doccomment">//! default-features = false</span>
+<span class="doccomment">//! features = [&quot;image&quot;]</span>
+<span class="doccomment">//! ```</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>raw</span>::{<span class='ident'>c_int</span>, <span class='ident'>c_char</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ffi</span>::<span class='ident'>CString</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
-<span class='kw'>use</span> ::<span class='ident'>surface</span>::<span class='ident'>Surface</span>;
-<span class='kw'>use</span> ::<span class='ident'>render</span>::{<span class='ident'>Renderer</span>, <span class='ident'>Texture</span>};
-<span class='kw'>use</span> ::<span class='ident'>rwops</span>::<span class='ident'>RWops</span>;
-<span class='kw'>use</span> ::<span class='ident'>version</span>::<span class='ident'>Version</span>;
-<span class='kw'>use</span> ::<span class='ident'>get_error</span>;
-<span class='kw'>use</span> <span class='ident'>sys</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::{<span class="ident">c_int</span>, <span class="ident">c_char</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">CString</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
+<span class="kw">use</span> ::<span class="ident">surface</span>::<span class="ident">Surface</span>;
+<span class="kw">use</span> ::<span class="ident">render</span>::{<span class="ident">Renderer</span>, <span class="ident">Texture</span>};
+<span class="kw">use</span> ::<span class="ident">rwops</span>::<span class="ident">RWops</span>;
+<span class="kw">use</span> ::<span class="ident">version</span>::<span class="ident">Version</span>;
+<span class="kw">use</span> ::<span class="ident">get_error</span>;
+<span class="kw">use</span> <span class="ident">sys</span>;
 
-<span class='comment'>// Setup linking for all targets.</span>
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_os</span><span class='op'>=</span><span class='string'>&quot;macos&quot;</span>)]</span>
-<span class='kw'>mod</span> <span class='ident'>mac</span> {
-    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>mac_framework</span>, <span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;use_mac_framework&quot;</span>))]</span>
-    <span class='attribute'>#[<span class='ident'>link</span>(<span class='ident'>kind</span><span class='op'>=</span><span class='string'>&quot;framework&quot;</span>, <span class='ident'>name</span><span class='op'>=</span><span class='string'>&quot;SDL2_image&quot;</span>)]</span>
-    <span class='kw'>extern</span> {}
+<span class="comment">// Setup linking for all targets.</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;macos&quot;</span>)]</span>
+<span class="kw">mod</span> <span class="ident">mac</span> {
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">mac_framework</span>, <span class="ident">feature</span><span class="op">=</span><span class="string">&quot;use_mac_framework&quot;</span>))]</span>
+    <span class="attribute">#[<span class="ident">link</span>(<span class="ident">kind</span><span class="op">=</span><span class="string">&quot;framework&quot;</span>, <span class="ident">name</span><span class="op">=</span><span class="string">&quot;SDL2_image&quot;</span>)]</span>
+    <span class="kw">extern</span> {}
 
-    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>any</span>(<span class='ident'>mac_framework</span>, <span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;use_mac_framework&quot;</span>)))]</span>
-    <span class='attribute'>#[<span class='ident'>link</span>(<span class='ident'>name</span><span class='op'>=</span><span class='string'>&quot;SDL2_image&quot;</span>)]</span>
-    <span class='kw'>extern</span> {}
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">mac_framework</span>, <span class="ident">feature</span><span class="op">=</span><span class="string">&quot;use_mac_framework&quot;</span>)))]</span>
+    <span class="attribute">#[<span class="ident">link</span>(<span class="ident">name</span><span class="op">=</span><span class="string">&quot;SDL2_image&quot;</span>)]</span>
+    <span class="kw">extern</span> {}
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>any</span>(<span class='ident'>target_os</span><span class='op'>=</span><span class='string'>&quot;windows&quot;</span>, <span class='ident'>target_os</span><span class='op'>=</span><span class='string'>&quot;linux&quot;</span>, <span class='ident'>target_os</span><span class='op'>=</span><span class='string'>&quot;freebsd&quot;</span>))]</span>
-<span class='kw'>mod</span> <span class='ident'>others</span> {
-    <span class='attribute'>#[<span class='ident'>link</span>(<span class='ident'>name</span><span class='op'>=</span><span class='string'>&quot;SDL2_image&quot;</span>)]</span>
-    <span class='kw'>extern</span> {}
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;windows&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;linux&quot;</span>, <span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;freebsd&quot;</span>))]</span>
+<span class="kw">mod</span> <span class="ident">others</span> {
+    <span class="attribute">#[<span class="ident">link</span>(<span class="ident">name</span><span class="op">=</span><span class="string">&quot;SDL2_image&quot;</span>)]</span>
+    <span class="kw">extern</span> {}
 }
 
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>non_camel_case_types</span>, <span class='ident'>dead_code</span>)]</span>
-<span class='kw'>mod</span> <span class='ident'>ffi</span>;
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_camel_case_types</span>, <span class="ident">dead_code</span>)]</span>
+<span class="kw">mod</span> <span class="ident">ffi</span>;
 
-<span class='doccomment'>/// InitFlags are passed to init() to control which subsystem</span>
-<span class='doccomment'>/// functionality to load.</span>
-<span class='macro'>bitflags</span><span class='macro'>!</span> {
-    <span class='kw'>pub</span> <span class='ident'>flags</span> <span class='ident'>InitFlag</span> : <span class='ident'>u32</span> {
-        <span class='kw'>const</span> <span class='ident'>INIT_JPG</span>  <span class='op'>=</span> <span class='ident'>ffi</span>::<span class='ident'>IMG_INIT_JPG</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-        <span class='kw'>const</span> <span class='ident'>INIT_PNG</span>  <span class='op'>=</span> <span class='ident'>ffi</span>::<span class='ident'>IMG_INIT_PNG</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-        <span class='kw'>const</span> <span class='ident'>INIT_TIF</span>  <span class='op'>=</span> <span class='ident'>ffi</span>::<span class='ident'>IMG_INIT_TIF</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-        <span class='kw'>const</span> <span class='ident'>INIT_WEBP</span> <span class='op'>=</span> <span class='ident'>ffi</span>::<span class='ident'>IMG_INIT_WEBP</span> <span class='kw'>as</span> <span class='ident'>u32</span>
+<span class="doccomment">/// InitFlags are passed to init() to control which subsystem</span>
+<span class="doccomment">/// functionality to load.</span>
+<span class="macro">bitflags</span><span class="macro">!</span> {
+    <span class="kw">pub</span> <span class="ident">flags</span> <span class="ident">InitFlag</span> : <span class="ident">u32</span> {
+        <span class="kw">const</span> <span class="ident">INIT_JPG</span>  <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">IMG_INIT_JPG</span> <span class="kw">as</span> <span class="ident">u32</span>,
+        <span class="kw">const</span> <span class="ident">INIT_PNG</span>  <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">IMG_INIT_PNG</span> <span class="kw">as</span> <span class="ident">u32</span>,
+        <span class="kw">const</span> <span class="ident">INIT_TIF</span>  <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">IMG_INIT_TIF</span> <span class="kw">as</span> <span class="ident">u32</span>,
+        <span class="kw">const</span> <span class="ident">INIT_WEBP</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">IMG_INIT_WEBP</span> <span class="kw">as</span> <span class="ident">u32</span>
     }
 }
 
-<span class='comment'>// This is used for error message for init</span>
-<span class='kw'>impl</span> <span class='ident'>ToString</span> <span class='kw'>for</span> <span class='ident'>InitFlag</span> {
-    <span class='kw'>fn</span> <span class='ident'>to_string</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>string</span> <span class='op'>=</span> <span class='string'>&quot;&quot;</span>.<span class='ident'>to_string</span>();
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>contains</span>(<span class='ident'>INIT_JPG</span>) {
-            <span class='ident'>string</span> <span class='op'>=</span> <span class='ident'>string</span> <span class='op'>+</span> <span class='kw-2'>&amp;</span><span class='string'>&quot;INIT_JPG &quot;</span>.<span class='ident'>to_string</span>();
+<span class="comment">// This is used for error message for init</span>
+<span class="kw">impl</span> <span class="ident">ToString</span> <span class="kw">for</span> <span class="ident">InitFlag</span> {
+    <span class="kw">fn</span> <span class="ident">to_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">string</span> <span class="op">=</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>();
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">contains</span>(<span class="ident">INIT_JPG</span>) {
+            <span class="ident">string</span> <span class="op">=</span> <span class="ident">string</span> <span class="op">+</span> <span class="kw-2">&amp;</span><span class="string">&quot;INIT_JPG &quot;</span>.<span class="ident">to_string</span>();
         }
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>contains</span>(<span class='ident'>INIT_PNG</span>) {
-            <span class='ident'>string</span> <span class='op'>=</span> <span class='ident'>string</span> <span class='op'>+</span> <span class='kw-2'>&amp;</span><span class='string'>&quot;INIT_PNG &quot;</span>.<span class='ident'>to_string</span>();
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">contains</span>(<span class="ident">INIT_PNG</span>) {
+            <span class="ident">string</span> <span class="op">=</span> <span class="ident">string</span> <span class="op">+</span> <span class="kw-2">&amp;</span><span class="string">&quot;INIT_PNG &quot;</span>.<span class="ident">to_string</span>();
         }
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>contains</span>(<span class='ident'>INIT_TIF</span>) {
-            <span class='ident'>string</span> <span class='op'>=</span> <span class='ident'>string</span> <span class='op'>+</span> <span class='kw-2'>&amp;</span><span class='string'>&quot;INIT_TIF &quot;</span>.<span class='ident'>to_string</span>();
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">contains</span>(<span class="ident">INIT_TIF</span>) {
+            <span class="ident">string</span> <span class="op">=</span> <span class="ident">string</span> <span class="op">+</span> <span class="kw-2">&amp;</span><span class="string">&quot;INIT_TIF &quot;</span>.<span class="ident">to_string</span>();
         }
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>contains</span>(<span class='ident'>INIT_WEBP</span>) {
-            <span class='ident'>string</span> <span class='op'>=</span> <span class='ident'>string</span> <span class='op'>+</span> <span class='kw-2'>&amp;</span><span class='string'>&quot;INIT_WEBP &quot;</span>.<span class='ident'>to_string</span>();
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">contains</span>(<span class="ident">INIT_WEBP</span>) {
+            <span class="ident">string</span> <span class="op">=</span> <span class="ident">string</span> <span class="op">+</span> <span class="kw-2">&amp;</span><span class="string">&quot;INIT_WEBP &quot;</span>.<span class="ident">to_string</span>();
         }
-        <span class='ident'>string</span>
+        <span class="ident">string</span>
     }
 }
 
 
-<span class='doccomment'>/// Static method extensions for creating Surfaces</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>LoadSurface</span>: <span class='ident'>Sized</span> {
-    <span class='comment'>// Self is only returned here to type hint to the compiler.</span>
-    <span class='comment'>// The syntax for type hinting in this case is not yet defined.</span>
-    <span class='comment'>// The intended return value is Result&lt;~Surface, String&gt;.</span>
-    <span class='kw'>fn</span> <span class='ident'>from_file</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='ident'>filename</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>from_xpm_array</span>(<span class='ident'>xpm</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>i8</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
+<span class="doccomment">/// Static method extensions for creating Surfaces</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">LoadSurface</span>: <span class="ident">Sized</span> {
+    <span class="comment">// Self is only returned here to type hint to the compiler.</span>
+    <span class="comment">// The syntax for type hinting in this case is not yet defined.</span>
+    <span class="comment">// The intended return value is Result&lt;~Surface, String&gt;.</span>
+    <span class="kw">fn</span> <span class="ident">from_file</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="ident">filename</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">from_xpm_array</span>(<span class="ident">xpm</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">i8</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">String</span><span class="op">&gt;</span>;
 }
 
-<span class='doccomment'>/// Method extensions to Surface for saving to disk</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>SaveSurface</span> {
-    <span class='kw'>fn</span> <span class='ident'>save</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>filename</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>String</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>save_rw</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>dst</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>RWops</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>String</span><span class='op'>&gt;</span>;
+<span class="doccomment">/// Method extensions to Surface for saving to disk</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">SaveSurface</span> {
+    <span class="kw">fn</span> <span class="ident">save</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">filename</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">save_rw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">dst</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">RWops</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">String</span><span class="op">&gt;</span>;
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>LoadSurface</span> <span class='kw'>for</span> <span class='ident'>Surface</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>from_file</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='ident'>filename</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='doccomment'>//! Loads an SDL Surface from a file</span>
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>c_filename</span> <span class='op'>=</span> <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='ident'>filename</span>.<span class='ident'>as_ref</span>().<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>()).<span class='ident'>unwrap</span>();
-            <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='ident'>ffi</span>::<span class='ident'>IMG_Load</span>(<span class='ident'>c_filename</span>.<span class='ident'>as_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _);
-            <span class='kw'>if</span> (<span class='ident'>raw</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> ()).<span class='ident'>is_null</span>() {
-                <span class='prelude-val'>Err</span>(<span class='ident'>get_error</span>())
-            } <span class='kw'>else</span> {
-                <span class='prelude-val'>Ok</span>(<span class='ident'>Surface</span>::<span class='ident'>from_ll</span>(<span class='ident'>raw</span>))
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">LoadSurface</span> <span class="kw">for</span> <span class="ident">Surface</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_file</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="ident">filename</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="doccomment">//! Loads an SDL Surface from a file</span>
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">c_filename</span> <span class="op">=</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">filename</span>.<span class="ident">as_ref</span>().<span class="ident">to_str</span>().<span class="ident">unwrap</span>()).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">IMG_Load</span>(<span class="ident">c_filename</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _);
+            <span class="kw">if</span> (<span class="ident">raw</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> ()).<span class="ident">is_null</span>() {
+                <span class="prelude-val">Err</span>(<span class="ident">get_error</span>())
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident">Surface</span>::<span class="ident">from_ll</span>(<span class="ident">raw</span>))
             }
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>from_xpm_array</span>(<span class='ident'>xpm</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>i8</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='doccomment'>//! Loads an SDL Surface from XPM data</span>
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='ident'>ffi</span>::<span class='ident'>IMG_ReadXPMFromArray</span>(<span class='ident'>xpm</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>);
-            <span class='kw'>if</span> (<span class='ident'>raw</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> ()).<span class='ident'>is_null</span>() {
-                <span class='prelude-val'>Err</span>(<span class='ident'>get_error</span>())
-            } <span class='kw'>else</span> {
-                <span class='prelude-val'>Ok</span>(<span class='ident'>Surface</span>::<span class='ident'>from_ll</span>(<span class='ident'>raw</span>))
-            }
-        }
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>SaveSurface</span> <span class='kw'>for</span> <span class='ident'>Surface</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>save</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>filename</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='doccomment'>//! Saves an SDL Surface to a file</span>
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>c_filename</span> <span class='op'>=</span> <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='ident'>filename</span>.<span class='ident'>as_ref</span>().<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>()).<span class='ident'>unwrap</span>();
-            <span class='kw'>let</span> <span class='ident'>status</span> <span class='op'>=</span> <span class='ident'>ffi</span>::<span class='ident'>IMG_SavePNG</span>(<span class='self'>self</span>.<span class='ident'>raw</span>(), <span class='ident'>c_filename</span>.<span class='ident'>as_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _);
-            <span class='kw'>if</span> <span class='ident'>status</span> <span class='op'>!=</span> <span class='number'>0</span> {
-                <span class='prelude-val'>Err</span>(<span class='ident'>get_error</span>())
-            } <span class='kw'>else</span> {
-                <span class='prelude-val'>Ok</span>(())
-            }
-        }
-    }
-
-    <span class='kw'>fn</span> <span class='ident'>save_rw</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>dst</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>RWops</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='doccomment'>//! Saves an SDL Surface to an RWops</span>
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>status</span> <span class='op'>=</span> <span class='ident'>ffi</span>::<span class='ident'>IMG_SavePNG_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>(), <span class='ident'>dst</span>.<span class='ident'>raw</span>(), <span class='number'>0</span>);
-
-            <span class='kw'>if</span> <span class='ident'>status</span> <span class='op'>!=</span> <span class='number'>0</span> {
-                <span class='prelude-val'>Err</span>(<span class='ident'>get_error</span>())
-            } <span class='kw'>else</span> {
-                <span class='prelude-val'>Ok</span>(())
+    <span class="kw">fn</span> <span class="ident">from_xpm_array</span>(<span class="ident">xpm</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">i8</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="doccomment">//! Loads an SDL Surface from XPM data</span>
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">IMG_ReadXPMFromArray</span>(<span class="ident">xpm</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>);
+            <span class="kw">if</span> (<span class="ident">raw</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> ()).<span class="ident">is_null</span>() {
+                <span class="prelude-val">Err</span>(<span class="ident">get_error</span>())
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident">Surface</span>::<span class="ident">from_ll</span>(<span class="ident">raw</span>))
             }
         }
     }
 }
 
-<span class='doccomment'>/// Method extensions for creating Textures from a Renderer</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>LoadTexture</span> {
-    <span class='kw'>fn</span> <span class='ident'>load_texture</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>filename</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Texture</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
-}
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">SaveSurface</span> <span class="kw">for</span> <span class="ident">Surface</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">save</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">filename</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="doccomment">//! Saves an SDL Surface to a file</span>
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">c_filename</span> <span class="op">=</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">filename</span>.<span class="ident">as_ref</span>().<span class="ident">to_str</span>().<span class="ident">unwrap</span>()).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">IMG_SavePNG</span>(<span class="self">self</span>.<span class="ident">raw</span>(), <span class="ident">c_filename</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _);
+            <span class="kw">if</span> <span class="ident">status</span> <span class="op">!=</span> <span class="number">0</span> {
+                <span class="prelude-val">Err</span>(<span class="ident">get_error</span>())
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Ok</span>(())
+            }
+        }
+    }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>LoadTexture</span> <span class='kw'>for</span> <span class='ident'>Renderer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>load_texture</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>filename</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Texture</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='doccomment'>//! Loads an SDL Texture from a file</span>
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>c_filename</span> <span class='op'>=</span> <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='ident'>filename</span>.<span class='ident'>as_ref</span>().<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>()).<span class='ident'>unwrap</span>();
-            <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='ident'>ffi</span>::<span class='ident'>IMG_LoadTexture</span>(<span class='self'>self</span>.<span class='ident'>raw</span>(), <span class='ident'>c_filename</span>.<span class='ident'>as_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _);
-            <span class='kw'>if</span> (<span class='ident'>raw</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> ()).<span class='ident'>is_null</span>() {
-                <span class='prelude-val'>Err</span>(<span class='ident'>get_error</span>())
-            } <span class='kw'>else</span> {
-                <span class='prelude-val'>Ok</span>(<span class='ident'>Texture</span>::<span class='ident'>from_ll</span>(<span class='self'>self</span>, <span class='ident'>raw</span>))
+    <span class="kw">fn</span> <span class="ident">save_rw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">dst</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">RWops</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="doccomment">//! Saves an SDL Surface to an RWops</span>
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">IMG_SavePNG_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>(), <span class="ident">dst</span>.<span class="ident">raw</span>(), <span class="number">0</span>);
+
+            <span class="kw">if</span> <span class="ident">status</span> <span class="op">!=</span> <span class="number">0</span> {
+                <span class="prelude-val">Err</span>(<span class="ident">get_error</span>())
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Ok</span>(())
             }
         }
     }
 }
 
-<span class='doccomment'>/// Context manager for `sdl2_image` to manage quiting. Can&#39;t do much with it but</span>
-<span class='doccomment'>/// keep it alive while you are using it.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Sdl2ImageContext</span>;
+<span class="doccomment">/// Method extensions for creating Textures from a Renderer</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">LoadTexture</span> {
+    <span class="kw">fn</span> <span class="ident">load_texture</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">filename</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Texture</span>, <span class="ident">String</span><span class="op">&gt;</span>;
+}
 
-<span class='kw'>impl</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>Sdl2ImageContext</span> {
-    <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_Quit</span>(); }
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">LoadTexture</span> <span class="kw">for</span> <span class="ident">Renderer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">load_texture</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">filename</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Texture</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="doccomment">//! Loads an SDL Texture from a file</span>
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">c_filename</span> <span class="op">=</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">filename</span>.<span class="ident">as_ref</span>().<span class="ident">to_str</span>().<span class="ident">unwrap</span>()).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">IMG_LoadTexture</span>(<span class="self">self</span>.<span class="ident">raw</span>(), <span class="ident">c_filename</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _);
+            <span class="kw">if</span> (<span class="ident">raw</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> ()).<span class="ident">is_null</span>() {
+                <span class="prelude-val">Err</span>(<span class="ident">get_error</span>())
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident">Texture</span>::<span class="ident">from_ll</span>(<span class="self">self</span>, <span class="ident">raw</span>))
+            }
+        }
     }
 }
 
-<span class='doccomment'>/// Initializes `SDL2_image` with `InitFlags`.</span>
-<span class='doccomment'>/// If not every flag is set it returns an error</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>init</span>(<span class='ident'>flags</span>: <span class='ident'>InitFlag</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Sdl2ImageContext</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>return_flags</span> <span class='op'>=</span> <span class='kw'>unsafe</span> {
-        <span class='kw'>let</span> <span class='ident'>used</span> <span class='op'>=</span> <span class='ident'>ffi</span>::<span class='ident'>IMG_Init</span>(<span class='ident'>flags</span>.<span class='ident'>bits</span>() <span class='kw'>as</span> <span class='ident'>c_int</span>);
-        <span class='ident'>InitFlag</span>::<span class='ident'>from_bits_truncate</span>(<span class='ident'>used</span> <span class='kw'>as</span> <span class='ident'>u32</span>)
+<span class="doccomment">/// Context manager for `sdl2_image` to manage quiting. Can&#39;t do much with it but</span>
+<span class="doccomment">/// keep it alive while you are using it.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Sdl2ImageContext</span>;
+
+<span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">Sdl2ImageContext</span> {
+    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_Quit</span>(); }
+    }
+}
+
+<span class="doccomment">/// Initializes `SDL2_image` with `InitFlags`.</span>
+<span class="doccomment">/// If not every flag is set it returns an error</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">flags</span>: <span class="ident">InitFlag</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Sdl2ImageContext</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">return_flags</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+        <span class="kw">let</span> <span class="ident">used</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">IMG_Init</span>(<span class="ident">flags</span>.<span class="ident">bits</span>() <span class="kw">as</span> <span class="ident">c_int</span>);
+        <span class="ident">InitFlag</span>::<span class="ident">from_bits_truncate</span>(<span class="ident">used</span> <span class="kw">as</span> <span class="ident">u32</span>)
     };
-    <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>flags</span>.<span class='ident'>intersects</span>(<span class='ident'>return_flags</span>) {
-        <span class='comment'>// According to docs, error message text is not always set</span>
-        <span class='kw'>if</span> <span class='ident'>get_error</span>() <span class='op'>==</span> <span class='string'>&quot;&quot;</span> {
-            <span class='kw'>let</span> <span class='ident'>un_init_flags</span> <span class='op'>=</span> <span class='ident'>return_flags</span> <span class='op'>^</span> <span class='ident'>flags</span>;
-            <span class='kw'>let</span> <span class='ident'>error_str</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span>(<span class='string'>&quot;Could not init: &quot;</span>.<span class='ident'>to_string</span>() <span class='op'>+</span> <span class='kw-2'>&amp;</span><span class='ident'>un_init_flags</span>.<span class='ident'>to_string</span>());
-            <span class='kw'>let</span> _ <span class='op'>=</span> ::<span class='ident'>set_error</span>(<span class='ident'>error_str</span>);
+    <span class="kw">if</span> <span class="op">!</span><span class="ident">flags</span>.<span class="ident">intersects</span>(<span class="ident">return_flags</span>) {
+        <span class="comment">// According to docs, error message text is not always set</span>
+        <span class="kw">if</span> <span class="ident">get_error</span>() <span class="op">==</span> <span class="string">&quot;&quot;</span> {
+            <span class="kw">let</span> <span class="ident">un_init_flags</span> <span class="op">=</span> <span class="ident">return_flags</span> <span class="op">^</span> <span class="ident">flags</span>;
+            <span class="kw">let</span> <span class="ident">error_str</span> <span class="op">=</span> <span class="kw-2">&amp;</span>(<span class="string">&quot;Could not init: &quot;</span>.<span class="ident">to_string</span>() <span class="op">+</span> <span class="kw-2">&amp;</span><span class="ident">un_init_flags</span>.<span class="ident">to_string</span>());
+            <span class="kw">let</span> _ <span class="op">=</span> ::<span class="ident">set_error</span>(<span class="ident">error_str</span>);
         }
-        <span class='prelude-val'>Err</span>(<span class='ident'>get_error</span>())
-    } <span class='kw'>else</span> {
-        <span class='prelude-val'>Ok</span>(<span class='ident'>Sdl2ImageContext</span>)
+        <span class="prelude-val">Err</span>(<span class="ident">get_error</span>())
+    } <span class="kw">else</span> {
+        <span class="prelude-val">Ok</span>(<span class="ident">Sdl2ImageContext</span>)
     }
 }
 
-<span class='doccomment'>/// Returns the version of the dynamically linked `SDL_image` library</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get_linked_version</span>() <span class='op'>-&gt;</span> <span class='ident'>Version</span> {
-    <span class='kw'>unsafe</span> {
-        <span class='ident'>Version</span>::<span class='ident'>from_ll</span>(<span class='kw-2'>*</span><span class='ident'>ffi</span>::<span class='ident'>IMG_Linked_Version</span>())
+<span class="doccomment">/// Returns the version of the dynamically linked `SDL_image` library</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_linked_version</span>() <span class="op">-&gt;</span> <span class="ident">Version</span> {
+    <span class="kw">unsafe</span> {
+        <span class="ident">Version</span>::<span class="ident">from_ll</span>(<span class="kw-2">*</span><span class="ident">ffi</span>::<span class="ident">IMG_Linked_Version</span>())
     }
 }
 
-<span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>fn</span> <span class='ident'>to_surface_result</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='ident'>raw</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>sys</span>::<span class='ident'>surface</span>::<span class='ident'>SDL_Surface</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-    <span class='kw'>if</span> (<span class='ident'>raw</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> ()).<span class='ident'>is_null</span>() {
-        <span class='prelude-val'>Err</span>(<span class='ident'>get_error</span>())
-    } <span class='kw'>else</span> {
-        <span class='kw'>unsafe</span> { <span class='prelude-val'>Ok</span>(<span class='ident'>Surface</span>::<span class='ident'>from_ll</span>(<span class='ident'>raw</span>)) }
+<span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">fn</span> <span class="ident">to_surface_result</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">raw</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">sys</span>::<span class="ident">surface</span>::<span class="ident">SDL_Surface</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">if</span> (<span class="ident">raw</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> ()).<span class="ident">is_null</span>() {
+        <span class="prelude-val">Err</span>(<span class="ident">get_error</span>())
+    } <span class="kw">else</span> {
+        <span class="kw">unsafe</span> { <span class="prelude-val">Ok</span>(<span class="ident">Surface</span>::<span class="ident">from_ll</span>(<span class="ident">raw</span>)) }
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ImageRWops</span> {
-    <span class='doccomment'>/// load as a surface. except TGA</span>
-    <span class='kw'>fn</span> <span class='ident'>load</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
-    <span class='doccomment'>/// load as a surface. This can load all supported image formats.</span>
-    <span class='kw'>fn</span> <span class='ident'>load_typed</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>_type</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ImageRWops</span> {
+    <span class="doccomment">/// load as a surface. except TGA</span>
+    <span class="kw">fn</span> <span class="ident">load</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// load as a surface. This can load all supported image formats.</span>
+    <span class="kw">fn</span> <span class="ident">load_typed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">_type</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>load_cur</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>load_ico</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>load_bmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>load_pnm</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>load_xpm</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>load_xcf</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>load_pcx</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>load_gif</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>load_jpg</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>load_tif</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>load_png</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>load_tga</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>load_lbm</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>load_xv</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>)  <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>load_webp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">load_cur</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">load_ico</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">load_bmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">load_pnm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">load_xpm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">load_xcf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">load_pcx</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">load_gif</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">load_jpg</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">load_tif</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">load_png</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">load_tga</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">load_lbm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">load_xv</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)  <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">load_webp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>is_cur</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
-    <span class='kw'>fn</span> <span class='ident'>is_ico</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
-    <span class='kw'>fn</span> <span class='ident'>is_bmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
-    <span class='kw'>fn</span> <span class='ident'>is_pnm</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
-    <span class='kw'>fn</span> <span class='ident'>is_xpm</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
-    <span class='kw'>fn</span> <span class='ident'>is_xcf</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
-    <span class='kw'>fn</span> <span class='ident'>is_pcx</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
-    <span class='kw'>fn</span> <span class='ident'>is_gif</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
-    <span class='kw'>fn</span> <span class='ident'>is_jpg</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
-    <span class='kw'>fn</span> <span class='ident'>is_tif</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
-    <span class='kw'>fn</span> <span class='ident'>is_png</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
-    <span class='kw'>fn</span> <span class='ident'>is_lbm</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
-    <span class='kw'>fn</span> <span class='ident'>is_xv</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>)  <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
-    <span class='kw'>fn</span> <span class='ident'>is_webp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_cur</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_ico</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_bmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_pnm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_xpm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_xcf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_pcx</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_gif</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_jpg</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_tif</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_png</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_lbm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_xv</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)  <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_webp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>ImageRWops</span> <span class='kw'>for</span> <span class='ident'>RWops</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>load</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> {
-            <span class='ident'>ffi</span>::<span class='ident'>IMG_Load_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>(), <span class='number'>0</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ImageRWops</span> <span class="kw">for</span> <span class="ident">RWops</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">load</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+            <span class="ident">ffi</span>::<span class="ident">IMG_Load_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>(), <span class="number">0</span>)
         };
-        <span class='ident'>to_surface_result</span>(<span class='ident'>raw</span>)
+        <span class="ident">to_surface_result</span>(<span class="ident">raw</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>load_typed</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>_type</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>c_type</span> <span class='op'>=</span> <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='ident'>_type</span>.<span class='ident'>as_bytes</span>()).<span class='ident'>unwrap</span>();
-            <span class='ident'>ffi</span>::<span class='ident'>IMG_LoadTyped_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>(), <span class='number'>0</span>, <span class='ident'>c_type</span>.<span class='ident'>as_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _)
+    <span class="kw">fn</span> <span class="ident">load_typed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">_type</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">c_type</span> <span class="op">=</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">_type</span>.<span class="ident">as_bytes</span>()).<span class="ident">unwrap</span>();
+            <span class="ident">ffi</span>::<span class="ident">IMG_LoadTyped_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>(), <span class="number">0</span>, <span class="ident">c_type</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _)
         };
-        <span class='ident'>to_surface_result</span>(<span class='ident'>raw</span>)
+        <span class="ident">to_surface_result</span>(<span class="ident">raw</span>)
     }
 
-    <span class='kw'>fn</span> <span class='ident'>load_cur</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_LoadCUR_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) };
-        <span class='ident'>to_surface_result</span>(<span class='ident'>raw</span>)
+    <span class="kw">fn</span> <span class="ident">load_cur</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_LoadCUR_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>()) };
+        <span class="ident">to_surface_result</span>(<span class="ident">raw</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>load_ico</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_LoadICO_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) };
-        <span class='ident'>to_surface_result</span>(<span class='ident'>raw</span>)
+    <span class="kw">fn</span> <span class="ident">load_ico</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_LoadICO_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>()) };
+        <span class="ident">to_surface_result</span>(<span class="ident">raw</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>load_bmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_LoadBMP_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) };
-        <span class='ident'>to_surface_result</span>(<span class='ident'>raw</span>)
+    <span class="kw">fn</span> <span class="ident">load_bmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_LoadBMP_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>()) };
+        <span class="ident">to_surface_result</span>(<span class="ident">raw</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>load_pnm</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_LoadPNM_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) };
-        <span class='ident'>to_surface_result</span>(<span class='ident'>raw</span>)
+    <span class="kw">fn</span> <span class="ident">load_pnm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_LoadPNM_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>()) };
+        <span class="ident">to_surface_result</span>(<span class="ident">raw</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>load_xpm</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_LoadXPM_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) };
-        <span class='ident'>to_surface_result</span>(<span class='ident'>raw</span>)
+    <span class="kw">fn</span> <span class="ident">load_xpm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_LoadXPM_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>()) };
+        <span class="ident">to_surface_result</span>(<span class="ident">raw</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>load_xcf</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_LoadXCF_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) };
-        <span class='ident'>to_surface_result</span>(<span class='ident'>raw</span>)
+    <span class="kw">fn</span> <span class="ident">load_xcf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_LoadXCF_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>()) };
+        <span class="ident">to_surface_result</span>(<span class="ident">raw</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>load_pcx</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_LoadPCX_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) };
-        <span class='ident'>to_surface_result</span>(<span class='ident'>raw</span>)
+    <span class="kw">fn</span> <span class="ident">load_pcx</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_LoadPCX_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>()) };
+        <span class="ident">to_surface_result</span>(<span class="ident">raw</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>load_gif</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_LoadGIF_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) };
-        <span class='ident'>to_surface_result</span>(<span class='ident'>raw</span>)
+    <span class="kw">fn</span> <span class="ident">load_gif</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_LoadGIF_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>()) };
+        <span class="ident">to_surface_result</span>(<span class="ident">raw</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>load_jpg</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_LoadJPG_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) };
-        <span class='ident'>to_surface_result</span>(<span class='ident'>raw</span>)
+    <span class="kw">fn</span> <span class="ident">load_jpg</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_LoadJPG_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>()) };
+        <span class="ident">to_surface_result</span>(<span class="ident">raw</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>load_tif</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_LoadTIF_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) };
-        <span class='ident'>to_surface_result</span>(<span class='ident'>raw</span>)
+    <span class="kw">fn</span> <span class="ident">load_tif</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_LoadTIF_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>()) };
+        <span class="ident">to_surface_result</span>(<span class="ident">raw</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>load_png</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_LoadPNG_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) };
-        <span class='ident'>to_surface_result</span>(<span class='ident'>raw</span>)
+    <span class="kw">fn</span> <span class="ident">load_png</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_LoadPNG_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>()) };
+        <span class="ident">to_surface_result</span>(<span class="ident">raw</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>load_tga</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_LoadTGA_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) };
-        <span class='ident'>to_surface_result</span>(<span class='ident'>raw</span>)
+    <span class="kw">fn</span> <span class="ident">load_tga</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_LoadTGA_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>()) };
+        <span class="ident">to_surface_result</span>(<span class="ident">raw</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>load_lbm</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_LoadLBM_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) };
-        <span class='ident'>to_surface_result</span>(<span class='ident'>raw</span>)
+    <span class="kw">fn</span> <span class="ident">load_lbm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_LoadLBM_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>()) };
+        <span class="ident">to_surface_result</span>(<span class="ident">raw</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>load_xv</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>)  <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_LoadXV_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) };
-        <span class='ident'>to_surface_result</span>(<span class='ident'>raw</span>)
+    <span class="kw">fn</span> <span class="ident">load_xv</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)  <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_LoadXV_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>()) };
+        <span class="ident">to_surface_result</span>(<span class="ident">raw</span>)
     }
-    <span class='kw'>fn</span> <span class='ident'>load_webp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>)  <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Surface</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_LoadWEBP_RW</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) };
-        <span class='ident'>to_surface_result</span>(<span class='ident'>raw</span>)
+    <span class="kw">fn</span> <span class="ident">load_webp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)  <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Surface</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_LoadWEBP_RW</span>(<span class="self">self</span>.<span class="ident">raw</span>()) };
+        <span class="ident">to_surface_result</span>(<span class="ident">raw</span>)
     }
 
-    <span class='kw'>fn</span> <span class='ident'>is_cur</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_isCUR</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) <span class='op'>==</span> <span class='number'>1</span> }
+    <span class="kw">fn</span> <span class="ident">is_cur</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_isCUR</span>(<span class="self">self</span>.<span class="ident">raw</span>()) <span class="op">==</span> <span class="number">1</span> }
     }
-    <span class='kw'>fn</span> <span class='ident'>is_ico</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_isICO</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) <span class='op'>==</span> <span class='number'>1</span> }
+    <span class="kw">fn</span> <span class="ident">is_ico</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_isICO</span>(<span class="self">self</span>.<span class="ident">raw</span>()) <span class="op">==</span> <span class="number">1</span> }
     }
-    <span class='kw'>fn</span> <span class='ident'>is_bmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_isBMP</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) <span class='op'>==</span> <span class='number'>1</span> }
+    <span class="kw">fn</span> <span class="ident">is_bmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_isBMP</span>(<span class="self">self</span>.<span class="ident">raw</span>()) <span class="op">==</span> <span class="number">1</span> }
     }
-    <span class='kw'>fn</span> <span class='ident'>is_pnm</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_isPNM</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) <span class='op'>==</span> <span class='number'>1</span> }
+    <span class="kw">fn</span> <span class="ident">is_pnm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_isPNM</span>(<span class="self">self</span>.<span class="ident">raw</span>()) <span class="op">==</span> <span class="number">1</span> }
     }
-    <span class='kw'>fn</span> <span class='ident'>is_xpm</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_isXPM</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) <span class='op'>==</span> <span class='number'>1</span> }
+    <span class="kw">fn</span> <span class="ident">is_xpm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_isXPM</span>(<span class="self">self</span>.<span class="ident">raw</span>()) <span class="op">==</span> <span class="number">1</span> }
     }
-    <span class='kw'>fn</span> <span class='ident'>is_xcf</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_isXCF</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) <span class='op'>==</span> <span class='number'>1</span> }
+    <span class="kw">fn</span> <span class="ident">is_xcf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_isXCF</span>(<span class="self">self</span>.<span class="ident">raw</span>()) <span class="op">==</span> <span class="number">1</span> }
     }
-    <span class='kw'>fn</span> <span class='ident'>is_pcx</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_isPCX</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) <span class='op'>==</span> <span class='number'>1</span> }
+    <span class="kw">fn</span> <span class="ident">is_pcx</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_isPCX</span>(<span class="self">self</span>.<span class="ident">raw</span>()) <span class="op">==</span> <span class="number">1</span> }
     }
-    <span class='kw'>fn</span> <span class='ident'>is_gif</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_isGIF</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) <span class='op'>==</span> <span class='number'>1</span> }
+    <span class="kw">fn</span> <span class="ident">is_gif</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_isGIF</span>(<span class="self">self</span>.<span class="ident">raw</span>()) <span class="op">==</span> <span class="number">1</span> }
     }
-    <span class='kw'>fn</span> <span class='ident'>is_jpg</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_isJPG</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) <span class='op'>==</span> <span class='number'>1</span> }
+    <span class="kw">fn</span> <span class="ident">is_jpg</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_isJPG</span>(<span class="self">self</span>.<span class="ident">raw</span>()) <span class="op">==</span> <span class="number">1</span> }
     }
-    <span class='kw'>fn</span> <span class='ident'>is_tif</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_isTIF</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) <span class='op'>==</span> <span class='number'>1</span> }
+    <span class="kw">fn</span> <span class="ident">is_tif</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_isTIF</span>(<span class="self">self</span>.<span class="ident">raw</span>()) <span class="op">==</span> <span class="number">1</span> }
     }
-    <span class='kw'>fn</span> <span class='ident'>is_png</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_isPNG</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) <span class='op'>==</span> <span class='number'>1</span> }
+    <span class="kw">fn</span> <span class="ident">is_png</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_isPNG</span>(<span class="self">self</span>.<span class="ident">raw</span>()) <span class="op">==</span> <span class="number">1</span> }
     }
-    <span class='kw'>fn</span> <span class='ident'>is_lbm</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_isLBM</span>(<span class='self'>self</span>.<span class='ident'>raw</span>()) <span class='op'>==</span> <span class='number'>1</span> }
+    <span class="kw">fn</span> <span class="ident">is_lbm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_isLBM</span>(<span class="self">self</span>.<span class="ident">raw</span>()) <span class="op">==</span> <span class="number">1</span> }
     }
-    <span class='kw'>fn</span> <span class='ident'>is_xv</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>)  <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_isXV</span>(<span class='self'>self</span>.<span class='ident'>raw</span>())  <span class='op'>==</span> <span class='number'>1</span> }
+    <span class="kw">fn</span> <span class="ident">is_xv</span>(<span class="kw-2">&amp;</span><span class="self">self</span>)  <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_isXV</span>(<span class="self">self</span>.<span class="ident">raw</span>())  <span class="op">==</span> <span class="number">1</span> }
     }
-    <span class='kw'>fn</span> <span class='ident'>is_webp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>ffi</span>::<span class='ident'>IMG_isWEBP</span>(<span class='self'>self</span>.<span class='ident'>raw</span>())  <span class='op'>==</span> <span class='number'>1</span> }
+    <span class="kw">fn</span> <span class="ident">is_webp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">IMG_isWEBP</span>(<span class="self">self</span>.<span class="ident">raw</span>())  <span class="op">==</span> <span class="number">1</span> }
     }
 }
 </pre>

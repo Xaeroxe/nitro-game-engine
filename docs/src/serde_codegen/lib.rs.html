@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -215,178 +215,178 @@
 <span id="170">170</span>
 <span id="171">171</span>
 <span id="172">172</span>
-</pre><pre class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;clippy&quot;</span>, <span class='ident'>plugin</span>(<span class='ident'>clippy</span>))]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;clippy&quot;</span>, <span class='ident'>feature</span>(<span class='ident'>plugin</span>))]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;clippy&quot;</span>, <span class='ident'>allow</span>(<span class='ident'>too_many_arguments</span>))]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;clippy&quot;</span>, <span class='ident'>allow</span>(<span class='ident'>used_underscore_binding</span>))]</span>
+</pre><pre class="rust ">
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;clippy&quot;</span>, <span class="ident">plugin</span>(<span class="ident">clippy</span>))]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;clippy&quot;</span>, <span class="ident">feature</span>(<span class="ident">plugin</span>))]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;clippy&quot;</span>, <span class="ident">allow</span>(<span class="ident">too_many_arguments</span>))]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;clippy&quot;</span>, <span class="ident">allow</span>(<span class="ident">used_underscore_binding</span>))]</span>
 
-<span class='comment'>// The `quote!` macro requires deep recursion.</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>recursion_limit</span> <span class='op'>=</span> <span class='string'>&quot;192&quot;</span>]</span>
+<span class="comment">// The `quote!` macro requires deep recursion.</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">recursion_limit</span> <span class="op">=</span> <span class="string">&quot;192&quot;</span>]</span>
 
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>serde_codegen_internals</span> <span class='kw'>as</span> <span class='ident'>internals</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde_codegen_internals</span> <span class="kw">as</span> <span class="ident">internals</span>;
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;with-syntex&quot;</span>)]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>syntex</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;with-syntex&quot;</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">syntex</span>;
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;with-syntex&quot;</span>)]</span>
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>syntex_syntax</span> <span class='kw'>as</span> <span class='ident'>syntax</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;with-syntex&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">syntex_syntax</span> <span class="kw">as</span> <span class="ident">syntax</span>;
 
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>syn</span>;
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>quote</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">syn</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">quote</span>;
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;with-syntex&quot;</span>)]</span>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;with-syntex&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
 
-<span class='kw'>mod</span> <span class='ident'>bound</span>;
-<span class='kw'>mod</span> <span class='ident'>de</span>;
-<span class='kw'>mod</span> <span class='ident'>ser</span>;
+<span class="kw">mod</span> <span class="ident">bound</span>;
+<span class="kw">mod</span> <span class="ident">de</span>;
+<span class="kw">mod</span> <span class="ident">ser</span>;
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;with-syntex&quot;</span>)]</span>
-<span class='kw'>fn</span> <span class='ident'>syntex_registry</span>() <span class='op'>-&gt;</span> <span class='ident'>syntex</span>::<span class='ident'>Registry</span> {
-    <span class='kw'>use</span> <span class='ident'>syntax</span>::{<span class='ident'>ast</span>, <span class='ident'>fold</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;with-syntex&quot;</span>)]</span>
+<span class="kw">fn</span> <span class="ident">syntex_registry</span>() <span class="op">-&gt;</span> <span class="ident">syntex</span>::<span class="ident">Registry</span> {
+    <span class="kw">use</span> <span class="ident">syntax</span>::{<span class="ident">ast</span>, <span class="ident">fold</span>};
 
-    <span class='doccomment'>/// Strip the serde attributes from the crate.</span>
-    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;with-syntex&quot;</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>strip_attributes</span>(<span class='ident'>krate</span>: <span class='ident'>ast</span>::<span class='ident'>Crate</span>) <span class='op'>-&gt;</span> <span class='ident'>ast</span>::<span class='ident'>Crate</span> {
-        <span class='doccomment'>/// Helper folder that strips the serde attributes after the extensions have been expanded.</span>
-        <span class='kw'>struct</span> <span class='ident'>StripAttributeFolder</span>;
+    <span class="doccomment">/// Strip the serde attributes from the crate.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;with-syntex&quot;</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">strip_attributes</span>(<span class="ident">krate</span>: <span class="ident">ast</span>::<span class="ident">Crate</span>) <span class="op">-&gt;</span> <span class="ident">ast</span>::<span class="ident">Crate</span> {
+        <span class="doccomment">/// Helper folder that strips the serde attributes after the extensions have been expanded.</span>
+        <span class="kw">struct</span> <span class="ident">StripAttributeFolder</span>;
 
-        <span class='kw'>impl</span> <span class='ident'>fold</span>::<span class='ident'>Folder</span> <span class='kw'>for</span> <span class='ident'>StripAttributeFolder</span> {
-            <span class='kw'>fn</span> <span class='ident'>fold_attribute</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>attr</span>: <span class='ident'>ast</span>::<span class='ident'>Attribute</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>ast</span>::<span class='ident'>Attribute</span><span class='op'>&gt;</span> {
-                <span class='kw'>if</span> <span class='ident'>attr</span>.<span class='ident'>value</span>.<span class='ident'>name</span> <span class='op'>==</span> <span class='string'>&quot;serde&quot;</span> {
-                    <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>ast</span>::<span class='ident'>MetaItemKind</span>::<span class='ident'>List</span>(..) <span class='op'>=</span> <span class='ident'>attr</span>.<span class='ident'>value</span>.<span class='ident'>node</span> {
-                        <span class='kw'>return</span> <span class='prelude-val'>None</span>;
+        <span class="kw">impl</span> <span class="ident">fold</span>::<span class="ident">Folder</span> <span class="kw">for</span> <span class="ident">StripAttributeFolder</span> {
+            <span class="kw">fn</span> <span class="ident">fold_attribute</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">attr</span>: <span class="ident">ast</span>::<span class="ident">Attribute</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ast</span>::<span class="ident">Attribute</span><span class="op">&gt;</span> {
+                <span class="kw">if</span> <span class="ident">attr</span>.<span class="ident">value</span>.<span class="ident">name</span> <span class="op">==</span> <span class="string">&quot;serde&quot;</span> {
+                    <span class="kw">if</span> <span class="kw">let</span> <span class="ident">ast</span>::<span class="ident">MetaItemKind</span>::<span class="ident">List</span>(..) <span class="op">=</span> <span class="ident">attr</span>.<span class="ident">value</span>.<span class="ident">node</span> {
+                        <span class="kw">return</span> <span class="prelude-val">None</span>;
                     }
                 }
-                <span class='prelude-val'>Some</span>(<span class='ident'>attr</span>)
+                <span class="prelude-val">Some</span>(<span class="ident">attr</span>)
             }
 
-            <span class='kw'>fn</span> <span class='ident'>fold_mac</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>mac</span>: <span class='ident'>ast</span>::<span class='ident'>Mac</span>) <span class='op'>-&gt;</span> <span class='ident'>ast</span>::<span class='ident'>Mac</span> {
-                <span class='ident'>fold</span>::<span class='ident'>noop_fold_mac</span>(<span class='ident'>mac</span>, <span class='self'>self</span>)
+            <span class="kw">fn</span> <span class="ident">fold_mac</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">mac</span>: <span class="ident">ast</span>::<span class="ident">Mac</span>) <span class="op">-&gt;</span> <span class="ident">ast</span>::<span class="ident">Mac</span> {
+                <span class="ident">fold</span>::<span class="ident">noop_fold_mac</span>(<span class="ident">mac</span>, <span class="self">self</span>)
             }
         }
 
-        <span class='ident'>fold</span>::<span class='ident'>Folder</span>::<span class='ident'>fold_crate</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>StripAttributeFolder</span>, <span class='ident'>krate</span>)
+        <span class="ident">fold</span>::<span class="ident">Folder</span>::<span class="ident">fold_crate</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">StripAttributeFolder</span>, <span class="ident">krate</span>)
     }
 
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>reg</span> <span class='op'>=</span> <span class='ident'>syntex</span>::<span class='ident'>Registry</span>::<span class='ident'>new</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">reg</span> <span class="op">=</span> <span class="ident">syntex</span>::<span class="ident">Registry</span>::<span class="ident">new</span>();
 
-    <span class='ident'>reg</span>.<span class='ident'>add_attr</span>(<span class='string'>&quot;feature(custom_derive)&quot;</span>);
-    <span class='ident'>reg</span>.<span class='ident'>add_attr</span>(<span class='string'>&quot;feature(custom_attribute)&quot;</span>);
+    <span class="ident">reg</span>.<span class="ident">add_attr</span>(<span class="string">&quot;feature(custom_derive)&quot;</span>);
+    <span class="ident">reg</span>.<span class="ident">add_attr</span>(<span class="string">&quot;feature(custom_attribute)&quot;</span>);
 
-    <span class='ident'>reg</span>.<span class='ident'>add_decorator</span>(<span class='string'>&quot;derive_Serialize&quot;</span>, <span class='ident'>shim</span>::<span class='ident'>expand_derive_serialize</span>);
-    <span class='ident'>reg</span>.<span class='ident'>add_decorator</span>(<span class='string'>&quot;derive_Deserialize&quot;</span>, <span class='ident'>shim</span>::<span class='ident'>expand_derive_deserialize</span>);
+    <span class="ident">reg</span>.<span class="ident">add_decorator</span>(<span class="string">&quot;derive_Serialize&quot;</span>, <span class="ident">shim</span>::<span class="ident">expand_derive_serialize</span>);
+    <span class="ident">reg</span>.<span class="ident">add_decorator</span>(<span class="string">&quot;derive_Deserialize&quot;</span>, <span class="ident">shim</span>::<span class="ident">expand_derive_deserialize</span>);
 
-    <span class='ident'>reg</span>.<span class='ident'>add_post_expansion_pass</span>(<span class='ident'>strip_attributes</span>);
+    <span class="ident">reg</span>.<span class="ident">add_post_expansion_pass</span>(<span class="ident">strip_attributes</span>);
 
-    <span class='ident'>reg</span>
+    <span class="ident">reg</span>
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;with-syntex&quot;</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>expand_str</span>(<span class='ident'>src</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>syntex</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>src</span> <span class='op'>=</span> <span class='ident'>src</span>.<span class='ident'>to_owned</span>();
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;with-syntex&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">expand_str</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">syntex</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="ident">src</span>.<span class="ident">to_owned</span>();
 
-    <span class='kw'>let</span> <span class='ident'>expand_thread</span> <span class='op'>=</span> <span class='kw'>move</span> <span class='op'>||</span> {
-        <span class='ident'>syntex_registry</span>().<span class='ident'>expand_str</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;&quot;</span>, <span class='kw-2'>&amp;</span><span class='ident'>src</span>)
+    <span class="kw">let</span> <span class="ident">expand_thread</span> <span class="op">=</span> <span class="kw">move</span> <span class="op">||</span> {
+        <span class="ident">syntex_registry</span>().<span class="ident">expand_str</span>(<span class="string">&quot;&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">src</span>)
     };
 
-    <span class='ident'>syntex</span>::<span class='ident'>with_extra_stack</span>(<span class='ident'>expand_thread</span>)
+    <span class="ident">syntex</span>::<span class="ident">with_extra_stack</span>(<span class="ident">expand_thread</span>)
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;with-syntex&quot;</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>expand</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>D</span><span class='op'>&gt;</span>(<span class='ident'>src</span>: <span class='ident'>S</span>, <span class='ident'>dst</span>: <span class='ident'>D</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>syntex</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;</span>,
-          <span class='ident'>D</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;</span>,
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;with-syntex&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">expand</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">src</span>: <span class="ident">S</span>, <span class="ident">dst</span>: <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">syntex</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>,
+          <span class="ident">D</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;</span>,
 {
-    <span class='kw'>let</span> <span class='ident'>src</span> <span class='op'>=</span> <span class='ident'>src</span>.<span class='ident'>as_ref</span>().<span class='ident'>to_owned</span>();
-    <span class='kw'>let</span> <span class='ident'>dst</span> <span class='op'>=</span> <span class='ident'>dst</span>.<span class='ident'>as_ref</span>().<span class='ident'>to_owned</span>();
+    <span class="kw">let</span> <span class="ident">src</span> <span class="op">=</span> <span class="ident">src</span>.<span class="ident">as_ref</span>().<span class="ident">to_owned</span>();
+    <span class="kw">let</span> <span class="ident">dst</span> <span class="op">=</span> <span class="ident">dst</span>.<span class="ident">as_ref</span>().<span class="ident">to_owned</span>();
 
-    <span class='kw'>let</span> <span class='ident'>expand_thread</span> <span class='op'>=</span> <span class='kw'>move</span> <span class='op'>||</span> {
-        <span class='ident'>syntex_registry</span>().<span class='ident'>expand</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>src</span>, <span class='ident'>dst</span>)
+    <span class="kw">let</span> <span class="ident">expand_thread</span> <span class="op">=</span> <span class="kw">move</span> <span class="op">||</span> {
+        <span class="ident">syntex_registry</span>().<span class="ident">expand</span>(<span class="string">&quot;&quot;</span>, <span class="ident">src</span>, <span class="ident">dst</span>)
     };
 
-    <span class='ident'>syntex</span>::<span class='ident'>with_extra_stack</span>(<span class='ident'>expand_thread</span>)
+    <span class="ident">syntex</span>::<span class="ident">with_extra_stack</span>(<span class="ident">expand_thread</span>)
 }
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>shim</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span>:<span class='ident'>ident</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pkg</span>:<span class='ident'>ident</span> :: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>func</span>:<span class='ident'>ident</span>) <span class='op'>=&gt;</span> {
-        <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>func</span>(
-            <span class='ident'>cx</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> ::<span class='ident'>syntax</span>::<span class='ident'>ext</span>::<span class='ident'>base</span>::<span class='ident'>ExtCtxt</span>,
-            <span class='ident'>span</span>: ::<span class='ident'>syntax</span>::<span class='ident'>codemap</span>::<span class='ident'>Span</span>,
-            <span class='ident'>meta_item</span>: <span class='kw-2'>&amp;</span>::<span class='ident'>syntax</span>::<span class='ident'>ast</span>::<span class='ident'>MetaItem</span>,
-            <span class='ident'>annotatable</span>: <span class='kw-2'>&amp;</span>::<span class='ident'>syntax</span>::<span class='ident'>ext</span>::<span class='ident'>base</span>::<span class='ident'>Annotatable</span>,
-            <span class='ident'>push</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>FnMut</span>(::<span class='ident'>syntax</span>::<span class='ident'>ext</span>::<span class='ident'>base</span>::<span class='ident'>Annotatable</span>)
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">shim</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">pkg</span>:<span class="ident">ident</span> :: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">func</span>:<span class="ident">ident</span>) <span class="op">=&gt;</span> {
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">func</span>(
+            <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> ::<span class="ident">syntax</span>::<span class="ident">ext</span>::<span class="ident">base</span>::<span class="ident">ExtCtxt</span>,
+            <span class="ident">span</span>: ::<span class="ident">syntax</span>::<span class="ident">codemap</span>::<span class="ident">Span</span>,
+            <span class="ident">meta_item</span>: <span class="kw-2">&amp;</span>::<span class="ident">syntax</span>::<span class="ident">ast</span>::<span class="ident">MetaItem</span>,
+            <span class="ident">annotatable</span>: <span class="kw-2">&amp;</span>::<span class="ident">syntax</span>::<span class="ident">ext</span>::<span class="ident">base</span>::<span class="ident">Annotatable</span>,
+            <span class="ident">push</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">FnMut</span>(::<span class="ident">syntax</span>::<span class="ident">ext</span>::<span class="ident">base</span>::<span class="ident">Annotatable</span>)
         ) {
-            <span class='kw'>let</span> <span class='ident'>item</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='kw-2'>*</span><span class='ident'>annotatable</span> {
-                ::<span class='ident'>syntax</span>::<span class='ident'>ext</span>::<span class='ident'>base</span>::<span class='ident'>Annotatable</span>::<span class='ident'>Item</span>(<span class='kw-2'>ref</span> <span class='ident'>item</span>) <span class='op'>=&gt;</span> <span class='ident'>item</span>,
-                _ <span class='op'>=&gt;</span> {
-                    <span class='ident'>cx</span>.<span class='ident'>span_err</span>(
-                        <span class='ident'>meta_item</span>.<span class='ident'>span</span>,
-                        <span class='macro'>concat</span><span class='macro'>!</span>(<span class='string'>&quot;`#[derive(&quot;</span>,
-                                <span class='macro'>stringify</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span>),
-                                <span class='string'>&quot;)]` may only be applied to structs and enums&quot;</span>));
-                    <span class='kw'>return</span>;
+            <span class="kw">let</span> <span class="ident">item</span> <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">*</span><span class="ident">annotatable</span> {
+                ::<span class="ident">syntax</span>::<span class="ident">ext</span>::<span class="ident">base</span>::<span class="ident">Annotatable</span>::<span class="ident">Item</span>(<span class="kw-2">ref</span> <span class="ident">item</span>) <span class="op">=&gt;</span> <span class="ident">item</span>,
+                _ <span class="op">=&gt;</span> {
+                    <span class="ident">cx</span>.<span class="ident">span_err</span>(
+                        <span class="ident">meta_item</span>.<span class="ident">span</span>,
+                        <span class="macro">concat</span><span class="macro">!</span>(<span class="string">&quot;`#[derive(&quot;</span>,
+                                <span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>),
+                                <span class="string">&quot;)]` may only be applied to structs and enums&quot;</span>));
+                    <span class="kw">return</span>;
                 }
             };
 
-            <span class='kw'>use</span> <span class='ident'>syntax</span>::{<span class='ident'>attr</span>, <span class='ident'>ast</span>, <span class='ident'>visit</span>};
-            <span class='kw'>struct</span> <span class='ident'>MarkSerdeAttributesUsed</span>;
-            <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>visit</span>::<span class='ident'>Visitor</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MarkSerdeAttributesUsed</span> {
-                <span class='kw'>fn</span> <span class='ident'>visit_attribute</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>attr</span>: <span class='kw-2'>&amp;</span><span class='ident'>ast</span>::<span class='ident'>Attribute</span>) {
-                    <span class='kw'>if</span> <span class='ident'>attr</span>.<span class='ident'>value</span>.<span class='ident'>name</span> <span class='op'>==</span> <span class='string'>&quot;serde&quot;</span> {
-                        <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>ast</span>::<span class='ident'>MetaItemKind</span>::<span class='ident'>List</span>(..) <span class='op'>=</span> <span class='ident'>attr</span>.<span class='ident'>value</span>.<span class='ident'>node</span> {
-                            <span class='ident'>attr</span>::<span class='ident'>mark_used</span>(<span class='ident'>attr</span>);
+            <span class="kw">use</span> <span class="ident">syntax</span>::{<span class="ident">attr</span>, <span class="ident">ast</span>, <span class="ident">visit</span>};
+            <span class="kw">struct</span> <span class="ident">MarkSerdeAttributesUsed</span>;
+            <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">visit</span>::<span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MarkSerdeAttributesUsed</span> {
+                <span class="kw">fn</span> <span class="ident">visit_attribute</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">attr</span>: <span class="kw-2">&amp;</span><span class="ident">ast</span>::<span class="ident">Attribute</span>) {
+                    <span class="kw">if</span> <span class="ident">attr</span>.<span class="ident">value</span>.<span class="ident">name</span> <span class="op">==</span> <span class="string">&quot;serde&quot;</span> {
+                        <span class="kw">if</span> <span class="kw">let</span> <span class="ident">ast</span>::<span class="ident">MetaItemKind</span>::<span class="ident">List</span>(..) <span class="op">=</span> <span class="ident">attr</span>.<span class="ident">value</span>.<span class="ident">node</span> {
+                            <span class="ident">attr</span>::<span class="ident">mark_used</span>(<span class="ident">attr</span>);
                         }
                     }
                 }
             }
-            <span class='ident'>visit</span>::<span class='ident'>walk_item</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>MarkSerdeAttributesUsed</span>, <span class='ident'>item</span>);
+            <span class="ident">visit</span>::<span class="ident">walk_item</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">MarkSerdeAttributesUsed</span>, <span class="ident">item</span>);
 
-            <span class='kw'>use</span> <span class='ident'>syntax</span>::<span class='ident'>print</span>::<span class='ident'>pprust</span>;
-            <span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>pprust</span>::<span class='ident'>item_to_string</span>(<span class='ident'>item</span>);
+            <span class="kw">use</span> <span class="ident">syntax</span>::<span class="ident">print</span>::<span class="ident">pprust</span>;
+            <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">pprust</span>::<span class="ident">item_to_string</span>(<span class="ident">item</span>);
 
-            <span class='kw'>use</span> {<span class='ident'>syn</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pkg</span>};
-            <span class='kw'>let</span> <span class='ident'>syn_item</span> <span class='op'>=</span> <span class='ident'>syn</span>::<span class='ident'>parse_macro_input</span>(<span class='kw-2'>&amp;</span><span class='ident'>s</span>).<span class='ident'>unwrap</span>();
-            <span class='kw'>let</span> <span class='ident'>expanded</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pkg</span>::<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>func</span>(<span class='kw-2'>&amp;</span><span class='ident'>syn_item</span>) {
-                <span class='prelude-val'>Ok</span>(<span class='ident'>expanded</span>) <span class='op'>=&gt;</span> <span class='ident'>expanded</span>.<span class='ident'>to_string</span>(),
-                <span class='prelude-val'>Err</span>(<span class='ident'>msg</span>) <span class='op'>=&gt;</span> {
-                    <span class='ident'>cx</span>.<span class='ident'>span_err</span>(<span class='ident'>span</span>, <span class='kw-2'>&amp;</span><span class='ident'>msg</span>);
-                    <span class='kw'>return</span>;
+            <span class="kw">use</span> {<span class="ident">syn</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">pkg</span>};
+            <span class="kw">let</span> <span class="ident">syn_item</span> <span class="op">=</span> <span class="ident">syn</span>::<span class="ident">parse_macro_input</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">expanded</span> <span class="op">=</span> <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">pkg</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">func</span>(<span class="kw-2">&amp;</span><span class="ident">syn_item</span>) {
+                <span class="prelude-val">Ok</span>(<span class="ident">expanded</span>) <span class="op">=&gt;</span> <span class="ident">expanded</span>.<span class="ident">to_string</span>(),
+                <span class="prelude-val">Err</span>(<span class="ident">msg</span>) <span class="op">=&gt;</span> {
+                    <span class="ident">cx</span>.<span class="ident">span_err</span>(<span class="ident">span</span>, <span class="kw-2">&amp;</span><span class="ident">msg</span>);
+                    <span class="kw">return</span>;
                 }
             };
 
-            <span class='kw'>use</span> <span class='ident'>syntax</span>::<span class='ident'>parse</span>;
-            <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>stringify</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span>).<span class='ident'>to_string</span>();
-            <span class='kw'>let</span> <span class='ident'>sess</span> <span class='op'>=</span> <span class='ident'>cx</span>.<span class='ident'>parse_sess</span>;
-            <span class='kw'>let</span> <span class='ident'>impl_item</span> <span class='op'>=</span> <span class='ident'>parse</span>::<span class='ident'>parse_item_from_source_str</span>(<span class='ident'>name</span>, <span class='ident'>expanded</span>, <span class='ident'>sess</span>);
-            <span class='ident'>push</span>(::<span class='ident'>syntax</span>::<span class='ident'>ext</span>::<span class='ident'>base</span>::<span class='ident'>Annotatable</span>::<span class='ident'>Item</span>(<span class='ident'>impl_item</span>.<span class='ident'>unwrap</span>().<span class='ident'>unwrap</span>()));
+            <span class="kw">use</span> <span class="ident">syntax</span>::<span class="ident">parse</span>;
+            <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="macro">stringify</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>).<span class="ident">to_string</span>();
+            <span class="kw">let</span> <span class="ident">sess</span> <span class="op">=</span> <span class="ident">cx</span>.<span class="ident">parse_sess</span>;
+            <span class="kw">let</span> <span class="ident">impl_item</span> <span class="op">=</span> <span class="ident">parse</span>::<span class="ident">parse_item_from_source_str</span>(<span class="ident">name</span>, <span class="ident">expanded</span>, <span class="ident">sess</span>);
+            <span class="ident">push</span>(::<span class="ident">syntax</span>::<span class="ident">ext</span>::<span class="ident">base</span>::<span class="ident">Annotatable</span>::<span class="ident">Item</span>(<span class="ident">impl_item</span>.<span class="ident">unwrap</span>().<span class="ident">unwrap</span>()));
         }
     };
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;with-syntex&quot;</span>)]</span>
-<span class='kw'>mod</span> <span class='ident'>shim</span> {
-    <span class='macro'>shim</span><span class='macro'>!</span>(<span class='ident'>Serialize</span> <span class='ident'>ser</span>::<span class='ident'>expand_derive_serialize</span>);
-    <span class='macro'>shim</span><span class='macro'>!</span>(<span class='ident'>Deserialize</span> <span class='ident'>de</span>::<span class='ident'>expand_derive_deserialize</span>);
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;with-syntex&quot;</span>)]</span>
+<span class="kw">mod</span> <span class="ident">shim</span> {
+    <span class="macro">shim</span><span class="macro">!</span>(<span class="ident">Serialize</span> <span class="ident">ser</span>::<span class="ident">expand_derive_serialize</span>);
+    <span class="macro">shim</span><span class="macro">!</span>(<span class="ident">Deserialize</span> <span class="ident">de</span>::<span class="ident">expand_derive_deserialize</span>);
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;with-syn&quot;</span>)]</span>
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-<span class='doccomment'>/// Not public API. Use the serde_derive crate.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>expand_derive_serialize</span>(<span class='ident'>item</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>quote</span>::<span class='ident'>Tokens</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>syn_item</span> <span class='op'>=</span> <span class='ident'>syn</span>::<span class='ident'>parse_macro_input</span>(<span class='ident'>item</span>).<span class='ident'>unwrap</span>();
-    <span class='ident'>ser</span>::<span class='ident'>expand_derive_serialize</span>(<span class='kw-2'>&amp;</span><span class='ident'>syn_item</span>)
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;with-syn&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="doccomment">/// Not public API. Use the serde_derive crate.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">expand_derive_serialize</span>(<span class="ident">item</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">quote</span>::<span class="ident">Tokens</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">syn_item</span> <span class="op">=</span> <span class="ident">syn</span>::<span class="ident">parse_macro_input</span>(<span class="ident">item</span>).<span class="ident">unwrap</span>();
+    <span class="ident">ser</span>::<span class="ident">expand_derive_serialize</span>(<span class="kw-2">&amp;</span><span class="ident">syn_item</span>)
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;with-syn&quot;</span>)]</span>
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-<span class='doccomment'>/// Not public API. Use the serde_derive crate.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>expand_derive_deserialize</span>(<span class='ident'>item</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>quote</span>::<span class='ident'>Tokens</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>syn_item</span> <span class='op'>=</span> <span class='ident'>syn</span>::<span class='ident'>parse_macro_input</span>(<span class='ident'>item</span>).<span class='ident'>unwrap</span>();
-    <span class='ident'>de</span>::<span class='ident'>expand_derive_deserialize</span>(<span class='kw-2'>&amp;</span><span class='ident'>syn_item</span>)
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;with-syn&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="doccomment">/// Not public API. Use the serde_derive crate.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">expand_derive_deserialize</span>(<span class="ident">item</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">quote</span>::<span class="ident">Tokens</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">syn_item</span> <span class="op">=</span> <span class="ident">syn</span>::<span class="ident">parse_macro_input</span>(<span class="ident">item</span>).<span class="ident">unwrap</span>();
+    <span class="ident">de</span>::<span class="ident">expand_derive_deserialize</span>(<span class="kw-2">&amp;</span><span class="ident">syn_item</span>)
 }
 </pre>
 </section>

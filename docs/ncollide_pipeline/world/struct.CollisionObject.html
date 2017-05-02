@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc struct">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,47 +43,47 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>ncollide_pipeline</a>::<wbr><a href='index.html'>world</a>::<wbr><a class='struct' href=''>CollisionObject</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>ncollide_pipeline</a>::<wbr><a href='index.html'>world</a>::<wbr><a class="struct" href=''>CollisionObject</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/ncollide_pipeline/world/collision_object.rs.html#64-79' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct CollisionObject&lt;P:&nbsp;<a class='trait' href='../../ncollide_math/point/trait.Point.html' title='ncollide_math::point::Point'>Point</a>, M, T&gt; {
-    pub uid: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>,
+<pre class='rust struct'>pub struct CollisionObject&lt;P:&nbsp;<a class="trait" href="../../ncollide_math/point/trait.Point.html" title="trait ncollide_math::point::Point">Point</a>, M, T&gt; {
+    pub uid: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,
     pub position: M,
-    pub shape: <a class='struct' href='../../ncollide_geometry/shape/shape/struct.ShapeHandle.html' title='ncollide_geometry::shape::shape::ShapeHandle'>ShapeHandle</a>&lt;P, M&gt;,
-    pub collision_groups: <a class='struct' href='../../ncollide_pipeline/world/struct.CollisionGroups.html' title='ncollide_pipeline::world::CollisionGroups'>CollisionGroups</a>,
-    pub query_type: <a class='enum' href='../../ncollide_pipeline/world/enum.GeometricQueryType.html' title='ncollide_pipeline::world::GeometricQueryType'>GeometricQueryType</a>&lt;P::<a class='trait' href='../../alga/linear/vector/trait.EuclideanSpace.html' title='alga::linear::vector::EuclideanSpace'>Real</a>&gt;,
+    pub shape: <a class="struct" href="../../ncollide_geometry/shape/shape/struct.ShapeHandle.html" title="struct ncollide_geometry::shape::shape::ShapeHandle">ShapeHandle</a>&lt;P, M&gt;,
+    pub collision_groups: <a class="struct" href="../../ncollide_pipeline/world/struct.CollisionGroups.html" title="struct ncollide_pipeline::world::CollisionGroups">CollisionGroups</a>,
+    pub query_type: <a class="enum" href="../../ncollide_pipeline/world/enum.GeometricQueryType.html" title="enum ncollide_pipeline::world::GeometricQueryType">GeometricQueryType</a>&lt;P::<a class="trait" href="../../alga/linear/vector/trait.EuclideanSpace.html" title="trait alga::linear::vector::EuclideanSpace">Real</a>&gt;,
     pub data: T,
     // some fields omitted
 }</pre><div class='docblock'><p>A stand-alone object that has a position and a shape.</p>
-</div><h2 class='fields'>Fields</h2><span id='structfield.uid' class='structfield'>
+</div><h2 class='fields'>Fields</h2><span id='structfield.uid' class="structfield">
                            <span id='uid.v' class='invisible'>
-                           <code>uid: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The collsion object unique identifier.</p>
-</div><span id='structfield.position' class='structfield'>
+                           <code>uid: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code>
+                           </span></span><div class='docblock'><p>The collsion object unique identifier.</p>
+</div><span id='structfield.position' class="structfield">
                            <span id='position.v' class='invisible'>
                            <code>position: M</code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The collision object position.</p>
-</div><span id='structfield.shape' class='structfield'>
+                           </span></span><div class='docblock'><p>The collision object position.</p>
+</div><span id='structfield.shape' class="structfield">
                            <span id='shape.v' class='invisible'>
-                           <code>shape: <a class='struct' href='../../ncollide_geometry/shape/shape/struct.ShapeHandle.html' title='ncollide_geometry::shape::shape::ShapeHandle'>ShapeHandle</a>&lt;P, M&gt;</code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The collision object shape.</p>
-</div><span id='structfield.collision_groups' class='structfield'>
+                           <code>shape: <a class="struct" href="../../ncollide_geometry/shape/shape/struct.ShapeHandle.html" title="struct ncollide_geometry::shape::shape::ShapeHandle">ShapeHandle</a>&lt;P, M&gt;</code>
+                           </span></span><div class='docblock'><p>The collision object shape.</p>
+</div><span id='structfield.collision_groups' class="structfield">
                            <span id='collision_groups.v' class='invisible'>
-                           <code>collision_groups: <a class='struct' href='../../ncollide_pipeline/world/struct.CollisionGroups.html' title='ncollide_pipeline::world::CollisionGroups'>CollisionGroups</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The collision groups of the collision object.</p>
-</div><span id='structfield.query_type' class='structfield'>
+                           <code>collision_groups: <a class="struct" href="../../ncollide_pipeline/world/struct.CollisionGroups.html" title="struct ncollide_pipeline::world::CollisionGroups">CollisionGroups</a></code>
+                           </span></span><div class='docblock'><p>The collision groups of the collision object.</p>
+</div><span id='structfield.query_type' class="structfield">
                            <span id='query_type.v' class='invisible'>
-                           <code>query_type: <a class='enum' href='../../ncollide_pipeline/world/enum.GeometricQueryType.html' title='ncollide_pipeline::world::GeometricQueryType'>GeometricQueryType</a>&lt;P::<a class='trait' href='../../alga/linear/vector/trait.EuclideanSpace.html' title='alga::linear::vector::EuclideanSpace'>Real</a>&gt;</code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The kind of queries this collision object is expected to .</p>
-</div><span id='structfield.data' class='structfield'>
+                           <code>query_type: <a class="enum" href="../../ncollide_pipeline/world/enum.GeometricQueryType.html" title="enum ncollide_pipeline::world::GeometricQueryType">GeometricQueryType</a>&lt;P::<a class="trait" href="../../alga/linear/vector/trait.EuclideanSpace.html" title="trait alga::linear::vector::EuclideanSpace">Real</a>&gt;</code>
+                           </span></span><div class='docblock'><p>The kind of queries this collision object is expected to .</p>
+</div><span id='structfield.data' class="structfield">
                            <span id='data.v' class='invisible'>
                            <code>data: T</code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The user-defined data associated to this object.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;P:&nbsp;<a class='trait' href='../../ncollide_math/point/trait.Point.html' title='ncollide_math::point::Point'>Point</a>, M, T&gt; <a class='struct' href='../../ncollide_pipeline/world/struct.CollisionObject.html' title='ncollide_pipeline::world::CollisionObject'>CollisionObject</a>&lt;P, M, T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ncollide_pipeline/world/collision_object.rs.html#81-100' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(uid: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; position: M,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; shape: <a class='struct' href='../../ncollide_geometry/shape/shape/struct.ShapeHandle.html' title='ncollide_geometry::shape::shape::ShapeHandle'>ShapeHandle</a>&lt;P, M&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; groups: <a class='struct' href='../../ncollide_pipeline/world/struct.CollisionGroups.html' title='ncollide_pipeline::world::CollisionGroups'>CollisionGroups</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; query_type: <a class='enum' href='../../ncollide_pipeline/world/enum.GeometricQueryType.html' title='ncollide_pipeline::world::GeometricQueryType'>GeometricQueryType</a>&lt;P::<a class='trait' href='../../alga/linear/vector/trait.EuclideanSpace.html' title='alga::linear::vector::EuclideanSpace'>Real</a>&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; data: T)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='struct' href='../../ncollide_pipeline/world/struct.CollisionObject.html' title='ncollide_pipeline::world::CollisionObject'>CollisionObject</a>&lt;P, M, T&gt;</code></span></h4>
+                           </span></span><div class='docblock'><p>The user-defined data associated to this object.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;P:&nbsp;<a class="trait" href="../../ncollide_math/point/trait.Point.html" title="trait ncollide_math::point::Point">Point</a>, M, T&gt; <a class="struct" href="../../ncollide_pipeline/world/struct.CollisionObject.html" title="struct ncollide_pipeline::world::CollisionObject">CollisionObject</a>&lt;P, M, T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ncollide_pipeline/world/collision_object.rs.html#81-100' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(uid: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; position: M,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; shape: <a class="struct" href="../../ncollide_geometry/shape/shape/struct.ShapeHandle.html" title="struct ncollide_geometry::shape::shape::ShapeHandle">ShapeHandle</a>&lt;P, M&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; groups: <a class="struct" href="../../ncollide_pipeline/world/struct.CollisionGroups.html" title="struct ncollide_pipeline::world::CollisionGroups">CollisionGroups</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; query_type: <a class="enum" href="../../ncollide_pipeline/world/enum.GeometricQueryType.html" title="enum ncollide_pipeline::world::GeometricQueryType">GeometricQueryType</a>&lt;P::<a class="trait" href="../../alga/linear/vector/trait.EuclideanSpace.html" title="trait alga::linear::vector::EuclideanSpace">Real</a>&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; data: T)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class="struct" href="../../ncollide_pipeline/world/struct.CollisionObject.html" title="struct ncollide_pipeline::world::CollisionObject">CollisionObject</a>&lt;P, M, T&gt;</code></span></h4>
 <div class='docblock'><p>Creates a new collision object.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>

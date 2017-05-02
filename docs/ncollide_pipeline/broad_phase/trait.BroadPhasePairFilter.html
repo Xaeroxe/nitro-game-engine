@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,23 +43,23 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>ncollide_pipeline</a>::<wbr><a href='index.html'>broad_phase</a>::<wbr><a class='trait' href=''>BroadPhasePairFilter</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>ncollide_pipeline</a>::<wbr><a href='index.html'>broad_phase</a>::<wbr><a class="trait" href=''>BroadPhasePairFilter</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/ncollide_pipeline/broad_phase/broad_phase_pair_filter.rs.html#5-8' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait BroadPhasePairFilter&lt;P:&nbsp;<a class='trait' href='../../ncollide_math/point/trait.Point.html' title='ncollide_math::point::Point'>Point</a>, M, T&gt; {
-    fn <a href='#tymethod.is_pair_valid' class='fnname'>is_pair_valid</a>(&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b1: &amp;<a class='struct' href='../../ncollide_pipeline/world/struct.CollisionObject.html' title='ncollide_pipeline::world::CollisionObject'>CollisionObject</a>&lt;P, M, T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b2: &amp;<a class='struct' href='../../ncollide_pipeline/world/struct.CollisionObject.html' title='ncollide_pipeline::world::CollisionObject'>CollisionObject</a>&lt;P, M, T&gt;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+<pre class='rust trait'>pub trait BroadPhasePairFilter&lt;P:&nbsp;<a class="trait" href="../../ncollide_math/point/trait.Point.html" title="trait ncollide_math::point::Point">Point</a>, M, T&gt; {
+    fn <a href='#tymethod.is_pair_valid' class='fnname'>is_pair_valid</a>(&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b1: &amp;<a class="struct" href="../../ncollide_pipeline/world/struct.CollisionObject.html" title="struct ncollide_pipeline::world::CollisionObject">CollisionObject</a>&lt;P, M, T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b2: &amp;<a class="struct" href="../../ncollide_pipeline/world/struct.CollisionObject.html" title="struct ncollide_pipeline::world::CollisionObject">CollisionObject</a>&lt;P, M, T&gt;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
 }</pre><div class='docblock'><p>A signal handler for contact detection.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.is_pair_valid' class='method'><span id='is_pair_valid.v' class='invisible'><code>fn <a href='#tymethod.is_pair_valid' class='fnname'>is_pair_valid</a>(&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b1: &amp;<a class='struct' href='../../ncollide_pipeline/world/struct.CollisionObject.html' title='ncollide_pipeline::world::CollisionObject'>CollisionObject</a>&lt;P, M, T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b2: &amp;<a class='struct' href='../../ncollide_pipeline/world/struct.CollisionObject.html' title='ncollide_pipeline::world::CollisionObject'>CollisionObject</a>&lt;P, M, T&gt;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><div class='docblock'><p>Activate an action for when two objects start or stop to be close to each other.</p>
+        <h3 id='tymethod.is_pair_valid' class='method'><span id='is_pair_valid.v' class='invisible'><code>fn <a href='#tymethod.is_pair_valid' class='fnname'>is_pair_valid</a>(&amp;self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b1: &amp;<a class="struct" href="../../ncollide_pipeline/world/struct.CollisionObject.html" title="struct ncollide_pipeline::world::CollisionObject">CollisionObject</a>&lt;P, M, T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b2: &amp;<a class="struct" href="../../ncollide_pipeline/world/struct.CollisionObject.html" title="struct ncollide_pipeline::world::CollisionObject">CollisionObject</a>&lt;P, M, T&gt;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>Activate an action for when two objects start or stop to be close to each other.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;P:&nbsp;<a class='trait' href='../../ncollide_math/point/trait.Point.html' title='ncollide_math::point::Point'>Point</a>, M, T&gt; BroadPhasePairFilter&lt;P, M, T&gt; for <a class='struct' href='../../ncollide_pipeline/world/struct.CollisionGroupsPairFilter.html' title='ncollide_pipeline::world::CollisionGroupsPairFilter'>CollisionGroupsPairFilter</a></code></li>
+    <li><code>impl&lt;P:&nbsp;<a class="trait" href="../../ncollide_math/point/trait.Point.html" title="trait ncollide_math::point::Point">Point</a>, M, T&gt; BroadPhasePairFilter&lt;P, M, T&gt; for <a class="struct" href="../../ncollide_pipeline/world/struct.CollisionGroupsPairFilter.html" title="struct ncollide_pipeline::world::CollisionGroupsPairFilter">CollisionGroupsPairFilter</a></code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/ncollide_pipeline/broad_phase/trait.BroadPhasePairFilter.js">
                  </script></section>

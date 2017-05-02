@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -145,109 +145,109 @@
 <span id="100">100</span>
 <span id="101">101</span>
 <span id="102">102</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! These are all of the **marker traits** used in typenum. Note that the definition here</span>
-<span class='doccomment'>//! for marker traits is slightly different than the conventional one --- we include traits</span>
-<span class='doccomment'>//! with functions that convert a type to the corresponding value.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! For example, the `Integer` trait includes the function (among others) `fn to_i32() -&gt;</span>
-<span class='doccomment'>//! i32` so that one can do this:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```</span>
-<span class='doccomment'>//! use typenum::{N42, Integer};</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! assert_eq!(-42, N42::to_i32());</span>
-<span class='doccomment'>//! ```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! These are all of the **marker traits** used in typenum. Note that the definition here</span>
+<span class="doccomment">//! for marker traits is slightly different than the conventional one --- we include traits</span>
+<span class="doccomment">//! with functions that convert a type to the corresponding value.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! For example, the `Integer` trait includes the function (among others) `fn to_i32() -&gt;</span>
+<span class="doccomment">//! i32` so that one can do this:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! use typenum::{N42, Integer};</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! assert_eq!(-42, N42::to_i32());</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!</span>
 
-<span class='doccomment'>/// A **marker trait** to designate that a type is not zero. All number types in this</span>
-<span class='doccomment'>/// crate implement `NonZero` except `B0`, `U0`, and `Z0`.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>NonZero</span> {}
+<span class="doccomment">/// A **marker trait** to designate that a type is not zero. All number types in this</span>
+<span class="doccomment">/// crate implement `NonZero` except `B0`, `U0`, and `Z0`.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">NonZero</span> {}
 
-<span class='doccomment'>/// A **Marker trait** for the types `Greater`, `Equal`, and `Less`.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This trait should not be implemented for anything outside this crate.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Ord</span> {
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_ordering</span>() <span class='op'>-&gt;</span> ::<span class='ident'>core</span>::<span class='ident'>cmp</span>::<span class='ident'>Ordering</span>;
+<span class="doccomment">/// A **Marker trait** for the types `Greater`, `Equal`, and `Less`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This trait should not be implemented for anything outside this crate.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Ord</span> {
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_ordering</span>() <span class="op">-&gt;</span> ::<span class="ident">core</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
 }
 
-<span class='doccomment'>/// The **marker trait** for compile time bits.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This trait should not be implemented for anything outside this crate.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Bit</span> {
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_u8</span>() <span class='op'>-&gt;</span> <span class='ident'>u8</span>;
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_bool</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
+<span class="doccomment">/// The **marker trait** for compile time bits.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This trait should not be implemented for anything outside this crate.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Bit</span> {
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_u8</span>() <span class="op">-&gt;</span> <span class="ident">u8</span>;
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_bool</span>() <span class="op">-&gt;</span> <span class="ident">bool</span>;
 }
 
-<span class='doccomment'>/// The **marker trait** for compile time unsigned integers.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This trait should not be implemented for anything outside this crate.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Example</span>
-<span class='doccomment'>/// ```rust</span>
-<span class='doccomment'>/// use typenum::{U3, Unsigned};</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// assert_eq!(U3::to_u32(), 3);</span>
-<span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Unsigned</span> {
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_u8</span>() <span class='op'>-&gt;</span> <span class='ident'>u8</span>;
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_u16</span>() <span class='op'>-&gt;</span> <span class='ident'>u16</span>;
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_u32</span>() <span class='op'>-&gt;</span> <span class='ident'>u32</span>;
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_u64</span>() <span class='op'>-&gt;</span> <span class='ident'>u64</span>;
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_usize</span>() <span class='op'>-&gt;</span> <span class='ident'>usize</span>;
+<span class="doccomment">/// The **marker trait** for compile time unsigned integers.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This trait should not be implemented for anything outside this crate.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Example</span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// use typenum::{U3, Unsigned};</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// assert_eq!(U3::to_u32(), 3);</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Unsigned</span> {
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_u8</span>() <span class="op">-&gt;</span> <span class="ident">u8</span>;
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_u16</span>() <span class="op">-&gt;</span> <span class="ident">u16</span>;
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_u32</span>() <span class="op">-&gt;</span> <span class="ident">u32</span>;
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_u64</span>() <span class="op">-&gt;</span> <span class="ident">u64</span>;
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_usize</span>() <span class="op">-&gt;</span> <span class="ident">usize</span>;
 
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_i8</span>() <span class='op'>-&gt;</span> <span class='ident'>i8</span>;
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_i16</span>() <span class='op'>-&gt;</span> <span class='ident'>i16</span>;
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_i32</span>() <span class='op'>-&gt;</span> <span class='ident'>i32</span>;
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_i64</span>() <span class='op'>-&gt;</span> <span class='ident'>i64</span>;
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_isize</span>() <span class='op'>-&gt;</span> <span class='ident'>isize</span>;
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_i8</span>() <span class="op">-&gt;</span> <span class="ident">i8</span>;
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_i16</span>() <span class="op">-&gt;</span> <span class="ident">i16</span>;
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_i32</span>() <span class="op">-&gt;</span> <span class="ident">i32</span>;
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_i64</span>() <span class="op">-&gt;</span> <span class="ident">i64</span>;
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_isize</span>() <span class="op">-&gt;</span> <span class="ident">isize</span>;
 }
 
-<span class='doccomment'>/// The **marker trait** for compile time signed integers.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This trait should not be implemented for anything outside this crate.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Example</span>
-<span class='doccomment'>/// ```rust</span>
-<span class='doccomment'>/// use typenum::{P3, Integer};</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// assert_eq!(P3::to_i32(), 3);</span>
-<span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Integer</span> {
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_i8</span>() <span class='op'>-&gt;</span> <span class='ident'>i8</span>;
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_i16</span>() <span class='op'>-&gt;</span> <span class='ident'>i16</span>;
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_i32</span>() <span class='op'>-&gt;</span> <span class='ident'>i32</span>;
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_i64</span>() <span class='op'>-&gt;</span> <span class='ident'>i64</span>;
-    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_isize</span>() <span class='op'>-&gt;</span> <span class='ident'>isize</span>;
+<span class="doccomment">/// The **marker trait** for compile time signed integers.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This trait should not be implemented for anything outside this crate.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Example</span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// use typenum::{P3, Integer};</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// assert_eq!(P3::to_i32(), 3);</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Integer</span> {
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_i8</span>() <span class="op">-&gt;</span> <span class="ident">i8</span>;
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_i16</span>() <span class="op">-&gt;</span> <span class="ident">i16</span>;
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_i32</span>() <span class="op">-&gt;</span> <span class="ident">i32</span>;
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_i64</span>() <span class="op">-&gt;</span> <span class="ident">i64</span>;
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">to_isize</span>() <span class="op">-&gt;</span> <span class="ident">isize</span>;
 }
 
-<span class='doccomment'>/// The **marker trait** for type-level arrays of type-level numbers.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This trait should not be implemented for anything outside this crate.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Someday, it will contain a function or associated constant to produce a runtime array, like the</span>
-<span class='doccomment'>/// other marker traits here. However, that requires stabilization of associated consts or of</span>
-<span class='doccomment'>/// const functions.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>TypeArray</span> {}
+<span class="doccomment">/// The **marker trait** for type-level arrays of type-level numbers.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This trait should not be implemented for anything outside this crate.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Someday, it will contain a function or associated constant to produce a runtime array, like the</span>
+<span class="doccomment">/// other marker traits here. However, that requires stabilization of associated consts or of</span>
+<span class="doccomment">/// const functions.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">TypeArray</span> {}
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,29 +43,29 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>alga</a>::<wbr><a href='index.html'>linear</a>::<wbr><a class='trait' href=''>Transformation</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>alga</a>::<wbr><a href='index.html'>linear</a>::<wbr><a class="trait" href=''>Transformation</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/alga/linear/transformation.rs.html#8-17' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Transformation&lt;E:&nbsp;<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>EuclideanSpace</a>&gt;: <a class='trait' href='../../alga/general/trait.MultiplicativeMonoid.html' title='alga::general::MultiplicativeMonoid'>MultiplicativeMonoid</a> {
+<pre class='rust trait'>pub trait Transformation&lt;E:&nbsp;<a class="trait" href="../../alga/linear/trait.EuclideanSpace.html" title="trait alga::linear::EuclideanSpace">EuclideanSpace</a>&gt;: <a class="trait" href="../../alga/general/trait.MultiplicativeMonoid.html" title="trait alga::general::MultiplicativeMonoid">MultiplicativeMonoid</a> {
     fn <a href='#tymethod.transform_point' class='fnname'>transform_point</a>(&amp;self, pt: &amp;E) -&gt; E;
-    fn <a href='#tymethod.transform_vector' class='fnname'>transform_vector</a>(&amp;self, v: &amp;E::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>) -&gt; E::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>;
+    fn <a href='#tymethod.transform_vector' class='fnname'>transform_vector</a>(&amp;self, v: &amp;E::<a class="trait" href="../../alga/linear/trait.EuclideanSpace.html" title="trait alga::linear::EuclideanSpace">Coordinates</a>) -&gt; E::<a class="trait" href="../../alga/linear/trait.EuclideanSpace.html" title="trait alga::linear::EuclideanSpace">Coordinates</a>;
 }</pre><div class='docblock'><p>A general transformation acting on an euclidean space. It may not be inversible.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
         <h3 id='tymethod.transform_point' class='method'><span id='transform_point.v' class='invisible'><code>fn <a href='#tymethod.transform_point' class='fnname'>transform_point</a>(&amp;self, pt: &amp;E) -&gt; E</code></span></h3><div class='docblock'><p>Applies this group&#39;s action on a point from the euclidean space.</p>
-</div><h3 id='tymethod.transform_vector' class='method'><span id='transform_vector.v' class='invisible'><code>fn <a href='#tymethod.transform_vector' class='fnname'>transform_vector</a>(&amp;self, v: &amp;E::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>) -&gt; E::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a></code></span></h3><div class='docblock'><p>Applies this group&#39;s action on a vector from the euclidean space.</p>
+</div><h3 id='tymethod.transform_vector' class='method'><span id='transform_vector.v' class='invisible'><code>fn <a href='#tymethod.transform_vector' class='fnname'>transform_vector</a>(&amp;self, v: &amp;E::<a class="trait" href="../../alga/linear/trait.EuclideanSpace.html" title="trait alga::linear::EuclideanSpace">Coordinates</a>) -&gt; E::<a class="trait" href="../../alga/linear/trait.EuclideanSpace.html" title="trait alga::linear::EuclideanSpace">Coordinates</a></code></span></h3><div class='docblock'><p>Applies this group&#39;s action on a vector from the euclidean space.</p>
 
 <p>If <code>v</code> is a vector and <code>a, b</code> two point such that <code>v = a - b</code>, the action <code>∘</code> on a vector
 is defined as <code>self ∘ v = (self × a) - (self × b)</code>.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;R, E&gt; Transformation&lt;E&gt; for R <span class='where fmt-newline'>where R: <a class='trait' href='../../alga/general/trait.Real.html' title='alga::general::Real'>Real</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E: <a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>EuclideanSpace</a>&lt;Real=R&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E::<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>Coordinates</a>: <a class='trait' href='../../alga/general/trait.ClosedMul.html' title='alga::general::ClosedMul'>ClosedMul</a>&lt;R&gt; + <a class='trait' href='../../alga/general/trait.ClosedDiv.html' title='alga::general::ClosedDiv'>ClosedDiv</a>&lt;R&gt; + <a class='trait' href='../../alga/general/trait.ClosedNeg.html' title='alga::general::ClosedNeg'>ClosedNeg</a></span></code></li>
-<li><code>impl&lt;E:&nbsp;<a class='trait' href='../../alga/linear/trait.EuclideanSpace.html' title='alga::linear::EuclideanSpace'>EuclideanSpace</a>&gt; Transformation&lt;E&gt; for <a class='struct' href='../../alga/general/struct.Id.html' title='alga::general::Id'>Id</a></code></li>
+    <li><code>impl&lt;R, E&gt; Transformation&lt;E&gt; for R <span class="where fmt-newline">where R: <a class="trait" href="../../alga/general/trait.Real.html" title="trait alga::general::Real">Real</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E: <a class="trait" href="../../alga/linear/trait.EuclideanSpace.html" title="trait alga::linear::EuclideanSpace">EuclideanSpace</a>&lt;Real=R&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E::<a class="trait" href="../../alga/linear/trait.EuclideanSpace.html" title="trait alga::linear::EuclideanSpace">Coordinates</a>: <a class="trait" href="../../alga/general/trait.ClosedMul.html" title="trait alga::general::ClosedMul">ClosedMul</a>&lt;R&gt; + <a class="trait" href="../../alga/general/trait.ClosedDiv.html" title="trait alga::general::ClosedDiv">ClosedDiv</a>&lt;R&gt; + <a class="trait" href="../../alga/general/trait.ClosedNeg.html" title="trait alga::general::ClosedNeg">ClosedNeg</a></span></code></li>
+<li><code>impl&lt;E:&nbsp;<a class="trait" href="../../alga/linear/trait.EuclideanSpace.html" title="trait alga::linear::EuclideanSpace">EuclideanSpace</a>&gt; Transformation&lt;E&gt; for <a class="struct" href="../../alga/general/struct.Id.html" title="struct alga::general::Id">Id</a></code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/alga/linear/trait.Transformation.js">
                  </script></section>

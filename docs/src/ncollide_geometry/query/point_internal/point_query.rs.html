@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -90,52 +90,52 @@
 <span id="45">45</span>
 <span id="46">46</span>
 <span id="47">47</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">na</span>;
+<span class="kw">use</span> <span class="ident">math</span>::<span class="ident">Point</span>;
 
-<span class='doccomment'>/// Description of the projection of a point on a shape.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>PointProjection</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Whether or not the point to project was inside of the shape.</span>
-    <span class='kw'>pub</span> <span class='ident'>is_inside</span>: <span class='ident'>bool</span>,
-    <span class='doccomment'>/// The projection result.</span>
-    <span class='kw'>pub</span> <span class='ident'>point</span>: <span class='ident'>P</span>,
+<span class="doccomment">/// Description of the projection of a point on a shape.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PointProjection</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Whether or not the point to project was inside of the shape.</span>
+    <span class="kw">pub</span> <span class="ident">is_inside</span>: <span class="ident">bool</span>,
+    <span class="doccomment">/// The projection result.</span>
+    <span class="kw">pub</span> <span class="ident">point</span>: <span class="ident">P</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> <span class='ident'>PointProjection</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Initializes a new `PointProjection`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>is_inside</span>: <span class='ident'>bool</span>, <span class='ident'>point</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>PointProjection</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='ident'>PointProjection</span> {
-            <span class='ident'>is_inside</span>: <span class='ident'>is_inside</span>,
-            <span class='ident'>point</span>:     <span class='ident'>point</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span> <span class="ident">PointProjection</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Initializes a new `PointProjection`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">is_inside</span>: <span class="ident">bool</span>, <span class="ident">point</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="ident">PointProjection</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+        <span class="ident">PointProjection</span> {
+            <span class="ident">is_inside</span>: <span class="ident">is_inside</span>,
+            <span class="ident">point</span>:     <span class="ident">point</span>
         }
     }
 }
 
-<span class='doccomment'>/// Trait of objects that can be tested for point inclusion and projection.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>PointQuery</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Projects a point on `self` transformed by `m`.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>project_point</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>pt</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>, <span class='ident'>solid</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>PointProjection</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>;
+<span class="doccomment">/// Trait of objects that can be tested for point inclusion and projection.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">PointQuery</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Projects a point on `self` transformed by `m`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">project_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>, <span class="ident">pt</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>, <span class="ident">solid</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">PointProjection</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>;
 
-    <span class='doccomment'>/// Computes the minimal distance between a point and `self` transformed by `m`.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>distance_to_point</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>pt</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>, <span class='ident'>solid</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span>::<span class='ident'>Real</span> {
-        <span class='kw'>let</span> <span class='ident'>proj</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>project_point</span>(<span class='ident'>m</span>, <span class='ident'>pt</span>, <span class='ident'>solid</span>);
-        <span class='kw'>let</span> <span class='ident'>dist</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>distance</span>(<span class='ident'>pt</span>, <span class='kw-2'>&amp;</span><span class='ident'>proj</span>.<span class='ident'>point</span>);
+    <span class="doccomment">/// Computes the minimal distance between a point and `self` transformed by `m`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">distance_to_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>, <span class="ident">pt</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>, <span class="ident">solid</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">P</span>::<span class="ident">Real</span> {
+        <span class="kw">let</span> <span class="ident">proj</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">project_point</span>(<span class="ident">m</span>, <span class="ident">pt</span>, <span class="ident">solid</span>);
+        <span class="kw">let</span> <span class="ident">dist</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">distance</span>(<span class="ident">pt</span>, <span class="kw-2">&amp;</span><span class="ident">proj</span>.<span class="ident">point</span>);
 
-        <span class='kw'>if</span> <span class='ident'>solid</span> <span class='op'>||</span> <span class='op'>!</span><span class='ident'>proj</span>.<span class='ident'>is_inside</span> {
-            <span class='ident'>dist</span>
+        <span class="kw">if</span> <span class="ident">solid</span> <span class="op">||</span> <span class="op">!</span><span class="ident">proj</span>.<span class="ident">is_inside</span> {
+            <span class="ident">dist</span>
         }
-        <span class='kw'>else</span> {
-            <span class='op'>-</span><span class='ident'>dist</span>
+        <span class="kw">else</span> {
+            <span class="op">-</span><span class="ident">dist</span>
         }
     }
 
-    <span class='doccomment'>/// Tests if the given point is inside of `self` transformed by `m`.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>contains_point</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>pt</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>project_point</span>(<span class='ident'>m</span>, <span class='ident'>pt</span>, <span class='bool-val'>false</span>).<span class='ident'>is_inside</span>
+    <span class="doccomment">/// Tests if the given point is inside of `self` transformed by `m`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">contains_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>, <span class="ident">pt</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">project_point</span>(<span class="ident">m</span>, <span class="ident">pt</span>, <span class="bool-val">false</span>).<span class="ident">is_inside</span>
     }
 }
 </pre>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -99,61 +99,61 @@
 <span id="54">54</span>
 <span id="55">55</span>
 <span id="56">56</span>
-</pre><pre class='rust '>
-<span class='doccomment'>/*!
+</pre><pre class="rust ">
+<span class="doccomment">/*!
 Querying SDL Version
  */</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ffi</span>::<span class='ident'>CStr</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::<span class="ident">CStr</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 
-<span class='kw'>use</span> <span class='ident'>sys</span>::<span class='ident'>version</span> <span class='kw'>as</span> <span class='ident'>ll</span>;
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">version</span> <span class="kw">as</span> <span class="ident">ll</span>;
 
-<span class='doccomment'>/// A structure that contains information about the version of SDL in use.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Version</span> {
-    <span class='doccomment'>/// major version</span>
-    <span class='kw'>pub</span> <span class='ident'>major</span>: <span class='ident'>u8</span>,
-    <span class='doccomment'>/// minor version</span>
-    <span class='kw'>pub</span> <span class='ident'>minor</span>: <span class='ident'>u8</span>,
-    <span class='doccomment'>/// update version (patchlevel)</span>
-    <span class='kw'>pub</span> <span class='ident'>patch</span>: <span class='ident'>u8</span>,
+<span class="doccomment">/// A structure that contains information about the version of SDL in use.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Version</span> {
+    <span class="doccomment">/// major version</span>
+    <span class="kw">pub</span> <span class="ident">major</span>: <span class="ident">u8</span>,
+    <span class="doccomment">/// minor version</span>
+    <span class="kw">pub</span> <span class="ident">minor</span>: <span class="ident">u8</span>,
+    <span class="doccomment">/// update version (patchlevel)</span>
+    <span class="kw">pub</span> <span class="ident">patch</span>: <span class="ident">u8</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Version</span> {
-    <span class='doccomment'>/// Convert a raw *SDL_version to Version.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_ll</span>(<span class='ident'>v</span>: <span class='ident'>ll</span>::<span class='ident'>SDL_version</span>) <span class='op'>-&gt;</span> <span class='ident'>Version</span> {
-        <span class='ident'>Version</span> { <span class='ident'>major</span>: <span class='ident'>v</span>.<span class='ident'>major</span>, <span class='ident'>minor</span>: <span class='ident'>v</span>.<span class='ident'>minor</span>, <span class='ident'>patch</span>: <span class='ident'>v</span>.<span class='ident'>patch</span> }
+<span class="kw">impl</span> <span class="ident">Version</span> {
+    <span class="doccomment">/// Convert a raw *SDL_version to Version.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_ll</span>(<span class="ident">v</span>: <span class="ident">ll</span>::<span class="ident">SDL_version</span>) <span class="op">-&gt;</span> <span class="ident">Version</span> {
+        <span class="ident">Version</span> { <span class="ident">major</span>: <span class="ident">v</span>.<span class="ident">major</span>, <span class="ident">minor</span>: <span class="ident">v</span>.<span class="ident">minor</span>, <span class="ident">patch</span>: <span class="ident">v</span>.<span class="ident">patch</span> }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>Version</span> {
-    <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-        <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;{}.{}.{}&quot;</span>, <span class='self'>self</span>.<span class='ident'>major</span>, <span class='self'>self</span>.<span class='ident'>minor</span>, <span class='self'>self</span>.<span class='ident'>patch</span>)
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Version</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}.{}.{}&quot;</span>, <span class="self">self</span>.<span class="ident">major</span>, <span class="self">self</span>.<span class="ident">minor</span>, <span class="self">self</span>.<span class="ident">patch</span>)
     }
 }
 
-<span class='doccomment'>/// Get the version of SDL that is linked against your program.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>version</span>() <span class='op'>-&gt;</span> <span class='ident'>Version</span> {
-    <span class='kw'>unsafe</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>cver</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_version</span> { <span class='ident'>major</span>: <span class='number'>0</span>, <span class='ident'>minor</span>: <span class='number'>0</span>, <span class='ident'>patch</span>: <span class='number'>0</span>};
-        <span class='ident'>ll</span>::<span class='ident'>SDL_GetVersion</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>cver</span>);
-        <span class='ident'>Version</span>::<span class='ident'>from_ll</span>(<span class='ident'>cver</span>)
+<span class="doccomment">/// Get the version of SDL that is linked against your program.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version</span>() <span class="op">-&gt;</span> <span class="ident">Version</span> {
+    <span class="kw">unsafe</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cver</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_version</span> { <span class="ident">major</span>: <span class="number">0</span>, <span class="ident">minor</span>: <span class="number">0</span>, <span class="ident">patch</span>: <span class="number">0</span>};
+        <span class="ident">ll</span>::<span class="ident">SDL_GetVersion</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cver</span>);
+        <span class="ident">Version</span>::<span class="ident">from_ll</span>(<span class="ident">cver</span>)
     }
 }
 
-<span class='doccomment'>/// Get the code revision of SDL that is linked against your program.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>revision</span>() <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-    <span class='kw'>unsafe</span> {
-        <span class='kw'>let</span> <span class='ident'>rev</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_GetRevision</span>();
-        <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>rev</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>().<span class='ident'>to_owned</span>()
+<span class="doccomment">/// Get the code revision of SDL that is linked against your program.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">revision</span>() <span class="op">-&gt;</span> <span class="ident">String</span> {
+    <span class="kw">unsafe</span> {
+        <span class="kw">let</span> <span class="ident">rev</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_GetRevision</span>();
+        <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">rev</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _).<span class="ident">to_str</span>().<span class="ident">unwrap</span>().<span class="ident">to_owned</span>()
     }
 }
 
-<span class='doccomment'>/// Get the revision number of SDL that is linked against your program.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>revision_number</span>() <span class='op'>-&gt;</span> <span class='ident'>i32</span> {
-    <span class='kw'>unsafe</span> {
-        <span class='ident'>ll</span>::<span class='ident'>SDL_GetRevisionNumber</span>()
+<span class="doccomment">/// Get the revision number of SDL that is linked against your program.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">revision_number</span>() <span class="op">-&gt;</span> <span class="ident">i32</span> {
+    <span class="kw">unsafe</span> {
+        <span class="ident">ll</span>::<span class="ident">SDL_GetRevisionNumber</span>()
     }
 }
 </pre>

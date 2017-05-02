@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -94,55 +94,55 @@
 <span id="49">49</span>
 <span id="50">50</span>
 <span id="51">51</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::{<span class='ident'>Borrow</span>, <span class='ident'>BorrowMut</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::{<span class="ident">Borrow</span>, <span class="ident">BorrowMut</span>};
 
-<span class='doccomment'>/// Special variant of Option that indicates a value may exist but is currently loaned out in a</span>
-<span class='doccomment'>/// &amp;mut.</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>OptionLoaned</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='prelude-val'>Some</span>(<span class='ident'>T</span>),
-    <span class='ident'>Loaned</span>,
-    <span class='prelude-val'>None</span>,
+<span class="doccomment">/// Special variant of Option that indicates a value may exist but is currently loaned out in a</span>
+<span class="doccomment">/// &amp;mut.</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">OptionLoaned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="prelude-val">Some</span>(<span class="ident">T</span>),
+    <span class="ident">Loaned</span>,
+    <span class="prelude-val">None</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>OptionLoaned</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>result</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>OptionLoaned</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='ident'>result</span> {
-            <span class='prelude-val'>Some</span>(<span class='prelude-val'>Some</span>(<span class='ident'>result</span>)) <span class='op'>=&gt;</span> <span class='ident'>OptionLoaned</span>::<span class='prelude-val'>Some</span>(<span class='ident'>result</span>),
-            <span class='prelude-val'>Some</span>(<span class='prelude-val'>None</span>) <span class='op'>=&gt;</span> <span class='ident'>OptionLoaned</span>::<span class='ident'>Loaned</span>,
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='ident'>OptionLoaned</span>::<span class='prelude-val'>None</span>,
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">OptionLoaned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">result</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">OptionLoaned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="ident">result</span> {
+            <span class="prelude-val">Some</span>(<span class="prelude-val">Some</span>(<span class="ident">result</span>)) <span class="op">=&gt;</span> <span class="ident">OptionLoaned</span>::<span class="prelude-val">Some</span>(<span class="ident">result</span>),
+            <span class="prelude-val">Some</span>(<span class="prelude-val">None</span>) <span class="op">=&gt;</span> <span class="ident">OptionLoaned</span>::<span class="ident">Loaned</span>,
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">OptionLoaned</span>::<span class="prelude-val">None</span>,
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>OptionLoaned</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>T</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>M</span>: <span class='ident'>Borrow</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">M</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">OptionLoaned</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">M</span>: <span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>result</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>OptionLoaned</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='ident'>result</span> {
-            <span class='prelude-val'>Some</span>(<span class='ident'>inner</span>) <span class='op'>=&gt;</span> {
-                <span class='kw'>match</span> <span class='ident'>inner</span>.<span class='ident'>as_ref</span>() {
-                    <span class='prelude-val'>Some</span>(<span class='ident'>inner</span>) <span class='op'>=&gt;</span> <span class='ident'>OptionLoaned</span>::<span class='prelude-val'>Some</span>(<span class='ident'>inner</span>.<span class='ident'>borrow</span>()),
-                    <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='ident'>OptionLoaned</span>::<span class='ident'>Loaned</span>,
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">result</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">OptionLoaned</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="ident">result</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">inner</span>) <span class="op">=&gt;</span> {
+                <span class="kw">match</span> <span class="ident">inner</span>.<span class="ident">as_ref</span>() {
+                    <span class="prelude-val">Some</span>(<span class="ident">inner</span>) <span class="op">=&gt;</span> <span class="ident">OptionLoaned</span>::<span class="prelude-val">Some</span>(<span class="ident">inner</span>.<span class="ident">borrow</span>()),
+                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">OptionLoaned</span>::<span class="ident">Loaned</span>,
                 }
             }
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='ident'>OptionLoaned</span>::<span class='prelude-val'>None</span>,
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">OptionLoaned</span>::<span class="prelude-val">None</span>,
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>OptionLoaned</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>T</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>M</span>: <span class='ident'>BorrowMut</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">M</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">OptionLoaned</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">M</span>: <span class="ident">BorrowMut</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>result</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>OptionLoaned</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='ident'>result</span> {
-            <span class='prelude-val'>Some</span>(<span class='ident'>inner</span>) <span class='op'>=&gt;</span> {
-                <span class='kw'>match</span> <span class='ident'>inner</span>.<span class='ident'>as_mut</span>() {
-                    <span class='prelude-val'>Some</span>(<span class='ident'>inner</span>) <span class='op'>=&gt;</span> <span class='ident'>OptionLoaned</span>::<span class='prelude-val'>Some</span>(<span class='ident'>inner</span>.<span class='ident'>borrow_mut</span>()),
-                    <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='ident'>OptionLoaned</span>::<span class='ident'>Loaned</span>,
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">result</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">OptionLoaned</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="ident">result</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">inner</span>) <span class="op">=&gt;</span> {
+                <span class="kw">match</span> <span class="ident">inner</span>.<span class="ident">as_mut</span>() {
+                    <span class="prelude-val">Some</span>(<span class="ident">inner</span>) <span class="op">=&gt;</span> <span class="ident">OptionLoaned</span>::<span class="prelude-val">Some</span>(<span class="ident">inner</span>.<span class="ident">borrow_mut</span>()),
+                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">OptionLoaned</span>::<span class="ident">Loaned</span>,
                 }
             }
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='ident'>OptionLoaned</span>::<span class='prelude-val'>None</span>,
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">OptionLoaned</span>::<span class="prelude-val">None</span>,
         }
     }
 }

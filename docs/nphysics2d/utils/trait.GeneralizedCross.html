@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,34 +43,34 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>nphysics2d</a>::<wbr><a href='index.html'>utils</a>::<wbr><a class='trait' href=''>GeneralizedCross</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>nphysics2d</a>::<wbr><a href='index.html'>utils</a>::<wbr><a class="trait" href=''>GeneralizedCross</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/nphysics2d/utils/generalized_cross.rs.html#6-17' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait GeneralizedCross {
-    type <a href='#associatedtype.CrossVector' class='type'>CrossVector</a>;
-    type <a href='#associatedtype.CrossMatrix' class='type'>CrossMatrix</a>;
-    fn <a href='#tymethod.gcross' class='fnname'>gcross</a>(&amp;self, rhs: &amp;Self) -&gt; Self::<a class='trait' href='../../nphysics2d/utils/trait.GeneralizedCross.html' title='nphysics2d::utils::GeneralizedCross'>CrossVector</a>;
-    fn <a href='#tymethod.gcross_matrix' class='fnname'>gcross_matrix</a>(&amp;self) -&gt; Self::<a class='trait' href='../../nphysics2d/utils/trait.GeneralizedCross.html' title='nphysics2d::utils::GeneralizedCross'>CrossMatrix</a>;
+    type <a href='#associatedtype.CrossVector' class="type">CrossVector</a>;
+    type <a href='#associatedtype.CrossMatrix' class="type">CrossMatrix</a>;
+    fn <a href='#tymethod.gcross' class='fnname'>gcross</a>(&amp;self, rhs: &amp;Self) -&gt; Self::<a class="trait" href="../../nphysics2d/utils/trait.GeneralizedCross.html" title="trait nphysics2d::utils::GeneralizedCross">CrossVector</a>;
+    fn <a href='#tymethod.gcross_matrix' class='fnname'>gcross_matrix</a>(&amp;self) -&gt; Self::<a class="trait" href="../../nphysics2d/utils/trait.GeneralizedCross.html" title="trait nphysics2d::utils::GeneralizedCross">CrossMatrix</a>;
 }</pre><div class='docblock'><p>This is a non-standard generalization of the cross product design exclusively to group the
 3D cross product and the 2D perpendicular product behind the same interface.</p>
 </div>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.CrossVector' class='method'><span id='CrossVector.t' class='invisible'><code>type <a href='#associatedtype.CrossVector' class='type'>CrossVector</a></code></span></h3><div class='docblock'><p>The result type of the this (non-standard) generalized cross product.</p>
-</div><h3 id='associatedtype.CrossMatrix' class='method'><span id='CrossMatrix.t' class='invisible'><code>type <a href='#associatedtype.CrossMatrix' class='type'>CrossMatrix</a></code></span></h3><div class='docblock'><p>The matrix representation of this (non-standard) generalized cross product.</p>
+        <h3 id='associatedtype.CrossVector' class='method'><span id='CrossVector.t' class='invisible'><code>type <a href='#associatedtype.CrossVector' class="type">CrossVector</a></code></span></h3><div class='docblock'><p>The result type of the this (non-standard) generalized cross product.</p>
+</div><h3 id='associatedtype.CrossMatrix' class='method'><span id='CrossMatrix.t' class='invisible'><code>type <a href='#associatedtype.CrossMatrix' class="type">CrossMatrix</a></code></span></h3><div class='docblock'><p>The matrix representation of this (non-standard) generalized cross product.</p>
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.gcross' class='method'><span id='gcross.v' class='invisible'><code>fn <a href='#tymethod.gcross' class='fnname'>gcross</a>(&amp;self, rhs: &amp;Self) -&gt; Self::<a class='trait' href='../../nphysics2d/utils/trait.GeneralizedCross.html' title='nphysics2d::utils::GeneralizedCross'>CrossVector</a></code></span></h3><div class='docblock'><p>Computes this (non-standard) generalized cross product.</p>
-</div><h3 id='tymethod.gcross_matrix' class='method'><span id='gcross_matrix.v' class='invisible'><code>fn <a href='#tymethod.gcross_matrix' class='fnname'>gcross_matrix</a>(&amp;self) -&gt; Self::<a class='trait' href='../../nphysics2d/utils/trait.GeneralizedCross.html' title='nphysics2d::utils::GeneralizedCross'>CrossMatrix</a></code></span></h3><div class='docblock'><p>Computes the matrix represenattion of this (non-standard) generalized cross product.</p>
+        <h3 id='tymethod.gcross' class='method'><span id='gcross.v' class='invisible'><code>fn <a href='#tymethod.gcross' class='fnname'>gcross</a>(&amp;self, rhs: &amp;Self) -&gt; Self::<a class="trait" href="../../nphysics2d/utils/trait.GeneralizedCross.html" title="trait nphysics2d::utils::GeneralizedCross">CrossVector</a></code></span></h3><div class='docblock'><p>Computes this (non-standard) generalized cross product.</p>
+</div><h3 id='tymethod.gcross_matrix' class='method'><span id='gcross_matrix.v' class='invisible'><code>fn <a href='#tymethod.gcross_matrix' class='fnname'>gcross_matrix</a>(&amp;self) -&gt; Self::<a class="trait" href="../../nphysics2d/utils/trait.GeneralizedCross.html" title="trait nphysics2d::utils::GeneralizedCross">CrossMatrix</a></code></span></h3><div class='docblock'><p>Computes the matrix represenattion of this (non-standard) generalized cross product.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;N:&nbsp;<a class='trait' href='../../alga/general/real/trait.Real.html' title='alga::general::real::Real'>Real</a>&gt; GeneralizedCross for <a class='type' href='../../nalgebra/core/alias/type.Vector2.html' title='nalgebra::core::alias::Vector2'>Vector2</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N:&nbsp;<a class='trait' href='../../alga/general/real/trait.Real.html' title='alga::general::real::Real'>Real</a>&gt; GeneralizedCross for <a class='type' href='../../nalgebra/core/alias/type.Vector3.html' title='nalgebra::core::alias::Vector3'>Vector3</a>&lt;N&gt;</code></li>
+    <li><code>impl&lt;N:&nbsp;<a class="trait" href="../../alga/general/real/trait.Real.html" title="trait alga::general::real::Real">Real</a>&gt; GeneralizedCross for <a class="type" href="../../nalgebra/core/alias/type.Vector2.html" title="type nalgebra::core::alias::Vector2">Vector2</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N:&nbsp;<a class="trait" href="../../alga/general/real/trait.Real.html" title="trait alga::general::real::Real">Real</a>&gt; GeneralizedCross for <a class="type" href="../../nalgebra/core/alias/type.Vector3.html" title="type nalgebra::core::alias::Vector3">Vector3</a>&lt;N&gt;</code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/nphysics2d/utils/trait.GeneralizedCross.js">
                  </script></section>

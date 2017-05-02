@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -54,16 +54,16 @@
 <span id="9"> 9</span>
 <span id="10">10</span>
 <span id="11">11</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>::<span class='ident'>Point2</span>;
-<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>shape</span>::<span class='ident'>Triangle2</span>;
-<span class='kw'>use</span> <span class='ident'>procedural</span>::{<span class='ident'>Polyline</span>, <span class='ident'>Polyline2</span>};
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>ToPolyline</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::<span class="ident">Real</span>;
+<span class="kw">use</span> <span class="ident">na</span>::<span class="ident">Point2</span>;
+<span class="kw">use</span> <span class="ident">geometry</span>::<span class="ident">shape</span>::<span class="ident">Triangle2</span>;
+<span class="kw">use</span> <span class="ident">procedural</span>::{<span class="ident">Polyline</span>, <span class="ident">Polyline2</span>};
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">ToPolyline</span>;
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>ToPolyline</span><span class='op'>&lt;</span><span class='ident'>Point2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, ()<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Triangle2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>to_polyline</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, _: ()) <span class='op'>-&gt;</span> <span class='ident'>Polyline2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='ident'>Polyline</span>::<span class='ident'>new</span>(<span class='macro'>vec</span><span class='macro'>!</span>(<span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>a</span>(), <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>b</span>(), <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>c</span>()), <span class='prelude-val'>None</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span> <span class="ident">ToPolyline</span><span class="op">&lt;</span><span class="ident">Point2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, ()<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Triangle2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_polyline</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, _: ()) <span class="op">-&gt;</span> <span class="ident">Polyline2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="ident">Polyline</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">a</span>(), <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">b</span>(), <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">c</span>()), <span class="prelude-val">None</span>)
     }
 }
 </pre>

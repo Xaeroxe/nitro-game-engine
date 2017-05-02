@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -73,34 +73,34 @@
 <span id="28">28</span>
 <span id="29">29</span>
 <span id="30">30</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Data structure to describe a constraint between two rigid bodies.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Data structure to describe a constraint between two rigid bodies.</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>RefCell</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">RefCell</span>;
 
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
-<span class='kw'>use</span> <span class='ident'>ncollide</span>::<span class='ident'>query</span>::<span class='ident'>Contact</span>;
-<span class='kw'>use</span> <span class='ident'>object</span>::<span class='ident'>RigidBody</span>;
-<span class='kw'>use</span> <span class='ident'>detection</span>::<span class='ident'>joint</span>::{<span class='ident'>Fixed</span>, <span class='ident'>BallInSocket</span>};
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::<span class="ident">Real</span>;
+<span class="kw">use</span> <span class="ident">ncollide</span>::<span class="ident">query</span>::<span class="ident">Contact</span>;
+<span class="kw">use</span> <span class="ident">object</span>::<span class="ident">RigidBody</span>;
+<span class="kw">use</span> <span class="ident">detection</span>::<span class="ident">joint</span>::{<span class="ident">Fixed</span>, <span class="ident">BallInSocket</span>};
+<span class="kw">use</span> <span class="ident">math</span>::<span class="ident">Point</span>;
 
-<span class='doccomment'>/// A constraint between two rigid bodies.</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Constraint</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// A contact.</span>
-    <span class='ident'>RBRB</span>(<span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>, <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>, <span class='ident'>Contact</span><span class='op'>&lt;</span><span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>),
-    <span class='doccomment'>/// A ball-in-socket joint.</span>
-    <span class='ident'>BallInSocket</span>(<span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>BallInSocket</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>),
-    <span class='doccomment'>/// A fixed joint.</span>
-    <span class='ident'>Fixed</span>(<span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>Fixed</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>),
+<span class="doccomment">/// A constraint between two rigid bodies.</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Constraint</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// A contact.</span>
+    <span class="ident">RBRB</span>(<span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>, <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>, <span class="ident">Contact</span><span class="op">&lt;</span><span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>),
+    <span class="doccomment">/// A ball-in-socket joint.</span>
+    <span class="ident">BallInSocket</span>(<span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">BallInSocket</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>),
+    <span class="doccomment">/// A fixed joint.</span>
+    <span class="ident">Fixed</span>(<span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">Fixed</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>),
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span> <span class='ident'>Clone</span> <span class='kw'>for</span> <span class='ident'>Constraint</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>clone</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Constraint</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>Constraint</span>::<span class='ident'>RBRB</span>(<span class='kw-2'>ref</span> <span class='ident'>a</span>, <span class='kw-2'>ref</span> <span class='ident'>b</span>, <span class='kw-2'>ref</span> <span class='ident'>c</span>) <span class='op'>=&gt;</span> <span class='ident'>Constraint</span>::<span class='ident'>RBRB</span>(<span class='ident'>a</span>.<span class='ident'>clone</span>(), <span class='ident'>b</span>.<span class='ident'>clone</span>(), <span class='ident'>c</span>.<span class='ident'>clone</span>()),
-            <span class='ident'>Constraint</span>::<span class='ident'>BallInSocket</span>(<span class='kw-2'>ref</span> <span class='ident'>bis</span>)     <span class='op'>=&gt;</span> <span class='ident'>Constraint</span>::<span class='ident'>BallInSocket</span>(<span class='ident'>bis</span>.<span class='ident'>clone</span>()),
-            <span class='ident'>Constraint</span>::<span class='ident'>Fixed</span>(<span class='kw-2'>ref</span> <span class='ident'>f</span>)              <span class='op'>=&gt;</span> <span class='ident'>Constraint</span>::<span class='ident'>Fixed</span>(<span class='ident'>f</span>.<span class='ident'>clone</span>()),
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Constraint</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Constraint</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">Constraint</span>::<span class="ident">RBRB</span>(<span class="kw-2">ref</span> <span class="ident">a</span>, <span class="kw-2">ref</span> <span class="ident">b</span>, <span class="kw-2">ref</span> <span class="ident">c</span>) <span class="op">=&gt;</span> <span class="ident">Constraint</span>::<span class="ident">RBRB</span>(<span class="ident">a</span>.<span class="ident">clone</span>(), <span class="ident">b</span>.<span class="ident">clone</span>(), <span class="ident">c</span>.<span class="ident">clone</span>()),
+            <span class="ident">Constraint</span>::<span class="ident">BallInSocket</span>(<span class="kw-2">ref</span> <span class="ident">bis</span>)     <span class="op">=&gt;</span> <span class="ident">Constraint</span>::<span class="ident">BallInSocket</span>(<span class="ident">bis</span>.<span class="ident">clone</span>()),
+            <span class="ident">Constraint</span>::<span class="ident">Fixed</span>(<span class="kw-2">ref</span> <span class="ident">f</span>)              <span class="op">=&gt;</span> <span class="ident">Constraint</span>::<span class="ident">Fixed</span>(<span class="ident">f</span>.<span class="ident">clone</span>()),
         }
     }
 }

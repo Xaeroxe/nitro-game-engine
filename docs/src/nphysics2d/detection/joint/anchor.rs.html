@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -87,48 +87,48 @@
 <span id="42">42</span>
 <span id="43">43</span>
 <span id="44">44</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>RefCell</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">RefCell</span>;
 
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='ident'>object</span>::<span class='ident'>RigidBody</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::<span class="ident">Real</span>;
+<span class="kw">use</span> <span class="ident">na</span>;
+<span class="kw">use</span> <span class="ident">object</span>::<span class="ident">RigidBody</span>;
+<span class="kw">use</span> <span class="ident">math</span>::<span class="ident">Point</span>;
 
-<span class='doccomment'>/// One of the two end points of a joint.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Anchor</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span>, <span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The body attached to this anchor.</span>
-    <span class='kw'>pub</span> <span class='ident'>body</span>:     <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;&gt;</span>,
-    <span class='doccomment'>/// The attach position, in local coordinates of the attached body.</span>
-    <span class='kw'>pub</span> <span class='ident'>position</span>: <span class='ident'>P</span>
+<span class="doccomment">/// One of the two end points of a joint.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Anchor</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span>, <span class="ident">P</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The body attached to this anchor.</span>
+    <span class="kw">pub</span> <span class="ident">body</span>:     <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span><span class="op">&gt;&gt;</span>,
+    <span class="doccomment">/// The attach position, in local coordinates of the attached body.</span>
+    <span class="kw">pub</span> <span class="ident">position</span>: <span class="ident">P</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>Anchor</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new `Anchor` at a given `position` on a `body` local space.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If `body` is `None`, the anchor is concidered to be attached to the ground and `position`</span>
-    <span class='doccomment'>/// is the attach point in global coordinates.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>body</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>RigidBody</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;&gt;</span>, <span class='ident'>position</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>Anchor</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='ident'>Anchor</span> {
-            <span class='ident'>body</span>:     <span class='ident'>body</span>,
-            <span class='ident'>position</span>: <span class='ident'>position</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span>, <span class="ident">P</span><span class="op">&gt;</span> <span class="ident">Anchor</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">P</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new `Anchor` at a given `position` on a `body` local space.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If `body` is `None`, the anchor is concidered to be attached to the ground and `position`</span>
+    <span class="doccomment">/// is the attach point in global coordinates.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">body</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">RigidBody</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span><span class="op">&gt;&gt;</span>, <span class="ident">position</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="ident">Anchor</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">P</span><span class="op">&gt;</span> {
+        <span class="ident">Anchor</span> {
+            <span class="ident">body</span>:     <span class="ident">body</span>,
+            <span class="ident">position</span>: <span class="ident">position</span>
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span>, <span class='ident'>P</span><span class='op'>&gt;</span> <span class='ident'>Anchor</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The center of mass of the body attached to this anchor.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Returns the zero vector if no body is attached.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>center_of_mass</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>body</span> {
-            <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>b</span>) <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>rb</span> <span class='op'>=</span> <span class='ident'>b</span>.<span class='ident'>borrow</span>();
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span>, <span class="ident">P</span><span class="op">&gt;</span> <span class="ident">Anchor</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">P</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The center of mass of the body attached to this anchor.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns the zero vector if no body is attached.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">center_of_mass</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Point</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">body</span> {
+            <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">b</span>) <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="ident">rb</span> <span class="op">=</span> <span class="ident">b</span>.<span class="ident">borrow</span>();
 
-                <span class='ident'>rb</span>.<span class='ident'>center_of_mass</span>().<span class='ident'>clone</span>()
+                <span class="ident">rb</span>.<span class="ident">center_of_mass</span>().<span class="ident">clone</span>()
             },
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='ident'>na</span>::<span class='ident'>origin</span>()
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">na</span>::<span class="ident">origin</span>()
         }
     }
 }

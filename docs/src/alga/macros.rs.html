@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -203,165 +203,165 @@
 <span id="158">158</span>
 <span id="159">159</span>
 <span id="160">160</span>
-</pre><pre class='rust '>
-<span class='comment'>// Copyright 2014 The Algebra Developers. For a full listing of the authors,</span>
-<span class='comment'>// refer to the AUTHORS file at the top-level directory of this distribution.</span>
-<span class='comment'>//</span>
-<span class='comment'>// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
-<span class='comment'>// you may not use this file except in compliance with the License.</span>
-<span class='comment'>// You may obtain a copy of the License at</span>
-<span class='comment'>//</span>
-<span class='comment'>//     http://www.apache.org/licenses/LICENSE-2.0</span>
-<span class='comment'>//</span>
-<span class='comment'>// Unless required by applicable law or agreed to in writing, software</span>
-<span class='comment'>// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
-<span class='comment'>// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
-<span class='comment'>// See the License for the specific language governing permissions and</span>
-<span class='comment'>// limitations under the License.</span>
+</pre><pre class="rust ">
+<span class="comment">// Copyright 2014 The Algebra Developers. For a full listing of the authors,</span>
+<span class="comment">// refer to the AUTHORS file at the top-level directory of this distribution.</span>
+<span class="comment">//</span>
+<span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="comment">// you may not use this file except in compliance with the License.</span>
+<span class="comment">// You may obtain a copy of the License at</span>
+<span class="comment">//</span>
+<span class="comment">//     http://www.apache.org/licenses/LICENSE-2.0</span>
+<span class="comment">//</span>
+<span class="comment">// Unless required by applicable law or agreed to in writing, software</span>
+<span class="comment">// distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="comment">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="comment">// See the License for the specific language governing permissions and</span>
+<span class="comment">// limitations under the License.</span>
 
-<span class='doccomment'>/// Implements empty traits aka marker traits for types provided.</span>
-<span class='doccomment'>/// # Examples</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// # #[macro_use]</span>
-<span class='doccomment'>/// # extern crate alga;</span>
-<span class='doccomment'>/// # fn main() {}</span>
-<span class='doccomment'>/// trait Marker {}</span>
-<span class='doccomment'>/// struct Struct;</span>
-<span class='doccomment'>/// impl_marker!(Marker; u32; Struct);</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// # #[macro_use]</span>
-<span class='doccomment'>/// # extern crate alga;</span>
-<span class='doccomment'>/// # use std::fmt::Debug;</span>
-<span class='doccomment'>/// # fn main() {}</span>
-<span class='doccomment'>/// trait Marker&lt;T: Debug&gt; {}</span>
-<span class='doccomment'>/// struct Struct&lt;T&gt;(T);</span>
-<span class='doccomment'>/// impl_marker!(Marker&lt;T&gt;; Struct&lt;T&gt; where T: Debug);</span>
-<span class='doccomment'>/// ```</span>
-<span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>impl_marker</span>(
-    <span class='comment'>// Finds the generic parameters of the type and implements the trait for it</span>
-    (@<span class='ident'>para_rec</span>
-        [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>:<span class='ident'>ty</span>, ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>clause</span>:<span class='ident'>tt</span>)<span class='op'>+</span>), ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>type_constr</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>)]
-        (<span class='op'>&lt;</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>params</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>)
-    ) <span class='op'>=&gt;</span> {
-        <span class='kw'>impl</span><span class='op'>&lt;</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>params</span>)<span class='op'>*</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span> <span class='kw'>for</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>type_constr</span>)<span class='kw-2'>*</span><span class='op'>&lt;</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>params</span>)<span class='op'>*</span>
-            <span class='kw'>where</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>clause</span>)<span class='op'>+</span>
+<span class="doccomment">/// Implements empty traits aka marker traits for types provided.</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # #[macro_use]</span>
+<span class="doccomment">/// # extern crate alga;</span>
+<span class="doccomment">/// # fn main() {}</span>
+<span class="doccomment">/// trait Marker {}</span>
+<span class="doccomment">/// struct Struct;</span>
+<span class="doccomment">/// impl_marker!(Marker; u32; Struct);</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # #[macro_use]</span>
+<span class="doccomment">/// # extern crate alga;</span>
+<span class="doccomment">/// # use std::fmt::Debug;</span>
+<span class="doccomment">/// # fn main() {}</span>
+<span class="doccomment">/// trait Marker&lt;T: Debug&gt; {}</span>
+<span class="doccomment">/// struct Struct&lt;T&gt;(T);</span>
+<span class="doccomment">/// impl_marker!(Marker&lt;T&gt;; Struct&lt;T&gt; where T: Debug);</span>
+<span class="doccomment">/// ```</span>
+<span class="attribute">#[<span class="ident">macro_export</span>]</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_marker</span>(
+    <span class="comment">// Finds the generic parameters of the type and implements the trait for it</span>
+    (@<span class="ident">para_rec</span>
+        [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>:<span class="ident">ty</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">clause</span>:<span class="ident">tt</span>)<span class="op">+</span>), ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">type_constr</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>)]
+        (<span class="op">&lt;</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">params</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>)
+    ) <span class="op">=&gt;</span> {
+        <span class="kw">impl</span><span class="op">&lt;</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">params</span>)<span class="op">*</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span> <span class="kw">for</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">type_constr</span>)<span class="kw-2">*</span><span class="op">&lt;</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">params</span>)<span class="op">*</span>
+            <span class="kw">where</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">clause</span>)<span class="op">+</span>
         {}
     };
-    <span class='comment'>// Munches some token trees for searching generic parameters of the type</span>
-    (@<span class='ident'>para_rec</span>
-        [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>:<span class='ident'>ty</span>, ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>clause</span>:<span class='ident'>tt</span>)<span class='op'>+</span>), ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>prev</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>)]
-        (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>cur</span>:<span class='ident'>tt</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>rest</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>)
-    ) <span class='op'>=&gt;</span> {
-        <span class='macro'>impl_marker</span><span class='macro'>!</span>(@<span class='ident'>para_rec</span>
-            [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>, ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>clause</span>)<span class='op'>+</span>), ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>prev</span>)<span class='op'>*</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>cur</span>)]
-            ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>rest</span>)<span class='kw-2'>*</span>)
+    <span class="comment">// Munches some token trees for searching generic parameters of the type</span>
+    (@<span class="ident">para_rec</span>
+        [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>:<span class="ident">ty</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">clause</span>:<span class="ident">tt</span>)<span class="op">+</span>), ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prev</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>)]
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">cur</span>:<span class="ident">tt</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>)
+    ) <span class="op">=&gt;</span> {
+        <span class="macro">impl_marker</span><span class="macro">!</span>(@<span class="ident">para_rec</span>
+            [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">clause</span>)<span class="op">+</span>), ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prev</span>)<span class="op">*</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">cur</span>)]
+            ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>)<span class="kw-2">*</span>)
         );
     };
-    <span class='comment'>// Handles the trailing separator after where clause</span>
-    (@<span class='ident'>where_rec</span>
-        [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>:<span class='ident'>ty</span>, ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>typ3</span>:<span class='ident'>tt</span>)<span class='op'>+</span>), ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>clause</span>:<span class='ident'>tt</span>)<span class='op'>+</span>)]
-        ($(;)<span class='kw-2'>*</span>)
-    ) <span class='op'>=&gt;</span> {
-        <span class='macro'>impl_marker</span><span class='macro'>!</span>(@<span class='ident'>para_rec</span>
-            [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>, ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>clause</span>)<span class='op'>+</span>), ()]
-            ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>typ3</span>)<span class='op'>+</span>)
+    <span class="comment">// Handles the trailing separator after where clause</span>
+    (@<span class="ident">where_rec</span>
+        [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>:<span class="ident">ty</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">typ3</span>:<span class="ident">tt</span>)<span class="op">+</span>), ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">clause</span>:<span class="ident">tt</span>)<span class="op">+</span>)]
+        ($(;)<span class="kw-2">*</span>)
+    ) <span class="op">=&gt;</span> {
+        <span class="macro">impl_marker</span><span class="macro">!</span>(@<span class="ident">para_rec</span>
+            [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">clause</span>)<span class="op">+</span>), ()]
+            ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">typ3</span>)<span class="op">+</span>)
         );
     };
-    <span class='comment'>// Implements the trait for the generic type and continues searching other types</span>
-    (@<span class='ident'>where_rec</span>
-        [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>:<span class='ident'>ty</span>, ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>typ3</span>:<span class='ident'>tt</span>)<span class='op'>+</span>), ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>clause</span>:<span class='ident'>tt</span>)<span class='op'>+</span>)]
-        (; $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>rest</span>:<span class='ident'>tt</span>)<span class='op'>+</span>)
-    ) <span class='op'>=&gt;</span> {
-        <span class='macro'>impl_marker</span><span class='macro'>!</span>(@<span class='ident'>para_rec</span>
-            [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>, ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>clause</span>)<span class='op'>+</span>), ()]
-            ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>typ3</span>)<span class='op'>+</span>)
+    <span class="comment">// Implements the trait for the generic type and continues searching other types</span>
+    (@<span class="ident">where_rec</span>
+        [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>:<span class="ident">ty</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">typ3</span>:<span class="ident">tt</span>)<span class="op">+</span>), ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">clause</span>:<span class="ident">tt</span>)<span class="op">+</span>)]
+        (; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>:<span class="ident">tt</span>)<span class="op">+</span>)
+    ) <span class="op">=&gt;</span> {
+        <span class="macro">impl_marker</span><span class="macro">!</span>(@<span class="ident">para_rec</span>
+            [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">clause</span>)<span class="op">+</span>), ()]
+            ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">typ3</span>)<span class="op">+</span>)
         );
-        <span class='macro'>impl_marker</span><span class='macro'>!</span>(@<span class='ident'>rec</span>
-            [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>, ()]
-            ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>rest</span>)<span class='op'>+</span>)
-        );
-    };
-    <span class='comment'>// Munches some token trees for searching the end of the where clause</span>
-    (@<span class='ident'>where_rec</span>
-        [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>:<span class='ident'>ty</span>, ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>typ3</span>:<span class='ident'>tt</span>)<span class='op'>+</span>), ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>prev</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>)]
-        (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>cur</span>:<span class='ident'>tt</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>rest</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>)
-    ) <span class='op'>=&gt;</span> {
-        <span class='macro'>impl_marker</span><span class='macro'>!</span>(@<span class='ident'>where_rec</span>
-            [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>, ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>typ3</span>)<span class='op'>+</span>), ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>prev</span>)<span class='op'>*</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>cur</span>)]
-            ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>rest</span>)<span class='kw-2'>*</span>)
+        <span class="macro">impl_marker</span><span class="macro">!</span>(@<span class="ident">rec</span>
+            [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>, ()]
+            ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>)<span class="op">+</span>)
         );
     };
-    <span class='comment'>// Handles the trailing separator for non-generic type and implements the trait</span>
-    (@<span class='ident'>rec</span>
-        [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>:<span class='ident'>ty</span>, ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>typ3</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>)]
-        ($(;)<span class='kw-2'>*</span>)
-    ) <span class='op'>=&gt;</span> {
-        <span class='kw'>impl</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span> <span class='kw'>for</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>typ3</span>)<span class='op'>*</span> { }
-    };
-    <span class='comment'>// Implements the trait for the non-generic type and continues searching other types</span>
-    (@<span class='ident'>rec</span>
-        [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>:<span class='ident'>ty</span>, ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>typ3</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>)]
-        (; $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>rest</span>:<span class='ident'>tt</span>)<span class='op'>+</span>)
-    ) <span class='op'>=&gt;</span> {
-        <span class='kw'>impl</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span> <span class='kw'>for</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>typ3</span>)<span class='op'>*</span> { }
-        <span class='macro'>impl_marker</span><span class='macro'>!</span>(@<span class='ident'>rec</span>
-            [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>, ()]
-            ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>rest</span>)<span class='op'>+</span>)
+    <span class="comment">// Munches some token trees for searching the end of the where clause</span>
+    (@<span class="ident">where_rec</span>
+        [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>:<span class="ident">ty</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">typ3</span>:<span class="ident">tt</span>)<span class="op">+</span>), ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prev</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>)]
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">cur</span>:<span class="ident">tt</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>)
+    ) <span class="op">=&gt;</span> {
+        <span class="macro">impl_marker</span><span class="macro">!</span>(@<span class="ident">where_rec</span>
+            [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">typ3</span>)<span class="op">+</span>), ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prev</span>)<span class="op">*</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">cur</span>)]
+            ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>)<span class="kw-2">*</span>)
         );
     };
-    <span class='comment'>// Detects that there is indeed a where clause for the type and tries to find where it ends.</span>
-    (@<span class='ident'>rec</span>
-        [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>:<span class='ident'>ty</span>, ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>prev</span>:<span class='ident'>tt</span>)<span class='op'>+</span>)]
-        (<span class='kw'>where</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>rest</span>:<span class='ident'>tt</span>)<span class='op'>+</span>)
-    ) <span class='op'>=&gt;</span> {
-        <span class='macro'>impl_marker</span><span class='macro'>!</span>(@<span class='ident'>where_rec</span>
-            [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>, ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>prev</span>)<span class='op'>+</span>), ()]
-            ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>rest</span>)<span class='op'>+</span>)
+    <span class="comment">// Handles the trailing separator for non-generic type and implements the trait</span>
+    (@<span class="ident">rec</span>
+        [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>:<span class="ident">ty</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">typ3</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>)]
+        ($(;)<span class="kw-2">*</span>)
+    ) <span class="op">=&gt;</span> {
+        <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span> <span class="kw">for</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">typ3</span>)<span class="op">*</span> { }
+    };
+    <span class="comment">// Implements the trait for the non-generic type and continues searching other types</span>
+    (@<span class="ident">rec</span>
+        [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>:<span class="ident">ty</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">typ3</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>)]
+        (; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>:<span class="ident">tt</span>)<span class="op">+</span>)
+    ) <span class="op">=&gt;</span> {
+        <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span> <span class="kw">for</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">typ3</span>)<span class="op">*</span> { }
+        <span class="macro">impl_marker</span><span class="macro">!</span>(@<span class="ident">rec</span>
+            [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>, ()]
+            ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>)<span class="op">+</span>)
         );
     };
-    <span class='comment'>// Munches some token trees for detecting if we have where clause or not</span>
-    (@<span class='ident'>rec</span>
-        [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>:<span class='ident'>ty</span>, ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>prev</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>)]
-        (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>cur</span>:<span class='ident'>tt</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>rest</span>:<span class='ident'>tt</span>)<span class='kw-2'>*</span>)
-    ) <span class='op'>=&gt;</span> {
-        <span class='macro'>impl_marker</span><span class='macro'>!</span>(@<span class='ident'>rec</span>
-            [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>, ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>prev</span>)<span class='op'>*</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>cur</span>)]
-            ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>rest</span>)<span class='kw-2'>*</span>)
+    <span class="comment">// Detects that there is indeed a where clause for the type and tries to find where it ends.</span>
+    (@<span class="ident">rec</span>
+        [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>:<span class="ident">ty</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prev</span>:<span class="ident">tt</span>)<span class="op">+</span>)]
+        (<span class="kw">where</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>:<span class="ident">tt</span>)<span class="op">+</span>)
+    ) <span class="op">=&gt;</span> {
+        <span class="macro">impl_marker</span><span class="macro">!</span>(@<span class="ident">where_rec</span>
+            [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prev</span>)<span class="op">+</span>), ()]
+            ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>)<span class="op">+</span>)
         );
     };
-    <span class='comment'>// Entry point to the macro</span>
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>:<span class='ident'>ty</span>; $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>rest</span>:<span class='ident'>tt</span>)<span class='op'>+</span>) <span class='op'>=&gt;</span> {
-        <span class='macro'>impl_marker</span><span class='macro'>!</span>(@<span class='ident'>rec</span>
-            [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tra1t</span>, ()]
-            ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>rest</span>)<span class='op'>+</span>)
+    <span class="comment">// Munches some token trees for detecting if we have where clause or not</span>
+    (@<span class="ident">rec</span>
+        [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>:<span class="ident">ty</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prev</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>)]
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">cur</span>:<span class="ident">tt</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>:<span class="ident">tt</span>)<span class="kw-2">*</span>)
+    ) <span class="op">=&gt;</span> {
+        <span class="macro">impl_marker</span><span class="macro">!</span>(@<span class="ident">rec</span>
+            [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>, ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">prev</span>)<span class="op">*</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">cur</span>)]
+            ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>)<span class="kw-2">*</span>)
+        );
+    };
+    <span class="comment">// Entry point to the macro</span>
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>:<span class="ident">ty</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>:<span class="ident">tt</span>)<span class="op">+</span>) <span class="op">=&gt;</span> {
+        <span class="macro">impl_marker</span><span class="macro">!</span>(@<span class="ident">rec</span>
+            [<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tra1t</span>, ()]
+            ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rest</span>)<span class="op">+</span>)
         );
     };
 );
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>impl_ident</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>:<span class='ident'>ty</span>; <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>V</span>:<span class='ident'>expr</span>; $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>:<span class='ident'>ty</span>),<span class='op'>*</span> $(,)<span class='kw-2'>*</span>) <span class='op'>=&gt;</span> {
-        $(<span class='kw'>impl</span> <span class='ident'>Identity</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span> { <span class='attribute'>#[<span class='ident'>inline</span>]</span> <span class='kw'>fn</span> <span class='ident'>identity</span>() <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span> {<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>V</span>} })<span class='op'>+</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_ident</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>:<span class="ident">ty</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">V</span>:<span class="ident">expr</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>:<span class="ident">ty</span>),<span class="op">*</span> $(,)<span class="kw-2">*</span>) <span class="op">=&gt;</span> {
+        $(<span class="kw">impl</span> <span class="ident">Identity</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span> { <span class="attribute">#[<span class="ident">inline</span>]</span> <span class="kw">fn</span> <span class="ident">identity</span>() <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span> {<span class="macro-nonterminal">$</span><span class="macro-nonterminal">V</span>} })<span class="op">+</span>
     }
 }
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>impl_approx_eq</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>V</span>:<span class='ident'>expr</span>; $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>:<span class='ident'>ty</span>),<span class='op'>*</span> $(,)<span class='kw-2'>*</span>) <span class='op'>=&gt;</span> {
-        $(<span class='kw'>impl</span> <span class='ident'>ApproxEq</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span> {
-            <span class='kw'>type</span> <span class='ident'>Eps</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>;
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>default_epsilon</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Eps</span> { <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>V</span> }
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>approx_eq_eps</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>, <span class='ident'>epsilon</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                <span class='kw'>if</span> <span class='self'>self</span> <span class='op'>&lt;</span> <span class='ident'>b</span> {
-                    <span class='kw-2'>*</span><span class='ident'>b</span> <span class='op'>-</span> <span class='kw-2'>*</span><span class='self'>self</span> <span class='op'>&lt;=</span> <span class='kw-2'>*</span><span class='ident'>epsilon</span>
-                } <span class='kw'>else</span> {
-                    <span class='kw-2'>*</span><span class='self'>self</span> <span class='op'>-</span> <span class='kw-2'>*</span><span class='ident'>b</span> <span class='op'>&lt;=</span> <span class='kw-2'>*</span><span class='ident'>epsilon</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_approx_eq</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">V</span>:<span class="ident">expr</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>:<span class="ident">ty</span>),<span class="op">*</span> $(,)<span class="kw-2">*</span>) <span class="op">=&gt;</span> {
+        $(<span class="kw">impl</span> <span class="ident">ApproxEq</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span> {
+            <span class="kw">type</span> <span class="ident">Eps</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>;
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">default_epsilon</span>() <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Eps</span> { <span class="macro-nonterminal">$</span><span class="macro-nonterminal">V</span> }
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">approx_eq_eps</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>, <span class="ident">epsilon</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                <span class="kw">if</span> <span class="self">self</span> <span class="op">&lt;</span> <span class="ident">b</span> {
+                    <span class="kw-2">*</span><span class="ident">b</span> <span class="op">-</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">&lt;=</span> <span class="kw-2">*</span><span class="ident">epsilon</span>
+                } <span class="kw">else</span> {
+                    <span class="kw-2">*</span><span class="self">self</span> <span class="op">-</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">&lt;=</span> <span class="kw-2">*</span><span class="ident">epsilon</span>
                 }
             }
-        })<span class='op'>+</span>
+        })<span class="op">+</span>
     }
 }
 </pre>

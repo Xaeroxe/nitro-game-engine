@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -120,82 +120,82 @@
 <span id="75">75</span>
 <span id="76">76</span>
 <span id="77">77</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>error</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ffi</span>::{<span class='ident'>CStr</span>, <span class='ident'>CString</span>, <span class='ident'>NulError</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
-<span class='kw'>use</span> <span class='ident'>get_error</span>;
-<span class='kw'>use</span> <span class='ident'>libc</span>::<span class='ident'>c_char</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::{<span class="ident">CStr</span>, <span class="ident">CString</span>, <span class="ident">NulError</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">get_error</span>;
+<span class="kw">use</span> <span class="ident">libc</span>::<span class="ident">c_char</span>;
 
-<span class='kw'>use</span> <span class='ident'>sys</span>::<span class='ident'>filesystem</span> <span class='kw'>as</span> <span class='ident'>ll</span>;
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">filesystem</span> <span class="kw">as</span> <span class="ident">ll</span>;
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>base_path</span>() <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='kw'>unsafe</span> {
-        <span class='kw'>let</span> <span class='ident'>buf</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_GetBasePath</span>();
-        <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>buf</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>().<span class='ident'>to_owned</span>()
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">base_path</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+        <span class="kw">let</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_GetBasePath</span>();
+        <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">buf</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _).<span class="ident">to_str</span>().<span class="ident">unwrap</span>().<span class="ident">to_owned</span>()
     };
 
-    <span class='kw'>if</span> <span class='ident'>result</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
-        <span class='prelude-val'>Err</span>(<span class='ident'>get_error</span>())
-    } <span class='kw'>else</span> {
-        <span class='prelude-val'>Ok</span>(<span class='ident'>result</span>)
+    <span class="kw">if</span> <span class="ident">result</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span> {
+        <span class="prelude-val">Err</span>(<span class="ident">get_error</span>())
+    } <span class="kw">else</span> {
+        <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
     }
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>PrefPathError</span> {
-    <span class='ident'>InvalidOrganizationName</span>(<span class='ident'>NulError</span>),
-    <span class='ident'>InvalidApplicationName</span>(<span class='ident'>NulError</span>),
-    <span class='ident'>SdlError</span>(<span class='ident'>String</span>),
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">PrefPathError</span> {
+    <span class="ident">InvalidOrganizationName</span>(<span class="ident">NulError</span>),
+    <span class="ident">InvalidApplicationName</span>(<span class="ident">NulError</span>),
+    <span class="ident">SdlError</span>(<span class="ident">String</span>),
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>PrefPathError</span> {
-    <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-        <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>PrefPathError</span>::<span class='kw-2'>*</span>;
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">PrefPathError</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">PrefPathError</span>::<span class="kw-2">*</span>;
 
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>InvalidOrganizationName</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;Invalid organization name: {}&quot;</span>, <span class='ident'>e</span>),
-            <span class='ident'>InvalidApplicationName</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;Invalid application name: {}&quot;</span>, <span class='ident'>e</span>),
-            <span class='ident'>SdlError</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;SDL error: {}&quot;</span>, <span class='ident'>e</span>)
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">InvalidOrganizationName</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid organization name: {}&quot;</span>, <span class="ident">e</span>),
+            <span class="ident">InvalidApplicationName</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Invalid application name: {}&quot;</span>, <span class="ident">e</span>),
+            <span class="ident">SdlError</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;SDL error: {}&quot;</span>, <span class="ident">e</span>)
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>error</span>::<span class='ident'>Error</span> <span class='kw'>for</span> <span class='ident'>PrefPathError</span> {
-    <span class='kw'>fn</span> <span class='ident'>description</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>PrefPathError</span>::<span class='kw-2'>*</span>;
+<span class="kw">impl</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">PrefPathError</span> {
+    <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">PrefPathError</span>::<span class="kw-2">*</span>;
 
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>InvalidOrganizationName</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;invalid organization name&quot;</span>,
-            <span class='ident'>InvalidApplicationName</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;invalid application name&quot;</span>,
-            <span class='ident'>SdlError</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='ident'>e</span>,
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">InvalidOrganizationName</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;invalid organization name&quot;</span>,
+            <span class="ident">InvalidApplicationName</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;invalid application name&quot;</span>,
+            <span class="ident">SdlError</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="ident">e</span>,
         }
     }
 }
 
-<span class='comment'>// TODO: Change to OsStr or something?</span>
-<span class='doccomment'>/// Return the preferred directory for the application to write files on this</span>
-<span class='doccomment'>/// system, based on the given organization and application name.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>pref_path</span>(<span class='ident'>org_name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>app_name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>)
-        <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>PrefPathError</span><span class='op'>&gt;</span> {
-    <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>PrefPathError</span>::<span class='kw-2'>*</span>;
-    <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='kw'>unsafe</span> {
-        <span class='kw'>let</span> <span class='ident'>org</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='ident'>org_name</span>) {
-            <span class='prelude-val'>Ok</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>,
-            <span class='prelude-val'>Err</span>(<span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>InvalidOrganizationName</span>(<span class='ident'>err</span>)),
+<span class="comment">// TODO: Change to OsStr or something?</span>
+<span class="doccomment">/// Return the preferred directory for the application to write files on this</span>
+<span class="doccomment">/// system, based on the given organization and application name.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pref_path</span>(<span class="ident">org_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">app_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>)
+        <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">PrefPathError</span><span class="op">&gt;</span> {
+    <span class="kw">use</span> <span class="self">self</span>::<span class="ident">PrefPathError</span>::<span class="kw-2">*</span>;
+    <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+        <span class="kw">let</span> <span class="ident">org</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">org_name</span>) {
+            <span class="prelude-val">Ok</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>,
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InvalidOrganizationName</span>(<span class="ident">err</span>)),
         };
-        <span class='kw'>let</span> <span class='ident'>app</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='ident'>app_name</span>) {
-            <span class='prelude-val'>Ok</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span><span class='ident'>s</span>,
-            <span class='prelude-val'>Err</span>(<span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>InvalidApplicationName</span>(<span class='ident'>err</span>)),
+        <span class="kw">let</span> <span class="ident">app</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">app_name</span>) {
+            <span class="prelude-val">Ok</span>(<span class="ident">s</span>) <span class="op">=&gt;</span><span class="ident">s</span>,
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InvalidApplicationName</span>(<span class="ident">err</span>)),
         };
-        <span class='kw'>let</span> <span class='ident'>buf</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_GetPrefPath</span>(<span class='ident'>org</span>.<span class='ident'>as_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>, <span class='ident'>app</span>.<span class='ident'>as_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>);
-        <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>buf</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>().<span class='ident'>to_owned</span>()
+        <span class="kw">let</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_GetPrefPath</span>(<span class="ident">org</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">app</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>);
+        <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">buf</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _).<span class="ident">to_str</span>().<span class="ident">unwrap</span>().<span class="ident">to_owned</span>()
     };
 
-    <span class='kw'>if</span> <span class='ident'>result</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
-        <span class='prelude-val'>Err</span>(<span class='ident'>SdlError</span>(<span class='ident'>get_error</span>()))
-    } <span class='kw'>else</span> {
-        <span class='prelude-val'>Ok</span>(<span class='ident'>result</span>)
+    <span class="kw">if</span> <span class="ident">result</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span> {
+        <span class="prelude-val">Err</span>(<span class="ident">SdlError</span>(<span class="ident">get_error</span>()))
+    } <span class="kw">else</span> {
+        <span class="prelude-val">Ok</span>(<span class="ident">result</span>)
     }
 }
 </pre>

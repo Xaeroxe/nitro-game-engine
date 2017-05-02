@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -378,341 +378,341 @@
 <span id="333">333</span>
 <span id="334">334</span>
 <span id="335">335</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>error</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ffi</span>::{<span class='ident'>CStr</span>, <span class='ident'>CString</span>, <span class='ident'>NulError</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
-<span class='kw'>use</span> <span class='ident'>libc</span>::<span class='ident'>c_char</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ffi</span>::{<span class="ident">CStr</span>, <span class="ident">CString</span>, <span class="ident">NulError</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
+<span class="kw">use</span> <span class="ident">libc</span>::<span class="ident">c_char</span>;
 
-<span class='kw'>use</span> <span class='ident'>sys</span>::<span class='ident'>sdl</span> <span class='kw'>as</span> <span class='ident'>ll</span>;
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">sdl</span> <span class="kw">as</span> <span class="ident">ll</span>;
 
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>i32</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Error</span> {
-    <span class='ident'>NoMemError</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_ENOMEM</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>ReadError</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_EFREAD</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>WriteError</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_EFWRITE</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>SeekError</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_EFSEEK</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>UnsupportedError</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_UNSUPPORTED</span> <span class='kw'>as</span> <span class='ident'>i32</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">i32</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Error</span> {
+    <span class="ident">NoMemError</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_ENOMEM</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">ReadError</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_EFREAD</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">WriteError</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_EFWRITE</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">SeekError</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_EFSEEK</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">UnsupportedError</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_UNSUPPORTED</span> <span class="kw">as</span> <span class="ident">i32</span>
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
-    <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-        <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>Error</span>::<span class='kw-2'>*</span>;
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">Error</span>::<span class="kw-2">*</span>;
 
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>NoMemError</span> <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;Out of memory&quot;</span>),
-            <span class='ident'>ReadError</span> <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;Error reading from datastream&quot;</span>),
-            <span class='ident'>WriteError</span> <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;Error writing to datastream&quot;</span>),
-            <span class='ident'>SeekError</span> <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;Error seeking in datastream&quot;</span>),
-            <span class='ident'>UnsupportedError</span> <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;Unknown SDL error&quot;</span>)
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">NoMemError</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Out of memory&quot;</span>),
+            <span class="ident">ReadError</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Error reading from datastream&quot;</span>),
+            <span class="ident">WriteError</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Error writing to datastream&quot;</span>),
+            <span class="ident">SeekError</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Error seeking in datastream&quot;</span>),
+            <span class="ident">UnsupportedError</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Unknown SDL error&quot;</span>)
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>error</span>::<span class='ident'>Error</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
-    <span class='kw'>fn</span> <span class='ident'>description</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>Error</span>::<span class='kw-2'>*</span>;
+<span class="kw">impl</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">Error</span>::<span class="kw-2">*</span>;
 
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>NoMemError</span> <span class='op'>=&gt;</span> <span class='string'>&quot;out of memory&quot;</span>,
-            <span class='ident'>ReadError</span> <span class='op'>=&gt;</span> <span class='string'>&quot;error reading from datastream&quot;</span>,
-            <span class='ident'>WriteError</span> <span class='op'>=&gt;</span> <span class='string'>&quot;error writing to datastream&quot;</span>,
-            <span class='ident'>SeekError</span> <span class='op'>=&gt;</span> <span class='string'>&quot;error seeking in datastream&quot;</span>,
-            <span class='ident'>UnsupportedError</span> <span class='op'>=&gt;</span> <span class='string'>&quot;unknown SDL error&quot;</span>
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">NoMemError</span> <span class="op">=&gt;</span> <span class="string">&quot;out of memory&quot;</span>,
+            <span class="ident">ReadError</span> <span class="op">=&gt;</span> <span class="string">&quot;error reading from datastream&quot;</span>,
+            <span class="ident">WriteError</span> <span class="op">=&gt;</span> <span class="string">&quot;error writing to datastream&quot;</span>,
+            <span class="ident">SeekError</span> <span class="op">=&gt;</span> <span class="string">&quot;error seeking in datastream&quot;</span>,
+            <span class="ident">UnsupportedError</span> <span class="op">=&gt;</span> <span class="string">&quot;unknown SDL error&quot;</span>
         }
     }
 }
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::{<span class='ident'>AtomicBool</span>, <span class='ident'>ATOMIC_BOOL_INIT</span>};
-<span class='doccomment'>/// Only one Sdl context can be alive at a time.</span>
-<span class='doccomment'>/// Set to false by default (not alive).</span>
-<span class='kw'>static</span> <span class='ident'>IS_SDL_CONTEXT_ALIVE</span>: <span class='ident'>AtomicBool</span> <span class='op'>=</span> <span class='ident'>ATOMIC_BOOL_INIT</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::{<span class="ident">AtomicBool</span>, <span class="ident">ATOMIC_BOOL_INIT</span>};
+<span class="doccomment">/// Only one Sdl context can be alive at a time.</span>
+<span class="doccomment">/// Set to false by default (not alive).</span>
+<span class="kw">static</span> <span class="ident">IS_SDL_CONTEXT_ALIVE</span>: <span class="ident">AtomicBool</span> <span class="op">=</span> <span class="ident">ATOMIC_BOOL_INIT</span>;
 
-<span class='doccomment'>/// The SDL context type. Initialize with `sdl2::init()`.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// From a thread-safety perspective, `Sdl` represents the main thread.</span>
-<span class='doccomment'>/// As such, `Sdl` is a useful type for ensuring that SDL types that can only</span>
-<span class='doccomment'>/// be used on the main thread are initialized that way.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// For instance, `SDL_PumpEvents()` is not thread safe, and may only be</span>
-<span class='doccomment'>/// called on the main thread.</span>
-<span class='doccomment'>/// All functionality that calls `SDL_PumpEvents()` is thus put into an</span>
-<span class='doccomment'>/// `EventPump` type, which can only be obtained through `Sdl`.</span>
-<span class='doccomment'>/// This guarantees that the only way to call event-pumping functions is on</span>
-<span class='doccomment'>/// the main thread.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Sdl</span> {
-    <span class='ident'>sdldrop</span>: <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>SdlDrop</span><span class='op'>&gt;</span>
+<span class="doccomment">/// The SDL context type. Initialize with `sdl2::init()`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// From a thread-safety perspective, `Sdl` represents the main thread.</span>
+<span class="doccomment">/// As such, `Sdl` is a useful type for ensuring that SDL types that can only</span>
+<span class="doccomment">/// be used on the main thread are initialized that way.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// For instance, `SDL_PumpEvents()` is not thread safe, and may only be</span>
+<span class="doccomment">/// called on the main thread.</span>
+<span class="doccomment">/// All functionality that calls `SDL_PumpEvents()` is thus put into an</span>
+<span class="doccomment">/// `EventPump` type, which can only be obtained through `Sdl`.</span>
+<span class="doccomment">/// This guarantees that the only way to call event-pumping functions is on</span>
+<span class="doccomment">/// the main thread.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Sdl</span> {
+    <span class="ident">sdldrop</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">SdlDrop</span><span class="op">&gt;</span>
 }
 
-<span class='kw'>impl</span> <span class='ident'>Sdl</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Sdl</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::<span class='ident'>Ordering</span>;
+<span class="kw">impl</span> <span class="ident">Sdl</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Sdl</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::<span class="ident">Ordering</span>;
 
-            <span class='comment'>// Atomically switch the `IS_SDL_CONTEXT_ALIVE` global to true</span>
-            <span class='kw'>let</span> <span class='ident'>was_alive</span> <span class='op'>=</span> <span class='ident'>IS_SDL_CONTEXT_ALIVE</span>.<span class='ident'>swap</span>(<span class='bool-val'>true</span>, <span class='ident'>Ordering</span>::<span class='ident'>Relaxed</span>);
+            <span class="comment">// Atomically switch the `IS_SDL_CONTEXT_ALIVE` global to true</span>
+            <span class="kw">let</span> <span class="ident">was_alive</span> <span class="op">=</span> <span class="ident">IS_SDL_CONTEXT_ALIVE</span>.<span class="ident">swap</span>(<span class="bool-val">true</span>, <span class="ident">Ordering</span>::<span class="ident">Relaxed</span>);
 
-            <span class='kw'>if</span> <span class='ident'>was_alive</span> {
-                <span class='prelude-val'>Err</span>(<span class='string'>&quot;Cannot initialize `Sdl` more than once at a time.&quot;</span>.<span class='ident'>to_owned</span>())
-            } <span class='kw'>else</span> {
-                <span class='comment'>// Initialize SDL without any explicit subsystems (flags = 0).</span>
-                <span class='kw'>if</span> <span class='ident'>ll</span>::<span class='ident'>SDL_Init</span>(<span class='number'>0</span>) <span class='op'>==</span> <span class='number'>0</span> {
-                    <span class='prelude-val'>Ok</span>(<span class='ident'>Sdl</span> {
-                        <span class='ident'>sdldrop</span>: <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>SdlDrop</span>)
+            <span class="kw">if</span> <span class="ident">was_alive</span> {
+                <span class="prelude-val">Err</span>(<span class="string">&quot;Cannot initialize `Sdl` more than once at a time.&quot;</span>.<span class="ident">to_owned</span>())
+            } <span class="kw">else</span> {
+                <span class="comment">// Initialize SDL without any explicit subsystems (flags = 0).</span>
+                <span class="kw">if</span> <span class="ident">ll</span>::<span class="ident">SDL_Init</span>(<span class="number">0</span>) <span class="op">==</span> <span class="number">0</span> {
+                    <span class="prelude-val">Ok</span>(<span class="ident">Sdl</span> {
+                        <span class="ident">sdldrop</span>: <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">SdlDrop</span>)
                     })
-                } <span class='kw'>else</span> {
-                    <span class='ident'>IS_SDL_CONTEXT_ALIVE</span>.<span class='ident'>swap</span>(<span class='bool-val'>false</span>, <span class='ident'>Ordering</span>::<span class='ident'>Relaxed</span>);
-                    <span class='prelude-val'>Err</span>(<span class='ident'>get_error</span>())
+                } <span class="kw">else</span> {
+                    <span class="ident">IS_SDL_CONTEXT_ALIVE</span>.<span class="ident">swap</span>(<span class="bool-val">false</span>, <span class="ident">Ordering</span>::<span class="ident">Relaxed</span>);
+                    <span class="prelude-val">Err</span>(<span class="ident">get_error</span>())
                 }
             }
         }
     }
 
-    <span class='doccomment'>/// Initializes the audio subsystem.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>audio</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>AudioSubsystem</span>, <span class='ident'>String</span><span class='op'>&gt;</span> { <span class='ident'>AudioSubsystem</span>::<span class='ident'>new</span>(<span class='self'>self</span>) }
+    <span class="doccomment">/// Initializes the audio subsystem.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">audio</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">AudioSubsystem</span>, <span class="ident">String</span><span class="op">&gt;</span> { <span class="ident">AudioSubsystem</span>::<span class="ident">new</span>(<span class="self">self</span>) }
 
-    <span class='doccomment'>/// Initializes the event subsystem.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>event</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>EventSubsystem</span>, <span class='ident'>String</span><span class='op'>&gt;</span> { <span class='ident'>EventSubsystem</span>::<span class='ident'>new</span>(<span class='self'>self</span>) }
+    <span class="doccomment">/// Initializes the event subsystem.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">event</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">EventSubsystem</span>, <span class="ident">String</span><span class="op">&gt;</span> { <span class="ident">EventSubsystem</span>::<span class="ident">new</span>(<span class="self">self</span>) }
 
-    <span class='doccomment'>/// Initializes the joystick subsystem.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>joystick</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>JoystickSubsystem</span>, <span class='ident'>String</span><span class='op'>&gt;</span> { <span class='ident'>JoystickSubsystem</span>::<span class='ident'>new</span>(<span class='self'>self</span>) }
+    <span class="doccomment">/// Initializes the joystick subsystem.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">joystick</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">JoystickSubsystem</span>, <span class="ident">String</span><span class="op">&gt;</span> { <span class="ident">JoystickSubsystem</span>::<span class="ident">new</span>(<span class="self">self</span>) }
 
-    <span class='doccomment'>/// Initializes the haptic subsystem.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>haptic</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>HapticSubsystem</span>, <span class='ident'>String</span><span class='op'>&gt;</span> { <span class='ident'>HapticSubsystem</span>::<span class='ident'>new</span>(<span class='self'>self</span>) }
+    <span class="doccomment">/// Initializes the haptic subsystem.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">haptic</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">HapticSubsystem</span>, <span class="ident">String</span><span class="op">&gt;</span> { <span class="ident">HapticSubsystem</span>::<span class="ident">new</span>(<span class="self">self</span>) }
 
-    <span class='doccomment'>/// Initializes the game controller subsystem.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>game_controller</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>GameControllerSubsystem</span>, <span class='ident'>String</span><span class='op'>&gt;</span> { <span class='ident'>GameControllerSubsystem</span>::<span class='ident'>new</span>(<span class='self'>self</span>) }
+    <span class="doccomment">/// Initializes the game controller subsystem.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">game_controller</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">GameControllerSubsystem</span>, <span class="ident">String</span><span class="op">&gt;</span> { <span class="ident">GameControllerSubsystem</span>::<span class="ident">new</span>(<span class="self">self</span>) }
 
-    <span class='doccomment'>/// Initializes the timer subsystem.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>timer</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>TimerSubsystem</span>, <span class='ident'>String</span><span class='op'>&gt;</span> { <span class='ident'>TimerSubsystem</span>::<span class='ident'>new</span>(<span class='self'>self</span>) }
+    <span class="doccomment">/// Initializes the timer subsystem.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">timer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TimerSubsystem</span>, <span class="ident">String</span><span class="op">&gt;</span> { <span class="ident">TimerSubsystem</span>::<span class="ident">new</span>(<span class="self">self</span>) }
 
-    <span class='doccomment'>/// Initializes the video subsystem.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>video</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>VideoSubsystem</span>, <span class='ident'>String</span><span class='op'>&gt;</span> { <span class='ident'>VideoSubsystem</span>::<span class='ident'>new</span>(<span class='self'>self</span>) }
+    <span class="doccomment">/// Initializes the video subsystem.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">video</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">VideoSubsystem</span>, <span class="ident">String</span><span class="op">&gt;</span> { <span class="ident">VideoSubsystem</span>::<span class="ident">new</span>(<span class="self">self</span>) }
 
-    <span class='doccomment'>/// Obtains the SDL event pump.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// At most one `EventPump` is allowed to be alive during the program&#39;s execution.</span>
-    <span class='doccomment'>/// If this function is called while an `EventPump` instance is alive, the function will return</span>
-    <span class='doccomment'>/// an error.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>event_pump</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>EventPump</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='ident'>EventPump</span>::<span class='ident'>new</span>(<span class='self'>self</span>)
+    <span class="doccomment">/// Obtains the SDL event pump.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// At most one `EventPump` is allowed to be alive during the program&#39;s execution.</span>
+    <span class="doccomment">/// If this function is called while an `EventPump` instance is alive, the function will return</span>
+    <span class="doccomment">/// an error.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">event_pump</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">EventPump</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="ident">EventPump</span>::<span class="ident">new</span>(<span class="self">self</span>)
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sdldrop</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>SdlDrop</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>sdldrop</span>.<span class='ident'>clone</span>()
-    }
-}
-
-<span class='doccomment'>/// When SDL is no longer in use (the refcount in an `Rc&lt;SdlDrop&gt;` reaches 0), the library is quit.</span>
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SdlDrop</span>;
-
-<span class='kw'>impl</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>SdlDrop</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::<span class='ident'>Ordering</span>;
-
-        <span class='kw'>let</span> <span class='ident'>was_alive</span> <span class='op'>=</span> <span class='ident'>IS_SDL_CONTEXT_ALIVE</span>.<span class='ident'>swap</span>(<span class='bool-val'>false</span>, <span class='ident'>Ordering</span>::<span class='ident'>Relaxed</span>);
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>was_alive</span>);
-
-        <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_Quit</span>(); }
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sdldrop</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">SdlDrop</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">sdldrop</span>.<span class="ident">clone</span>()
     }
 }
 
-<span class='comment'>// No subsystem can implement `Send` because the destructor, `SDL_QuitSubSystem`,</span>
-<span class='comment'>// utilizes non-atomic reference counting and should thus be called on a single thread.</span>
-<span class='comment'>// Some subsystems have functions designed to be thread-safe, such as adding a timer or accessing</span>
-<span class='comment'>// the event queue. These subsystems implement `Sync`.</span>
+<span class="doccomment">/// When SDL is no longer in use (the refcount in an `Rc&lt;SdlDrop&gt;` reaches 0), the library is quit.</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SdlDrop</span>;
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>subsystem</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span>:<span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>flag</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> (
-        <span class='kw'>impl</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>sdl</span>: <span class='kw-2'>&amp;</span><span class='ident'>Sdl</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_InitSubSystem</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>flag</span>) };
+<span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">SdlDrop</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::<span class="ident">Ordering</span>;
 
-                <span class='kw'>if</span> <span class='ident'>result</span> <span class='op'>==</span> <span class='number'>0</span> {
-                    <span class='prelude-val'>Ok</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span> {
-                        <span class='ident'>_subsystem_drop</span>: <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='ident'>SubsystemDrop</span> {
-                            <span class='ident'>_sdldrop</span>: <span class='ident'>sdl</span>.<span class='ident'>sdldrop</span>.<span class='ident'>clone</span>(),
-                            <span class='ident'>flag</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>flag</span>
+        <span class="kw">let</span> <span class="ident">was_alive</span> <span class="op">=</span> <span class="ident">IS_SDL_CONTEXT_ALIVE</span>.<span class="ident">swap</span>(<span class="bool-val">false</span>, <span class="ident">Ordering</span>::<span class="ident">Relaxed</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">was_alive</span>);
+
+        <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_Quit</span>(); }
+    }
+}
+
+<span class="comment">// No subsystem can implement `Send` because the destructor, `SDL_QuitSubSystem`,</span>
+<span class="comment">// utilizes non-atomic reference counting and should thus be called on a single thread.</span>
+<span class="comment">// Some subsystems have functions designed to be thread-safe, such as adding a timer or accessing</span>
+<span class="comment">// the event queue. These subsystems implement `Sync`.</span>
+
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">subsystem</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">flag</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> (
+        <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">sdl</span>: <span class="kw-2">&amp;</span><span class="ident">Sdl</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_InitSubSystem</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">flag</span>) };
+
+                <span class="kw">if</span> <span class="ident">result</span> <span class="op">==</span> <span class="number">0</span> {
+                    <span class="prelude-val">Ok</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
+                        <span class="ident">_subsystem_drop</span>: <span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">SubsystemDrop</span> {
+                            <span class="ident">_sdldrop</span>: <span class="ident">sdl</span>.<span class="ident">sdldrop</span>.<span class="ident">clone</span>(),
+                            <span class="ident">flag</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">flag</span>
                         })
                     })
-                } <span class='kw'>else</span> {
-                    <span class='prelude-val'>Err</span>(<span class='ident'>get_error</span>())
+                } <span class="kw">else</span> {
+                    <span class="prelude-val">Err</span>(<span class="ident">get_error</span>())
                 }
             }
         }
     );
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span>:<span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>flag</span>:<span class='ident'>expr</span>, <span class='ident'>nosync</span>) <span class='op'>=&gt;</span> (
-        <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>)]</span>
-        <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span> {
-            <span class='doccomment'>/// Subsystems cannot be moved or (usually) used on non-main threads.</span>
-            <span class='doccomment'>/// Luckily, Rc restricts use to the main thread.</span>
-            <span class='ident'>_subsystem_drop</span>: <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>SubsystemDrop</span><span class='op'>&gt;</span>
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">flag</span>:<span class="ident">expr</span>, <span class="ident">nosync</span>) <span class="op">=&gt;</span> (
+        <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
+        <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
+            <span class="doccomment">/// Subsystems cannot be moved or (usually) used on non-main threads.</span>
+            <span class="doccomment">/// Luckily, Rc restricts use to the main thread.</span>
+            <span class="ident">_subsystem_drop</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">SubsystemDrop</span><span class="op">&gt;</span>
         }
 
-        <span class='kw'>impl</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span> {
-            <span class='doccomment'>/// Obtain an SDL context.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sdl</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Sdl</span> {
-                <span class='ident'>Sdl</span> { <span class='ident'>sdldrop</span>: <span class='self'>self</span>.<span class='ident'>_subsystem_drop</span>.<span class='ident'>_sdldrop</span>.<span class='ident'>clone</span>() }
+        <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
+            <span class="doccomment">/// Obtain an SDL context.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sdl</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Sdl</span> {
+                <span class="ident">Sdl</span> { <span class="ident">sdldrop</span>: <span class="self">self</span>.<span class="ident">_subsystem_drop</span>.<span class="ident">_sdldrop</span>.<span class="ident">clone</span>() }
             }
         }
 
-        <span class='macro'>subsystem</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>flag</span>);
+        <span class="macro">subsystem</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">flag</span>);
     );
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span>:<span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>flag</span>:<span class='ident'>expr</span>, <span class='ident'>sync</span>) <span class='op'>=&gt;</span> (
-        <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span> {
-            <span class='doccomment'>/// Subsystems cannot be moved or (usually) used on non-main threads.</span>
-            <span class='doccomment'>/// Luckily, Rc restricts use to the main thread.</span>
-            <span class='ident'>_subsystem_drop</span>: <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>SubsystemDrop</span><span class='op'>&gt;</span>
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">flag</span>:<span class="ident">expr</span>, <span class="ident">sync</span>) <span class="op">=&gt;</span> (
+        <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
+            <span class="doccomment">/// Subsystems cannot be moved or (usually) used on non-main threads.</span>
+            <span class="doccomment">/// Luckily, Rc restricts use to the main thread.</span>
+            <span class="ident">_subsystem_drop</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">SubsystemDrop</span><span class="op">&gt;</span>
         }
-        <span class='kw'>unsafe</span> <span class='kw'>impl</span> <span class='ident'>Sync</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span> {}
+        <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {}
 
-        <span class='kw'>impl</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clone</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span> {
-                    <span class='ident'>_subsystem_drop</span>: <span class='self'>self</span>.<span class='ident'>_subsystem_drop</span>.<span class='ident'>clone</span>()
+        <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span> {
+                    <span class="ident">_subsystem_drop</span>: <span class="self">self</span>.<span class="ident">_subsystem_drop</span>.<span class="ident">clone</span>()
                 }
             }
 
-            <span class='doccomment'>/// Obtain an SDL context.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sdl</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Sdl</span> {
-                <span class='ident'>Sdl</span> { <span class='ident'>sdldrop</span>: <span class='self'>self</span>.<span class='ident'>_subsystem_drop</span>.<span class='ident'>_sdldrop</span>.<span class='ident'>clone</span>() }
+            <span class="doccomment">/// Obtain an SDL context.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sdl</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Sdl</span> {
+                <span class="ident">Sdl</span> { <span class="ident">sdldrop</span>: <span class="self">self</span>.<span class="ident">_subsystem_drop</span>.<span class="ident">_sdldrop</span>.<span class="ident">clone</span>() }
             }
         }
 
-        <span class='macro'>subsystem</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>flag</span>);
+        <span class="macro">subsystem</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">flag</span>);
     )
 }
 
-<span class='doccomment'>/// When a subsystem is no longer in use (the refcount in an `Rc&lt;SubsystemDrop&gt;` reaches 0),</span>
-<span class='doccomment'>/// the subsystem is quit.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>)]</span>
-<span class='kw'>struct</span> <span class='ident'>SubsystemDrop</span> {
-    <span class='ident'>_sdldrop</span>: <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>SdlDrop</span><span class='op'>&gt;</span>,
-    <span class='ident'>flag</span>: <span class='ident'>ll</span>::<span class='ident'>SDL_InitFlag</span>
+<span class="doccomment">/// When a subsystem is no longer in use (the refcount in an `Rc&lt;SubsystemDrop&gt;` reaches 0),</span>
+<span class="doccomment">/// the subsystem is quit.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">struct</span> <span class="ident">SubsystemDrop</span> {
+    <span class="ident">_sdldrop</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">SdlDrop</span><span class="op">&gt;</span>,
+    <span class="ident">flag</span>: <span class="ident">ll</span>::<span class="ident">SDL_InitFlag</span>
 }
 
-<span class='kw'>impl</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>SubsystemDrop</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_QuitSubSystem</span>(<span class='self'>self</span>.<span class='ident'>flag</span>); }
+<span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">SubsystemDrop</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_QuitSubSystem</span>(<span class="self">self</span>.<span class="ident">flag</span>); }
     }
 }
 
-<span class='macro'>subsystem</span><span class='macro'>!</span>(<span class='ident'>AudioSubsystem</span>, <span class='ident'>ll</span>::<span class='ident'>SDL_INIT_AUDIO</span>, <span class='ident'>nosync</span>);
-<span class='macro'>subsystem</span><span class='macro'>!</span>(<span class='ident'>GameControllerSubsystem</span>, <span class='ident'>ll</span>::<span class='ident'>SDL_INIT_GAMECONTROLLER</span>, <span class='ident'>nosync</span>);
-<span class='macro'>subsystem</span><span class='macro'>!</span>(<span class='ident'>HapticSubsystem</span>, <span class='ident'>ll</span>::<span class='ident'>SDL_INIT_HAPTIC</span>, <span class='ident'>nosync</span>);
-<span class='macro'>subsystem</span><span class='macro'>!</span>(<span class='ident'>JoystickSubsystem</span>, <span class='ident'>ll</span>::<span class='ident'>SDL_INIT_JOYSTICK</span>, <span class='ident'>nosync</span>);
-<span class='macro'>subsystem</span><span class='macro'>!</span>(<span class='ident'>VideoSubsystem</span>, <span class='ident'>ll</span>::<span class='ident'>SDL_INIT_VIDEO</span>, <span class='ident'>nosync</span>);
-<span class='comment'>// Timers can be added on other threads.</span>
-<span class='macro'>subsystem</span><span class='macro'>!</span>(<span class='ident'>TimerSubsystem</span>, <span class='ident'>ll</span>::<span class='ident'>SDL_INIT_TIMER</span>, <span class='ident'>sync</span>);
-<span class='comment'>// The event queue can be read from other threads.</span>
-<span class='macro'>subsystem</span><span class='macro'>!</span>(<span class='ident'>EventSubsystem</span>, <span class='ident'>ll</span>::<span class='ident'>SDL_INIT_EVENTS</span>, <span class='ident'>sync</span>);
+<span class="macro">subsystem</span><span class="macro">!</span>(<span class="ident">AudioSubsystem</span>, <span class="ident">ll</span>::<span class="ident">SDL_INIT_AUDIO</span>, <span class="ident">nosync</span>);
+<span class="macro">subsystem</span><span class="macro">!</span>(<span class="ident">GameControllerSubsystem</span>, <span class="ident">ll</span>::<span class="ident">SDL_INIT_GAMECONTROLLER</span>, <span class="ident">nosync</span>);
+<span class="macro">subsystem</span><span class="macro">!</span>(<span class="ident">HapticSubsystem</span>, <span class="ident">ll</span>::<span class="ident">SDL_INIT_HAPTIC</span>, <span class="ident">nosync</span>);
+<span class="macro">subsystem</span><span class="macro">!</span>(<span class="ident">JoystickSubsystem</span>, <span class="ident">ll</span>::<span class="ident">SDL_INIT_JOYSTICK</span>, <span class="ident">nosync</span>);
+<span class="macro">subsystem</span><span class="macro">!</span>(<span class="ident">VideoSubsystem</span>, <span class="ident">ll</span>::<span class="ident">SDL_INIT_VIDEO</span>, <span class="ident">nosync</span>);
+<span class="comment">// Timers can be added on other threads.</span>
+<span class="macro">subsystem</span><span class="macro">!</span>(<span class="ident">TimerSubsystem</span>, <span class="ident">ll</span>::<span class="ident">SDL_INIT_TIMER</span>, <span class="ident">sync</span>);
+<span class="comment">// The event queue can be read from other threads.</span>
+<span class="macro">subsystem</span><span class="macro">!</span>(<span class="ident">EventSubsystem</span>, <span class="ident">ll</span>::<span class="ident">SDL_INIT_EVENTS</span>, <span class="ident">sync</span>);
 
-<span class='kw'>static</span> <span class='kw-2'>mut</span> <span class='ident'>IS_EVENT_PUMP_ALIVE</span>: <span class='ident'>bool</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
+<span class="kw">static</span> <span class="kw-2">mut</span> <span class="ident">IS_EVENT_PUMP_ALIVE</span>: <span class="ident">bool</span> <span class="op">=</span> <span class="bool-val">false</span>;
 
-<span class='doccomment'>/// A thread-safe type that encapsulates SDL event-pumping functions.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>EventPump</span> {
-    <span class='ident'>_sdldrop</span>: <span class='ident'>Rc</span><span class='op'>&lt;</span><span class='ident'>SdlDrop</span><span class='op'>&gt;</span>
+<span class="doccomment">/// A thread-safe type that encapsulates SDL event-pumping functions.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EventPump</span> {
+    <span class="ident">_sdldrop</span>: <span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">SdlDrop</span><span class="op">&gt;</span>
 }
 
-<span class='kw'>impl</span> <span class='ident'>EventPump</span> {
-    <span class='doccomment'>/// Obtains the SDL event pump.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>sdl</span>: <span class='kw-2'>&amp;</span><span class='ident'>Sdl</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>EventPump</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='comment'>// Called on the main SDL thread.</span>
+<span class="kw">impl</span> <span class="ident">EventPump</span> {
+    <span class="doccomment">/// Obtains the SDL event pump.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">sdl</span>: <span class="kw-2">&amp;</span><span class="ident">Sdl</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">EventPump</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="comment">// Called on the main SDL thread.</span>
 
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>if</span> <span class='ident'>IS_EVENT_PUMP_ALIVE</span> {
-                <span class='prelude-val'>Err</span>(<span class='string'>&quot;an `EventPump` instance is already alive - there can only be one `EventPump` in use at a time.&quot;</span>.<span class='ident'>to_owned</span>())
-            } <span class='kw'>else</span> {
-                <span class='comment'>// Initialize the events subsystem, just in case none of the other subsystems have done it yet.</span>
-                <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_InitSubSystem</span>(<span class='ident'>ll</span>::<span class='ident'>SDL_INIT_EVENTS</span>);
+        <span class="kw">unsafe</span> {
+            <span class="kw">if</span> <span class="ident">IS_EVENT_PUMP_ALIVE</span> {
+                <span class="prelude-val">Err</span>(<span class="string">&quot;an `EventPump` instance is already alive - there can only be one `EventPump` in use at a time.&quot;</span>.<span class="ident">to_owned</span>())
+            } <span class="kw">else</span> {
+                <span class="comment">// Initialize the events subsystem, just in case none of the other subsystems have done it yet.</span>
+                <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_InitSubSystem</span>(<span class="ident">ll</span>::<span class="ident">SDL_INIT_EVENTS</span>);
 
-                <span class='kw'>if</span> <span class='ident'>result</span> <span class='op'>==</span> <span class='number'>0</span> {
-                    <span class='ident'>IS_EVENT_PUMP_ALIVE</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
+                <span class="kw">if</span> <span class="ident">result</span> <span class="op">==</span> <span class="number">0</span> {
+                    <span class="ident">IS_EVENT_PUMP_ALIVE</span> <span class="op">=</span> <span class="bool-val">true</span>;
 
-                    <span class='prelude-val'>Ok</span>(<span class='ident'>EventPump</span> {
-                        <span class='ident'>_sdldrop</span>: <span class='ident'>sdl</span>.<span class='ident'>sdldrop</span>.<span class='ident'>clone</span>()
+                    <span class="prelude-val">Ok</span>(<span class="ident">EventPump</span> {
+                        <span class="ident">_sdldrop</span>: <span class="ident">sdl</span>.<span class="ident">sdldrop</span>.<span class="ident">clone</span>()
                     })
-                } <span class='kw'>else</span> {
-                    <span class='prelude-val'>Err</span>(<span class='ident'>get_error</span>())
+                } <span class="kw">else</span> {
+                    <span class="prelude-val">Err</span>(<span class="ident">get_error</span>())
                 }
             }
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>EventPump</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='comment'>// Called on the main SDL thread.</span>
+<span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">EventPump</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="comment">// Called on the main SDL thread.</span>
 
-        <span class='kw'>unsafe</span> {
-            <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>IS_EVENT_PUMP_ALIVE</span>);
-            <span class='ident'>ll</span>::<span class='ident'>SDL_QuitSubSystem</span>(<span class='ident'>ll</span>::<span class='ident'>SDL_INIT_EVENTS</span>);
-            <span class='ident'>IS_EVENT_PUMP_ALIVE</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
+        <span class="kw">unsafe</span> {
+            <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">IS_EVENT_PUMP_ALIVE</span>);
+            <span class="ident">ll</span>::<span class="ident">SDL_QuitSubSystem</span>(<span class="ident">ll</span>::<span class="ident">SDL_INIT_EVENTS</span>);
+            <span class="ident">IS_EVENT_PUMP_ALIVE</span> <span class="op">=</span> <span class="bool-val">false</span>;
         }
     }
 }
 
-<span class='doccomment'>/// Initializes the SDL library.</span>
-<span class='doccomment'>/// This must be called before using any other SDL function.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Example</span>
-<span class='doccomment'>/// ```no_run</span>
-<span class='doccomment'>/// let sdl_context = sdl2::init().unwrap();</span>
-<span class='doccomment'>/// let mut event_pump = sdl_context.event_pump().unwrap();</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// for event in event_pump.poll_iter() {</span>
-<span class='doccomment'>///     // ...</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// // SDL_Quit() is called here as `sdl_context` is dropped.</span>
-<span class='doccomment'>/// ```</span>
-<span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>init</span>() <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Sdl</span>, <span class='ident'>String</span><span class='op'>&gt;</span> { <span class='ident'>Sdl</span>::<span class='ident'>new</span>() }
+<span class="doccomment">/// Initializes the SDL library.</span>
+<span class="doccomment">/// This must be called before using any other SDL function.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Example</span>
+<span class="doccomment">/// ```no_run</span>
+<span class="doccomment">/// let sdl_context = sdl2::init().unwrap();</span>
+<span class="doccomment">/// let mut event_pump = sdl_context.event_pump().unwrap();</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// for event in event_pump.poll_iter() {</span>
+<span class="doccomment">///     // ...</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// // SDL_Quit() is called here as `sdl_context` is dropped.</span>
+<span class="doccomment">/// ```</span>
+<span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">init</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Sdl</span>, <span class="ident">String</span><span class="op">&gt;</span> { <span class="ident">Sdl</span>::<span class="ident">new</span>() }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get_error</span>() <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-    <span class='kw'>unsafe</span> {
-        <span class='kw'>let</span> <span class='ident'>err</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_GetError</span>();
-        <span class='ident'>CStr</span>::<span class='ident'>from_ptr</span>(<span class='ident'>err</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> _).<span class='ident'>to_str</span>().<span class='ident'>unwrap</span>().<span class='ident'>to_owned</span>()
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_error</span>() <span class="op">-&gt;</span> <span class="ident">String</span> {
+    <span class="kw">unsafe</span> {
+        <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_GetError</span>();
+        <span class="ident">CStr</span>::<span class="ident">from_ptr</span>(<span class="ident">err</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> _).<span class="ident">to_str</span>().<span class="ident">unwrap</span>().<span class="ident">to_owned</span>()
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_error</span>(<span class='ident'>err</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>NulError</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>c_string</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='ident'>err</span>));
-    <span class='prelude-val'>Ok</span>(<span class='kw'>unsafe</span> {
-        <span class='ident'>ll</span>::<span class='ident'>SDL_SetError</span>(<span class='ident'>c_string</span>.<span class='ident'>as_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>);
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_error</span>(<span class="ident">err</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">NulError</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">c_string</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">CString</span>::<span class="ident">new</span>(<span class="ident">err</span>));
+    <span class="prelude-val">Ok</span>(<span class="kw">unsafe</span> {
+        <span class="ident">ll</span>::<span class="ident">SDL_SetError</span>(<span class="ident">c_string</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>);
     })
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_error_from_code</span>(<span class='ident'>err</span>: <span class='ident'>Error</span>) {
-    <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_Error</span>(<span class='ident'>err</span> <span class='kw'>as</span> <span class='ident'>ll</span>::<span class='ident'>SDL_errorcode</span>); }
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_error_from_code</span>(<span class="ident">err</span>: <span class="ident">Error</span>) {
+    <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_Error</span>(<span class="ident">err</span> <span class="kw">as</span> <span class="ident">ll</span>::<span class="ident">SDL_errorcode</span>); }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clear_error</span>() {
-    <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_ClearError</span>(); }
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">clear_error</span>() {
+    <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_ClearError</span>(); }
 }
 </pre>
 </section>

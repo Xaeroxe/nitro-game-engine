@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -72,36 +72,36 @@
 <span id="27">27</span>
 <span id="28">28</span>
 <span id="29">29</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Non-persistant pairwise geometric queries.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Non-persistant pairwise geometric queries.</span>
 
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>inline</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>contacts_internal</span>::<span class='ident'>Contact</span>;
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>inline</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>contacts_internal</span>::<span class='ident'>contact_internal</span> <span class='kw'>as</span> <span class='ident'>contact</span>;
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>inline</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>proximity_internal</span>::<span class='ident'>Proximity</span>;
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>inline</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>proximity_internal</span>::<span class='ident'>proximity_internal</span> <span class='kw'>as</span> <span class='ident'>proximity</span>;
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>inline</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>distance_internal</span>::<span class='ident'>distance</span>;
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>inline</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>time_of_impact_internal</span>::<span class='ident'>time_of_impact</span>;
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>inline</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>ray_internal</span>::{<span class='ident'>Ray</span>, <span class='ident'>Ray2</span>, <span class='ident'>Ray3</span>,
-                             <span class='ident'>RayIntersection</span>, <span class='ident'>RayIntersection2</span>, <span class='ident'>RayIntersection3</span>,
-                             <span class='ident'>RayCast</span>, <span class='ident'>RayInterferencesCollector</span>,
-                             <span class='ident'>RayIntersectionCostFn</span>};
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>inline</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>point_internal</span>::{<span class='ident'>PointProjection</span>, <span class='ident'>PointQuery</span>, <span class='ident'>PointInterferencesCollector</span>};
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">contacts_internal</span>::<span class="ident">Contact</span>;
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">contacts_internal</span>::<span class="ident">contact_internal</span> <span class="kw">as</span> <span class="ident">contact</span>;
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">proximity_internal</span>::<span class="ident">Proximity</span>;
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">proximity_internal</span>::<span class="ident">proximity_internal</span> <span class="kw">as</span> <span class="ident">proximity</span>;
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">distance_internal</span>::<span class="ident">distance</span>;
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">time_of_impact_internal</span>::<span class="ident">time_of_impact</span>;
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ray_internal</span>::{<span class="ident">Ray</span>, <span class="ident">Ray2</span>, <span class="ident">Ray3</span>,
+                             <span class="ident">RayIntersection</span>, <span class="ident">RayIntersection2</span>, <span class="ident">RayIntersection3</span>,
+                             <span class="ident">RayCast</span>, <span class="ident">RayInterferencesCollector</span>,
+                             <span class="ident">RayIntersectionCostFn</span>};
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">point_internal</span>::{<span class="ident">PointProjection</span>, <span class="ident">PointQuery</span>, <span class="ident">PointInterferencesCollector</span>};
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>algorithms</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>contacts_internal</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>distance_internal</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>proximity_internal</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>time_of_impact_internal</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>ray_internal</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>point_internal</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">algorithms</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">contacts_internal</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">distance_internal</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">proximity_internal</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">time_of_impact_internal</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ray_internal</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">point_internal</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

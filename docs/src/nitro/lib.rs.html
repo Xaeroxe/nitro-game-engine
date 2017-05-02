@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -110,74 +110,74 @@
 <span id="65">65</span>
 <span id="66">66</span>
 <span id="67">67</span>
-</pre><pre class='rust '>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>sdl2</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>serde</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>chrono</span>;
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>serde_derive</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>bincode</span>;
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>enum_primitive</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>num</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rand</span>;
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>unborrow</span>;
+</pre><pre class="rust ">
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">sdl2</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">chrono</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde_derive</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">bincode</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">enum_primitive</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rand</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">unborrow</span>;
 
-<span class='kw'>pub</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>ncollide</span>;
-<span class='kw'>pub</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>nphysics2d</span>;
-<span class='kw'>pub</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>nalgebra</span>;
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">ncollide</span>;
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">nphysics2d</span>;
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">nalgebra</span>;
 
-<span class='kw'>mod</span> <span class='ident'>app</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>app</span>::<span class='ident'>App</span>;
+<span class="kw">mod</span> <span class="ident">app</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">app</span>::<span class="ident">App</span>;
 
-<span class='kw'>mod</span> <span class='ident'>audio_private</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>audio</span> {
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>audio_private</span>::<span class='ident'>audio</span>::<span class='ident'>Audio</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>audio_private</span>::<span class='ident'>playlist</span>::<span class='ident'>Playlist</span>;
+<span class="kw">mod</span> <span class="ident">audio_private</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">audio</span> {
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">audio_private</span>::<span class="ident">audio</span>::<span class="ident">Audio</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">audio_private</span>::<span class="ident">playlist</span>::<span class="ident">Playlist</span>;
 }
 
-<span class='kw'>mod</span> <span class='ident'>game_object</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>game_object</span>::<span class='ident'>GameObject</span>;
+<span class="kw">mod</span> <span class="ident">game_object</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">game_object</span>::<span class="ident">GameObject</span>;
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>component</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">component</span>;
 
-<span class='kw'>mod</span> <span class='ident'>graphics_private</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>graphics</span> {
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>graphics_private</span>::<span class='ident'>texture</span>::<span class='ident'>Texture</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>graphics_private</span>::<span class='ident'>Sprite</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>graphics_private</span>::<span class='ident'>sprite_sheet</span>::<span class='ident'>SpriteSheet</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>graphics_private</span>::<span class='ident'>canvas</span>::<span class='ident'>Canvas</span>;
+<span class="kw">mod</span> <span class="ident">graphics_private</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">graphics</span> {
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">graphics_private</span>::<span class="ident">texture</span>::<span class="ident">Texture</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">graphics_private</span>::<span class="ident">Sprite</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">graphics_private</span>::<span class="ident">sprite_sheet</span>::<span class="ident">SpriteSheet</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">graphics_private</span>::<span class="ident">canvas</span>::<span class="ident">Canvas</span>;
 }
 
-<span class='kw'>mod</span> <span class='ident'>math_private</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>math</span> {
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>math_private</span>::<span class='ident'>vector</span>::<span class='ident'>Vector</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>math_private</span>::<span class='ident'>vector</span>::<span class='ident'>VecConvert</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>math_private</span>::<span class='ident'>transform</span>::<span class='ident'>Transform</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>math_private</span>::<span class='ident'>transform</span>::<span class='ident'>TransformDirections</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>math_private</span>::<span class='ident'>polar_coords</span>::<span class='ident'>PolarCoords</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>math_private</span>::<span class='ident'>Rect</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>math_private</span>::<span class='ident'>IntRect</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>math_private</span>::<span class='ident'>int_vector</span>::<span class='ident'>IntVector</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>math_private</span>::<span class='ident'>int_vector</span>::<span class='ident'>IntVecConvert</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>math_private</span>::<span class='ident'>check_and_use</span>;
+<span class="kw">mod</span> <span class="ident">math_private</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">math</span> {
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">math_private</span>::<span class="ident">vector</span>::<span class="ident">Vector</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">math_private</span>::<span class="ident">vector</span>::<span class="ident">VecConvert</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">math_private</span>::<span class="ident">transform</span>::<span class="ident">Transform</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">math_private</span>::<span class="ident">transform</span>::<span class="ident">TransformDirections</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">math_private</span>::<span class="ident">polar_coords</span>::<span class="ident">PolarCoords</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">math_private</span>::<span class="ident">Rect</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">math_private</span>::<span class="ident">IntRect</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">math_private</span>::<span class="ident">int_vector</span>::<span class="ident">IntVector</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">math_private</span>::<span class="ident">int_vector</span>::<span class="ident">IntVecConvert</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">math_private</span>::<span class="ident">check_and_use</span>;
 }
 
-<span class='kw'>mod</span> <span class='ident'>input_private</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>input</span> {
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>input_private</span>::<span class='ident'>Axis</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>input_private</span>::<span class='ident'>input</span>::<span class='ident'>Input</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>input_private</span>::<span class='ident'>keyboard</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>input_private</span>::<span class='ident'>mouse</span>;
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>input_private</span>::<span class='ident'>Button</span>;
+<span class="kw">mod</span> <span class="ident">input_private</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">input</span> {
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">input_private</span>::<span class="ident">Axis</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">input_private</span>::<span class="ident">input</span>::<span class="ident">Input</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">input_private</span>::<span class="ident">keyboard</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">input_private</span>::<span class="ident">mouse</span>;
+    <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">input_private</span>::<span class="ident">Button</span>;
 }
 
-<span class='kw'>mod</span> <span class='ident'>camera</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>camera</span>::<span class='ident'>Camera</span>;
+<span class="kw">mod</span> <span class="ident">camera</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">camera</span>::<span class="ident">Camera</span>;
 
-<span class='kw'>mod</span> <span class='ident'>option_loaned</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>option_loaned</span>::<span class='ident'>OptionLoaned</span>;
+<span class="kw">mod</span> <span class="ident">option_loaned</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">option_loaned</span>::<span class="ident">OptionLoaned</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

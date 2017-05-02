@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -103,67 +103,67 @@
 <span id="58">58</span>
 <span id="59">59</span>
 <span id="60">60</span>
-</pre><pre class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;no_std&quot;</span>, <span class='ident'>feature</span>(<span class='ident'>no_std</span>, <span class='ident'>core</span>))]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;no_std&quot;</span>, <span class='ident'>no_std</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>non_camel_case_types</span>)]</span>
+</pre><pre class="rust ">
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no_std&quot;</span>, <span class="ident">feature</span>(<span class="ident">no_std</span>, <span class="ident">core</span>))]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no_std&quot;</span>, <span class="ident">no_std</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">non_camel_case_types</span>)]</span>
 
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>libc</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;no_std&quot;</span>)]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>core</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">libc</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no_std&quot;</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">core</span>;
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>scancode</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>keycode</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">scancode</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">keycode</span>;
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>audio</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>clipboard</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>controller</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>cpuinfo</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>event</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>filesystem</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>haptic</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>gesture</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>joystick</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>keyboard</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>messagebox</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>rect</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>pixels</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>render</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>rwops</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>surface</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>touch</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>video</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>mouse</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>sdl</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>timer</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>version</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>hint</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">audio</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">clipboard</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">controller</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">cpuinfo</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">event</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">filesystem</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">haptic</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">gesture</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">joystick</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">keyboard</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">messagebox</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">rect</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">pixels</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">render</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">rwops</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">surface</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">touch</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">video</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">mouse</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">sdl</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">timer</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">version</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">hint</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>scancode</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>keycode</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>audio</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>clipboard</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>controller</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>cpuinfo</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>event</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>filesystem</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>haptic</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>gesture</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>joystick</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>keyboard</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>messagebox</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>rect</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>pixels</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>render</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>rwops</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>surface</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>touch</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>video</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>mouse</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>sdl</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>timer</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>version</span>::<span class='kw-2'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hint</span>::<span class='kw-2'>*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">scancode</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">keycode</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">audio</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">clipboard</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">controller</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">cpuinfo</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">event</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">filesystem</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">haptic</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">gesture</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">joystick</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">keyboard</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">messagebox</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">rect</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">pixels</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">render</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">rwops</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">surface</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">touch</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">video</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">mouse</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sdl</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">timer</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">version</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hint</span>::<span class="kw-2">*</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

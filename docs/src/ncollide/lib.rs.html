@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -105,8 +105,8 @@
 <span id="60">60</span>
 <span id="61">61</span>
 <span id="62">62</span>
-</pre><pre class='rust '>
-<span class='doccomment'>/*!
+</pre><pre class="rust ">
+<span class="doccomment">/*!
 ncollide
 ========
 
@@ -145,29 +145,29 @@ ncollide = &quot;0.10.*&quot;
 And various traits for collision detectors and broad phase collision detection.
 */</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>non_camel_case_types</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>unused_parens</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>non_upper_case_globals</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>unused_qualifications</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>warn</span>(<span class='ident'>missing_docs</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>unused_results</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>warn</span>(<span class='ident'>unused_imports</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>missing_copy_implementations</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_root_url</span> <span class='op'>=</span> <span class='string'>&quot;http://ncollide.org/rustdoc&quot;</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">non_camel_case_types</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">unused_parens</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">non_upper_case_globals</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">unused_qualifications</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">unused_results</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">warn</span>(<span class="ident">unused_imports</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">missing_copy_implementations</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;http://ncollide.org/rustdoc&quot;</span>)]</span>
 
-<span class='kw'>pub</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>ncollide_math</span>;
-<span class='kw'>pub</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>ncollide_utils</span>;
-<span class='kw'>pub</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>ncollide_geometry</span>;
-<span class='kw'>pub</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>ncollide_pipeline</span>;
-<span class='kw'>pub</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>ncollide_procedural</span>;
-<span class='kw'>pub</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>ncollide_transformation</span>;
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">ncollide_math</span>;
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">ncollide_utils</span>;
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">ncollide_geometry</span>;
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">ncollide_pipeline</span>;
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">ncollide_procedural</span>;
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">ncollide_transformation</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>ncollide_math</span> <span class='kw'>as</span> <span class='ident'>math</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>ncollide_utils</span> <span class='kw'>as</span> <span class='ident'>utils</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>ncollide_geometry</span>::{<span class='ident'>shape</span>, <span class='ident'>bounding_volume</span>, <span class='ident'>partitioning</span>, <span class='ident'>query</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>ncollide_pipeline</span>::{<span class='ident'>narrow_phase</span>, <span class='ident'>broad_phase</span>, <span class='ident'>world</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>ncollide_procedural</span> <span class='kw'>as</span> <span class='ident'>procedural</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>ncollide_transformation</span> <span class='kw'>as</span> <span class='ident'>transformation</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">ncollide_math</span> <span class="kw">as</span> <span class="ident">math</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">ncollide_utils</span> <span class="kw">as</span> <span class="ident">utils</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">ncollide_geometry</span>::{<span class="ident">shape</span>, <span class="ident">bounding_volume</span>, <span class="ident">partitioning</span>, <span class="ident">query</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">ncollide_pipeline</span>::{<span class="ident">narrow_phase</span>, <span class="ident">broad_phase</span>, <span class="ident">world</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">ncollide_procedural</span> <span class="kw">as</span> <span class="ident">procedural</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">ncollide_transformation</span> <span class="kw">as</span> <span class="ident">transformation</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

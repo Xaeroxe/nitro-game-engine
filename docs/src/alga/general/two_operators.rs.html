@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -302,266 +302,266 @@
 <span id="257">257</span>
 <span id="258">258</span>
 <span id="259">259</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Num</span>;
-<span class='kw'>use</span> <span class='ident'>num_complex</span>::<span class='ident'>Complex</span>;
-<span class='kw'>use</span> <span class='ident'>approx</span>::<span class='ident'>ApproxEq</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">num</span>::<span class="ident">Num</span>;
+<span class="kw">use</span> <span class="ident">num_complex</span>::<span class="ident">Complex</span>;
+<span class="kw">use</span> <span class="ident">approx</span>::<span class="ident">ApproxEq</span>;
 
-<span class='kw'>use</span> <span class='ident'>general</span>::{<span class='ident'>Operator</span>, <span class='ident'>Additive</span>, <span class='ident'>Multiplicative</span>, <span class='ident'>AbstractGroupAbelian</span>, <span class='ident'>AbstractMonoid</span>, <span class='ident'>ClosedNeg</span>};
-<span class='kw'>use</span> <span class='ident'>general</span>::<span class='ident'>wrapper</span>::<span class='ident'>Wrapper</span> <span class='kw'>as</span> <span class='ident'>W</span>;
+<span class="kw">use</span> <span class="ident">general</span>::{<span class="ident">Operator</span>, <span class="ident">Additive</span>, <span class="ident">Multiplicative</span>, <span class="ident">AbstractGroupAbelian</span>, <span class="ident">AbstractMonoid</span>, <span class="ident">ClosedNeg</span>};
+<span class="kw">use</span> <span class="ident">general</span>::<span class="ident">wrapper</span>::<span class="ident">Wrapper</span> <span class="kw">as</span> <span class="ident">W</span>;
 
-<span class='doccomment'>/// A ring is the combination of an abelian group and a multiplicative monoid structure.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// A ring is equipped with:</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// * A abstract operator (usually the addition) that fulfills the constraints of an abelian group.</span>
-<span class='doccomment'>/// * A second abstract operator (usually the multiplication) that fulfills the constraints of a monoid.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>AbstractRing</span><span class='op'>&lt;</span><span class='ident'>A</span>: <span class='ident'>Operator</span> <span class='op'>=</span> <span class='ident'>Additive</span>, <span class='ident'>M</span>: <span class='ident'>Operator</span> <span class='op'>=</span> <span class='ident'>Multiplicative</span><span class='op'>&gt;</span>:
-    <span class='ident'>AbstractGroupAbelian</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>AbstractMonoid</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
+<span class="doccomment">/// A ring is the combination of an abelian group and a multiplicative monoid structure.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// A ring is equipped with:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// * A abstract operator (usually the addition) that fulfills the constraints of an abelian group.</span>
+<span class="doccomment">/// * A second abstract operator (usually the multiplication) that fulfills the constraints of a monoid.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">AbstractRing</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">Operator</span> <span class="op">=</span> <span class="ident">Additive</span>, <span class="ident">M</span>: <span class="ident">Operator</span> <span class="op">=</span> <span class="ident">Multiplicative</span><span class="op">&gt;</span>:
+    <span class="ident">AbstractGroupAbelian</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">AbstractMonoid</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> {
 
-    <span class='doccomment'>/// Returns `true` if the multiplication and addition operators are distributive for</span>
-    <span class='doccomment'>/// the given argument tuple. Approximate equality is used for verifications.</span>
-    <span class='kw'>fn</span> <span class='ident'>prop_mul_and_add_are_distributive_approx</span>(<span class='ident'>args</span>: (<span class='self'>Self</span>, <span class='self'>Self</span>, <span class='self'>Self</span>)) <span class='op'>-&gt;</span> <span class='ident'>bool</span>
-        <span class='kw'>where</span> <span class='self'>Self</span>: <span class='ident'>ApproxEq</span> {
+    <span class="doccomment">/// Returns `true` if the multiplication and addition operators are distributive for</span>
+    <span class="doccomment">/// the given argument tuple. Approximate equality is used for verifications.</span>
+    <span class="kw">fn</span> <span class="ident">prop_mul_and_add_are_distributive_approx</span>(<span class="ident">args</span>: (<span class="self">Self</span>, <span class="self">Self</span>, <span class="self">Self</span>)) <span class="op">-&gt;</span> <span class="ident">bool</span>
+        <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">ApproxEq</span> {
 
-        <span class='kw'>let</span> (<span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>c</span>) <span class='op'>=</span> <span class='ident'>args</span>;
-        <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='op'>||</span> { <span class='ident'>W</span>::<span class='op'>&lt;</span>_, <span class='ident'>A</span>, <span class='ident'>M</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>a</span>.<span class='ident'>clone</span>()) };
-        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='op'>||</span> { <span class='ident'>W</span>::<span class='op'>&lt;</span>_, <span class='ident'>A</span>, <span class='ident'>M</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>b</span>.<span class='ident'>clone</span>()) };
-        <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='op'>||</span> { <span class='ident'>W</span>::<span class='op'>&lt;</span>_, <span class='ident'>A</span>, <span class='ident'>M</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>c</span>.<span class='ident'>clone</span>()) };
+        <span class="kw">let</span> (<span class="ident">a</span>, <span class="ident">b</span>, <span class="ident">c</span>) <span class="op">=</span> <span class="ident">args</span>;
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="op">||</span> { <span class="ident">W</span>::<span class="op">&lt;</span>_, <span class="ident">A</span>, <span class="ident">M</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">a</span>.<span class="ident">clone</span>()) };
+        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="op">||</span> { <span class="ident">W</span>::<span class="op">&lt;</span>_, <span class="ident">A</span>, <span class="ident">M</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">b</span>.<span class="ident">clone</span>()) };
+        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="op">||</span> { <span class="ident">W</span>::<span class="op">&lt;</span>_, <span class="ident">A</span>, <span class="ident">M</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">c</span>.<span class="ident">clone</span>()) };
 
-        <span class='comment'>// Left distributivity</span>
-        <span class='macro'>relative_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>() <span class='op'>*</span> (<span class='ident'>b</span>() <span class='op'>+</span> <span class='ident'>c</span>()), <span class='ident'>a</span>() <span class='op'>*</span> <span class='ident'>b</span>() <span class='op'>+</span> <span class='ident'>a</span>() <span class='op'>*</span> <span class='ident'>c</span>()) <span class='op'>&amp;&amp;</span>
-        <span class='comment'>// Right distributivity</span>
-        <span class='macro'>relative_eq</span><span class='macro'>!</span>((<span class='ident'>b</span>() <span class='op'>+</span> <span class='ident'>c</span>()) <span class='op'>*</span> <span class='ident'>a</span>(), <span class='ident'>b</span>() <span class='op'>*</span> <span class='ident'>a</span>() <span class='op'>+</span> <span class='ident'>c</span>() <span class='op'>*</span> <span class='ident'>a</span>())
+        <span class="comment">// Left distributivity</span>
+        <span class="macro">relative_eq</span><span class="macro">!</span>(<span class="ident">a</span>() <span class="op">*</span> (<span class="ident">b</span>() <span class="op">+</span> <span class="ident">c</span>()), <span class="ident">a</span>() <span class="op">*</span> <span class="ident">b</span>() <span class="op">+</span> <span class="ident">a</span>() <span class="op">*</span> <span class="ident">c</span>()) <span class="op">&amp;&amp;</span>
+        <span class="comment">// Right distributivity</span>
+        <span class="macro">relative_eq</span><span class="macro">!</span>((<span class="ident">b</span>() <span class="op">+</span> <span class="ident">c</span>()) <span class="op">*</span> <span class="ident">a</span>(), <span class="ident">b</span>() <span class="op">*</span> <span class="ident">a</span>() <span class="op">+</span> <span class="ident">c</span>() <span class="op">*</span> <span class="ident">a</span>())
     }
 
-    <span class='doccomment'>/// Returns `true` if the multiplication and addition operators are distributive for</span>
-    <span class='doccomment'>/// the given argument tuple.</span>
-    <span class='kw'>fn</span> <span class='ident'>prop_mul_and_add_are_distributive</span>(<span class='ident'>args</span>: (<span class='self'>Self</span>, <span class='self'>Self</span>, <span class='self'>Self</span>)) <span class='op'>-&gt;</span> <span class='ident'>bool</span>
-        <span class='kw'>where</span> <span class='self'>Self</span>: <span class='ident'>Eq</span> {
+    <span class="doccomment">/// Returns `true` if the multiplication and addition operators are distributive for</span>
+    <span class="doccomment">/// the given argument tuple.</span>
+    <span class="kw">fn</span> <span class="ident">prop_mul_and_add_are_distributive</span>(<span class="ident">args</span>: (<span class="self">Self</span>, <span class="self">Self</span>, <span class="self">Self</span>)) <span class="op">-&gt;</span> <span class="ident">bool</span>
+        <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Eq</span> {
 
-        <span class='kw'>let</span> (<span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>c</span>) <span class='op'>=</span> <span class='ident'>args</span>;
-        <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='op'>||</span> { <span class='ident'>W</span>::<span class='op'>&lt;</span>_, <span class='ident'>A</span>, <span class='ident'>M</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>a</span>.<span class='ident'>clone</span>()) };
-        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='op'>||</span> { <span class='ident'>W</span>::<span class='op'>&lt;</span>_, <span class='ident'>A</span>, <span class='ident'>M</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>b</span>.<span class='ident'>clone</span>()) };
-        <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='op'>||</span> { <span class='ident'>W</span>::<span class='op'>&lt;</span>_, <span class='ident'>A</span>, <span class='ident'>M</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>c</span>.<span class='ident'>clone</span>()) };
+        <span class="kw">let</span> (<span class="ident">a</span>, <span class="ident">b</span>, <span class="ident">c</span>) <span class="op">=</span> <span class="ident">args</span>;
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="op">||</span> { <span class="ident">W</span>::<span class="op">&lt;</span>_, <span class="ident">A</span>, <span class="ident">M</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">a</span>.<span class="ident">clone</span>()) };
+        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="op">||</span> { <span class="ident">W</span>::<span class="op">&lt;</span>_, <span class="ident">A</span>, <span class="ident">M</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">b</span>.<span class="ident">clone</span>()) };
+        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="op">||</span> { <span class="ident">W</span>::<span class="op">&lt;</span>_, <span class="ident">A</span>, <span class="ident">M</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">c</span>.<span class="ident">clone</span>()) };
 
-        <span class='comment'>// Left distributivity</span>
-        (<span class='ident'>a</span>() <span class='op'>*</span> <span class='ident'>b</span>()) <span class='op'>+</span> <span class='ident'>c</span>() <span class='op'>==</span> (<span class='ident'>a</span>() <span class='op'>*</span> <span class='ident'>b</span>()) <span class='op'>+</span> (<span class='ident'>a</span>() <span class='op'>*</span> <span class='ident'>c</span>()) <span class='op'>&amp;&amp;</span>
-        <span class='comment'>// Right distributivity</span>
-        (<span class='ident'>b</span>() <span class='op'>+</span> <span class='ident'>c</span>()) <span class='op'>*</span> <span class='ident'>a</span>() <span class='op'>==</span> (<span class='ident'>b</span>() <span class='op'>*</span> <span class='ident'>a</span>()) <span class='op'>+</span> (<span class='ident'>c</span>() <span class='op'>*</span> <span class='ident'>a</span>())
-    }
-}
-
-<span class='doccomment'>/// Implements the ring trait for types provided.</span>
-<span class='doccomment'>/// # Examples</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// # #[macro_use]</span>
-<span class='doccomment'>/// # extern crate alga;</span>
-<span class='doccomment'>/// # use alga::general::{AbstractMagma, AbstractRing, Additive, Multiplicative, Inverse, Identity};</span>
-<span class='doccomment'>/// # fn main() {}</span>
-<span class='doccomment'>/// #[derive(PartialEq, Clone)]</span>
-<span class='doccomment'>/// struct Wrapper&lt;T&gt;(T);</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl&lt;T: AbstractMagma&lt;Additive&gt;&gt; AbstractMagma&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
-<span class='doccomment'>///     fn operate(&amp;self, right: &amp;Self) -&gt; Self {</span>
-<span class='doccomment'>///         Wrapper(self.0.operate(&amp;right.0))</span>
-<span class='doccomment'>///     }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl&lt;T: Inverse&lt;Additive&gt;&gt; Inverse&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
-<span class='doccomment'>///     fn inverse(&amp;self) -&gt; Self {</span>
-<span class='doccomment'>///         Wrapper(self.0.inverse())</span>
-<span class='doccomment'>///     }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl&lt;T: Identity&lt;Additive&gt;&gt; Identity&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
-<span class='doccomment'>///     fn identity() -&gt; Self {</span>
-<span class='doccomment'>///         Wrapper(T::identity())</span>
-<span class='doccomment'>///     }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl&lt;T: AbstractMagma&lt;Multiplicative&gt;&gt; AbstractMagma&lt;Multiplicative&gt; for Wrapper&lt;T&gt; {</span>
-<span class='doccomment'>///     fn operate(&amp;self, right: &amp;Self) -&gt; Self {</span>
-<span class='doccomment'>///         Wrapper(self.0.operate(&amp;right.0))</span>
-<span class='doccomment'>///     }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl&lt;T: Identity&lt;Multiplicative&gt;&gt; Identity&lt;Multiplicative&gt; for Wrapper&lt;T&gt; {</span>
-<span class='doccomment'>///     fn identity() -&gt; Self {</span>
-<span class='doccomment'>///         Wrapper(T::identity())</span>
-<span class='doccomment'>///     }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl_ring!(&lt;Additive, Multiplicative&gt; for Wrapper&lt;T&gt; where T: AbstractRing);</span>
-<span class='doccomment'>/// ```</span>
-<span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>impl_ring</span>(
-    (<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>A</span>:<span class='ident'>ty</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>:<span class='ident'>ty</span><span class='op'>&gt;</span> <span class='kw'>for</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>:<span class='ident'>tt</span>)<span class='op'>+</span>) <span class='op'>=&gt;</span> {
-        <span class='macro'>impl_abelian</span><span class='macro'>!</span>(<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>A</span><span class='op'>&gt;</span> <span class='kw'>for</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>)<span class='op'>+</span>);
-        <span class='macro'>impl_monoid</span><span class='macro'>!</span>(<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>)<span class='op'>+</span>);
-        <span class='macro'>impl_marker</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>general</span>::<span class='ident'>AbstractRing</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>A</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span><span class='op'>&gt;</span>; $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>)<span class='op'>+</span>);
-    }
-);
-
-<span class='doccomment'>/// A ring with a commutative multiplication.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```notrust</span>
-<span class='doccomment'>/// ∀ a, b ∈ Self, a × b = b × a</span>
-<span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>AbstractRingCommutative</span><span class='op'>&lt;</span><span class='ident'>A</span>: <span class='ident'>Operator</span> <span class='op'>=</span> <span class='ident'>Additive</span>, <span class='ident'>M</span>: <span class='ident'>Operator</span> <span class='op'>=</span> <span class='ident'>Multiplicative</span><span class='op'>&gt;</span> : <span class='ident'>AbstractRing</span><span class='op'>&lt;</span><span class='ident'>A</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Returns `true` if the multiplication operator is commutative for the given argument tuple.</span>
-    <span class='doccomment'>/// Approximate equality is used for verifications.</span>
-    <span class='kw'>fn</span> <span class='ident'>prop_mul_is_commutative_approx</span>(<span class='ident'>args</span>: (<span class='self'>Self</span>, <span class='self'>Self</span>)) <span class='op'>-&gt;</span> <span class='ident'>bool</span>
-        <span class='kw'>where</span> <span class='self'>Self</span>: <span class='ident'>ApproxEq</span> {
-
-        <span class='kw'>let</span> (<span class='ident'>a</span>, <span class='ident'>b</span>) <span class='op'>=</span> <span class='ident'>args</span>;
-        <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='op'>||</span> { <span class='ident'>W</span>::<span class='op'>&lt;</span>_, <span class='ident'>A</span>, <span class='ident'>M</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>a</span>.<span class='ident'>clone</span>()) };
-        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='op'>||</span> { <span class='ident'>W</span>::<span class='op'>&lt;</span>_, <span class='ident'>A</span>, <span class='ident'>M</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>b</span>.<span class='ident'>clone</span>()) };
-
-        <span class='macro'>relative_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>() <span class='op'>*</span> <span class='ident'>b</span>(), <span class='ident'>b</span>() <span class='op'>*</span> <span class='ident'>a</span>())
-    }
-
-    <span class='doccomment'>/// Returns `true` if the multiplication operator is commutative for the given argument tuple.</span>
-    <span class='kw'>fn</span> <span class='ident'>prop_mul_is_commutative</span>(<span class='ident'>args</span>: (<span class='self'>Self</span>, <span class='self'>Self</span>)) <span class='op'>-&gt;</span> <span class='ident'>bool</span>
-        <span class='kw'>where</span> <span class='self'>Self</span>: <span class='ident'>Eq</span> {
-
-        <span class='kw'>let</span> (<span class='ident'>a</span>, <span class='ident'>b</span>) <span class='op'>=</span> <span class='ident'>args</span>;
-        <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='op'>||</span> { <span class='ident'>W</span>::<span class='op'>&lt;</span>_, <span class='ident'>A</span>, <span class='ident'>M</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>a</span>.<span class='ident'>clone</span>()) };
-        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='op'>||</span> { <span class='ident'>W</span>::<span class='op'>&lt;</span>_, <span class='ident'>A</span>, <span class='ident'>M</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>b</span>.<span class='ident'>clone</span>()) };
-
-        <span class='ident'>a</span>() <span class='op'>*</span> <span class='ident'>b</span>() <span class='op'>==</span> <span class='ident'>b</span>() <span class='op'>*</span> <span class='ident'>a</span>()
+        <span class="comment">// Left distributivity</span>
+        (<span class="ident">a</span>() <span class="op">*</span> <span class="ident">b</span>()) <span class="op">+</span> <span class="ident">c</span>() <span class="op">==</span> (<span class="ident">a</span>() <span class="op">*</span> <span class="ident">b</span>()) <span class="op">+</span> (<span class="ident">a</span>() <span class="op">*</span> <span class="ident">c</span>()) <span class="op">&amp;&amp;</span>
+        <span class="comment">// Right distributivity</span>
+        (<span class="ident">b</span>() <span class="op">+</span> <span class="ident">c</span>()) <span class="op">*</span> <span class="ident">a</span>() <span class="op">==</span> (<span class="ident">b</span>() <span class="op">*</span> <span class="ident">a</span>()) <span class="op">+</span> (<span class="ident">c</span>() <span class="op">*</span> <span class="ident">a</span>())
     }
 }
 
-<span class='doccomment'>/// Implements the commutative ring trait for types provided.</span>
-<span class='doccomment'>/// # Examples</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// # #[macro_use]</span>
-<span class='doccomment'>/// # extern crate alga;</span>
-<span class='doccomment'>/// # use alga::general::{AbstractMagma, AbstractRingCommutative, Additive, Multiplicative, Inverse, Identity};</span>
-<span class='doccomment'>/// # fn main() {}</span>
-<span class='doccomment'>/// #[derive(PartialEq, Clone)]</span>
-<span class='doccomment'>/// struct Wrapper&lt;T&gt;(T);</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl&lt;T: AbstractMagma&lt;Additive&gt;&gt; AbstractMagma&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
-<span class='doccomment'>///     fn operate(&amp;self, right: &amp;Self) -&gt; Self {</span>
-<span class='doccomment'>///         Wrapper(self.0.operate(&amp;right.0))</span>
-<span class='doccomment'>///     }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl&lt;T: Inverse&lt;Additive&gt;&gt; Inverse&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
-<span class='doccomment'>///     fn inverse(&amp;self) -&gt; Self {</span>
-<span class='doccomment'>///         Wrapper(self.0.inverse())</span>
-<span class='doccomment'>///     }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl&lt;T: Identity&lt;Additive&gt;&gt; Identity&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
-<span class='doccomment'>///     fn identity() -&gt; Self {</span>
-<span class='doccomment'>///         Wrapper(T::identity())</span>
-<span class='doccomment'>///     }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl&lt;T: AbstractMagma&lt;Multiplicative&gt;&gt; AbstractMagma&lt;Multiplicative&gt; for Wrapper&lt;T&gt; {</span>
-<span class='doccomment'>///     fn operate(&amp;self, right: &amp;Self) -&gt; Self {</span>
-<span class='doccomment'>///         Wrapper(self.0.operate(&amp;right.0))</span>
-<span class='doccomment'>///     }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl&lt;T: Identity&lt;Multiplicative&gt;&gt; Identity&lt;Multiplicative&gt; for Wrapper&lt;T&gt; {</span>
-<span class='doccomment'>///     fn identity() -&gt; Self {</span>
-<span class='doccomment'>///         Wrapper(T::identity())</span>
-<span class='doccomment'>///     }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl_ring!(&lt;Additive, Multiplicative&gt; for Wrapper&lt;T&gt; where T: AbstractRingCommutative);</span>
-<span class='doccomment'>/// ```</span>
-<span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>impl_ring_commutative</span>(
-    (<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>A</span>:<span class='ident'>ty</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>:<span class='ident'>ty</span><span class='op'>&gt;</span> <span class='kw'>for</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>:<span class='ident'>tt</span>)<span class='op'>+</span>) <span class='op'>=&gt;</span> {
-        <span class='macro'>impl_ring</span><span class='macro'>!</span>(<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>A</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>)<span class='op'>+</span>);
-        <span class='macro'>impl_marker</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>general</span>::<span class='ident'>AbstractRingCommutative</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>A</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span><span class='op'>&gt;</span>; $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>)<span class='op'>+</span>);
+<span class="doccomment">/// Implements the ring trait for types provided.</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # #[macro_use]</span>
+<span class="doccomment">/// # extern crate alga;</span>
+<span class="doccomment">/// # use alga::general::{AbstractMagma, AbstractRing, Additive, Multiplicative, Inverse, Identity};</span>
+<span class="doccomment">/// # fn main() {}</span>
+<span class="doccomment">/// #[derive(PartialEq, Clone)]</span>
+<span class="doccomment">/// struct Wrapper&lt;T&gt;(T);</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl&lt;T: AbstractMagma&lt;Additive&gt;&gt; AbstractMagma&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
+<span class="doccomment">///     fn operate(&amp;self, right: &amp;Self) -&gt; Self {</span>
+<span class="doccomment">///         Wrapper(self.0.operate(&amp;right.0))</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl&lt;T: Inverse&lt;Additive&gt;&gt; Inverse&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
+<span class="doccomment">///     fn inverse(&amp;self) -&gt; Self {</span>
+<span class="doccomment">///         Wrapper(self.0.inverse())</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl&lt;T: Identity&lt;Additive&gt;&gt; Identity&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
+<span class="doccomment">///     fn identity() -&gt; Self {</span>
+<span class="doccomment">///         Wrapper(T::identity())</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl&lt;T: AbstractMagma&lt;Multiplicative&gt;&gt; AbstractMagma&lt;Multiplicative&gt; for Wrapper&lt;T&gt; {</span>
+<span class="doccomment">///     fn operate(&amp;self, right: &amp;Self) -&gt; Self {</span>
+<span class="doccomment">///         Wrapper(self.0.operate(&amp;right.0))</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl&lt;T: Identity&lt;Multiplicative&gt;&gt; Identity&lt;Multiplicative&gt; for Wrapper&lt;T&gt; {</span>
+<span class="doccomment">///     fn identity() -&gt; Self {</span>
+<span class="doccomment">///         Wrapper(T::identity())</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl_ring!(&lt;Additive, Multiplicative&gt; for Wrapper&lt;T&gt; where T: AbstractRing);</span>
+<span class="doccomment">/// ```</span>
+<span class="attribute">#[<span class="ident">macro_export</span>]</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_ring</span>(
+    (<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">A</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>:<span class="ident">ty</span><span class="op">&gt;</span> <span class="kw">for</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>:<span class="ident">tt</span>)<span class="op">+</span>) <span class="op">=&gt;</span> {
+        <span class="macro">impl_abelian</span><span class="macro">!</span>(<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">A</span><span class="op">&gt;</span> <span class="kw">for</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>)<span class="op">+</span>);
+        <span class="macro">impl_monoid</span><span class="macro">!</span>(<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span><span class="op">&gt;</span> <span class="kw">for</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>)<span class="op">+</span>);
+        <span class="macro">impl_marker</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">general</span>::<span class="ident">AbstractRing</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">A</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span><span class="op">&gt;</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>)<span class="op">+</span>);
     }
 );
 
-<span class='doccomment'>/// A field is a commutative ring, and an abelian group under both operators.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>AbstractField</span><span class='op'>&lt;</span><span class='ident'>A</span>: <span class='ident'>Operator</span> <span class='op'>=</span> <span class='ident'>Additive</span>, <span class='ident'>M</span>: <span class='ident'>Operator</span> <span class='op'>=</span> <span class='ident'>Multiplicative</span><span class='op'>&gt;</span>
-    : <span class='ident'>AbstractRingCommutative</span><span class='op'>&lt;</span><span class='ident'>A</span>, <span class='ident'>M</span><span class='op'>&gt;</span>
-    <span class='op'>+</span> <span class='ident'>AbstractGroupAbelian</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>
+<span class="doccomment">/// A ring with a commutative multiplication.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```notrust</span>
+<span class="doccomment">/// ∀ a, b ∈ Self, a × b = b × a</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">AbstractRingCommutative</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">Operator</span> <span class="op">=</span> <span class="ident">Additive</span>, <span class="ident">M</span>: <span class="ident">Operator</span> <span class="op">=</span> <span class="ident">Multiplicative</span><span class="op">&gt;</span> : <span class="ident">AbstractRing</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Returns `true` if the multiplication operator is commutative for the given argument tuple.</span>
+    <span class="doccomment">/// Approximate equality is used for verifications.</span>
+    <span class="kw">fn</span> <span class="ident">prop_mul_is_commutative_approx</span>(<span class="ident">args</span>: (<span class="self">Self</span>, <span class="self">Self</span>)) <span class="op">-&gt;</span> <span class="ident">bool</span>
+        <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">ApproxEq</span> {
+
+        <span class="kw">let</span> (<span class="ident">a</span>, <span class="ident">b</span>) <span class="op">=</span> <span class="ident">args</span>;
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="op">||</span> { <span class="ident">W</span>::<span class="op">&lt;</span>_, <span class="ident">A</span>, <span class="ident">M</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">a</span>.<span class="ident">clone</span>()) };
+        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="op">||</span> { <span class="ident">W</span>::<span class="op">&lt;</span>_, <span class="ident">A</span>, <span class="ident">M</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">b</span>.<span class="ident">clone</span>()) };
+
+        <span class="macro">relative_eq</span><span class="macro">!</span>(<span class="ident">a</span>() <span class="op">*</span> <span class="ident">b</span>(), <span class="ident">b</span>() <span class="op">*</span> <span class="ident">a</span>())
+    }
+
+    <span class="doccomment">/// Returns `true` if the multiplication operator is commutative for the given argument tuple.</span>
+    <span class="kw">fn</span> <span class="ident">prop_mul_is_commutative</span>(<span class="ident">args</span>: (<span class="self">Self</span>, <span class="self">Self</span>)) <span class="op">-&gt;</span> <span class="ident">bool</span>
+        <span class="kw">where</span> <span class="self">Self</span>: <span class="ident">Eq</span> {
+
+        <span class="kw">let</span> (<span class="ident">a</span>, <span class="ident">b</span>) <span class="op">=</span> <span class="ident">args</span>;
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="op">||</span> { <span class="ident">W</span>::<span class="op">&lt;</span>_, <span class="ident">A</span>, <span class="ident">M</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">a</span>.<span class="ident">clone</span>()) };
+        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="op">||</span> { <span class="ident">W</span>::<span class="op">&lt;</span>_, <span class="ident">A</span>, <span class="ident">M</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">b</span>.<span class="ident">clone</span>()) };
+
+        <span class="ident">a</span>() <span class="op">*</span> <span class="ident">b</span>() <span class="op">==</span> <span class="ident">b</span>() <span class="op">*</span> <span class="ident">a</span>()
+    }
+}
+
+<span class="doccomment">/// Implements the commutative ring trait for types provided.</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # #[macro_use]</span>
+<span class="doccomment">/// # extern crate alga;</span>
+<span class="doccomment">/// # use alga::general::{AbstractMagma, AbstractRingCommutative, Additive, Multiplicative, Inverse, Identity};</span>
+<span class="doccomment">/// # fn main() {}</span>
+<span class="doccomment">/// #[derive(PartialEq, Clone)]</span>
+<span class="doccomment">/// struct Wrapper&lt;T&gt;(T);</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl&lt;T: AbstractMagma&lt;Additive&gt;&gt; AbstractMagma&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
+<span class="doccomment">///     fn operate(&amp;self, right: &amp;Self) -&gt; Self {</span>
+<span class="doccomment">///         Wrapper(self.0.operate(&amp;right.0))</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl&lt;T: Inverse&lt;Additive&gt;&gt; Inverse&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
+<span class="doccomment">///     fn inverse(&amp;self) -&gt; Self {</span>
+<span class="doccomment">///         Wrapper(self.0.inverse())</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl&lt;T: Identity&lt;Additive&gt;&gt; Identity&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
+<span class="doccomment">///     fn identity() -&gt; Self {</span>
+<span class="doccomment">///         Wrapper(T::identity())</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl&lt;T: AbstractMagma&lt;Multiplicative&gt;&gt; AbstractMagma&lt;Multiplicative&gt; for Wrapper&lt;T&gt; {</span>
+<span class="doccomment">///     fn operate(&amp;self, right: &amp;Self) -&gt; Self {</span>
+<span class="doccomment">///         Wrapper(self.0.operate(&amp;right.0))</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl&lt;T: Identity&lt;Multiplicative&gt;&gt; Identity&lt;Multiplicative&gt; for Wrapper&lt;T&gt; {</span>
+<span class="doccomment">///     fn identity() -&gt; Self {</span>
+<span class="doccomment">///         Wrapper(T::identity())</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl_ring!(&lt;Additive, Multiplicative&gt; for Wrapper&lt;T&gt; where T: AbstractRingCommutative);</span>
+<span class="doccomment">/// ```</span>
+<span class="attribute">#[<span class="ident">macro_export</span>]</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_ring_commutative</span>(
+    (<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">A</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>:<span class="ident">ty</span><span class="op">&gt;</span> <span class="kw">for</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>:<span class="ident">tt</span>)<span class="op">+</span>) <span class="op">=&gt;</span> {
+        <span class="macro">impl_ring</span><span class="macro">!</span>(<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">A</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span><span class="op">&gt;</span> <span class="kw">for</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>)<span class="op">+</span>);
+        <span class="macro">impl_marker</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">general</span>::<span class="ident">AbstractRingCommutative</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">A</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span><span class="op">&gt;</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>)<span class="op">+</span>);
+    }
+);
+
+<span class="doccomment">/// A field is a commutative ring, and an abelian group under both operators.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">AbstractField</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">Operator</span> <span class="op">=</span> <span class="ident">Additive</span>, <span class="ident">M</span>: <span class="ident">Operator</span> <span class="op">=</span> <span class="ident">Multiplicative</span><span class="op">&gt;</span>
+    : <span class="ident">AbstractRingCommutative</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">M</span><span class="op">&gt;</span>
+    <span class="op">+</span> <span class="ident">AbstractGroupAbelian</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>
 { }
 
-<span class='doccomment'>/// Implements the field trait for types provided.</span>
-<span class='doccomment'>/// # Examples</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// # #[macro_use]</span>
-<span class='doccomment'>/// # extern crate alga;</span>
-<span class='doccomment'>/// # use alga::general::{AbstractMagma, AbstractField, Additive, Multiplicative, Inverse, Identity};</span>
-<span class='doccomment'>/// # fn main() {}</span>
-<span class='doccomment'>/// #[derive(PartialEq, Clone)]</span>
-<span class='doccomment'>/// struct Wrapper&lt;T&gt;(T);</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl&lt;T: AbstractMagma&lt;Additive&gt;&gt; AbstractMagma&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
-<span class='doccomment'>///     fn operate(&amp;self, right: &amp;Self) -&gt; Self {</span>
-<span class='doccomment'>///         Wrapper(self.0.operate(&amp;right.0))</span>
-<span class='doccomment'>///     }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl&lt;T: Inverse&lt;Additive&gt;&gt; Inverse&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
-<span class='doccomment'>///     fn inverse(&amp;self) -&gt; Self {</span>
-<span class='doccomment'>///         Wrapper(self.0.inverse())</span>
-<span class='doccomment'>///     }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl&lt;T: Identity&lt;Additive&gt;&gt; Identity&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
-<span class='doccomment'>///     fn identity() -&gt; Self {</span>
-<span class='doccomment'>///         Wrapper(T::identity())</span>
-<span class='doccomment'>///     }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl&lt;T: AbstractMagma&lt;Multiplicative&gt;&gt; AbstractMagma&lt;Multiplicative&gt; for Wrapper&lt;T&gt; {</span>
-<span class='doccomment'>///     fn operate(&amp;self, right: &amp;Self) -&gt; Self {</span>
-<span class='doccomment'>///         Wrapper(self.0.operate(&amp;right.0))</span>
-<span class='doccomment'>///     }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>/// impl&lt;T: Inverse&lt;Multiplicative&gt;&gt; Inverse&lt;Multiplicative&gt; for Wrapper&lt;T&gt; {</span>
-<span class='doccomment'>///     fn inverse(&amp;self) -&gt; Self {</span>
-<span class='doccomment'>///         Wrapper(self.0.inverse())</span>
-<span class='doccomment'>///     }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl&lt;T: Identity&lt;Multiplicative&gt;&gt; Identity&lt;Multiplicative&gt; for Wrapper&lt;T&gt; {</span>
-<span class='doccomment'>///     fn identity() -&gt; Self {</span>
-<span class='doccomment'>///         Wrapper(T::identity())</span>
-<span class='doccomment'>///     }</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// impl_field!(&lt;Additive, Multiplicative&gt; for Wrapper&lt;T&gt; where T: AbstractField);</span>
-<span class='doccomment'>/// ```</span>
-<span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>impl_field</span>(
-    (<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>A</span>:<span class='ident'>ty</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>:<span class='ident'>ty</span><span class='op'>&gt;</span> <span class='kw'>for</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>:<span class='ident'>tt</span>)<span class='op'>+</span>) <span class='op'>=&gt;</span> {
-        <span class='macro'>impl_ring_commutative</span><span class='macro'>!</span>(<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>A</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>)<span class='op'>+</span>);
-        <span class='macro'>impl_marker</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>general</span>::<span class='ident'>AbstractQuasigroup</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span><span class='op'>&gt;</span>; $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>)<span class='op'>+</span>);
-        <span class='macro'>impl_marker</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>general</span>::<span class='ident'>AbstractLoop</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span><span class='op'>&gt;</span>; $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>)<span class='op'>+</span>);
-        <span class='macro'>impl_marker</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>general</span>::<span class='ident'>AbstractGroup</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span><span class='op'>&gt;</span>; $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>)<span class='op'>+</span>);
-        <span class='macro'>impl_marker</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>general</span>::<span class='ident'>AbstractGroupAbelian</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span><span class='op'>&gt;</span>; $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>)<span class='op'>+</span>);
-        <span class='macro'>impl_marker</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>general</span>::<span class='ident'>AbstractField</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>A</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span><span class='op'>&gt;</span>; $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>)<span class='op'>+</span>);
+<span class="doccomment">/// Implements the field trait for types provided.</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// # #[macro_use]</span>
+<span class="doccomment">/// # extern crate alga;</span>
+<span class="doccomment">/// # use alga::general::{AbstractMagma, AbstractField, Additive, Multiplicative, Inverse, Identity};</span>
+<span class="doccomment">/// # fn main() {}</span>
+<span class="doccomment">/// #[derive(PartialEq, Clone)]</span>
+<span class="doccomment">/// struct Wrapper&lt;T&gt;(T);</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl&lt;T: AbstractMagma&lt;Additive&gt;&gt; AbstractMagma&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
+<span class="doccomment">///     fn operate(&amp;self, right: &amp;Self) -&gt; Self {</span>
+<span class="doccomment">///         Wrapper(self.0.operate(&amp;right.0))</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl&lt;T: Inverse&lt;Additive&gt;&gt; Inverse&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
+<span class="doccomment">///     fn inverse(&amp;self) -&gt; Self {</span>
+<span class="doccomment">///         Wrapper(self.0.inverse())</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl&lt;T: Identity&lt;Additive&gt;&gt; Identity&lt;Additive&gt; for Wrapper&lt;T&gt; {</span>
+<span class="doccomment">///     fn identity() -&gt; Self {</span>
+<span class="doccomment">///         Wrapper(T::identity())</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl&lt;T: AbstractMagma&lt;Multiplicative&gt;&gt; AbstractMagma&lt;Multiplicative&gt; for Wrapper&lt;T&gt; {</span>
+<span class="doccomment">///     fn operate(&amp;self, right: &amp;Self) -&gt; Self {</span>
+<span class="doccomment">///         Wrapper(self.0.operate(&amp;right.0))</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// impl&lt;T: Inverse&lt;Multiplicative&gt;&gt; Inverse&lt;Multiplicative&gt; for Wrapper&lt;T&gt; {</span>
+<span class="doccomment">///     fn inverse(&amp;self) -&gt; Self {</span>
+<span class="doccomment">///         Wrapper(self.0.inverse())</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl&lt;T: Identity&lt;Multiplicative&gt;&gt; Identity&lt;Multiplicative&gt; for Wrapper&lt;T&gt; {</span>
+<span class="doccomment">///     fn identity() -&gt; Self {</span>
+<span class="doccomment">///         Wrapper(T::identity())</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// impl_field!(&lt;Additive, Multiplicative&gt; for Wrapper&lt;T&gt; where T: AbstractField);</span>
+<span class="doccomment">/// ```</span>
+<span class="attribute">#[<span class="ident">macro_export</span>]</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_field</span>(
+    (<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">A</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>:<span class="ident">ty</span><span class="op">&gt;</span> <span class="kw">for</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>:<span class="ident">tt</span>)<span class="op">+</span>) <span class="op">=&gt;</span> {
+        <span class="macro">impl_ring_commutative</span><span class="macro">!</span>(<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">A</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span><span class="op">&gt;</span> <span class="kw">for</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>)<span class="op">+</span>);
+        <span class="macro">impl_marker</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">general</span>::<span class="ident">AbstractQuasigroup</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span><span class="op">&gt;</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>)<span class="op">+</span>);
+        <span class="macro">impl_marker</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">general</span>::<span class="ident">AbstractLoop</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span><span class="op">&gt;</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>)<span class="op">+</span>);
+        <span class="macro">impl_marker</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">general</span>::<span class="ident">AbstractGroup</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span><span class="op">&gt;</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>)<span class="op">+</span>);
+        <span class="macro">impl_marker</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">general</span>::<span class="ident">AbstractGroupAbelian</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span><span class="op">&gt;</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>)<span class="op">+</span>);
+        <span class="macro">impl_marker</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">general</span>::<span class="ident">AbstractField</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">A</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span><span class="op">&gt;</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>)<span class="op">+</span>);
     }
 );
 
-<span class='comment'>/*
+<span class="comment">/*
  *
  * Implementations.
  *
  */</span>
-<span class='macro'>impl_ring_commutative</span><span class='macro'>!</span>(<span class='op'>&lt;</span><span class='ident'>Additive</span>, <span class='ident'>Multiplicative</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>i8</span>; <span class='ident'>i16</span>; <span class='ident'>i32</span>; <span class='ident'>i64</span>; <span class='ident'>isize</span>);
-<span class='macro'>impl_field</span><span class='macro'>!</span>(<span class='op'>&lt;</span><span class='ident'>Additive</span>, <span class='ident'>Multiplicative</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>f32</span>; <span class='ident'>f64</span>);
+<span class="macro">impl_ring_commutative</span><span class="macro">!</span>(<span class="op">&lt;</span><span class="ident">Additive</span>, <span class="ident">Multiplicative</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">i8</span>; <span class="ident">i16</span>; <span class="ident">i32</span>; <span class="ident">i64</span>; <span class="ident">isize</span>);
+<span class="macro">impl_field</span><span class="macro">!</span>(<span class="op">&lt;</span><span class="ident">Additive</span>, <span class="ident">Multiplicative</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">f32</span>; <span class="ident">f64</span>);
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Num</span> <span class='op'>+</span> <span class='ident'>Clone</span> <span class='op'>+</span> <span class='ident'>ClosedNeg</span> <span class='op'>+</span> <span class='ident'>AbstractRing</span><span class='op'>&gt;</span>            <span class='ident'>AbstractRing</span>            <span class='kw'>for</span> <span class='ident'>Complex</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> { }
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Num</span> <span class='op'>+</span> <span class='ident'>Clone</span> <span class='op'>+</span> <span class='ident'>ClosedNeg</span> <span class='op'>+</span> <span class='ident'>AbstractRingCommutative</span><span class='op'>&gt;</span> <span class='ident'>AbstractRingCommutative</span> <span class='kw'>for</span> <span class='ident'>Complex</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> { }
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Num</span> <span class='op'>+</span> <span class='ident'>Clone</span> <span class='op'>+</span> <span class='ident'>ClosedNeg</span> <span class='op'>+</span> <span class='ident'>AbstractField</span><span class='op'>&gt;</span>           <span class='ident'>AbstractField</span>           <span class='kw'>for</span> <span class='ident'>Complex</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> { }
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Num</span> <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">ClosedNeg</span> <span class="op">+</span> <span class="ident">AbstractRing</span><span class="op">&gt;</span>            <span class="ident">AbstractRing</span>            <span class="kw">for</span> <span class="ident">Complex</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> { }
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Num</span> <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">ClosedNeg</span> <span class="op">+</span> <span class="ident">AbstractRingCommutative</span><span class="op">&gt;</span> <span class="ident">AbstractRingCommutative</span> <span class="kw">for</span> <span class="ident">Complex</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> { }
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Num</span> <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">ClosedNeg</span> <span class="op">+</span> <span class="ident">AbstractField</span><span class="op">&gt;</span>           <span class="ident">AbstractField</span>           <span class="kw">for</span> <span class="ident">Complex</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> { }
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

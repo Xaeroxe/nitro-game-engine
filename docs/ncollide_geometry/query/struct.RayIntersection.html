@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc struct">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,38 +43,38 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>ncollide_geometry</a>::<wbr><a href='index.html'>query</a>::<wbr><a class='struct' href=''>RayIntersection</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>ncollide_geometry</a>::<wbr><a href='index.html'>query</a>::<wbr><a class="struct" href=''>RayIntersection</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/ncollide_geometry/query/ray_internal/ray.rs.html#46-60' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct RayIntersection&lt;V:&nbsp;<a class='trait' href='../../ncollide_math/vector/trait.Vector.html' title='ncollide_math::vector::Vector'>Vector</a>&gt; {
-    pub toi: V::<a class='trait' href='../../alga/linear/vector/trait.InnerSpace.html' title='alga::linear::vector::InnerSpace'>Real</a>,
+<pre class='rust struct'>pub struct RayIntersection&lt;V:&nbsp;<a class="trait" href="../../ncollide_math/vector/trait.Vector.html" title="trait ncollide_math::vector::Vector">Vector</a>&gt; {
+    pub toi: V::<a class="trait" href="../../alga/linear/vector/trait.InnerSpace.html" title="trait alga::linear::vector::InnerSpace">Real</a>,
     pub normal: V,
-    pub uvs: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='type' href='../../nalgebra/geometry/point_alias/type.Point2.html' title='nalgebra::geometry::point_alias::Point2'>Point2</a>&lt;V::<a class='trait' href='../../alga/linear/vector/trait.InnerSpace.html' title='alga::linear::vector::InnerSpace'>Real</a>&gt;&gt;,
+    pub uvs: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="type" href="../../nalgebra/geometry/point_alias/type.Point2.html" title="type nalgebra::geometry::point_alias::Point2">Point2</a>&lt;V::<a class="trait" href="../../alga/linear/vector/trait.InnerSpace.html" title="trait alga::linear::vector::InnerSpace">Real</a>&gt;&gt;,
 }</pre><div class='docblock'><p>Structure containing the result of a successful ray cast.</p>
-</div><h2 class='fields'>Fields</h2><span id='structfield.toi' class='structfield'>
+</div><h2 class='fields'>Fields</h2><span id='structfield.toi' class="structfield">
                            <span id='toi.v' class='invisible'>
-                           <code>toi: V::<a class='trait' href='../../alga/linear/vector/trait.InnerSpace.html' title='alga::linear::vector::InnerSpace'>Real</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The time of impact of the ray with the object.  The exact contact point can be computed
+                           <code>toi: V::<a class="trait" href="../../alga/linear/vector/trait.InnerSpace.html" title="trait alga::linear::vector::InnerSpace">Real</a></code>
+                           </span></span><div class='docblock'><p>The time of impact of the ray with the object.  The exact contact point can be computed
 with: <code>origin + dir * toi</code> where <code>origin</code> is the origin of the ray; <code>dir</code> is its direction and
 <code>toi</code> is the value of this field.</p>
-</div><span id='structfield.normal' class='structfield'>
+</div><span id='structfield.normal' class="structfield">
                            <span id='normal.v' class='invisible'>
                            <code>normal: V</code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The normal at the intersection point.</p>
+                           </span></span><div class='docblock'><p>The normal at the intersection point.</p>
 
 <p>If the <code>toi</code> is exactly zero, the normal might not be reliable.</p>
-</div><span id='structfield.uvs' class='structfield'>
+</div><span id='structfield.uvs' class="structfield">
                            <span id='uvs.v' class='invisible'>
-                           <code>uvs: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='type' href='../../nalgebra/geometry/point_alias/type.Point2.html' title='nalgebra::geometry::point_alias::Point2'>Point2</a>&lt;V::<a class='trait' href='../../alga/linear/vector/trait.InnerSpace.html' title='alga::linear::vector::InnerSpace'>Real</a>&gt;&gt;</code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The textures coordinates at the intersection point.  This is an <code>Option</code> because some shape
+                           <code>uvs: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="type" href="../../nalgebra/geometry/point_alias/type.Point2.html" title="type nalgebra::geometry::point_alias::Point2">Point2</a>&lt;V::<a class="trait" href="../../alga/linear/vector/trait.InnerSpace.html" title="trait alga::linear::vector::InnerSpace">Real</a>&gt;&gt;</code>
+                           </span></span><div class='docblock'><p>The textures coordinates at the intersection point.  This is an <code>Option</code> because some shape
 do not support texture coordinates.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;V:&nbsp;<a class='trait' href='../../ncollide_math/vector/trait.Vector.html' title='ncollide_math::vector::Vector'>Vector</a>&gt; <a class='struct' href='../../ncollide_geometry/query/ray_internal/struct.RayIntersection.html' title='ncollide_geometry::query::ray_internal::RayIntersection'>RayIntersection</a>&lt;V&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ncollide_geometry/query/ray_internal/ray.rs.html#62-82' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new_with_uvs' class='method'><span id='new_with_uvs.v' class='invisible'><code>fn <a href='#method.new_with_uvs' class='fnname'>new_with_uvs</a>(toi: V::<a class='trait' href='../../alga/linear/vector/trait.InnerSpace.html' title='alga::linear::vector::InnerSpace'>Real</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; normal: V,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; uvs: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='type' href='../../nalgebra/geometry/point_alias/type.Point2.html' title='nalgebra::geometry::point_alias::Point2'>Point2</a>&lt;V::<a class='trait' href='../../alga/linear/vector/trait.InnerSpace.html' title='alga::linear::vector::InnerSpace'>Real</a>&gt;&gt;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='struct' href='../../ncollide_geometry/query/ray_internal/struct.RayIntersection.html' title='ncollide_geometry::query::ray_internal::RayIntersection'>RayIntersection</a>&lt;V&gt;</code></span></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;V:&nbsp;<a class="trait" href="../../ncollide_math/vector/trait.Vector.html" title="trait ncollide_math::vector::Vector">Vector</a>&gt; <a class="struct" href="../../ncollide_geometry/query/ray_internal/struct.RayIntersection.html" title="struct ncollide_geometry::query::ray_internal::RayIntersection">RayIntersection</a>&lt;V&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/ncollide_geometry/query/ray_internal/ray.rs.html#62-82' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new_with_uvs' class="method"><span id='new_with_uvs.v' class='invisible'><code>fn <a href='#method.new_with_uvs' class='fnname'>new_with_uvs</a>(toi: V::<a class="trait" href="../../alga/linear/vector/trait.InnerSpace.html" title="trait alga::linear::vector::InnerSpace">Real</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; normal: V,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; uvs: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="type" href="../../nalgebra/geometry/point_alias/type.Point2.html" title="type nalgebra::geometry::point_alias::Point2">Point2</a>&lt;V::<a class="trait" href="../../alga/linear/vector/trait.InnerSpace.html" title="trait alga::linear::vector::InnerSpace">Real</a>&gt;&gt;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class="struct" href="../../ncollide_geometry/query/ray_internal/struct.RayIntersection.html" title="struct ncollide_geometry::query::ray_internal::RayIntersection">RayIntersection</a>&lt;V&gt;</code></span></h4>
 <div class='docblock'><p>Creates a new <code>RayIntersection</code>.</p>
-</div><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(toi: V::<a class='trait' href='../../alga/linear/vector/trait.InnerSpace.html' title='alga::linear::vector::InnerSpace'>Real</a>, normal: V) -&gt; <a class='struct' href='../../ncollide_geometry/query/ray_internal/struct.RayIntersection.html' title='ncollide_geometry::query::ray_internal::RayIntersection'>RayIntersection</a>&lt;V&gt;</code></span></h4>
+</div><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(toi: V::<a class="trait" href="../../alga/linear/vector/trait.InnerSpace.html" title="trait alga::linear::vector::InnerSpace">Real</a>, normal: V) -&gt; <a class="struct" href="../../ncollide_geometry/query/ray_internal/struct.RayIntersection.html" title="struct ncollide_geometry::query::ray_internal::RayIntersection">RayIntersection</a>&lt;V&gt;</code></span></h4>
 <div class='docblock'><p>Creates a new <code>RayIntersection</code>.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>

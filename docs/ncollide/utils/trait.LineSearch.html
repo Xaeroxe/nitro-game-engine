@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,23 +43,23 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>ncollide</a>::<wbr><a href='index.html'>utils</a>::<wbr><a class='trait' href=''>LineSearch</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>ncollide</a>::<wbr><a href='index.html'>utils</a>::<wbr><a class="trait" href=''>LineSearch</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/ncollide_utils/optimization.rs.html#108-111' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait LineSearch&lt;N, V&gt; {
-    fn <a href='#tymethod.step_size' class='fnname'>step_size</a>&lt;F&gt;(&amp;self, f: &amp;mut F, df: &amp;V, x: &amp;V, dir: &amp;V) -&gt; N <span class='where fmt-newline'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;V) -&gt; N</span>;
+    fn <a href='#tymethod.step_size' class='fnname'>step_size</a>&lt;F&gt;(&amp;self, f: &amp;mut F, df: &amp;V, x: &amp;V, dir: &amp;V) -&gt; N <span class="where fmt-newline">where F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html" title="trait core::ops::Fn">Fn</a>(&amp;V) -&gt; N</span>;
 }</pre><div class='docblock'><p>Trait for line search methods.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.step_size' class='method'><span id='step_size.v' class='invisible'><code>fn <a href='#tymethod.step_size' class='fnname'>step_size</a>&lt;F&gt;(&amp;self, f: &amp;mut F, df: &amp;V, x: &amp;V, dir: &amp;V) -&gt; N <span class='where fmt-newline'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;V) -&gt; N</span></code></span></h3><div class='docblock'><p>Gets a near-optimal step size for the next descent.</p>
+        <h3 id='tymethod.step_size' class='method'><span id='step_size.v' class='invisible'><code>fn <a href='#tymethod.step_size' class='fnname'>step_size</a>&lt;F&gt;(&amp;self, f: &amp;mut F, df: &amp;V, x: &amp;V, dir: &amp;V) -&gt; N <span class="where fmt-newline">where F: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html" title="trait core::ops::Fn">Fn</a>(&amp;V) -&gt; N</span></code></span></h3><div class='docblock'><p>Gets a near-optimal step size for the next descent.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;N, V&gt; LineSearch&lt;N, V&gt; for <a class='struct' href='../../ncollide/utils/struct.BacktrackingLineSearch.html' title='ncollide::utils::BacktrackingLineSearch'>BacktrackingLineSearch</a>&lt;N&gt; <span class='where fmt-newline'>where N: <a class='trait' href='../../ncollide/math/trait.Scalar.html' title='ncollide::math::Scalar'>Scalar</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;V: <a class='trait' href='../../nalgebra/traits/geometry/trait.Dot.html' title='nalgebra::traits::geometry::Dot'>Dot</a>&lt;N&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Add.html' title='core::ops::Add'>Add</a>&lt;V, Output=V&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html' title='core::ops::Mul'>Mul</a>&lt;N, Output=V&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a></span></code></li>
+    <li><code>impl&lt;N, V&gt; LineSearch&lt;N, V&gt; for <a class="struct" href="../../ncollide/utils/struct.BacktrackingLineSearch.html" title="struct ncollide::utils::BacktrackingLineSearch">BacktrackingLineSearch</a>&lt;N&gt; <span class="where fmt-newline">where N: <a class="trait" href="../../ncollide/math/trait.Scalar.html" title="trait ncollide::math::Scalar">Scalar</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;V: <a class="trait" href="../../nalgebra/traits/geometry/trait.Dot.html" title="trait nalgebra::traits::geometry::Dot">Dot</a>&lt;N&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Add.html" title="trait core::ops::Add">Add</a>&lt;V, Output=V&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html" title="trait core::ops::Mul">Mul</a>&lt;N, Output=V&gt; + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a></span></code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/ncollide_utils/optimization/trait.LineSearch.js">
                  </script></section>

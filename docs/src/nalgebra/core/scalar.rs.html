@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -52,16 +52,16 @@
 <span id="7">7</span>
 <span id="8">8</span>
 <span id="9">9</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>::<span class='ident'>Debug</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Debug</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::<span class="ident">Any</span>;
 
-<span class='doccomment'>/// The basic scarar type for all structures of `nalgebra`.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This does not make any assumption on the algebraic properties of `Self`.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Scalar</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>PartialEq</span> <span class='op'>+</span> <span class='ident'>Debug</span> <span class='op'>+</span> <span class='ident'>Any</span> {
+<span class="doccomment">/// The basic scarar type for all structures of `nalgebra`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This does not make any assumption on the algebraic properties of `Self`.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Scalar</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">PartialEq</span> <span class="op">+</span> <span class="ident">Debug</span> <span class="op">+</span> <span class="ident">Any</span> {
 }
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>PartialEq</span> <span class='op'>+</span> <span class='ident'>Debug</span> <span class='op'>+</span> <span class='ident'>Any</span><span class='op'>&gt;</span> <span class='ident'>Scalar</span> <span class='kw'>for</span> <span class='ident'>T</span> { }
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">PartialEq</span> <span class="op">+</span> <span class="ident">Debug</span> <span class="op">+</span> <span class="ident">Any</span><span class="op">&gt;</span> <span class="ident">Scalar</span> <span class="kw">for</span> <span class="ident">T</span> { }
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

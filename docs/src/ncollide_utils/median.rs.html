@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -61,23 +61,23 @@
 <span id="16">16</span>
 <span id="17">17</span>
 <span id="18">18</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::<span class="ident">Real</span>;
+<span class="kw">use</span> <span class="ident">na</span>;
 
-<span class='doccomment'>/// Computes the median of a set of values.</span>
-<span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>median</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span><span class='op'>&gt;</span>(<span class='ident'>vals</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>N</span>]) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>vals</span>.<span class='ident'>len</span>() <span class='op'>&gt;</span> <span class='number'>0</span>, <span class='string'>&quot;Cannot compute the median of zero values.&quot;</span>);
+<span class="doccomment">/// Computes the median of a set of values.</span>
+<span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">median</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span><span class="op">&gt;</span>(<span class="ident">vals</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">N</span>]) <span class="op">-&gt;</span> <span class="ident">N</span> {
+    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">vals</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">0</span>, <span class="string">&quot;Cannot compute the median of zero values.&quot;</span>);
 
-    <span class='ident'>vals</span>.<span class='ident'>sort_by</span>(<span class='op'>|</span><span class='ident'>a</span>, <span class='ident'>b</span><span class='op'>|</span> <span class='ident'>a</span>.<span class='ident'>partial_cmp</span>(<span class='ident'>b</span>).<span class='ident'>unwrap</span>() );
+    <span class="ident">vals</span>.<span class="ident">sort_by</span>(<span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> <span class="ident">a</span>.<span class="ident">partial_cmp</span>(<span class="ident">b</span>).<span class="ident">unwrap</span>() );
 
-    <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='ident'>vals</span>.<span class='ident'>len</span>();
+    <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">vals</span>.<span class="ident">len</span>();
 
-    <span class='kw'>if</span> <span class='ident'>n</span> <span class='op'>%</span> <span class='number'>2</span> <span class='op'>==</span> <span class='number'>0</span> {
-        (<span class='ident'>vals</span>[<span class='ident'>n</span> <span class='op'>/</span> <span class='number'>2</span> <span class='op'>-</span> <span class='number'>1</span>] <span class='op'>+</span> <span class='ident'>vals</span>[<span class='ident'>n</span> <span class='op'>/</span> <span class='number'>2</span>]) <span class='op'>/</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>2.0</span>)
-    } <span class='kw'>else</span> {
-        <span class='ident'>vals</span>[<span class='ident'>n</span> <span class='op'>/</span> <span class='number'>2</span>]
+    <span class="kw">if</span> <span class="ident">n</span> <span class="op">%</span> <span class="number">2</span> <span class="op">==</span> <span class="number">0</span> {
+        (<span class="ident">vals</span>[<span class="ident">n</span> <span class="op">/</span> <span class="number">2</span> <span class="op">-</span> <span class="number">1</span>] <span class="op">+</span> <span class="ident">vals</span>[<span class="ident">n</span> <span class="op">/</span> <span class="number">2</span>]) <span class="op">/</span> <span class="ident">na</span>::<span class="ident">convert</span>(<span class="number">2.0</span>)
+    } <span class="kw">else</span> {
+        <span class="ident">vals</span>[<span class="ident">n</span> <span class="op">/</span> <span class="number">2</span>]
     }
 }
 </pre>

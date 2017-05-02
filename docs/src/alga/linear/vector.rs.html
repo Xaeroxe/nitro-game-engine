@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -257,219 +257,219 @@
 <span id="212">212</span>
 <span id="213">213</span>
 <span id="214">214</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>num</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>Sub</span>, <span class='ident'>Mul</span>, <span class='ident'>Div</span>, <span class='ident'>AddAssign</span>, <span class='ident'>SubAssign</span>, <span class='ident'>MulAssign</span>, <span class='ident'>DivAssign</span>, <span class='ident'>Neg</span>, <span class='ident'>Index</span>, <span class='ident'>IndexMut</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">num</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">Sub</span>, <span class="ident">Mul</span>, <span class="ident">Div</span>, <span class="ident">AddAssign</span>, <span class="ident">SubAssign</span>, <span class="ident">MulAssign</span>, <span class="ident">DivAssign</span>, <span class="ident">Neg</span>, <span class="ident">Index</span>, <span class="ident">IndexMut</span>};
 
-<span class='kw'>use</span> <span class='ident'>general</span>::{<span class='ident'>ClosedAdd</span>, <span class='ident'>ClosedMul</span>, <span class='ident'>ClosedDiv</span>, <span class='ident'>Module</span>, <span class='ident'>Field</span>, <span class='ident'>Real</span>};
+<span class="kw">use</span> <span class="ident">general</span>::{<span class="ident">ClosedAdd</span>, <span class="ident">ClosedMul</span>, <span class="ident">ClosedDiv</span>, <span class="ident">Module</span>, <span class="ident">Field</span>, <span class="ident">Real</span>};
 
-<span class='doccomment'>/// A vector space has a module structure over a field instead of a ring.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>VectorSpace</span>: <span class='ident'>Module</span><span class='op'>&lt;</span><span class='ident'>Ring</span> <span class='op'>=</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>VectorSpace</span><span class='op'>&gt;</span>::<span class='ident'>Field</span><span class='op'>&gt;</span> <span class='comment'>/* +
+<span class="doccomment">/// A vector space has a module structure over a field instead of a ring.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">VectorSpace</span>: <span class="ident">Module</span><span class="op">&lt;</span><span class="ident">Ring</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">VectorSpace</span><span class="op">&gt;</span>::<span class="ident">Field</span><span class="op">&gt;</span> <span class="comment">/* +
                        ClosedDiv&lt;&lt;Self as VectorSpace&gt;::Field&gt; */</span> {
-    <span class='doccomment'>/// The underlying scalar field.</span>
-    <span class='kw'>type</span> <span class='ident'>Field</span>: <span class='ident'>Field</span>;
+    <span class="doccomment">/// The underlying scalar field.</span>
+    <span class="kw">type</span> <span class="ident">Field</span>: <span class="ident">Field</span>;
 }
 
-<span class='doccomment'>/// A normed vector space.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>NormedSpace</span>: <span class='ident'>VectorSpace</span> {
-    <span class='doccomment'>/// The squared norm of this vector.</span>
-    <span class='kw'>fn</span> <span class='ident'>norm_squared</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Field</span>;
+<span class="doccomment">/// A normed vector space.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">NormedSpace</span>: <span class="ident">VectorSpace</span> {
+    <span class="doccomment">/// The squared norm of this vector.</span>
+    <span class="kw">fn</span> <span class="ident">norm_squared</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Field</span>;
 
-    <span class='doccomment'>/// The norm of this vector.</span>
-    <span class='kw'>fn</span> <span class='ident'>norm</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Field</span>;
+    <span class="doccomment">/// The norm of this vector.</span>
+    <span class="kw">fn</span> <span class="ident">norm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Field</span>;
 
-    <span class='doccomment'>/// Returns a normalized version of this vector.</span>
-    <span class='kw'>fn</span> <span class='ident'>normalize</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
+    <span class="doccomment">/// Returns a normalized version of this vector.</span>
+    <span class="kw">fn</span> <span class="ident">normalize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 
-    <span class='doccomment'>/// Normalizes this vector in-place and returns its norm.</span>
-    <span class='kw'>fn</span> <span class='ident'>normalize_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Field</span>;
+    <span class="doccomment">/// Normalizes this vector in-place and returns its norm.</span>
+    <span class="kw">fn</span> <span class="ident">normalize_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Field</span>;
 
-    <span class='doccomment'>/// Returns a normalized version of this vector unless its norm as smaller or equal to `eps`.</span>
-    <span class='kw'>fn</span> <span class='ident'>try_normalize</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>eps</span>: <span class='self'>Self</span>::<span class='ident'>Field</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span>;
+    <span class="doccomment">/// Returns a normalized version of this vector unless its norm as smaller or equal to `eps`.</span>
+    <span class="kw">fn</span> <span class="ident">try_normalize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">eps</span>: <span class="self">Self</span>::<span class="ident">Field</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
 
-    <span class='doccomment'>/// Normalizes this vector in-place or does nothing if its norm is smaller or equal to `eps`.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If the normalization succeded, returns the old normal of this vector.</span>
-    <span class='kw'>fn</span> <span class='ident'>try_normalize_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>eps</span>: <span class='self'>Self</span>::<span class='ident'>Field</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Field</span><span class='op'>&gt;</span>;
+    <span class="doccomment">/// Normalizes this vector in-place or does nothing if its norm is smaller or equal to `eps`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If the normalization succeded, returns the old normal of this vector.</span>
+    <span class="kw">fn</span> <span class="ident">try_normalize_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">eps</span>: <span class="self">Self</span>::<span class="ident">Field</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Field</span><span class="op">&gt;</span>;
 }
 
 
-<span class='doccomment'>/// A vector space aquipped with an inner product.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// It must be a normed space as well and the norm must agree with the inner product.</span>
-<span class='doccomment'>/// The inner product must be symmetric, linear in its first agurment, and positive definite.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>InnerSpace</span>: <span class='ident'>NormedSpace</span><span class='op'>&lt;</span><span class='ident'>Field</span> <span class='op'>=</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>InnerSpace</span><span class='op'>&gt;</span>::<span class='ident'>Real</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The result of inner product (same as the field used by this vector space).</span>
-    <span class='kw'>type</span> <span class='ident'>Real</span>: <span class='ident'>Real</span>;
+<span class="doccomment">/// A vector space aquipped with an inner product.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// It must be a normed space as well and the norm must agree with the inner product.</span>
+<span class="doccomment">/// The inner product must be symmetric, linear in its first agurment, and positive definite.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">InnerSpace</span>: <span class="ident">NormedSpace</span><span class="op">&lt;</span><span class="ident">Field</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">InnerSpace</span><span class="op">&gt;</span>::<span class="ident">Real</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The result of inner product (same as the field used by this vector space).</span>
+    <span class="kw">type</span> <span class="ident">Real</span>: <span class="ident">Real</span>;
 
-    <span class='doccomment'>/// Computes the inner product of `self` with `other`.</span>
-    <span class='kw'>fn</span> <span class='ident'>inner_product</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Real</span>;
+    <span class="doccomment">/// Computes the inner product of `self` with `other`.</span>
+    <span class="kw">fn</span> <span class="ident">inner_product</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Real</span>;
 
-    <span class='doccomment'>/// Measures the angle between two vectors.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>angle</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Real</span> {
-        <span class='kw'>let</span> <span class='ident'>prod</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>inner_product</span>(<span class='ident'>other</span>);
-        <span class='kw'>let</span> <span class='ident'>n1</span>   <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>norm</span>();
-        <span class='kw'>let</span> <span class='ident'>n2</span>   <span class='op'>=</span> <span class='ident'>other</span>.<span class='ident'>norm</span>();
+    <span class="doccomment">/// Measures the angle between two vectors.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">angle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Real</span> {
+        <span class="kw">let</span> <span class="ident">prod</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner_product</span>(<span class="ident">other</span>);
+        <span class="kw">let</span> <span class="ident">n1</span>   <span class="op">=</span> <span class="self">self</span>.<span class="ident">norm</span>();
+        <span class="kw">let</span> <span class="ident">n2</span>   <span class="op">=</span> <span class="ident">other</span>.<span class="ident">norm</span>();
 
-        <span class='kw'>if</span> <span class='ident'>n1</span> <span class='op'>==</span> <span class='ident'>num</span>::<span class='ident'>zero</span>() <span class='op'>||</span> <span class='ident'>n2</span> <span class='op'>==</span> <span class='ident'>num</span>::<span class='ident'>zero</span>() {
-            <span class='ident'>num</span>::<span class='ident'>zero</span>()
+        <span class="kw">if</span> <span class="ident">n1</span> <span class="op">==</span> <span class="ident">num</span>::<span class="ident">zero</span>() <span class="op">||</span> <span class="ident">n2</span> <span class="op">==</span> <span class="ident">num</span>::<span class="ident">zero</span>() {
+            <span class="ident">num</span>::<span class="ident">zero</span>()
         }
-        <span class='kw'>else</span> {
-            <span class='kw'>let</span> <span class='ident'>cang</span> <span class='op'>=</span> <span class='ident'>prod</span> <span class='op'>/</span> (<span class='ident'>n1</span> <span class='op'>*</span> <span class='ident'>n2</span>);
+        <span class="kw">else</span> {
+            <span class="kw">let</span> <span class="ident">cang</span> <span class="op">=</span> <span class="ident">prod</span> <span class="op">/</span> (<span class="ident">n1</span> <span class="op">*</span> <span class="ident">n2</span>);
 
-            <span class='kw'>if</span> <span class='ident'>cang</span> <span class='op'>&gt;</span> <span class='ident'>num</span>::<span class='ident'>one</span>() {
-                <span class='ident'>num</span>::<span class='ident'>zero</span>()
+            <span class="kw">if</span> <span class="ident">cang</span> <span class="op">&gt;</span> <span class="ident">num</span>::<span class="ident">one</span>() {
+                <span class="ident">num</span>::<span class="ident">zero</span>()
             }
-            <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>cang</span> <span class='op'>&lt;</span> <span class='op'>-</span><span class='ident'>num</span>::<span class='ident'>one</span>::<span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Real</span><span class='op'>&gt;</span>() {
-                <span class='self'>Self</span>::<span class='ident'>Real</span>::<span class='ident'>pi</span>()
+            <span class="kw">else</span> <span class="kw">if</span> <span class="ident">cang</span> <span class="op">&lt;</span> <span class="op">-</span><span class="ident">num</span>::<span class="ident">one</span>::<span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Real</span><span class="op">&gt;</span>() {
+                <span class="self">Self</span>::<span class="ident">Real</span>::<span class="ident">pi</span>()
             }
-            <span class='kw'>else</span> {
-                <span class='ident'>cang</span>.<span class='ident'>acos</span>()
-            }
-        }
-    }
-}
-
-<span class='doccomment'>/// A finite-dimensional vector space.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>FiniteDimVectorSpace</span>: <span class='ident'>VectorSpace</span> <span class='op'>+</span>
-                                <span class='ident'>Index</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>VectorSpace</span><span class='op'>&gt;</span>::<span class='ident'>Field</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                                <span class='ident'>IndexMut</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>VectorSpace</span><span class='op'>&gt;</span>::<span class='ident'>Field</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The vector space dimension.</span>
-    <span class='kw'>fn</span> <span class='ident'>dimension</span>() <span class='op'>-&gt;</span> <span class='ident'>usize</span>;
-
-    <span class='doccomment'>/// Applies the given closule to each element of this vector space&#39;s canonical basis. Stops if</span>
-    <span class='doccomment'>/// `f` returns `false`.</span>
-    <span class='comment'>// XXX: return an iterator instead when `-&gt; impl Iterator` will be supported by Rust.</span>
-    <span class='kw'>fn</span> <span class='ident'>canonical_basis</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnMut</span>(<span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='ident'>f</span>: <span class='ident'>F</span>) {
-        <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='self'>Self</span>::<span class='ident'>dimension</span>() {
-            <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>f</span>(<span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>canonical_basis_element</span>(<span class='ident'>i</span>)) {
-                <span class='kw'>break</span>;
+            <span class="kw">else</span> {
+                <span class="ident">cang</span>.<span class="ident">acos</span>()
             }
         }
     }
-
-    <span class='doccomment'>/// The i-the canonical basis element.</span>
-    <span class='kw'>fn</span> <span class='ident'>canonical_basis_element</span>(<span class='ident'>i</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-
-    <span class='doccomment'>/// The dot product between two vectors.</span>
-    <span class='kw'>fn</span> <span class='ident'>dot</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Field</span>;
-
-    <span class='doccomment'>/// Same as `&amp;self[i]` but without bound-checking.</span>
-    <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>component_unchecked</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>Field</span>;
-
-    <span class='doccomment'>/// Same as `&amp;mut self[i]` but without bound-checking.</span>
-    <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>component_unchecked_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>Self</span>::<span class='ident'>Field</span>;
 }
 
-<span class='doccomment'>/// A finite-dimensional vector space equipped with an inner product that must coincide</span>
-<span class='doccomment'>/// with the dot product.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>FiniteDimInnerSpace</span>: <span class='ident'>InnerSpace</span> <span class='op'>+</span> <span class='ident'>FiniteDimVectorSpace</span><span class='op'>&lt;</span><span class='ident'>Field</span> <span class='op'>=</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>InnerSpace</span><span class='op'>&gt;</span>::<span class='ident'>Real</span><span class='op'>&gt;</span> {
+<span class="doccomment">/// A finite-dimensional vector space.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">FiniteDimVectorSpace</span>: <span class="ident">VectorSpace</span> <span class="op">+</span>
+                                <span class="ident">Index</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">VectorSpace</span><span class="op">&gt;</span>::<span class="ident">Field</span><span class="op">&gt;</span> <span class="op">+</span>
+                                <span class="ident">IndexMut</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">VectorSpace</span><span class="op">&gt;</span>::<span class="ident">Field</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The vector space dimension.</span>
+    <span class="kw">fn</span> <span class="ident">dimension</span>() <span class="op">-&gt;</span> <span class="ident">usize</span>;
 
-    <span class='doccomment'>/// Orthonormalizes the given family of vectors. The largest free family of vectors is moved at</span>
-    <span class='doccomment'>/// the beginning of the array and its size is returned. Vectors at an indices larger or equal to</span>
-    <span class='doccomment'>/// this length can be modified to an arbitrary value.</span>
-    <span class='kw'>fn</span> <span class='ident'>orthonormalize</span>(<span class='ident'>vs</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='self'>Self</span>]) <span class='op'>-&gt;</span> <span class='ident'>usize</span>;
+    <span class="doccomment">/// Applies the given closule to each element of this vector space&#39;s canonical basis. Stops if</span>
+    <span class="doccomment">/// `f` returns `false`.</span>
+    <span class="comment">// XXX: return an iterator instead when `-&gt; impl Iterator` will be supported by Rust.</span>
+    <span class="kw">fn</span> <span class="ident">canonical_basis</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">F</span>) {
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="self">Self</span>::<span class="ident">dimension</span>() {
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">canonical_basis_element</span>(<span class="ident">i</span>)) {
+                <span class="kw">break</span>;
+            }
+        }
+    }
 
-    <span class='doccomment'>/// Applies the given closure to each element of the orthonormal basis of the subspace</span>
-    <span class='doccomment'>/// orthogonal to free family of vectors `vs`. If `vs` is not a free family, the result is</span>
-    <span class='doccomment'>/// unspecified.</span>
-    <span class='comment'>// XXX: return an iterator instead when `-&gt; impl Iterator` will be supported by Rust.</span>
-    <span class='kw'>fn</span> <span class='ident'>orthonormal_subspace_basis</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnMut</span>(<span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span><span class='op'>&gt;</span>(<span class='ident'>vs</span>: <span class='kw-2'>&amp;</span>[<span class='self'>Self</span>], <span class='ident'>f</span>: <span class='ident'>F</span>);
+    <span class="doccomment">/// The i-the canonical basis element.</span>
+    <span class="kw">fn</span> <span class="ident">canonical_basis_element</span>(<span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+
+    <span class="doccomment">/// The dot product between two vectors.</span>
+    <span class="kw">fn</span> <span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Field</span>;
+
+    <span class="doccomment">/// Same as `&amp;self[i]` but without bound-checking.</span>
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">component_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Field</span>;
+
+    <span class="doccomment">/// Same as `&amp;mut self[i]` but without bound-checking.</span>
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">component_unchecked_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">Field</span>;
 }
 
-<span class='doccomment'>/// A set points associated with a vector space and a transitive and free additive group action</span>
-<span class='doccomment'>/// (the translation).</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>AffineSpace</span>: <span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>Clone</span> <span class='op'>+</span> <span class='ident'>PartialEq</span> <span class='op'>+</span>
-                       <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='self'>Self</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>AffineSpace</span><span class='op'>&gt;</span>::<span class='ident'>Translation</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                       <span class='ident'>ClosedAdd</span><span class='op'>&lt;&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>AffineSpace</span><span class='op'>&gt;</span>::<span class='ident'>Translation</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The associated vector space.</span>
-    <span class='kw'>type</span> <span class='ident'>Translation</span>: <span class='ident'>VectorSpace</span>;
+<span class="doccomment">/// A finite-dimensional vector space equipped with an inner product that must coincide</span>
+<span class="doccomment">/// with the dot product.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">FiniteDimInnerSpace</span>: <span class="ident">InnerSpace</span> <span class="op">+</span> <span class="ident">FiniteDimVectorSpace</span><span class="op">&lt;</span><span class="ident">Field</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">InnerSpace</span><span class="op">&gt;</span>::<span class="ident">Real</span><span class="op">&gt;</span> {
 
-    <span class='doccomment'>/// Same as `*self + *t`. Applies the additive group action of this affine space&#39;s associated</span>
-    <span class='doccomment'>/// vector space on `self`.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>translate_by</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>Translation</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>clone</span>() <span class='op'>+</span> <span class='ident'>t</span>.<span class='ident'>clone</span>()
+    <span class="doccomment">/// Orthonormalizes the given family of vectors. The largest free family of vectors is moved at</span>
+    <span class="doccomment">/// the beginning of the array and its size is returned. Vectors at an indices larger or equal to</span>
+    <span class="doccomment">/// this length can be modified to an arbitrary value.</span>
+    <span class="kw">fn</span> <span class="ident">orthonormalize</span>(<span class="ident">vs</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="self">Self</span>]) <span class="op">-&gt;</span> <span class="ident">usize</span>;
+
+    <span class="doccomment">/// Applies the given closure to each element of the orthonormal basis of the subspace</span>
+    <span class="doccomment">/// orthogonal to free family of vectors `vs`. If `vs` is not a free family, the result is</span>
+    <span class="doccomment">/// unspecified.</span>
+    <span class="comment">// XXX: return an iterator instead when `-&gt; impl Iterator` will be supported by Rust.</span>
+    <span class="kw">fn</span> <span class="ident">orthonormal_subspace_basis</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span><span class="op">&gt;</span>(<span class="ident">vs</span>: <span class="kw-2">&amp;</span>[<span class="self">Self</span>], <span class="ident">f</span>: <span class="ident">F</span>);
+}
+
+<span class="doccomment">/// A set points associated with a vector space and a transitive and free additive group action</span>
+<span class="doccomment">/// (the translation).</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">AffineSpace</span>: <span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">PartialEq</span> <span class="op">+</span>
+                       <span class="ident">Sub</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">AffineSpace</span><span class="op">&gt;</span>::<span class="ident">Translation</span><span class="op">&gt;</span> <span class="op">+</span>
+                       <span class="ident">ClosedAdd</span><span class="op">&lt;&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">AffineSpace</span><span class="op">&gt;</span>::<span class="ident">Translation</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The associated vector space.</span>
+    <span class="kw">type</span> <span class="ident">Translation</span>: <span class="ident">VectorSpace</span>;
+
+    <span class="doccomment">/// Same as `*self + *t`. Applies the additive group action of this affine space&#39;s associated</span>
+    <span class="doccomment">/// vector space on `self`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">translate_by</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">t</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Translation</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">clone</span>() <span class="op">+</span> <span class="ident">t</span>.<span class="ident">clone</span>()
     }
 
-    <span class='doccomment'>/// Same as `*self - *other`. Returns the unique element `v` of the associated vector space</span>
-    <span class='doccomment'>/// such that `self = right + v`.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>subtract</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>right</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Translation</span> {
-        <span class='self'>self</span>.<span class='ident'>clone</span>() <span class='op'>-</span> <span class='ident'>right</span>.<span class='ident'>clone</span>()
+    <span class="doccomment">/// Same as `*self - *other`. Returns the unique element `v` of the associated vector space</span>
+    <span class="doccomment">/// such that `self = right + v`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">subtract</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">right</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Translation</span> {
+        <span class="self">self</span>.<span class="ident">clone</span>() <span class="op">-</span> <span class="ident">right</span>.<span class="ident">clone</span>()
     }
 }
 
 
-<span class='doccomment'>/// The finite-dimensional affine space based on the field of reals.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>EuclideanSpace</span>: <span class='ident'>AffineSpace</span><span class='op'>&lt;</span><span class='ident'>Translation</span> <span class='op'>=</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>EuclideanSpace</span><span class='op'>&gt;</span>::<span class='ident'>Coordinates</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                          <span class='comment'>// Equivalent to `.scale_by`.</span>
-                          <span class='ident'>ClosedMul</span><span class='op'>&lt;&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>EuclideanSpace</span><span class='op'>&gt;</span>::<span class='ident'>Real</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                          <span class='comment'>// Equivalent to `.scale_by`.</span>
-                          <span class='ident'>ClosedDiv</span><span class='op'>&lt;&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>EuclideanSpace</span><span class='op'>&gt;</span>::<span class='ident'>Real</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                          <span class='comment'>// Equivalent to `.scale_by(-1.0)`.</span>
-                          <span class='ident'>Neg</span><span class='op'>&lt;</span><span class='ident'>Output</span> <span class='op'>=</span> <span class='self'>Self</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The underlying finite vector space.</span>
-    <span class='kw'>type</span> <span class='ident'>Coordinates</span>: <span class='ident'>FiniteDimInnerSpace</span><span class='op'>&lt;</span><span class='ident'>Real</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Real</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='comment'>// XXX: the following bounds should not be necessary but the compiler does not</span>
-                 <span class='comment'>// seem to be able to find them (from supertraits of VectorSpace)… Also, it won&#39;t</span>
-                 <span class='comment'>// find them even if we add ClosedMul instead of Mul and MulAssign separately…</span>
-                 <span class='ident'>Add</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Coordinates</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Coordinates</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='ident'>AddAssign</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Coordinates</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Coordinates</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Coordinates</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='ident'>SubAssign</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Coordinates</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Real</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Coordinates</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='ident'>MulAssign</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Real</span><span class='op'>&gt;</span>                  <span class='op'>+</span>
-                 <span class='ident'>Div</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Real</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Coordinates</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='ident'>DivAssign</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Real</span><span class='op'>&gt;</span>                  <span class='op'>+</span>
-                 <span class='ident'>Neg</span><span class='op'>&lt;</span><span class='ident'>Output</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Coordinates</span><span class='op'>&gt;</span>;
+<span class="doccomment">/// The finite-dimensional affine space based on the field of reals.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">EuclideanSpace</span>: <span class="ident">AffineSpace</span><span class="op">&lt;</span><span class="ident">Translation</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">EuclideanSpace</span><span class="op">&gt;</span>::<span class="ident">Coordinates</span><span class="op">&gt;</span> <span class="op">+</span>
+                          <span class="comment">// Equivalent to `.scale_by`.</span>
+                          <span class="ident">ClosedMul</span><span class="op">&lt;&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">EuclideanSpace</span><span class="op">&gt;</span>::<span class="ident">Real</span><span class="op">&gt;</span> <span class="op">+</span>
+                          <span class="comment">// Equivalent to `.scale_by`.</span>
+                          <span class="ident">ClosedDiv</span><span class="op">&lt;&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">EuclideanSpace</span><span class="op">&gt;</span>::<span class="ident">Real</span><span class="op">&gt;</span> <span class="op">+</span>
+                          <span class="comment">// Equivalent to `.scale_by(-1.0)`.</span>
+                          <span class="ident">Neg</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The underlying finite vector space.</span>
+    <span class="kw">type</span> <span class="ident">Coordinates</span>: <span class="ident">FiniteDimInnerSpace</span><span class="op">&lt;</span><span class="ident">Real</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Real</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="comment">// XXX: the following bounds should not be necessary but the compiler does not</span>
+                 <span class="comment">// seem to be able to find them (from supertraits of VectorSpace)… Also, it won&#39;t</span>
+                 <span class="comment">// find them even if we add ClosedMul instead of Mul and MulAssign separately…</span>
+                 <span class="ident">Add</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Coordinates</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Coordinates</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Coordinates</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="ident">Sub</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Coordinates</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Coordinates</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="ident">SubAssign</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Coordinates</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="ident">Mul</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Real</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Coordinates</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="ident">MulAssign</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Real</span><span class="op">&gt;</span>                  <span class="op">+</span>
+                 <span class="ident">Div</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Real</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Coordinates</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Real</span><span class="op">&gt;</span>                  <span class="op">+</span>
+                 <span class="ident">Neg</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Coordinates</span><span class="op">&gt;</span>;
 
-    <span class='comment'>// XXX: we can&#39;t write the following =( :</span>
-    <span class='comment'>// type Vector: FiniteDimInnerSpace&lt;Field = Self::Real&gt; + InnerSpace&lt;Real = Self::Real&gt;;</span>
-    <span class='comment'>// The compiler won&#39;t recognize that VectorSpace::Field = Self::Real.</span>
-    <span class='comment'>// Though it will work if only one bound is used… looks like a compiler bug.</span>
+    <span class="comment">// XXX: we can&#39;t write the following =( :</span>
+    <span class="comment">// type Vector: FiniteDimInnerSpace&lt;Field = Self::Real&gt; + InnerSpace&lt;Real = Self::Real&gt;;</span>
+    <span class="comment">// The compiler won&#39;t recognize that VectorSpace::Field = Self::Real.</span>
+    <span class="comment">// Though it will work if only one bound is used… looks like a compiler bug.</span>
 
-    <span class='doccomment'>/// The underlying reals.</span>
-    <span class='kw'>type</span> <span class='ident'>Real</span>: <span class='ident'>Real</span>;
+    <span class="doccomment">/// The underlying reals.</span>
+    <span class="kw">type</span> <span class="ident">Real</span>: <span class="ident">Real</span>;
 
-    <span class='doccomment'>/// The preferred origin of this euclidean space.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Theoretically, an euclidean space has no clearly defined origin. Though it is almost always</span>
-    <span class='doccomment'>/// useful to have some reference point to express all the others as translations of it.</span>
-    <span class='kw'>fn</span> <span class='ident'>origin</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
+    <span class="doccomment">/// The preferred origin of this euclidean space.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Theoretically, an euclidean space has no clearly defined origin. Though it is almost always</span>
+    <span class="doccomment">/// useful to have some reference point to express all the others as translations of it.</span>
+    <span class="kw">fn</span> <span class="ident">origin</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
 
-    <span class='doccomment'>/// Multiplies the distance of this point to `Self::origin()` by `s`.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Same as self * s.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>scale_by</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>s</span>: <span class='self'>Self</span>::<span class='ident'>Real</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>Self</span>::<span class='ident'>from_coordinates</span>(<span class='self'>self</span>.<span class='ident'>coordinates</span>() <span class='op'>*</span> <span class='ident'>s</span>)
+    <span class="doccomment">/// Multiplies the distance of this point to `Self::origin()` by `s`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Same as self * s.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">scale_by</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">s</span>: <span class="self">Self</span>::<span class="ident">Real</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>::<span class="ident">from_coordinates</span>(<span class="self">self</span>.<span class="ident">coordinates</span>() <span class="op">*</span> <span class="ident">s</span>)
     }
 
-    <span class='comment'>// FIXME: take self by-value?</span>
-    <span class='doccomment'>/// The coordinates of this point, i.e., the translation from the origin.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>coordinates</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Coordinates</span> {
-        <span class='self'>self</span>.<span class='ident'>subtract</span>(<span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>origin</span>())
+    <span class="comment">// FIXME: take self by-value?</span>
+    <span class="doccomment">/// The coordinates of this point, i.e., the translation from the origin.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">coordinates</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Coordinates</span> {
+        <span class="self">self</span>.<span class="ident">subtract</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">origin</span>())
     }
 
-    <span class='doccomment'>/// Builds a point from its coordinates relative to the origin.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>from_coordinates</span>(<span class='ident'>coords</span>: <span class='self'>Self</span>::<span class='ident'>Coordinates</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>Self</span>::<span class='ident'>origin</span>().<span class='ident'>translate_by</span>(<span class='kw-2'>&amp;</span><span class='ident'>coords</span>)
+    <span class="doccomment">/// Builds a point from its coordinates relative to the origin.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">from_coordinates</span>(<span class="ident">coords</span>: <span class="self">Self</span>::<span class="ident">Coordinates</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>::<span class="ident">origin</span>().<span class="ident">translate_by</span>(<span class="kw-2">&amp;</span><span class="ident">coords</span>)
     }
 
-    <span class='doccomment'>/// The distance between two points.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>distance_squared</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Real</span> {
-        <span class='self'>self</span>.<span class='ident'>subtract</span>(<span class='ident'>b</span>).<span class='ident'>norm_squared</span>()
+    <span class="doccomment">/// The distance between two points.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">distance_squared</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Real</span> {
+        <span class="self">self</span>.<span class="ident">subtract</span>(<span class="ident">b</span>).<span class="ident">norm_squared</span>()
     }
 
-    <span class='doccomment'>/// The distance between two points.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>distance</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Real</span> {
-        <span class='self'>self</span>.<span class='ident'>subtract</span>(<span class='ident'>b</span>).<span class='ident'>norm</span>()
+    <span class="doccomment">/// The distance between two points.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">distance</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Real</span> {
+        <span class="self">self</span>.<span class="ident">subtract</span>(<span class="ident">b</span>).<span class="ident">norm</span>()
     }
 }
 </pre>

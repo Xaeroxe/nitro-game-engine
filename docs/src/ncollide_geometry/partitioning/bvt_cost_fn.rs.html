@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -53,16 +53,16 @@
 <span id="8"> 8</span>
 <span id="9"> 9</span>
 <span id="10">10</span>
-</pre><pre class='rust '>
-<span class='doccomment'>/// Trait implemented by cost functions used by the best-first search on a `BVT`.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>BVTCostFn</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>B</span>, <span class='ident'>BV</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// User-defined data attached to each BVT leaf.</span>
-    <span class='kw'>type</span> <span class='ident'>UserData</span>;
+</pre><pre class="rust ">
+<span class="doccomment">/// Trait implemented by cost functions used by the best-first search on a `BVT`.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">BVTCostFn</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">B</span>, <span class="ident">BV</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// User-defined data attached to each BVT leaf.</span>
+    <span class="kw">type</span> <span class="ident">UserData</span>;
 
-    <span class='doccomment'>/// Computes the cost of a bounding volume.</span>
-    <span class='kw'>fn</span> <span class='ident'>compute_bv_cost</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>&amp;</span><span class='ident'>BV</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>;
-    <span class='doccomment'>/// Computes the cost of an object, and the result to be returned if it is the best one.</span>
-    <span class='kw'>fn</span> <span class='ident'>compute_b_cost</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>&amp;</span><span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='ident'>N</span>, <span class='self'>Self</span>::<span class='ident'>UserData</span>)<span class='op'>&gt;</span>;
+    <span class="doccomment">/// Computes the cost of a bounding volume.</span>
+    <span class="kw">fn</span> <span class="ident">compute_bv_cost</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">BV</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// Computes the cost of an object, and the result to be returned if it is the best one.</span>
+    <span class="kw">fn</span> <span class="ident">compute_b_cost</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">B</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">N</span>, <span class="self">Self</span>::<span class="ident">UserData</span>)<span class="op">&gt;</span>;
 }
 </pre>
 </section>

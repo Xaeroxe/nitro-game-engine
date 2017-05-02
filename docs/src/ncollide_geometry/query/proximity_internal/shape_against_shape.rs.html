@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -82,44 +82,44 @@
 <span id="37">37</span>
 <span id="38">38</span>
 <span id="39">39</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>linear</span>::<span class='ident'>Translation</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Isometry</span>};
-<span class='kw'>use</span> <span class='ident'>shape</span>::{<span class='ident'>Shape</span>, <span class='ident'>Ball</span>, <span class='ident'>Plane</span>};
-<span class='kw'>use</span> <span class='ident'>query</span>::<span class='ident'>Proximity</span>;
-<span class='kw'>use</span> <span class='ident'>query</span>::<span class='ident'>proximity_internal</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">linear</span>::<span class="ident">Translation</span>;
+<span class="kw">use</span> <span class="ident">math</span>::{<span class="ident">Point</span>, <span class="ident">Isometry</span>};
+<span class="kw">use</span> <span class="ident">shape</span>::{<span class="ident">Shape</span>, <span class="ident">Ball</span>, <span class="ident">Plane</span>};
+<span class="kw">use</span> <span class="ident">query</span>::<span class="ident">Proximity</span>;
+<span class="kw">use</span> <span class="ident">query</span>::<span class="ident">proximity_internal</span>;
 
-<span class='doccomment'>/// Tests whether two shapes are in intersecting or separated by a distance smaller than `margin`.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>shape_against_shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>(<span class='ident'>m1</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>g1</span>: <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
-                                 <span class='ident'>m2</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>g2</span>: <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
-                                 <span class='ident'>margin</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>)
-                                 <span class='op'>-&gt;</span> <span class='ident'>Proximity</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span>,
-          <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='kw'>if</span> <span class='kw'>let</span> (<span class='prelude-val'>Some</span>(<span class='ident'>b1</span>), <span class='prelude-val'>Some</span>(<span class='ident'>b2</span>)) <span class='op'>=</span> (<span class='ident'>g1</span>.<span class='ident'>as_shape</span>::<span class='op'>&lt;</span><span class='ident'>Ball</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;&gt;</span>(),
-                                   <span class='ident'>g2</span>.<span class='ident'>as_shape</span>::<span class='op'>&lt;</span><span class='ident'>Ball</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;&gt;</span>()) {
-        <span class='kw'>let</span> <span class='ident'>p1</span> <span class='op'>=</span> <span class='ident'>P</span>::<span class='ident'>from_coordinates</span>(<span class='ident'>m1</span>.<span class='ident'>translation</span>().<span class='ident'>to_vector</span>());
-        <span class='kw'>let</span> <span class='ident'>p2</span> <span class='op'>=</span> <span class='ident'>P</span>::<span class='ident'>from_coordinates</span>(<span class='ident'>m2</span>.<span class='ident'>translation</span>().<span class='ident'>to_vector</span>());
+<span class="doccomment">/// Tests whether two shapes are in intersecting or separated by a distance smaller than `margin`.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shape_against_shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>(<span class="ident">m1</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>, <span class="ident">g1</span>: <span class="kw-2">&amp;</span><span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>,
+                                 <span class="ident">m2</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>, <span class="ident">g2</span>: <span class="kw-2">&amp;</span><span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>,
+                                 <span class="ident">margin</span>: <span class="ident">P</span>::<span class="ident">Real</span>)
+                                 <span class="op">-&gt;</span> <span class="ident">Proximity</span>
+    <span class="kw">where</span> <span class="ident">P</span>: <span class="ident">Point</span>,
+          <span class="ident">M</span>: <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+    <span class="kw">if</span> <span class="kw">let</span> (<span class="prelude-val">Some</span>(<span class="ident">b1</span>), <span class="prelude-val">Some</span>(<span class="ident">b2</span>)) <span class="op">=</span> (<span class="ident">g1</span>.<span class="ident">as_shape</span>::<span class="op">&lt;</span><span class="ident">Ball</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Real</span><span class="op">&gt;&gt;</span>(),
+                                   <span class="ident">g2</span>.<span class="ident">as_shape</span>::<span class="op">&lt;</span><span class="ident">Ball</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Real</span><span class="op">&gt;&gt;</span>()) {
+        <span class="kw">let</span> <span class="ident">p1</span> <span class="op">=</span> <span class="ident">P</span>::<span class="ident">from_coordinates</span>(<span class="ident">m1</span>.<span class="ident">translation</span>().<span class="ident">to_vector</span>());
+        <span class="kw">let</span> <span class="ident">p2</span> <span class="op">=</span> <span class="ident">P</span>::<span class="ident">from_coordinates</span>(<span class="ident">m2</span>.<span class="ident">translation</span>().<span class="ident">to_vector</span>());
 
-        <span class='ident'>proximity_internal</span>::<span class='ident'>ball_against_ball</span>(<span class='kw-2'>&amp;</span><span class='ident'>p1</span>, <span class='ident'>b1</span>, <span class='kw-2'>&amp;</span><span class='ident'>p2</span>, <span class='ident'>b2</span>, <span class='ident'>margin</span>)
+        <span class="ident">proximity_internal</span>::<span class="ident">ball_against_ball</span>(<span class="kw-2">&amp;</span><span class="ident">p1</span>, <span class="ident">b1</span>, <span class="kw-2">&amp;</span><span class="ident">p2</span>, <span class="ident">b2</span>, <span class="ident">margin</span>)
     }
-    <span class='kw'>else</span> <span class='kw'>if</span> <span class='kw'>let</span> (<span class='prelude-val'>Some</span>(<span class='ident'>p1</span>), <span class='prelude-val'>Some</span>(<span class='ident'>s2</span>)) <span class='op'>=</span> (<span class='ident'>g1</span>.<span class='ident'>as_shape</span>::<span class='op'>&lt;</span><span class='ident'>Plane</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;&gt;</span>(), <span class='ident'>g2</span>.<span class='ident'>as_support_map</span>()) {
-        <span class='ident'>proximity_internal</span>::<span class='ident'>plane_against_support_map</span>(<span class='ident'>m1</span>, <span class='ident'>p1</span>, <span class='ident'>m2</span>, <span class='ident'>s2</span>, <span class='ident'>margin</span>)
+    <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> (<span class="prelude-val">Some</span>(<span class="ident">p1</span>), <span class="prelude-val">Some</span>(<span class="ident">s2</span>)) <span class="op">=</span> (<span class="ident">g1</span>.<span class="ident">as_shape</span>::<span class="op">&lt;</span><span class="ident">Plane</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Vector</span><span class="op">&gt;&gt;</span>(), <span class="ident">g2</span>.<span class="ident">as_support_map</span>()) {
+        <span class="ident">proximity_internal</span>::<span class="ident">plane_against_support_map</span>(<span class="ident">m1</span>, <span class="ident">p1</span>, <span class="ident">m2</span>, <span class="ident">s2</span>, <span class="ident">margin</span>)
     }
-    <span class='kw'>else</span> <span class='kw'>if</span> <span class='kw'>let</span> (<span class='prelude-val'>Some</span>(<span class='ident'>s1</span>), <span class='prelude-val'>Some</span>(<span class='ident'>p2</span>)) <span class='op'>=</span> (<span class='ident'>g1</span>.<span class='ident'>as_support_map</span>(), <span class='ident'>g2</span>.<span class='ident'>as_shape</span>::<span class='op'>&lt;</span><span class='ident'>Plane</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;&gt;</span>()) {
-        <span class='ident'>proximity_internal</span>::<span class='ident'>support_map_against_plane</span>(<span class='ident'>m1</span>, <span class='ident'>s1</span>, <span class='ident'>m2</span>, <span class='ident'>p2</span>, <span class='ident'>margin</span>)
+    <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> (<span class="prelude-val">Some</span>(<span class="ident">s1</span>), <span class="prelude-val">Some</span>(<span class="ident">p2</span>)) <span class="op">=</span> (<span class="ident">g1</span>.<span class="ident">as_support_map</span>(), <span class="ident">g2</span>.<span class="ident">as_shape</span>::<span class="op">&lt;</span><span class="ident">Plane</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Vector</span><span class="op">&gt;&gt;</span>()) {
+        <span class="ident">proximity_internal</span>::<span class="ident">support_map_against_plane</span>(<span class="ident">m1</span>, <span class="ident">s1</span>, <span class="ident">m2</span>, <span class="ident">p2</span>, <span class="ident">margin</span>)
     }
-    <span class='kw'>else</span> <span class='kw'>if</span> <span class='kw'>let</span> (<span class='prelude-val'>Some</span>(<span class='ident'>s1</span>), <span class='prelude-val'>Some</span>(<span class='ident'>s2</span>)) <span class='op'>=</span> (<span class='ident'>g1</span>.<span class='ident'>as_support_map</span>(), <span class='ident'>g2</span>.<span class='ident'>as_support_map</span>()) {
-        <span class='ident'>proximity_internal</span>::<span class='ident'>support_map_against_support_map</span>::<span class='op'>&lt;</span><span class='ident'>P</span>, _, _, _<span class='op'>&gt;</span>(<span class='ident'>m1</span>, <span class='ident'>s1</span>, <span class='ident'>m2</span>, <span class='ident'>s2</span>, <span class='ident'>margin</span>)
+    <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> (<span class="prelude-val">Some</span>(<span class="ident">s1</span>), <span class="prelude-val">Some</span>(<span class="ident">s2</span>)) <span class="op">=</span> (<span class="ident">g1</span>.<span class="ident">as_support_map</span>(), <span class="ident">g2</span>.<span class="ident">as_support_map</span>()) {
+        <span class="ident">proximity_internal</span>::<span class="ident">support_map_against_support_map</span>::<span class="op">&lt;</span><span class="ident">P</span>, _, _, _<span class="op">&gt;</span>(<span class="ident">m1</span>, <span class="ident">s1</span>, <span class="ident">m2</span>, <span class="ident">s2</span>, <span class="ident">margin</span>)
     }
-    <span class='kw'>else</span> <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>c1</span>) <span class='op'>=</span> <span class='ident'>g1</span>.<span class='ident'>as_composite_shape</span>() {
-        <span class='ident'>proximity_internal</span>::<span class='ident'>composite_shape_against_shape</span>(<span class='ident'>m1</span>, <span class='ident'>c1</span>, <span class='ident'>m2</span>, <span class='ident'>g2</span>, <span class='ident'>margin</span>)
+    <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c1</span>) <span class="op">=</span> <span class="ident">g1</span>.<span class="ident">as_composite_shape</span>() {
+        <span class="ident">proximity_internal</span>::<span class="ident">composite_shape_against_shape</span>(<span class="ident">m1</span>, <span class="ident">c1</span>, <span class="ident">m2</span>, <span class="ident">g2</span>, <span class="ident">margin</span>)
     }
-    <span class='kw'>else</span> <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>c2</span>) <span class='op'>=</span> <span class='ident'>g2</span>.<span class='ident'>as_composite_shape</span>() {
-        <span class='ident'>proximity_internal</span>::<span class='ident'>shape_against_composite_shape</span>(<span class='ident'>m1</span>, <span class='ident'>g1</span>, <span class='ident'>m2</span>, <span class='ident'>c2</span>, <span class='ident'>margin</span>)
+    <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">c2</span>) <span class="op">=</span> <span class="ident">g2</span>.<span class="ident">as_composite_shape</span>() {
+        <span class="ident">proximity_internal</span>::<span class="ident">shape_against_composite_shape</span>(<span class="ident">m1</span>, <span class="ident">g1</span>, <span class="ident">m2</span>, <span class="ident">c2</span>, <span class="ident">margin</span>)
     }
-    <span class='kw'>else</span> {
-        <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;No algorithm known to compute proximity between the given pair of shapes.&quot;</span>)
+    <span class="kw">else</span> {
+        <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;No algorithm known to compute proximity between the given pair of shapes.&quot;</span>)
     }
 }
 </pre>

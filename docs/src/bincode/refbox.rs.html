@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -477,438 +477,438 @@
 <span id="432">432</span>
 <span id="433">433</span>
 <span id="434">434</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>boxed</span>::<span class='ident'>Box</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::<span class='ident'>Deref</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">boxed</span>::<span class="ident">Box</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::<span class="ident">Deref</span>;
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc-serialize&quot;</span>)]</span>
-<span class='kw'>use</span> <span class='ident'>rustc_serialize_crate</span>::{<span class='ident'>Encodable</span>, <span class='ident'>Encoder</span>, <span class='ident'>Decodable</span>, <span class='ident'>Decoder</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rustc-serialize&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">rustc_serialize_crate</span>::{<span class="ident">Encodable</span>, <span class="ident">Encoder</span>, <span class="ident">Decodable</span>, <span class="ident">Decoder</span>};
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;serde&quot;</span>)]</span>
-<span class='kw'>use</span> <span class='ident'>serde_crate</span> <span class='kw'>as</span> <span class='ident'>serde</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">serde_crate</span> <span class="kw">as</span> <span class="ident">serde</span>;
 
-<span class='doccomment'>/// A struct for encoding nested reference types.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Encoding large objects by reference is really handy.  For example,</span>
-<span class='doccomment'>/// `encode(&amp;large_hashmap, ...)` encodes the large structure without having to</span>
-<span class='doccomment'>/// own the hashmap.  However, it is impossible to serialize a reference if that</span>
-<span class='doccomment'>/// reference is inside of a struct.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```ignore rust</span>
-<span class='doccomment'>/// // Not possible, rustc can not decode the reference.</span>
-<span class='doccomment'>/// #[derive(RustcEncoding, RustcDecoding)]</span>
-<span class='doccomment'>/// struct Message&lt;&#39;a&gt;  {</span>
-<span class='doccomment'>///   big_map: &amp;&#39;a HashMap&lt;u32, u32&gt;,</span>
-<span class='doccomment'>///   message_type: String,</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This is because on the decoding side, you can&#39;t create the Message struct</span>
-<span class='doccomment'>/// because it needs to have a reference to a HashMap, which is impossible because</span>
-<span class='doccomment'>/// during deserialization, all members need to be owned by the deserialized</span>
-<span class='doccomment'>/// object.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This is where RefBox comes in.  During serialization, it serializs a reference,</span>
-<span class='doccomment'>/// but during deserialization, it puts that sub-object into a box!</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```ignore rust</span>
-<span class='doccomment'>/// // This works!</span>
-<span class='doccomment'>/// #[derive(RustcEncoding, RustcDecoding)]</span>
-<span class='doccomment'>/// struct Message&lt;&#39;a&gt; {</span>
-<span class='doccomment'>///     big_map: RefBox&lt;&#39;a, HashMap&lt;u32, u32&gt;&gt;,</span>
-<span class='doccomment'>///     message_type: String</span>
-<span class='doccomment'>/// }</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Now we can write</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```ignore rust</span>
-<span class='doccomment'>/// let my_map = HashMap::new();</span>
-<span class='doccomment'>/// let my_msg = Message {</span>
-<span class='doccomment'>///     big_map: RefBox::new(&amp;my_map),</span>
-<span class='doccomment'>///     message_type: &quot;foo&quot;.to_string()</span>
-<span class='doccomment'>/// };</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// let encoded = encode(&amp;my_msg, ...).unwrap();</span>
-<span class='doccomment'>/// let decoded: Message&lt;&#39;static&gt; = decode(&amp;encoded[]).unwrap();</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Notice that we managed to encode and decode a struct with a nested reference</span>
-<span class='doccomment'>/// and that the decoded message has the lifetime `&#39;static` which shows us</span>
-<span class='doccomment'>/// that the message owns everything inside it completely.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Please don&#39;t stick RefBox inside deep data structures.  It is much better</span>
-<span class='doccomment'>/// suited in the outermost layer of whatever it is that you are encoding.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Eq</span>, <span class='ident'>Ord</span>, <span class='ident'>Hash</span>, <span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RefBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>: <span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>inner</span>:  <span class='ident'>RefBoxInner</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span>
+<span class="doccomment">/// A struct for encoding nested reference types.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Encoding large objects by reference is really handy.  For example,</span>
+<span class="doccomment">/// `encode(&amp;large_hashmap, ...)` encodes the large structure without having to</span>
+<span class="doccomment">/// own the hashmap.  However, it is impossible to serialize a reference if that</span>
+<span class="doccomment">/// reference is inside of a struct.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```ignore rust</span>
+<span class="doccomment">/// // Not possible, rustc can not decode the reference.</span>
+<span class="doccomment">/// #[derive(RustcEncoding, RustcDecoding)]</span>
+<span class="doccomment">/// struct Message&lt;&#39;a&gt;  {</span>
+<span class="doccomment">///   big_map: &amp;&#39;a HashMap&lt;u32, u32&gt;,</span>
+<span class="doccomment">///   message_type: String,</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is because on the decoding side, you can&#39;t create the Message struct</span>
+<span class="doccomment">/// because it needs to have a reference to a HashMap, which is impossible because</span>
+<span class="doccomment">/// during deserialization, all members need to be owned by the deserialized</span>
+<span class="doccomment">/// object.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This is where RefBox comes in.  During serialization, it serializs a reference,</span>
+<span class="doccomment">/// but during deserialization, it puts that sub-object into a box!</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```ignore rust</span>
+<span class="doccomment">/// // This works!</span>
+<span class="doccomment">/// #[derive(RustcEncoding, RustcDecoding)]</span>
+<span class="doccomment">/// struct Message&lt;&#39;a&gt; {</span>
+<span class="doccomment">///     big_map: RefBox&lt;&#39;a, HashMap&lt;u32, u32&gt;&gt;,</span>
+<span class="doccomment">///     message_type: String</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Now we can write</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```ignore rust</span>
+<span class="doccomment">/// let my_map = HashMap::new();</span>
+<span class="doccomment">/// let my_msg = Message {</span>
+<span class="doccomment">///     big_map: RefBox::new(&amp;my_map),</span>
+<span class="doccomment">///     message_type: &quot;foo&quot;.to_string()</span>
+<span class="doccomment">/// };</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// let encoded = encode(&amp;my_msg, ...).unwrap();</span>
+<span class="doccomment">/// let decoded: Message&lt;&#39;static&gt; = decode(&amp;encoded[]).unwrap();</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Notice that we managed to encode and decode a struct with a nested reference</span>
+<span class="doccomment">/// and that the decoded message has the lifetime `&#39;static` which shows us</span>
+<span class="doccomment">/// that the message owns everything inside it completely.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Please don&#39;t stick RefBox inside deep data structures.  It is much better</span>
+<span class="doccomment">/// suited in the outermost layer of whatever it is that you are encoding.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Eq</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RefBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">inner</span>:  <span class="ident">RefBoxInner</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span>
 }
 
-<span class='doccomment'>/// Like a RefBox, but encoding from a `str` and decoedes to a `String`.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Eq</span>, <span class='ident'>Ord</span>, <span class='ident'>Hash</span>, <span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>StrBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>inner</span>: <span class='ident'>RefBoxInner</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>str</span>, <span class='ident'>String</span><span class='op'>&gt;</span>
+<span class="doccomment">/// Like a RefBox, but encoding from a `str` and decoedes to a `String`.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Eq</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StrBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">inner</span>: <span class="ident">RefBoxInner</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">str</span>, <span class="ident">String</span><span class="op">&gt;</span>
 }
 
-<span class='doccomment'>/// Like a RefBox, but encodes from a `[T]` and encodes to a `Vec&lt;T&gt;`.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Eq</span>, <span class='ident'>Ord</span>, <span class='ident'>Hash</span>, <span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SliceBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>: <span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>inner</span>: <span class='ident'>RefBoxInner</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, [<span class='ident'>T</span>], <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span>
+<span class="doccomment">/// Like a RefBox, but encodes from a `[T]` and encodes to a `Vec&lt;T&gt;`.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Eq</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SliceBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">inner</span>: <span class="ident">RefBoxInner</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, [<span class="ident">T</span>], <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span>
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Eq</span>, <span class='ident'>Ord</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>enum</span> <span class='ident'>RefBoxInner</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: <span class='lifetime'>&#39;a</span> <span class='op'>+</span> <span class='question-mark'>?</span><span class='ident'>Sized</span>, <span class='ident'>B</span><span class='op'>&gt;</span> {
-    <span class='ident'>Ref</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>A</span>),
-    <span class='ident'>Box</span>(<span class='ident'>B</span>)
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Eq</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">enum</span> <span class="ident">RefBoxInner</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span>, <span class="ident">B</span><span class="op">&gt;</span> {
+    <span class="ident">Ref</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">A</span>),
+    <span class="ident">Box</span>(<span class="ident">B</span>)
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Clone</span> <span class='kw'>for</span> <span class='ident'>RefBoxInner</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>Clone</span> {
-    <span class='kw'>fn</span> <span class='ident'>clone</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RefBoxInner</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Ref</span>(<span class='ident'>reff</span>) <span class='op'>=&gt;</span> <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>reff</span>.<span class='ident'>clone</span>())),
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='kw-2'>ref</span> <span class='ident'>boxed</span>) <span class='op'>=&gt;</span> <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>boxed</span>.<span class='ident'>clone</span>())
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">RefBoxInner</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Clone</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RefBoxInner</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>, <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">RefBoxInner</span>::<span class="ident">Ref</span>(<span class="ident">reff</span>) <span class="op">=&gt;</span> <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">reff</span>.<span class="ident">clone</span>())),
+            <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="kw-2">ref</span> <span class="ident">boxed</span>) <span class="op">=&gt;</span> <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">boxed</span>.<span class="ident">clone</span>())
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Clone</span> <span class='kw'>for</span> <span class='ident'>RefBoxInner</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>str</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>clone</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RefBoxInner</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>str</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Ref</span>(<span class='ident'>reff</span>) <span class='op'>=&gt;</span> <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>String</span>::<span class='ident'>from</span>(<span class='ident'>reff</span>)),
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='kw-2'>ref</span> <span class='ident'>boxed</span>) <span class='op'>=&gt;</span> <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>boxed</span>.<span class='ident'>clone</span>())
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">RefBoxInner</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">str</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RefBoxInner</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">str</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">RefBoxInner</span>::<span class="ident">Ref</span>(<span class="ident">reff</span>) <span class="op">=&gt;</span> <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">String</span>::<span class="ident">from</span>(<span class="ident">reff</span>)),
+            <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="kw-2">ref</span> <span class="ident">boxed</span>) <span class="op">=&gt;</span> <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">boxed</span>.<span class="ident">clone</span>())
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Clone</span> <span class='kw'>for</span> <span class='ident'>RefBoxInner</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, [<span class='ident'>T</span>], <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>Clone</span> {
-    <span class='kw'>fn</span> <span class='ident'>clone</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RefBoxInner</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, [<span class='ident'>T</span>], <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Ref</span>(<span class='ident'>reff</span>) <span class='op'>=&gt;</span> <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>Vec</span>::<span class='ident'>from</span>(<span class='ident'>reff</span>)),
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='kw-2'>ref</span> <span class='ident'>boxed</span>) <span class='op'>=&gt;</span> <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>boxed</span>.<span class='ident'>clone</span>())
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">RefBoxInner</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, [<span class="ident">T</span>], <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Clone</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">RefBoxInner</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, [<span class="ident">T</span>], <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">RefBoxInner</span>::<span class="ident">Ref</span>(<span class="ident">reff</span>) <span class="op">=&gt;</span> <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">Vec</span>::<span class="ident">from</span>(<span class="ident">reff</span>)),
+            <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="kw-2">ref</span> <span class="ident">boxed</span>) <span class="op">=&gt;</span> <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">boxed</span>.<span class="ident">clone</span>())
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>RefBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new RefBox that looks at a borrowed value.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>v</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>RefBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>RefBox</span> {
-            <span class='ident'>inner</span>: <span class='ident'>RefBoxInner</span>::<span class='ident'>Ref</span>(<span class='ident'>v</span>)
+<span class="kw">impl</span> <span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">RefBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new RefBox that looks at a borrowed value.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">RefBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">RefBox</span> {
+            <span class="ident">inner</span>: <span class="ident">RefBoxInner</span>::<span class="ident">Ref</span>(<span class="ident">v</span>)
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>RefBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>T</span><span class='op'>&gt;</span>  {
-    <span class='doccomment'>/// Takes the value out of this refbox.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Fails if this refbox was not created out of a deserialization.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Unless you are doing some really weird things with static references,</span>
-    <span class='doccomment'>/// this function will never fail.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>take</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>inner</span> {
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='ident'>b</span>,
-            _ <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>()
+<span class="kw">impl</span> <span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">RefBox</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">T</span><span class="op">&gt;</span>  {
+    <span class="doccomment">/// Takes the value out of this refbox.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Fails if this refbox was not created out of a deserialization.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Unless you are doing some really weird things with static references,</span>
+    <span class="doccomment">/// this function will never fail.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">take</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span> {
+            <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">b</span>) <span class="op">=&gt;</span> <span class="ident">b</span>,
+            _ <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>()
         }
     }
 
-    <span class='doccomment'>/// Tries to take the value out of this refbox.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>try_take</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>RefBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>T</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>inner</span> {
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='ident'>b</span>),
-            <span class='ident'>o</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>RefBox</span>{ <span class='ident'>inner</span>: <span class='ident'>o</span>})
+    <span class="doccomment">/// Tries to take the value out of this refbox.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_take</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">RefBox</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span> {
+            <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">b</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">b</span>),
+            <span class="ident">o</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">RefBox</span>{ <span class="ident">inner</span>: <span class="ident">o</span>})
         }
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc-serialize&quot;</span>)]</span>
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>: <span class='ident'>Encodable</span><span class='op'>&gt;</span> <span class='ident'>Encodable</span> <span class='kw'>for</span> <span class='ident'>RefBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>encode</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Encoder</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>S</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>encode</span>(<span class='ident'>s</span>)
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rustc-serialize&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Encodable</span><span class="op">&gt;</span> <span class="ident">Encodable</span> <span class="kw">for</span> <span class="ident">RefBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">encode</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Encoder</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">encode</span>(<span class="ident">s</span>)
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc-serialize&quot;</span>)]</span>
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Decodable</span><span class='op'>&gt;</span> <span class='ident'>Decodable</span> <span class='kw'>for</span> <span class='ident'>RefBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>decode</span><span class='op'>&lt;</span><span class='ident'>D</span>: <span class='ident'>Decoder</span><span class='op'>&gt;</span>(<span class='ident'>d</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>D</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>RefBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>D</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>inner</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Decodable</span>::<span class='ident'>decode</span>(<span class='ident'>d</span>));
-        <span class='prelude-val'>Ok</span>(<span class='ident'>RefBox</span>{<span class='ident'>inner</span>: <span class='ident'>inner</span>})
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rustc-serialize&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Decodable</span><span class="op">&gt;</span> <span class="ident">Decodable</span> <span class="kw">for</span> <span class="ident">RefBox</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">Decoder</span><span class="op">&gt;</span>(<span class="ident">d</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RefBox</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">Decodable</span>::<span class="ident">decode</span>(<span class="ident">d</span>));
+        <span class="prelude-val">Ok</span>(<span class="ident">RefBox</span>{<span class="ident">inner</span>: <span class="ident">inner</span>})
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;serde&quot;</span>)]</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>serde</span>::<span class='ident'>Serialize</span> <span class='kw'>for</span> <span class='ident'>RefBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>serde</span>::<span class='ident'>Serialize</span>,
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">serde</span>::<span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">RefBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">serde</span>::<span class="ident">Serialize</span>,
 {
-    <span class='kw'>fn</span> <span class='ident'>serialize</span><span class='op'>&lt;</span><span class='ident'>S</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>serializer</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>S</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>S</span>: <span class='ident'>serde</span>::<span class='ident'>Serializer</span>
+    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">serde</span>::<span class="ident">Serializer</span>
     {
-        <span class='ident'>serde</span>::<span class='ident'>Serialize</span>::<span class='ident'>serialize</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>inner</span>, <span class='ident'>serializer</span>)
+        <span class="ident">serde</span>::<span class="ident">Serialize</span>::<span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span>, <span class="ident">serializer</span>)
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;serde&quot;</span>)]</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>: <span class='ident'>serde</span>::<span class='ident'>Deserialize</span><span class='op'>&gt;</span> <span class='ident'>serde</span>::<span class='ident'>Deserialize</span> <span class='kw'>for</span> <span class='ident'>RefBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>deserialize</span><span class='op'>&lt;</span><span class='ident'>D</span><span class='op'>&gt;</span>(<span class='ident'>deserializer</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>D</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span>, <span class='ident'>D</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>D</span>: <span class='ident'>serde</span>::<span class='ident'>Deserializer</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">serde</span>::<span class="ident">Deserialize</span><span class="op">&gt;</span> <span class="ident">serde</span>::<span class="ident">Deserialize</span> <span class="kw">for</span> <span class="ident">RefBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="ident">D</span>: <span class="ident">serde</span>::<span class="ident">Deserializer</span>
     {
-        <span class='kw'>let</span> <span class='ident'>inner</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>serde</span>::<span class='ident'>Deserialize</span>::<span class='ident'>deserialize</span>(<span class='ident'>deserializer</span>));
-        <span class='prelude-val'>Ok</span>(<span class='ident'>RefBox</span>{ <span class='ident'>inner</span>: <span class='ident'>inner</span> })
+        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">serde</span>::<span class="ident">Deserialize</span>::<span class="ident">deserialize</span>(<span class="ident">deserializer</span>));
+        <span class="prelude-val">Ok</span>(<span class="ident">RefBox</span>{ <span class="ident">inner</span>: <span class="ident">inner</span> })
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>StrBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new StrBox that looks at a borrowed value.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>StrBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>StrBox</span> {
-            <span class='ident'>inner</span>: <span class='ident'>RefBoxInner</span>::<span class='ident'>Ref</span>(<span class='ident'>s</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">StrBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new StrBox that looks at a borrowed value.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">StrBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">StrBox</span> {
+            <span class="ident">inner</span>: <span class="ident">RefBoxInner</span>::<span class="ident">Ref</span>(<span class="ident">s</span>)
         }
     }
 
-    <span class='doccomment'>/// Extract a String from a StrBox.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>into_string</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>inner</span> {
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Ref</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>String</span>::<span class='ident'>from</span>(<span class='ident'>s</span>),
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>
+    <span class="doccomment">/// Extract a String from a StrBox.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_string</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span> {
+            <span class="ident">RefBoxInner</span>::<span class="ident">Ref</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="ident">s</span>),
+            <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>
         }
     }
 
-    <span class='doccomment'>/// Convert to an Owned `SliceBox`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>to_owned</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>StrBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>inner</span> {
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Ref</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>StrBox</span>::<span class='ident'>boxed</span>(<span class='ident'>String</span>::<span class='ident'>from</span>(<span class='ident'>s</span>)),
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>StrBox</span>::<span class='ident'>boxed</span>(<span class='ident'>s</span>)
-        }
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>str</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>StrBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>as_ref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>inner</span> {
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Ref</span>(<span class='kw-2'>ref</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>,
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='kw-2'>ref</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>
+    <span class="doccomment">/// Convert to an Owned `SliceBox`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_owned</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">StrBox</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span> {
+            <span class="ident">RefBoxInner</span>::<span class="ident">Ref</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">StrBox</span>::<span class="ident">boxed</span>(<span class="ident">String</span>::<span class="ident">from</span>(<span class="ident">s</span>)),
+            <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">StrBox</span>::<span class="ident">boxed</span>(<span class="ident">s</span>)
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>StrBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>  {
-    <span class='doccomment'>/// Creates a new StrBox made from an allocated String.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>boxed</span>(<span class='ident'>s</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>StrBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> {
-        <span class='ident'>StrBox</span> { <span class='ident'>inner</span>: <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>s</span>) }
-    }
-
-    <span class='doccomment'>/// Takes the value out of this refbox.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Fails if this refbox was not created out of a deserialization.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Unless you are doing some really weird things with static references,</span>
-    <span class='doccomment'>/// this function will never fail.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>take</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>inner</span> {
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='ident'>b</span>,
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Ref</span>(<span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='ident'>String</span>::<span class='ident'>from</span>(<span class='ident'>b</span>)
-        }
-    }
-
-    <span class='doccomment'>/// Tries to take the value out of this refbox.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>try_take</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>StrBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>inner</span> {
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='ident'>b</span>),
-            <span class='ident'>o</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>StrBox</span>{ <span class='ident'>inner</span>: <span class='ident'>o</span>})
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">StrBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span> {
+            <span class="ident">RefBoxInner</span>::<span class="ident">Ref</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>,
+            <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>
         }
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc-serialize&quot;</span>)]</span>
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Encodable</span> <span class='kw'>for</span> <span class='ident'>StrBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>encode</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Encoder</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>S</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>encode</span>(<span class='ident'>s</span>)
+<span class="kw">impl</span> <span class="ident">StrBox</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span>  {
+    <span class="doccomment">/// Creates a new StrBox made from an allocated String.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">boxed</span>(<span class="ident">s</span>: <span class="ident">String</span>) <span class="op">-&gt;</span> <span class="ident">StrBox</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+        <span class="ident">StrBox</span> { <span class="ident">inner</span>: <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">s</span>) }
+    }
+
+    <span class="doccomment">/// Takes the value out of this refbox.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Fails if this refbox was not created out of a deserialization.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Unless you are doing some really weird things with static references,</span>
+    <span class="doccomment">/// this function will never fail.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">take</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span> {
+            <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">b</span>) <span class="op">=&gt;</span> <span class="ident">b</span>,
+            <span class="ident">RefBoxInner</span>::<span class="ident">Ref</span>(<span class="ident">b</span>) <span class="op">=&gt;</span> <span class="ident">String</span>::<span class="ident">from</span>(<span class="ident">b</span>)
+        }
+    }
+
+    <span class="doccomment">/// Tries to take the value out of this refbox.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_take</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">StrBox</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span> {
+            <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">b</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">b</span>),
+            <span class="ident">o</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">StrBox</span>{ <span class="ident">inner</span>: <span class="ident">o</span>})
+        }
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc-serialize&quot;</span>)]</span>
-<span class='kw'>impl</span> <span class='ident'>Decodable</span> <span class='kw'>for</span> <span class='ident'>StrBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>decode</span><span class='op'>&lt;</span><span class='ident'>D</span>: <span class='ident'>Decoder</span><span class='op'>&gt;</span>(<span class='ident'>d</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>D</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>StrBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>, <span class='ident'>D</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>inner</span>: <span class='ident'>RefBoxInner</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>str</span>, <span class='ident'>String</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Decodable</span>::<span class='ident'>decode</span>(<span class='ident'>d</span>));
-        <span class='prelude-val'>Ok</span>(<span class='ident'>StrBox</span>{<span class='ident'>inner</span>: <span class='ident'>inner</span>})
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rustc-serialize&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Encodable</span> <span class="kw">for</span> <span class="ident">StrBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">encode</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Encoder</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">encode</span>(<span class="ident">s</span>)
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;serde&quot;</span>)]</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>serde</span>::<span class='ident'>Serialize</span> <span class='kw'>for</span> <span class='ident'>StrBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>serialize</span><span class='op'>&lt;</span><span class='ident'>S</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>serializer</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>S</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>S</span>: <span class='ident'>serde</span>::<span class='ident'>Serializer</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rustc-serialize&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">Decodable</span> <span class="kw">for</span> <span class="ident">StrBox</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">Decoder</span><span class="op">&gt;</span>(<span class="ident">d</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">StrBox</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span>, <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">inner</span>: <span class="ident">RefBoxInner</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span>, <span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">Decodable</span>::<span class="ident">decode</span>(<span class="ident">d</span>));
+        <span class="prelude-val">Ok</span>(<span class="ident">StrBox</span>{<span class="ident">inner</span>: <span class="ident">inner</span>})
+    }
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">serde</span>::<span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">StrBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">serde</span>::<span class="ident">Serializer</span>
     {
-        <span class='ident'>serde</span>::<span class='ident'>Serialize</span>::<span class='ident'>serialize</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>inner</span>, <span class='ident'>serializer</span>)
+        <span class="ident">serde</span>::<span class="ident">Serialize</span>::<span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span>, <span class="ident">serializer</span>)
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;serde&quot;</span>)]</span>
-<span class='kw'>impl</span> <span class='ident'>serde</span>::<span class='ident'>Deserialize</span> <span class='kw'>for</span> <span class='ident'>StrBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>deserialize</span><span class='op'>&lt;</span><span class='ident'>D</span><span class='op'>&gt;</span>(<span class='ident'>deserializer</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>D</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span>, <span class='ident'>D</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>D</span>: <span class='ident'>serde</span>::<span class='ident'>Deserializer</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="ident">serde</span>::<span class="ident">Deserialize</span> <span class="kw">for</span> <span class="ident">StrBox</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="ident">D</span>: <span class="ident">serde</span>::<span class="ident">Deserializer</span>
     {
-        <span class='kw'>let</span> <span class='ident'>inner</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>serde</span>::<span class='ident'>Deserialize</span>::<span class='ident'>deserialize</span>(<span class='ident'>deserializer</span>));
-        <span class='prelude-val'>Ok</span>(<span class='ident'>StrBox</span>{ <span class='ident'>inner</span>: <span class='ident'>inner</span> })
+        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">serde</span>::<span class="ident">Deserialize</span>::<span class="ident">deserialize</span>(<span class="ident">deserializer</span>));
+        <span class="prelude-val">Ok</span>(<span class="ident">StrBox</span>{ <span class="ident">inner</span>: <span class="ident">inner</span> })
     }
 }
 
-<span class='comment'>//</span>
-<span class='comment'>// SliceBox</span>
-<span class='comment'>//</span>
+<span class="comment">//</span>
+<span class="comment">// SliceBox</span>
+<span class="comment">//</span>
 
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>SliceBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new RefBox that looks at a borrowed value.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>v</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>T</span>]) <span class='op'>-&gt;</span> <span class='ident'>SliceBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>SliceBox</span> {
-            <span class='ident'>inner</span>: <span class='ident'>RefBoxInner</span>::<span class='ident'>Ref</span>(<span class='ident'>v</span>)
+<span class="kw">impl</span> <span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">SliceBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new RefBox that looks at a borrowed value.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">T</span>]) <span class="op">-&gt;</span> <span class="ident">SliceBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">SliceBox</span> {
+            <span class="ident">inner</span>: <span class="ident">RefBoxInner</span>::<span class="ident">Ref</span>(<span class="ident">v</span>)
         }
     }
 
-    <span class='doccomment'>/// Extract a `Vec&lt;T&gt;` from a `SliceBox`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>into_vec</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>Clone</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>inner</span> {
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Ref</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>to_vec</span>(),
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>
+    <span class="doccomment">/// Extract a `Vec&lt;T&gt;` from a `SliceBox`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_vec</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Clone</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span> {
+            <span class="ident">RefBoxInner</span>::<span class="ident">Ref</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">to_vec</span>(),
+            <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>
         }
     }
 
-    <span class='doccomment'>/// Convert to an Owned `SliceBox`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>to_owned</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>SliceBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>Clone</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>inner</span> {
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Ref</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>SliceBox</span>::<span class='ident'>boxed</span>(<span class='ident'>s</span>.<span class='ident'>to_vec</span>()),
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>SliceBox</span>::<span class='ident'>boxed</span>(<span class='ident'>s</span>)
-        }
-    }
-}
-
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>SliceBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>T</span><span class='op'>&gt;</span>  {
-    <span class='doccomment'>/// Creates a new SliceBox made from an allocated `Vec&lt;T&gt;`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>boxed</span>(<span class='ident'>s</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>SliceBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>SliceBox</span> { <span class='ident'>inner</span>: <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>s</span>) }
-    }
-
-    <span class='doccomment'>/// Takes the value out of this refbox.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Fails if this refbox was not created out of a deserialization.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Unless you are doing some really weird things with static references,</span>
-    <span class='doccomment'>/// this function will never fail.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>take</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>inner</span> {
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='ident'>b</span>,
-            _ <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>()
-        }
-    }
-
-    <span class='doccomment'>/// Tries to take the value out of this refbox.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>try_take</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>SliceBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>T</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>inner</span> {
-            <span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='ident'>b</span>),
-            <span class='ident'>o</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>SliceBox</span>{ <span class='ident'>inner</span>: <span class='ident'>o</span>})
+    <span class="doccomment">/// Convert to an Owned `SliceBox`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_owned</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">SliceBox</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Clone</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span> {
+            <span class="ident">RefBoxInner</span>::<span class="ident">Ref</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">SliceBox</span>::<span class="ident">boxed</span>(<span class="ident">s</span>.<span class="ident">to_vec</span>()),
+            <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">SliceBox</span>::<span class="ident">boxed</span>(<span class="ident">s</span>)
         }
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc-serialize&quot;</span>)]</span>
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>: <span class='ident'>Encodable</span><span class='op'>&gt;</span> <span class='ident'>Encodable</span> <span class='kw'>for</span> <span class='ident'>SliceBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>encode</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Encoder</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>S</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>encode</span>(<span class='ident'>s</span>)
+<span class="kw">impl</span> <span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">SliceBox</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">T</span><span class="op">&gt;</span>  {
+    <span class="doccomment">/// Creates a new SliceBox made from an allocated `Vec&lt;T&gt;`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">boxed</span>(<span class="ident">s</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">SliceBox</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">SliceBox</span> { <span class="ident">inner</span>: <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">s</span>) }
+    }
+
+    <span class="doccomment">/// Takes the value out of this refbox.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Fails if this refbox was not created out of a deserialization.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Unless you are doing some really weird things with static references,</span>
+    <span class="doccomment">/// this function will never fail.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">take</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span> {
+            <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">b</span>) <span class="op">=&gt;</span> <span class="ident">b</span>,
+            _ <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>()
+        }
+    }
+
+    <span class="doccomment">/// Tries to take the value out of this refbox.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_take</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">SliceBox</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">inner</span> {
+            <span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">b</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">b</span>),
+            <span class="ident">o</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">SliceBox</span>{ <span class="ident">inner</span>: <span class="ident">o</span>})
+        }
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc-serialize&quot;</span>)]</span>
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Decodable</span><span class='op'>&gt;</span> <span class='ident'>Decodable</span> <span class='kw'>for</span> <span class='ident'>SliceBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>decode</span><span class='op'>&lt;</span><span class='ident'>D</span>: <span class='ident'>Decoder</span><span class='op'>&gt;</span>(<span class='ident'>d</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>D</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>SliceBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>D</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>inner</span>: <span class='ident'>RefBoxInner</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, [<span class='ident'>T</span>], <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Decodable</span>::<span class='ident'>decode</span>(<span class='ident'>d</span>));
-        <span class='prelude-val'>Ok</span>(<span class='ident'>SliceBox</span>{<span class='ident'>inner</span>: <span class='ident'>inner</span>})
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rustc-serialize&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Encodable</span><span class="op">&gt;</span> <span class="ident">Encodable</span> <span class="kw">for</span> <span class="ident">SliceBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">encode</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Encoder</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">encode</span>(<span class="ident">s</span>)
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;serde&quot;</span>)]</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>serde</span>::<span class='ident'>Serialize</span> <span class='kw'>for</span> <span class='ident'>SliceBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>serde</span>::<span class='ident'>Serialize</span>,
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rustc-serialize&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Decodable</span><span class="op">&gt;</span> <span class="ident">Decodable</span> <span class="kw">for</span> <span class="ident">SliceBox</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">Decoder</span><span class="op">&gt;</span>(<span class="ident">d</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SliceBox</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">inner</span>: <span class="ident">RefBoxInner</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, [<span class="ident">T</span>], <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">Decodable</span>::<span class="ident">decode</span>(<span class="ident">d</span>));
+        <span class="prelude-val">Ok</span>(<span class="ident">SliceBox</span>{<span class="ident">inner</span>: <span class="ident">inner</span>})
+    }
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">serde</span>::<span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">SliceBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">serde</span>::<span class="ident">Serialize</span>,
 {
-    <span class='kw'>fn</span> <span class='ident'>serialize</span><span class='op'>&lt;</span><span class='ident'>S</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>serializer</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>S</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>S</span>: <span class='ident'>serde</span>::<span class='ident'>Serializer</span>
+    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">serde</span>::<span class="ident">Serializer</span>
     {
-        <span class='ident'>serde</span>::<span class='ident'>Serialize</span>::<span class='ident'>serialize</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>inner</span>, <span class='ident'>serializer</span>)
+        <span class="ident">serde</span>::<span class="ident">Serialize</span>::<span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span>, <span class="ident">serializer</span>)
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;serde&quot;</span>)]</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>: <span class='ident'>serde</span>::<span class='ident'>Deserialize</span><span class='op'>&gt;</span> <span class='ident'>serde</span>::<span class='ident'>Deserialize</span> <span class='kw'>for</span> <span class='ident'>SliceBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>deserialize</span><span class='op'>&lt;</span><span class='ident'>D</span><span class='op'>&gt;</span>(<span class='ident'>deserializer</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>D</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span>, <span class='ident'>D</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>D</span>: <span class='ident'>serde</span>::<span class='ident'>Deserializer</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">serde</span>::<span class="ident">Deserialize</span><span class="op">&gt;</span> <span class="ident">serde</span>::<span class="ident">Deserialize</span> <span class="kw">for</span> <span class="ident">SliceBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="ident">D</span>: <span class="ident">serde</span>::<span class="ident">Deserializer</span>
     {
-        <span class='kw'>let</span> <span class='ident'>inner</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>serde</span>::<span class='ident'>Deserialize</span>::<span class='ident'>deserialize</span>(<span class='ident'>deserializer</span>));
-        <span class='prelude-val'>Ok</span>(<span class='ident'>SliceBox</span>{ <span class='ident'>inner</span>: <span class='ident'>inner</span> })
+        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">serde</span>::<span class="ident">Deserialize</span>::<span class="ident">deserialize</span>(<span class="ident">deserializer</span>));
+        <span class="prelude-val">Ok</span>(<span class="ident">SliceBox</span>{ <span class="ident">inner</span>: <span class="ident">inner</span> })
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc-serialize&quot;</span>)]</span>
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: <span class='ident'>Encodable</span> <span class='op'>+</span> <span class='question-mark'>?</span><span class='ident'>Sized</span>, <span class='ident'>B</span>: <span class='ident'>Encodable</span><span class='op'>&gt;</span> <span class='ident'>Encodable</span> <span class='kw'>for</span> <span class='ident'>RefBoxInner</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>, <span class='ident'>B</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>encode</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Encoder</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>S</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='kw-2'>&amp;</span><span class='ident'>RefBoxInner</span>::<span class='ident'>Ref</span>(<span class='kw-2'>ref</span> <span class='ident'>r</span>) <span class='op'>=&gt;</span> <span class='ident'>r</span>.<span class='ident'>encode</span>(<span class='ident'>s</span>),
-            <span class='kw-2'>&amp;</span><span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='kw-2'>ref</span> <span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='ident'>b</span>.<span class='ident'>encode</span>(<span class='ident'>s</span>)
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rustc-serialize&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span>: <span class="ident">Encodable</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span>, <span class="ident">B</span>: <span class="ident">Encodable</span><span class="op">&gt;</span> <span class="ident">Encodable</span> <span class="kw">for</span> <span class="ident">RefBoxInner</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span>, <span class="ident">B</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">encode</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Encoder</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="kw-2">&amp;</span><span class="ident">RefBoxInner</span>::<span class="ident">Ref</span>(<span class="kw-2">ref</span> <span class="ident">r</span>) <span class="op">=&gt;</span> <span class="ident">r</span>.<span class="ident">encode</span>(<span class="ident">s</span>),
+            <span class="kw-2">&amp;</span><span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="kw-2">ref</span> <span class="ident">b</span>) <span class="op">=&gt;</span> <span class="ident">b</span>.<span class="ident">encode</span>(<span class="ident">s</span>)
         }
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;serde&quot;</span>)]</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: <span class='question-mark'>?</span><span class='ident'>Sized</span>, <span class='ident'>B</span><span class='op'>&gt;</span> <span class='ident'>serde</span>::<span class='ident'>Serialize</span> <span class='kw'>for</span> <span class='ident'>RefBoxInner</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>, <span class='ident'>B</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>A</span>: <span class='ident'>serde</span>::<span class='ident'>Serialize</span>,
-          <span class='ident'>B</span>: <span class='ident'>serde</span>::<span class='ident'>Serialize</span>,
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span>: <span class="question-mark">?</span><span class="ident">Sized</span>, <span class="ident">B</span><span class="op">&gt;</span> <span class="ident">serde</span>::<span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">RefBoxInner</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span>, <span class="ident">B</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">A</span>: <span class="ident">serde</span>::<span class="ident">Serialize</span>,
+          <span class="ident">B</span>: <span class="ident">serde</span>::<span class="ident">Serialize</span>,
 {
-    <span class='kw'>fn</span> <span class='ident'>serialize</span><span class='op'>&lt;</span><span class='ident'>S</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>serializer</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>S</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>S</span>: <span class='ident'>serde</span>::<span class='ident'>Serializer</span>
+    <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">serde</span>::<span class="ident">Serializer</span>
     {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='kw-2'>&amp;</span><span class='ident'>RefBoxInner</span>::<span class='ident'>Ref</span>(<span class='kw-2'>ref</span> <span class='ident'>r</span>) <span class='op'>=&gt;</span> <span class='ident'>serde</span>::<span class='ident'>Serialize</span>::<span class='ident'>serialize</span>(<span class='ident'>r</span>, <span class='ident'>serializer</span>),
-            <span class='kw-2'>&amp;</span><span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='kw-2'>ref</span> <span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='ident'>serde</span>::<span class='ident'>Serialize</span>::<span class='ident'>serialize</span>(<span class='ident'>b</span>, <span class='ident'>serializer</span>),
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="kw-2">&amp;</span><span class="ident">RefBoxInner</span>::<span class="ident">Ref</span>(<span class="kw-2">ref</span> <span class="ident">r</span>) <span class="op">=&gt;</span> <span class="ident">serde</span>::<span class="ident">Serialize</span>::<span class="ident">serialize</span>(<span class="ident">r</span>, <span class="ident">serializer</span>),
+            <span class="kw-2">&amp;</span><span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="kw-2">ref</span> <span class="ident">b</span>) <span class="op">=&gt;</span> <span class="ident">serde</span>::<span class="ident">Serialize</span>::<span class="ident">serialize</span>(<span class="ident">b</span>, <span class="ident">serializer</span>),
         }
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc-serialize&quot;</span>)]</span>
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='ident'>A</span>: <span class='question-mark'>?</span><span class='ident'>Sized</span>, <span class='ident'>B</span>: <span class='ident'>Decodable</span><span class='op'>&gt;</span> <span class='ident'>Decodable</span> <span class='kw'>for</span> <span class='ident'>RefBoxInner</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>A</span>, <span class='ident'>B</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>decode</span><span class='op'>&lt;</span><span class='ident'>D</span>: <span class='ident'>Decoder</span><span class='op'>&gt;</span>(<span class='ident'>d</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>D</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>RefBoxInner</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>A</span>, <span class='ident'>B</span><span class='op'>&gt;</span>, <span class='ident'>D</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>decoded</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Decodable</span>::<span class='ident'>decode</span>(<span class='ident'>d</span>));
-        <span class='prelude-val'>Ok</span>(<span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>decoded</span>))
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rustc-serialize&quot;</span>)]</span>
+<span class="kw">impl</span> <span class="op">&lt;</span><span class="ident">A</span>: <span class="question-mark">?</span><span class="ident">Sized</span>, <span class="ident">B</span>: <span class="ident">Decodable</span><span class="op">&gt;</span> <span class="ident">Decodable</span> <span class="kw">for</span> <span class="ident">RefBoxInner</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">A</span>, <span class="ident">B</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">decode</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">Decoder</span><span class="op">&gt;</span>(<span class="ident">d</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RefBoxInner</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">A</span>, <span class="ident">B</span><span class="op">&gt;</span>, <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">decoded</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">Decodable</span>::<span class="ident">decode</span>(<span class="ident">d</span>));
+        <span class="prelude-val">Ok</span>(<span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">decoded</span>))
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;serde&quot;</span>)]</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: <span class='question-mark'>?</span><span class='ident'>Sized</span>, <span class='ident'>B</span><span class='op'>&gt;</span> <span class='ident'>serde</span>::<span class='ident'>Deserialize</span> <span class='kw'>for</span> <span class='ident'>RefBoxInner</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>, <span class='ident'>B</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>B</span>: <span class='ident'>serde</span>::<span class='ident'>Deserialize</span>,
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span>: <span class="question-mark">?</span><span class="ident">Sized</span>, <span class="ident">B</span><span class="op">&gt;</span> <span class="ident">serde</span>::<span class="ident">Deserialize</span> <span class="kw">for</span> <span class="ident">RefBoxInner</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">A</span>, <span class="ident">B</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">B</span>: <span class="ident">serde</span>::<span class="ident">Deserialize</span>,
 {
-    <span class='kw'>fn</span> <span class='ident'>deserialize</span><span class='op'>&lt;</span><span class='ident'>D</span><span class='op'>&gt;</span>(<span class='ident'>deserializer</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>D</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span>, <span class='ident'>D</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>D</span>: <span class='ident'>serde</span>::<span class='ident'>Deserializer</span>
+    <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="ident">D</span>: <span class="ident">serde</span>::<span class="ident">Deserializer</span>
     {
-        <span class='kw'>let</span> <span class='ident'>deserialized</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>serde</span>::<span class='ident'>Deserialize</span>::<span class='ident'>deserialize</span>(<span class='ident'>deserializer</span>));
-        <span class='prelude-val'>Ok</span>(<span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='ident'>deserialized</span>))
+        <span class="kw">let</span> <span class="ident">deserialized</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">serde</span>::<span class="ident">Deserialize</span>::<span class="ident">deserialize</span>(<span class="ident">deserializer</span>));
+        <span class="prelude-val">Ok</span>(<span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="ident">deserialized</span>))
     }
 }
 
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Deref</span> <span class='kw'>for</span> <span class='ident'>RefBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Target</span> <span class='op'>=</span> <span class='ident'>T</span>;
+<span class="kw">impl</span> <span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">RefBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">T</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>deref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>T</span> {
-        <span class='kw'>match</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>inner</span> {
-            <span class='kw-2'>&amp;</span><span class='ident'>RefBoxInner</span>::<span class='ident'>Ref</span>(<span class='kw-2'>ref</span> <span class='ident'>t</span>) <span class='op'>=&gt;</span> <span class='ident'>t</span>,
-            <span class='kw-2'>&amp;</span><span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='kw-2'>ref</span> <span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='ident'>b</span>.<span class='ident'>deref</span>()
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">T</span> {
+        <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span> {
+            <span class="kw-2">&amp;</span><span class="ident">RefBoxInner</span>::<span class="ident">Ref</span>(<span class="kw-2">ref</span> <span class="ident">t</span>) <span class="op">=&gt;</span> <span class="ident">t</span>,
+            <span class="kw-2">&amp;</span><span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="kw-2">ref</span> <span class="ident">b</span>) <span class="op">=&gt;</span> <span class="ident">b</span>.<span class="ident">deref</span>()
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Deref</span> <span class='kw'>for</span> <span class='ident'>SliceBox</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Target</span> <span class='op'>=</span> [<span class='ident'>T</span>];
+<span class="kw">impl</span> <span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">SliceBox</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> [<span class="ident">T</span>];
 
-    <span class='kw'>fn</span> <span class='ident'>deref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span>[<span class='ident'>T</span>] {
-        <span class='kw'>match</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>inner</span> {
-            <span class='kw-2'>&amp;</span><span class='ident'>RefBoxInner</span>::<span class='ident'>Ref</span>(<span class='kw-2'>ref</span> <span class='ident'>t</span>) <span class='op'>=&gt;</span> <span class='ident'>t</span>,
-            <span class='kw-2'>&amp;</span><span class='ident'>RefBoxInner</span>::<span class='ident'>Box</span>(<span class='kw-2'>ref</span> <span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='ident'>b</span>.<span class='ident'>deref</span>()
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">T</span>] {
+        <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span> {
+            <span class="kw-2">&amp;</span><span class="ident">RefBoxInner</span>::<span class="ident">Ref</span>(<span class="kw-2">ref</span> <span class="ident">t</span>) <span class="op">=&gt;</span> <span class="ident">t</span>,
+            <span class="kw-2">&amp;</span><span class="ident">RefBoxInner</span>::<span class="ident">Box</span>(<span class="kw-2">ref</span> <span class="ident">b</span>) <span class="op">=&gt;</span> <span class="ident">b</span>.<span class="ident">deref</span>()
         }
     }
 }

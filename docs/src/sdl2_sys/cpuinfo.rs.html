@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -62,25 +62,25 @@
 <span id="17">17</span>
 <span id="18">18</span>
 <span id="19">19</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>libc</span>::{<span class='ident'>c_int</span>};
-<span class='kw'>use</span> <span class='ident'>sdl</span>::<span class='ident'>SDL_bool</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">libc</span>::{<span class="ident">c_int</span>};
+<span class="kw">use</span> <span class="ident">sdl</span>::<span class="ident">SDL_bool</span>;
 
-<span class='comment'>// SDL_cpuinfo.h</span>
-<span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_GetCPUCount</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_GetCPUCacheLineSize</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HasRDTSC</span>() <span class='op'>-&gt;</span> <span class='ident'>SDL_bool</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HasAltiVec</span>() <span class='op'>-&gt;</span> <span class='ident'>SDL_bool</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HasMMX</span>() <span class='op'>-&gt;</span> <span class='ident'>SDL_bool</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_Has3DNow</span>() <span class='op'>-&gt;</span> <span class='ident'>SDL_bool</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HasSSE</span>() <span class='op'>-&gt;</span> <span class='ident'>SDL_bool</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HasSSE2</span>() <span class='op'>-&gt;</span> <span class='ident'>SDL_bool</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HasSSE3</span>() <span class='op'>-&gt;</span> <span class='ident'>SDL_bool</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HasSSE41</span>() <span class='op'>-&gt;</span> <span class='ident'>SDL_bool</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HasSSE42</span>() <span class='op'>-&gt;</span> <span class='ident'>SDL_bool</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HasAVX</span>() <span class='op'>-&gt;</span> <span class='ident'>SDL_bool</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_GetSystemRAM</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
+<span class="comment">// SDL_cpuinfo.h</span>
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_GetCPUCount</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_GetCPUCacheLineSize</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HasRDTSC</span>() <span class="op">-&gt;</span> <span class="ident">SDL_bool</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HasAltiVec</span>() <span class="op">-&gt;</span> <span class="ident">SDL_bool</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HasMMX</span>() <span class="op">-&gt;</span> <span class="ident">SDL_bool</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_Has3DNow</span>() <span class="op">-&gt;</span> <span class="ident">SDL_bool</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HasSSE</span>() <span class="op">-&gt;</span> <span class="ident">SDL_bool</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HasSSE2</span>() <span class="op">-&gt;</span> <span class="ident">SDL_bool</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HasSSE3</span>() <span class="op">-&gt;</span> <span class="ident">SDL_bool</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HasSSE41</span>() <span class="op">-&gt;</span> <span class="ident">SDL_bool</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HasSSE42</span>() <span class="op">-&gt;</span> <span class="ident">SDL_bool</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HasAVX</span>() <span class="op">-&gt;</span> <span class="ident">SDL_bool</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_GetSystemRAM</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
 }
 </pre>
 </section>

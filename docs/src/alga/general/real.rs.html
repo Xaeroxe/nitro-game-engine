@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -425,389 +425,389 @@
 <span id="380">380</span>
 <span id="381">381</span>
 <span id="382">382</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
-<span class='kw'>use</span> <span class='ident'>num</span>::{<span class='ident'>Num</span>, <span class='ident'>FromPrimitive</span>, <span class='ident'>Signed</span>, <span class='ident'>Bounded</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::{<span class='ident'>f32</span>, <span class='ident'>f64</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>::{<span class='ident'>Debug</span>, <span class='ident'>Display</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Neg</span>, <span class='ident'>AddAssign</span>, <span class='ident'>MulAssign</span>, <span class='ident'>SubAssign</span>, <span class='ident'>DivAssign</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::<span class="ident">Any</span>;
+<span class="kw">use</span> <span class="ident">num</span>::{<span class="ident">Num</span>, <span class="ident">FromPrimitive</span>, <span class="ident">Signed</span>, <span class="ident">Bounded</span>};
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">f32</span>, <span class="ident">f64</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::{<span class="ident">Debug</span>, <span class="ident">Display</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Neg</span>, <span class="ident">AddAssign</span>, <span class="ident">MulAssign</span>, <span class="ident">SubAssign</span>, <span class="ident">DivAssign</span>};
 
-<span class='kw'>use</span> <span class='ident'>approx</span>::<span class='ident'>ApproxEq</span>;
+<span class="kw">use</span> <span class="ident">approx</span>::<span class="ident">ApproxEq</span>;
 
-<span class='kw'>use</span> <span class='ident'>general</span>::{<span class='ident'>Field</span>, <span class='ident'>SubsetOf</span>, <span class='ident'>SupersetOf</span>, <span class='ident'>Lattice</span>};
+<span class="kw">use</span> <span class="ident">general</span>::{<span class="ident">Field</span>, <span class="ident">SubsetOf</span>, <span class="ident">SupersetOf</span>, <span class="ident">Lattice</span>};
 
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
 
-<span class='doccomment'>/// Trait shared by all reals.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Reals are equipped with functions that are commonly used on reals. The results of those</span>
-<span class='doccomment'>/// functions only have to be approximately equal to the actual theoretical values.</span>
-<span class='comment'>// FIXME: SubsetOf should be removed when specialization will be supported by rustc. This will</span>
-<span class='comment'>// allow a blancket impl: impl&lt;T: Clone&gt; SubsetOf&lt;T&gt; for T { ... }</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Real</span>: <span class='ident'>SubsetOf</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>SupersetOf</span><span class='op'>&lt;</span><span class='ident'>f64</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Field</span> <span class='op'>+</span> <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Num</span> <span class='op'>+</span> <span class='ident'>FromPrimitive</span> <span class='op'>+</span>
-                <span class='ident'>Neg</span><span class='op'>&lt;</span><span class='ident'>Output</span> <span class='op'>=</span> <span class='self'>Self</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>AddAssign</span> <span class='op'>+</span> <span class='ident'>MulAssign</span> <span class='op'>+</span> <span class='ident'>SubAssign</span> <span class='op'>+</span> <span class='ident'>DivAssign</span> <span class='op'>+</span>
-                <span class='ident'>ApproxEq</span><span class='op'>&lt;</span><span class='ident'>Epsilon</span> <span class='op'>=</span> <span class='self'>Self</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Lattice</span> <span class='op'>+</span> <span class='ident'>PartialEq</span> <span class='op'>+</span> <span class='ident'>Signed</span> <span class='op'>+</span>
-                <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='ident'>Any</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> <span class='op'>+</span> <span class='ident'>Debug</span> <span class='op'>+</span> <span class='ident'>Display</span> <span class='op'>+</span> <span class='comment'>// NOTE: make all types debuggable/&#39;static/Any ? This seems essencial for any kind of generic programming.</span>
-                <span class='ident'>Bounded</span> { <span class='comment'>// NOTE: a real must be bounded because, no matter the chosen representation, being `Copy` implies that it occupies a statically-known size, meaning that it must have min/max values.</span>
-    <span class='kw'>fn</span> <span class='ident'>floor</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>ceil</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>round</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>trunc</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>fract</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>abs</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>signum</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>is_sign_positive</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
-    <span class='kw'>fn</span> <span class='ident'>is_sign_negative</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
-    <span class='kw'>fn</span> <span class='ident'>mul_add</span>(<span class='self'>self</span>, <span class='ident'>a</span>: <span class='self'>Self</span>, <span class='ident'>b</span>: <span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>recip</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>powi</span>(<span class='self'>self</span>, <span class='ident'>n</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>powf</span>(<span class='self'>self</span>, <span class='ident'>n</span>: <span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>sqrt</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>exp</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>exp2</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>ln</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>log</span>(<span class='self'>self</span>, <span class='ident'>base</span>: <span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>log2</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>log10</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>max</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>min</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>cbrt</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>hypot</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>sin</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>cos</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>tan</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>asin</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>acos</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>atan</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>atan2</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>sin_cos</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> (<span class='self'>Self</span>, <span class='self'>Self</span>);
-    <span class='kw'>fn</span> <span class='ident'>exp_m1</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>ln_1p</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>sinh</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>cosh</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>tanh</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>asinh</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>acosh</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>atanh</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
+<span class="doccomment">/// Trait shared by all reals.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Reals are equipped with functions that are commonly used on reals. The results of those</span>
+<span class="doccomment">/// functions only have to be approximately equal to the actual theoretical values.</span>
+<span class="comment">// FIXME: SubsetOf should be removed when specialization will be supported by rustc. This will</span>
+<span class="comment">// allow a blancket impl: impl&lt;T: Clone&gt; SubsetOf&lt;T&gt; for T { ... }</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Real</span>: <span class="ident">SubsetOf</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">SupersetOf</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Field</span> <span class="op">+</span> <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Num</span> <span class="op">+</span> <span class="ident">FromPrimitive</span> <span class="op">+</span>
+                <span class="ident">Neg</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">AddAssign</span> <span class="op">+</span> <span class="ident">MulAssign</span> <span class="op">+</span> <span class="ident">SubAssign</span> <span class="op">+</span> <span class="ident">DivAssign</span> <span class="op">+</span>
+                <span class="ident">ApproxEq</span><span class="op">&lt;</span><span class="ident">Epsilon</span> <span class="op">=</span> <span class="self">Self</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Lattice</span> <span class="op">+</span> <span class="ident">PartialEq</span> <span class="op">+</span> <span class="ident">Signed</span> <span class="op">+</span>
+                <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="ident">Any</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> <span class="op">+</span> <span class="ident">Debug</span> <span class="op">+</span> <span class="ident">Display</span> <span class="op">+</span> <span class="comment">// NOTE: make all types debuggable/&#39;static/Any ? This seems essencial for any kind of generic programming.</span>
+                <span class="ident">Bounded</span> { <span class="comment">// NOTE: a real must be bounded because, no matter the chosen representation, being `Copy` implies that it occupies a statically-known size, meaning that it must have min/max values.</span>
+    <span class="kw">fn</span> <span class="ident">floor</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">ceil</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">trunc</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">fract</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">signum</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">is_sign_positive</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_sign_negative</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">mul_add</span>(<span class="self">self</span>, <span class="ident">a</span>: <span class="self">Self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">recip</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">exp</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">exp2</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">ln</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">log</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">log2</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">log10</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">max</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">min</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">hypot</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">tan</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">asin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">acos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">atan</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">atan2</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">sin_cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>);
+    <span class="kw">fn</span> <span class="ident">exp_m1</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">ln_1p</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">sinh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">cosh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">tanh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">asinh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">acosh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">atanh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 
 
-    <span class='kw'>fn</span> <span class='ident'>pi</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>two_pi</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>frac_pi_2</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>frac_pi_3</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>frac_pi_4</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>frac_pi_6</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>frac_pi_8</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>frac_1_pi</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>frac_2_pi</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>frac_2_sqrt_pi</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
+    <span class="kw">fn</span> <span class="ident">pi</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">two_pi</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">frac_pi_2</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">frac_pi_3</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">frac_pi_4</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">frac_pi_6</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">frac_pi_8</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">frac_1_pi</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">frac_2_pi</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">frac_2_sqrt_pi</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>e</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>log2_e</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>log10_e</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>ln_2</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-    <span class='kw'>fn</span> <span class='ident'>ln_10</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span>;
+    <span class="kw">fn</span> <span class="ident">e</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">log2_e</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">log10_e</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">ln_2</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">ln_10</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
 }
 
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>impl_real</span>(
-    ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span>:<span class='ident'>ty</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>:<span class='ident'>ident</span>);<span class='kw-2'>*</span>) <span class='op'>=&gt;</span> ($(
-        <span class='kw'>impl</span> <span class='ident'>Real</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>T</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>floor</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>floor</span>()
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_real</span>(
+    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>:<span class="ident">ident</span>);<span class="kw-2">*</span>) <span class="op">=&gt;</span> ($(
+        <span class="kw">impl</span> <span class="ident">Real</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">floor</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">floor</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>ceil</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>ceil</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">ceil</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">ceil</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>round</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>round</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">round</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>trunc</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>trunc</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">trunc</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">trunc</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>fract</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>fract</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">fract</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">fract</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>abs</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>abs</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">abs</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>signum</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>signum</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">signum</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">signum</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>is_sign_positive</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                <span class='self'>self</span>.<span class='ident'>is_sign_positive</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">is_sign_positive</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                <span class="self">self</span>.<span class="ident">is_sign_positive</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>is_sign_negative</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                <span class='self'>self</span>.<span class='ident'>is_sign_negative</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">is_sign_negative</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                <span class="self">self</span>.<span class="ident">is_sign_negative</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>mul_add</span>(<span class='self'>self</span>, <span class='ident'>a</span>: <span class='self'>Self</span>, <span class='ident'>b</span>: <span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>mul_add</span>(<span class='ident'>a</span>, <span class='ident'>b</span>)
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">mul_add</span>(<span class="self">self</span>, <span class="ident">a</span>: <span class="self">Self</span>, <span class="ident">b</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">mul_add</span>(<span class="ident">a</span>, <span class="ident">b</span>)
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>recip</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>recip</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">recip</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">recip</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>powi</span>(<span class='self'>self</span>, <span class='ident'>n</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>powi</span>(<span class='ident'>n</span>)
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">powi</span>(<span class="ident">n</span>)
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>powf</span>(<span class='self'>self</span>, <span class='ident'>n</span>: <span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>powf</span>(<span class='ident'>n</span>)
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">powf</span>(<span class="ident">n</span>)
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>sqrt</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>sqrt</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">sqrt</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>exp</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>exp</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">exp</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">exp</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>exp2</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>exp2</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">exp2</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">exp2</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>ln</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>ln</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">ln</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">ln</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>log</span>(<span class='self'>self</span>, <span class='ident'>base</span>: <span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>log</span>(<span class='ident'>base</span>)
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">log</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">log</span>(<span class="ident">base</span>)
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>log2</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>log2</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">log2</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">log2</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>log10</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>log10</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">log10</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">log10</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>max</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>max</span>(<span class='ident'>other</span>)
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">max</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">max</span>(<span class="ident">other</span>)
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>min</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>min</span>(<span class='ident'>other</span>)
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">min</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">min</span>(<span class="ident">other</span>)
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>cbrt</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>cbrt</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">cbrt</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>hypot</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>hypot</span>(<span class='ident'>other</span>)
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">hypot</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">hypot</span>(<span class="ident">other</span>)
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>sin</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>sin</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">sin</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>cos</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>cos</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">cos</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>tan</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>tan</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">tan</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">tan</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>asin</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>asin</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">asin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">asin</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>acos</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>acos</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">acos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">acos</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>atan</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>atan</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">atan</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">atan</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>atan2</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>atan2</span>(<span class='ident'>other</span>)
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">atan2</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">atan2</span>(<span class="ident">other</span>)
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>sin_cos</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> (<span class='self'>Self</span>, <span class='self'>Self</span>) {
-                <span class='self'>self</span>.<span class='ident'>sin_cos</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">sin_cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
+                <span class="self">self</span>.<span class="ident">sin_cos</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>exp_m1</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>exp_m1</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">exp_m1</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">exp_m1</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>ln_1p</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>ln_1p</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">ln_1p</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">ln_1p</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>sinh</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>sinh</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">sinh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">sinh</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>cosh</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>cosh</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">cosh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">cosh</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>tanh</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>tanh</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">tanh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">tanh</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>asinh</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>asinh</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">asinh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">asinh</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>acosh</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>acosh</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">acosh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">acosh</span>()
             }
         
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>atanh</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='self'>self</span>.<span class='ident'>atanh</span>()
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">atanh</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="self">self</span>.<span class="ident">atanh</span>()
             }
         
-            <span class='doccomment'>/// Archimedes&#39; constant.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>pi</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>::<span class='ident'>consts</span>::<span class='ident'>PI</span>
+            <span class="doccomment">/// Archimedes&#39; constant.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">pi</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">consts</span>::<span class="ident">PI</span>
             }
         
-            <span class='doccomment'>/// 2.0 * pi.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>two_pi</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>::<span class='ident'>consts</span>::<span class='ident'>PI</span> <span class='op'>+</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>::<span class='ident'>consts</span>::<span class='ident'>PI</span>
+            <span class="doccomment">/// 2.0 * pi.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">two_pi</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">consts</span>::<span class="ident">PI</span> <span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">consts</span>::<span class="ident">PI</span>
             }
         
-            <span class='doccomment'>/// pi / 2.0.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>frac_pi_2</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>::<span class='ident'>consts</span>::<span class='ident'>FRAC_PI_2</span>
+            <span class="doccomment">/// pi / 2.0.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">frac_pi_2</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">consts</span>::<span class="ident">FRAC_PI_2</span>
             }
         
-            <span class='doccomment'>/// pi / 3.0.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>frac_pi_3</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>::<span class='ident'>consts</span>::<span class='ident'>FRAC_PI_3</span>
+            <span class="doccomment">/// pi / 3.0.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">frac_pi_3</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">consts</span>::<span class="ident">FRAC_PI_3</span>
             }
         
-            <span class='doccomment'>/// pi / 4.0.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>frac_pi_4</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>::<span class='ident'>consts</span>::<span class='ident'>FRAC_PI_4</span>
+            <span class="doccomment">/// pi / 4.0.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">frac_pi_4</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">consts</span>::<span class="ident">FRAC_PI_4</span>
             }
         
-            <span class='doccomment'>/// pi / 6.0.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>frac_pi_6</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>::<span class='ident'>consts</span>::<span class='ident'>FRAC_PI_6</span>
+            <span class="doccomment">/// pi / 6.0.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">frac_pi_6</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">consts</span>::<span class="ident">FRAC_PI_6</span>
             }
         
-            <span class='doccomment'>/// pi / 8.0.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>frac_pi_8</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>::<span class='ident'>consts</span>::<span class='ident'>FRAC_PI_8</span>
+            <span class="doccomment">/// pi / 8.0.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">frac_pi_8</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">consts</span>::<span class="ident">FRAC_PI_8</span>
             }
         
-            <span class='doccomment'>/// 1.0 / pi.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>frac_1_pi</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>::<span class='ident'>consts</span>::<span class='ident'>FRAC_1_PI</span>
+            <span class="doccomment">/// 1.0 / pi.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">frac_1_pi</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">consts</span>::<span class="ident">FRAC_1_PI</span>
             }
         
-            <span class='doccomment'>/// 2.0 / pi.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>frac_2_pi</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>::<span class='ident'>consts</span>::<span class='ident'>FRAC_2_PI</span>
+            <span class="doccomment">/// 2.0 / pi.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">frac_2_pi</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">consts</span>::<span class="ident">FRAC_2_PI</span>
             }
         
-            <span class='doccomment'>/// 2.0 / sqrt(pi).</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>frac_2_sqrt_pi</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>::<span class='ident'>consts</span>::<span class='ident'>FRAC_2_SQRT_PI</span>
+            <span class="doccomment">/// 2.0 / sqrt(pi).</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">frac_2_sqrt_pi</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">consts</span>::<span class="ident">FRAC_2_SQRT_PI</span>
             }
         
         
-            <span class='doccomment'>/// Euler&#39;s number.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>e</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>::<span class='ident'>consts</span>::<span class='ident'>E</span>
+            <span class="doccomment">/// Euler&#39;s number.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">e</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">consts</span>::<span class="ident">E</span>
             }
         
-            <span class='doccomment'>/// log2(e).</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>log2_e</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>::<span class='ident'>consts</span>::<span class='ident'>LOG2_E</span>
+            <span class="doccomment">/// log2(e).</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">log2_e</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">consts</span>::<span class="ident">LOG2_E</span>
             }
         
-            <span class='doccomment'>/// log10(e).</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>log10_e</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>::<span class='ident'>consts</span>::<span class='ident'>LOG10_E</span>
+            <span class="doccomment">/// log10(e).</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">log10_e</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">consts</span>::<span class="ident">LOG10_E</span>
             }
         
-            <span class='doccomment'>/// ln(2.0).</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>ln_2</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>::<span class='ident'>consts</span>::<span class='ident'>LN_2</span>
+            <span class="doccomment">/// ln(2.0).</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">ln_2</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">consts</span>::<span class="ident">LN_2</span>
             }
         
-            <span class='doccomment'>/// ln(10.0).</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>ln_10</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>M</span>::<span class='ident'>consts</span>::<span class='ident'>LN_10</span>
+            <span class="doccomment">/// ln(10.0).</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">ln_10</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">M</span>::<span class="ident">consts</span>::<span class="ident">LN_10</span>
             }
         }
-    )<span class='kw-2'>*</span>)
+    )<span class="kw-2">*</span>)
 );
 
-<span class='macro'>impl_real</span><span class='macro'>!</span>(<span class='ident'>f32</span>,<span class='ident'>f32</span>; <span class='ident'>f64</span>,<span class='ident'>f64</span>);
+<span class="macro">impl_real</span><span class="macro">!</span>(<span class="ident">f32</span>,<span class="ident">f32</span>; <span class="ident">f64</span>,<span class="ident">f64</span>);
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

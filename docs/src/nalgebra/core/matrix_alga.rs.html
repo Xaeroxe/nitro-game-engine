@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -831,301 +831,301 @@
 <span id="786">786</span>
 <span id="787">787</span>
 <span id="788">788</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>num</span>::{<span class='ident'>Zero</span>, <span class='ident'>One</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">num</span>::{<span class="ident">Zero</span>, <span class="ident">One</span>};
 
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::{<span class='ident'>AbstractMagma</span>, <span class='ident'>AbstractGroupAbelian</span>, <span class='ident'>AbstractGroup</span>, <span class='ident'>AbstractLoop</span>,
-                    <span class='ident'>AbstractMonoid</span>, <span class='ident'>AbstractQuasigroup</span>, <span class='ident'>AbstractSemigroup</span>, <span class='ident'>AbstractModule</span>,
-                    <span class='ident'>Module</span>, <span class='ident'>Field</span>, <span class='ident'>RingCommutative</span>, <span class='ident'>Real</span>, <span class='ident'>Inverse</span>, <span class='ident'>Additive</span>, <span class='ident'>Multiplicative</span>,
-                    <span class='ident'>MeetSemilattice</span>, <span class='ident'>JoinSemilattice</span>, <span class='ident'>Lattice</span>, <span class='ident'>Identity</span>,
-                    <span class='ident'>ClosedAdd</span>, <span class='ident'>ClosedNeg</span>, <span class='ident'>ClosedMul</span>};
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>linear</span>::{<span class='ident'>VectorSpace</span>, <span class='ident'>NormedSpace</span>, <span class='ident'>InnerSpace</span>, <span class='ident'>FiniteDimVectorSpace</span>, <span class='ident'>FiniteDimInnerSpace</span>};
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::{<span class="ident">AbstractMagma</span>, <span class="ident">AbstractGroupAbelian</span>, <span class="ident">AbstractGroup</span>, <span class="ident">AbstractLoop</span>,
+                    <span class="ident">AbstractMonoid</span>, <span class="ident">AbstractQuasigroup</span>, <span class="ident">AbstractSemigroup</span>, <span class="ident">AbstractModule</span>,
+                    <span class="ident">Module</span>, <span class="ident">Field</span>, <span class="ident">RingCommutative</span>, <span class="ident">Real</span>, <span class="ident">Inverse</span>, <span class="ident">Additive</span>, <span class="ident">Multiplicative</span>,
+                    <span class="ident">MeetSemilattice</span>, <span class="ident">JoinSemilattice</span>, <span class="ident">Lattice</span>, <span class="ident">Identity</span>,
+                    <span class="ident">ClosedAdd</span>, <span class="ident">ClosedNeg</span>, <span class="ident">ClosedMul</span>};
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">linear</span>::{<span class="ident">VectorSpace</span>, <span class="ident">NormedSpace</span>, <span class="ident">InnerSpace</span>, <span class="ident">FiniteDimVectorSpace</span>, <span class="ident">FiniteDimInnerSpace</span>};
 
-<span class='kw'>use</span> <span class='ident'>core</span>::{<span class='ident'>Scalar</span>, <span class='ident'>Matrix</span>, <span class='ident'>SquareMatrix</span>};
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>dimension</span>::{<span class='ident'>Dim</span>, <span class='ident'>DimName</span>};
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>storage</span>::<span class='ident'>OwnedStorage</span>;
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>allocator</span>::<span class='ident'>OwnedAllocator</span>;
+<span class="kw">use</span> <span class="ident">core</span>::{<span class="ident">Scalar</span>, <span class="ident">Matrix</span>, <span class="ident">SquareMatrix</span>};
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">dimension</span>::{<span class="ident">Dim</span>, <span class="ident">DimName</span>};
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">storage</span>::<span class="ident">OwnedStorage</span>;
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">allocator</span>::<span class="ident">OwnedAllocator</span>;
 
-<span class='comment'>/*
+<span class="comment">/*
  *
  * Additive structures.
  *
  */</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>: <span class='ident'>DimName</span>, <span class='ident'>C</span>: <span class='ident'>DimName</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>Identity</span><span class='op'>&lt;</span><span class='ident'>Additive</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>Zero</span>,
-          <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>identity</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>Self</span>::<span class='ident'>from_element</span>(<span class='ident'>N</span>::<span class='ident'>zero</span>())
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>: <span class="ident">DimName</span>, <span class="ident">C</span>: <span class="ident">DimName</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">Identity</span><span class="op">&lt;</span><span class="ident">Additive</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">Zero</span>,
+          <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">identity</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>::<span class="ident">from_element</span>(<span class="ident">N</span>::<span class="ident">zero</span>())
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>: <span class='ident'>DimName</span>, <span class='ident'>C</span>: <span class='ident'>DimName</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>AbstractMagma</span><span class='op'>&lt;</span><span class='ident'>Additive</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>ClosedAdd</span>,
-          <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>operate</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span> <span class='op'>+</span> <span class='ident'>other</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>: <span class="ident">DimName</span>, <span class="ident">C</span>: <span class="ident">DimName</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">AbstractMagma</span><span class="op">&lt;</span><span class="ident">Additive</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">ClosedAdd</span>,
+          <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">operate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span> <span class="op">+</span> <span class="ident">other</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>: <span class='ident'>DimName</span>, <span class='ident'>C</span>: <span class='ident'>DimName</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>Inverse</span><span class='op'>&lt;</span><span class='ident'>Additive</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>ClosedNeg</span>,
-          <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>inverse</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-        <span class='op'>-</span><span class='self'>self</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>: <span class="ident">DimName</span>, <span class="ident">C</span>: <span class="ident">DimName</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">Inverse</span><span class="op">&lt;</span><span class="ident">Additive</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">ClosedNeg</span>,
+          <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">inverse</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+        <span class="op">-</span><span class="self">self</span>
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>inverse_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='kw-2'>*</span><span class='self'>self</span> <span class='op'>=</span> <span class='op'>-</span><span class='self'>self</span>.<span class='ident'>clone</span>()
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">inverse_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="op">-</span><span class="self">self</span>.<span class="ident">clone</span>()
     }
 }
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>inherit_additive_structure</span>(
-    ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>marker</span>: <span class='ident'>ident</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>operator</span>: <span class='ident'>ident</span><span class='op'>&gt;</span> $(<span class='op'>+</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>bounds</span>: <span class='ident'>ident</span>)<span class='kw-2'>*</span>),<span class='op'>*</span> $(,)<span class='kw-2'>*</span>) <span class='op'>=&gt;</span> {$(
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>: <span class='ident'>DimName</span>, <span class='ident'>C</span>: <span class='ident'>DimName</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>marker</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>operator</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-            <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>marker</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>operator</span><span class='op'>&gt;</span> $(<span class='op'>+</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>bounds</span>)<span class='kw-2'>*</span>,
-                  <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span>,
-                  <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span> { }
-    )<span class='kw-2'>*</span>}
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">inherit_additive_structure</span>(
+    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">marker</span>: <span class="ident">ident</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">operator</span>: <span class="ident">ident</span><span class="op">&gt;</span> $(<span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bounds</span>: <span class="ident">ident</span>)<span class="kw-2">*</span>),<span class="op">*</span> $(,)<span class="kw-2">*</span>) <span class="op">=&gt;</span> {$(
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>: <span class="ident">DimName</span>, <span class="ident">C</span>: <span class="ident">DimName</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">marker</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">operator</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+            <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">marker</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">operator</span><span class="op">&gt;</span> $(<span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bounds</span>)<span class="kw-2">*</span>,
+                  <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+                  <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> { }
+    )<span class="kw-2">*</span>}
 );
 
-<span class='macro'>inherit_additive_structure</span><span class='macro'>!</span>(
-    <span class='ident'>AbstractSemigroup</span><span class='op'>&lt;</span><span class='ident'>Additive</span><span class='op'>&gt;</span>    <span class='op'>+</span> <span class='ident'>ClosedAdd</span>,
-    <span class='ident'>AbstractMonoid</span><span class='op'>&lt;</span><span class='ident'>Additive</span><span class='op'>&gt;</span>       <span class='op'>+</span> <span class='ident'>Zero</span> <span class='op'>+</span> <span class='ident'>ClosedAdd</span>,
-    <span class='ident'>AbstractQuasigroup</span><span class='op'>&lt;</span><span class='ident'>Additive</span><span class='op'>&gt;</span>   <span class='op'>+</span> <span class='ident'>ClosedAdd</span> <span class='op'>+</span> <span class='ident'>ClosedNeg</span>,
-    <span class='ident'>AbstractLoop</span><span class='op'>&lt;</span><span class='ident'>Additive</span><span class='op'>&gt;</span>         <span class='op'>+</span> <span class='ident'>Zero</span> <span class='op'>+</span> <span class='ident'>ClosedAdd</span> <span class='op'>+</span> <span class='ident'>ClosedNeg</span>,
-    <span class='ident'>AbstractGroup</span><span class='op'>&lt;</span><span class='ident'>Additive</span><span class='op'>&gt;</span>        <span class='op'>+</span> <span class='ident'>Zero</span> <span class='op'>+</span> <span class='ident'>ClosedAdd</span> <span class='op'>+</span> <span class='ident'>ClosedNeg</span>,
-    <span class='ident'>AbstractGroupAbelian</span><span class='op'>&lt;</span><span class='ident'>Additive</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Zero</span> <span class='op'>+</span> <span class='ident'>ClosedAdd</span> <span class='op'>+</span> <span class='ident'>ClosedNeg</span>
+<span class="macro">inherit_additive_structure</span><span class="macro">!</span>(
+    <span class="ident">AbstractSemigroup</span><span class="op">&lt;</span><span class="ident">Additive</span><span class="op">&gt;</span>    <span class="op">+</span> <span class="ident">ClosedAdd</span>,
+    <span class="ident">AbstractMonoid</span><span class="op">&lt;</span><span class="ident">Additive</span><span class="op">&gt;</span>       <span class="op">+</span> <span class="ident">Zero</span> <span class="op">+</span> <span class="ident">ClosedAdd</span>,
+    <span class="ident">AbstractQuasigroup</span><span class="op">&lt;</span><span class="ident">Additive</span><span class="op">&gt;</span>   <span class="op">+</span> <span class="ident">ClosedAdd</span> <span class="op">+</span> <span class="ident">ClosedNeg</span>,
+    <span class="ident">AbstractLoop</span><span class="op">&lt;</span><span class="ident">Additive</span><span class="op">&gt;</span>         <span class="op">+</span> <span class="ident">Zero</span> <span class="op">+</span> <span class="ident">ClosedAdd</span> <span class="op">+</span> <span class="ident">ClosedNeg</span>,
+    <span class="ident">AbstractGroup</span><span class="op">&lt;</span><span class="ident">Additive</span><span class="op">&gt;</span>        <span class="op">+</span> <span class="ident">Zero</span> <span class="op">+</span> <span class="ident">ClosedAdd</span> <span class="op">+</span> <span class="ident">ClosedNeg</span>,
+    <span class="ident">AbstractGroupAbelian</span><span class="op">&lt;</span><span class="ident">Additive</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Zero</span> <span class="op">+</span> <span class="ident">ClosedAdd</span> <span class="op">+</span> <span class="ident">ClosedNeg</span>
 );
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>: <span class='ident'>DimName</span>, <span class='ident'>C</span>: <span class='ident'>DimName</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>AbstractModule</span> <span class='kw'>for</span> <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>RingCommutative</span>,
-          <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>AbstractRing</span> <span class='op'>=</span> <span class='ident'>N</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>: <span class="ident">DimName</span>, <span class="ident">C</span>: <span class="ident">DimName</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">AbstractModule</span> <span class="kw">for</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">RingCommutative</span>,
+          <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">AbstractRing</span> <span class="op">=</span> <span class="ident">N</span>;
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>multiply_by</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>n</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span> <span class='op'>*</span> <span class='ident'>n</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">multiply_by</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span> <span class="op">*</span> <span class="ident">n</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>: <span class='ident'>DimName</span>, <span class='ident'>C</span>: <span class='ident'>DimName</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>Module</span> <span class='kw'>for</span> <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>RingCommutative</span>,
-          <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Ring</span> <span class='op'>=</span> <span class='ident'>N</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>: <span class="ident">DimName</span>, <span class="ident">C</span>: <span class="ident">DimName</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">Module</span> <span class="kw">for</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">RingCommutative</span>,
+          <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Ring</span> <span class="op">=</span> <span class="ident">N</span>;
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>: <span class='ident'>DimName</span>, <span class='ident'>C</span>: <span class='ident'>DimName</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>VectorSpace</span> <span class='kw'>for</span> <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>Field</span>,
-          <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Field</span> <span class='op'>=</span> <span class='ident'>N</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>: <span class="ident">DimName</span>, <span class="ident">C</span>: <span class="ident">DimName</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">VectorSpace</span> <span class="kw">for</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">Field</span>,
+          <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Field</span> <span class="op">=</span> <span class="ident">N</span>;
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>: <span class='ident'>DimName</span>, <span class='ident'>C</span>: <span class='ident'>DimName</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>FiniteDimVectorSpace</span> <span class='kw'>for</span> <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>Field</span>,
-          <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>dimension</span>() <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='ident'>R</span>::<span class='ident'>dim</span>() <span class='op'>*</span> <span class='ident'>C</span>::<span class='ident'>dim</span>()
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>: <span class="ident">DimName</span>, <span class="ident">C</span>: <span class="ident">DimName</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">FiniteDimVectorSpace</span> <span class="kw">for</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">Field</span>,
+          <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">dimension</span>() <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="ident">R</span>::<span class="ident">dim</span>() <span class="op">*</span> <span class="ident">C</span>::<span class="ident">dim</span>()
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>canonical_basis_element</span>(<span class='ident'>i</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>i</span> <span class='op'>&lt;</span> <span class='self'>Self</span>::<span class='ident'>dimension</span>(), <span class='string'>&quot;Index out of bound.&quot;</span>);
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">canonical_basis_element</span>(<span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">i</span> <span class="op">&lt;</span> <span class="self">Self</span>::<span class="ident">dimension</span>(), <span class="string">&quot;Index out of bound.&quot;</span>);
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>zero</span>();
-        <span class='kw'>unsafe</span> { <span class='kw-2'>*</span><span class='ident'>res</span>.<span class='ident'>data</span>.<span class='ident'>get_unchecked_linear_mut</span>(<span class='ident'>i</span>) <span class='op'>=</span> <span class='ident'>N</span>::<span class='ident'>one</span>(); }
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">zero</span>();
+        <span class="kw">unsafe</span> { <span class="kw-2">*</span><span class="ident">res</span>.<span class="ident">data</span>.<span class="ident">get_unchecked_linear_mut</span>(<span class="ident">i</span>) <span class="op">=</span> <span class="ident">N</span>::<span class="ident">one</span>(); }
 
-        <span class='ident'>res</span>
+        <span class="ident">res</span>
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>dot</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-        <span class='self'>self</span>.<span class='ident'>dot</span>(<span class='ident'>other</span>)
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+        <span class="self">self</span>.<span class="ident">dot</span>(<span class="ident">other</span>)
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>component_unchecked</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>N</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>get_unchecked_linear</span>(<span class='ident'>i</span>)
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">component_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">N</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">get_unchecked_linear</span>(<span class="ident">i</span>)
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>component_unchecked_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>N</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>get_unchecked_linear_mut</span>(<span class='ident'>i</span>)
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>: <span class='ident'>DimName</span>, <span class='ident'>C</span>: <span class='ident'>DimName</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>NormedSpace</span> <span class='kw'>for</span> <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Real</span>,
-          <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>norm_squared</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-        <span class='self'>self</span>.<span class='ident'>norm_squared</span>()
-    }
-
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>norm</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-        <span class='self'>self</span>.<span class='ident'>norm</span>()
-    }
-
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>normalize</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>normalize</span>()
-    }
-
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>normalize_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-        <span class='self'>self</span>.<span class='ident'>normalize_mut</span>()
-    }
-
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>try_normalize</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>min_norm</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>try_normalize</span>(<span class='ident'>min_norm</span>)
-    }
-
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>try_normalize_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>min_norm</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>try_normalize_mut</span>(<span class='ident'>min_norm</span>)
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">component_unchecked_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">N</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">get_unchecked_linear_mut</span>(<span class="ident">i</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>: <span class='ident'>DimName</span>, <span class='ident'>C</span>: <span class='ident'>DimName</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>InnerSpace</span> <span class='kw'>for</span> <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Real</span>,
-          <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Real</span> <span class='op'>=</span> <span class='ident'>N</span>;
-
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>angle</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-        <span class='self'>self</span>.<span class='ident'>angle</span>(<span class='ident'>other</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>: <span class="ident">DimName</span>, <span class="ident">C</span>: <span class="ident">DimName</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">NormedSpace</span> <span class="kw">for</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Real</span>,
+          <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">norm_squared</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+        <span class="self">self</span>.<span class="ident">norm_squared</span>()
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>inner_product</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-        <span class='self'>self</span>.<span class='ident'>dot</span>(<span class='ident'>other</span>)
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">norm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+        <span class="self">self</span>.<span class="ident">norm</span>()
+    }
+
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">normalize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">normalize</span>()
+    }
+
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">normalize_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+        <span class="self">self</span>.<span class="ident">normalize_mut</span>()
+    }
+
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">try_normalize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">min_norm</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">try_normalize</span>(<span class="ident">min_norm</span>)
+    }
+
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">try_normalize_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">min_norm</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">try_normalize_mut</span>(<span class="ident">min_norm</span>)
     }
 }
 
-<span class='comment'>// FIXME: specialization will greatly simplify this implementation in the future.</span>
-<span class='comment'>// In particular:</span>
-<span class='comment'>//   − use `x()` instead of `::canonical_basis_element`</span>
-<span class='comment'>//   − use `::new(x, y, z)` instead of `::from_slice`</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>: <span class='ident'>DimName</span>, <span class='ident'>C</span>: <span class='ident'>DimName</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>FiniteDimInnerSpace</span> <span class='kw'>for</span> <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Real</span>,
-          <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>orthonormalize</span>(<span class='ident'>vs</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span>]) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>nbasis_elements</span> <span class='op'>=</span> <span class='number'>0</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>: <span class="ident">DimName</span>, <span class="ident">C</span>: <span class="ident">DimName</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">InnerSpace</span> <span class="kw">for</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Real</span>,
+          <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Real</span> <span class="op">=</span> <span class="ident">N</span>;
 
-        <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='ident'>vs</span>.<span class='ident'>len</span>() {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">angle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+        <span class="self">self</span>.<span class="ident">angle</span>(<span class="ident">other</span>)
+    }
+
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">inner_product</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+        <span class="self">self</span>.<span class="ident">dot</span>(<span class="ident">other</span>)
+    }
+}
+
+<span class="comment">// FIXME: specialization will greatly simplify this implementation in the future.</span>
+<span class="comment">// In particular:</span>
+<span class="comment">//   − use `x()` instead of `::canonical_basis_element`</span>
+<span class="comment">//   − use `::new(x, y, z)` instead of `::from_slice`</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>: <span class="ident">DimName</span>, <span class="ident">C</span>: <span class="ident">DimName</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">FiniteDimInnerSpace</span> <span class="kw">for</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Real</span>,
+          <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">orthonormalize</span>(<span class="ident">vs</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>]) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">nbasis_elements</span> <span class="op">=</span> <span class="number">0</span>;
+
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="ident">vs</span>.<span class="ident">len</span>() {
             {
-                <span class='kw'>let</span> (<span class='ident'>elt</span>, <span class='ident'>basis</span>) <span class='op'>=</span> <span class='ident'>vs</span>[.. <span class='ident'>i</span> <span class='op'>+</span> <span class='number'>1</span>].<span class='ident'>split_last_mut</span>().<span class='ident'>unwrap</span>();
+                <span class="kw">let</span> (<span class="ident">elt</span>, <span class="ident">basis</span>) <span class="op">=</span> <span class="ident">vs</span>[.. <span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>].<span class="ident">split_last_mut</span>().<span class="ident">unwrap</span>();
 
-                <span class='kw'>for</span> <span class='ident'>basis_element</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='ident'>basis</span>[.. <span class='ident'>nbasis_elements</span>] {
-                    <span class='kw-2'>*</span><span class='ident'>elt</span> <span class='op'>-=</span> <span class='kw-2'>&amp;</span><span class='kw-2'>*</span><span class='ident'>basis_element</span> <span class='op'>*</span> <span class='ident'>elt</span>.<span class='ident'>dot</span>(<span class='ident'>basis_element</span>)
+                <span class="kw">for</span> <span class="ident">basis_element</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">basis</span>[.. <span class="ident">nbasis_elements</span>] {
+                    <span class="kw-2">*</span><span class="ident">elt</span> <span class="op">-=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">basis_element</span> <span class="op">*</span> <span class="ident">elt</span>.<span class="ident">dot</span>(<span class="ident">basis_element</span>)
                 }
             }
 
-            <span class='kw'>if</span> <span class='ident'>vs</span>[<span class='ident'>i</span>].<span class='ident'>try_normalize_mut</span>(<span class='ident'>N</span>::<span class='ident'>zero</span>()).<span class='ident'>is_some</span>() {
-                <span class='comment'>// FIXME: this will be efficient on dynamically-allocated vectors but for</span>
-                <span class='comment'>// statically-allocated ones, `.clone_from` would be better.</span>
-                <span class='ident'>vs</span>.<span class='ident'>swap</span>(<span class='ident'>nbasis_elements</span>, <span class='ident'>i</span>);
-                <span class='ident'>nbasis_elements</span> <span class='op'>+=</span> <span class='number'>1</span>;
+            <span class="kw">if</span> <span class="ident">vs</span>[<span class="ident">i</span>].<span class="ident">try_normalize_mut</span>(<span class="ident">N</span>::<span class="ident">zero</span>()).<span class="ident">is_some</span>() {
+                <span class="comment">// FIXME: this will be efficient on dynamically-allocated vectors but for</span>
+                <span class="comment">// statically-allocated ones, `.clone_from` would be better.</span>
+                <span class="ident">vs</span>.<span class="ident">swap</span>(<span class="ident">nbasis_elements</span>, <span class="ident">i</span>);
+                <span class="ident">nbasis_elements</span> <span class="op">+=</span> <span class="number">1</span>;
 
-                <span class='comment'>// All the other vectors will be dependent.</span>
-                <span class='kw'>if</span> <span class='ident'>nbasis_elements</span> <span class='op'>==</span> <span class='self'>Self</span>::<span class='ident'>dimension</span>() {
-                    <span class='kw'>break</span>;
+                <span class="comment">// All the other vectors will be dependent.</span>
+                <span class="kw">if</span> <span class="ident">nbasis_elements</span> <span class="op">==</span> <span class="self">Self</span>::<span class="ident">dimension</span>() {
+                    <span class="kw">break</span>;
                 }
             }
         }
 
-        <span class='ident'>nbasis_elements</span>
+        <span class="ident">nbasis_elements</span>
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>orthonormal_subspace_basis</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='ident'>vs</span>: <span class='kw-2'>&amp;</span>[<span class='self'>Self</span>], <span class='kw-2'>mut</span> <span class='ident'>f</span>: <span class='ident'>F</span>)
-        <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>FnMut</span>(<span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='comment'>// FIXME: is this necessary?</span>
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>vs</span>.<span class='ident'>len</span>() <span class='op'>&lt;=</span> <span class='self'>Self</span>::<span class='ident'>dimension</span>(), <span class='string'>&quot;The given set of vectors has no chance of being a free family.&quot;</span>);
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">orthonormal_subspace_basis</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">vs</span>: <span class="kw-2">&amp;</span>[<span class="self">Self</span>], <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">F</span>)
+        <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="comment">// FIXME: is this necessary?</span>
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">vs</span>.<span class="ident">len</span>() <span class="op">&lt;=</span> <span class="self">Self</span>::<span class="ident">dimension</span>(), <span class="string">&quot;The given set of vectors has no chance of being a free family.&quot;</span>);
 
-        <span class='kw'>match</span> <span class='self'>Self</span>::<span class='ident'>dimension</span>() {
-            <span class='number'>1</span> <span class='op'>=&gt;</span> {
-                <span class='kw'>if</span> <span class='ident'>vs</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
-                    <span class='ident'>f</span>(<span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>canonical_basis_element</span>(<span class='number'>0</span>));
+        <span class="kw">match</span> <span class="self">Self</span>::<span class="ident">dimension</span>() {
+            <span class="number">1</span> <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="ident">vs</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span> {
+                    <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">canonical_basis_element</span>(<span class="number">0</span>));
                 }
             },
-            <span class='number'>2</span> <span class='op'>=&gt;</span> {
-                <span class='kw'>if</span> <span class='ident'>vs</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
-                    <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>f</span>(<span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>canonical_basis_element</span>(<span class='number'>0</span>)) <span class='op'>&amp;&amp;</span>
-                            <span class='ident'>f</span>(<span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>canonical_basis_element</span>(<span class='number'>1</span>));
+            <span class="number">2</span> <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="ident">vs</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span> {
+                    <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">canonical_basis_element</span>(<span class="number">0</span>)) <span class="op">&amp;&amp;</span>
+                            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">canonical_basis_element</span>(<span class="number">1</span>));
                 }
-                <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>vs</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>1</span> {
-                    <span class='kw'>let</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>vs</span>[<span class='number'>0</span>];
-                    <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>from_column_slice</span>(<span class='kw-2'>&amp;</span>[<span class='op'>-</span><span class='ident'>v</span>[<span class='number'>1</span>], <span class='ident'>v</span>[<span class='number'>0</span>]]);
+                <span class="kw">else</span> <span class="kw">if</span> <span class="ident">vs</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">1</span> {
+                    <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">vs</span>[<span class="number">0</span>];
+                    <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">from_column_slice</span>(<span class="kw-2">&amp;</span>[<span class="op">-</span><span class="ident">v</span>[<span class="number">1</span>], <span class="ident">v</span>[<span class="number">0</span>]]);
 
-                    <span class='ident'>f</span>(<span class='kw-2'>&amp;</span><span class='ident'>res</span>.<span class='ident'>normalize</span>());
+                    <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">res</span>.<span class="ident">normalize</span>());
                 }
 
-                <span class='comment'>// Otherwise, nothing.</span>
+                <span class="comment">// Otherwise, nothing.</span>
             },
-            <span class='number'>3</span> <span class='op'>=&gt;</span> {
-                <span class='kw'>if</span> <span class='ident'>vs</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
-                    <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>f</span>(<span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>canonical_basis_element</span>(<span class='number'>0</span>)) <span class='op'>&amp;&amp;</span>
-                            <span class='ident'>f</span>(<span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>canonical_basis_element</span>(<span class='number'>1</span>)) <span class='op'>&amp;&amp;</span>
-                            <span class='ident'>f</span>(<span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>canonical_basis_element</span>(<span class='number'>2</span>));
+            <span class="number">3</span> <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="ident">vs</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span> {
+                    <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">canonical_basis_element</span>(<span class="number">0</span>)) <span class="op">&amp;&amp;</span>
+                            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">canonical_basis_element</span>(<span class="number">1</span>)) <span class="op">&amp;&amp;</span>
+                            <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">canonical_basis_element</span>(<span class="number">2</span>));
                 }
-                <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>vs</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>1</span> {
-                    <span class='kw'>let</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>vs</span>[<span class='number'>0</span>];
-                    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>a</span>;
+                <span class="kw">else</span> <span class="kw">if</span> <span class="ident">vs</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">1</span> {
+                    <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">vs</span>[<span class="number">0</span>];
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">a</span>;
 
-                    <span class='kw'>if</span> <span class='ident'>v</span>[<span class='number'>0</span>].<span class='ident'>abs</span>() <span class='op'>&gt;</span> <span class='ident'>v</span>[<span class='number'>1</span>].<span class='ident'>abs</span>() {
-                        <span class='ident'>a</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>from_column_slice</span>(<span class='kw-2'>&amp;</span>[<span class='ident'>v</span>[<span class='number'>2</span>], <span class='ident'>N</span>::<span class='ident'>zero</span>(), <span class='op'>-</span><span class='ident'>v</span>[<span class='number'>0</span>]]);
+                    <span class="kw">if</span> <span class="ident">v</span>[<span class="number">0</span>].<span class="ident">abs</span>() <span class="op">&gt;</span> <span class="ident">v</span>[<span class="number">1</span>].<span class="ident">abs</span>() {
+                        <span class="ident">a</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">from_column_slice</span>(<span class="kw-2">&amp;</span>[<span class="ident">v</span>[<span class="number">2</span>], <span class="ident">N</span>::<span class="ident">zero</span>(), <span class="op">-</span><span class="ident">v</span>[<span class="number">0</span>]]);
                     }
-                    <span class='kw'>else</span> {
-                        <span class='ident'>a</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>from_column_slice</span>(<span class='kw-2'>&amp;</span>[<span class='ident'>N</span>::<span class='ident'>zero</span>(), <span class='op'>-</span><span class='ident'>v</span>[<span class='number'>2</span>], <span class='ident'>v</span>[<span class='number'>1</span>]]);
+                    <span class="kw">else</span> {
+                        <span class="ident">a</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">from_column_slice</span>(<span class="kw-2">&amp;</span>[<span class="ident">N</span>::<span class="ident">zero</span>(), <span class="op">-</span><span class="ident">v</span>[<span class="number">2</span>], <span class="ident">v</span>[<span class="number">1</span>]]);
                     };
 
-                    <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>a</span>.<span class='ident'>normalize_mut</span>();
+                    <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">a</span>.<span class="ident">normalize_mut</span>();
 
-                    <span class='kw'>if</span> <span class='ident'>f</span>(<span class='kw-2'>&amp;</span><span class='ident'>a</span>.<span class='ident'>cross</span>(<span class='ident'>v</span>)) {
-                        <span class='ident'>f</span>(<span class='kw-2'>&amp;</span><span class='ident'>a</span>);
+                    <span class="kw">if</span> <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">a</span>.<span class="ident">cross</span>(<span class="ident">v</span>)) {
+                        <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">a</span>);
                     }
                 }
-                <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>vs</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>2</span> {
-                    <span class='ident'>f</span>(<span class='kw-2'>&amp;</span><span class='ident'>vs</span>[<span class='number'>0</span>].<span class='ident'>cross</span>(<span class='kw-2'>&amp;</span><span class='ident'>vs</span>[<span class='number'>1</span>]).<span class='ident'>normalize</span>());
+                <span class="kw">else</span> <span class="kw">if</span> <span class="ident">vs</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">2</span> {
+                    <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">vs</span>[<span class="number">0</span>].<span class="ident">cross</span>(<span class="kw-2">&amp;</span><span class="ident">vs</span>[<span class="number">1</span>]).<span class="ident">normalize</span>());
                 }
             },
-            _ <span class='op'>=&gt;</span> {
-                <span class='comment'>// XXX: use a GenericArray instead.</span>
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>known_basis</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+            _ <span class="op">=&gt;</span> {
+                <span class="comment">// XXX: use a GenericArray instead.</span>
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">known_basis</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 
-                <span class='kw'>for</span> <span class='ident'>v</span> <span class='kw'>in</span> <span class='ident'>vs</span>.<span class='ident'>iter</span>() {
-                    <span class='ident'>known_basis</span>.<span class='ident'>push</span>(<span class='ident'>v</span>.<span class='ident'>normalize</span>())
+                <span class="kw">for</span> <span class="ident">v</span> <span class="kw">in</span> <span class="ident">vs</span>.<span class="ident">iter</span>() {
+                    <span class="ident">known_basis</span>.<span class="ident">push</span>(<span class="ident">v</span>.<span class="ident">normalize</span>())
                 }
 
-                <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='self'>Self</span>::<span class='ident'>dimension</span>() <span class='op'>-</span> <span class='ident'>vs</span>.<span class='ident'>len</span>() {
-                    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>elt</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>canonical_basis_element</span>(<span class='ident'>i</span>);
+                <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="self">Self</span>::<span class="ident">dimension</span>() <span class="op">-</span> <span class="ident">vs</span>.<span class="ident">len</span>() {
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">elt</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">canonical_basis_element</span>(<span class="ident">i</span>);
 
-                    <span class='kw'>for</span> <span class='ident'>v</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='ident'>known_basis</span> {
-                        <span class='ident'>elt</span> <span class='op'>-=</span> <span class='ident'>v</span> <span class='op'>*</span> <span class='ident'>elt</span>.<span class='ident'>dot</span>(<span class='ident'>v</span>)
+                    <span class="kw">for</span> <span class="ident">v</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">known_basis</span> {
+                        <span class="ident">elt</span> <span class="op">-=</span> <span class="ident">v</span> <span class="op">*</span> <span class="ident">elt</span>.<span class="ident">dot</span>(<span class="ident">v</span>)
                     };
 
-                    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>subsp_elt</span>) <span class='op'>=</span> <span class='ident'>elt</span>.<span class='ident'>try_normalize</span>(<span class='ident'>N</span>::<span class='ident'>zero</span>()) {
-                        <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>f</span>(<span class='kw-2'>&amp;</span><span class='ident'>subsp_elt</span>) { <span class='kw'>return</span> };
+                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">subsp_elt</span>) <span class="op">=</span> <span class="ident">elt</span>.<span class="ident">try_normalize</span>(<span class="ident">N</span>::<span class="ident">zero</span>()) {
+                        <span class="kw">if</span> <span class="op">!</span><span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">subsp_elt</span>) { <span class="kw">return</span> };
 
-                        <span class='ident'>known_basis</span>.<span class='ident'>push</span>(<span class='ident'>subsp_elt</span>);
+                        <span class="ident">known_basis</span>.<span class="ident">push</span>(<span class="ident">subsp_elt</span>);
                     }
                 }
             }
@@ -1134,490 +1134,490 @@
 }
 
 
-<span class='comment'>/*
+<span class="comment">/*
  *
  *
  * Multiplicative structures.
  *
  *
  */</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>: <span class='ident'>DimName</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>Identity</span><span class='op'>&lt;</span><span class='ident'>Multiplicative</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>SquareMatrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>Zero</span> <span class='op'>+</span> <span class='ident'>One</span>,
-          <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>D</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>D</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>identity</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>Self</span>::<span class='ident'>identity</span>()
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>: <span class="ident">DimName</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">Identity</span><span class="op">&lt;</span><span class="ident">Multiplicative</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SquareMatrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">Zero</span> <span class="op">+</span> <span class="ident">One</span>,
+          <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">identity</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">Self</span>::<span class="ident">identity</span>()
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>: <span class='ident'>DimName</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>AbstractMagma</span><span class='op'>&lt;</span><span class='ident'>Multiplicative</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>SquareMatrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>Zero</span> <span class='op'>+</span> <span class='ident'>ClosedAdd</span> <span class='op'>+</span> <span class='ident'>ClosedMul</span>,
-          <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>D</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>D</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>operate</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span> <span class='op'>*</span> <span class='ident'>other</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>: <span class="ident">DimName</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">AbstractMagma</span><span class="op">&lt;</span><span class="ident">Multiplicative</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SquareMatrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">Zero</span> <span class="op">+</span> <span class="ident">ClosedAdd</span> <span class="op">+</span> <span class="ident">ClosedMul</span>,
+          <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">operate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span> <span class="op">*</span> <span class="ident">other</span>
     }
 }
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>impl_multiplicative_structure</span>(
-    ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>marker</span>: <span class='ident'>ident</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>operator</span>: <span class='ident'>ident</span><span class='op'>&gt;</span> $(<span class='op'>+</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>bounds</span>: <span class='ident'>ident</span>)<span class='kw-2'>*</span>),<span class='op'>*</span> $(,)<span class='kw-2'>*</span>) <span class='op'>=&gt;</span> {$(
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>: <span class='ident'>DimName</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>marker</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>operator</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>SquareMatrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-            <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>Zero</span> <span class='op'>+</span> <span class='ident'>ClosedAdd</span> <span class='op'>+</span> <span class='ident'>ClosedMul</span> <span class='op'>+</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>marker</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>operator</span><span class='op'>&gt;</span> $(<span class='op'>+</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>bounds</span>)<span class='kw-2'>*</span>,
-                  <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>D</span><span class='op'>&gt;</span>,
-                  <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>D</span>, <span class='ident'>S</span><span class='op'>&gt;</span> { }
-    )<span class='kw-2'>*</span>}
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_multiplicative_structure</span>(
+    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">marker</span>: <span class="ident">ident</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">operator</span>: <span class="ident">ident</span><span class="op">&gt;</span> $(<span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bounds</span>: <span class="ident">ident</span>)<span class="kw-2">*</span>),<span class="op">*</span> $(,)<span class="kw-2">*</span>) <span class="op">=&gt;</span> {$(
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>: <span class="ident">DimName</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">marker</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">operator</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SquareMatrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span>
+            <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">Zero</span> <span class="op">+</span> <span class="ident">ClosedAdd</span> <span class="op">+</span> <span class="ident">ClosedMul</span> <span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">marker</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">operator</span><span class="op">&gt;</span> $(<span class="op">+</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">bounds</span>)<span class="kw-2">*</span>,
+                  <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span>,
+                  <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span> { }
+    )<span class="kw-2">*</span>}
 );
 
-<span class='macro'>impl_multiplicative_structure</span><span class='macro'>!</span>(
-    <span class='ident'>AbstractSemigroup</span><span class='op'>&lt;</span><span class='ident'>Multiplicative</span><span class='op'>&gt;</span>,
-    <span class='ident'>AbstractMonoid</span><span class='op'>&lt;</span><span class='ident'>Multiplicative</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>One</span>
+<span class="macro">impl_multiplicative_structure</span><span class="macro">!</span>(
+    <span class="ident">AbstractSemigroup</span><span class="op">&lt;</span><span class="ident">Multiplicative</span><span class="op">&gt;</span>,
+    <span class="ident">AbstractMonoid</span><span class="op">&lt;</span><span class="ident">Multiplicative</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">One</span>
 );
 
-<span class='comment'>// // FIXME: Field too strong?</span>
-<span class='comment'>// impl&lt;N, S&gt; Matrix for Matrix&lt;N, S&gt;</span>
-<span class='comment'>//     where N: Scalar + Field,</span>
-<span class='comment'>//           S: Storage&lt;N&gt; {</span>
-<span class='comment'>//     type Field     = N;</span>
-<span class='comment'>//     type Row       = OwnedMatrix&lt;N, Static&lt;U1&gt;, S::C, S::Alloc&gt;;</span>
-<span class='comment'>//     type Column    = OwnedMatrix&lt;N, S::R, Static&lt;U1&gt;, S::Alloc&gt;;</span>
-<span class='comment'>//     type Transpose = OwnedMatrix&lt;N, S::C, S::R, S::Alloc&gt;;</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn nrows(&amp;self) -&gt; usize {</span>
-<span class='comment'>//         self.shape().0</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn ncolumns(&amp;self) -&gt; usize {</span>
-<span class='comment'>//         self.shape().1</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn row(&amp;self, row: usize) -&gt; Self::Row {</span>
-<span class='comment'>//         let mut res: Self::Row = ::zero();</span>
-
-<span class='comment'>//         for (column, e) in res.iter_mut().enumerate() {</span>
-<span class='comment'>//             *e = self[(row, column)];</span>
-<span class='comment'>//         }</span>
-
-<span class='comment'>//         res</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn column(&amp;self, column: usize) -&gt; Self::Column {</span>
-<span class='comment'>//         let mut res: Self::Column = ::zero();</span>
-
-<span class='comment'>//         for (row, e) in res.iter_mut().enumerate() {</span>
-<span class='comment'>//             *e = self[(row, column)];</span>
-<span class='comment'>//         }</span>
-
-<span class='comment'>//         res</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     unsafe fn get_unchecked(&amp;self, i: usize, j: usize) -&gt; Self::Field {</span>
-<span class='comment'>//         self.get_unchecked(i, j)</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn transpose(&amp;self) -&gt; Self::Transpose {</span>
-<span class='comment'>//         self.transpose()</span>
-<span class='comment'>//     }</span>
-<span class='comment'>// }</span>
-
-<span class='comment'>// impl&lt;N, S&gt; MatrixMut for Matrix&lt;N, S&gt;</span>
-<span class='comment'>//     where N: Scalar + Field,</span>
-<span class='comment'>//           S: StorageMut&lt;N&gt; {</span>
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn set_row_mut(&amp;mut self, irow: usize, row: &amp;Self::Row) {</span>
-<span class='comment'>//         assert!(irow &lt; self.shape().0, &quot;Row index out of bounds.&quot;);</span>
-
-<span class='comment'>//         for (icol, e) in row.iter().enumerate() {</span>
-<span class='comment'>//             unsafe { self.set_unchecked(irow, icol, *e) }</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn set_column_mut(&amp;mut self, icol: usize, col: &amp;Self::Column) {</span>
-<span class='comment'>//         assert!(icol &lt; self.shape().1, &quot;Column index out of bounds.&quot;);</span>
-<span class='comment'>//         for (irow, e) in col.iter().enumerate() {</span>
-<span class='comment'>//             unsafe { self.set_unchecked(irow, icol, *e) }</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     unsafe fn set_unchecked(&amp;mut self, i: usize, j: usize, val: Self::Field) {</span>
-<span class='comment'>//         *self.get_unchecked_mut(i, j) = val</span>
-<span class='comment'>//     }</span>
-<span class='comment'>// }</span>
-
-<span class='comment'>// // FIXME: Real is needed here only for invertibility...</span>
-<span class='comment'>// impl&lt;N: Real&gt; SquareMatrixMut for $t&lt;N&gt; {</span>
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn from_diagonal(diag: &amp;Self::Coordinates) -&gt; Self {</span>
-<span class='comment'>//         let mut res: $t&lt;N&gt; = ::zero();</span>
-<span class='comment'>//         res.set_diagonal_mut(diag);</span>
-<span class='comment'>//         res</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn set_diagonal_mut(&amp;mut self, diag: &amp;Self::Coordinates) {</span>
-<span class='comment'>//         for (i, e) in diag.iter().enumerate() {</span>
-<span class='comment'>//             unsafe { self.set_unchecked(i, i, *e) }</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//     }</span>
-<span class='comment'>// }</span>
-
-
-
-<span class='comment'>// Specializations depending on the dimension.</span>
-<span class='comment'>// matrix_group_approx_impl!(common: $t, 1, $vector, $($compN),+);</span>
-
-<span class='comment'>// // FIXME: Real is needed here only for invertibility...</span>
-<span class='comment'>// impl&lt;N: Real&gt; SquareMatrix for $t&lt;N&gt; {</span>
-<span class='comment'>//     type Vector = $vector&lt;N&gt;;</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn diagonal(&amp;self) -&gt; Self::Coordinates {</span>
-<span class='comment'>//         $vector::new(self.m11)</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn determinant(&amp;self) -&gt; Self::Field {</span>
-<span class='comment'>//         self.m11</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn try_inverse(&amp;self) -&gt; Option&lt;Self&gt; {</span>
-<span class='comment'>//         let mut res = *self;</span>
-<span class='comment'>//         if res.try_inverse_mut() {</span>
-<span class='comment'>//             Some(res)</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//         else {</span>
-<span class='comment'>//             None</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn try_inverse_mut(&amp;mut self) -&gt; bool {</span>
-<span class='comment'>//         if relative_eq!(&amp;self.m11, &amp;::zero()) {</span>
-<span class='comment'>//             false</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//         else {</span>
-<span class='comment'>//             self.m11 = ::one::&lt;N&gt;() / ::determinant(self);</span>
-
-<span class='comment'>//             true</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn transpose_mut(&amp;mut self) {</span>
-<span class='comment'>//         // no-op</span>
-<span class='comment'>//     }</span>
-<span class='comment'>// }</span>
-
-<span class='comment'>//  ident, 2, $vector: ident, $($compN: ident),+) =&gt; {</span>
-<span class='comment'>// matrix_group_approx_impl!(common: $t, 2, $vector, $($compN),+);</span>
-
-<span class='comment'>// // FIXME: Real is needed only for inversion here.</span>
-<span class='comment'>// impl&lt;N: Real&gt; SquareMatrix for $t&lt;N&gt; {</span>
-<span class='comment'>//     type Vector = $vector&lt;N&gt;;</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn diagonal(&amp;self) -&gt; Self::Coordinates {</span>
-<span class='comment'>//         $vector::new(self.m11, self.m22)</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn determinant(&amp;self) -&gt; Self::Field {</span>
-<span class='comment'>//         self.m11 * self.m22 - self.m21 * self.m12</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn try_inverse(&amp;self) -&gt; Option&lt;Self&gt; {</span>
-<span class='comment'>//         let mut res = *self;</span>
-<span class='comment'>//         if res.try_inverse_mut() {</span>
-<span class='comment'>//             Some(res)</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//         else {</span>
-<span class='comment'>//             None</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn try_inverse_mut(&amp;mut self) -&gt; bool {</span>
-<span class='comment'>//         let determinant = ::determinant(self);</span>
-
-<span class='comment'>//         if relative_eq!(&amp;determinant, &amp;::zero()) {</span>
-<span class='comment'>//             false</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//         else {</span>
-<span class='comment'>//             *self = Matrix2::new(</span>
-<span class='comment'>//                 self.m22 / determinant , -self.m12 / determinant,</span>
-<span class='comment'>//                 -self.m21 / determinant, self.m11 / determinant);</span>
-
-<span class='comment'>//             true</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn transpose_mut(&amp;mut self) {</span>
-<span class='comment'>//         mem::swap(&amp;mut self.m12, &amp;mut self.m21)</span>
-<span class='comment'>//     }</span>
-<span class='comment'>// }</span>
-
-<span class='comment'>//  ident, 3, $vector: ident, $($compN: ident),+) =&gt; {</span>
-<span class='comment'>// matrix_group_approx_impl!(common: $t, 3, $vector, $($compN),+);</span>
-
-<span class='comment'>// // FIXME: Real is needed only for inversion here.</span>
-<span class='comment'>// impl&lt;N: Real&gt; SquareMatrix for $t&lt;N&gt; {</span>
-<span class='comment'>//     type Vector = $vector&lt;N&gt;;</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn diagonal(&amp;self) -&gt; Self::Coordinates {</span>
-<span class='comment'>//         $vector::new(self.m11, self.m22, self.m33)</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn determinant(&amp;self) -&gt; Self::Field {</span>
-<span class='comment'>//         let minor_m12_m23 = self.m22 * self.m33 - self.m32 * self.m23;</span>
-<span class='comment'>//         let minor_m11_m23 = self.m21 * self.m33 - self.m31 * self.m23;</span>
-<span class='comment'>//         let minor_m11_m22 = self.m21 * self.m32 - self.m31 * self.m22;</span>
-
-<span class='comment'>//         self.m11 * minor_m12_m23 - self.m12 * minor_m11_m23 + self.m13 * minor_m11_m22</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn try_inverse(&amp;self) -&gt; Option&lt;Self&gt; {</span>
-<span class='comment'>//         let mut res = *self;</span>
-<span class='comment'>//         if res.try_inverse_mut() {</span>
-<span class='comment'>//             Some(res)</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//         else {</span>
-<span class='comment'>//             None</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn try_inverse_mut(&amp;mut self) -&gt; bool {</span>
-<span class='comment'>//         let minor_m12_m23 = self.m22 * self.m33 - self.m32 * self.m23;</span>
-<span class='comment'>//         let minor_m11_m23 = self.m21 * self.m33 - self.m31 * self.m23;</span>
-<span class='comment'>//         let minor_m11_m22 = self.m21 * self.m32 - self.m31 * self.m22;</span>
-
-<span class='comment'>//         let determinant = self.m11 * minor_m12_m23 -</span>
-<span class='comment'>//                           self.m12 * minor_m11_m23 +</span>
-<span class='comment'>//                           self.m13 * minor_m11_m22;</span>
-
-<span class='comment'>//         if relative_eq!(&amp;determinant, &amp;::zero()) {</span>
-<span class='comment'>//             false</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//         else {</span>
-<span class='comment'>//             *self = Matrix3::new(</span>
-<span class='comment'>//                 (minor_m12_m23 / determinant),</span>
-<span class='comment'>//                 ((self.m13 * self.m32 - self.m33 * self.m12) / determinant),</span>
-<span class='comment'>//                 ((self.m12 * self.m23 - self.m22 * self.m13) / determinant),</span>
-
-<span class='comment'>//                 (-minor_m11_m23 / determinant),</span>
-<span class='comment'>//                 ((self.m11 * self.m33 - self.m31 * self.m13) / determinant),</span>
-<span class='comment'>//                 ((self.m13 * self.m21 - self.m23 * self.m11) / determinant),</span>
-
-<span class='comment'>//                 (minor_m11_m22  / determinant),</span>
-<span class='comment'>//                 ((self.m12 * self.m31 - self.m32 * self.m11) / determinant),</span>
-<span class='comment'>//                 ((self.m11 * self.m22 - self.m21 * self.m12) / determinant)</span>
-<span class='comment'>//                 );</span>
-
-<span class='comment'>//             true</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn transpose_mut(&amp;mut self) {</span>
-<span class='comment'>//         mem::swap(&amp;mut self.m12, &amp;mut self.m21);</span>
-<span class='comment'>//         mem::swap(&amp;mut self.m13, &amp;mut self.m31);</span>
-<span class='comment'>//         mem::swap(&amp;mut self.m23, &amp;mut self.m32);</span>
-<span class='comment'>//     }</span>
-<span class='comment'>// }</span>
-
-<span class='comment'>//  ident, $dimension: expr, $vector: ident, $($compN: ident),+) =&gt; {</span>
-<span class='comment'>// matrix_group_approx_impl!(common: $t, $dimension, $vector, $($compN),+);</span>
-
-<span class='comment'>// // FIXME: Real is needed only for inversion here.</span>
-<span class='comment'>// impl&lt;N: Real&gt; SquareMatrix for $t&lt;N&gt; {</span>
-<span class='comment'>//     type Vector = $vector&lt;N&gt;;</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn diagonal(&amp;self) -&gt; Self::Coordinates {</span>
-<span class='comment'>//         let mut diagonal: $vector&lt;N&gt; = ::zero();</span>
-
-<span class='comment'>//         for i in 0 .. $dimension {</span>
-<span class='comment'>//             unsafe { diagonal.unsafe_set(i, self.get_unchecked(i, i)) }</span>
-<span class='comment'>//         }</span>
-
-<span class='comment'>//         diagonal</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn determinant(&amp;self) -&gt; Self::Field {</span>
-<span class='comment'>//         // FIXME: extremely naive implementation.</span>
-<span class='comment'>//         let mut det = ::zero();</span>
-
-<span class='comment'>//         for icol in 0 .. $dimension {</span>
-<span class='comment'>//             let e = unsafe { self.unsafe_at((0, icol)) };</span>
-
-<span class='comment'>//             if e != ::zero() {</span>
-<span class='comment'>//                 let minor_mat = self.delete_row_column(0, icol);</span>
-<span class='comment'>//                 let minor     = minor_mat.determinant();</span>
-
-<span class='comment'>//                 if icol % 2 == 0 {</span>
-<span class='comment'>//                     det += minor;</span>
-<span class='comment'>//                 }</span>
-<span class='comment'>//                 else {</span>
-<span class='comment'>//                     det -= minor;</span>
-<span class='comment'>//                 }</span>
-<span class='comment'>//             }</span>
-<span class='comment'>//         }</span>
-
-<span class='comment'>//         det</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn try_inverse(&amp;self) -&gt; Option&lt;Self&gt; {</span>
-<span class='comment'>//         let mut res = *self;</span>
-<span class='comment'>//         if res.try_inverse_mut() {</span>
-<span class='comment'>//             Some(res)</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//         else {</span>
-<span class='comment'>//             None</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn try_inverse_mut(&amp;mut self) -&gt; bool {</span>
-<span class='comment'>//         let mut res: $t&lt;N&gt; = ::one();</span>
-
-<span class='comment'>//         // Inversion using Gauss-Jordan elimination</span>
-<span class='comment'>//         for k in 0 .. $dimension {</span>
-<span class='comment'>//             // search a non-zero value on the k-th column</span>
-<span class='comment'>//             // FIXME: would it be worth it to spend some more time searching for the</span>
-<span class='comment'>//             // max instead?</span>
-
-<span class='comment'>//             let mut n0 = k; // index of a non-zero entry</span>
-
-<span class='comment'>//             while n0 != $dimension {</span>
-<span class='comment'>//                 if self[(n0, k)] != ::zero() {</span>
-<span class='comment'>//                     break;</span>
-<span class='comment'>//                 }</span>
-
-<span class='comment'>//                 n0 = n0 + 1;</span>
-<span class='comment'>//             }</span>
-
-<span class='comment'>//             if n0 == $dimension {</span>
-<span class='comment'>//                 return false</span>
-<span class='comment'>//             }</span>
-
-<span class='comment'>//             // swap pivot line</span>
-<span class='comment'>//             if n0 != k {</span>
-<span class='comment'>//                 for j in 0 .. $dimension {</span>
-<span class='comment'>//                     self.swap((n0, j), (k, j));</span>
-<span class='comment'>//                     res.swap((n0, j), (k, j));</span>
-<span class='comment'>//                 }</span>
-<span class='comment'>//             }</span>
-
-<span class='comment'>//             let pivot = self[(k, k)];</span>
-
-<span class='comment'>//             for j in k .. $dimension {</span>
-<span class='comment'>//                 let selfval = self[(k, j)] / pivot;</span>
-<span class='comment'>//                 self[(k, j)] = selfval;</span>
-<span class='comment'>//             }</span>
-
-<span class='comment'>//             for j in 0 .. $dimension {</span>
-<span class='comment'>//                 let resval = res[(k, j)] / pivot;</span>
-<span class='comment'>//                 res[(k, j)] = resval;</span>
-<span class='comment'>//             }</span>
-
-<span class='comment'>//             for l in 0 .. $dimension {</span>
-<span class='comment'>//                 if l != k {</span>
-<span class='comment'>//                     let normalizer = self[(l, k)];</span>
-
-<span class='comment'>//                     for j in k .. $dimension {</span>
-<span class='comment'>//                         let selfval = self[(l, j)] - self[(k, j)] * normalizer;</span>
-<span class='comment'>//                         self[(l, j)] = selfval;</span>
-<span class='comment'>//                     }</span>
-
-<span class='comment'>//                     for j in 0 .. $dimension {</span>
-<span class='comment'>//                         let resval  = res[(l, j)] - res[(k, j)] * normalizer;</span>
-<span class='comment'>//                         res[(l, j)] = resval;</span>
-<span class='comment'>//                     }</span>
-<span class='comment'>//                 }</span>
-<span class='comment'>//             }</span>
-<span class='comment'>//         }</span>
-
-<span class='comment'>//         *self = res;</span>
-
-<span class='comment'>//         true</span>
-<span class='comment'>//     }</span>
-
-<span class='comment'>//     #[inline]</span>
-<span class='comment'>//     fn transpose_mut(&amp;mut self) {</span>
-<span class='comment'>//         for i in 1 .. $dimension {</span>
-<span class='comment'>//             for j in 0 .. i {</span>
-<span class='comment'>//                 self.swap((i, j), (j, i))</span>
-<span class='comment'>//             }</span>
-<span class='comment'>//         }</span>
-<span class='comment'>//     }</span>
-
-
-
-
-<span class='comment'>/*
+<span class="comment">// // FIXME: Field too strong?</span>
+<span class="comment">// impl&lt;N, S&gt; Matrix for Matrix&lt;N, S&gt;</span>
+<span class="comment">//     where N: Scalar + Field,</span>
+<span class="comment">//           S: Storage&lt;N&gt; {</span>
+<span class="comment">//     type Field     = N;</span>
+<span class="comment">//     type Row       = OwnedMatrix&lt;N, Static&lt;U1&gt;, S::C, S::Alloc&gt;;</span>
+<span class="comment">//     type Column    = OwnedMatrix&lt;N, S::R, Static&lt;U1&gt;, S::Alloc&gt;;</span>
+<span class="comment">//     type Transpose = OwnedMatrix&lt;N, S::C, S::R, S::Alloc&gt;;</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn nrows(&amp;self) -&gt; usize {</span>
+<span class="comment">//         self.shape().0</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn ncolumns(&amp;self) -&gt; usize {</span>
+<span class="comment">//         self.shape().1</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn row(&amp;self, row: usize) -&gt; Self::Row {</span>
+<span class="comment">//         let mut res: Self::Row = ::zero();</span>
+
+<span class="comment">//         for (column, e) in res.iter_mut().enumerate() {</span>
+<span class="comment">//             *e = self[(row, column)];</span>
+<span class="comment">//         }</span>
+
+<span class="comment">//         res</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn column(&amp;self, column: usize) -&gt; Self::Column {</span>
+<span class="comment">//         let mut res: Self::Column = ::zero();</span>
+
+<span class="comment">//         for (row, e) in res.iter_mut().enumerate() {</span>
+<span class="comment">//             *e = self[(row, column)];</span>
+<span class="comment">//         }</span>
+
+<span class="comment">//         res</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     unsafe fn get_unchecked(&amp;self, i: usize, j: usize) -&gt; Self::Field {</span>
+<span class="comment">//         self.get_unchecked(i, j)</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn transpose(&amp;self) -&gt; Self::Transpose {</span>
+<span class="comment">//         self.transpose()</span>
+<span class="comment">//     }</span>
+<span class="comment">// }</span>
+
+<span class="comment">// impl&lt;N, S&gt; MatrixMut for Matrix&lt;N, S&gt;</span>
+<span class="comment">//     where N: Scalar + Field,</span>
+<span class="comment">//           S: StorageMut&lt;N&gt; {</span>
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn set_row_mut(&amp;mut self, irow: usize, row: &amp;Self::Row) {</span>
+<span class="comment">//         assert!(irow &lt; self.shape().0, &quot;Row index out of bounds.&quot;);</span>
+
+<span class="comment">//         for (icol, e) in row.iter().enumerate() {</span>
+<span class="comment">//             unsafe { self.set_unchecked(irow, icol, *e) }</span>
+<span class="comment">//         }</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn set_column_mut(&amp;mut self, icol: usize, col: &amp;Self::Column) {</span>
+<span class="comment">//         assert!(icol &lt; self.shape().1, &quot;Column index out of bounds.&quot;);</span>
+<span class="comment">//         for (irow, e) in col.iter().enumerate() {</span>
+<span class="comment">//             unsafe { self.set_unchecked(irow, icol, *e) }</span>
+<span class="comment">//         }</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     unsafe fn set_unchecked(&amp;mut self, i: usize, j: usize, val: Self::Field) {</span>
+<span class="comment">//         *self.get_unchecked_mut(i, j) = val</span>
+<span class="comment">//     }</span>
+<span class="comment">// }</span>
+
+<span class="comment">// // FIXME: Real is needed here only for invertibility...</span>
+<span class="comment">// impl&lt;N: Real&gt; SquareMatrixMut for $t&lt;N&gt; {</span>
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn from_diagonal(diag: &amp;Self::Coordinates) -&gt; Self {</span>
+<span class="comment">//         let mut res: $t&lt;N&gt; = ::zero();</span>
+<span class="comment">//         res.set_diagonal_mut(diag);</span>
+<span class="comment">//         res</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn set_diagonal_mut(&amp;mut self, diag: &amp;Self::Coordinates) {</span>
+<span class="comment">//         for (i, e) in diag.iter().enumerate() {</span>
+<span class="comment">//             unsafe { self.set_unchecked(i, i, *e) }</span>
+<span class="comment">//         }</span>
+<span class="comment">//     }</span>
+<span class="comment">// }</span>
+
+
+
+<span class="comment">// Specializations depending on the dimension.</span>
+<span class="comment">// matrix_group_approx_impl!(common: $t, 1, $vector, $($compN),+);</span>
+
+<span class="comment">// // FIXME: Real is needed here only for invertibility...</span>
+<span class="comment">// impl&lt;N: Real&gt; SquareMatrix for $t&lt;N&gt; {</span>
+<span class="comment">//     type Vector = $vector&lt;N&gt;;</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn diagonal(&amp;self) -&gt; Self::Coordinates {</span>
+<span class="comment">//         $vector::new(self.m11)</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn determinant(&amp;self) -&gt; Self::Field {</span>
+<span class="comment">//         self.m11</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn try_inverse(&amp;self) -&gt; Option&lt;Self&gt; {</span>
+<span class="comment">//         let mut res = *self;</span>
+<span class="comment">//         if res.try_inverse_mut() {</span>
+<span class="comment">//             Some(res)</span>
+<span class="comment">//         }</span>
+<span class="comment">//         else {</span>
+<span class="comment">//             None</span>
+<span class="comment">//         }</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn try_inverse_mut(&amp;mut self) -&gt; bool {</span>
+<span class="comment">//         if relative_eq!(&amp;self.m11, &amp;::zero()) {</span>
+<span class="comment">//             false</span>
+<span class="comment">//         }</span>
+<span class="comment">//         else {</span>
+<span class="comment">//             self.m11 = ::one::&lt;N&gt;() / ::determinant(self);</span>
+
+<span class="comment">//             true</span>
+<span class="comment">//         }</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn transpose_mut(&amp;mut self) {</span>
+<span class="comment">//         // no-op</span>
+<span class="comment">//     }</span>
+<span class="comment">// }</span>
+
+<span class="comment">//  ident, 2, $vector: ident, $($compN: ident),+) =&gt; {</span>
+<span class="comment">// matrix_group_approx_impl!(common: $t, 2, $vector, $($compN),+);</span>
+
+<span class="comment">// // FIXME: Real is needed only for inversion here.</span>
+<span class="comment">// impl&lt;N: Real&gt; SquareMatrix for $t&lt;N&gt; {</span>
+<span class="comment">//     type Vector = $vector&lt;N&gt;;</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn diagonal(&amp;self) -&gt; Self::Coordinates {</span>
+<span class="comment">//         $vector::new(self.m11, self.m22)</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn determinant(&amp;self) -&gt; Self::Field {</span>
+<span class="comment">//         self.m11 * self.m22 - self.m21 * self.m12</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn try_inverse(&amp;self) -&gt; Option&lt;Self&gt; {</span>
+<span class="comment">//         let mut res = *self;</span>
+<span class="comment">//         if res.try_inverse_mut() {</span>
+<span class="comment">//             Some(res)</span>
+<span class="comment">//         }</span>
+<span class="comment">//         else {</span>
+<span class="comment">//             None</span>
+<span class="comment">//         }</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn try_inverse_mut(&amp;mut self) -&gt; bool {</span>
+<span class="comment">//         let determinant = ::determinant(self);</span>
+
+<span class="comment">//         if relative_eq!(&amp;determinant, &amp;::zero()) {</span>
+<span class="comment">//             false</span>
+<span class="comment">//         }</span>
+<span class="comment">//         else {</span>
+<span class="comment">//             *self = Matrix2::new(</span>
+<span class="comment">//                 self.m22 / determinant , -self.m12 / determinant,</span>
+<span class="comment">//                 -self.m21 / determinant, self.m11 / determinant);</span>
+
+<span class="comment">//             true</span>
+<span class="comment">//         }</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn transpose_mut(&amp;mut self) {</span>
+<span class="comment">//         mem::swap(&amp;mut self.m12, &amp;mut self.m21)</span>
+<span class="comment">//     }</span>
+<span class="comment">// }</span>
+
+<span class="comment">//  ident, 3, $vector: ident, $($compN: ident),+) =&gt; {</span>
+<span class="comment">// matrix_group_approx_impl!(common: $t, 3, $vector, $($compN),+);</span>
+
+<span class="comment">// // FIXME: Real is needed only for inversion here.</span>
+<span class="comment">// impl&lt;N: Real&gt; SquareMatrix for $t&lt;N&gt; {</span>
+<span class="comment">//     type Vector = $vector&lt;N&gt;;</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn diagonal(&amp;self) -&gt; Self::Coordinates {</span>
+<span class="comment">//         $vector::new(self.m11, self.m22, self.m33)</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn determinant(&amp;self) -&gt; Self::Field {</span>
+<span class="comment">//         let minor_m12_m23 = self.m22 * self.m33 - self.m32 * self.m23;</span>
+<span class="comment">//         let minor_m11_m23 = self.m21 * self.m33 - self.m31 * self.m23;</span>
+<span class="comment">//         let minor_m11_m22 = self.m21 * self.m32 - self.m31 * self.m22;</span>
+
+<span class="comment">//         self.m11 * minor_m12_m23 - self.m12 * minor_m11_m23 + self.m13 * minor_m11_m22</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn try_inverse(&amp;self) -&gt; Option&lt;Self&gt; {</span>
+<span class="comment">//         let mut res = *self;</span>
+<span class="comment">//         if res.try_inverse_mut() {</span>
+<span class="comment">//             Some(res)</span>
+<span class="comment">//         }</span>
+<span class="comment">//         else {</span>
+<span class="comment">//             None</span>
+<span class="comment">//         }</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn try_inverse_mut(&amp;mut self) -&gt; bool {</span>
+<span class="comment">//         let minor_m12_m23 = self.m22 * self.m33 - self.m32 * self.m23;</span>
+<span class="comment">//         let minor_m11_m23 = self.m21 * self.m33 - self.m31 * self.m23;</span>
+<span class="comment">//         let minor_m11_m22 = self.m21 * self.m32 - self.m31 * self.m22;</span>
+
+<span class="comment">//         let determinant = self.m11 * minor_m12_m23 -</span>
+<span class="comment">//                           self.m12 * minor_m11_m23 +</span>
+<span class="comment">//                           self.m13 * minor_m11_m22;</span>
+
+<span class="comment">//         if relative_eq!(&amp;determinant, &amp;::zero()) {</span>
+<span class="comment">//             false</span>
+<span class="comment">//         }</span>
+<span class="comment">//         else {</span>
+<span class="comment">//             *self = Matrix3::new(</span>
+<span class="comment">//                 (minor_m12_m23 / determinant),</span>
+<span class="comment">//                 ((self.m13 * self.m32 - self.m33 * self.m12) / determinant),</span>
+<span class="comment">//                 ((self.m12 * self.m23 - self.m22 * self.m13) / determinant),</span>
+
+<span class="comment">//                 (-minor_m11_m23 / determinant),</span>
+<span class="comment">//                 ((self.m11 * self.m33 - self.m31 * self.m13) / determinant),</span>
+<span class="comment">//                 ((self.m13 * self.m21 - self.m23 * self.m11) / determinant),</span>
+
+<span class="comment">//                 (minor_m11_m22  / determinant),</span>
+<span class="comment">//                 ((self.m12 * self.m31 - self.m32 * self.m11) / determinant),</span>
+<span class="comment">//                 ((self.m11 * self.m22 - self.m21 * self.m12) / determinant)</span>
+<span class="comment">//                 );</span>
+
+<span class="comment">//             true</span>
+<span class="comment">//         }</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn transpose_mut(&amp;mut self) {</span>
+<span class="comment">//         mem::swap(&amp;mut self.m12, &amp;mut self.m21);</span>
+<span class="comment">//         mem::swap(&amp;mut self.m13, &amp;mut self.m31);</span>
+<span class="comment">//         mem::swap(&amp;mut self.m23, &amp;mut self.m32);</span>
+<span class="comment">//     }</span>
+<span class="comment">// }</span>
+
+<span class="comment">//  ident, $dimension: expr, $vector: ident, $($compN: ident),+) =&gt; {</span>
+<span class="comment">// matrix_group_approx_impl!(common: $t, $dimension, $vector, $($compN),+);</span>
+
+<span class="comment">// // FIXME: Real is needed only for inversion here.</span>
+<span class="comment">// impl&lt;N: Real&gt; SquareMatrix for $t&lt;N&gt; {</span>
+<span class="comment">//     type Vector = $vector&lt;N&gt;;</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn diagonal(&amp;self) -&gt; Self::Coordinates {</span>
+<span class="comment">//         let mut diagonal: $vector&lt;N&gt; = ::zero();</span>
+
+<span class="comment">//         for i in 0 .. $dimension {</span>
+<span class="comment">//             unsafe { diagonal.unsafe_set(i, self.get_unchecked(i, i)) }</span>
+<span class="comment">//         }</span>
+
+<span class="comment">//         diagonal</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn determinant(&amp;self) -&gt; Self::Field {</span>
+<span class="comment">//         // FIXME: extremely naive implementation.</span>
+<span class="comment">//         let mut det = ::zero();</span>
+
+<span class="comment">//         for icol in 0 .. $dimension {</span>
+<span class="comment">//             let e = unsafe { self.unsafe_at((0, icol)) };</span>
+
+<span class="comment">//             if e != ::zero() {</span>
+<span class="comment">//                 let minor_mat = self.delete_row_column(0, icol);</span>
+<span class="comment">//                 let minor     = minor_mat.determinant();</span>
+
+<span class="comment">//                 if icol % 2 == 0 {</span>
+<span class="comment">//                     det += minor;</span>
+<span class="comment">//                 }</span>
+<span class="comment">//                 else {</span>
+<span class="comment">//                     det -= minor;</span>
+<span class="comment">//                 }</span>
+<span class="comment">//             }</span>
+<span class="comment">//         }</span>
+
+<span class="comment">//         det</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn try_inverse(&amp;self) -&gt; Option&lt;Self&gt; {</span>
+<span class="comment">//         let mut res = *self;</span>
+<span class="comment">//         if res.try_inverse_mut() {</span>
+<span class="comment">//             Some(res)</span>
+<span class="comment">//         }</span>
+<span class="comment">//         else {</span>
+<span class="comment">//             None</span>
+<span class="comment">//         }</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn try_inverse_mut(&amp;mut self) -&gt; bool {</span>
+<span class="comment">//         let mut res: $t&lt;N&gt; = ::one();</span>
+
+<span class="comment">//         // Inversion using Gauss-Jordan elimination</span>
+<span class="comment">//         for k in 0 .. $dimension {</span>
+<span class="comment">//             // search a non-zero value on the k-th column</span>
+<span class="comment">//             // FIXME: would it be worth it to spend some more time searching for the</span>
+<span class="comment">//             // max instead?</span>
+
+<span class="comment">//             let mut n0 = k; // index of a non-zero entry</span>
+
+<span class="comment">//             while n0 != $dimension {</span>
+<span class="comment">//                 if self[(n0, k)] != ::zero() {</span>
+<span class="comment">//                     break;</span>
+<span class="comment">//                 }</span>
+
+<span class="comment">//                 n0 = n0 + 1;</span>
+<span class="comment">//             }</span>
+
+<span class="comment">//             if n0 == $dimension {</span>
+<span class="comment">//                 return false</span>
+<span class="comment">//             }</span>
+
+<span class="comment">//             // swap pivot line</span>
+<span class="comment">//             if n0 != k {</span>
+<span class="comment">//                 for j in 0 .. $dimension {</span>
+<span class="comment">//                     self.swap((n0, j), (k, j));</span>
+<span class="comment">//                     res.swap((n0, j), (k, j));</span>
+<span class="comment">//                 }</span>
+<span class="comment">//             }</span>
+
+<span class="comment">//             let pivot = self[(k, k)];</span>
+
+<span class="comment">//             for j in k .. $dimension {</span>
+<span class="comment">//                 let selfval = self[(k, j)] / pivot;</span>
+<span class="comment">//                 self[(k, j)] = selfval;</span>
+<span class="comment">//             }</span>
+
+<span class="comment">//             for j in 0 .. $dimension {</span>
+<span class="comment">//                 let resval = res[(k, j)] / pivot;</span>
+<span class="comment">//                 res[(k, j)] = resval;</span>
+<span class="comment">//             }</span>
+
+<span class="comment">//             for l in 0 .. $dimension {</span>
+<span class="comment">//                 if l != k {</span>
+<span class="comment">//                     let normalizer = self[(l, k)];</span>
+
+<span class="comment">//                     for j in k .. $dimension {</span>
+<span class="comment">//                         let selfval = self[(l, j)] - self[(k, j)] * normalizer;</span>
+<span class="comment">//                         self[(l, j)] = selfval;</span>
+<span class="comment">//                     }</span>
+
+<span class="comment">//                     for j in 0 .. $dimension {</span>
+<span class="comment">//                         let resval  = res[(l, j)] - res[(k, j)] * normalizer;</span>
+<span class="comment">//                         res[(l, j)] = resval;</span>
+<span class="comment">//                     }</span>
+<span class="comment">//                 }</span>
+<span class="comment">//             }</span>
+<span class="comment">//         }</span>
+
+<span class="comment">//         *self = res;</span>
+
+<span class="comment">//         true</span>
+<span class="comment">//     }</span>
+
+<span class="comment">//     #[inline]</span>
+<span class="comment">//     fn transpose_mut(&amp;mut self) {</span>
+<span class="comment">//         for i in 1 .. $dimension {</span>
+<span class="comment">//             for j in 0 .. i {</span>
+<span class="comment">//                 self.swap((i, j), (j, i))</span>
+<span class="comment">//             }</span>
+<span class="comment">//         }</span>
+<span class="comment">//     }</span>
+
+
+
+
+<span class="comment">/*
  *
  * Ordering
  *
  */</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>: <span class='ident'>Dim</span>, <span class='ident'>C</span>: <span class='ident'>Dim</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>MeetSemilattice</span> <span class='kw'>for</span> <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>MeetSemilattice</span>,
-          <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>meet</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>zip_map</span>(<span class='ident'>other</span>, <span class='op'>|</span><span class='ident'>a</span>, <span class='ident'>b</span><span class='op'>|</span> <span class='ident'>a</span>.<span class='ident'>meet</span>(<span class='kw-2'>&amp;</span><span class='ident'>b</span>))
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">MeetSemilattice</span> <span class="kw">for</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">MeetSemilattice</span>,
+          <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">meet</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">zip_map</span>(<span class="ident">other</span>, <span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> <span class="ident">a</span>.<span class="ident">meet</span>(<span class="kw-2">&amp;</span><span class="ident">b</span>))
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>: <span class='ident'>Dim</span>, <span class='ident'>C</span>: <span class='ident'>Dim</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>JoinSemilattice</span> <span class='kw'>for</span> <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>JoinSemilattice</span>,
-          <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>join</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>zip_map</span>(<span class='ident'>other</span>, <span class='op'>|</span><span class='ident'>a</span>, <span class='ident'>b</span><span class='op'>|</span> <span class='ident'>a</span>.<span class='ident'>join</span>(<span class='kw-2'>&amp;</span><span class='ident'>b</span>))
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">JoinSemilattice</span> <span class="kw">for</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">JoinSemilattice</span>,
+          <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">join</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">zip_map</span>(<span class="ident">other</span>, <span class="op">|</span><span class="ident">a</span>, <span class="ident">b</span><span class="op">|</span> <span class="ident">a</span>.<span class="ident">join</span>(<span class="kw-2">&amp;</span><span class="ident">b</span>))
     }
 }
 
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>: <span class='ident'>Dim</span>, <span class='ident'>C</span>: <span class='ident'>Dim</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>Lattice</span> <span class='kw'>for</span> <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>Lattice</span>,
-          <span class='ident'>S</span>: <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>R</span>, <span class='ident'>C</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>meet_join</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> (<span class='self'>Self</span>, <span class='self'>Self</span>) {
-        <span class='kw'>let</span> <span class='ident'>shape</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>shape</span>();
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>shape</span> <span class='op'>==</span> <span class='ident'>other</span>.<span class='ident'>data</span>.<span class='ident'>shape</span>(), <span class='string'>&quot;Matrix meet/join error: mismatched dimensions.&quot;</span>);
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>: <span class="ident">Dim</span>, <span class="ident">C</span>: <span class="ident">Dim</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">Lattice</span> <span class="kw">for</span> <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">Lattice</span>,
+          <span class="ident">S</span>: <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">R</span>, <span class="ident">C</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">meet_join</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> (<span class="self">Self</span>, <span class="self">Self</span>) {
+        <span class="kw">let</span> <span class="ident">shape</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">shape</span>();
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">shape</span> <span class="op">==</span> <span class="ident">other</span>.<span class="ident">data</span>.<span class="ident">shape</span>(), <span class="string">&quot;Matrix meet/join error: mismatched dimensions.&quot;</span>);
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>mres</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='self'>Self</span>::<span class='ident'>new_uninitialized_generic</span>(<span class='ident'>shape</span>.<span class='number'>0</span>, <span class='ident'>shape</span>.<span class='number'>1</span>) };
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>jres</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='self'>Self</span>::<span class='ident'>new_uninitialized_generic</span>(<span class='ident'>shape</span>.<span class='number'>0</span>, <span class='ident'>shape</span>.<span class='number'>1</span>) };
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">mres</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">Self</span>::<span class="ident">new_uninitialized_generic</span>(<span class="ident">shape</span>.<span class="number">0</span>, <span class="ident">shape</span>.<span class="number">1</span>) };
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">jres</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">Self</span>::<span class="ident">new_uninitialized_generic</span>(<span class="ident">shape</span>.<span class="number">0</span>, <span class="ident">shape</span>.<span class="number">1</span>) };
 
-        <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='ident'>shape</span>.<span class='number'>0</span>.<span class='ident'>value</span>() <span class='op'>*</span> <span class='ident'>shape</span>.<span class='number'>1</span>.<span class='ident'>value</span>() {
-            <span class='kw'>unsafe</span> {
-                <span class='kw'>let</span> <span class='ident'>mj</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>get_unchecked_linear</span>(<span class='ident'>i</span>).<span class='ident'>meet_join</span>(<span class='ident'>other</span>.<span class='ident'>data</span>.<span class='ident'>get_unchecked_linear</span>(<span class='ident'>i</span>));
-                <span class='kw-2'>*</span><span class='ident'>mres</span>.<span class='ident'>data</span>.<span class='ident'>get_unchecked_linear_mut</span>(<span class='ident'>i</span>) <span class='op'>=</span> <span class='ident'>mj</span>.<span class='number'>0</span>;
-                <span class='kw-2'>*</span><span class='ident'>jres</span>.<span class='ident'>data</span>.<span class='ident'>get_unchecked_linear_mut</span>(<span class='ident'>i</span>) <span class='op'>=</span> <span class='ident'>mj</span>.<span class='number'>1</span>;
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="ident">shape</span>.<span class="number">0</span>.<span class="ident">value</span>() <span class="op">*</span> <span class="ident">shape</span>.<span class="number">1</span>.<span class="ident">value</span>() {
+            <span class="kw">unsafe</span> {
+                <span class="kw">let</span> <span class="ident">mj</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">get_unchecked_linear</span>(<span class="ident">i</span>).<span class="ident">meet_join</span>(<span class="ident">other</span>.<span class="ident">data</span>.<span class="ident">get_unchecked_linear</span>(<span class="ident">i</span>));
+                <span class="kw-2">*</span><span class="ident">mres</span>.<span class="ident">data</span>.<span class="ident">get_unchecked_linear_mut</span>(<span class="ident">i</span>) <span class="op">=</span> <span class="ident">mj</span>.<span class="number">0</span>;
+                <span class="kw-2">*</span><span class="ident">jres</span>.<span class="ident">data</span>.<span class="ident">get_unchecked_linear_mut</span>(<span class="ident">i</span>) <span class="op">=</span> <span class="ident">mj</span>.<span class="number">1</span>;
             }
         }
 
-        (<span class='ident'>mres</span>, <span class='ident'>jres</span>)
+        (<span class="ident">mres</span>, <span class="ident">jres</span>)
     }
 }
 </pre>

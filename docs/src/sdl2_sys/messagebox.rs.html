@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -120,83 +120,83 @@
 <span id="75">75</span>
 <span id="76">76</span>
 <span id="77">77</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>raw</span>::{<span class='ident'>c_int</span>,<span class='ident'>c_char</span>};
-<span class='kw'>use</span> <span class='ident'>video</span>::<span class='ident'>SDL_Window</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::{<span class="ident">c_int</span>,<span class="ident">c_char</span>};
+<span class="kw">use</span> <span class="ident">video</span>::<span class="ident">SDL_Window</span>;
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>u32</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>SDL_MessageBoxFlags</span> {
-    <span class='ident'>SDL_MESSAGEBOX_ERROR</span> <span class='op'>=</span> <span class='number'>16</span>,
-    <span class='ident'>SDL_MESSAGEBOX_WARNING</span> <span class='op'>=</span> <span class='number'>32</span>,
-    <span class='ident'>SDL_MESSAGEBOX_INFORMATION</span> <span class='op'>=</span> <span class='number'>64</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SDL_MessageBoxFlags</span> {
+    <span class="ident">SDL_MESSAGEBOX_ERROR</span> <span class="op">=</span> <span class="number">16</span>,
+    <span class="ident">SDL_MESSAGEBOX_WARNING</span> <span class="op">=</span> <span class="number">32</span>,
+    <span class="ident">SDL_MESSAGEBOX_INFORMATION</span> <span class="op">=</span> <span class="number">64</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>u32</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>SDL_MessageBoxButtonFlags</span> {
-    <span class='ident'>SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT</span> <span class='op'>=</span> <span class='number'>1</span>,
-    <span class='ident'>SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT</span> <span class='op'>=</span> <span class='number'>2</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SDL_MessageBoxButtonFlags</span> {
+    <span class="ident">SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT</span> <span class="op">=</span> <span class="number">1</span>,
+    <span class="ident">SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT</span> <span class="op">=</span> <span class="number">2</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_MessageBoxButtonData</span> {
-    <span class='kw'>pub</span> <span class='ident'>flags</span>: <span class='ident'>u32</span>,
-    <span class='kw'>pub</span> <span class='ident'>buttonid</span>: <span class='ident'>c_int</span>,
-    <span class='kw'>pub</span> <span class='ident'>text</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>,
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_MessageBoxButtonData</span> {
+    <span class="kw">pub</span> <span class="ident">flags</span>: <span class="ident">u32</span>,
+    <span class="kw">pub</span> <span class="ident">buttonid</span>: <span class="ident">c_int</span>,
+    <span class="kw">pub</span> <span class="ident">text</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
 }
-<span class='kw'>impl</span> ::<span class='ident'>std</span>::<span class='ident'>default</span>::<span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>SDL_MessageBoxButtonData</span> {
-    <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> { <span class='kw'>unsafe</span> { ::<span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>zeroed</span>() } }
-}
-
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_MessageBoxColor</span> {
-    <span class='kw'>pub</span> <span class='ident'>r</span>: <span class='ident'>u8</span>,
-    <span class='kw'>pub</span> <span class='ident'>g</span>: <span class='ident'>u8</span>,
-    <span class='kw'>pub</span> <span class='ident'>b</span>: <span class='ident'>u8</span>,
+<span class="kw">impl</span> ::<span class="ident">std</span>::<span class="ident">default</span>::<span class="ident">Default</span> <span class="kw">for</span> <span class="ident">SDL_MessageBoxButtonData</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> { <span class="kw">unsafe</span> { ::<span class="ident">std</span>::<span class="ident">mem</span>::<span class="ident">zeroed</span>() } }
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>u32</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>SDL_MessageBoxColorType</span> {
-    <span class='ident'>SDL_MESSAGEBOX_COLOR_BACKGROUND</span> <span class='op'>=</span> <span class='number'>0</span>,
-    <span class='ident'>SDL_MESSAGEBOX_COLOR_TEXT</span> <span class='op'>=</span> <span class='number'>1</span>,
-    <span class='ident'>SDL_MESSAGEBOX_COLOR_BUTTON_BORDER</span> <span class='op'>=</span> <span class='number'>2</span>,
-    <span class='ident'>SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND</span> <span class='op'>=</span> <span class='number'>3</span>,
-    <span class='ident'>SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED</span> <span class='op'>=</span> <span class='number'>4</span>,
-    <span class='ident'>SDL_MESSAGEBOX_COLOR_MAX</span> <span class='op'>=</span> <span class='number'>5</span>,
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_MessageBoxColor</span> {
+    <span class="kw">pub</span> <span class="ident">r</span>: <span class="ident">u8</span>,
+    <span class="kw">pub</span> <span class="ident">g</span>: <span class="ident">u8</span>,
+    <span class="kw">pub</span> <span class="ident">b</span>: <span class="ident">u8</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_MessageBoxColorScheme</span> {
-    <span class='kw'>pub</span> <span class='ident'>colors</span>: [<span class='ident'>SDL_MessageBoxColor</span>; <span class='number'>5usize</span>],
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SDL_MessageBoxColorType</span> {
+    <span class="ident">SDL_MESSAGEBOX_COLOR_BACKGROUND</span> <span class="op">=</span> <span class="number">0</span>,
+    <span class="ident">SDL_MESSAGEBOX_COLOR_TEXT</span> <span class="op">=</span> <span class="number">1</span>,
+    <span class="ident">SDL_MESSAGEBOX_COLOR_BUTTON_BORDER</span> <span class="op">=</span> <span class="number">2</span>,
+    <span class="ident">SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND</span> <span class="op">=</span> <span class="number">3</span>,
+    <span class="ident">SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED</span> <span class="op">=</span> <span class="number">4</span>,
+    <span class="ident">SDL_MESSAGEBOX_COLOR_MAX</span> <span class="op">=</span> <span class="number">5</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_MessageBoxData</span> {
-    <span class='kw'>pub</span> <span class='ident'>flags</span>: <span class='ident'>u32</span>,
-    <span class='kw'>pub</span> <span class='ident'>window</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Window</span>,
-    <span class='kw'>pub</span> <span class='ident'>title</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>,
-    <span class='kw'>pub</span> <span class='ident'>message</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>,
-    <span class='kw'>pub</span> <span class='ident'>numbuttons</span>: <span class='ident'>c_int</span>,
-    <span class='kw'>pub</span> <span class='ident'>buttons</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>SDL_MessageBoxButtonData</span>,
-    <span class='kw'>pub</span> <span class='ident'>color_scheme</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>SDL_MessageBoxColorScheme</span>,
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_MessageBoxColorScheme</span> {
+    <span class="kw">pub</span> <span class="ident">colors</span>: [<span class="ident">SDL_MessageBoxColor</span>; <span class="number">5usize</span>],
 }
 
-<span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_ShowMessageBox</span>(<span class='ident'>messageboxdata</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>SDL_MessageBoxData</span>,
-                              <span class='ident'>buttonid</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_int</span>)
-        <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_MessageBoxData</span> {
+    <span class="kw">pub</span> <span class="ident">flags</span>: <span class="ident">u32</span>,
+    <span class="kw">pub</span> <span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Window</span>,
+    <span class="kw">pub</span> <span class="ident">title</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
+    <span class="kw">pub</span> <span class="ident">message</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
+    <span class="kw">pub</span> <span class="ident">numbuttons</span>: <span class="ident">c_int</span>,
+    <span class="kw">pub</span> <span class="ident">buttons</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">SDL_MessageBoxButtonData</span>,
+    <span class="kw">pub</span> <span class="ident">color_scheme</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">SDL_MessageBoxColorScheme</span>,
+}
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_ShowSimpleMessageBox</span>(<span class='ident'>flags</span>: <span class='ident'>u32</span>,
-                                    <span class='ident'>title</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>,
-                                    <span class='ident'>message</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>,
-                                    <span class='ident'>window</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Window</span>)
-        <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_ShowMessageBox</span>(<span class="ident">messageboxdata</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">SDL_MessageBoxData</span>,
+                              <span class="ident">buttonid</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_int</span>)
+        <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_ShowSimpleMessageBox</span>(<span class="ident">flags</span>: <span class="ident">u32</span>,
+                                    <span class="ident">title</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
+                                    <span class="ident">message</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
+                                    <span class="ident">window</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Window</span>)
+        <span class="op">-&gt;</span> <span class="ident">c_int</span>;
 }
 </pre>
 </section>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -171,134 +171,134 @@
 <span id="126">126</span>
 <span id="127">127</span>
 <span id="128">128</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>::<span class='ident'>Display</span>;
-<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Bounded</span>;
-<span class='kw'>use</span> <span class='ident'>approx</span>::<span class='ident'>ApproxEq</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Display</span>;
+<span class="kw">use</span> <span class="ident">num</span>::<span class="ident">Bounded</span>;
+<span class="kw">use</span> <span class="ident">approx</span>::<span class="ident">ApproxEq</span>;
 
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::{<span class='ident'>Lattice</span>, <span class='ident'>Real</span>};
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>linear</span>::{<span class='ident'>InnerSpace</span>, <span class='ident'>FiniteDimInnerSpace</span>};
-<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='self'>self</span>, <span class='ident'>ColumnVector</span>};
-<span class='kw'>use</span> <span class='ident'>na</span>::<span class='ident'>dimension</span>::{<span class='ident'>U1</span>, <span class='ident'>U2</span>, <span class='ident'>U3</span>};
-<span class='kw'>use</span> <span class='ident'>na</span>::<span class='ident'>storage</span>::<span class='ident'>OwnedStorage</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>::<span class='ident'>allocator</span>::{<span class='ident'>Allocator</span>, <span class='ident'>OwnedAllocator</span>};
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::{<span class="ident">Lattice</span>, <span class="ident">Real</span>};
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">linear</span>::{<span class="ident">InnerSpace</span>, <span class="ident">FiniteDimInnerSpace</span>};
+<span class="kw">use</span> <span class="ident">na</span>::{<span class="self">self</span>, <span class="ident">ColumnVector</span>};
+<span class="kw">use</span> <span class="ident">na</span>::<span class="ident">dimension</span>::{<span class="ident">U1</span>, <span class="ident">U2</span>, <span class="ident">U3</span>};
+<span class="kw">use</span> <span class="ident">na</span>::<span class="ident">storage</span>::<span class="ident">OwnedStorage</span>;
+<span class="kw">use</span> <span class="ident">na</span>::<span class="ident">allocator</span>::{<span class="ident">Allocator</span>, <span class="ident">OwnedAllocator</span>};
 
-<span class='doccomment'>/// Trait implemented by vector types usable by ncollide.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Vector</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> <span class='op'>+</span>
-                  <span class='ident'>Display</span> <span class='op'>+</span>
-                  <span class='ident'>Lattice</span> <span class='op'>+</span>
-                  <span class='ident'>Bounded</span> <span class='op'>+</span>
-                  <span class='ident'>ApproxEq</span><span class='op'>&lt;</span><span class='ident'>Epsilon</span> <span class='op'>=</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>InnerSpace</span><span class='op'>&gt;</span>::<span class='ident'>Real</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                  <span class='ident'>FiniteDimInnerSpace</span> {
-    <span class='doccomment'>/// Iterate through the samples.</span>
-    <span class='kw'>fn</span> <span class='ident'>sample_sphere</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnMut</span>(<span class='self'>Self</span>)<span class='op'>&gt;</span>(<span class='ident'>F</span>);
+<span class="doccomment">/// Trait implemented by vector types usable by ncollide.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Vector</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> <span class="op">+</span>
+                  <span class="ident">Display</span> <span class="op">+</span>
+                  <span class="ident">Lattice</span> <span class="op">+</span>
+                  <span class="ident">Bounded</span> <span class="op">+</span>
+                  <span class="ident">ApproxEq</span><span class="op">&lt;</span><span class="ident">Epsilon</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">InnerSpace</span><span class="op">&gt;</span>::<span class="ident">Real</span><span class="op">&gt;</span> <span class="op">+</span>
+                  <span class="ident">FiniteDimInnerSpace</span> {
+    <span class="doccomment">/// Iterate through the samples.</span>
+    <span class="kw">fn</span> <span class="ident">sample_sphere</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>)<span class="op">&gt;</span>(<span class="ident">F</span>);
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>Vector</span> <span class='kw'>for</span> <span class='ident'>ColumnVector</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>U2</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Real</span> <span class='op'>+</span> <span class='ident'>Display</span>,
-          <span class='ident'>S</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='ident'>Copy</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> <span class='op'>+</span> <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>U2</span>, <span class='ident'>U1</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>U2</span>, <span class='ident'>U1</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                    <span class='ident'>Allocator</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>U2</span>, <span class='ident'>U1</span><span class='op'>&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">Vector</span> <span class="kw">for</span> <span class="ident">ColumnVector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U2</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Real</span> <span class="op">+</span> <span class="ident">Display</span>,
+          <span class="ident">S</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="ident">Copy</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> <span class="op">+</span> <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U2</span>, <span class="ident">U1</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U2</span>, <span class="ident">U1</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="op">+</span>
+                    <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">U2</span>, <span class="ident">U1</span><span class="op">&gt;</span> {
 
-    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>sample_sphere</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnMut</span>(<span class='self'>Self</span>)<span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='ident'>f</span>: <span class='ident'>F</span>) {
-        <span class='kw'>for</span> <span class='ident'>e</span> <span class='kw'>in</span> <span class='ident'>SAMPLES_2_F64</span>.<span class='ident'>iter</span>() {
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='self'>Self</span>::<span class='ident'>new_uninitialized</span>() };
-            <span class='ident'>s</span>[<span class='number'>0</span>] <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='ident'>e</span>[<span class='number'>0</span>]);
-            <span class='ident'>s</span>[<span class='number'>1</span>] <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='ident'>e</span>[<span class='number'>1</span>]);
-            <span class='ident'>f</span>(<span class='ident'>s</span>)
+    <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">sample_sphere</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>)<span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">F</span>) {
+        <span class="kw">for</span> <span class="ident">e</span> <span class="kw">in</span> <span class="ident">SAMPLES_2_F64</span>.<span class="ident">iter</span>() {
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">Self</span>::<span class="ident">new_uninitialized</span>() };
+            <span class="ident">s</span>[<span class="number">0</span>] <span class="op">=</span> <span class="ident">na</span>::<span class="ident">convert</span>(<span class="ident">e</span>[<span class="number">0</span>]);
+            <span class="ident">s</span>[<span class="number">1</span>] <span class="op">=</span> <span class="ident">na</span>::<span class="ident">convert</span>(<span class="ident">e</span>[<span class="number">1</span>]);
+            <span class="ident">f</span>(<span class="ident">s</span>)
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>Vector</span> <span class='kw'>for</span> <span class='ident'>ColumnVector</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>U3</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Real</span> <span class='op'>+</span> <span class='ident'>Display</span>,
-          <span class='ident'>S</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='ident'>Copy</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> <span class='op'>+</span> <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>U3</span>, <span class='ident'>U1</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>U3</span>, <span class='ident'>U1</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                    <span class='ident'>Allocator</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>U3</span>, <span class='ident'>U1</span><span class='op'>&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">Vector</span> <span class="kw">for</span> <span class="ident">ColumnVector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Real</span> <span class="op">+</span> <span class="ident">Display</span>,
+          <span class="ident">S</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="ident">Copy</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> <span class="op">+</span> <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">U1</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">U3</span>, <span class="ident">U1</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="op">+</span>
+                    <span class="ident">Allocator</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">U3</span>, <span class="ident">U1</span><span class="op">&gt;</span> {
 
-    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>sample_sphere</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnMut</span>(<span class='self'>Self</span>)<span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='ident'>f</span>: <span class='ident'>F</span>) {
-        <span class='kw'>for</span> <span class='ident'>e</span> <span class='kw'>in</span> <span class='ident'>SAMPLES_3_F64</span>.<span class='ident'>iter</span>() {
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='self'>Self</span>::<span class='ident'>new_uninitialized</span>() };
-            <span class='ident'>s</span>[<span class='number'>0</span>] <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='ident'>e</span>[<span class='number'>0</span>]);
-            <span class='ident'>s</span>[<span class='number'>1</span>] <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='ident'>e</span>[<span class='number'>1</span>]);
-            <span class='ident'>s</span>[<span class='number'>2</span>] <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='ident'>e</span>[<span class='number'>2</span>]);
-            <span class='ident'>f</span>(<span class='ident'>s</span>)
+    <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">sample_sphere</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="self">Self</span>)<span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">F</span>) {
+        <span class="kw">for</span> <span class="ident">e</span> <span class="kw">in</span> <span class="ident">SAMPLES_3_F64</span>.<span class="ident">iter</span>() {
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="self">Self</span>::<span class="ident">new_uninitialized</span>() };
+            <span class="ident">s</span>[<span class="number">0</span>] <span class="op">=</span> <span class="ident">na</span>::<span class="ident">convert</span>(<span class="ident">e</span>[<span class="number">0</span>]);
+            <span class="ident">s</span>[<span class="number">1</span>] <span class="op">=</span> <span class="ident">na</span>::<span class="ident">convert</span>(<span class="ident">e</span>[<span class="number">1</span>]);
+            <span class="ident">s</span>[<span class="number">2</span>] <span class="op">=</span> <span class="ident">na</span>::<span class="ident">convert</span>(<span class="ident">e</span>[<span class="number">2</span>]);
+            <span class="ident">f</span>(<span class="ident">s</span>)
         }
     }
 }
 
-<span class='comment'>// FIXME: this is bad: this fixes definitely the number of samples…</span>
-<span class='kw'>static</span> <span class='ident'>SAMPLES_2_F64</span>: [[ <span class='ident'>f64</span>; <span class='number'>2</span> ]; <span class='number'>21</span>] <span class='op'>=</span> [
-    [ <span class='number'>1.0</span>,         <span class='number'>0.0</span>         ],
-    [ <span class='number'>0.95557281</span>,  <span class='number'>0.29475517</span>  ],
-    [ <span class='number'>0.82623877</span>,  <span class='number'>0.56332006</span>  ],
-    [ <span class='number'>0.6234898</span>,   <span class='number'>0.78183148</span>  ],
-    [ <span class='number'>0.36534102</span>,  <span class='number'>0.93087375</span>  ],
-    [ <span class='number'>0.07473009</span>,  <span class='number'>0.9972038</span>   ],
-    [ <span class='op'>-</span><span class='number'>0.22252093</span>, <span class='number'>0.97492791</span>  ],
-    [ <span class='op'>-</span><span class='number'>0.5</span>,        <span class='number'>0.8660254</span>   ],
-    [ <span class='op'>-</span><span class='number'>0.73305187</span>, <span class='number'>0.68017274</span>  ],
-    [ <span class='op'>-</span><span class='number'>0.90096887</span>, <span class='number'>0.43388374</span>  ],
-    [ <span class='op'>-</span><span class='number'>0.98883083</span>, <span class='number'>0.14904227</span>  ],
-    [ <span class='op'>-</span><span class='number'>0.98883083</span>, <span class='op'>-</span><span class='number'>0.14904227</span> ],
-    [ <span class='op'>-</span><span class='number'>0.90096887</span>, <span class='op'>-</span><span class='number'>0.43388374</span> ],
-    [ <span class='op'>-</span><span class='number'>0.73305187</span>, <span class='op'>-</span><span class='number'>0.68017274</span> ],
-    [ <span class='op'>-</span><span class='number'>0.5</span>,        <span class='op'>-</span><span class='number'>0.8660254</span>  ],
-    [ <span class='op'>-</span><span class='number'>0.22252093</span>, <span class='op'>-</span><span class='number'>0.97492791</span> ],
-    [ <span class='number'>0.07473009</span>,  <span class='op'>-</span><span class='number'>0.9972038</span>  ],
-    [ <span class='number'>0.36534102</span>,  <span class='op'>-</span><span class='number'>0.93087375</span> ],
-    [ <span class='number'>0.6234898</span>,   <span class='op'>-</span><span class='number'>0.78183148</span> ],
-    [ <span class='number'>0.82623877</span>,  <span class='op'>-</span><span class='number'>0.56332006</span> ],
-    [ <span class='number'>0.95557281</span>,  <span class='op'>-</span><span class='number'>0.29475517</span> ],
+<span class="comment">// FIXME: this is bad: this fixes definitely the number of samples…</span>
+<span class="kw">static</span> <span class="ident">SAMPLES_2_F64</span>: [[ <span class="ident">f64</span>; <span class="number">2</span> ]; <span class="number">21</span>] <span class="op">=</span> [
+    [ <span class="number">1.0</span>,         <span class="number">0.0</span>         ],
+    [ <span class="number">0.95557281</span>,  <span class="number">0.29475517</span>  ],
+    [ <span class="number">0.82623877</span>,  <span class="number">0.56332006</span>  ],
+    [ <span class="number">0.6234898</span>,   <span class="number">0.78183148</span>  ],
+    [ <span class="number">0.36534102</span>,  <span class="number">0.93087375</span>  ],
+    [ <span class="number">0.07473009</span>,  <span class="number">0.9972038</span>   ],
+    [ <span class="op">-</span><span class="number">0.22252093</span>, <span class="number">0.97492791</span>  ],
+    [ <span class="op">-</span><span class="number">0.5</span>,        <span class="number">0.8660254</span>   ],
+    [ <span class="op">-</span><span class="number">0.73305187</span>, <span class="number">0.68017274</span>  ],
+    [ <span class="op">-</span><span class="number">0.90096887</span>, <span class="number">0.43388374</span>  ],
+    [ <span class="op">-</span><span class="number">0.98883083</span>, <span class="number">0.14904227</span>  ],
+    [ <span class="op">-</span><span class="number">0.98883083</span>, <span class="op">-</span><span class="number">0.14904227</span> ],
+    [ <span class="op">-</span><span class="number">0.90096887</span>, <span class="op">-</span><span class="number">0.43388374</span> ],
+    [ <span class="op">-</span><span class="number">0.73305187</span>, <span class="op">-</span><span class="number">0.68017274</span> ],
+    [ <span class="op">-</span><span class="number">0.5</span>,        <span class="op">-</span><span class="number">0.8660254</span>  ],
+    [ <span class="op">-</span><span class="number">0.22252093</span>, <span class="op">-</span><span class="number">0.97492791</span> ],
+    [ <span class="number">0.07473009</span>,  <span class="op">-</span><span class="number">0.9972038</span>  ],
+    [ <span class="number">0.36534102</span>,  <span class="op">-</span><span class="number">0.93087375</span> ],
+    [ <span class="number">0.6234898</span>,   <span class="op">-</span><span class="number">0.78183148</span> ],
+    [ <span class="number">0.82623877</span>,  <span class="op">-</span><span class="number">0.56332006</span> ],
+    [ <span class="number">0.95557281</span>,  <span class="op">-</span><span class="number">0.29475517</span> ],
 ];
 
 
-<span class='comment'>// Those vectors come from bullet 3d</span>
-<span class='kw'>static</span> <span class='ident'>SAMPLES_3_F64</span>: [[ <span class='ident'>f64</span>; <span class='number'>3</span> ]; <span class='number'>42</span>] <span class='op'>=</span> [
-    [ <span class='number'>0.000000</span> , <span class='op'>-</span><span class='number'>0.000000</span>, <span class='op'>-</span><span class='number'>1.000000</span> ],
-    [ <span class='number'>0.723608</span> , <span class='op'>-</span><span class='number'>0.525725</span>, <span class='op'>-</span><span class='number'>0.447219</span> ],
-    [ <span class='op'>-</span><span class='number'>0.276388</span>, <span class='op'>-</span><span class='number'>0.850649</span>, <span class='op'>-</span><span class='number'>0.447219</span> ],
-    [ <span class='op'>-</span><span class='number'>0.894426</span>, <span class='op'>-</span><span class='number'>0.000000</span>, <span class='op'>-</span><span class='number'>0.447216</span> ],
-    [ <span class='op'>-</span><span class='number'>0.276388</span>, <span class='number'>0.850649</span> , <span class='op'>-</span><span class='number'>0.447220</span> ],
-    [ <span class='number'>0.723608</span> , <span class='number'>0.525725</span> , <span class='op'>-</span><span class='number'>0.447219</span> ],
-    [ <span class='number'>0.276388</span> , <span class='op'>-</span><span class='number'>0.850649</span>, <span class='number'>0.447220</span>  ],
-    [ <span class='op'>-</span><span class='number'>0.723608</span>, <span class='op'>-</span><span class='number'>0.525725</span>, <span class='number'>0.447219</span>  ],
-    [ <span class='op'>-</span><span class='number'>0.723608</span>, <span class='number'>0.525725</span> , <span class='number'>0.447219</span>  ],
-    [ <span class='number'>0.276388</span> , <span class='number'>0.850649</span> , <span class='number'>0.447219</span>  ],
-    [ <span class='number'>0.894426</span> , <span class='number'>0.000000</span> , <span class='number'>0.447216</span>  ],
-    [ <span class='op'>-</span><span class='number'>0.000000</span>, <span class='number'>0.000000</span> , <span class='number'>1.000000</span>  ],
-    [ <span class='number'>0.425323</span> , <span class='op'>-</span><span class='number'>0.309011</span>, <span class='op'>-</span><span class='number'>0.850654</span> ],
-    [ <span class='op'>-</span><span class='number'>0.162456</span>, <span class='op'>-</span><span class='number'>0.499995</span>, <span class='op'>-</span><span class='number'>0.850654</span> ],
-    [ <span class='number'>0.262869</span> , <span class='op'>-</span><span class='number'>0.809012</span>, <span class='op'>-</span><span class='number'>0.525738</span> ],
-    [ <span class='number'>0.425323</span> , <span class='number'>0.309011</span> , <span class='op'>-</span><span class='number'>0.850654</span> ],
-    [ <span class='number'>0.850648</span> , <span class='op'>-</span><span class='number'>0.000000</span>, <span class='op'>-</span><span class='number'>0.525736</span> ],
-    [ <span class='op'>-</span><span class='number'>0.525730</span>, <span class='op'>-</span><span class='number'>0.000000</span>, <span class='op'>-</span><span class='number'>0.850652</span> ],
-    [ <span class='op'>-</span><span class='number'>0.688190</span>, <span class='op'>-</span><span class='number'>0.499997</span>, <span class='op'>-</span><span class='number'>0.525736</span> ],
-    [ <span class='op'>-</span><span class='number'>0.162456</span>, <span class='number'>0.499995</span> , <span class='op'>-</span><span class='number'>0.850654</span> ],
-    [ <span class='op'>-</span><span class='number'>0.688190</span>, <span class='number'>0.499997</span> , <span class='op'>-</span><span class='number'>0.525736</span> ],
-    [ <span class='number'>0.262869</span> , <span class='number'>0.809012</span> , <span class='op'>-</span><span class='number'>0.525738</span> ],
-    [ <span class='number'>0.951058</span> , <span class='number'>0.309013</span> , <span class='number'>0.000000</span>  ],
-    [ <span class='number'>0.951058</span> , <span class='op'>-</span><span class='number'>0.309013</span>, <span class='number'>0.000000</span>  ],
-    [ <span class='number'>0.587786</span> , <span class='op'>-</span><span class='number'>0.809017</span>, <span class='number'>0.000000</span>  ],
-    [ <span class='number'>0.000000</span> , <span class='op'>-</span><span class='number'>1.000000</span>, <span class='number'>0.000000</span>  ],
-    [ <span class='op'>-</span><span class='number'>0.587786</span>, <span class='op'>-</span><span class='number'>0.809017</span>, <span class='number'>0.000000</span>  ],
-    [ <span class='op'>-</span><span class='number'>0.951058</span>, <span class='op'>-</span><span class='number'>0.309013</span>, <span class='op'>-</span><span class='number'>0.000000</span> ],
-    [ <span class='op'>-</span><span class='number'>0.951058</span>, <span class='number'>0.309013</span> , <span class='op'>-</span><span class='number'>0.000000</span> ],
-    [ <span class='op'>-</span><span class='number'>0.587786</span>, <span class='number'>0.809017</span> , <span class='op'>-</span><span class='number'>0.000000</span> ],
-    [ <span class='op'>-</span><span class='number'>0.000000</span>, <span class='number'>1.000000</span> , <span class='op'>-</span><span class='number'>0.000000</span> ],
-    [ <span class='number'>0.587786</span> , <span class='number'>0.809017</span> , <span class='op'>-</span><span class='number'>0.000000</span> ],
-    [ <span class='number'>0.688190</span> , <span class='op'>-</span><span class='number'>0.499997</span>, <span class='number'>0.525736</span>  ],
-    [ <span class='op'>-</span><span class='number'>0.262869</span>, <span class='op'>-</span><span class='number'>0.809012</span>, <span class='number'>0.525738</span>  ],
-    [ <span class='op'>-</span><span class='number'>0.850648</span>, <span class='number'>0.000000</span> , <span class='number'>0.525736</span>  ],
-    [ <span class='op'>-</span><span class='number'>0.262869</span>, <span class='number'>0.809012</span> , <span class='number'>0.525738</span>  ],
-    [ <span class='number'>0.688190</span> , <span class='number'>0.499997</span> , <span class='number'>0.525736</span>  ],
-    [ <span class='number'>0.525730</span> , <span class='number'>0.000000</span> , <span class='number'>0.850652</span>  ],
-    [ <span class='number'>0.162456</span> , <span class='op'>-</span><span class='number'>0.499995</span>, <span class='number'>0.850654</span>  ],
-    [ <span class='op'>-</span><span class='number'>0.425323</span>, <span class='op'>-</span><span class='number'>0.309011</span>, <span class='number'>0.850654</span>  ],
-    [ <span class='op'>-</span><span class='number'>0.425323</span>, <span class='number'>0.309011</span> , <span class='number'>0.850654</span>  ],
-    [ <span class='number'>0.162456</span> , <span class='number'>0.499995</span> , <span class='number'>0.850654</span>  ]
+<span class="comment">// Those vectors come from bullet 3d</span>
+<span class="kw">static</span> <span class="ident">SAMPLES_3_F64</span>: [[ <span class="ident">f64</span>; <span class="number">3</span> ]; <span class="number">42</span>] <span class="op">=</span> [
+    [ <span class="number">0.000000</span> , <span class="op">-</span><span class="number">0.000000</span>, <span class="op">-</span><span class="number">1.000000</span> ],
+    [ <span class="number">0.723608</span> , <span class="op">-</span><span class="number">0.525725</span>, <span class="op">-</span><span class="number">0.447219</span> ],
+    [ <span class="op">-</span><span class="number">0.276388</span>, <span class="op">-</span><span class="number">0.850649</span>, <span class="op">-</span><span class="number">0.447219</span> ],
+    [ <span class="op">-</span><span class="number">0.894426</span>, <span class="op">-</span><span class="number">0.000000</span>, <span class="op">-</span><span class="number">0.447216</span> ],
+    [ <span class="op">-</span><span class="number">0.276388</span>, <span class="number">0.850649</span> , <span class="op">-</span><span class="number">0.447220</span> ],
+    [ <span class="number">0.723608</span> , <span class="number">0.525725</span> , <span class="op">-</span><span class="number">0.447219</span> ],
+    [ <span class="number">0.276388</span> , <span class="op">-</span><span class="number">0.850649</span>, <span class="number">0.447220</span>  ],
+    [ <span class="op">-</span><span class="number">0.723608</span>, <span class="op">-</span><span class="number">0.525725</span>, <span class="number">0.447219</span>  ],
+    [ <span class="op">-</span><span class="number">0.723608</span>, <span class="number">0.525725</span> , <span class="number">0.447219</span>  ],
+    [ <span class="number">0.276388</span> , <span class="number">0.850649</span> , <span class="number">0.447219</span>  ],
+    [ <span class="number">0.894426</span> , <span class="number">0.000000</span> , <span class="number">0.447216</span>  ],
+    [ <span class="op">-</span><span class="number">0.000000</span>, <span class="number">0.000000</span> , <span class="number">1.000000</span>  ],
+    [ <span class="number">0.425323</span> , <span class="op">-</span><span class="number">0.309011</span>, <span class="op">-</span><span class="number">0.850654</span> ],
+    [ <span class="op">-</span><span class="number">0.162456</span>, <span class="op">-</span><span class="number">0.499995</span>, <span class="op">-</span><span class="number">0.850654</span> ],
+    [ <span class="number">0.262869</span> , <span class="op">-</span><span class="number">0.809012</span>, <span class="op">-</span><span class="number">0.525738</span> ],
+    [ <span class="number">0.425323</span> , <span class="number">0.309011</span> , <span class="op">-</span><span class="number">0.850654</span> ],
+    [ <span class="number">0.850648</span> , <span class="op">-</span><span class="number">0.000000</span>, <span class="op">-</span><span class="number">0.525736</span> ],
+    [ <span class="op">-</span><span class="number">0.525730</span>, <span class="op">-</span><span class="number">0.000000</span>, <span class="op">-</span><span class="number">0.850652</span> ],
+    [ <span class="op">-</span><span class="number">0.688190</span>, <span class="op">-</span><span class="number">0.499997</span>, <span class="op">-</span><span class="number">0.525736</span> ],
+    [ <span class="op">-</span><span class="number">0.162456</span>, <span class="number">0.499995</span> , <span class="op">-</span><span class="number">0.850654</span> ],
+    [ <span class="op">-</span><span class="number">0.688190</span>, <span class="number">0.499997</span> , <span class="op">-</span><span class="number">0.525736</span> ],
+    [ <span class="number">0.262869</span> , <span class="number">0.809012</span> , <span class="op">-</span><span class="number">0.525738</span> ],
+    [ <span class="number">0.951058</span> , <span class="number">0.309013</span> , <span class="number">0.000000</span>  ],
+    [ <span class="number">0.951058</span> , <span class="op">-</span><span class="number">0.309013</span>, <span class="number">0.000000</span>  ],
+    [ <span class="number">0.587786</span> , <span class="op">-</span><span class="number">0.809017</span>, <span class="number">0.000000</span>  ],
+    [ <span class="number">0.000000</span> , <span class="op">-</span><span class="number">1.000000</span>, <span class="number">0.000000</span>  ],
+    [ <span class="op">-</span><span class="number">0.587786</span>, <span class="op">-</span><span class="number">0.809017</span>, <span class="number">0.000000</span>  ],
+    [ <span class="op">-</span><span class="number">0.951058</span>, <span class="op">-</span><span class="number">0.309013</span>, <span class="op">-</span><span class="number">0.000000</span> ],
+    [ <span class="op">-</span><span class="number">0.951058</span>, <span class="number">0.309013</span> , <span class="op">-</span><span class="number">0.000000</span> ],
+    [ <span class="op">-</span><span class="number">0.587786</span>, <span class="number">0.809017</span> , <span class="op">-</span><span class="number">0.000000</span> ],
+    [ <span class="op">-</span><span class="number">0.000000</span>, <span class="number">1.000000</span> , <span class="op">-</span><span class="number">0.000000</span> ],
+    [ <span class="number">0.587786</span> , <span class="number">0.809017</span> , <span class="op">-</span><span class="number">0.000000</span> ],
+    [ <span class="number">0.688190</span> , <span class="op">-</span><span class="number">0.499997</span>, <span class="number">0.525736</span>  ],
+    [ <span class="op">-</span><span class="number">0.262869</span>, <span class="op">-</span><span class="number">0.809012</span>, <span class="number">0.525738</span>  ],
+    [ <span class="op">-</span><span class="number">0.850648</span>, <span class="number">0.000000</span> , <span class="number">0.525736</span>  ],
+    [ <span class="op">-</span><span class="number">0.262869</span>, <span class="number">0.809012</span> , <span class="number">0.525738</span>  ],
+    [ <span class="number">0.688190</span> , <span class="number">0.499997</span> , <span class="number">0.525736</span>  ],
+    [ <span class="number">0.525730</span> , <span class="number">0.000000</span> , <span class="number">0.850652</span>  ],
+    [ <span class="number">0.162456</span> , <span class="op">-</span><span class="number">0.499995</span>, <span class="number">0.850654</span>  ],
+    [ <span class="op">-</span><span class="number">0.425323</span>, <span class="op">-</span><span class="number">0.309011</span>, <span class="number">0.850654</span>  ],
+    [ <span class="op">-</span><span class="number">0.425323</span>, <span class="number">0.309011</span> , <span class="number">0.850654</span>  ],
+    [ <span class="number">0.162456</span> , <span class="number">0.499995</span> , <span class="number">0.850654</span>  ]
 ];
 </pre>
 </section>

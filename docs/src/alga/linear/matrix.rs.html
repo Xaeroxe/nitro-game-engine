@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -185,149 +185,149 @@
 <span id="140">140</span>
 <span id="141">141</span>
 <span id="142">142</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::<span class='ident'>Mul</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::<span class="ident">Mul</span>;
 
-<span class='kw'>use</span> <span class='ident'>general</span>::{<span class='ident'>Field</span>, <span class='ident'>MultiplicativeMonoid</span>, <span class='ident'>MultiplicativeGroup</span>};
-<span class='kw'>use</span> <span class='ident'>linear</span>::<span class='ident'>FiniteDimVectorSpace</span>;
+<span class="kw">use</span> <span class="ident">general</span>::{<span class="ident">Field</span>, <span class="ident">MultiplicativeMonoid</span>, <span class="ident">MultiplicativeGroup</span>};
+<span class="kw">use</span> <span class="ident">linear</span>::<span class="ident">FiniteDimVectorSpace</span>;
 
-<span class='doccomment'>/// The space of all matrices.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Matrix</span>: <span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>Clone</span> <span class='op'>+</span>
-                  <span class='ident'>Mul</span><span class='op'>&lt;&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Matrix</span><span class='op'>&gt;</span>::<span class='ident'>Row</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Matrix</span><span class='op'>&gt;</span>::<span class='ident'>Column</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The underlying field.</span>
-    <span class='kw'>type</span> <span class='ident'>Field</span>: <span class='ident'>Field</span>;
+<span class="doccomment">/// The space of all matrices.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Matrix</span>: <span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span>
+                  <span class="ident">Mul</span><span class="op">&lt;&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">Matrix</span><span class="op">&gt;</span>::<span class="ident">Row</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">Matrix</span><span class="op">&gt;</span>::<span class="ident">Column</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The underlying field.</span>
+    <span class="kw">type</span> <span class="ident">Field</span>: <span class="ident">Field</span>;
 
-    <span class='doccomment'>/// The type of rows of this matrix.</span>
-    <span class='kw'>type</span> <span class='ident'>Row</span>: <span class='ident'>FiniteDimVectorSpace</span><span class='op'>&lt;</span><span class='ident'>Field</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Field</span><span class='op'>&gt;</span>;
+    <span class="doccomment">/// The type of rows of this matrix.</span>
+    <span class="kw">type</span> <span class="ident">Row</span>: <span class="ident">FiniteDimVectorSpace</span><span class="op">&lt;</span><span class="ident">Field</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Field</span><span class="op">&gt;</span>;
 
-    <span class='doccomment'>/// The type of columns of this matrix.</span>
-    <span class='kw'>type</span> <span class='ident'>Column</span>: <span class='ident'>FiniteDimVectorSpace</span><span class='op'>&lt;</span><span class='ident'>Field</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Field</span><span class='op'>&gt;</span>;
+    <span class="doccomment">/// The type of columns of this matrix.</span>
+    <span class="kw">type</span> <span class="ident">Column</span>: <span class="ident">FiniteDimVectorSpace</span><span class="op">&lt;</span><span class="ident">Field</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Field</span><span class="op">&gt;</span>;
 
-    <span class='doccomment'>/// The type of the transposed matrix.</span>
-    <span class='kw'>type</span> <span class='ident'>Transpose</span>: <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>Field</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Field</span>, <span class='ident'>Row</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Column</span>, <span class='ident'>Column</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Row</span><span class='op'>&gt;</span>;
+    <span class="doccomment">/// The type of the transposed matrix.</span>
+    <span class="kw">type</span> <span class="ident">Transpose</span>: <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">Field</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Field</span>, <span class="ident">Row</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Column</span>, <span class="ident">Column</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Row</span><span class="op">&gt;</span>;
 
-    <span class='doccomment'>/// The number of rows of this matrix.</span>
-    <span class='kw'>fn</span> <span class='ident'>nrows</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span>;
+    <span class="doccomment">/// The number of rows of this matrix.</span>
+    <span class="kw">fn</span> <span class="ident">nrows</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span>;
 
-    <span class='doccomment'>/// The number of columns of this matrix.</span>
-    <span class='kw'>fn</span> <span class='ident'>ncolumns</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span>;
+    <span class="doccomment">/// The number of columns of this matrix.</span>
+    <span class="kw">fn</span> <span class="ident">ncolumns</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span>;
 
-    <span class='doccomment'>/// The i-th row of this matrix.</span>
-    <span class='kw'>fn</span> <span class='ident'>row</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Row</span>;
+    <span class="doccomment">/// The i-th row of this matrix.</span>
+    <span class="kw">fn</span> <span class="ident">row</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Row</span>;
 
-    <span class='doccomment'>/// The i-th column of this matrix.</span>
-    <span class='kw'>fn</span> <span class='ident'>column</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Column</span>;
+    <span class="doccomment">/// The i-th column of this matrix.</span>
+    <span class="kw">fn</span> <span class="ident">column</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Column</span>;
 
-    <span class='doccomment'>/// Gets the component at row `i` and column `j` of this matrix without bound checking.</span>
-    <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>get_unchecked</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>, <span class='ident'>j</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Field</span>;
+    <span class="doccomment">/// Gets the component at row `i` and column `j` of this matrix without bound checking.</span>
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">get_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">j</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Field</span>;
 
-    <span class='doccomment'>/// Gets the component at row `i` and column `j` of this matrix.</span>
-    <span class='kw'>fn</span> <span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>, <span class='ident'>j</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Field</span> {
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>i</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>nrows</span>() <span class='op'>&amp;&amp;</span> <span class='ident'>j</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>ncolumns</span>(), <span class='string'>&quot;Matrix indexing: index out of bounds.&quot;</span>);
+    <span class="doccomment">/// Gets the component at row `i` and column `j` of this matrix.</span>
+    <span class="kw">fn</span> <span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">j</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Field</span> {
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">i</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">nrows</span>() <span class="op">&amp;&amp;</span> <span class="ident">j</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">ncolumns</span>(), <span class="string">&quot;Matrix indexing: index out of bounds.&quot;</span>);
 
-        <span class='kw'>unsafe</span> { <span class='self'>self</span>.<span class='ident'>get_unchecked</span>(<span class='ident'>i</span>, <span class='ident'>j</span>) }
+        <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">get_unchecked</span>(<span class="ident">i</span>, <span class="ident">j</span>) }
     }
 
-    <span class='doccomment'>/// Transposes this matrix.</span>
-    <span class='kw'>fn</span> <span class='ident'>transpose</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Transpose</span>;
+    <span class="doccomment">/// Transposes this matrix.</span>
+    <span class="kw">fn</span> <span class="ident">transpose</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Transpose</span>;
 }
 
-<span class='doccomment'>/// The space of all matrices that are stable under modifications of its components, rows and columns.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>MatrixMut</span>: <span class='ident'>Matrix</span> {
-    <span class='doccomment'>/// Sets the i-th row of this matrix.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>set_row</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>, <span class='ident'>row</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>Row</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>clone</span>();
-        <span class='ident'>res</span>.<span class='ident'>set_row_mut</span>(<span class='ident'>i</span>, <span class='ident'>row</span>);
-        <span class='ident'>res</span>
+<span class="doccomment">/// The space of all matrices that are stable under modifications of its components, rows and columns.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">MatrixMut</span>: <span class="ident">Matrix</span> {
+    <span class="doccomment">/// Sets the i-th row of this matrix.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">set_row</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">row</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Row</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">clone</span>();
+        <span class="ident">res</span>.<span class="ident">set_row_mut</span>(<span class="ident">i</span>, <span class="ident">row</span>);
+        <span class="ident">res</span>
     }
 
-    <span class='doccomment'>/// In-place sets the i-th row of this matrix.</span>
-    <span class='kw'>fn</span> <span class='ident'>set_row_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>, <span class='ident'>row</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>Row</span>);
+    <span class="doccomment">/// In-place sets the i-th row of this matrix.</span>
+    <span class="kw">fn</span> <span class="ident">set_row_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">row</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Row</span>);
 
-    <span class='doccomment'>/// Sets the i-th col of this matrix.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>set_column</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>, <span class='ident'>col</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>Column</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>clone</span>();
-        <span class='ident'>res</span>.<span class='ident'>set_column_mut</span>(<span class='ident'>i</span>, <span class='ident'>col</span>);
-        <span class='ident'>res</span>
+    <span class="doccomment">/// Sets the i-th col of this matrix.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">set_column</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">col</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Column</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">clone</span>();
+        <span class="ident">res</span>.<span class="ident">set_column_mut</span>(<span class="ident">i</span>, <span class="ident">col</span>);
+        <span class="ident">res</span>
     }
 
-    <span class='doccomment'>/// In-place sets the i-th col of this matrix.</span>
-    <span class='kw'>fn</span> <span class='ident'>set_column_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>, <span class='ident'>col</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>Column</span>);
+    <span class="doccomment">/// In-place sets the i-th col of this matrix.</span>
+    <span class="kw">fn</span> <span class="ident">set_column_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">col</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Column</span>);
 
-    <span class='doccomment'>/// Sets the component at row `i` and column `j` of this matrix without bound checking.</span>
-    <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>set_unchecked</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>, <span class='ident'>j</span>: <span class='ident'>usize</span>, <span class='ident'>val</span>: <span class='self'>Self</span>::<span class='ident'>Field</span>);
+    <span class="doccomment">/// Sets the component at row `i` and column `j` of this matrix without bound checking.</span>
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">set_unchecked</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">j</span>: <span class="ident">usize</span>, <span class="ident">val</span>: <span class="self">Self</span>::<span class="ident">Field</span>);
 
-    <span class='doccomment'>/// Sets the component at row `i` and column `j` of this matrix.</span>
-    <span class='kw'>fn</span> <span class='ident'>set</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>, <span class='ident'>j</span>: <span class='ident'>usize</span>, <span class='ident'>val</span>: <span class='self'>Self</span>::<span class='ident'>Field</span>) {
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>i</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>nrows</span>() <span class='op'>&amp;&amp;</span> <span class='ident'>j</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>ncolumns</span>(), <span class='string'>&quot;Matrix indexing: index out of bounds.&quot;</span>);
+    <span class="doccomment">/// Sets the component at row `i` and column `j` of this matrix.</span>
+    <span class="kw">fn</span> <span class="ident">set</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">j</span>: <span class="ident">usize</span>, <span class="ident">val</span>: <span class="self">Self</span>::<span class="ident">Field</span>) {
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">i</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">nrows</span>() <span class="op">&amp;&amp;</span> <span class="ident">j</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">ncolumns</span>(), <span class="string">&quot;Matrix indexing: index out of bounds.&quot;</span>);
 
-        <span class='kw'>unsafe</span> { <span class='self'>self</span>.<span class='ident'>set_unchecked</span>(<span class='ident'>i</span>, <span class='ident'>j</span>, <span class='ident'>val</span>) }
-    }
-}
-
-<span class='doccomment'>/// The monoid of all square matrices, including non-inversible ones.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>SquareMatrix</span>
-    : <span class='ident'>Matrix</span><span class='op'>&lt;</span><span class='ident'>Row</span>       <span class='op'>=</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>SquareMatrix</span><span class='op'>&gt;</span>::<span class='ident'>Vector</span>,
-             <span class='ident'>Column</span>    <span class='op'>=</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>SquareMatrix</span><span class='op'>&gt;</span>::<span class='ident'>Vector</span>,
-             <span class='ident'>Transpose</span> <span class='op'>=</span> <span class='self'>Self</span><span class='op'>&gt;</span> <span class='op'>+</span>
-      <span class='ident'>MultiplicativeMonoid</span> {
-
-    <span class='doccomment'>/// The type of rows, column, and diagonal of this matrix.</span>
-    <span class='kw'>type</span> <span class='ident'>Vector</span>: <span class='ident'>FiniteDimVectorSpace</span><span class='op'>&lt;</span><span class='ident'>Field</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Field</span><span class='op'>&gt;</span>;
-
-    <span class='doccomment'>/// The diagonal of this matrix.</span>
-    <span class='kw'>fn</span> <span class='ident'>diagonal</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Vector</span>;
-
-    <span class='doccomment'>/// The determinant of this matrix.</span>
-    <span class='kw'>fn</span> <span class='ident'>determinant</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Field</span>;
-
-    <span class='comment'>// FIXME: add an epsilon value (as for try_normalize)?</span>
-    <span class='doccomment'>/// Attempts to inverse `self`.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>try_inverse</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span>;
-
-    <span class='doccomment'>/// The number of rows or column of this matrix.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>dimension</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='self'>self</span>.<span class='ident'>nrows</span>()
-    }
-
-    <span class='doccomment'>/// In-place transposition.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>transpose_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='kw-2'>*</span><span class='self'>self</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>transpose</span>()
+        <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">set_unchecked</span>(<span class="ident">i</span>, <span class="ident">j</span>, <span class="ident">val</span>) }
     }
 }
 
-<span class='doccomment'>/// The monoid of all mutable square matrices that are stable under modification of its diagonal.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>SquareMatrixMut</span>: <span class='ident'>SquareMatrix</span> <span class='op'>+</span>
-                           <span class='ident'>MatrixMut</span><span class='op'>&lt;</span><span class='ident'>Row</span>       <span class='op'>=</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>SquareMatrix</span><span class='op'>&gt;</span>::<span class='ident'>Vector</span>,
-                                     <span class='ident'>Column</span>    <span class='op'>=</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>SquareMatrix</span><span class='op'>&gt;</span>::<span class='ident'>Vector</span>,
-                                     <span class='ident'>Transpose</span> <span class='op'>=</span> <span class='self'>Self</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Constructs a new diagonal matrix.</span>
-    <span class='kw'>fn</span> <span class='ident'>from_diagonal</span>(<span class='ident'>diag</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>Vector</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
+<span class="doccomment">/// The monoid of all square matrices, including non-inversible ones.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">SquareMatrix</span>
+    : <span class="ident">Matrix</span><span class="op">&lt;</span><span class="ident">Row</span>       <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">SquareMatrix</span><span class="op">&gt;</span>::<span class="ident">Vector</span>,
+             <span class="ident">Column</span>    <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">SquareMatrix</span><span class="op">&gt;</span>::<span class="ident">Vector</span>,
+             <span class="ident">Transpose</span> <span class="op">=</span> <span class="self">Self</span><span class="op">&gt;</span> <span class="op">+</span>
+      <span class="ident">MultiplicativeMonoid</span> {
 
-    <span class='doccomment'>/// Sets the matrix diagonal.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>set_diagonal</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>diag</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>Vector</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>clone</span>();
-        <span class='ident'>res</span>.<span class='ident'>set_diagonal_mut</span>(<span class='ident'>diag</span>);
-        <span class='ident'>res</span>
+    <span class="doccomment">/// The type of rows, column, and diagonal of this matrix.</span>
+    <span class="kw">type</span> <span class="ident">Vector</span>: <span class="ident">FiniteDimVectorSpace</span><span class="op">&lt;</span><span class="ident">Field</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Field</span><span class="op">&gt;</span>;
+
+    <span class="doccomment">/// The diagonal of this matrix.</span>
+    <span class="kw">fn</span> <span class="ident">diagonal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Vector</span>;
+
+    <span class="doccomment">/// The determinant of this matrix.</span>
+    <span class="kw">fn</span> <span class="ident">determinant</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Field</span>;
+
+    <span class="comment">// FIXME: add an epsilon value (as for try_normalize)?</span>
+    <span class="doccomment">/// Attempts to inverse `self`.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">try_inverse</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
+
+    <span class="doccomment">/// The number of rows or column of this matrix.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">dimension</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="self">self</span>.<span class="ident">nrows</span>()
     }
 
-    <span class='doccomment'>/// In-place sets the matrix diagonal.</span>
-    <span class='kw'>fn</span> <span class='ident'>set_diagonal_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>diag</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>Vector</span>);
+    <span class="doccomment">/// In-place transposition.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">transpose_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">transpose</span>()
+    }
 }
 
-<span class='doccomment'>/// The group of inversible matrix. Commonly known as the General Linear group `GL(n)` by</span>
-<span class='doccomment'>/// algebraists.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>InversibleSquareMatrix</span>: <span class='ident'>SquareMatrix</span> <span class='op'>+</span> <span class='ident'>MultiplicativeGroup</span> {
+<span class="doccomment">/// The monoid of all mutable square matrices that are stable under modification of its diagonal.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">SquareMatrixMut</span>: <span class="ident">SquareMatrix</span> <span class="op">+</span>
+                           <span class="ident">MatrixMut</span><span class="op">&lt;</span><span class="ident">Row</span>       <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">SquareMatrix</span><span class="op">&gt;</span>::<span class="ident">Vector</span>,
+                                     <span class="ident">Column</span>    <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">SquareMatrix</span><span class="op">&gt;</span>::<span class="ident">Vector</span>,
+                                     <span class="ident">Transpose</span> <span class="op">=</span> <span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Constructs a new diagonal matrix.</span>
+    <span class="kw">fn</span> <span class="ident">from_diagonal</span>(<span class="ident">diag</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Vector</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+
+    <span class="doccomment">/// Sets the matrix diagonal.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">set_diagonal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">diag</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Vector</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">clone</span>();
+        <span class="ident">res</span>.<span class="ident">set_diagonal_mut</span>(<span class="ident">diag</span>);
+        <span class="ident">res</span>
+    }
+
+    <span class="doccomment">/// In-place sets the matrix diagonal.</span>
+    <span class="kw">fn</span> <span class="ident">set_diagonal_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">diag</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Vector</span>);
+}
+
+<span class="doccomment">/// The group of inversible matrix. Commonly known as the General Linear group `GL(n)` by</span>
+<span class="doccomment">/// algebraists.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">InversibleSquareMatrix</span>: <span class="ident">SquareMatrix</span> <span class="op">+</span> <span class="ident">MultiplicativeGroup</span> {
 }
 
 
-<span class='comment'>// Add marker traits for symmetric-, SDP-ness, etc.</span>
+<span class="comment">// Add marker traits for symmetric-, SDP-ness, etc.</span>
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

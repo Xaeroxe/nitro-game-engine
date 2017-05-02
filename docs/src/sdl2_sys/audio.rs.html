@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -151,114 +151,114 @@
 <span id="106">106</span>
 <span id="107">107</span>
 <span id="108">108</span>
-</pre><pre class='rust '>
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;no_std&quot;</span>)]</span>
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>prelude</span>::<span class='kw-2'>*</span>;
-<span class='kw'>use</span> <span class='ident'>libc</span>::{<span class='ident'>c_int</span>, <span class='ident'>c_uint</span>, <span class='ident'>c_void</span>, <span class='ident'>uint8_t</span>, <span class='ident'>uint32_t</span>};
-<span class='kw'>use</span> <span class='ident'>libc</span>::{<span class='ident'>uint16_t</span>, <span class='ident'>c_double</span>, <span class='ident'>c_char</span>};
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>rwops</span>::<span class='ident'>SDL_RWops</span>;
+</pre><pre class="rust ">
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no_std&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">libc</span>::{<span class="ident">c_int</span>, <span class="ident">c_uint</span>, <span class="ident">c_void</span>, <span class="ident">uint8_t</span>, <span class="ident">uint32_t</span>};
+<span class="kw">use</span> <span class="ident">libc</span>::{<span class="ident">uint16_t</span>, <span class="ident">c_double</span>, <span class="ident">c_char</span>};
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">rwops</span>::<span class="ident">SDL_RWops</span>;
 
-<span class='comment'>// assume LSB</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span> <span class='ident'>uint16_t</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_U8</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>         <span class='number'>0x0008</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_S8</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>         <span class='number'>0x8008</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_U16LSB</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>     <span class='number'>0x0010</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_S16LSB</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>     <span class='number'>0x8010</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_U16MSB</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>     <span class='number'>0x1010</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_S16MSB</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>     <span class='number'>0x9010</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_U16</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>        <span class='ident'>AUDIO_U16LSB</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_S16</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>        <span class='ident'>AUDIO_S16LSB</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_S32LSB</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>     <span class='number'>0x8020</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_S32MSB</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>     <span class='number'>0x9020</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_S32</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>        <span class='ident'>AUDIO_S32LSB</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_F32LSB</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>     <span class='number'>0x8120</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_F32MSB</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>     <span class='number'>0x9120</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_F32</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>        <span class='ident'>AUDIO_F32LSB</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_U16SYS</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>     <span class='ident'>AUDIO_U16LSB</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_S16SYS</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>     <span class='ident'>AUDIO_S16LSB</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_S32SYS</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>     <span class='ident'>AUDIO_S32LSB</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>AUDIO_F32SYS</span> : <span class='ident'>SDL_AudioFormat</span> <span class='op'>=</span>     <span class='ident'>AUDIO_F32LSB</span>;
+<span class="comment">// assume LSB</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SDL_AudioFormat</span> <span class="op">=</span> <span class="ident">uint16_t</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_U8</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>         <span class="number">0x0008</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_S8</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>         <span class="number">0x8008</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_U16LSB</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>     <span class="number">0x0010</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_S16LSB</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>     <span class="number">0x8010</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_U16MSB</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>     <span class="number">0x1010</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_S16MSB</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>     <span class="number">0x9010</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_U16</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>        <span class="ident">AUDIO_U16LSB</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_S16</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>        <span class="ident">AUDIO_S16LSB</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_S32LSB</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>     <span class="number">0x8020</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_S32MSB</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>     <span class="number">0x9020</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_S32</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>        <span class="ident">AUDIO_S32LSB</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_F32LSB</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>     <span class="number">0x8120</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_F32MSB</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>     <span class="number">0x9120</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_F32</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>        <span class="ident">AUDIO_F32LSB</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_U16SYS</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>     <span class="ident">AUDIO_U16LSB</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_S16SYS</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>     <span class="ident">AUDIO_S16LSB</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_S32SYS</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>     <span class="ident">AUDIO_S32LSB</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AUDIO_F32SYS</span> : <span class="ident">SDL_AudioFormat</span> <span class="op">=</span>     <span class="ident">AUDIO_F32LSB</span>;
 
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>SDL_AudioCallback</span> <span class='op'>=</span>
-    <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span> (<span class='ident'>arg1</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>, <span class='ident'>arg2</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint8_t</span>, <span class='ident'>arg3</span>: <span class='ident'>c_int</span>)<span class='op'>&gt;</span>;
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_copy_implementations</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_AudioSpec</span> {
-    <span class='kw'>pub</span> <span class='ident'>freq</span>: <span class='ident'>c_int</span>,
-    <span class='kw'>pub</span> <span class='ident'>format</span>: <span class='ident'>SDL_AudioFormat</span>,
-    <span class='kw'>pub</span> <span class='ident'>channels</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>silence</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>samples</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>padding</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>size</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>callback</span>: <span class='ident'>SDL_AudioCallback</span>,
-    <span class='kw'>pub</span> <span class='ident'>userdata</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>,
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SDL_AudioCallback</span> <span class="op">=</span>
+    <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> (<span class="ident">arg1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">arg2</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint8_t</span>, <span class="ident">arg3</span>: <span class="ident">c_int</span>)<span class="op">&gt;</span>;
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_copy_implementations</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_AudioSpec</span> {
+    <span class="kw">pub</span> <span class="ident">freq</span>: <span class="ident">c_int</span>,
+    <span class="kw">pub</span> <span class="ident">format</span>: <span class="ident">SDL_AudioFormat</span>,
+    <span class="kw">pub</span> <span class="ident">channels</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">silence</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">samples</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">padding</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">size</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">callback</span>: <span class="ident">SDL_AudioCallback</span>,
+    <span class="kw">pub</span> <span class="ident">userdata</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
 }
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>SDL_AudioFilter</span> <span class='op'>=</span>
-    <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span> (<span class='ident'>arg1</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_AudioCVT</span>, <span class='ident'>arg2</span>: <span class='ident'>SDL_AudioFormat</span>)<span class='op'>&gt;</span>;
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>, <span class='ident'>missing_copy_implementations</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_AudioCVT</span> {
-    <span class='kw'>pub</span> <span class='ident'>needed</span>: <span class='ident'>c_int</span>,
-    <span class='kw'>pub</span> <span class='ident'>src_format</span>: <span class='ident'>SDL_AudioFormat</span>,
-    <span class='kw'>pub</span> <span class='ident'>dst_format</span>: <span class='ident'>SDL_AudioFormat</span>,
-    <span class='kw'>pub</span> <span class='ident'>rate_incr</span>: <span class='ident'>c_double</span>,
-    <span class='kw'>pub</span> <span class='ident'>buf</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>len</span>: <span class='ident'>c_int</span>,
-    <span class='kw'>pub</span> <span class='ident'>len_cvt</span>: <span class='ident'>c_int</span>,
-    <span class='kw'>pub</span> <span class='ident'>len_mult</span>: <span class='ident'>c_int</span>,
-    <span class='kw'>pub</span> <span class='ident'>len_ratio</span>: <span class='ident'>c_double</span>,
-    <span class='ident'>filters</span>: [<span class='ident'>SDL_AudioFilter</span>; <span class='number'>10</span>],
-    <span class='ident'>filter_index</span>: <span class='ident'>c_int</span>,
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SDL_AudioFilter</span> <span class="op">=</span>
+    <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> (<span class="ident">arg1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_AudioCVT</span>, <span class="ident">arg2</span>: <span class="ident">SDL_AudioFormat</span>)<span class="op">&gt;</span>;
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>, <span class="ident">missing_copy_implementations</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_AudioCVT</span> {
+    <span class="kw">pub</span> <span class="ident">needed</span>: <span class="ident">c_int</span>,
+    <span class="kw">pub</span> <span class="ident">src_format</span>: <span class="ident">SDL_AudioFormat</span>,
+    <span class="kw">pub</span> <span class="ident">dst_format</span>: <span class="ident">SDL_AudioFormat</span>,
+    <span class="kw">pub</span> <span class="ident">rate_incr</span>: <span class="ident">c_double</span>,
+    <span class="kw">pub</span> <span class="ident">buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">len</span>: <span class="ident">c_int</span>,
+    <span class="kw">pub</span> <span class="ident">len_cvt</span>: <span class="ident">c_int</span>,
+    <span class="kw">pub</span> <span class="ident">len_mult</span>: <span class="ident">c_int</span>,
+    <span class="kw">pub</span> <span class="ident">len_ratio</span>: <span class="ident">c_double</span>,
+    <span class="ident">filters</span>: [<span class="ident">SDL_AudioFilter</span>; <span class="number">10</span>],
+    <span class="ident">filter_index</span>: <span class="ident">c_int</span>,
 }
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>SDL_AudioDeviceID</span> <span class='op'>=</span> <span class='ident'>uint32_t</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>SDL_AudioStatus</span> <span class='op'>=</span> <span class='ident'>c_uint</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_AUDIO_STOPPED</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>0</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_AUDIO_PLAYING</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>1</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_AUDIO_PAUSED</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>2</span>;
-<span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_GetNumAudioDrivers</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_GetAudioDriver</span>(<span class='ident'>index</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_AudioInit</span>(<span class='ident'>driver_name</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_AudioQuit</span>();
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_GetCurrentAudioDriver</span>() <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_OpenAudio</span>(<span class='ident'>desired</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>SDL_AudioSpec</span>,
-                         <span class='ident'>obtained</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_AudioSpec</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_GetNumAudioDevices</span>(<span class='ident'>iscapture</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_GetAudioDeviceName</span>(<span class='ident'>index</span>: <span class='ident'>c_int</span>, <span class='ident'>iscapture</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_OpenAudioDevice</span>(<span class='ident'>device</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>, <span class='ident'>iscapture</span>: <span class='ident'>c_int</span>,
-                               <span class='ident'>desired</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>SDL_AudioSpec</span>,
-                               <span class='ident'>obtained</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_AudioSpec</span>,
-                               <span class='ident'>allowed_changes</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>SDL_AudioDeviceID</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_GetAudioStatus</span>() <span class='op'>-&gt;</span> <span class='ident'>SDL_AudioStatus</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_GetAudioDeviceStatus</span>(<span class='ident'>dev</span>: <span class='ident'>SDL_AudioDeviceID</span>) <span class='op'>-&gt;</span>
-        <span class='ident'>SDL_AudioStatus</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_PauseAudio</span>(<span class='ident'>pause_on</span>: <span class='ident'>c_int</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_PauseAudioDevice</span>(<span class='ident'>dev</span>: <span class='ident'>SDL_AudioDeviceID</span>, <span class='ident'>pause_on</span>: <span class='ident'>c_int</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_LoadWAV_RW</span>(<span class='ident'>src</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_RWops</span>, <span class='ident'>freesrc</span>: <span class='ident'>c_int</span>,
-                          <span class='ident'>spec</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_AudioSpec</span>,
-                          <span class='ident'>audio_buf</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint8_t</span>, <span class='ident'>audio_len</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint32_t</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_AudioSpec</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_FreeWAV</span>(<span class='ident'>audio_buf</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint8_t</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_BuildAudioCVT</span>(<span class='ident'>cvt</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_AudioCVT</span>,
-                             <span class='ident'>src_format</span>: <span class='ident'>SDL_AudioFormat</span>, <span class='ident'>src_channels</span>: <span class='ident'>uint8_t</span>,
-                             <span class='ident'>src_rate</span>: <span class='ident'>c_int</span>, <span class='ident'>dst_format</span>: <span class='ident'>SDL_AudioFormat</span>,
-                             <span class='ident'>dst_channels</span>: <span class='ident'>uint8_t</span>, <span class='ident'>dst_rate</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_ConvertAudio</span>(<span class='ident'>cvt</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_AudioCVT</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_MixAudio</span>(<span class='ident'>dst</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint8_t</span>, <span class='ident'>src</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>uint8_t</span>, <span class='ident'>len</span>: <span class='ident'>uint32_t</span>,
-                        <span class='ident'>volume</span>: <span class='ident'>c_int</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_MixAudioFormat</span>(<span class='ident'>dst</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint8_t</span>, <span class='ident'>src</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>uint8_t</span>,
-                              <span class='ident'>format</span>: <span class='ident'>SDL_AudioFormat</span>, <span class='ident'>len</span>: <span class='ident'>uint32_t</span>,
-                              <span class='ident'>volume</span>: <span class='ident'>c_int</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_QueueAudio</span>(<span class='ident'>dev</span>: <span class='ident'>SDL_AudioDeviceID</span>, <span class='ident'>data</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_void</span>, <span class='ident'>len</span>: <span class='ident'>uint32_t</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_GetQueuedAudioSize</span>(<span class='ident'>dev</span>: <span class='ident'>SDL_AudioDeviceID</span>) <span class='op'>-&gt;</span> <span class='ident'>uint32_t</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_ClearQueuedAudio</span>(<span class='ident'>dev</span>: <span class='ident'>SDL_AudioDeviceID</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_LockAudio</span>();
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_LockAudioDevice</span>(<span class='ident'>dev</span>: <span class='ident'>SDL_AudioDeviceID</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_UnlockAudio</span>();
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_UnlockAudioDevice</span>(<span class='ident'>dev</span>: <span class='ident'>SDL_AudioDeviceID</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_CloseAudio</span>();
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_CloseAudioDevice</span>(<span class='ident'>dev</span>: <span class='ident'>SDL_AudioDeviceID</span>);
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SDL_AudioDeviceID</span> <span class="op">=</span> <span class="ident">uint32_t</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SDL_AudioStatus</span> <span class="op">=</span> <span class="ident">c_uint</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_AUDIO_STOPPED</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_AUDIO_PLAYING</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_AUDIO_PAUSED</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">2</span>;
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_GetNumAudioDrivers</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_GetAudioDriver</span>(<span class="ident">index</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_AudioInit</span>(<span class="ident">driver_name</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_AudioQuit</span>();
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_GetCurrentAudioDriver</span>() <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_OpenAudio</span>(<span class="ident">desired</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">SDL_AudioSpec</span>,
+                         <span class="ident">obtained</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_AudioSpec</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_GetNumAudioDevices</span>(<span class="ident">iscapture</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_GetAudioDeviceName</span>(<span class="ident">index</span>: <span class="ident">c_int</span>, <span class="ident">iscapture</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_OpenAudioDevice</span>(<span class="ident">device</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>, <span class="ident">iscapture</span>: <span class="ident">c_int</span>,
+                               <span class="ident">desired</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">SDL_AudioSpec</span>,
+                               <span class="ident">obtained</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_AudioSpec</span>,
+                               <span class="ident">allowed_changes</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">SDL_AudioDeviceID</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_GetAudioStatus</span>() <span class="op">-&gt;</span> <span class="ident">SDL_AudioStatus</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_GetAudioDeviceStatus</span>(<span class="ident">dev</span>: <span class="ident">SDL_AudioDeviceID</span>) <span class="op">-&gt;</span>
+        <span class="ident">SDL_AudioStatus</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_PauseAudio</span>(<span class="ident">pause_on</span>: <span class="ident">c_int</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_PauseAudioDevice</span>(<span class="ident">dev</span>: <span class="ident">SDL_AudioDeviceID</span>, <span class="ident">pause_on</span>: <span class="ident">c_int</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_LoadWAV_RW</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_RWops</span>, <span class="ident">freesrc</span>: <span class="ident">c_int</span>,
+                          <span class="ident">spec</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_AudioSpec</span>,
+                          <span class="ident">audio_buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint8_t</span>, <span class="ident">audio_len</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint32_t</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_AudioSpec</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_FreeWAV</span>(<span class="ident">audio_buf</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint8_t</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_BuildAudioCVT</span>(<span class="ident">cvt</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_AudioCVT</span>,
+                             <span class="ident">src_format</span>: <span class="ident">SDL_AudioFormat</span>, <span class="ident">src_channels</span>: <span class="ident">uint8_t</span>,
+                             <span class="ident">src_rate</span>: <span class="ident">c_int</span>, <span class="ident">dst_format</span>: <span class="ident">SDL_AudioFormat</span>,
+                             <span class="ident">dst_channels</span>: <span class="ident">uint8_t</span>, <span class="ident">dst_rate</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_ConvertAudio</span>(<span class="ident">cvt</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_AudioCVT</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_MixAudio</span>(<span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint8_t</span>, <span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">uint8_t</span>, <span class="ident">len</span>: <span class="ident">uint32_t</span>,
+                        <span class="ident">volume</span>: <span class="ident">c_int</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_MixAudioFormat</span>(<span class="ident">dst</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint8_t</span>, <span class="ident">src</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">uint8_t</span>,
+                              <span class="ident">format</span>: <span class="ident">SDL_AudioFormat</span>, <span class="ident">len</span>: <span class="ident">uint32_t</span>,
+                              <span class="ident">volume</span>: <span class="ident">c_int</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_QueueAudio</span>(<span class="ident">dev</span>: <span class="ident">SDL_AudioDeviceID</span>, <span class="ident">data</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>, <span class="ident">len</span>: <span class="ident">uint32_t</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_GetQueuedAudioSize</span>(<span class="ident">dev</span>: <span class="ident">SDL_AudioDeviceID</span>) <span class="op">-&gt;</span> <span class="ident">uint32_t</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_ClearQueuedAudio</span>(<span class="ident">dev</span>: <span class="ident">SDL_AudioDeviceID</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_LockAudio</span>();
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_LockAudioDevice</span>(<span class="ident">dev</span>: <span class="ident">SDL_AudioDeviceID</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_UnlockAudio</span>();
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_UnlockAudioDevice</span>(<span class="ident">dev</span>: <span class="ident">SDL_AudioDeviceID</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_CloseAudio</span>();
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_CloseAudioDevice</span>(<span class="ident">dev</span>: <span class="ident">SDL_AudioDeviceID</span>);
 }
 </pre>
 </section>

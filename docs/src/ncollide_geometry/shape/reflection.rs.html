@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -77,39 +77,39 @@
 <span id="32">32</span>
 <span id="33">33</span>
 <span id="34">34</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>shape</span>::<span class='ident'>SupportMap</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">shape</span>::<span class="ident">SupportMap</span>;
+<span class="kw">use</span> <span class="ident">math</span>::<span class="ident">Point</span>;
 
-<span class='doccomment'>/// SupportMap representation of the reflection of a shape.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// A reflection is obtained with the central symmetry with regard to the origin.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Reflection</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>G</span>: <span class='question-mark'>?</span><span class='ident'>Sized</span> <span class='op'>+</span> <span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>shape</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>G</span>
+<span class="doccomment">/// SupportMap representation of the reflection of a shape.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// A reflection is obtained with the central symmetry with regard to the origin.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Reflection</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">G</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">shape</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">G</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>G</span>: <span class='question-mark'>?</span><span class='ident'>Sized</span><span class='op'>&gt;</span> <span class='ident'>Reflection</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>G</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Build the reflection of a shape. Since the representation is implicit,</span>
-    <span class='doccomment'>/// the reflection computation is done in constant time.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>shape</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>G</span>) <span class='op'>-&gt;</span> <span class='ident'>Reflection</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>G</span><span class='op'>&gt;</span> {
-        <span class='ident'>Reflection</span> { <span class='ident'>shape</span>: <span class='ident'>shape</span> }
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">G</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span> <span class="ident">Reflection</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">G</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Build the reflection of a shape. Since the representation is implicit,</span>
+    <span class="doccomment">/// the reflection computation is done in constant time.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">shape</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">G</span>) <span class="op">-&gt;</span> <span class="ident">Reflection</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">G</span><span class="op">&gt;</span> {
+        <span class="ident">Reflection</span> { <span class="ident">shape</span>: <span class="ident">shape</span> }
     }
 
-    <span class='doccomment'>/// The reflected shape.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>shape</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>G</span> {
-        <span class='self'>self</span>.<span class='ident'>shape</span>
+    <span class="doccomment">/// The reflected shape.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shape</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">G</span> {
+        <span class="self">self</span>.<span class="ident">shape</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>G</span>: <span class='question-mark'>?</span><span class='ident'>Sized</span><span class='op'>&gt;</span> <span class='ident'>SupportMap</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Reflection</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>G</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span>,
-          <span class='ident'>G</span>: <span class='ident'>SupportMap</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>support_point</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>dir</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>::<span class='ident'>Vector</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span> {
-        <span class='op'>-</span><span class='self'>self</span>.<span class='ident'>shape</span>().<span class='ident'>support_point</span>(<span class='ident'>m</span>, <span class='kw-2'>&amp;</span><span class='op'>-</span><span class='kw-2'>*</span><span class='ident'>dir</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">G</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span> <span class="ident">SupportMap</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Reflection</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">G</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">P</span>: <span class="ident">Point</span>,
+          <span class="ident">G</span>: <span class="ident">SupportMap</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">support_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>, <span class="ident">dir</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>::<span class="ident">Vector</span>) <span class="op">-&gt;</span> <span class="ident">P</span> {
+        <span class="op">-</span><span class="self">self</span>.<span class="ident">shape</span>().<span class="ident">support_point</span>(<span class="ident">m</span>, <span class="kw-2">&amp;</span><span class="op">-</span><span class="kw-2">*</span><span class="ident">dir</span>)
     }
 }
 </pre>

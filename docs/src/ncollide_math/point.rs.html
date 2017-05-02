@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -85,48 +85,48 @@
 <span id="40">40</span>
 <span id="41">41</span>
 <span id="42">42</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>::<span class='ident'>Display</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>AddAssign</span>, <span class='ident'>Sub</span>, <span class='ident'>SubAssign</span>, <span class='ident'>Mul</span>, <span class='ident'>MulAssign</span>, <span class='ident'>Div</span>, <span class='ident'>DivAssign</span>, <span class='ident'>Neg</span>, <span class='ident'>Index</span>, <span class='ident'>IndexMut</span>};
-<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Bounded</span>;
-<span class='kw'>use</span> <span class='ident'>approx</span>::<span class='ident'>ApproxEq</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Display</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>, <span class="ident">Mul</span>, <span class="ident">MulAssign</span>, <span class="ident">Div</span>, <span class="ident">DivAssign</span>, <span class="ident">Neg</span>, <span class="ident">Index</span>, <span class="ident">IndexMut</span>};
+<span class="kw">use</span> <span class="ident">num</span>::<span class="ident">Bounded</span>;
+<span class="kw">use</span> <span class="ident">approx</span>::<span class="ident">ApproxEq</span>;
 
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::{<span class='ident'>Lattice</span>, <span class='ident'>Real</span>};
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>linear</span>::<span class='ident'>EuclideanSpace</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='ident'>Axpy</span>, <span class='ident'>ColumnVector</span>, <span class='ident'>PointBase</span>};
-<span class='kw'>use</span> <span class='ident'>na</span>::<span class='ident'>dimension</span>::{<span class='ident'>DimName</span>, <span class='ident'>U1</span>};
-<span class='kw'>use</span> <span class='ident'>na</span>::<span class='ident'>storage</span>::<span class='ident'>OwnedStorage</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>::<span class='ident'>allocator</span>::<span class='ident'>OwnedAllocator</span>;
-<span class='kw'>use</span> ::<span class='ident'>Vector</span>;
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::{<span class="ident">Lattice</span>, <span class="ident">Real</span>};
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">linear</span>::<span class="ident">EuclideanSpace</span>;
+<span class="kw">use</span> <span class="ident">na</span>::{<span class="ident">Axpy</span>, <span class="ident">ColumnVector</span>, <span class="ident">PointBase</span>};
+<span class="kw">use</span> <span class="ident">na</span>::<span class="ident">dimension</span>::{<span class="ident">DimName</span>, <span class="ident">U1</span>};
+<span class="kw">use</span> <span class="ident">na</span>::<span class="ident">storage</span>::<span class="ident">OwnedStorage</span>;
+<span class="kw">use</span> <span class="ident">na</span>::<span class="ident">allocator</span>::<span class="ident">OwnedAllocator</span>;
+<span class="kw">use</span> ::<span class="ident">Vector</span>;
 
 
-<span class='doccomment'>/// Trait implemented by point types usable by ncollide.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Point</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> <span class='op'>+</span>
-                 <span class='ident'>Display</span> <span class='op'>+</span> <span class='ident'>Lattice</span> <span class='op'>+</span> <span class='ident'>Bounded</span> <span class='op'>+</span>
-                 <span class='ident'>Index</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>EuclideanSpace</span><span class='op'>&gt;</span>::<span class='ident'>Real</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='ident'>IndexMut</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>EuclideanSpace</span><span class='op'>&gt;</span>::<span class='ident'>Real</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='ident'>Axpy</span><span class='op'>&lt;&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>EuclideanSpace</span><span class='op'>&gt;</span>::<span class='ident'>Real</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='ident'>ApproxEq</span><span class='op'>&lt;</span><span class='ident'>Epsilon</span> <span class='op'>=</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>EuclideanSpace</span><span class='op'>&gt;</span>::<span class='ident'>Real</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='ident'>EuclideanSpace</span><span class='op'>&lt;</span><span class='ident'>Coordinates</span> <span class='op'>=</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Point</span><span class='op'>&gt;</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Vector</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>Real</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Real</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='ident'>Add</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Vector</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='ident'>AddAssign</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Vector</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='ident'>SubAssign</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Real</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='ident'>MulAssign</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Real</span><span class='op'>&gt;</span>          <span class='op'>+</span>
-                 <span class='ident'>Div</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Real</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span> <span class='op'>+</span>
-                 <span class='ident'>DivAssign</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Real</span><span class='op'>&gt;</span>          <span class='op'>+</span>
-                 <span class='ident'>Neg</span><span class='op'>&lt;</span><span class='ident'>Output</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span>;
+<span class="doccomment">/// Trait implemented by point types usable by ncollide.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Point</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> <span class="op">+</span>
+                 <span class="ident">Display</span> <span class="op">+</span> <span class="ident">Lattice</span> <span class="op">+</span> <span class="ident">Bounded</span> <span class="op">+</span>
+                 <span class="ident">Index</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">EuclideanSpace</span><span class="op">&gt;</span>::<span class="ident">Real</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="ident">IndexMut</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">EuclideanSpace</span><span class="op">&gt;</span>::<span class="ident">Real</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="ident">Axpy</span><span class="op">&lt;&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">EuclideanSpace</span><span class="op">&gt;</span>::<span class="ident">Real</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="ident">ApproxEq</span><span class="op">&lt;</span><span class="ident">Epsilon</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">EuclideanSpace</span><span class="op">&gt;</span>::<span class="ident">Real</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="ident">EuclideanSpace</span><span class="op">&lt;</span><span class="ident">Coordinates</span> <span class="op">=</span> <span class="op">&lt;</span><span class="self">Self</span> <span class="kw">as</span> <span class="ident">Point</span><span class="op">&gt;</span>::<span class="ident">Vector</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Vector</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">Real</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Real</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="ident">Add</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Vector</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Vector</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Vector</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="ident">Sub</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Vector</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Vector</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="ident">SubAssign</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Vector</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="ident">Mul</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Real</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Vector</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="ident">MulAssign</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Real</span><span class="op">&gt;</span>          <span class="op">+</span>
+                 <span class="ident">Div</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Real</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Vector</span><span class="op">&gt;</span> <span class="op">+</span>
+                 <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Real</span><span class="op">&gt;</span>          <span class="op">+</span>
+                 <span class="ident">Neg</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Vector</span><span class="op">&gt;</span>;
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>Point</span> <span class='kw'>for</span> <span class='ident'>PointBase</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Real</span>,
-          <span class='ident'>D</span>: <span class='ident'>DimName</span>,
-          <span class='ident'>S</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> <span class='op'>+</span> <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>OwnedStorage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>U1</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>::<span class='ident'>Alloc</span>: <span class='ident'>OwnedAllocator</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>U1</span>, <span class='ident'>S</span><span class='op'>&gt;</span>,
-          <span class='ident'>ColumnVector</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>S</span><span class='op'>&gt;</span>: <span class='ident'>Vector</span><span class='op'>&lt;</span><span class='ident'>Real</span> <span class='op'>=</span> <span class='ident'>N</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Vector</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Coordinates</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">Point</span> <span class="kw">for</span> <span class="ident">PointBase</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Real</span>,
+          <span class="ident">D</span>: <span class="ident">DimName</span>,
+          <span class="ident">S</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> <span class="op">+</span> <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">OwnedStorage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">U1</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>::<span class="ident">Alloc</span>: <span class="ident">OwnedAllocator</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">U1</span>, <span class="ident">S</span><span class="op">&gt;</span>,
+          <span class="ident">ColumnVector</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span>: <span class="ident">Vector</span><span class="op">&lt;</span><span class="ident">Real</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Vector</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Coordinates</span>;
 }
 </pre>
 </section>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,15 +43,15 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>alga</a>::<wbr><a href='index.html'>general</a>::<wbr><a class='trait' href=''>AbstractModule</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>alga</a>::<wbr><a href='index.html'>general</a>::<wbr><a class="trait" href=''>AbstractModule</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/alga/general/module.rs.html#21-30' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait AbstractModule&lt;OpGroup:&nbsp;<a class='trait' href='../../alga/general/trait.Operator.html' title='alga::general::Operator'>Operator</a>&nbsp;=&nbsp;<a class='struct' href='../../alga/general/struct.Additive.html' title='alga::general::Additive'>Additive</a>, OpAdd:&nbsp;<a class='trait' href='../../alga/general/trait.Operator.html' title='alga::general::Operator'>Operator</a>&nbsp;=&nbsp;<a class='struct' href='../../alga/general/struct.Additive.html' title='alga::general::Additive'>Additive</a>, OpMul:&nbsp;<a class='trait' href='../../alga/general/trait.Operator.html' title='alga::general::Operator'>Operator</a>&nbsp;=&nbsp;<a class='struct' href='../../alga/general/struct.Multiplicative.html' title='alga::general::Multiplicative'>Multiplicative</a>&gt;: <a class='trait' href='../../alga/general/trait.AbstractGroupAbelian.html' title='alga::general::AbstractGroupAbelian'>AbstractGroupAbelian</a>&lt;OpGroup&gt; {
-    type <a href='#associatedtype.AbstractRing' class='type'>AbstractRing</a>: <a class='trait' href='../../alga/general/trait.AbstractRingCommutative.html' title='alga::general::AbstractRingCommutative'>AbstractRingCommutative</a>&lt;OpAdd, OpMul&gt;;
-    fn <a href='#tymethod.multiply_by' class='fnname'>multiply_by</a>(&amp;self, r: Self::<a class='trait' href='../../alga/general/trait.AbstractModule.html' title='alga::general::AbstractModule'>AbstractRing</a>) -&gt; Self;
+<pre class='rust trait'>pub trait AbstractModule&lt;OpGroup:&nbsp;<a class="trait" href="../../alga/general/trait.Operator.html" title="trait alga::general::Operator">Operator</a>&nbsp;=&nbsp;<a class="struct" href="../../alga/general/struct.Additive.html" title="struct alga::general::Additive">Additive</a>, OpAdd:&nbsp;<a class="trait" href="../../alga/general/trait.Operator.html" title="trait alga::general::Operator">Operator</a>&nbsp;=&nbsp;<a class="struct" href="../../alga/general/struct.Additive.html" title="struct alga::general::Additive">Additive</a>, OpMul:&nbsp;<a class="trait" href="../../alga/general/trait.Operator.html" title="trait alga::general::Operator">Operator</a>&nbsp;=&nbsp;<a class="struct" href="../../alga/general/struct.Multiplicative.html" title="struct alga::general::Multiplicative">Multiplicative</a>&gt;: <a class="trait" href="../../alga/general/trait.AbstractGroupAbelian.html" title="trait alga::general::AbstractGroupAbelian">AbstractGroupAbelian</a>&lt;OpGroup&gt; {
+    type <a href='#associatedtype.AbstractRing' class="type">AbstractRing</a>: <a class="trait" href="../../alga/general/trait.AbstractRingCommutative.html" title="trait alga::general::AbstractRingCommutative">AbstractRingCommutative</a>&lt;OpAdd, OpMul&gt;;
+    fn <a href='#tymethod.multiply_by' class='fnname'>multiply_by</a>(&amp;self, r: Self::<a class="trait" href="../../alga/general/trait.AbstractModule.html" title="trait alga::general::AbstractModule">AbstractRing</a>) -&gt; Self;
 }</pre><div class='docblock'><p>A module combines two sets: one with an abelian group structure and another with a
 commutative ring structure.</p>
 
@@ -71,11 +71,11 @@ a ∘ (x + y) = (a ∘ x) + (a ∘ y)
 </div>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.AbstractRing' class='method'><span id='AbstractRing.t' class='invisible'><code>type <a href='#associatedtype.AbstractRing' class='type'>AbstractRing</a>: <a class='trait' href='../../alga/general/trait.AbstractRingCommutative.html' title='alga::general::AbstractRingCommutative'>AbstractRingCommutative</a>&lt;OpAdd, OpMul&gt;</code></span></h3><div class='docblock'><p>The underlying scalar field.</p>
+        <h3 id='associatedtype.AbstractRing' class='method'><span id='AbstractRing.t' class='invisible'><code>type <a href='#associatedtype.AbstractRing' class="type">AbstractRing</a>: <a class="trait" href="../../alga/general/trait.AbstractRingCommutative.html" title="trait alga::general::AbstractRingCommutative">AbstractRingCommutative</a>&lt;OpAdd, OpMul&gt;</code></span></h3><div class='docblock'><p>The underlying scalar field.</p>
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.multiply_by' class='method'><span id='multiply_by.v' class='invisible'><code>fn <a href='#tymethod.multiply_by' class='fnname'>multiply_by</a>(&amp;self, r: Self::<a class='trait' href='../../alga/general/trait.AbstractModule.html' title='alga::general::AbstractModule'>AbstractRing</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Multiplies an element of the ring with an element of the module.</p>
+        <h3 id='tymethod.multiply_by' class='method'><span id='multiply_by.v' class='invisible'><code>fn <a href='#tymethod.multiply_by' class='fnname'>multiply_by</a>(&amp;self, r: Self::<a class="trait" href="../../alga/general/trait.AbstractModule.html" title="trait alga::general::AbstractModule">AbstractRing</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Multiplies an element of the ring with an element of the module.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>

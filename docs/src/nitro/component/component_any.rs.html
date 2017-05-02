@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -65,27 +65,27 @@
 <span id="20">20</span>
 <span id="21">21</span>
 <span id="22">22</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
-<span class='kw'>use</span> <span class='ident'>component</span>::<span class='ident'>Component</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::<span class="ident">Any</span>;
+<span class="kw">use</span> <span class="ident">component</span>::<span class="ident">Component</span>;
 
-<span class='doccomment'>/// Helper trait for Components, any struct that implements Component and Any automatically</span>
-<span class='doccomment'>/// implements this trait.  Needed to allow components of a specific type to be queried for on a</span>
-<span class='doccomment'>/// GameObject.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ComponentAny</span>: <span class='ident'>Component</span> <span class='op'>+</span> <span class='ident'>Any</span> {
-    <span class='kw'>fn</span> <span class='ident'>as_any</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Any</span>;
-    <span class='kw'>fn</span> <span class='ident'>as_any_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Any</span>;
+<span class="doccomment">/// Helper trait for Components, any struct that implements Component and Any automatically</span>
+<span class="doccomment">/// implements this trait.  Needed to allow components of a specific type to be queried for on a</span>
+<span class="doccomment">/// GameObject.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ComponentAny</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Any</span> {
+    <span class="kw">fn</span> <span class="ident">as_any</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Any</span>;
+    <span class="kw">fn</span> <span class="ident">as_any_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Any</span>;
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>ComponentAny</span> <span class='kw'>for</span> <span class='ident'>T</span>
-    <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>Component</span> <span class='op'>+</span> <span class='ident'>Any</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">ComponentAny</span> <span class="kw">for</span> <span class="ident">T</span>
+    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Any</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>as_any</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Any</span> {
-        <span class='self'>self</span>
+    <span class="kw">fn</span> <span class="ident">as_any</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Any</span> {
+        <span class="self">self</span>
     }
 
-    <span class='kw'>fn</span> <span class='ident'>as_any_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Any</span> {
-        <span class='self'>self</span>
+    <span class="kw">fn</span> <span class="ident">as_any_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Any</span> {
+        <span class="self">self</span>
     }
 }
 </pre>

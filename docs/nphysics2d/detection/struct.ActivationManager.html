@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc struct">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,17 +43,17 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>nphysics2d</a>::<wbr><a href='index.html'>detection</a>::<wbr><a class='struct' href=''>ActivationManager</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>nphysics2d</a>::<wbr><a href='index.html'>detection</a>::<wbr><a class="struct" href=''>ActivationManager</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/nphysics2d/detection/activation_manager.rs.html#16-21' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct ActivationManager&lt;N:&nbsp;<a class='trait' href='../../alga/general/real/trait.Real.html' title='alga::general::real::Real'>Real</a>&gt; { /* fields omitted */ }</pre><div class='docblock'><p>Structure that monitors island-based activation/deactivation of objects.</p>
+<pre class='rust struct'>pub struct ActivationManager&lt;N:&nbsp;<a class="trait" href="../../alga/general/real/trait.Real.html" title="trait alga::general::real::Real">Real</a>&gt; { /* fields omitted */ }</pre><div class='docblock'><p>Structure that monitors island-based activation/deactivation of objects.</p>
 
 <p>It is responsible for making objects sleep or wake up.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;N:&nbsp;<a class='trait' href='../../alga/general/real/trait.Real.html' title='alga::general::real::Real'>Real</a>&gt; <a class='struct' href='../../nphysics2d/detection/struct.ActivationManager.html' title='nphysics2d::detection::ActivationManager'>ActivationManager</a>&lt;N&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/nphysics2d/detection/activation_manager.rs.html#23-195' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(mix_factor: N) -&gt; <a class='struct' href='../../nphysics2d/detection/struct.ActivationManager.html' title='nphysics2d::detection::ActivationManager'>ActivationManager</a>&lt;N&gt;</code></span></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;N:&nbsp;<a class="trait" href="../../alga/general/real/trait.Real.html" title="trait alga::general::real::Real">Real</a>&gt; <a class="struct" href="../../nphysics2d/detection/struct.ActivationManager.html" title="struct nphysics2d::detection::ActivationManager">ActivationManager</a>&lt;N&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/nphysics2d/detection/activation_manager.rs.html#23-195' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(mix_factor: N) -&gt; <a class="struct" href="../../nphysics2d/detection/struct.ActivationManager.html" title="struct nphysics2d::detection::ActivationManager">ActivationManager</a>&lt;N&gt;</code></span></h4>
 <div class='docblock'><p>Creates a new <code>ActivationManager</code>.</p>
 
 <h1 id='arguments' class='section-header'><a href='#arguments'>Arguments:</a></h1>
@@ -61,9 +61,9 @@
 <li><code>thresold</code>   - the minimum energy required to keep an object awake.</li>
 <li><code>mix_factor</code> - the ratio of energy to keep between two frames.</li>
 </ul>
-</div><h4 id='method.deferred_activate' class='method'><span id='deferred_activate.v' class='invisible'><code>fn <a href='#method.deferred_activate' class='fnname'>deferred_activate</a>(&amp;mut self, b: &amp;<a class='type' href='../../nphysics2d/object/type.RigidBodyHandle.html' title='nphysics2d::object::RigidBodyHandle'>RigidBodyHandle</a>&lt;N&gt;)</code></span></h4>
+</div><h4 id='method.deferred_activate' class="method"><span id='deferred_activate.v' class='invisible'><code>fn <a href='#method.deferred_activate' class='fnname'>deferred_activate</a>(&amp;mut self, b: &amp;<a class="type" href="../../nphysics2d/object/type.RigidBodyHandle.html" title="type nphysics2d::object::RigidBodyHandle">RigidBodyHandle</a>&lt;N&gt;)</code></span></h4>
 <div class='docblock'><p>Notify the <code>ActivationManager</code> that is has to activate an object at the next update.</p>
-</div><h4 id='method.update' class='method'><span id='update.v' class='invisible'><code>fn <a href='#method.update' class='fnname'>update</a>(&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; world: &amp;mut <a class='type' href='../../nphysics2d/world/type.RigidBodyCollisionWorld.html' title='nphysics2d::world::RigidBodyCollisionWorld'>RigidBodyCollisionWorld</a>&lt;N&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; joints: &amp;<a class='struct' href='../../nphysics2d/detection/joint/struct.JointManager.html' title='nphysics2d::detection::joint::JointManager'>JointManager</a>&lt;N&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bodies: &amp;<a class='struct' href='../../ncollide_utils/data/hash_map/struct.HashMap.html' title='ncollide_utils::data::hash_map::HashMap'>HashMap</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, <a class='type' href='../../nphysics2d/object/type.RigidBodyHandle.html' title='nphysics2d::object::RigidBodyHandle'>RigidBodyHandle</a>&lt;N&gt;, <a class='struct' href='../../ncollide_utils/data/hash/struct.UintTWHash.html' title='ncollide_utils::data::hash::UintTWHash'>UintTWHash</a>&gt;)</code></span></h4>
+</div><h4 id='method.update' class="method"><span id='update.v' class='invisible'><code>fn <a href='#method.update' class='fnname'>update</a>(&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; world: &amp;mut <a class="type" href="../../nphysics2d/world/type.RigidBodyCollisionWorld.html" title="type nphysics2d::world::RigidBodyCollisionWorld">RigidBodyCollisionWorld</a>&lt;N&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; joints: &amp;<a class="struct" href="../../nphysics2d/detection/joint/struct.JointManager.html" title="struct nphysics2d::detection::joint::JointManager">JointManager</a>&lt;N&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bodies: &amp;<a class="struct" href="../../ncollide_utils/data/hash_map/struct.HashMap.html" title="struct ncollide_utils::data::hash_map::HashMap">HashMap</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <a class="type" href="../../nphysics2d/object/type.RigidBodyHandle.html" title="type nphysics2d::object::RigidBodyHandle">RigidBodyHandle</a>&lt;N&gt;, <a class="struct" href="../../ncollide_utils/data/hash/struct.UintTWHash.html" title="struct ncollide_utils::data::hash::UintTWHash">UintTWHash</a>&gt;)</code></span></h4>
 <div class='docblock'><p>Update the activation manager, activating and deactivating objects when needed.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>

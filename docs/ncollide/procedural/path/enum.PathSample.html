@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc enum">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,22 +43,22 @@
         </form>
     </nav>
 
-    <section id='main' class="content enum">
-<h1 class='fqn'><span class='in-band'>Enum <a href='../../index.html'>ncollide</a>::<wbr><a href='../index.html'>procedural</a>::<wbr><a href='index.html'>path</a>::<wbr><a class='enum' href=''>PathSample</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../../index.html'>ncollide</a>::<wbr><a href='../index.html'>procedural</a>::<wbr><a href='index.html'>path</a>::<wbr><a class="enum" href=''>PathSample</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../../src/ncollide_procedural/path/path.rs.html#5-15' title='goto source code'>[src]</a></span></h1>
-<pre class='rust enum'>pub enum PathSample&lt;P&gt; <span class='where fmt-newline'>where P: <a class='trait' href='../../../ncollide/math/trait.Point.html' title='ncollide::math::Point'>Point</a></span> {
-    StartPoint(P,&nbsp;P::<a class='trait' href='../../../ncollide/math/trait.Point.html' title='ncollide::math::Point'>Vector</a>),
-    InnerPoint(P,&nbsp;P::<a class='trait' href='../../../ncollide/math/trait.Point.html' title='ncollide::math::Point'>Vector</a>),
-    EndPoint(P,&nbsp;P::<a class='trait' href='../../../ncollide/math/trait.Point.html' title='ncollide::math::Point'>Vector</a>),
+<pre class='rust enum'>pub enum PathSample&lt;P&gt; <span class="where fmt-newline">where P: <a class="trait" href="../../../ncollide/math/trait.Point.html" title="trait ncollide::math::Point">Point</a></span> {
+    StartPoint(P,&nbsp;P::<a class="trait" href="../../../ncollide/math/trait.Point.html" title="trait ncollide::math::Point">Vector</a>),
+    InnerPoint(P,&nbsp;P::<a class="trait" href="../../../ncollide/math/trait.Point.html" title="trait ncollide::math::Point">Vector</a>),
+    EndPoint(P,&nbsp;P::<a class="trait" href="../../../ncollide/math/trait.Point.html" title="trait ncollide::math::Point">Vector</a>),
     EndOfSample,
 }</pre><div class='docblock'><p>A sample point and its associated tangent.</p>
 </div><h2 class='variants'>Variants</h2>
-<span id='variant.StartPoint' class='variant'><span id='StartPoint.v' class='invisible'><code>StartPoint(P,&nbsp;P::<a class='trait' href='../../../ncollide/math/trait.Point.html' title='ncollide::math::Point'>Vector</a>)</code></span></span><div class='docblock'><p>A point that starts a new path.</p>
-</div><span id='variant.InnerPoint' class='variant'><span id='InnerPoint.v' class='invisible'><code>InnerPoint(P,&nbsp;P::<a class='trait' href='../../../ncollide/math/trait.Point.html' title='ncollide::math::Point'>Vector</a>)</code></span></span><div class='docblock'><p>A point that is inside of the path currently generated.</p>
-</div><span id='variant.EndPoint' class='variant'><span id='EndPoint.v' class='invisible'><code>EndPoint(P,&nbsp;P::<a class='trait' href='../../../ncollide/math/trait.Point.html' title='ncollide::math::Point'>Vector</a>)</code></span></span><div class='docblock'><p>A point that ends the path currently generated.</p>
+<span id='variant.StartPoint' class='variant'><span id='StartPoint.v' class='invisible'><code>StartPoint(P,&nbsp;P::<a class="trait" href="../../../ncollide/math/trait.Point.html" title="trait ncollide::math::Point">Vector</a>)</code></span></span><div class='docblock'><p>A point that starts a new path.</p>
+</div><span id='variant.InnerPoint' class='variant'><span id='InnerPoint.v' class='invisible'><code>InnerPoint(P,&nbsp;P::<a class="trait" href="../../../ncollide/math/trait.Point.html" title="trait ncollide::math::Point">Vector</a>)</code></span></span><div class='docblock'><p>A point that is inside of the path currently generated.</p>
+</div><span id='variant.EndPoint' class='variant'><span id='EndPoint.v' class='invisible'><code>EndPoint(P,&nbsp;P::<a class="trait" href="../../../ncollide/math/trait.Point.html" title="trait ncollide::math::Point">Vector</a>)</code></span></span><div class='docblock'><p>A point that ends the path currently generated.</p>
 </div><span id='variant.EndOfSample' class='variant'><span id='EndOfSample.v' class='invisible'><code>EndOfSample</code></span></span><div class='docblock'><p>Used when the sampler does not have any other points to generate.</p>
 </div></section>
     <section id='search' class="content hidden"></section>

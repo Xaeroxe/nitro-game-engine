@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -245,207 +245,207 @@
 <span id="200">200</span>
 <span id="201">201</span>
 <span id="202">202</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>approx</span>::<span class='ident'>ApproxEq</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">approx</span>::<span class="ident">ApproxEq</span>;
 
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Field</span>;
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::<span class="ident">Field</span>;
 
-<span class='kw'>use</span> <span class='ident'>core</span>::{<span class='ident'>Scalar</span>, <span class='ident'>Matrix</span>, <span class='ident'>SquareMatrix</span>, <span class='ident'>OwnedSquareMatrix</span>};
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>dimension</span>::<span class='ident'>Dim</span>;
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>storage</span>::{<span class='ident'>Storage</span>, <span class='ident'>StorageMut</span>};
+<span class="kw">use</span> <span class="ident">core</span>::{<span class="ident">Scalar</span>, <span class="ident">Matrix</span>, <span class="ident">SquareMatrix</span>, <span class="ident">OwnedSquareMatrix</span>};
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">dimension</span>::<span class="ident">Dim</span>;
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">storage</span>::{<span class="ident">Storage</span>, <span class="ident">StorageMut</span>};
 
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>: <span class='ident'>Dim</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>SquareMatrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>Field</span> <span class='op'>+</span> <span class='ident'>ApproxEq</span>,
-          <span class='ident'>S</span>: <span class='ident'>Storage</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>D</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Attempts to invert this matrix.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>try_inverse</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>OwnedSquareMatrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>S</span>::<span class='ident'>Alloc</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>into_owned</span>();
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>: <span class="ident">Dim</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">SquareMatrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">Field</span> <span class="op">+</span> <span class="ident">ApproxEq</span>,
+          <span class="ident">S</span>: <span class="ident">Storage</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Attempts to invert this matrix.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_inverse</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">OwnedSquareMatrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span>::<span class="ident">Alloc</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_owned</span>();
 
-        <span class='kw'>if</span> <span class='ident'>res</span>.<span class='ident'>shape</span>().<span class='number'>0</span> <span class='op'>&lt;=</span> <span class='number'>3</span> {
-            <span class='kw'>if</span> <span class='ident'>res</span>.<span class='ident'>try_inverse_mut</span>() {
-                <span class='prelude-val'>Some</span>(<span class='ident'>res</span>)
+        <span class="kw">if</span> <span class="ident">res</span>.<span class="ident">shape</span>().<span class="number">0</span> <span class="op">&lt;=</span> <span class="number">3</span> {
+            <span class="kw">if</span> <span class="ident">res</span>.<span class="ident">try_inverse_mut</span>() {
+                <span class="prelude-val">Some</span>(<span class="ident">res</span>)
             }
-            <span class='kw'>else</span> {
-                <span class='prelude-val'>None</span>
+            <span class="kw">else</span> {
+                <span class="prelude-val">None</span>
             }
         }
-        <span class='kw'>else</span> {
-            <span class='ident'>gauss_jordan_inverse</span>(<span class='ident'>res</span>)
-        }
-    }
-}
-
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>: <span class='ident'>Dim</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>SquareMatrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>Field</span> <span class='op'>+</span> <span class='ident'>ApproxEq</span>,
-          <span class='ident'>S</span>: <span class='ident'>StorageMut</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>D</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Attempts to invert this matrix in-place. Returns `false` and leaves `self` untouched if</span>
-    <span class='doccomment'>/// inversion fails.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>try_inverse_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>is_square</span>(), <span class='string'>&quot;Unable to invert a non-square matrix.&quot;</span>);
-
-        <span class='kw'>let</span> <span class='ident'>dim</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>shape</span>().<span class='number'>0</span>;
-
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>match</span> <span class='ident'>dim</span> {
-                <span class='number'>0</span> <span class='op'>=&gt;</span> <span class='bool-val'>true</span>,
-                <span class='number'>1</span> <span class='op'>=&gt;</span> {
-                    <span class='kw'>if</span> <span class='macro'>relative_eq</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>get_unchecked</span>(<span class='number'>0</span>, <span class='number'>0</span>), <span class='kw-2'>&amp;</span><span class='ident'>N</span>::<span class='ident'>zero</span>()) {
-                        <span class='bool-val'>false</span>
-                    }
-                    <span class='kw'>else</span> {
-                        <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked_mut</span>(<span class='number'>0</span>, <span class='number'>0</span>) <span class='op'>=</span> <span class='ident'>N</span>::<span class='ident'>one</span>() <span class='op'>/</span> <span class='self'>self</span>.<span class='ident'>determinant</span>();
-                        <span class='bool-val'>true</span>
-                    }
-                },
-                <span class='number'>2</span> <span class='op'>=&gt;</span> {
-                    <span class='kw'>let</span> <span class='ident'>determinant</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>determinant</span>();
-
-                    <span class='kw'>if</span> <span class='macro'>relative_eq</span><span class='macro'>!</span>(<span class='kw-2'>&amp;</span><span class='ident'>determinant</span>, <span class='kw-2'>&amp;</span><span class='ident'>N</span>::<span class='ident'>zero</span>()) {
-                        <span class='bool-val'>false</span>
-                    }
-                    <span class='kw'>else</span> {
-                        <span class='kw'>let</span> <span class='ident'>m11</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked</span>(<span class='number'>0</span>, <span class='number'>0</span>); <span class='kw'>let</span> <span class='ident'>m12</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked</span>(<span class='number'>0</span>, <span class='number'>1</span>);
-                        <span class='kw'>let</span> <span class='ident'>m21</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked</span>(<span class='number'>1</span>, <span class='number'>0</span>); <span class='kw'>let</span> <span class='ident'>m22</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked</span>(<span class='number'>1</span>, <span class='number'>1</span>);
-
-                        <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked_mut</span>(<span class='number'>0</span>, <span class='number'>0</span>) <span class='op'>=</span>  <span class='ident'>m22</span> <span class='op'>/</span> <span class='ident'>determinant</span>;
-                        <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked_mut</span>(<span class='number'>0</span>, <span class='number'>1</span>) <span class='op'>=</span> <span class='op'>-</span><span class='ident'>m12</span> <span class='op'>/</span> <span class='ident'>determinant</span>;
-
-                        <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked_mut</span>(<span class='number'>1</span>, <span class='number'>0</span>) <span class='op'>=</span> <span class='op'>-</span><span class='ident'>m21</span> <span class='op'>/</span> <span class='ident'>determinant</span>;
-                        <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked_mut</span>(<span class='number'>1</span>, <span class='number'>1</span>) <span class='op'>=</span>  <span class='ident'>m11</span> <span class='op'>/</span> <span class='ident'>determinant</span>;
-
-                        <span class='bool-val'>true</span>
-                    }
-                },
-                <span class='number'>3</span> <span class='op'>=&gt;</span> {
-                    <span class='kw'>let</span> <span class='ident'>m11</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked</span>(<span class='number'>0</span>, <span class='number'>0</span>);
-                    <span class='kw'>let</span> <span class='ident'>m12</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked</span>(<span class='number'>0</span>, <span class='number'>1</span>);
-                    <span class='kw'>let</span> <span class='ident'>m13</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked</span>(<span class='number'>0</span>, <span class='number'>2</span>);
-
-                    <span class='kw'>let</span> <span class='ident'>m21</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked</span>(<span class='number'>1</span>, <span class='number'>0</span>);
-                    <span class='kw'>let</span> <span class='ident'>m22</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked</span>(<span class='number'>1</span>, <span class='number'>1</span>);
-                    <span class='kw'>let</span> <span class='ident'>m23</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked</span>(<span class='number'>1</span>, <span class='number'>2</span>);
-
-                    <span class='kw'>let</span> <span class='ident'>m31</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked</span>(<span class='number'>2</span>, <span class='number'>0</span>);
-                    <span class='kw'>let</span> <span class='ident'>m32</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked</span>(<span class='number'>2</span>, <span class='number'>1</span>);
-                    <span class='kw'>let</span> <span class='ident'>m33</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked</span>(<span class='number'>2</span>, <span class='number'>2</span>);
-
-
-                    <span class='kw'>let</span> <span class='ident'>minor_m12_m23</span> <span class='op'>=</span> <span class='ident'>m22</span> <span class='op'>*</span> <span class='ident'>m33</span> <span class='op'>-</span> <span class='ident'>m32</span> <span class='op'>*</span> <span class='ident'>m23</span>;
-                    <span class='kw'>let</span> <span class='ident'>minor_m11_m23</span> <span class='op'>=</span> <span class='ident'>m21</span> <span class='op'>*</span> <span class='ident'>m33</span> <span class='op'>-</span> <span class='ident'>m31</span> <span class='op'>*</span> <span class='ident'>m23</span>;
-                    <span class='kw'>let</span> <span class='ident'>minor_m11_m22</span> <span class='op'>=</span> <span class='ident'>m21</span> <span class='op'>*</span> <span class='ident'>m32</span> <span class='op'>-</span> <span class='ident'>m31</span> <span class='op'>*</span> <span class='ident'>m22</span>;
-
-                    <span class='kw'>let</span> <span class='ident'>determinant</span> <span class='op'>=</span> <span class='ident'>m11</span> <span class='op'>*</span> <span class='ident'>minor_m12_m23</span> <span class='op'>-</span>
-                                      <span class='ident'>m12</span> <span class='op'>*</span> <span class='ident'>minor_m11_m23</span> <span class='op'>+</span>
-                                      <span class='ident'>m13</span> <span class='op'>*</span> <span class='ident'>minor_m11_m22</span>;
-
-                    <span class='kw'>if</span> <span class='macro'>relative_eq</span><span class='macro'>!</span>(<span class='kw-2'>&amp;</span><span class='ident'>determinant</span>, <span class='kw-2'>&amp;</span><span class='ident'>N</span>::<span class='ident'>zero</span>()) {
-                        <span class='bool-val'>false</span>
-                    }
-                    <span class='kw'>else</span> {
-                        <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked_mut</span>(<span class='number'>0</span>, <span class='number'>0</span>) <span class='op'>=</span> <span class='ident'>minor_m12_m23</span> <span class='op'>/</span> <span class='ident'>determinant</span>;
-                        <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked_mut</span>(<span class='number'>0</span>, <span class='number'>1</span>) <span class='op'>=</span> (<span class='ident'>m13</span> <span class='op'>*</span> <span class='ident'>m32</span> <span class='op'>-</span> <span class='ident'>m33</span> <span class='op'>*</span> <span class='ident'>m12</span>) <span class='op'>/</span> <span class='ident'>determinant</span>;
-                        <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked_mut</span>(<span class='number'>0</span>, <span class='number'>2</span>) <span class='op'>=</span> (<span class='ident'>m12</span> <span class='op'>*</span> <span class='ident'>m23</span> <span class='op'>-</span> <span class='ident'>m22</span> <span class='op'>*</span> <span class='ident'>m13</span>) <span class='op'>/</span> <span class='ident'>determinant</span>;
-
-                        <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked_mut</span>(<span class='number'>1</span>, <span class='number'>0</span>) <span class='op'>=</span> <span class='op'>-</span><span class='ident'>minor_m11_m23</span> <span class='op'>/</span> <span class='ident'>determinant</span>;
-                        <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked_mut</span>(<span class='number'>1</span>, <span class='number'>1</span>) <span class='op'>=</span> (<span class='ident'>m11</span> <span class='op'>*</span> <span class='ident'>m33</span> <span class='op'>-</span> <span class='ident'>m31</span> <span class='op'>*</span> <span class='ident'>m13</span>) <span class='op'>/</span> <span class='ident'>determinant</span>;
-                        <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked_mut</span>(<span class='number'>1</span>, <span class='number'>2</span>) <span class='op'>=</span> (<span class='ident'>m13</span> <span class='op'>*</span> <span class='ident'>m21</span> <span class='op'>-</span> <span class='ident'>m23</span> <span class='op'>*</span> <span class='ident'>m11</span>) <span class='op'>/</span> <span class='ident'>determinant</span>;
-
-                        <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked_mut</span>(<span class='number'>2</span>, <span class='number'>0</span>) <span class='op'>=</span> <span class='ident'>minor_m11_m22</span>  <span class='op'>/</span> <span class='ident'>determinant</span>;
-                        <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked_mut</span>(<span class='number'>2</span>, <span class='number'>1</span>) <span class='op'>=</span> (<span class='ident'>m12</span> <span class='op'>*</span> <span class='ident'>m31</span> <span class='op'>-</span> <span class='ident'>m32</span> <span class='op'>*</span> <span class='ident'>m11</span>) <span class='op'>/</span> <span class='ident'>determinant</span>;
-                        <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>get_unchecked_mut</span>(<span class='number'>2</span>, <span class='number'>2</span>) <span class='op'>=</span> (<span class='ident'>m11</span> <span class='op'>*</span> <span class='ident'>m22</span> <span class='op'>-</span> <span class='ident'>m21</span> <span class='op'>*</span> <span class='ident'>m12</span>) <span class='op'>/</span> <span class='ident'>determinant</span>;
-
-                        <span class='bool-val'>true</span>
-                    }
-                },
-                _ <span class='op'>=&gt;</span> {
-                    <span class='kw'>let</span> <span class='ident'>oself</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>clone_owned</span>();
-                    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>res</span>) <span class='op'>=</span> <span class='ident'>gauss_jordan_inverse</span>(<span class='ident'>oself</span>) {
-                        <span class='self'>self</span>.<span class='ident'>copy_from</span>(<span class='kw-2'>&amp;</span><span class='ident'>res</span>);
-                        <span class='bool-val'>true</span>
-                    }
-                    <span class='kw'>else</span> {
-                        <span class='bool-val'>false</span>
-                    }
-                }
-            }
+        <span class="kw">else</span> {
+            <span class="ident">gauss_jordan_inverse</span>(<span class="ident">res</span>)
         }
     }
 }
 
 
-<span class='doccomment'>/// Inverts the given matrix using Gauss-Jordan Ellimitation.</span>
-<span class='kw'>fn</span> <span class='ident'>gauss_jordan_inverse</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>S</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='ident'>matrix</span>: <span class='ident'>SquareMatrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>S</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>OwnedSquareMatrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>S</span>::<span class='ident'>Alloc</span><span class='op'>&gt;&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>D</span>: <span class='ident'>Dim</span>,
-          <span class='ident'>N</span>: <span class='ident'>Scalar</span> <span class='op'>+</span> <span class='ident'>Field</span> <span class='op'>+</span> <span class='ident'>ApproxEq</span>,
-          <span class='ident'>S</span>: <span class='ident'>StorageMut</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>D</span><span class='op'>&gt;</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>: <span class="ident">Dim</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">SquareMatrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">Field</span> <span class="op">+</span> <span class="ident">ApproxEq</span>,
+          <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Attempts to invert this matrix in-place. Returns `false` and leaves `self` untouched if</span>
+    <span class="doccomment">/// inversion fails.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_inverse_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">is_square</span>(), <span class="string">&quot;Unable to invert a non-square matrix.&quot;</span>);
 
-    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>matrix</span>.<span class='ident'>is_square</span>(), <span class='string'>&quot;Unable to invert a non-square matrix.&quot;</span>);
-    <span class='kw'>let</span> <span class='ident'>dim</span> <span class='op'>=</span> <span class='ident'>matrix</span>.<span class='ident'>data</span>.<span class='ident'>shape</span>().<span class='number'>0</span>;
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span>: <span class='ident'>OwnedSquareMatrix</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>D</span>, <span class='ident'>S</span>::<span class='ident'>Alloc</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Matrix</span>::<span class='ident'>identity_generic</span>(<span class='ident'>dim</span>, <span class='ident'>dim</span>);
-    <span class='kw'>let</span> <span class='ident'>dim</span> <span class='op'>=</span> <span class='ident'>dim</span>.<span class='ident'>value</span>();
+        <span class="kw">let</span> <span class="ident">dim</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">shape</span>().<span class="number">0</span>;
 
-    <span class='kw'>unsafe</span> {
-        <span class='kw'>for</span> <span class='ident'>k</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='ident'>dim</span> {
-            <span class='comment'>// Search a non-zero value on the k-th column.</span>
-            <span class='comment'>// FIXME: would it be worth it to spend some more time searching for the</span>
-            <span class='comment'>// max instead?</span>
+        <span class="kw">unsafe</span> {
+            <span class="kw">match</span> <span class="ident">dim</span> {
+                <span class="number">0</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+                <span class="number">1</span> <span class="op">=&gt;</span> {
+                    <span class="kw">if</span> <span class="macro">relative_eq</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">get_unchecked</span>(<span class="number">0</span>, <span class="number">0</span>), <span class="kw-2">&amp;</span><span class="ident">N</span>::<span class="ident">zero</span>()) {
+                        <span class="bool-val">false</span>
+                    }
+                    <span class="kw">else</span> {
+                        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked_mut</span>(<span class="number">0</span>, <span class="number">0</span>) <span class="op">=</span> <span class="ident">N</span>::<span class="ident">one</span>() <span class="op">/</span> <span class="self">self</span>.<span class="ident">determinant</span>();
+                        <span class="bool-val">true</span>
+                    }
+                },
+                <span class="number">2</span> <span class="op">=&gt;</span> {
+                    <span class="kw">let</span> <span class="ident">determinant</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">determinant</span>();
 
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>n0</span> <span class='op'>=</span> <span class='ident'>k</span>; <span class='comment'>// index of a non-zero entry.</span>
+                    <span class="kw">if</span> <span class="macro">relative_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">determinant</span>, <span class="kw-2">&amp;</span><span class="ident">N</span>::<span class="ident">zero</span>()) {
+                        <span class="bool-val">false</span>
+                    }
+                    <span class="kw">else</span> {
+                        <span class="kw">let</span> <span class="ident">m11</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked</span>(<span class="number">0</span>, <span class="number">0</span>); <span class="kw">let</span> <span class="ident">m12</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked</span>(<span class="number">0</span>, <span class="number">1</span>);
+                        <span class="kw">let</span> <span class="ident">m21</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked</span>(<span class="number">1</span>, <span class="number">0</span>); <span class="kw">let</span> <span class="ident">m22</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked</span>(<span class="number">1</span>, <span class="number">1</span>);
 
-            <span class='kw'>while</span> <span class='ident'>n0</span> <span class='op'>!=</span> <span class='ident'>dim</span> {
-                <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>matrix</span>.<span class='ident'>get_unchecked</span>(<span class='ident'>n0</span>, <span class='ident'>k</span>).<span class='ident'>is_zero</span>() {
-                    <span class='kw'>break</span>;
+                        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked_mut</span>(<span class="number">0</span>, <span class="number">0</span>) <span class="op">=</span>  <span class="ident">m22</span> <span class="op">/</span> <span class="ident">determinant</span>;
+                        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked_mut</span>(<span class="number">0</span>, <span class="number">1</span>) <span class="op">=</span> <span class="op">-</span><span class="ident">m12</span> <span class="op">/</span> <span class="ident">determinant</span>;
+
+                        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked_mut</span>(<span class="number">1</span>, <span class="number">0</span>) <span class="op">=</span> <span class="op">-</span><span class="ident">m21</span> <span class="op">/</span> <span class="ident">determinant</span>;
+                        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked_mut</span>(<span class="number">1</span>, <span class="number">1</span>) <span class="op">=</span>  <span class="ident">m11</span> <span class="op">/</span> <span class="ident">determinant</span>;
+
+                        <span class="bool-val">true</span>
+                    }
+                },
+                <span class="number">3</span> <span class="op">=&gt;</span> {
+                    <span class="kw">let</span> <span class="ident">m11</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked</span>(<span class="number">0</span>, <span class="number">0</span>);
+                    <span class="kw">let</span> <span class="ident">m12</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked</span>(<span class="number">0</span>, <span class="number">1</span>);
+                    <span class="kw">let</span> <span class="ident">m13</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked</span>(<span class="number">0</span>, <span class="number">2</span>);
+
+                    <span class="kw">let</span> <span class="ident">m21</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked</span>(<span class="number">1</span>, <span class="number">0</span>);
+                    <span class="kw">let</span> <span class="ident">m22</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked</span>(<span class="number">1</span>, <span class="number">1</span>);
+                    <span class="kw">let</span> <span class="ident">m23</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked</span>(<span class="number">1</span>, <span class="number">2</span>);
+
+                    <span class="kw">let</span> <span class="ident">m31</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked</span>(<span class="number">2</span>, <span class="number">0</span>);
+                    <span class="kw">let</span> <span class="ident">m32</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked</span>(<span class="number">2</span>, <span class="number">1</span>);
+                    <span class="kw">let</span> <span class="ident">m33</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked</span>(<span class="number">2</span>, <span class="number">2</span>);
+
+
+                    <span class="kw">let</span> <span class="ident">minor_m12_m23</span> <span class="op">=</span> <span class="ident">m22</span> <span class="op">*</span> <span class="ident">m33</span> <span class="op">-</span> <span class="ident">m32</span> <span class="op">*</span> <span class="ident">m23</span>;
+                    <span class="kw">let</span> <span class="ident">minor_m11_m23</span> <span class="op">=</span> <span class="ident">m21</span> <span class="op">*</span> <span class="ident">m33</span> <span class="op">-</span> <span class="ident">m31</span> <span class="op">*</span> <span class="ident">m23</span>;
+                    <span class="kw">let</span> <span class="ident">minor_m11_m22</span> <span class="op">=</span> <span class="ident">m21</span> <span class="op">*</span> <span class="ident">m32</span> <span class="op">-</span> <span class="ident">m31</span> <span class="op">*</span> <span class="ident">m22</span>;
+
+                    <span class="kw">let</span> <span class="ident">determinant</span> <span class="op">=</span> <span class="ident">m11</span> <span class="op">*</span> <span class="ident">minor_m12_m23</span> <span class="op">-</span>
+                                      <span class="ident">m12</span> <span class="op">*</span> <span class="ident">minor_m11_m23</span> <span class="op">+</span>
+                                      <span class="ident">m13</span> <span class="op">*</span> <span class="ident">minor_m11_m22</span>;
+
+                    <span class="kw">if</span> <span class="macro">relative_eq</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="ident">determinant</span>, <span class="kw-2">&amp;</span><span class="ident">N</span>::<span class="ident">zero</span>()) {
+                        <span class="bool-val">false</span>
+                    }
+                    <span class="kw">else</span> {
+                        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked_mut</span>(<span class="number">0</span>, <span class="number">0</span>) <span class="op">=</span> <span class="ident">minor_m12_m23</span> <span class="op">/</span> <span class="ident">determinant</span>;
+                        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked_mut</span>(<span class="number">0</span>, <span class="number">1</span>) <span class="op">=</span> (<span class="ident">m13</span> <span class="op">*</span> <span class="ident">m32</span> <span class="op">-</span> <span class="ident">m33</span> <span class="op">*</span> <span class="ident">m12</span>) <span class="op">/</span> <span class="ident">determinant</span>;
+                        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked_mut</span>(<span class="number">0</span>, <span class="number">2</span>) <span class="op">=</span> (<span class="ident">m12</span> <span class="op">*</span> <span class="ident">m23</span> <span class="op">-</span> <span class="ident">m22</span> <span class="op">*</span> <span class="ident">m13</span>) <span class="op">/</span> <span class="ident">determinant</span>;
+
+                        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked_mut</span>(<span class="number">1</span>, <span class="number">0</span>) <span class="op">=</span> <span class="op">-</span><span class="ident">minor_m11_m23</span> <span class="op">/</span> <span class="ident">determinant</span>;
+                        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked_mut</span>(<span class="number">1</span>, <span class="number">1</span>) <span class="op">=</span> (<span class="ident">m11</span> <span class="op">*</span> <span class="ident">m33</span> <span class="op">-</span> <span class="ident">m31</span> <span class="op">*</span> <span class="ident">m13</span>) <span class="op">/</span> <span class="ident">determinant</span>;
+                        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked_mut</span>(<span class="number">1</span>, <span class="number">2</span>) <span class="op">=</span> (<span class="ident">m13</span> <span class="op">*</span> <span class="ident">m21</span> <span class="op">-</span> <span class="ident">m23</span> <span class="op">*</span> <span class="ident">m11</span>) <span class="op">/</span> <span class="ident">determinant</span>;
+
+                        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked_mut</span>(<span class="number">2</span>, <span class="number">0</span>) <span class="op">=</span> <span class="ident">minor_m11_m22</span>  <span class="op">/</span> <span class="ident">determinant</span>;
+                        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked_mut</span>(<span class="number">2</span>, <span class="number">1</span>) <span class="op">=</span> (<span class="ident">m12</span> <span class="op">*</span> <span class="ident">m31</span> <span class="op">-</span> <span class="ident">m32</span> <span class="op">*</span> <span class="ident">m11</span>) <span class="op">/</span> <span class="ident">determinant</span>;
+                        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">get_unchecked_mut</span>(<span class="number">2</span>, <span class="number">2</span>) <span class="op">=</span> (<span class="ident">m11</span> <span class="op">*</span> <span class="ident">m22</span> <span class="op">-</span> <span class="ident">m21</span> <span class="op">*</span> <span class="ident">m12</span>) <span class="op">/</span> <span class="ident">determinant</span>;
+
+                        <span class="bool-val">true</span>
+                    }
+                },
+                _ <span class="op">=&gt;</span> {
+                    <span class="kw">let</span> <span class="ident">oself</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">clone_owned</span>();
+                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">res</span>) <span class="op">=</span> <span class="ident">gauss_jordan_inverse</span>(<span class="ident">oself</span>) {
+                        <span class="self">self</span>.<span class="ident">copy_from</span>(<span class="kw-2">&amp;</span><span class="ident">res</span>);
+                        <span class="bool-val">true</span>
+                    }
+                    <span class="kw">else</span> {
+                        <span class="bool-val">false</span>
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+<span class="doccomment">/// Inverts the given matrix using Gauss-Jordan Ellimitation.</span>
+<span class="kw">fn</span> <span class="ident">gauss_jordan_inverse</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">matrix</span>: <span class="ident">SquareMatrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">OwnedSquareMatrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span>::<span class="ident">Alloc</span><span class="op">&gt;&gt;</span>
+    <span class="kw">where</span> <span class="ident">D</span>: <span class="ident">Dim</span>,
+          <span class="ident">N</span>: <span class="ident">Scalar</span> <span class="op">+</span> <span class="ident">Field</span> <span class="op">+</span> <span class="ident">ApproxEq</span>,
+          <span class="ident">S</span>: <span class="ident">StorageMut</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">D</span><span class="op">&gt;</span> {
+
+    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">matrix</span>.<span class="ident">is_square</span>(), <span class="string">&quot;Unable to invert a non-square matrix.&quot;</span>);
+    <span class="kw">let</span> <span class="ident">dim</span> <span class="op">=</span> <span class="ident">matrix</span>.<span class="ident">data</span>.<span class="ident">shape</span>().<span class="number">0</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span>: <span class="ident">OwnedSquareMatrix</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">D</span>, <span class="ident">S</span>::<span class="ident">Alloc</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Matrix</span>::<span class="ident">identity_generic</span>(<span class="ident">dim</span>, <span class="ident">dim</span>);
+    <span class="kw">let</span> <span class="ident">dim</span> <span class="op">=</span> <span class="ident">dim</span>.<span class="ident">value</span>();
+
+    <span class="kw">unsafe</span> {
+        <span class="kw">for</span> <span class="ident">k</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="ident">dim</span> {
+            <span class="comment">// Search a non-zero value on the k-th column.</span>
+            <span class="comment">// FIXME: would it be worth it to spend some more time searching for the</span>
+            <span class="comment">// max instead?</span>
+
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">n0</span> <span class="op">=</span> <span class="ident">k</span>; <span class="comment">// index of a non-zero entry.</span>
+
+            <span class="kw">while</span> <span class="ident">n0</span> <span class="op">!=</span> <span class="ident">dim</span> {
+                <span class="kw">if</span> <span class="op">!</span><span class="ident">matrix</span>.<span class="ident">get_unchecked</span>(<span class="ident">n0</span>, <span class="ident">k</span>).<span class="ident">is_zero</span>() {
+                    <span class="kw">break</span>;
                 }
 
-                <span class='ident'>n0</span> <span class='op'>+=</span> <span class='number'>1</span>;
+                <span class="ident">n0</span> <span class="op">+=</span> <span class="number">1</span>;
             }
 
-            <span class='kw'>if</span> <span class='ident'>n0</span> <span class='op'>==</span> <span class='ident'>dim</span> {
-                <span class='kw'>return</span> <span class='prelude-val'>None</span>
+            <span class="kw">if</span> <span class="ident">n0</span> <span class="op">==</span> <span class="ident">dim</span> {
+                <span class="kw">return</span> <span class="prelude-val">None</span>
             }
 
-            <span class='comment'>// Swap pivot line.</span>
-            <span class='kw'>if</span> <span class='ident'>n0</span> <span class='op'>!=</span> <span class='ident'>k</span> {
-                <span class='kw'>for</span> <span class='ident'>j</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='ident'>dim</span> {
-                    <span class='ident'>matrix</span>.<span class='ident'>swap_unchecked</span>((<span class='ident'>n0</span>, <span class='ident'>j</span>), (<span class='ident'>k</span>, <span class='ident'>j</span>));
-                    <span class='ident'>res</span>.<span class='ident'>swap_unchecked</span>((<span class='ident'>n0</span>, <span class='ident'>j</span>), (<span class='ident'>k</span>, <span class='ident'>j</span>));
+            <span class="comment">// Swap pivot line.</span>
+            <span class="kw">if</span> <span class="ident">n0</span> <span class="op">!=</span> <span class="ident">k</span> {
+                <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="ident">dim</span> {
+                    <span class="ident">matrix</span>.<span class="ident">swap_unchecked</span>((<span class="ident">n0</span>, <span class="ident">j</span>), (<span class="ident">k</span>, <span class="ident">j</span>));
+                    <span class="ident">res</span>.<span class="ident">swap_unchecked</span>((<span class="ident">n0</span>, <span class="ident">j</span>), (<span class="ident">k</span>, <span class="ident">j</span>));
                 }
             }
 
-            <span class='kw'>let</span> <span class='ident'>pivot</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>matrix</span>.<span class='ident'>get_unchecked</span>(<span class='ident'>k</span>, <span class='ident'>k</span>);
+            <span class="kw">let</span> <span class="ident">pivot</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">matrix</span>.<span class="ident">get_unchecked</span>(<span class="ident">k</span>, <span class="ident">k</span>);
 
-            <span class='kw'>for</span> <span class='ident'>j</span> <span class='kw'>in</span> <span class='ident'>k</span> .. <span class='ident'>dim</span> {
-                <span class='kw'>let</span> <span class='ident'>selfval</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>matrix</span>.<span class='ident'>get_unchecked</span>(<span class='ident'>k</span>, <span class='ident'>j</span>) <span class='op'>/</span> <span class='ident'>pivot</span>;
-                <span class='kw-2'>*</span><span class='ident'>matrix</span>.<span class='ident'>get_unchecked_mut</span>(<span class='ident'>k</span>, <span class='ident'>j</span>) <span class='op'>=</span> <span class='ident'>selfval</span>;
+            <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="ident">k</span> .. <span class="ident">dim</span> {
+                <span class="kw">let</span> <span class="ident">selfval</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">matrix</span>.<span class="ident">get_unchecked</span>(<span class="ident">k</span>, <span class="ident">j</span>) <span class="op">/</span> <span class="ident">pivot</span>;
+                <span class="kw-2">*</span><span class="ident">matrix</span>.<span class="ident">get_unchecked_mut</span>(<span class="ident">k</span>, <span class="ident">j</span>) <span class="op">=</span> <span class="ident">selfval</span>;
             }
 
-            <span class='kw'>for</span> <span class='ident'>j</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='ident'>dim</span> {
-                <span class='kw'>let</span> <span class='ident'>resval</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>res</span>.<span class='ident'>get_unchecked</span>(<span class='ident'>k</span>, <span class='ident'>j</span>) <span class='op'>/</span> <span class='ident'>pivot</span>;
-                <span class='kw-2'>*</span><span class='ident'>res</span>.<span class='ident'>get_unchecked_mut</span>(<span class='ident'>k</span>, <span class='ident'>j</span>) <span class='op'>=</span> <span class='ident'>resval</span>;
+            <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="ident">dim</span> {
+                <span class="kw">let</span> <span class="ident">resval</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">res</span>.<span class="ident">get_unchecked</span>(<span class="ident">k</span>, <span class="ident">j</span>) <span class="op">/</span> <span class="ident">pivot</span>;
+                <span class="kw-2">*</span><span class="ident">res</span>.<span class="ident">get_unchecked_mut</span>(<span class="ident">k</span>, <span class="ident">j</span>) <span class="op">=</span> <span class="ident">resval</span>;
             }
 
-            <span class='kw'>for</span> <span class='ident'>l</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='ident'>dim</span> {
-                <span class='kw'>if</span> <span class='ident'>l</span> <span class='op'>!=</span> <span class='ident'>k</span> {
-                    <span class='kw'>let</span> <span class='ident'>normalizer</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>matrix</span>.<span class='ident'>get_unchecked</span>(<span class='ident'>l</span>, <span class='ident'>k</span>);
+            <span class="kw">for</span> <span class="ident">l</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="ident">dim</span> {
+                <span class="kw">if</span> <span class="ident">l</span> <span class="op">!=</span> <span class="ident">k</span> {
+                    <span class="kw">let</span> <span class="ident">normalizer</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">matrix</span>.<span class="ident">get_unchecked</span>(<span class="ident">l</span>, <span class="ident">k</span>);
 
-                    <span class='kw'>for</span> <span class='ident'>j</span> <span class='kw'>in</span> <span class='ident'>k</span> .. <span class='ident'>dim</span> {
-                        <span class='kw'>let</span> <span class='ident'>selfval</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>matrix</span>.<span class='ident'>get_unchecked</span>(<span class='ident'>l</span>, <span class='ident'>j</span>) <span class='op'>-</span> <span class='kw-2'>*</span><span class='ident'>matrix</span>.<span class='ident'>get_unchecked</span>(<span class='ident'>k</span>, <span class='ident'>j</span>) <span class='op'>*</span> <span class='ident'>normalizer</span>;
-                        <span class='kw-2'>*</span><span class='ident'>matrix</span>.<span class='ident'>get_unchecked_mut</span>(<span class='ident'>l</span>, <span class='ident'>j</span>) <span class='op'>=</span> <span class='ident'>selfval</span>;
+                    <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="ident">k</span> .. <span class="ident">dim</span> {
+                        <span class="kw">let</span> <span class="ident">selfval</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">matrix</span>.<span class="ident">get_unchecked</span>(<span class="ident">l</span>, <span class="ident">j</span>) <span class="op">-</span> <span class="kw-2">*</span><span class="ident">matrix</span>.<span class="ident">get_unchecked</span>(<span class="ident">k</span>, <span class="ident">j</span>) <span class="op">*</span> <span class="ident">normalizer</span>;
+                        <span class="kw-2">*</span><span class="ident">matrix</span>.<span class="ident">get_unchecked_mut</span>(<span class="ident">l</span>, <span class="ident">j</span>) <span class="op">=</span> <span class="ident">selfval</span>;
                     }
 
-                    <span class='kw'>for</span> <span class='ident'>j</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='ident'>dim</span> {
-                        <span class='kw'>let</span> <span class='ident'>resval</span>  <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>res</span>.<span class='ident'>get_unchecked</span>(<span class='ident'>l</span>, <span class='ident'>j</span>) <span class='op'>-</span> <span class='kw-2'>*</span><span class='ident'>res</span>.<span class='ident'>get_unchecked</span>(<span class='ident'>k</span>, <span class='ident'>j</span>) <span class='op'>*</span> <span class='ident'>normalizer</span>;
-                        <span class='kw-2'>*</span><span class='ident'>res</span>.<span class='ident'>get_unchecked_mut</span>(<span class='ident'>l</span>, <span class='ident'>j</span>) <span class='op'>=</span> <span class='ident'>resval</span>;
+                    <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="ident">dim</span> {
+                        <span class="kw">let</span> <span class="ident">resval</span>  <span class="op">=</span> <span class="kw-2">*</span><span class="ident">res</span>.<span class="ident">get_unchecked</span>(<span class="ident">l</span>, <span class="ident">j</span>) <span class="op">-</span> <span class="kw-2">*</span><span class="ident">res</span>.<span class="ident">get_unchecked</span>(<span class="ident">k</span>, <span class="ident">j</span>) <span class="op">*</span> <span class="ident">normalizer</span>;
+                        <span class="kw-2">*</span><span class="ident">res</span>.<span class="ident">get_unchecked_mut</span>(<span class="ident">l</span>, <span class="ident">j</span>) <span class="op">=</span> <span class="ident">resval</span>;
                     }
                 }
             }
         }
 
-        <span class='prelude-val'>Some</span>(<span class='ident'>res</span>)
+        <span class="prelude-val">Some</span>(<span class="ident">res</span>)
     }
 }
 </pre>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -460,421 +460,421 @@
 <span id="415">415</span>
 <span id="416">416</span>
 <span id="417">417</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//!  Simplex using the Johnson subalgorithm to compute the projection of the origin on the simplex.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//!  Simplex using the Johnson subalgorithm to compute the projection of the origin on the simplex.</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cell</span>::<span class='ident'>RefCell</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>Arc</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>BTreeMap</span>;
-<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Bounded</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">RefCell</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">BTreeMap</span>;
+<span class="kw">use</span> <span class="ident">num</span>::<span class="ident">Bounded</span>;
 
-<span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='ident'>query</span>::<span class='ident'>algorithms</span>::<span class='ident'>simplex</span>::<span class='ident'>Simplex</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
+<span class="kw">use</span> <span class="ident">na</span>;
+<span class="kw">use</span> <span class="ident">query</span>::<span class="ident">algorithms</span>::<span class="ident">simplex</span>::<span class="ident">Simplex</span>;
+<span class="kw">use</span> <span class="ident">math</span>::<span class="ident">Point</span>;
 
 
-<span class='macro'>thread_local</span><span class='macro'>!</span>(<span class='kw'>static</span> <span class='ident'>KEY_RECURSION_TEMPLATE</span>: <span class='ident'>RefCell</span><span class='op'>&lt;</span><span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>RecursionTemplate</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>RefCell</span>::<span class='ident'>new</span>(<span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>Vec</span>::<span class='ident'>new</span>())));
+<span class="macro">thread_local</span><span class="macro">!</span>(<span class="kw">static</span> <span class="ident">KEY_RECURSION_TEMPLATE</span>: <span class="ident">RefCell</span><span class="op">&lt;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">RecursionTemplate</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">RefCell</span>::<span class="ident">new</span>(<span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">Vec</span>::<span class="ident">new</span>())));
 
-<span class='doccomment'>///  Simplex using the Johnson subalgorithm to compute the projection of the origin on the simplex.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>JohnsonSimplex</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> {
-    <span class='ident'>recursion_template</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>RecursionTemplate</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>points</span>:             <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
-    <span class='ident'>exchange_points</span>:    <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
-    <span class='ident'>determinants</span>:       <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;</span>
+<span class="doccomment">///  Simplex using the Johnson subalgorithm to compute the projection of the origin on the simplex.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">JohnsonSimplex</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span> {
+    <span class="ident">recursion_template</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">RecursionTemplate</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">points</span>:             <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>,
+    <span class="ident">exchange_points</span>:    <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>,
+    <span class="ident">determinants</span>:       <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Real</span><span class="op">&gt;</span>
 }
 
-<span class='doccomment'>/// Set of indices to explain to the JohnsonSimplex how to do its work.</span>
-<span class='doccomment'>/// Building this is very time consuming, and thus should be shared between all instances of the</span>
-<span class='doccomment'>/// Johnson simplex.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Clone</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RecursionTemplate</span> {
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='ident'>permutation_list</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>,
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='ident'>offsets</span>:          <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>,
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='ident'>sub_determinants</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>,
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='ident'>num_determinants</span>: <span class='ident'>usize</span>,
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='ident'>num_leaves</span>:       <span class='ident'>usize</span> <span class='comment'>// useful only for printing…</span>
+<span class="doccomment">/// Set of indices to explain to the JohnsonSimplex how to do its work.</span>
+<span class="doccomment">/// Building this is very time consuming, and thus should be shared between all instances of the</span>
+<span class="doccomment">/// Johnson simplex.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">PartialEq</span>, <span class="ident">Clone</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RecursionTemplate</span> {
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="ident">permutation_list</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="ident">offsets</span>:          <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="ident">sub_determinants</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="ident">num_determinants</span>: <span class="ident">usize</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="ident">num_leaves</span>:       <span class="ident">usize</span> <span class="comment">// useful only for printing…</span>
 }
 
-<span class='kw'>impl</span> <span class='ident'>RecursionTemplate</span> {
-    <span class='doccomment'>/// Creates a new set of Recursion simplex sharable between any Johnson simplex having a</span>
-    <span class='doccomment'>/// dimension inferior or equal to `dimension`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>dimension</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>RecursionTemplate</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>template</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>with_capacity</span>(<span class='ident'>dimension</span> <span class='op'>+</span> <span class='number'>1</span>);
+<span class="kw">impl</span> <span class="ident">RecursionTemplate</span> {
+    <span class="doccomment">/// Creates a new set of Recursion simplex sharable between any Johnson simplex having a</span>
+    <span class="doccomment">/// dimension inferior or equal to `dimension`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">dimension</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">RecursionTemplate</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">template</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">dimension</span> <span class="op">+</span> <span class="number">1</span>);
 
-        <span class='kw'>for</span> <span class='ident'>dimension</span> <span class='kw'>in</span> <span class='number'>0usize</span> .. <span class='ident'>dimension</span> <span class='op'>+</span> <span class='number'>1</span> {
-            <span class='ident'>template</span>.<span class='ident'>push</span>(<span class='ident'>RecursionTemplate</span>::<span class='ident'>make_permutation_list</span>(<span class='ident'>dimension</span>))
+        <span class="kw">for</span> <span class="ident">dimension</span> <span class="kw">in</span> <span class="number">0usize</span> .. <span class="ident">dimension</span> <span class="op">+</span> <span class="number">1</span> {
+            <span class="ident">template</span>.<span class="ident">push</span>(<span class="ident">RecursionTemplate</span>::<span class="ident">make_permutation_list</span>(<span class="ident">dimension</span>))
         }
 
-        <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>template</span>)
+        <span class="ident">Arc</span>::<span class="ident">new</span>(<span class="ident">template</span>)
     }
 
-    <span class='comment'>// pub fn to_raw_str(&amp;self) -&gt; ~str {</span>
-    <span class='comment'>//     let res = &quot;permutation_list: &quot; + self.permutation_list.to_str() + &quot;, &quot; +</span>
-    <span class='comment'>//               &quot;offset: &quot;           + self.offsets.to_str() + &quot;, &quot; +</span>
-    <span class='comment'>//               &quot;sub_determinants: &quot; + self.sub_determinants.to_str();</span>
+    <span class="comment">// pub fn to_raw_str(&amp;self) -&gt; ~str {</span>
+    <span class="comment">//     let res = &quot;permutation_list: &quot; + self.permutation_list.to_str() + &quot;, &quot; +</span>
+    <span class="comment">//               &quot;offset: &quot;           + self.offsets.to_str() + &quot;, &quot; +</span>
+    <span class="comment">//               &quot;sub_determinants: &quot; + self.sub_determinants.to_str();</span>
 
-    <span class='comment'>//     res</span>
-    <span class='comment'>// }</span>
+    <span class="comment">//     res</span>
+    <span class="comment">// }</span>
 
-    <span class='comment'>// This is the tricky part of the algorithm. This generates all datas needed</span>
-    <span class='comment'>// to run the johson subalgorithm fastly. This should _not_ be run every time</span>
-    <span class='comment'>// the algorithm is executed. Instead, it should be pre-computed, or computed</span>
-    <span class='comment'>// only once for all. The resulting GC-managed list is intented to be shared</span>
-    <span class='comment'>// between all other simplicis with the same dimension.</span>
-    <span class='kw'>fn</span> <span class='ident'>make_permutation_list</span>(<span class='ident'>dimension</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>RecursionTemplate</span> {
-        <span class='comment'>// The number of points on the biggest subsimplex</span>
-        <span class='kw'>let</span> <span class='ident'>max_num_points</span>      <span class='op'>=</span> <span class='ident'>dimension</span> <span class='op'>+</span> <span class='number'>1</span>;
+    <span class="comment">// This is the tricky part of the algorithm. This generates all datas needed</span>
+    <span class="comment">// to run the johson subalgorithm fastly. This should _not_ be run every time</span>
+    <span class="comment">// the algorithm is executed. Instead, it should be pre-computed, or computed</span>
+    <span class="comment">// only once for all. The resulting GC-managed list is intented to be shared</span>
+    <span class="comment">// between all other simplicis with the same dimension.</span>
+    <span class="kw">fn</span> <span class="ident">make_permutation_list</span>(<span class="ident">dimension</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">RecursionTemplate</span> {
+        <span class="comment">// The number of points on the biggest subsimplex</span>
+        <span class="kw">let</span> <span class="ident">max_num_points</span>      <span class="op">=</span> <span class="ident">dimension</span> <span class="op">+</span> <span class="number">1</span>;
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>pts</span>              <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>(); <span class='comment'>// the result</span>
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>offsets</span>          <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>sub_determinants</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">pts</span>              <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>(); <span class="comment">// the result</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offsets</span>          <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sub_determinants</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 
-        <span class='comment'>// the beginning of the last subsimplices list</span>
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>last_dim_begin</span>  <span class='op'>=</span> <span class='number'>0</span>;
+        <span class="comment">// the beginning of the last subsimplices list</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">last_dim_begin</span>  <span class="op">=</span> <span class="number">0</span>;
 
-        <span class='comment'>// the end of the last subsimplices list</span>
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>last_dim_end</span>    <span class='op'>=</span> <span class='ident'>dimension</span> <span class='op'>+</span> <span class='number'>1</span> <span class='op'>+</span> <span class='number'>1</span>;
+        <span class="comment">// the end of the last subsimplices list</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">last_dim_end</span>    <span class="op">=</span> <span class="ident">dimension</span> <span class="op">+</span> <span class="number">1</span> <span class="op">+</span> <span class="number">1</span>;
 
-        <span class='comment'>// the number of points of the last subsimplices</span>
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>last_num_points</span> <span class='op'>=</span> <span class='ident'>dimension</span> <span class='op'>+</span> <span class='number'>1</span>;
+        <span class="comment">// the number of points of the last subsimplices</span>
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">last_num_points</span> <span class="op">=</span> <span class="ident">dimension</span> <span class="op">+</span> <span class="number">1</span>;
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>map</span>             <span class='op'>=</span> <span class='ident'>BTreeMap</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>, <span class='ident'>usize</span><span class='op'>&gt;</span>::<span class='ident'>new</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span>             <span class="op">=</span> <span class="ident">BTreeMap</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>, <span class="ident">usize</span><span class="op">&gt;</span>::<span class="ident">new</span>();
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>determinant_index</span>  <span class='op'>=</span> <span class='number'>0</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">determinant_index</span>  <span class="op">=</span> <span class="number">0</span>;
 
-        <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='ident'>max_num_points</span> {
-            <span class='ident'>pts</span>.<span class='ident'>push</span>(<span class='ident'>i</span>)
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="ident">max_num_points</span> {
+            <span class="ident">pts</span>.<span class="ident">push</span>(<span class="ident">i</span>)
         }
 
-        <span class='comment'>// initially push the whole simplex (will be removed at the end)</span>
-        <span class='ident'>pts</span>.<span class='ident'>push</span>(<span class='number'>0</span>);
+        <span class="comment">// initially push the whole simplex (will be removed at the end)</span>
+        <span class="ident">pts</span>.<span class="ident">push</span>(<span class="number">0</span>);
 
-        <span class='ident'>offsets</span>.<span class='ident'>push</span>(<span class='ident'>max_num_points</span> <span class='op'>+</span> <span class='number'>1</span>);
+        <span class="ident">offsets</span>.<span class="ident">push</span>(<span class="ident">max_num_points</span> <span class="op">+</span> <span class="number">1</span>);
 
-        <span class='comment'>// ... then remove one point each time</span>
-        <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0usize</span> .. <span class='ident'>dimension</span> <span class='op'>+</span> <span class='number'>1</span> {
-            <span class='comment'>// for each sub-simplex ...</span>
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>curr</span>      <span class='op'>=</span> <span class='ident'>last_dim_begin</span>;
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>num_added</span> <span class='op'>=</span> <span class='number'>0</span>;
+        <span class="comment">// ... then remove one point each time</span>
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0usize</span> .. <span class="ident">dimension</span> <span class="op">+</span> <span class="number">1</span> {
+            <span class="comment">// for each sub-simplex ...</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">curr</span>      <span class="op">=</span> <span class="ident">last_dim_begin</span>;
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">num_added</span> <span class="op">=</span> <span class="number">0</span>;
 
-            <span class='kw'>while</span> <span class='ident'>curr</span> <span class='op'>!=</span> <span class='ident'>last_dim_end</span> {
-                <span class='comment'>// ... iterate on it ...</span>
-                <span class='kw'>for</span> <span class='ident'>j</span> <span class='kw'>in</span> <span class='number'>0usize</span> .. <span class='ident'>last_num_points</span> {
-                    <span class='comment'>// ... and build all the sublist with one last point</span>
-                    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>sublist</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+            <span class="kw">while</span> <span class="ident">curr</span> <span class="op">!=</span> <span class="ident">last_dim_end</span> {
+                <span class="comment">// ... iterate on it ...</span>
+                <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0usize</span> .. <span class="ident">last_num_points</span> {
+                    <span class="comment">// ... and build all the sublist with one last point</span>
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sublist</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 
-                    <span class='comment'>// then extract the sub-simplex</span>
-                    <span class='kw'>for</span> <span class='ident'>k</span> <span class='kw'>in</span> <span class='number'>0usize</span> .. <span class='ident'>last_num_points</span> {
-                        <span class='comment'>// we remove the j&#39;th point</span>
-                        <span class='kw'>if</span> <span class='ident'>pts</span>[<span class='ident'>curr</span> <span class='op'>+</span> <span class='ident'>j</span>] <span class='op'>!=</span> <span class='ident'>pts</span>[<span class='ident'>curr</span> <span class='op'>+</span> <span class='ident'>k</span>] {
-                            <span class='ident'>sublist</span>.<span class='ident'>push</span>(<span class='ident'>pts</span>[<span class='ident'>curr</span> <span class='op'>+</span> <span class='ident'>k</span>]);
+                    <span class="comment">// then extract the sub-simplex</span>
+                    <span class="kw">for</span> <span class="ident">k</span> <span class="kw">in</span> <span class="number">0usize</span> .. <span class="ident">last_num_points</span> {
+                        <span class="comment">// we remove the j&#39;th point</span>
+                        <span class="kw">if</span> <span class="ident">pts</span>[<span class="ident">curr</span> <span class="op">+</span> <span class="ident">j</span>] <span class="op">!=</span> <span class="ident">pts</span>[<span class="ident">curr</span> <span class="op">+</span> <span class="ident">k</span>] {
+                            <span class="ident">sublist</span>.<span class="ident">push</span>(<span class="ident">pts</span>[<span class="ident">curr</span> <span class="op">+</span> <span class="ident">k</span>]);
                         }
                     }
 
-                    <span class='comment'>// keep a trace of the removed point</span>
-                    <span class='ident'>sublist</span>.<span class='ident'>push</span>(<span class='ident'>pts</span>[<span class='ident'>curr</span> <span class='op'>+</span> <span class='ident'>j</span>]);
+                    <span class="comment">// keep a trace of the removed point</span>
+                    <span class="ident">sublist</span>.<span class="ident">push</span>(<span class="ident">pts</span>[<span class="ident">curr</span> <span class="op">+</span> <span class="ident">j</span>]);
 
-                    <span class='kw'>match</span> <span class='ident'>map</span>.<span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='ident'>sublist</span>) {
-                        <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>v</span>) <span class='op'>=&gt;</span> <span class='ident'>sub_determinants</span>.<span class='ident'>push</span>(<span class='ident'>v</span>),
-                        <span class='prelude-val'>None</span>     <span class='op'>=&gt;</span> {
-                            <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='ident'>e</span> <span class='kw'>in</span> <span class='ident'>sublist</span>.<span class='ident'>iter</span>() {
-                                <span class='ident'>pts</span>.<span class='ident'>push</span>(<span class='ident'>e</span>);
-                                <span class='ident'>num_added</span> <span class='op'>=</span> <span class='ident'>num_added</span> <span class='op'>+</span> <span class='number'>1</span>;
+                    <span class="kw">match</span> <span class="ident">map</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">sublist</span>) {
+                        <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>) <span class="op">=&gt;</span> <span class="ident">sub_determinants</span>.<span class="ident">push</span>(<span class="ident">v</span>),
+                        <span class="prelude-val">None</span>     <span class="op">=&gt;</span> {
+                            <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">e</span> <span class="kw">in</span> <span class="ident">sublist</span>.<span class="ident">iter</span>() {
+                                <span class="ident">pts</span>.<span class="ident">push</span>(<span class="ident">e</span>);
+                                <span class="ident">num_added</span> <span class="op">=</span> <span class="ident">num_added</span> <span class="op">+</span> <span class="number">1</span>;
                             }
-                            <span class='ident'>sub_determinants</span>.<span class='ident'>push</span>(<span class='ident'>determinant_index</span>);
-                            <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>map</span>.<span class='ident'>insert</span>(<span class='ident'>sublist</span>, <span class='ident'>determinant_index</span>);
-                            <span class='ident'>determinant_index</span> <span class='op'>=</span> <span class='ident'>determinant_index</span> <span class='op'>+</span> <span class='number'>1</span>;
+                            <span class="ident">sub_determinants</span>.<span class="ident">push</span>(<span class="ident">determinant_index</span>);
+                            <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">map</span>.<span class="ident">insert</span>(<span class="ident">sublist</span>, <span class="ident">determinant_index</span>);
+                            <span class="ident">determinant_index</span> <span class="op">=</span> <span class="ident">determinant_index</span> <span class="op">+</span> <span class="number">1</span>;
                         }
                     }
                 }
 
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>parent</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
-                <span class='kw'>for</span> <span class='ident'>k</span> <span class='kw'>in</span> <span class='number'>0usize</span> .. <span class='ident'>last_num_points</span> <span class='op'>+</span> <span class='number'>1</span> {
-                    <span class='ident'>parent</span>.<span class='ident'>push</span>(<span class='ident'>pts</span>[<span class='ident'>curr</span> <span class='op'>+</span> <span class='ident'>k</span>])
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">parent</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+                <span class="kw">for</span> <span class="ident">k</span> <span class="kw">in</span> <span class="number">0usize</span> .. <span class="ident">last_num_points</span> <span class="op">+</span> <span class="number">1</span> {
+                    <span class="ident">parent</span>.<span class="ident">push</span>(<span class="ident">pts</span>[<span class="ident">curr</span> <span class="op">+</span> <span class="ident">k</span>])
                 }
 
 
-                <span class='kw'>match</span> <span class='ident'>map</span>.<span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='ident'>parent</span>) {
-                    <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>p</span>) <span class='op'>=&gt;</span> <span class='ident'>sub_determinants</span>.<span class='ident'>push</span>(<span class='ident'>p</span>),
-                    <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {
-                        <span class='ident'>sub_determinants</span>.<span class='ident'>push</span>(<span class='ident'>determinant_index</span>);
-                        <span class='comment'>// There is no need to keep a place for the full simplex determinant.</span>
-                        <span class='comment'>// So we dont increase the determinant buffer index for the first</span>
-                        <span class='comment'>// iteration.</span>
-                        <span class='ident'>determinant_index</span> <span class='op'>=</span> <span class='ident'>determinant_index</span> <span class='op'>+</span> <span class='kw'>if</span> <span class='ident'>i</span> <span class='op'>==</span> <span class='number'>0</span> { <span class='number'>0</span> } <span class='kw'>else</span> { <span class='number'>1</span> };
+                <span class="kw">match</span> <span class="ident">map</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">parent</span>) {
+                    <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">p</span>) <span class="op">=&gt;</span> <span class="ident">sub_determinants</span>.<span class="ident">push</span>(<span class="ident">p</span>),
+                    <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
+                        <span class="ident">sub_determinants</span>.<span class="ident">push</span>(<span class="ident">determinant_index</span>);
+                        <span class="comment">// There is no need to keep a place for the full simplex determinant.</span>
+                        <span class="comment">// So we dont increase the determinant buffer index for the first</span>
+                        <span class="comment">// iteration.</span>
+                        <span class="ident">determinant_index</span> <span class="op">=</span> <span class="ident">determinant_index</span> <span class="op">+</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="number">0</span> { <span class="number">0</span> } <span class="kw">else</span> { <span class="number">1</span> };
                     }
                 }
 
-                <span class='ident'>curr</span> <span class='op'>=</span> <span class='ident'>curr</span> <span class='op'>+</span> <span class='ident'>last_num_points</span> <span class='op'>+</span> <span class='number'>1</span>;
+                <span class="ident">curr</span> <span class="op">=</span> <span class="ident">curr</span> <span class="op">+</span> <span class="ident">last_num_points</span> <span class="op">+</span> <span class="number">1</span>;
             }
 
-            <span class='comment'>// initialize the next iteration with one less point</span>
-            <span class='ident'>last_dim_begin</span> <span class='op'>=</span> <span class='ident'>last_dim_end</span> ;
-            <span class='ident'>last_dim_end</span> <span class='op'>=</span> <span class='ident'>last_dim_end</span> <span class='op'>+</span> <span class='ident'>num_added</span>;
-            <span class='ident'>offsets</span>.<span class='ident'>push</span>(<span class='ident'>last_dim_end</span>);
-            <span class='ident'>last_num_points</span> <span class='op'>=</span> <span class='ident'>last_num_points</span> <span class='op'>-</span> <span class='number'>1</span>;
+            <span class="comment">// initialize the next iteration with one less point</span>
+            <span class="ident">last_dim_begin</span> <span class="op">=</span> <span class="ident">last_dim_end</span> ;
+            <span class="ident">last_dim_end</span> <span class="op">=</span> <span class="ident">last_dim_end</span> <span class="op">+</span> <span class="ident">num_added</span>;
+            <span class="ident">offsets</span>.<span class="ident">push</span>(<span class="ident">last_dim_end</span>);
+            <span class="ident">last_num_points</span> <span class="op">=</span> <span class="ident">last_num_points</span> <span class="op">-</span> <span class="number">1</span>;
         }
 
-        <span class='comment'>// determinant indices for leaves</span>
-        <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0usize</span> .. <span class='ident'>max_num_points</span> {
-            <span class='ident'>sub_determinants</span>.<span class='ident'>push</span>(<span class='kw-2'>*</span><span class='ident'>map</span>.<span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='macro'>vec</span><span class='macro'>!</span>(<span class='ident'>max_num_points</span> <span class='op'>-</span> <span class='number'>1</span> <span class='op'>-</span> <span class='ident'>i</span>)).<span class='ident'>unwrap</span>())
+        <span class="comment">// determinant indices for leaves</span>
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0usize</span> .. <span class="ident">max_num_points</span> {
+            <span class="ident">sub_determinants</span>.<span class="ident">push</span>(<span class="kw-2">*</span><span class="ident">map</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="macro">vec</span><span class="macro">!</span>(<span class="ident">max_num_points</span> <span class="op">-</span> <span class="number">1</span> <span class="op">-</span> <span class="ident">i</span>)).<span class="ident">unwrap</span>())
         }
 
-        <span class='comment'>// end to begin offsets</span>
-        <span class='ident'>offsets</span>.<span class='ident'>insert</span>(<span class='number'>0</span>, <span class='number'>0usize</span>);
-        <span class='ident'>offsets</span>.<span class='ident'>reverse</span>();
-        <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>offsets</span>.<span class='ident'>pop</span>();
+        <span class="comment">// end to begin offsets</span>
+        <span class="ident">offsets</span>.<span class="ident">insert</span>(<span class="number">0</span>, <span class="number">0usize</span>);
+        <span class="ident">offsets</span>.<span class="ident">reverse</span>();
+        <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">offsets</span>.<span class="ident">pop</span>();
 
-        <span class='kw'>let</span> <span class='ident'>rev_offsets</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>offsets</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span><span class='ident'>e</span><span class='op'>|</span> <span class='ident'>pts</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='ident'>e</span>).<span class='ident'>collect</span>();
-        <span class='kw'>let</span> <span class='ident'>num_leaves</span> <span class='op'>=</span> <span class='ident'>rev_offsets</span>[<span class='number'>0</span>];
+        <span class="kw">let</span> <span class="ident">rev_offsets</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">offsets</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">e</span><span class="op">|</span> <span class="ident">pts</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">e</span>).<span class="ident">collect</span>();
+        <span class="kw">let</span> <span class="ident">num_leaves</span> <span class="op">=</span> <span class="ident">rev_offsets</span>[<span class="number">0</span>];
 
-        <span class='comment'>// reverse points and detereminants</span>
-        <span class='ident'>pts</span>.<span class='ident'>reverse</span>();
-        <span class='ident'>sub_determinants</span>.<span class='ident'>reverse</span>();
+        <span class="comment">// reverse points and detereminants</span>
+        <span class="ident">pts</span>.<span class="ident">reverse</span>();
+        <span class="ident">sub_determinants</span>.<span class="ident">reverse</span>();
 
-        <span class='comment'>// remove the full simplex</span>
-        <span class='kw'>let</span> <span class='ident'>num_pts</span> <span class='op'>=</span> <span class='ident'>pts</span>.<span class='ident'>len</span>();
-        <span class='ident'>pts</span>.<span class='ident'>truncate</span>(<span class='ident'>num_pts</span> <span class='op'>-</span> <span class='ident'>max_num_points</span> <span class='op'>-</span> <span class='number'>1</span>);
-        <span class='ident'>sub_determinants</span>.<span class='ident'>truncate</span>(<span class='ident'>num_pts</span> <span class='op'>-</span> <span class='ident'>max_num_points</span> <span class='op'>-</span> <span class='number'>1</span>);
+        <span class="comment">// remove the full simplex</span>
+        <span class="kw">let</span> <span class="ident">num_pts</span> <span class="op">=</span> <span class="ident">pts</span>.<span class="ident">len</span>();
+        <span class="ident">pts</span>.<span class="ident">truncate</span>(<span class="ident">num_pts</span> <span class="op">-</span> <span class="ident">max_num_points</span> <span class="op">-</span> <span class="number">1</span>);
+        <span class="ident">sub_determinants</span>.<span class="ident">truncate</span>(<span class="ident">num_pts</span> <span class="op">-</span> <span class="ident">max_num_points</span> <span class="op">-</span> <span class="number">1</span>);
 
-        <span class='ident'>RecursionTemplate</span> {
-            <span class='ident'>offsets</span>:          <span class='ident'>rev_offsets</span>,
-            <span class='ident'>permutation_list</span>: <span class='ident'>pts</span>,
-            <span class='ident'>num_determinants</span>: <span class='ident'>sub_determinants</span>[<span class='number'>0</span>] <span class='op'>+</span> <span class='number'>1</span>,
-            <span class='ident'>sub_determinants</span>: <span class='ident'>sub_determinants</span>,
-            <span class='ident'>num_leaves</span>:       <span class='ident'>num_leaves</span>
+        <span class="ident">RecursionTemplate</span> {
+            <span class="ident">offsets</span>:          <span class="ident">rev_offsets</span>,
+            <span class="ident">permutation_list</span>: <span class="ident">pts</span>,
+            <span class="ident">num_determinants</span>: <span class="ident">sub_determinants</span>[<span class="number">0</span>] <span class="op">+</span> <span class="number">1</span>,
+            <span class="ident">sub_determinants</span>: <span class="ident">sub_determinants</span>,
+            <span class="ident">num_leaves</span>:       <span class="ident">num_leaves</span>
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> <span class='ident'>JohnsonSimplex</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new, empty, Johnson simplex.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>recursion</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>RecursionTemplate</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>JohnsonSimplex</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>_dimension</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span>();
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span> <span class="ident">JohnsonSimplex</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new, empty, Johnson simplex.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">recursion</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">RecursionTemplate</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">JohnsonSimplex</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">_dimension</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">dimension</span>::<span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Vector</span><span class="op">&gt;</span>();
 
-        <span class='ident'>JohnsonSimplex</span> {
-            <span class='ident'>points</span>:             <span class='ident'>Vec</span>::<span class='ident'>with_capacity</span>(<span class='ident'>_dimension</span> <span class='op'>+</span> <span class='number'>1</span>),
-            <span class='ident'>exchange_points</span>:    <span class='ident'>Vec</span>::<span class='ident'>with_capacity</span>(<span class='ident'>_dimension</span> <span class='op'>+</span> <span class='number'>1</span>),
-            <span class='ident'>determinants</span>:       <span class='ident'>iter</span>::<span class='ident'>repeat</span>(<span class='ident'>na</span>::<span class='ident'>zero</span>()).<span class='ident'>take</span>(<span class='ident'>recursion</span>[<span class='ident'>_dimension</span>].<span class='ident'>num_determinants</span>).<span class='ident'>collect</span>(),
-            <span class='ident'>recursion_template</span>: <span class='ident'>recursion</span>
+        <span class="ident">JohnsonSimplex</span> {
+            <span class="ident">points</span>:             <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">_dimension</span> <span class="op">+</span> <span class="number">1</span>),
+            <span class="ident">exchange_points</span>:    <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">_dimension</span> <span class="op">+</span> <span class="number">1</span>),
+            <span class="ident">determinants</span>:       <span class="ident">iter</span>::<span class="ident">repeat</span>(<span class="ident">na</span>::<span class="ident">zero</span>()).<span class="ident">take</span>(<span class="ident">recursion</span>[<span class="ident">_dimension</span>].<span class="ident">num_determinants</span>).<span class="ident">collect</span>(),
+            <span class="ident">recursion_template</span>: <span class="ident">recursion</span>
         }
     }
 
-    <span class='doccomment'>/// Creates a new, empty Johnson simplex. The recursion template uses the thread-local one.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_w_tls</span>() <span class='op'>-&gt;</span> <span class='ident'>JohnsonSimplex</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='ident'>KEY_RECURSION_TEMPLATE</span>.<span class='ident'>with</span>(<span class='op'>|</span><span class='ident'>rec</span><span class='op'>|</span> {
-            <span class='kw'>if</span> <span class='ident'>rec</span>.<span class='ident'>borrow</span>().<span class='ident'>len</span>() <span class='op'>&lt;=</span> <span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span>() {
-                <span class='kw-2'>*</span><span class='ident'>rec</span>.<span class='ident'>borrow_mut</span>() <span class='op'>=</span> <span class='ident'>RecursionTemplate</span>::<span class='ident'>new</span>(<span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span>());
+    <span class="doccomment">/// Creates a new, empty Johnson simplex. The recursion template uses the thread-local one.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_w_tls</span>() <span class="op">-&gt;</span> <span class="ident">JohnsonSimplex</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+        <span class="ident">KEY_RECURSION_TEMPLATE</span>.<span class="ident">with</span>(<span class="op">|</span><span class="ident">rec</span><span class="op">|</span> {
+            <span class="kw">if</span> <span class="ident">rec</span>.<span class="ident">borrow</span>().<span class="ident">len</span>() <span class="op">&lt;=</span> <span class="ident">na</span>::<span class="ident">dimension</span>::<span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Vector</span><span class="op">&gt;</span>() {
+                <span class="kw-2">*</span><span class="ident">rec</span>.<span class="ident">borrow_mut</span>() <span class="op">=</span> <span class="ident">RecursionTemplate</span>::<span class="ident">new</span>(<span class="ident">na</span>::<span class="ident">dimension</span>::<span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Vector</span><span class="op">&gt;</span>());
             }
-            <span class='ident'>JohnsonSimplex</span>::<span class='ident'>new</span>(<span class='ident'>rec</span>.<span class='ident'>borrow</span>().<span class='ident'>clone</span>())
+            <span class="ident">JohnsonSimplex</span>::<span class="ident">new</span>(<span class="ident">rec</span>.<span class="ident">borrow</span>().<span class="ident">clone</span>())
         })
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> <span class='ident'>JohnsonSimplex</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>do_project_origin</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>reduce</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span> {
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>points</span>.<span class='ident'>is_empty</span>() {
-            <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Cannot project the origin on an empty simplex.&quot;</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span> <span class="ident">JohnsonSimplex</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">do_project_origin</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">reduce</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="ident">P</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">points</span>.<span class="ident">is_empty</span>() {
+            <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Cannot project the origin on an empty simplex.&quot;</span>)
         }
 
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>points</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>1</span> {
-            <span class='kw'>return</span> <span class='self'>self</span>.<span class='ident'>points</span>[<span class='number'>0</span>];
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">points</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">1</span> {
+            <span class="kw">return</span> <span class="self">self</span>.<span class="ident">points</span>[<span class="number">0</span>];
         }
 
-        <span class='kw'>let</span> <span class='ident'>max_num_pts</span>      <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>points</span>.<span class='ident'>len</span>();
-        <span class='kw'>let</span> <span class='ident'>recursion</span>        <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>recursion_template</span>[<span class='ident'>max_num_pts</span> <span class='op'>-</span> <span class='number'>1</span>];
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>curr_num_pts</span> <span class='op'>=</span> <span class='number'>1usize</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>curr</span>         <span class='op'>=</span> <span class='ident'>max_num_pts</span>;
+        <span class="kw">let</span> <span class="ident">max_num_pts</span>      <span class="op">=</span> <span class="self">self</span>.<span class="ident">points</span>.<span class="ident">len</span>();
+        <span class="kw">let</span> <span class="ident">recursion</span>        <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">recursion_template</span>[<span class="ident">max_num_pts</span> <span class="op">-</span> <span class="number">1</span>];
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">curr_num_pts</span> <span class="op">=</span> <span class="number">1usize</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">curr</span>         <span class="op">=</span> <span class="ident">max_num_pts</span>;
 
-        <span class='kw'>let</span> <span class='ident'>ndets</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>determinants</span>.<span class='ident'>len</span>();
-        <span class='kw'>for</span> <span class='ident'>c</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>determinants</span>[<span class='ident'>recursion</span>.<span class='ident'>num_determinants</span> <span class='op'>-</span> <span class='ident'>max_num_pts</span> .. <span class='ident'>ndets</span>].<span class='ident'>iter_mut</span>() {
-            <span class='kw-2'>*</span><span class='ident'>c</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>one</span>();
+        <span class="kw">let</span> <span class="ident">ndets</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">determinants</span>.<span class="ident">len</span>();
+        <span class="kw">for</span> <span class="ident">c</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">determinants</span>[<span class="ident">recursion</span>.<span class="ident">num_determinants</span> <span class="op">-</span> <span class="ident">max_num_pts</span> .. <span class="ident">ndets</span>].<span class="ident">iter_mut</span>() {
+            <span class="kw-2">*</span><span class="ident">c</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">one</span>();
         }
 
-        <span class='comment'>// NOTE: Please read that before thinking all those `unsafe_whatever` should be bannished.</span>
-        <span class='comment'>// The whole point of having this `recursion_template` stuff is to speed up the</span>
-        <span class='comment'>// computations having exact precomputed indices.</span>
-        <span class='comment'>// Using safe accesses to vectors kind of makes this useless sinces each array access will</span>
-        <span class='comment'>// be much slower.</span>
-        <span class='comment'>// That is why we use unsafe indexing here. Nothing personal, just a huge need of</span>
-        <span class='comment'>// performances :p</span>
-        <span class='comment'>// There might be a whay to to this nicely with iterators. But indexing is verry intricate</span>
-        <span class='comment'>// here…</span>
+        <span class="comment">// NOTE: Please read that before thinking all those `unsafe_whatever` should be bannished.</span>
+        <span class="comment">// The whole point of having this `recursion_template` stuff is to speed up the</span>
+        <span class="comment">// computations having exact precomputed indices.</span>
+        <span class="comment">// Using safe accesses to vectors kind of makes this useless sinces each array access will</span>
+        <span class="comment">// be much slower.</span>
+        <span class="comment">// That is why we use unsafe indexing here. Nothing personal, just a huge need of</span>
+        <span class="comment">// performances :p</span>
+        <span class="comment">// There might be a whay to to this nicely with iterators. But indexing is verry intricate</span>
+        <span class="comment">// here…</span>
 
-        <span class='comment'>/*
+        <span class="comment">/*
          * first loop: compute all the determinants
          */</span>
-        <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='ident'>end</span> <span class='kw'>in</span> <span class='ident'>recursion</span>.<span class='ident'>offsets</span>[<span class='number'>2</span> ..].<span class='ident'>iter</span>() { <span class='comment'>// FIXME: try to transform this using a `window_iter()`</span>
-            <span class='comment'>// for each sub-simplex ...</span>
-            <span class='kw'>while</span> <span class='ident'>curr</span> <span class='op'>!=</span> <span class='ident'>end</span> { <span class='comment'>// FIXME: replace this `while` by a `for` when a range with custom increment exist</span>
-                <span class='kw'>unsafe</span> {
-                    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>determinant</span>: <span class='ident'>P</span>::<span class='ident'>Real</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
-                    <span class='kw'>let</span> <span class='ident'>kpt</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>points</span>[..].<span class='ident'>get_unchecked</span>(<span class='kw-2'>*</span><span class='ident'>recursion</span>.<span class='ident'>permutation_list</span>[..].<span class='ident'>get_unchecked</span>(<span class='ident'>curr</span> <span class='op'>+</span> <span class='number'>1usize</span>));
-                    <span class='kw'>let</span> <span class='ident'>jpt</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>points</span>[..].<span class='ident'>get_unchecked</span>(<span class='kw-2'>*</span><span class='ident'>recursion</span>.<span class='ident'>permutation_list</span>[..].<span class='ident'>get_unchecked</span>(<span class='ident'>curr</span>));
+        <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">end</span> <span class="kw">in</span> <span class="ident">recursion</span>.<span class="ident">offsets</span>[<span class="number">2</span> ..].<span class="ident">iter</span>() { <span class="comment">// FIXME: try to transform this using a `window_iter()`</span>
+            <span class="comment">// for each sub-simplex ...</span>
+            <span class="kw">while</span> <span class="ident">curr</span> <span class="op">!=</span> <span class="ident">end</span> { <span class="comment">// FIXME: replace this `while` by a `for` when a range with custom increment exist</span>
+                <span class="kw">unsafe</span> {
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">determinant</span>: <span class="ident">P</span>::<span class="ident">Real</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">zero</span>();
+                    <span class="kw">let</span> <span class="ident">kpt</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">points</span>[..].<span class="ident">get_unchecked</span>(<span class="kw-2">*</span><span class="ident">recursion</span>.<span class="ident">permutation_list</span>[..].<span class="ident">get_unchecked</span>(<span class="ident">curr</span> <span class="op">+</span> <span class="number">1usize</span>));
+                    <span class="kw">let</span> <span class="ident">jpt</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">points</span>[..].<span class="ident">get_unchecked</span>(<span class="kw-2">*</span><span class="ident">recursion</span>.<span class="ident">permutation_list</span>[..].<span class="ident">get_unchecked</span>(<span class="ident">curr</span>));
 
-                    <span class='comment'>// ... with curr_num_pts points ...</span>
-                    <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='ident'>curr</span> <span class='op'>+</span> <span class='number'>1</span> .. <span class='ident'>curr</span> <span class='op'>+</span> <span class='number'>1</span> <span class='op'>+</span> <span class='ident'>curr_num_pts</span> {
-                        <span class='comment'>// ... compute its determinant.</span>
-                        <span class='kw'>let</span> <span class='ident'>i_pid</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>recursion</span>.<span class='ident'>permutation_list</span>[..].<span class='ident'>get_unchecked</span>(<span class='ident'>i</span>);
-                        <span class='kw'>let</span> <span class='ident'>sub_determinant</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>determinants</span>[..].<span class='ident'>get_unchecked</span>(<span class='kw-2'>*</span><span class='ident'>recursion</span>.<span class='ident'>sub_determinants</span>[..].<span class='ident'>get_unchecked</span>(<span class='ident'>i</span>));
-                        <span class='kw'>let</span> <span class='ident'>delta</span> <span class='op'>=</span> <span class='ident'>sub_determinant</span> <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>dot</span>(<span class='kw-2'>&amp;</span>(<span class='ident'>kpt</span> <span class='op'>-</span> <span class='ident'>jpt</span>), <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>points</span>[..].<span class='ident'>get_unchecked</span>(<span class='ident'>i_pid</span>).<span class='ident'>coordinates</span>());
+                    <span class="comment">// ... with curr_num_pts points ...</span>
+                    <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">curr</span> <span class="op">+</span> <span class="number">1</span> .. <span class="ident">curr</span> <span class="op">+</span> <span class="number">1</span> <span class="op">+</span> <span class="ident">curr_num_pts</span> {
+                        <span class="comment">// ... compute its determinant.</span>
+                        <span class="kw">let</span> <span class="ident">i_pid</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">recursion</span>.<span class="ident">permutation_list</span>[..].<span class="ident">get_unchecked</span>(<span class="ident">i</span>);
+                        <span class="kw">let</span> <span class="ident">sub_determinant</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">determinants</span>[..].<span class="ident">get_unchecked</span>(<span class="kw-2">*</span><span class="ident">recursion</span>.<span class="ident">sub_determinants</span>[..].<span class="ident">get_unchecked</span>(<span class="ident">i</span>));
+                        <span class="kw">let</span> <span class="ident">delta</span> <span class="op">=</span> <span class="ident">sub_determinant</span> <span class="op">*</span> <span class="ident">na</span>::<span class="ident">dot</span>(<span class="kw-2">&amp;</span>(<span class="ident">kpt</span> <span class="op">-</span> <span class="ident">jpt</span>), <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">points</span>[..].<span class="ident">get_unchecked</span>(<span class="ident">i_pid</span>).<span class="ident">coordinates</span>());
 
-                        <span class='ident'>determinant</span> <span class='op'>=</span> <span class='ident'>determinant</span> <span class='op'>+</span> <span class='ident'>delta</span>;
+                        <span class="ident">determinant</span> <span class="op">=</span> <span class="ident">determinant</span> <span class="op">+</span> <span class="ident">delta</span>;
                     }
 
-                    <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>determinants</span>.<span class='ident'>as_mut_ptr</span>().<span class='ident'>offset</span>(<span class='kw-2'>*</span><span class='ident'>recursion</span>.<span class='ident'>sub_determinants</span>[..].<span class='ident'>get_unchecked</span>(<span class='ident'>curr</span>) <span class='kw'>as</span> <span class='ident'>isize</span>) <span class='op'>=</span> <span class='ident'>determinant</span>;
+                    <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">determinants</span>.<span class="ident">as_mut_ptr</span>().<span class="ident">offset</span>(<span class="kw-2">*</span><span class="ident">recursion</span>.<span class="ident">sub_determinants</span>[..].<span class="ident">get_unchecked</span>(<span class="ident">curr</span>) <span class="kw">as</span> <span class="ident">isize</span>) <span class="op">=</span> <span class="ident">determinant</span>;
 
-                    <span class='ident'>curr</span> <span class='op'>=</span> <span class='ident'>curr</span> <span class='op'>+</span> <span class='ident'>curr_num_pts</span> <span class='op'>+</span> <span class='number'>1</span>; <span class='comment'>// points + removed point + determinant id</span>
+                    <span class="ident">curr</span> <span class="op">=</span> <span class="ident">curr</span> <span class="op">+</span> <span class="ident">curr_num_pts</span> <span class="op">+</span> <span class="number">1</span>; <span class="comment">// points + removed point + determinant id</span>
                 }
             }
 
-            <span class='ident'>curr_num_pts</span> <span class='op'>=</span> <span class='ident'>curr_num_pts</span> <span class='op'>+</span> <span class='number'>1</span>;
+            <span class="ident">curr_num_pts</span> <span class="op">=</span> <span class="ident">curr_num_pts</span> <span class="op">+</span> <span class="number">1</span>;
         }
 
-        <span class='comment'>/*
+        <span class="comment">/*
          * second loop: find the subsimplex containing the projection
          */</span>
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>offsets_iter</span> <span class='op'>=</span> <span class='ident'>recursion</span>.<span class='ident'>offsets</span>[..].<span class='ident'>iter</span>().<span class='ident'>rev</span>();
-        <span class='kw'>let</span>     _            <span class='op'>=</span> <span class='ident'>offsets_iter</span>.<span class='ident'>next</span>(); <span class='comment'>// skip the first offset</span>
-        <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='ident'>end</span> <span class='kw'>in</span> <span class='ident'>offsets_iter</span> {
-            <span class='comment'>// for each sub-simplex ...</span>
-            <span class='kw'>while</span> <span class='ident'>curr</span> <span class='op'>!=</span> <span class='ident'>end</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>foundit</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offsets_iter</span> <span class="op">=</span> <span class="ident">recursion</span>.<span class="ident">offsets</span>[..].<span class="ident">iter</span>().<span class="ident">rev</span>();
+        <span class="kw">let</span>     _            <span class="op">=</span> <span class="ident">offsets_iter</span>.<span class="ident">next</span>(); <span class="comment">// skip the first offset</span>
+        <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">end</span> <span class="kw">in</span> <span class="ident">offsets_iter</span> {
+            <span class="comment">// for each sub-simplex ...</span>
+            <span class="kw">while</span> <span class="ident">curr</span> <span class="op">!=</span> <span class="ident">end</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">foundit</span> <span class="op">=</span> <span class="bool-val">true</span>;
 
-                <span class='comment'>// ... with curr_num_pts points permutations ...</span>
-                <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0usize</span> .. <span class='ident'>curr_num_pts</span> {
-                    <span class='kw'>unsafe</span> {
-                        <span class='comment'>// ... see if its determinant is positive</span>
-                        <span class='kw'>let</span> <span class='ident'>det_id</span> <span class='op'>=</span> <span class='ident'>curr</span> <span class='op'>-</span> (<span class='ident'>i</span> <span class='op'>+</span> <span class='number'>1</span>) <span class='op'>*</span> <span class='ident'>curr_num_pts</span>;
-                        <span class='kw'>let</span> <span class='ident'>det</span>    <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>determinants</span>[..].<span class='ident'>get_unchecked</span>(<span class='kw-2'>*</span><span class='ident'>recursion</span>.<span class='ident'>sub_determinants</span>[..].<span class='ident'>get_unchecked</span>(<span class='ident'>det_id</span>));
+                <span class="comment">// ... with curr_num_pts points permutations ...</span>
+                <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0usize</span> .. <span class="ident">curr_num_pts</span> {
+                    <span class="kw">unsafe</span> {
+                        <span class="comment">// ... see if its determinant is positive</span>
+                        <span class="kw">let</span> <span class="ident">det_id</span> <span class="op">=</span> <span class="ident">curr</span> <span class="op">-</span> (<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>) <span class="op">*</span> <span class="ident">curr_num_pts</span>;
+                        <span class="kw">let</span> <span class="ident">det</span>    <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">determinants</span>[..].<span class="ident">get_unchecked</span>(<span class="kw-2">*</span><span class="ident">recursion</span>.<span class="ident">sub_determinants</span>[..].<span class="ident">get_unchecked</span>(<span class="ident">det_id</span>));
 
-                        <span class='kw'>if</span> <span class='ident'>det</span> <span class='op'>&gt;</span> <span class='ident'>na</span>::<span class='ident'>zero</span>() {
-                            <span class='comment'>// invalidate the children determinant</span>
-                            <span class='kw'>if</span> <span class='ident'>curr_num_pts</span> <span class='op'>&gt;</span> <span class='number'>1</span> {
-                                <span class='kw'>let</span> <span class='ident'>subdetid</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>recursion</span>.<span class='ident'>sub_determinants</span>[..].<span class='ident'>get_unchecked</span>(<span class='ident'>det_id</span> <span class='op'>+</span> <span class='number'>1</span>);
+                        <span class="kw">if</span> <span class="ident">det</span> <span class="op">&gt;</span> <span class="ident">na</span>::<span class="ident">zero</span>() {
+                            <span class="comment">// invalidate the children determinant</span>
+                            <span class="kw">if</span> <span class="ident">curr_num_pts</span> <span class="op">&gt;</span> <span class="number">1</span> {
+                                <span class="kw">let</span> <span class="ident">subdetid</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">recursion</span>.<span class="ident">sub_determinants</span>[..].<span class="ident">get_unchecked</span>(<span class="ident">det_id</span> <span class="op">+</span> <span class="number">1</span>);
 
-                                <span class='kw'>if</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>determinants</span>[..].<span class='ident'>get_unchecked</span>(<span class='ident'>subdetid</span>) <span class='op'>&gt;</span> <span class='ident'>na</span>::<span class='ident'>zero</span>() {
-                                    <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>determinants</span>.<span class='ident'>as_mut_ptr</span>().<span class='ident'>offset</span>(<span class='ident'>subdetid</span> <span class='kw'>as</span> <span class='ident'>isize</span>) <span class='op'>=</span> <span class='ident'>Bounded</span>::<span class='ident'>max_value</span>()
+                                <span class="kw">if</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">determinants</span>[..].<span class="ident">get_unchecked</span>(<span class="ident">subdetid</span>) <span class="op">&gt;</span> <span class="ident">na</span>::<span class="ident">zero</span>() {
+                                    <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">determinants</span>.<span class="ident">as_mut_ptr</span>().<span class="ident">offset</span>(<span class="ident">subdetid</span> <span class="kw">as</span> <span class="ident">isize</span>) <span class="op">=</span> <span class="ident">Bounded</span>::<span class="ident">max_value</span>()
                                 }
                             }
 
-                            <span class='comment'>// dont concider this sub-simplex if it has been invalidated by its</span>
-                            <span class='comment'>// parent(s)</span>
-                            <span class='kw'>if</span> <span class='ident'>det</span> <span class='op'>==</span> <span class='ident'>Bounded</span>::<span class='ident'>max_value</span>() {
-                                <span class='ident'>foundit</span> <span class='op'>=</span> <span class='bool-val'>false</span>
+                            <span class="comment">// dont concider this sub-simplex if it has been invalidated by its</span>
+                            <span class="comment">// parent(s)</span>
+                            <span class="kw">if</span> <span class="ident">det</span> <span class="op">==</span> <span class="ident">Bounded</span>::<span class="ident">max_value</span>() {
+                                <span class="ident">foundit</span> <span class="op">=</span> <span class="bool-val">false</span>
                             }
                         }
-                        <span class='kw'>else</span> {
-                            <span class='comment'>// we found a negative determinant: no projection possible here</span>
-                            <span class='ident'>foundit</span> <span class='op'>=</span> <span class='bool-val'>false</span>
+                        <span class="kw">else</span> {
+                            <span class="comment">// we found a negative determinant: no projection possible here</span>
+                            <span class="ident">foundit</span> <span class="op">=</span> <span class="bool-val">false</span>
                         }
                     }
                 }
 
-                <span class='kw'>if</span> <span class='ident'>foundit</span> {
-                    <span class='comment'>// we found a projection!</span>
-                    <span class='comment'>// re-run the same iteration but, this time, compute the projection</span>
-                    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>total_det</span>: <span class='ident'>P</span>::<span class='ident'>Real</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
-                    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>proj</span> <span class='op'>=</span> <span class='ident'>P</span>::<span class='ident'>origin</span>();
+                <span class="kw">if</span> <span class="ident">foundit</span> {
+                    <span class="comment">// we found a projection!</span>
+                    <span class="comment">// re-run the same iteration but, this time, compute the projection</span>
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">total_det</span>: <span class="ident">P</span>::<span class="ident">Real</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">zero</span>();
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">proj</span> <span class="op">=</span> <span class="ident">P</span>::<span class="ident">origin</span>();
 
-                    <span class='kw'>unsafe</span> {
-                        <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0usize</span> .. <span class='ident'>curr_num_pts</span> { <span class='comment'>// FIXME: change this when decreasing loops are implemented</span>
-                            <span class='comment'>// ... see if its determinant is positive</span>
-                            <span class='kw'>let</span> <span class='ident'>id</span>    <span class='op'>=</span> <span class='ident'>curr</span> <span class='op'>-</span> (<span class='ident'>i</span> <span class='op'>+</span> <span class='number'>1</span>) <span class='op'>*</span> <span class='ident'>curr_num_pts</span>;
-                            <span class='kw'>let</span> <span class='ident'>det</span>   <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>determinants</span>[..]
-                                              .<span class='ident'>get_unchecked</span>(<span class='kw-2'>*</span><span class='ident'>recursion</span>.<span class='ident'>sub_determinants</span>[..].<span class='ident'>get_unchecked</span>(<span class='ident'>id</span>));
+                    <span class="kw">unsafe</span> {
+                        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0usize</span> .. <span class="ident">curr_num_pts</span> { <span class="comment">// FIXME: change this when decreasing loops are implemented</span>
+                            <span class="comment">// ... see if its determinant is positive</span>
+                            <span class="kw">let</span> <span class="ident">id</span>    <span class="op">=</span> <span class="ident">curr</span> <span class="op">-</span> (<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>) <span class="op">*</span> <span class="ident">curr_num_pts</span>;
+                            <span class="kw">let</span> <span class="ident">det</span>   <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">determinants</span>[..]
+                                              .<span class="ident">get_unchecked</span>(<span class="kw-2">*</span><span class="ident">recursion</span>.<span class="ident">sub_determinants</span>[..].<span class="ident">get_unchecked</span>(<span class="ident">id</span>));
 
-                            <span class='ident'>total_det</span> <span class='op'>=</span> <span class='ident'>total_det</span> <span class='op'>+</span> <span class='ident'>det</span>;
-                            <span class='ident'>proj</span>.<span class='ident'>axpy</span>(<span class='ident'>det</span>, <span class='self'>self</span>.<span class='ident'>points</span>[..].<span class='ident'>get_unchecked</span>(<span class='kw-2'>*</span><span class='ident'>recursion</span>.<span class='ident'>permutation_list</span>[..].<span class='ident'>get_unchecked</span>(<span class='ident'>id</span>)));
+                            <span class="ident">total_det</span> <span class="op">=</span> <span class="ident">total_det</span> <span class="op">+</span> <span class="ident">det</span>;
+                            <span class="ident">proj</span>.<span class="ident">axpy</span>(<span class="ident">det</span>, <span class="self">self</span>.<span class="ident">points</span>[..].<span class="ident">get_unchecked</span>(<span class="kw-2">*</span><span class="ident">recursion</span>.<span class="ident">permutation_list</span>[..].<span class="ident">get_unchecked</span>(<span class="ident">id</span>)));
                         }
 
-                        <span class='kw'>if</span> <span class='ident'>reduce</span> {
-                            <span class='comment'>// we need to reduce the simplex</span>
-                            <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0usize</span> .. <span class='ident'>curr_num_pts</span> {
-                                <span class='kw'>let</span> <span class='ident'>id</span> <span class='op'>=</span> <span class='ident'>curr</span> <span class='op'>-</span> (<span class='ident'>i</span> <span class='op'>+</span> <span class='number'>1</span>) <span class='op'>*</span> <span class='ident'>curr_num_pts</span>;
-                                <span class='self'>self</span>.<span class='ident'>exchange_points</span>.<span class='ident'>push</span>(
-                                    <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>points</span>[..].<span class='ident'>get_unchecked</span>(
-                                        <span class='kw-2'>*</span><span class='ident'>recursion</span>.<span class='ident'>permutation_list</span>[..].<span class='ident'>get_unchecked</span>(<span class='ident'>id</span>)));
+                        <span class="kw">if</span> <span class="ident">reduce</span> {
+                            <span class="comment">// we need to reduce the simplex</span>
+                            <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0usize</span> .. <span class="ident">curr_num_pts</span> {
+                                <span class="kw">let</span> <span class="ident">id</span> <span class="op">=</span> <span class="ident">curr</span> <span class="op">-</span> (<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>) <span class="op">*</span> <span class="ident">curr_num_pts</span>;
+                                <span class="self">self</span>.<span class="ident">exchange_points</span>.<span class="ident">push</span>(
+                                    <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">points</span>[..].<span class="ident">get_unchecked</span>(
+                                        <span class="kw-2">*</span><span class="ident">recursion</span>.<span class="ident">permutation_list</span>[..].<span class="ident">get_unchecked</span>(<span class="ident">id</span>)));
                             }
 
-                            <span class='ident'>mem</span>::<span class='ident'>swap</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>exchange_points</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>points</span>);
-                            <span class='self'>self</span>.<span class='ident'>exchange_points</span>.<span class='ident'>clear</span>();
+                            <span class="ident">mem</span>::<span class="ident">swap</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">exchange_points</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">points</span>);
+                            <span class="self">self</span>.<span class="ident">exchange_points</span>.<span class="ident">clear</span>();
                         }
                     }
 
-                    <span class='kw'>return</span> <span class='ident'>proj</span> <span class='op'>/</span> <span class='ident'>total_det</span>;
+                    <span class="kw">return</span> <span class="ident">proj</span> <span class="op">/</span> <span class="ident">total_det</span>;
                 }
 
-                <span class='ident'>curr</span> <span class='op'>=</span> <span class='ident'>curr</span> <span class='op'>-</span> <span class='ident'>curr_num_pts</span> <span class='op'>*</span> <span class='ident'>curr_num_pts</span>;
+                <span class="ident">curr</span> <span class="op">=</span> <span class="ident">curr</span> <span class="op">-</span> <span class="ident">curr_num_pts</span> <span class="op">*</span> <span class="ident">curr_num_pts</span>;
             }
 
-            <span class='ident'>curr_num_pts</span> <span class='op'>=</span> <span class='ident'>curr_num_pts</span> <span class='op'>-</span> <span class='number'>1</span>;
+            <span class="ident">curr_num_pts</span> <span class="op">=</span> <span class="ident">curr_num_pts</span> <span class="op">-</span> <span class="number">1</span>;
         }
 
-        <span class='ident'>P</span>::<span class='ident'>origin</span>()
+        <span class="ident">P</span>::<span class="ident">origin</span>()
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> <span class='ident'>Simplex</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>JohnsonSimplex</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>reset</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>pt</span>: <span class='ident'>P</span>) {
-        <span class='self'>self</span>.<span class='ident'>points</span>.<span class='ident'>clear</span>();
-        <span class='self'>self</span>.<span class='ident'>points</span>.<span class='ident'>push</span>(<span class='ident'>pt</span>);
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span> <span class="ident">Simplex</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">JohnsonSimplex</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">reset</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pt</span>: <span class="ident">P</span>) {
+        <span class="self">self</span>.<span class="ident">points</span>.<span class="ident">clear</span>();
+        <span class="self">self</span>.<span class="ident">points</span>.<span class="ident">push</span>(<span class="ident">pt</span>);
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>dimension</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='self'>self</span>.<span class='ident'>points</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='number'>1</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">dimension</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="self">self</span>.<span class="ident">points</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>max_sq_len</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span>::<span class='ident'>Real</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>max_sq_len</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>();
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">max_sq_len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">P</span>::<span class="ident">Real</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">max_sq_len</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">zero</span>();
 
-        <span class='kw'>for</span> <span class='ident'>p</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>points</span>.<span class='ident'>iter</span>() {
-            <span class='kw'>let</span> <span class='ident'>norm</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>norm_squared</span>(<span class='kw-2'>&amp;</span><span class='ident'>p</span>.<span class='ident'>coordinates</span>());
+        <span class="kw">for</span> <span class="ident">p</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">points</span>.<span class="ident">iter</span>() {
+            <span class="kw">let</span> <span class="ident">norm</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">norm_squared</span>(<span class="kw-2">&amp;</span><span class="ident">p</span>.<span class="ident">coordinates</span>());
 
-            <span class='kw'>if</span> <span class='ident'>norm</span> <span class='op'>&gt;</span> <span class='ident'>max_sq_len</span> {
-                <span class='ident'>max_sq_len</span> <span class='op'>=</span> <span class='ident'>norm</span>
+            <span class="kw">if</span> <span class="ident">norm</span> <span class="op">&gt;</span> <span class="ident">max_sq_len</span> {
+                <span class="ident">max_sq_len</span> <span class="op">=</span> <span class="ident">norm</span>
             }
         }
 
-        <span class='ident'>max_sq_len</span>
+        <span class="ident">max_sq_len</span>
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>contains_point</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>pt</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>points</span>.<span class='ident'>iter</span>().<span class='ident'>any</span>(<span class='op'>|</span><span class='ident'>v</span><span class='op'>|</span> <span class='ident'>pt</span> <span class='op'>==</span> <span class='ident'>v</span>)
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">contains_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pt</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">points</span>.<span class="ident">iter</span>().<span class="ident">any</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">pt</span> <span class="op">==</span> <span class="ident">v</span>)
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>add_point</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>pt</span>: <span class='ident'>P</span>) {
-        <span class='self'>self</span>.<span class='ident'>points</span>.<span class='ident'>push</span>(<span class='ident'>pt</span>);
-        <span class='macro'>assert</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>points</span>.<span class='ident'>len</span>() <span class='op'>&lt;=</span> <span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span>() <span class='op'>+</span> <span class='number'>1</span>);
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">add_point</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pt</span>: <span class="ident">P</span>) {
+        <span class="self">self</span>.<span class="ident">points</span>.<span class="ident">push</span>(<span class="ident">pt</span>);
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">points</span>.<span class="ident">len</span>() <span class="op">&lt;=</span> <span class="ident">na</span>::<span class="ident">dimension</span>::<span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Vector</span><span class="op">&gt;</span>() <span class="op">+</span> <span class="number">1</span>);
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>project_origin_and_reduce</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span> {
-        <span class='self'>self</span>.<span class='ident'>do_project_origin</span>(<span class='bool-val'>true</span>)
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">project_origin_and_reduce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">P</span> {
+        <span class="self">self</span>.<span class="ident">do_project_origin</span>(<span class="bool-val">true</span>)
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>project_origin</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span> {
-        <span class='self'>self</span>.<span class='ident'>do_project_origin</span>(<span class='bool-val'>false</span>)
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">project_origin</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">P</span> {
+        <span class="self">self</span>.<span class="ident">do_project_origin</span>(<span class="bool-val">false</span>)
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>modify_pnts</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='ident'>Fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>P</span>)) {
-        <span class='kw'>for</span> <span class='ident'>pt</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>points</span>.<span class='ident'>iter_mut</span>() {
-            <span class='ident'>f</span>(<span class='ident'>pt</span>)
+    <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">modify_pnts</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">P</span>)) {
+        <span class="kw">for</span> <span class="ident">pt</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">points</span>.<span class="ident">iter_mut</span>() {
+            <span class="ident">f</span>(<span class="ident">pt</span>)
         }
     }
 }

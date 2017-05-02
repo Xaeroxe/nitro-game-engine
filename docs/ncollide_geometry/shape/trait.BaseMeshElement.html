@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,24 +43,24 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>ncollide_geometry</a>::<wbr><a href='index.html'>shape</a>::<wbr><a class='trait' href=''>BaseMeshElement</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>ncollide_geometry</a>::<wbr><a href='index.html'>shape</a>::<wbr><a class="trait" href=''>BaseMeshElement</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/ncollide_geometry/shape/base_mesh.rs.html#14-17' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait BaseMeshElement&lt;I, P&gt; {
-    fn <a href='#tymethod.new_with_vertices_and_indices' class='fnname'>new_with_vertices_and_indices</a>(_: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a>P<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>, _: &amp;I) -&gt; Self;
+    fn <a href='#tymethod.new_with_vertices_and_indices' class='fnname'>new_with_vertices_and_indices</a>(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a>P<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, _: &amp;I) -&gt; Self;
 }</pre><div class='docblock'><p>Trait implemented by elements usable on the Mesh.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.new_with_vertices_and_indices' class='method'><span id='new_with_vertices_and_indices.v' class='invisible'><code>fn <a href='#tymethod.new_with_vertices_and_indices' class='fnname'>new_with_vertices_and_indices</a>(_: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a>P<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>, _: &amp;I) -&gt; Self</code></span></h3><div class='docblock'><p>Creates a new mesh element from a set of vertices and indices.</p>
+        <h3 id='tymethod.new_with_vertices_and_indices' class='method'><span id='new_with_vertices_and_indices.v' class='invisible'><code>fn <a href='#tymethod.new_with_vertices_and_indices' class='fnname'>new_with_vertices_and_indices</a>(_: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a>P<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, _: &amp;I) -&gt; Self</code></span></h3><div class='docblock'><p>Creates a new mesh element from a set of vertices and indices.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;P:&nbsp;<a class='trait' href='../../ncollide_math/point/trait.Point.html' title='ncollide_math::point::Point'>Point</a>&gt; BaseMeshElement&lt;<a class='type' href='../../nalgebra/geometry/point_alias/type.Point2.html' title='nalgebra::geometry::point_alias::Point2'>Point2</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;, P&gt; for <a class='struct' href='../../ncollide_geometry/shape/struct.Segment.html' title='ncollide_geometry::shape::Segment'>Segment</a>&lt;P&gt;</code></li>
-<li><code>impl&lt;P:&nbsp;<a class='trait' href='../../ncollide_math/point/trait.Point.html' title='ncollide_math::point::Point'>Point</a>&gt; BaseMeshElement&lt;<a class='type' href='../../nalgebra/geometry/point_alias/type.Point3.html' title='nalgebra::geometry::point_alias::Point3'>Point3</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;, P&gt; for <a class='struct' href='../../ncollide_geometry/shape/struct.Triangle.html' title='ncollide_geometry::shape::Triangle'>Triangle</a>&lt;P&gt;</code></li>
+    <li><code>impl&lt;P:&nbsp;<a class="trait" href="../../ncollide_math/point/trait.Point.html" title="trait ncollide_math::point::Point">Point</a>&gt; BaseMeshElement&lt;<a class="type" href="../../nalgebra/geometry/point_alias/type.Point2.html" title="type nalgebra::geometry::point_alias::Point2">Point2</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;, P&gt; for <a class="struct" href="../../ncollide_geometry/shape/struct.Segment.html" title="struct ncollide_geometry::shape::Segment">Segment</a>&lt;P&gt;</code></li>
+<li><code>impl&lt;P:&nbsp;<a class="trait" href="../../ncollide_math/point/trait.Point.html" title="trait ncollide_math::point::Point">Point</a>&gt; BaseMeshElement&lt;<a class="type" href="../../nalgebra/geometry/point_alias/type.Point3.html" title="type nalgebra::geometry::point_alias::Point3">Point3</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>&gt;, P&gt; for <a class="struct" href="../../ncollide_geometry/shape/struct.Triangle.html" title="struct ncollide_geometry::shape::Triangle">Triangle</a>&lt;P&gt;</code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/ncollide_geometry/shape/trait.BaseMeshElement.js">
                  </script></section>

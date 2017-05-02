@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -64,28 +64,28 @@
 <span id="19">19</span>
 <span id="20">20</span>
 <span id="21">21</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Persistant collision detection algorithms to compute contact points.</span>
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>inline</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>contact_generator</span>::{<span class='ident'>ContactGenerator</span>, <span class='ident'>ContactDispatcher</span>, <span class='ident'>ContactAlgorithm</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>default_contact_dispatcher</span>::<span class='ident'>DefaultContactDispatcher</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>ball_ball_contact_generator</span>::<span class='ident'>BallBallContactGenerator</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>plane_support_map_contact_generator</span>::{<span class='ident'>PlaneSupportMapContactGenerator</span>, <span class='ident'>SupportMapPlaneContactGenerator</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>support_map_support_map_contact_generator</span>::<span class='ident'>SupportMapSupportMapContactGenerator</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>incremental_contact_manifold_generator</span>::<span class='ident'>IncrementalContactManifoldGenerator</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>one_shot_contact_manifold_generator</span>::<span class='ident'>OneShotContactManifoldGenerator</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>composite_shape_shape_contact_generator</span>::{<span class='ident'>CompositeShapeShapeContactGenerator</span>, <span class='ident'>ShapeCompositeShapeContactGenerator</span>};
+</pre><pre class="rust ">
+<span class="doccomment">//! Persistant collision detection algorithms to compute contact points.</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">contact_generator</span>::{<span class="ident">ContactGenerator</span>, <span class="ident">ContactDispatcher</span>, <span class="ident">ContactAlgorithm</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">default_contact_dispatcher</span>::<span class="ident">DefaultContactDispatcher</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ball_ball_contact_generator</span>::<span class="ident">BallBallContactGenerator</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">plane_support_map_contact_generator</span>::{<span class="ident">PlaneSupportMapContactGenerator</span>, <span class="ident">SupportMapPlaneContactGenerator</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">support_map_support_map_contact_generator</span>::<span class="ident">SupportMapSupportMapContactGenerator</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">incremental_contact_manifold_generator</span>::<span class="ident">IncrementalContactManifoldGenerator</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">one_shot_contact_manifold_generator</span>::<span class="ident">OneShotContactManifoldGenerator</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">composite_shape_shape_contact_generator</span>::{<span class="ident">CompositeShapeShapeContactGenerator</span>, <span class="ident">ShapeCompositeShapeContactGenerator</span>};
 
-<span class='comment'>// FIXME: un-hide this and move everything to a folder.</span>
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>contact_generator</span>;
-<span class='kw'>mod</span> <span class='ident'>default_contact_dispatcher</span>;
-<span class='kw'>mod</span> <span class='ident'>ball_ball_contact_generator</span>;
-<span class='kw'>mod</span> <span class='ident'>plane_support_map_contact_generator</span>;
-<span class='kw'>mod</span> <span class='ident'>support_map_support_map_contact_generator</span>;
-<span class='kw'>mod</span> <span class='ident'>incremental_contact_manifold_generator</span>;
-<span class='kw'>mod</span> <span class='ident'>one_shot_contact_manifold_generator</span>;
-<span class='kw'>mod</span> <span class='ident'>composite_shape_shape_contact_generator</span>;
+<span class="comment">// FIXME: un-hide this and move everything to a folder.</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">contact_generator</span>;
+<span class="kw">mod</span> <span class="ident">default_contact_dispatcher</span>;
+<span class="kw">mod</span> <span class="ident">ball_ball_contact_generator</span>;
+<span class="kw">mod</span> <span class="ident">plane_support_map_contact_generator</span>;
+<span class="kw">mod</span> <span class="ident">support_map_support_map_contact_generator</span>;
+<span class="kw">mod</span> <span class="ident">incremental_contact_manifold_generator</span>;
+<span class="kw">mod</span> <span class="ident">one_shot_contact_manifold_generator</span>;
+<span class="kw">mod</span> <span class="ident">composite_shape_shape_contact_generator</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

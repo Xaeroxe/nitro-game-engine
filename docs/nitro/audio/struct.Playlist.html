@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc struct">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,15 +43,15 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>nitro</a>::<wbr><a href='index.html'>audio</a>::<wbr><a class='struct' href=''>Playlist</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>nitro</a>::<wbr><a href='index.html'>audio</a>::<wbr><a class="struct" href=''>Playlist</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/nitro/audio_private/playlist.rs.html#12-22' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Playlist {
-    pub shuffle: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>,
-    pub loop_music: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>,
+    pub shuffle: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
+    pub loop_music: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
     // some fields omitted
 }</pre><div class='docblock'><p>Allows you to create and control playlists for music playback.</p>
 
@@ -59,32 +59,32 @@
 should be of assistance to you.  Apps can have one active playlist at a time which lives in 
 nitro::App.playlist.  To change the playlist stop App.playlist then assign a new playlist to
 App.playlist and then start App.playlist.</p>
-</div><h2 class='fields'>Fields</h2><span id='structfield.shuffle' class='structfield'>
+</div><h2 class='fields'>Fields</h2><span id='structfield.shuffle' class="structfield">
                            <span id='shuffle.v' class='invisible'>
-                           <code>shuffle: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>If this is true playlist will be shuffled on start and on loop</p>
-</div><span id='structfield.loop_music' class='structfield'>
+                           <code>shuffle: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code>
+                           </span></span><div class='docblock'><p>If this is true playlist will be shuffled on start and on loop</p>
+</div><span id='structfield.loop_music' class="structfield">
                            <span id='loop_music.v' class='invisible'>
-                           <code>loop_music: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>If this is true playlist will loop back to start when music is finished.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../../nitro/audio/struct.Playlist.html' title='nitro::audio::Playlist'>Playlist</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/nitro/audio_private/playlist.rs.html#24-113' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../../nitro/audio/struct.Playlist.html' title='nitro::audio::Playlist'>Playlist</a></code></span></h4>
+                           <code>loop_music: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code>
+                           </span></span><div class='docblock'><p>If this is true playlist will loop back to start when music is finished.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../nitro/audio/struct.Playlist.html" title="struct nitro::audio::Playlist">Playlist</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/nitro/audio_private/playlist.rs.html#24-113' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="struct" href="../../nitro/audio/struct.Playlist.html" title="struct nitro::audio::Playlist">Playlist</a></code></span></h4>
 <div class='docblock'><p>Creates a new playlist with no tracks, and shuffle and loop_music set to false.</p>
-</div><h4 id='method.start' class='method'><span id='start.v' class='invisible'><code>fn <a href='#method.start' class='fnname'>start</a>(&amp;mut self)</code></span></h4>
+</div><h4 id='method.start' class="method"><span id='start.v' class='invisible'><code>fn <a href='#method.start' class='fnname'>start</a>(&amp;mut self)</code></span></h4>
 <div class='docblock'><p>Start playing this playlist.</p>
 
 <p>Will not auto advance songs unless this playlist is attached to App::audio.playlist</p>
-</div><h4 id='method.stop' class='method'><span id='stop.v' class='invisible'><code>fn <a href='#method.stop' class='fnname'>stop</a>(&amp;mut self)</code></span></h4>
+</div><h4 id='method.stop' class="method"><span id='stop.v' class='invisible'><code>fn <a href='#method.stop' class='fnname'>stop</a>(&amp;mut self)</code></span></h4>
 <div class='docblock'><p>Stops music playback</p>
-</div><h4 id='method.next_track' class='method'><span id='next_track.v' class='invisible'><code>fn <a href='#method.next_track' class='fnname'>next_track</a>(&amp;mut self)</code></span></h4>
+</div><h4 id='method.next_track' class="method"><span id='next_track.v' class='invisible'><code>fn <a href='#method.next_track' class='fnname'>next_track</a>(&amp;mut self)</code></span></h4>
 <div class='docblock'><p>Advance to the next track in the playlist</p>
-</div><h4 id='method.play_track' class='method'><span id='play_track.v' class='invisible'><code>fn <a href='#method.play_track' class='fnname'>play_track</a>(&amp;mut self, track: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h4>
+</div><h4 id='method.play_track' class="method"><span id='play_track.v' class='invisible'><code>fn <a href='#method.play_track' class='fnname'>play_track</a>(&amp;mut self, track: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</code></span></h4>
 <div class='docblock'><p>Returns err if track is not a valid index into self.tracks</p>
-</div><h4 id='method.current_track' class='method'><span id='current_track.v' class='invisible'><code>fn <a href='#method.current_track' class='fnname'>current_track</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></span></h4>
-<h4 id='method.add_track' class='method'><span id='add_track.v' class='invisible'><code>fn <a href='#method.add_track' class='fnname'>add_track</a>(&amp;mut self, path: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code></span></h4>
+</div><h4 id='method.current_track' class="method"><span id='current_track.v' class='invisible'><code>fn <a href='#method.current_track' class='fnname'>current_track</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h4>
+<h4 id='method.add_track' class="method"><span id='add_track.v' class='invisible'><code>fn <a href='#method.add_track' class='fnname'>add_track</a>(&amp;mut self, path: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</code></span></h4>
 <div class='docblock'><p>Adds a new track to the playlist.  The first track added will be track 0 the second track
 will be track 1, so on so forth.</p>
-</div><h4 id='method.track_count' class='method'><span id='track_count.v' class='invisible'><code>fn <a href='#method.track_count' class='fnname'>track_count</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></span></h4>
+</div><h4 id='method.track_count' class="method"><span id='track_count.v' class='invisible'><code>fn <a href='#method.track_count' class='fnname'>track_count</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 

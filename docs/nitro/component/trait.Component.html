@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,15 +43,15 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>nitro</a>::<wbr><a href='index.html'>component</a>::<wbr><a class='trait' href=''>Component</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>nitro</a>::<wbr><a href='index.html'>component</a>::<wbr><a class="trait" href=''>Component</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/nitro/component/component.rs.html#12-22' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Component {
-    fn <a href='#tymethod.receive_message' class='fnname'>receive_message</a>(&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; app: &amp;mut <a class='struct' href='../../nitro/struct.App.html' title='nitro::App'>App</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; game_object: &amp;mut <a class='struct' href='../../nitro/struct.GameObject.html' title='nitro::GameObject'>GameObject</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; message: &amp;<a class='enum' href='../../nitro/component/enum.Message.html' title='nitro::component::Message'>Message</a>);
-    fn <a href='#tymethod.render_gui' class='fnname'>render_gui</a>(&amp;self, canvas: &amp;mut <a class='struct' href='../../nitro/graphics/struct.Canvas.html' title='nitro::graphics::Canvas'>Canvas</a>, game_object: &amp;<a class='struct' href='../../nitro/struct.GameObject.html' title='nitro::GameObject'>GameObject</a>);
+    fn <a href='#tymethod.receive_message' class='fnname'>receive_message</a>(&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; app: &amp;mut <a class="struct" href="../../nitro/struct.App.html" title="struct nitro::App">App</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; game_object: &amp;mut <a class="struct" href="../../nitro/struct.GameObject.html" title="struct nitro::GameObject">GameObject</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; message: &amp;<a class="enum" href="../../nitro/component/enum.Message.html" title="enum nitro::component::Message">Message</a>);
+    fn <a href='#tymethod.render_gui' class='fnname'>render_gui</a>(&amp;self, canvas: &amp;mut <a class="struct" href="../../nitro/graphics/struct.Canvas.html" title="struct nitro::graphics::Canvas">Canvas</a>, game_object: &amp;<a class="struct" href="../../nitro/struct.GameObject.html" title="struct nitro::GameObject">GameObject</a>);
 }</pre><div class='docblock'><p>Allows GameObjects to be extended with additional behavior.</p>
 
 <p>This trait and understanding of it is essential to working in Nitro, most of your game logic
@@ -61,10 +61,10 @@ to.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.receive_message' class='method'><span id='receive_message.v' class='invisible'><code>fn <a href='#tymethod.receive_message' class='fnname'>receive_message</a>(&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; app: &amp;mut <a class='struct' href='../../nitro/struct.App.html' title='nitro::App'>App</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; game_object: &amp;mut <a class='struct' href='../../nitro/struct.GameObject.html' title='nitro::GameObject'>GameObject</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; message: &amp;<a class='enum' href='../../nitro/component/enum.Message.html' title='nitro::component::Message'>Message</a>)</code></span></h3><div class='docblock'><p>This function is called whenever the app has a message for your Component.  By using a
+        <h3 id='tymethod.receive_message' class='method'><span id='receive_message.v' class='invisible'><code>fn <a href='#tymethod.receive_message' class='fnname'>receive_message</a>(&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; app: &amp;mut <a class="struct" href="../../nitro/struct.App.html" title="struct nitro::App">App</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; game_object: &amp;mut <a class="struct" href="../../nitro/struct.GameObject.html" title="struct nitro::GameObject">GameObject</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; message: &amp;<a class="enum" href="../../nitro/component/enum.Message.html" title="enum nitro::component::Message">Message</a>)</code></span></h3><div class='docblock'><p>This function is called whenever the app has a message for your Component.  By using a
 match statement on the message you can make your component respond to a variety of events
 generated by the engine.</p>
-</div><h3 id='tymethod.render_gui' class='method'><span id='render_gui.v' class='invisible'><code>fn <a href='#tymethod.render_gui' class='fnname'>render_gui</a>(&amp;self, canvas: &amp;mut <a class='struct' href='../../nitro/graphics/struct.Canvas.html' title='nitro::graphics::Canvas'>Canvas</a>, game_object: &amp;<a class='struct' href='../../nitro/struct.GameObject.html' title='nitro::GameObject'>GameObject</a>)</code></span></h3><div class='docblock'><p>Called whenever the game is ready for you to render a gui.  If you have no gui to render
+</div><h3 id='tymethod.render_gui' class='method'><span id='render_gui.v' class='invisible'><code>fn <a href='#tymethod.render_gui' class='fnname'>render_gui</a>(&amp;self, canvas: &amp;mut <a class="struct" href="../../nitro/graphics/struct.Canvas.html" title="struct nitro::graphics::Canvas">Canvas</a>, game_object: &amp;<a class="struct" href="../../nitro/struct.GameObject.html" title="struct nitro::GameObject">GameObject</a>)</code></span></h3><div class='docblock'><p>Called whenever the game is ready for you to render a gui.  If you have no gui to render
 then do nothing in this function.  This will be called for every component on every
 GameObject every frame.</p>
 </div></div>

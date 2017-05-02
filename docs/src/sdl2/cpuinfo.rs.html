@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -98,61 +98,61 @@
 <span id="53">53</span>
 <span id="54">54</span>
 <span id="55">55</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>sys</span>::<span class='ident'>cpuinfo</span> <span class='kw'>as</span> <span class='ident'>ll</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">cpuinfo</span> <span class="kw">as</span> <span class="ident">ll</span>;
 
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>CACHELINESIZE</span>: <span class='ident'>u8</span> <span class='op'>=</span> <span class='number'>128</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CACHELINESIZE</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">128</span>;
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cpu_count</span>() <span class='op'>-&gt;</span> <span class='ident'>i32</span> {
-    <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_GetCPUCount</span>() }
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cpu_count</span>() <span class="op">-&gt;</span> <span class="ident">i32</span> {
+    <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_GetCPUCount</span>() }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>cpu_cache_line_size</span>() <span class='op'>-&gt;</span> <span class='ident'>i32</span> {
-    <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_GetCPUCacheLineSize</span>() }
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">cpu_cache_line_size</span>() <span class="op">-&gt;</span> <span class="ident">i32</span> {
+    <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_GetCPUCacheLineSize</span>() }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>has_rdtsc</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-    <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_HasRDTSC</span>() <span class='op'>==</span> <span class='number'>1</span> }
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_rdtsc</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_HasRDTSC</span>() <span class="op">==</span> <span class="number">1</span> }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>has_alti_vec</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-    <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_HasAltiVec</span>() <span class='op'>==</span> <span class='number'>1</span> }
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_alti_vec</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_HasAltiVec</span>() <span class="op">==</span> <span class="number">1</span> }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>has_mmx</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-    <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_HasMMX</span>() <span class='op'>==</span> <span class='number'>1</span> }
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_mmx</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_HasMMX</span>() <span class="op">==</span> <span class="number">1</span> }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>has_3d_now</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-    <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_Has3DNow</span>() <span class='op'>==</span> <span class='number'>1</span> }
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_3d_now</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_Has3DNow</span>() <span class="op">==</span> <span class="number">1</span> }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>has_sse</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-    <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_HasSSE</span>() <span class='op'>==</span> <span class='number'>1</span> }
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_sse</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_HasSSE</span>() <span class="op">==</span> <span class="number">1</span> }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>has_sse2</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-    <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_HasSSE2</span>() <span class='op'>==</span> <span class='number'>1</span> }
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_sse2</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_HasSSE2</span>() <span class="op">==</span> <span class="number">1</span> }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>has_sse3</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-    <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_HasSSE3</span>() <span class='op'>==</span> <span class='number'>1</span> }
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_sse3</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_HasSSE3</span>() <span class="op">==</span> <span class="number">1</span> }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>has_sse41</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-    <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_HasSSE41</span>() <span class='op'>==</span> <span class='number'>1</span> }
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_sse41</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_HasSSE41</span>() <span class="op">==</span> <span class="number">1</span> }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>has_sse42</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-    <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_HasSSE42</span>() <span class='op'>==</span> <span class='number'>1</span> }
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_sse42</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_HasSSE42</span>() <span class="op">==</span> <span class="number">1</span> }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>has_avx</span>() <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-    <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_HasAVX</span>() <span class='op'>==</span> <span class='number'>1</span> }
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_avx</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_HasAVX</span>() <span class="op">==</span> <span class="number">1</span> }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>system_ram</span>() <span class='op'>-&gt;</span> <span class='ident'>i32</span> {
-    <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_GetSystemRAM</span>() }
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">system_ram</span>() <span class="op">-&gt;</span> <span class="ident">i32</span> {
+    <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_GetSystemRAM</span>() }
 }
 </pre>
 </section>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,50 +43,50 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>nalgebra</a>::<wbr><a class='trait' href=''>IterableMut</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>nalgebra</a>::<wbr><a class="trait" href=''>IterableMut</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/nalgebra/traits/structure.rs.html#220-223' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait IterableMut&lt;N&gt; {
-    fn <a href='#tymethod.iter_mut' class='fnname'>iter_mut</a>(&amp;mut self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/core/slice/struct.IterMut.html' title='core::slice::IterMut'>IterMut</a>&lt;N&gt;;
+    fn <a href='#tymethod.iter_mut' class='fnname'>iter_mut</a>(&amp;mut self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/core/slice/struct.IterMut.html" title="struct core::slice::IterMut">IterMut</a>&lt;N&gt;;
 }</pre><div class='docblock'><p>This is a workaround of current Rust limitations.</p>
 
 <p>Traits of mutable objects which can be iterated through like a vector.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.iter_mut' class='method'><span id='iter_mut.v' class='invisible'><code>fn <a href='#tymethod.iter_mut' class='fnname'>iter_mut</a>(&amp;mut self) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/core/slice/struct.IterMut.html' title='core::slice::IterMut'>IterMut</a>&lt;N&gt;</code></span></h3><div class='docblock'><p>Gets a vector-like read-write iterator.</p>
+        <h3 id='tymethod.iter_mut' class='method'><span id='iter_mut.v' class='invisible'><code>fn <a href='#tymethod.iter_mut' class='fnname'>iter_mut</a>(&amp;mut self) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/core/slice/struct.IterMut.html" title="struct core::slice::IterMut">IterMut</a>&lt;N&gt;</code></span></h3><div class='docblock'><p>Gets a vector-like read-write iterator.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.DVector.html' title='nalgebra::DVector'>DVector</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.DVector1.html' title='nalgebra::DVector1'>DVector1</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.DVector2.html' title='nalgebra::DVector2'>DVector2</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.DVector3.html' title='nalgebra::DVector3'>DVector3</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.DVector4.html' title='nalgebra::DVector4'>DVector4</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.DVector5.html' title='nalgebra::DVector5'>DVector5</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.DVector6.html' title='nalgebra::DVector6'>DVector6</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Vector1.html' title='nalgebra::Vector1'>Vector1</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Vector2.html' title='nalgebra::Vector2'>Vector2</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Vector3.html' title='nalgebra::Vector3'>Vector3</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Vector4.html' title='nalgebra::Vector4'>Vector4</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Vector5.html' title='nalgebra::Vector5'>Vector5</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Vector6.html' title='nalgebra::Vector6'>Vector6</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Point1.html' title='nalgebra::Point1'>Point1</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Point2.html' title='nalgebra::Point2'>Point2</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Point3.html' title='nalgebra::Point3'>Point3</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Point4.html' title='nalgebra::Point4'>Point4</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Point5.html' title='nalgebra::Point5'>Point5</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Point6.html' title='nalgebra::Point6'>Point6</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Quaternion.html' title='nalgebra::Quaternion'>Quaternion</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Matrix1.html' title='nalgebra::Matrix1'>Matrix1</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Matrix2.html' title='nalgebra::Matrix2'>Matrix2</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Matrix3.html' title='nalgebra::Matrix3'>Matrix3</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Matrix4.html' title='nalgebra::Matrix4'>Matrix4</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Matrix5.html' title='nalgebra::Matrix5'>Matrix5</a>&lt;N&gt;</code></li>
-<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class='struct' href='../nalgebra/struct.Matrix6.html' title='nalgebra::Matrix6'>Matrix6</a>&lt;N&gt;</code></li>
+    <li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.DVector.html" title="struct nalgebra::DVector">DVector</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.DVector1.html" title="struct nalgebra::DVector1">DVector1</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.DVector2.html" title="struct nalgebra::DVector2">DVector2</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.DVector3.html" title="struct nalgebra::DVector3">DVector3</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.DVector4.html" title="struct nalgebra::DVector4">DVector4</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.DVector5.html" title="struct nalgebra::DVector5">DVector5</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.DVector6.html" title="struct nalgebra::DVector6">DVector6</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Vector1.html" title="struct nalgebra::Vector1">Vector1</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Vector2.html" title="struct nalgebra::Vector2">Vector2</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Vector3.html" title="struct nalgebra::Vector3">Vector3</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Vector4.html" title="struct nalgebra::Vector4">Vector4</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Vector5.html" title="struct nalgebra::Vector5">Vector5</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Vector6.html" title="struct nalgebra::Vector6">Vector6</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Point1.html" title="struct nalgebra::Point1">Point1</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Point2.html" title="struct nalgebra::Point2">Point2</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Point3.html" title="struct nalgebra::Point3">Point3</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Point4.html" title="struct nalgebra::Point4">Point4</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Point5.html" title="struct nalgebra::Point5">Point5</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Point6.html" title="struct nalgebra::Point6">Point6</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Quaternion.html" title="struct nalgebra::Quaternion">Quaternion</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Matrix1.html" title="struct nalgebra::Matrix1">Matrix1</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Matrix2.html" title="struct nalgebra::Matrix2">Matrix2</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Matrix3.html" title="struct nalgebra::Matrix3">Matrix3</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Matrix4.html" title="struct nalgebra::Matrix4">Matrix4</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Matrix5.html" title="struct nalgebra::Matrix5">Matrix5</a>&lt;N&gt;</code></li>
+<li><code>impl&lt;N&gt; IterableMut&lt;N&gt; for <a class="struct" href="../nalgebra/struct.Matrix6.html" title="struct nalgebra::Matrix6">Matrix6</a>&lt;N&gt;</code></li>
 </ul><script type="text/javascript" async
                          src="../implementors/nalgebra/trait.IterableMut.js">
                  </script></section>

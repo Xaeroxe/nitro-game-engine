@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -76,39 +76,39 @@
 <span id="31">31</span>
 <span id="32">32</span>
 <span id="33">33</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='kw-2'>*</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>generics</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>ident</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>invoke</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>lifetime</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>path</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>qpath</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>ty</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>ty_param</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>where_predicate</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">generics</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ident</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">invoke</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">lifetime</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">path</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">qpath</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ty</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ty_param</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">where_predicate</span>;
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>id</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span>(<span class='ident'>id</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='ident'>Ident</span>
-    <span class='kw'>where</span> <span class='ident'>I</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Ident</span><span class='op'>&gt;</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">id</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">id</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="ident">Ident</span>
+    <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Ident</span><span class="op">&gt;</span>
 {
-    <span class='ident'>id</span>.<span class='ident'>into</span>()
+    <span class="ident">id</span>.<span class="ident">into</span>()
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_generics</span>(<span class='ident'>generics</span>: <span class='ident'>Generics</span>) <span class='op'>-&gt;</span> <span class='ident'>generics</span>::<span class='ident'>GenericsBuilder</span> {
-    <span class='ident'>generics</span>::<span class='ident'>GenericsBuilder</span>::<span class='ident'>from_generics</span>(<span class='ident'>generics</span>)
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_generics</span>(<span class="ident">generics</span>: <span class="ident">Generics</span>) <span class="op">-&gt;</span> <span class="ident">generics</span>::<span class="ident">GenericsBuilder</span> {
+    <span class="ident">generics</span>::<span class="ident">GenericsBuilder</span>::<span class="ident">from_generics</span>(<span class="ident">generics</span>)
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>where_predicate</span>() <span class='op'>-&gt;</span> <span class='ident'>where_predicate</span>::<span class='ident'>WherePredicateBuilder</span> {
-    <span class='ident'>where_predicate</span>::<span class='ident'>WherePredicateBuilder</span>::<span class='ident'>new</span>()
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">where_predicate</span>() <span class="op">-&gt;</span> <span class="ident">where_predicate</span>::<span class="ident">WherePredicateBuilder</span> {
+    <span class="ident">where_predicate</span>::<span class="ident">WherePredicateBuilder</span>::<span class="ident">new</span>()
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>ty</span>() <span class='op'>-&gt;</span> <span class='ident'>ty</span>::<span class='ident'>TyBuilder</span> {
-    <span class='ident'>ty</span>::<span class='ident'>TyBuilder</span>::<span class='ident'>new</span>()
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ty</span>() <span class="op">-&gt;</span> <span class="ident">ty</span>::<span class="ident">TyBuilder</span> {
+    <span class="ident">ty</span>::<span class="ident">TyBuilder</span>::<span class="ident">new</span>()
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>path</span>() <span class='op'>-&gt;</span> <span class='ident'>path</span>::<span class='ident'>PathBuilder</span> {
-    <span class='ident'>path</span>::<span class='ident'>PathBuilder</span>::<span class='ident'>new</span>()
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">path</span>() <span class="op">-&gt;</span> <span class="ident">path</span>::<span class="ident">PathBuilder</span> {
+    <span class="ident">path</span>::<span class="ident">PathBuilder</span>::<span class="ident">new</span>()
 }
 </pre>
 </section>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -154,116 +154,116 @@
 <span id="109">109</span>
 <span id="110">110</span>
 <span id="111">111</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
-<span class='kw'>use</span> <span class='ident'>sdl2</span>::<span class='ident'>mixer</span>::<span class='ident'>Chunk</span>;
-<span class='kw'>use</span> <span class='ident'>sdl2</span>::<span class='ident'>mixer</span>::<span class='ident'>Channel</span>;
-<span class='kw'>use</span> <span class='ident'>sdl2</span>::<span class='ident'>mixer</span>::<span class='ident'>Sdl2MixerContext</span>;
-<span class='kw'>use</span> <span class='ident'>sdl2</span>::<span class='ident'>mixer</span>;
-<span class='kw'>use</span> <span class='ident'>sdl2</span>::<span class='ident'>AudioSubsystem</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>PathBuf</span>;
-<span class='kw'>use</span> <span class='ident'>audio</span>::<span class='ident'>Playlist</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
+<span class="kw">use</span> <span class="ident">sdl2</span>::<span class="ident">mixer</span>::<span class="ident">Chunk</span>;
+<span class="kw">use</span> <span class="ident">sdl2</span>::<span class="ident">mixer</span>::<span class="ident">Channel</span>;
+<span class="kw">use</span> <span class="ident">sdl2</span>::<span class="ident">mixer</span>::<span class="ident">Sdl2MixerContext</span>;
+<span class="kw">use</span> <span class="ident">sdl2</span>::<span class="ident">mixer</span>;
+<span class="kw">use</span> <span class="ident">sdl2</span>::<span class="ident">AudioSubsystem</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">PathBuf</span>;
+<span class="kw">use</span> <span class="ident">audio</span>::<span class="ident">Playlist</span>;
 
-<span class='doccomment'>/// Responsible for controlling audio playback in the game.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This structure makes 128 sound channels available to the user of this library.</span>
-<span class='doccomment'>/// When member methods request a channel id that id must be between 0 and 127.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Audio</span> {
-    <span class='ident'>sound_cache</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>Chunk</span><span class='op'>&gt;</span>,
-    <span class='ident'>_audio</span>: <span class='ident'>AudioSubsystem</span>,
-    <span class='ident'>_mixer</span>: <span class='ident'>Sdl2MixerContext</span>,
-    <span class='kw'>pub</span> <span class='ident'>playlist</span>: <span class='ident'>Playlist</span>,
+<span class="doccomment">/// Responsible for controlling audio playback in the game.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This structure makes 128 sound channels available to the user of this library.</span>
+<span class="doccomment">/// When member methods request a channel id that id must be between 0 and 127.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Audio</span> {
+    <span class="ident">sound_cache</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Chunk</span><span class="op">&gt;</span>,
+    <span class="ident">_audio</span>: <span class="ident">AudioSubsystem</span>,
+    <span class="ident">_mixer</span>: <span class="ident">Sdl2MixerContext</span>,
+    <span class="kw">pub</span> <span class="ident">playlist</span>: <span class="ident">Playlist</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Audio</span> {
-    <span class='doccomment'>/// Plays a sound at a volume between 1.0 and 0.0</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// path is a filename relative to assets/sounds (assets\sounds on Windows)</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>play_sound</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>path</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>volume</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>chunk</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sound_cache</span>.<span class='ident'>get</span>(<span class='ident'>path</span>) {
-            <span class='kw'>let</span> <span class='ident'>channel</span> <span class='op'>=</span> <span class='ident'>Channel</span>::<span class='ident'>all</span>().<span class='ident'>play</span>(<span class='ident'>chunk</span>, <span class='number'>0</span>)<span class='question-mark'>?</span>;
-            <span class='ident'>channel</span>.<span class='ident'>set_volume</span>((<span class='ident'>volume</span> <span class='op'>*</span> <span class='number'>128.0</span>) <span class='kw'>as</span> <span class='ident'>i32</span>);
-            <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(());
+<span class="kw">impl</span> <span class="ident">Audio</span> {
+    <span class="doccomment">/// Plays a sound at a volume between 1.0 and 0.0</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// path is a filename relative to assets/sounds (assets\sounds on Windows)</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">play_sound</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">volume</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">chunk</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">sound_cache</span>.<span class="ident">get</span>(<span class="ident">path</span>) {
+            <span class="kw">let</span> <span class="ident">channel</span> <span class="op">=</span> <span class="ident">Channel</span>::<span class="ident">all</span>().<span class="ident">play</span>(<span class="ident">chunk</span>, <span class="number">0</span>)<span class="question-mark">?</span>;
+            <span class="ident">channel</span>.<span class="ident">set_volume</span>((<span class="ident">volume</span> <span class="op">*</span> <span class="number">128.0</span>) <span class="kw">as</span> <span class="ident">i32</span>);
+            <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
         }
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>file_path</span> <span class='op'>=</span> <span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='string'>&quot;assets&quot;</span>);
-        <span class='ident'>file_path</span>.<span class='ident'>push</span>(<span class='string'>&quot;sounds&quot;</span>);
-        <span class='ident'>file_path</span>.<span class='ident'>push</span>(<span class='ident'>path</span>);
-        <span class='kw'>let</span> <span class='ident'>chunk</span> <span class='op'>=</span> <span class='ident'>Chunk</span>::<span class='ident'>from_file</span>(<span class='ident'>file_path</span>)<span class='question-mark'>?</span>;
-        <span class='kw'>let</span> <span class='ident'>channel</span> <span class='op'>=</span> <span class='ident'>Channel</span>::<span class='ident'>all</span>().<span class='ident'>play</span>(<span class='kw-2'>&amp;</span><span class='ident'>chunk</span>, <span class='number'>0</span>)<span class='question-mark'>?</span>;
-        <span class='ident'>channel</span>.<span class='ident'>set_volume</span>((<span class='ident'>volume</span> <span class='op'>*</span> <span class='number'>128.0</span>) <span class='kw'>as</span> <span class='ident'>i32</span>);
-        <span class='self'>self</span>.<span class='ident'>sound_cache</span>.<span class='ident'>insert</span>(<span class='ident'>path</span>.<span class='ident'>to_owned</span>(), <span class='ident'>chunk</span>);
-        <span class='prelude-val'>Ok</span>(())
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">file_path</span> <span class="op">=</span> <span class="ident">PathBuf</span>::<span class="ident">from</span>(<span class="string">&quot;assets&quot;</span>);
+        <span class="ident">file_path</span>.<span class="ident">push</span>(<span class="string">&quot;sounds&quot;</span>);
+        <span class="ident">file_path</span>.<span class="ident">push</span>(<span class="ident">path</span>);
+        <span class="kw">let</span> <span class="ident">chunk</span> <span class="op">=</span> <span class="ident">Chunk</span>::<span class="ident">from_file</span>(<span class="ident">file_path</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">channel</span> <span class="op">=</span> <span class="ident">Channel</span>::<span class="ident">all</span>().<span class="ident">play</span>(<span class="kw-2">&amp;</span><span class="ident">chunk</span>, <span class="number">0</span>)<span class="question-mark">?</span>;
+        <span class="ident">channel</span>.<span class="ident">set_volume</span>((<span class="ident">volume</span> <span class="op">*</span> <span class="number">128.0</span>) <span class="kw">as</span> <span class="ident">i32</span>);
+        <span class="self">self</span>.<span class="ident">sound_cache</span>.<span class="ident">insert</span>(<span class="ident">path</span>.<span class="ident">to_owned</span>(), <span class="ident">chunk</span>);
+        <span class="prelude-val">Ok</span>(())
     }
 
-    <span class='doccomment'>/// Play a sound on a user sound channel.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>play_sound_on_channel</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>channel_id</span>: <span class='ident'>i32</span>, <span class='ident'>path</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='ident'>channel_id</span> <span class='op'>&gt;=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='ident'>channel_id</span> <span class='op'>&lt;</span> <span class='number'>128</span> {
-            <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>chunk</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sound_cache</span>.<span class='ident'>get</span>(<span class='ident'>path</span>) {
-                <span class='ident'>mixer</span>::<span class='ident'>channel</span>(<span class='ident'>channel_id</span>).<span class='ident'>play</span>(<span class='ident'>chunk</span>, <span class='number'>0</span>)<span class='question-mark'>?</span>;
-                <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(());
+    <span class="doccomment">/// Play a sound on a user sound channel.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">play_sound_on_channel</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">channel_id</span>: <span class="ident">i32</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">channel_id</span> <span class="op">&gt;=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">channel_id</span> <span class="op">&lt;</span> <span class="number">128</span> {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">chunk</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">sound_cache</span>.<span class="ident">get</span>(<span class="ident">path</span>) {
+                <span class="ident">mixer</span>::<span class="ident">channel</span>(<span class="ident">channel_id</span>).<span class="ident">play</span>(<span class="ident">chunk</span>, <span class="number">0</span>)<span class="question-mark">?</span>;
+                <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
             }
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>file_path</span> <span class='op'>=</span> <span class='ident'>PathBuf</span>::<span class='ident'>from</span>(<span class='string'>&quot;assets&quot;</span>);
-            <span class='ident'>file_path</span>.<span class='ident'>push</span>(<span class='string'>&quot;sounds&quot;</span>);
-            <span class='ident'>file_path</span>.<span class='ident'>push</span>(<span class='ident'>path</span>);
-            <span class='kw'>let</span> <span class='ident'>chunk</span> <span class='op'>=</span> <span class='ident'>Chunk</span>::<span class='ident'>from_file</span>(<span class='ident'>file_path</span>)<span class='question-mark'>?</span>;
-            <span class='ident'>Channel</span>::<span class='ident'>all</span>().<span class='ident'>play</span>(<span class='kw-2'>&amp;</span><span class='ident'>chunk</span>, <span class='number'>0</span>)<span class='question-mark'>?</span>;
-            <span class='self'>self</span>.<span class='ident'>sound_cache</span>.<span class='ident'>insert</span>(<span class='ident'>path</span>.<span class='ident'>to_owned</span>(), <span class='ident'>chunk</span>);
-            <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(());
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">file_path</span> <span class="op">=</span> <span class="ident">PathBuf</span>::<span class="ident">from</span>(<span class="string">&quot;assets&quot;</span>);
+            <span class="ident">file_path</span>.<span class="ident">push</span>(<span class="string">&quot;sounds&quot;</span>);
+            <span class="ident">file_path</span>.<span class="ident">push</span>(<span class="ident">path</span>);
+            <span class="kw">let</span> <span class="ident">chunk</span> <span class="op">=</span> <span class="ident">Chunk</span>::<span class="ident">from_file</span>(<span class="ident">file_path</span>)<span class="question-mark">?</span>;
+            <span class="ident">Channel</span>::<span class="ident">all</span>().<span class="ident">play</span>(<span class="kw-2">&amp;</span><span class="ident">chunk</span>, <span class="number">0</span>)<span class="question-mark">?</span>;
+            <span class="self">self</span>.<span class="ident">sound_cache</span>.<span class="ident">insert</span>(<span class="ident">path</span>.<span class="ident">to_owned</span>(), <span class="ident">chunk</span>);
+            <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
         }
-        <span class='prelude-val'>Err</span>(<span class='string'>&quot;Channel out of range.&quot;</span>.<span class='ident'>to_string</span>())
+        <span class="prelude-val">Err</span>(<span class="string">&quot;Channel out of range.&quot;</span>.<span class="ident">to_string</span>())
     }
 
-    <span class='doccomment'>/// Set the volume for a user sound channel. Volume is between 0.0 and 1.0</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_channel_volume</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>channel_id</span>: <span class='ident'>i32</span>, <span class='ident'>volume</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='ident'>channel_id</span> <span class='op'>&gt;=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='ident'>channel_id</span> <span class='op'>&lt;</span> <span class='number'>128</span> {
-            <span class='ident'>mixer</span>::<span class='ident'>channel</span>(<span class='ident'>channel_id</span>).<span class='ident'>set_volume</span>((<span class='ident'>volume</span> <span class='op'>*</span> <span class='number'>128.0</span>) <span class='kw'>as</span> <span class='ident'>i32</span>);
-            <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(());
+    <span class="doccomment">/// Set the volume for a user sound channel. Volume is between 0.0 and 1.0</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_channel_volume</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">channel_id</span>: <span class="ident">i32</span>, <span class="ident">volume</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">channel_id</span> <span class="op">&gt;=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">channel_id</span> <span class="op">&lt;</span> <span class="number">128</span> {
+            <span class="ident">mixer</span>::<span class="ident">channel</span>(<span class="ident">channel_id</span>).<span class="ident">set_volume</span>((<span class="ident">volume</span> <span class="op">*</span> <span class="number">128.0</span>) <span class="kw">as</span> <span class="ident">i32</span>);
+            <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
         }
-        <span class='prelude-val'>Err</span>(<span class='string'>&quot;Channel out of range.&quot;</span>.<span class='ident'>to_string</span>())
+        <span class="prelude-val">Err</span>(<span class="string">&quot;Channel out of range.&quot;</span>.<span class="ident">to_string</span>())
     }
 
-    <span class='doccomment'>/// Get the volume for a user sound channel. Volume is between 0.0 and 1.0</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get_channel_volume</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>channel_id</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>f32</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='ident'>channel_id</span> <span class='op'>&gt;=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='ident'>channel_id</span> <span class='op'>&lt;</span> <span class='number'>128</span> {
-            <span class='kw'>return</span> <span class='prelude-val'>Ok</span>((<span class='ident'>mixer</span>::<span class='ident'>channel</span>(<span class='ident'>channel_id</span>).<span class='ident'>get_volume</span>() <span class='kw'>as</span> <span class='ident'>f32</span>) <span class='op'>/</span> <span class='number'>128.0</span>);
+    <span class="doccomment">/// Get the volume for a user sound channel. Volume is between 0.0 and 1.0</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_channel_volume</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">channel_id</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">f32</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">channel_id</span> <span class="op">&gt;=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">channel_id</span> <span class="op">&lt;</span> <span class="number">128</span> {
+            <span class="kw">return</span> <span class="prelude-val">Ok</span>((<span class="ident">mixer</span>::<span class="ident">channel</span>(<span class="ident">channel_id</span>).<span class="ident">get_volume</span>() <span class="kw">as</span> <span class="ident">f32</span>) <span class="op">/</span> <span class="number">128.0</span>);
         }
-        <span class='prelude-val'>Err</span>(<span class='string'>&quot;Channel out of range.&quot;</span>.<span class='ident'>to_string</span>())
+        <span class="prelude-val">Err</span>(<span class="string">&quot;Channel out of range.&quot;</span>.<span class="ident">to_string</span>())
     }
 
-    <span class='doccomment'>/// Pause audio output on a user sound channel.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>pause_channel</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>channel_id</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='ident'>channel_id</span> <span class='op'>&gt;=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='ident'>channel_id</span> <span class='op'>&lt;</span> <span class='number'>128</span> {
-            <span class='ident'>mixer</span>::<span class='ident'>channel</span>(<span class='ident'>channel_id</span>).<span class='ident'>pause</span>();
-            <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(());
+    <span class="doccomment">/// Pause audio output on a user sound channel.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pause_channel</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">channel_id</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">channel_id</span> <span class="op">&gt;=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">channel_id</span> <span class="op">&lt;</span> <span class="number">128</span> {
+            <span class="ident">mixer</span>::<span class="ident">channel</span>(<span class="ident">channel_id</span>).<span class="ident">pause</span>();
+            <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
         }
-        <span class='prelude-val'>Err</span>(<span class='string'>&quot;Channel out of range.&quot;</span>.<span class='ident'>to_string</span>())
+        <span class="prelude-val">Err</span>(<span class="string">&quot;Channel out of range.&quot;</span>.<span class="ident">to_string</span>())
     }
 
-    <span class='doccomment'>/// Resume paused audio output on a user sound channel.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>resume_channel</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>channel_id</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='ident'>channel_id</span> <span class='op'>&gt;=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='ident'>channel_id</span> <span class='op'>&lt;</span> <span class='number'>128</span> {
-            <span class='ident'>mixer</span>::<span class='ident'>channel</span>(<span class='ident'>channel_id</span>).<span class='ident'>resume</span>();
-            <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(());
+    <span class="doccomment">/// Resume paused audio output on a user sound channel.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resume_channel</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">channel_id</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">channel_id</span> <span class="op">&gt;=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">channel_id</span> <span class="op">&lt;</span> <span class="number">128</span> {
+            <span class="ident">mixer</span>::<span class="ident">channel</span>(<span class="ident">channel_id</span>).<span class="ident">resume</span>();
+            <span class="kw">return</span> <span class="prelude-val">Ok</span>(());
         }
-        <span class='prelude-val'>Err</span>(<span class='string'>&quot;Channel out of range.&quot;</span>.<span class='ident'>to_string</span>())
+        <span class="prelude-val">Err</span>(<span class="string">&quot;Channel out of range.&quot;</span>.<span class="ident">to_string</span>())
     }
 
-    <span class='doccomment'>/// Returns true if a channel is not playing anything. This will still return false if the</span>
-    <span class='doccomment'>/// channel has a sound to play but is paused.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>channel_idle</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>channel_id</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='ident'>channel_id</span> <span class='op'>&gt;=</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='ident'>channel_id</span> <span class='op'>&lt;</span> <span class='number'>128</span> {
-            <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>mixer</span>::<span class='ident'>channel</span>(<span class='ident'>channel_id</span>).<span class='ident'>is_playing</span>());
+    <span class="doccomment">/// Returns true if a channel is not playing anything. This will still return false if the</span>
+    <span class="doccomment">/// channel has a sound to play but is paused.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">channel_idle</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">channel_id</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">channel_id</span> <span class="op">&gt;=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">channel_id</span> <span class="op">&lt;</span> <span class="number">128</span> {
+            <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">mixer</span>::<span class="ident">channel</span>(<span class="ident">channel_id</span>).<span class="ident">is_playing</span>());
         }
-        <span class='prelude-val'>None</span>
+        <span class="prelude-val">None</span>
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>audio</span>: <span class='ident'>AudioSubsystem</span>, <span class='ident'>mixer</span>: <span class='ident'>Sdl2MixerContext</span>) <span class='op'>-&gt;</span> <span class='ident'>Audio</span> {
-    <span class='ident'>Audio</span> {
-        <span class='ident'>playlist</span>: <span class='ident'>Playlist</span>::<span class='ident'>new</span>(),
-        <span class='ident'>sound_cache</span>: <span class='ident'>HashMap</span>::<span class='ident'>new</span>(),
-        <span class='ident'>_audio</span>: <span class='ident'>audio</span>,
-        <span class='ident'>_mixer</span>: <span class='ident'>mixer</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">audio</span>: <span class="ident">AudioSubsystem</span>, <span class="ident">mixer</span>: <span class="ident">Sdl2MixerContext</span>) <span class="op">-&gt;</span> <span class="ident">Audio</span> {
+    <span class="ident">Audio</span> {
+        <span class="ident">playlist</span>: <span class="ident">Playlist</span>::<span class="ident">new</span>(),
+        <span class="ident">sound_cache</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
+        <span class="ident">_audio</span>: <span class="ident">audio</span>,
+        <span class="ident">_mixer</span>: <span class="ident">mixer</span>,
     }
 }
 </pre>

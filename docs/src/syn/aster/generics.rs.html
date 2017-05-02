@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -276,238 +276,238 @@
 <span id="231">231</span>
 <span id="232">232</span>
 <span id="233">233</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> {<span class='ident'>Generics</span>, <span class='ident'>Ident</span>, <span class='ident'>LifetimeDef</span>, <span class='ident'>TyParam</span>, <span class='ident'>WhereClause</span>, <span class='ident'>WherePredicate</span>};
-<span class='kw'>use</span> <span class='ident'>aster</span>::<span class='ident'>invoke</span>::{<span class='ident'>Identity</span>, <span class='ident'>Invoke</span>};
-<span class='kw'>use</span> <span class='ident'>aster</span>::<span class='ident'>lifetime</span>::{<span class='ident'>IntoLifetime</span>, <span class='ident'>LifetimeDefBuilder</span>, <span class='ident'>IntoLifetimeDef</span>};
-<span class='kw'>use</span> <span class='ident'>aster</span>::<span class='ident'>path</span>::<span class='ident'>IntoPath</span>;
-<span class='kw'>use</span> <span class='ident'>aster</span>::<span class='ident'>ty_param</span>::<span class='ident'>TyParamBuilder</span>;
-<span class='kw'>use</span> <span class='ident'>aster</span>::<span class='ident'>where_predicate</span>::<span class='ident'>WherePredicateBuilder</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> {<span class="ident">Generics</span>, <span class="ident">Ident</span>, <span class="ident">LifetimeDef</span>, <span class="ident">TyParam</span>, <span class="ident">WhereClause</span>, <span class="ident">WherePredicate</span>};
+<span class="kw">use</span> <span class="ident">aster</span>::<span class="ident">invoke</span>::{<span class="ident">Identity</span>, <span class="ident">Invoke</span>};
+<span class="kw">use</span> <span class="ident">aster</span>::<span class="ident">lifetime</span>::{<span class="ident">IntoLifetime</span>, <span class="ident">LifetimeDefBuilder</span>, <span class="ident">IntoLifetimeDef</span>};
+<span class="kw">use</span> <span class="ident">aster</span>::<span class="ident">path</span>::<span class="ident">IntoPath</span>;
+<span class="kw">use</span> <span class="ident">aster</span>::<span class="ident">ty_param</span>::<span class="ident">TyParamBuilder</span>;
+<span class="kw">use</span> <span class="ident">aster</span>::<span class="ident">where_predicate</span>::<span class="ident">WherePredicateBuilder</span>;
 
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>GenericsBuilder</span><span class='op'>&lt;</span><span class='ident'>F</span> <span class='op'>=</span> <span class='ident'>Identity</span><span class='op'>&gt;</span> {
-    <span class='ident'>callback</span>: <span class='ident'>F</span>,
-    <span class='ident'>lifetimes</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>LifetimeDef</span><span class='op'>&gt;</span>,
-    <span class='ident'>ty_params</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>TyParam</span><span class='op'>&gt;</span>,
-    <span class='ident'>predicates</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>WherePredicate</span><span class='op'>&gt;</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GenericsBuilder</span><span class="op">&lt;</span><span class="ident">F</span> <span class="op">=</span> <span class="ident">Identity</span><span class="op">&gt;</span> {
+    <span class="ident">callback</span>: <span class="ident">F</span>,
+    <span class="ident">lifetimes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">LifetimeDef</span><span class="op">&gt;</span>,
+    <span class="ident">ty_params</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TyParam</span><span class="op">&gt;</span>,
+    <span class="ident">predicates</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">WherePredicate</span><span class="op">&gt;</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>GenericsBuilder</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>GenericsBuilder</span>::<span class='ident'>with_callback</span>(<span class='ident'>Identity</span>)
+<span class="kw">impl</span> <span class="ident">GenericsBuilder</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">GenericsBuilder</span>::<span class="ident">with_callback</span>(<span class="ident">Identity</span>)
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_generics</span>(<span class='ident'>generics</span>: <span class='ident'>Generics</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>GenericsBuilder</span>::<span class='ident'>from_generics_with_callback</span>(<span class='ident'>generics</span>, <span class='ident'>Identity</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_generics</span>(<span class="ident">generics</span>: <span class="ident">Generics</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">GenericsBuilder</span>::<span class="ident">from_generics_with_callback</span>(<span class="ident">generics</span>, <span class="ident">Identity</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span> <span class='ident'>GenericsBuilder</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Invoke</span><span class='op'>&lt;</span><span class='ident'>Generics</span><span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="ident">GenericsBuilder</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Invoke</span><span class="op">&lt;</span><span class="ident">Generics</span><span class="op">&gt;</span>
 {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_callback</span>(<span class='ident'>callback</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>GenericsBuilder</span> {
-            <span class='ident'>callback</span>: <span class='ident'>callback</span>,
-            <span class='ident'>lifetimes</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
-            <span class='ident'>ty_params</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
-            <span class='ident'>predicates</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_callback</span>(<span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">GenericsBuilder</span> {
+            <span class="ident">callback</span>: <span class="ident">callback</span>,
+            <span class="ident">lifetimes</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
+            <span class="ident">ty_params</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
+            <span class="ident">predicates</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_generics_with_callback</span>(<span class='ident'>generics</span>: <span class='ident'>Generics</span>, <span class='ident'>callback</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>GenericsBuilder</span> {
-            <span class='ident'>callback</span>: <span class='ident'>callback</span>,
-            <span class='ident'>lifetimes</span>: <span class='ident'>generics</span>.<span class='ident'>lifetimes</span>,
-            <span class='ident'>ty_params</span>: <span class='ident'>generics</span>.<span class='ident'>ty_params</span>,
-            <span class='ident'>predicates</span>: <span class='ident'>generics</span>.<span class='ident'>where_clause</span>.<span class='ident'>predicates</span>,
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_generics_with_callback</span>(<span class="ident">generics</span>: <span class="ident">Generics</span>, <span class="ident">callback</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">GenericsBuilder</span> {
+            <span class="ident">callback</span>: <span class="ident">callback</span>,
+            <span class="ident">lifetimes</span>: <span class="ident">generics</span>.<span class="ident">lifetimes</span>,
+            <span class="ident">ty_params</span>: <span class="ident">generics</span>.<span class="ident">ty_params</span>,
+            <span class="ident">predicates</span>: <span class="ident">generics</span>.<span class="ident">where_clause</span>.<span class="ident">predicates</span>,
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with</span>(<span class='self'>self</span>, <span class='ident'>generics</span>: <span class='ident'>Generics</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>with_lifetimes</span>(<span class='ident'>generics</span>.<span class='ident'>lifetimes</span>.<span class='ident'>into_iter</span>())
-            .<span class='ident'>with_ty_params</span>(<span class='ident'>generics</span>.<span class='ident'>ty_params</span>.<span class='ident'>into_iter</span>())
-            .<span class='ident'>with_predicates</span>(<span class='ident'>generics</span>.<span class='ident'>where_clause</span>.<span class='ident'>predicates</span>.<span class='ident'>into_iter</span>())
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with</span>(<span class="self">self</span>, <span class="ident">generics</span>: <span class="ident">Generics</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">with_lifetimes</span>(<span class="ident">generics</span>.<span class="ident">lifetimes</span>.<span class="ident">into_iter</span>())
+            .<span class="ident">with_ty_params</span>(<span class="ident">generics</span>.<span class="ident">ty_params</span>.<span class="ident">into_iter</span>())
+            .<span class="ident">with_predicates</span>(<span class="ident">generics</span>.<span class="ident">where_clause</span>.<span class="ident">predicates</span>.<span class="ident">into_iter</span>())
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_lifetimes</span><span class='op'>&lt;</span><span class='ident'>I</span>, <span class='ident'>L</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>iter</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
-        <span class='kw'>where</span> <span class='ident'>I</span>: <span class='ident'>IntoIterator</span><span class='op'>&lt;</span><span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>L</span><span class='op'>&gt;</span>,
-              <span class='ident'>L</span>: <span class='ident'>IntoLifetimeDef</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_lifetimes</span><span class="op">&lt;</span><span class="ident">I</span>, <span class="ident">L</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+        <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">L</span><span class="op">&gt;</span>,
+              <span class="ident">L</span>: <span class="ident">IntoLifetimeDef</span>
     {
-        <span class='kw'>let</span> <span class='ident'>iter</span> <span class='op'>=</span> <span class='ident'>iter</span>.<span class='ident'>into_iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>lifetime_def</span><span class='op'>|</span> <span class='ident'>lifetime_def</span>.<span class='ident'>into_lifetime_def</span>());
-        <span class='self'>self</span>.<span class='ident'>lifetimes</span>.<span class='ident'>extend</span>(<span class='ident'>iter</span>);
-        <span class='self'>self</span>
+        <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="ident">iter</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">lifetime_def</span><span class="op">|</span> <span class="ident">lifetime_def</span>.<span class="ident">into_lifetime_def</span>());
+        <span class="self">self</span>.<span class="ident">lifetimes</span>.<span class="ident">extend</span>(<span class="ident">iter</span>);
+        <span class="self">self</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_lifetime_names</span><span class='op'>&lt;</span><span class='ident'>I</span>, <span class='ident'>N</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>iter</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
-        <span class='kw'>where</span> <span class='ident'>I</span>: <span class='ident'>IntoIterator</span><span class='op'>&lt;</span><span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>N</span><span class='op'>&gt;</span>,
-              <span class='ident'>N</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Ident</span><span class='op'>&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_lifetime_names</span><span class="op">&lt;</span><span class="ident">I</span>, <span class="ident">N</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+        <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;</span>,
+              <span class="ident">N</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Ident</span><span class="op">&gt;</span>
     {
-        <span class='kw'>for</span> <span class='ident'>name</span> <span class='kw'>in</span> <span class='ident'>iter</span> {
-            <span class='self'>self</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>lifetime_name</span>(<span class='ident'>name</span>);
+        <span class="kw">for</span> <span class="ident">name</span> <span class="kw">in</span> <span class="ident">iter</span> {
+            <span class="self">self</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">lifetime_name</span>(<span class="ident">name</span>);
         }
-        <span class='self'>self</span>
+        <span class="self">self</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_lifetime</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>lifetime</span>: <span class='ident'>LifetimeDef</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>lifetimes</span>.<span class='ident'>push</span>(<span class='ident'>lifetime</span>);
-        <span class='self'>self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_lifetime</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">lifetime</span>: <span class="ident">LifetimeDef</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">lifetimes</span>.<span class="ident">push</span>(<span class="ident">lifetime</span>);
+        <span class="self">self</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>lifetime_name</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
-        <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Ident</span><span class='op'>&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lifetime_name</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">name</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+        <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Ident</span><span class="op">&gt;</span>
     {
-        <span class='self'>self</span>.<span class='ident'>lifetime</span>(<span class='ident'>name</span>).<span class='ident'>build</span>()
+        <span class="self">self</span>.<span class="ident">lifetime</span>(<span class="ident">name</span>).<span class="ident">build</span>()
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>lifetime</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='ident'>LifetimeDefBuilder</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Ident</span><span class='op'>&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lifetime</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">name</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="ident">LifetimeDefBuilder</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Ident</span><span class="op">&gt;</span>
     {
-        <span class='ident'>LifetimeDefBuilder</span>::<span class='ident'>with_callback</span>(<span class='ident'>name</span>, <span class='self'>self</span>)
+        <span class="ident">LifetimeDefBuilder</span>::<span class="ident">with_callback</span>(<span class="ident">name</span>, <span class="self">self</span>)
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_ty_params</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>iter</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
-        <span class='kw'>where</span> <span class='ident'>I</span>: <span class='ident'>IntoIterator</span><span class='op'>&lt;</span><span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>TyParam</span><span class='op'>&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_ty_params</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+        <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">TyParam</span><span class="op">&gt;</span>
     {
-        <span class='self'>self</span>.<span class='ident'>ty_params</span>.<span class='ident'>extend</span>(<span class='ident'>iter</span>);
-        <span class='self'>self</span>
+        <span class="self">self</span>.<span class="ident">ty_params</span>.<span class="ident">extend</span>(<span class="ident">iter</span>);
+        <span class="self">self</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_ty_param_ids</span><span class='op'>&lt;</span><span class='ident'>I</span>, <span class='ident'>T</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>iter</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
-        <span class='kw'>where</span> <span class='ident'>I</span>: <span class='ident'>IntoIterator</span><span class='op'>&lt;</span><span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>T</span><span class='op'>&gt;</span>,
-              <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Ident</span><span class='op'>&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_ty_param_ids</span><span class="op">&lt;</span><span class="ident">I</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+        <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">T</span><span class="op">&gt;</span>,
+              <span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Ident</span><span class="op">&gt;</span>
     {
-        <span class='kw'>for</span> <span class='ident'>id</span> <span class='kw'>in</span> <span class='ident'>iter</span> {
-            <span class='self'>self</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>ty_param_id</span>(<span class='ident'>id</span>);
+        <span class="kw">for</span> <span class="ident">id</span> <span class="kw">in</span> <span class="ident">iter</span> {
+            <span class="self">self</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">ty_param_id</span>(<span class="ident">id</span>);
         }
-        <span class='self'>self</span>
+        <span class="self">self</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_ty_param</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>ty_param</span>: <span class='ident'>TyParam</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>ty_params</span>.<span class='ident'>push</span>(<span class='ident'>ty_param</span>);
-        <span class='self'>self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_ty_param</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ty_param</span>: <span class="ident">TyParam</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">ty_params</span>.<span class="ident">push</span>(<span class="ident">ty_param</span>);
+        <span class="self">self</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>ty_param_id</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>id</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
-        <span class='kw'>where</span> <span class='ident'>I</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Ident</span><span class='op'>&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ty_param_id</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">id</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+        <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Ident</span><span class="op">&gt;</span>
     {
-        <span class='self'>self</span>.<span class='ident'>ty_param</span>(<span class='ident'>id</span>).<span class='ident'>build</span>()
+        <span class="self">self</span>.<span class="ident">ty_param</span>(<span class="ident">id</span>).<span class="ident">build</span>()
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>ty_param</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>id</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='ident'>TyParamBuilder</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span>
-        <span class='kw'>where</span> <span class='ident'>I</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Ident</span><span class='op'>&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ty_param</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">id</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="ident">TyParamBuilder</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
+        <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Ident</span><span class="op">&gt;</span>
     {
-        <span class='ident'>TyParamBuilder</span>::<span class='ident'>with_callback</span>(<span class='ident'>id</span>, <span class='self'>self</span>)
+        <span class="ident">TyParamBuilder</span>::<span class="ident">with_callback</span>(<span class="ident">id</span>, <span class="self">self</span>)
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_predicates</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>iter</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
-        <span class='kw'>where</span> <span class='ident'>I</span>: <span class='ident'>IntoIterator</span><span class='op'>&lt;</span><span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>WherePredicate</span><span class='op'>&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_predicates</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+        <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">WherePredicate</span><span class="op">&gt;</span>
     {
-        <span class='self'>self</span>.<span class='ident'>predicates</span>.<span class='ident'>extend</span>(<span class='ident'>iter</span>);
-        <span class='self'>self</span>
+        <span class="self">self</span>.<span class="ident">predicates</span>.<span class="ident">extend</span>(<span class="ident">iter</span>);
+        <span class="self">self</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_predicate</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>predicate</span>: <span class='ident'>WherePredicate</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>predicates</span>.<span class='ident'>push</span>(<span class='ident'>predicate</span>);
-        <span class='self'>self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_predicate</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">predicate</span>: <span class="ident">WherePredicate</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">predicates</span>.<span class="ident">push</span>(<span class="ident">predicate</span>);
+        <span class="self">self</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>predicate</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>WherePredicateBuilder</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>WherePredicateBuilder</span>::<span class='ident'>with_callback</span>(<span class='self'>self</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">predicate</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">WherePredicateBuilder</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">WherePredicateBuilder</span>::<span class="ident">with_callback</span>(<span class="self">self</span>)
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_lifetime_bound</span><span class='op'>&lt;</span><span class='ident'>L</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>lifetime</span>: <span class='ident'>L</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
-        <span class='kw'>where</span> <span class='ident'>L</span>: <span class='ident'>IntoLifetime</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_lifetime_bound</span><span class="op">&lt;</span><span class="ident">L</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">lifetime</span>: <span class="ident">L</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+        <span class="kw">where</span> <span class="ident">L</span>: <span class="ident">IntoLifetime</span>
     {
-        <span class='kw'>let</span> <span class='ident'>lifetime</span> <span class='op'>=</span> <span class='ident'>lifetime</span>.<span class='ident'>into_lifetime</span>();
+        <span class="kw">let</span> <span class="ident">lifetime</span> <span class="op">=</span> <span class="ident">lifetime</span>.<span class="ident">into_lifetime</span>();
 
-        <span class='kw'>for</span> <span class='ident'>lifetime_def</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>lifetimes</span> {
-            <span class='ident'>lifetime_def</span>.<span class='ident'>bounds</span>.<span class='ident'>push</span>(<span class='ident'>lifetime</span>.<span class='ident'>clone</span>());
-        }
-
-        <span class='kw'>for</span> <span class='ident'>ty_param</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>ty_params</span> {
-            <span class='kw-2'>*</span><span class='ident'>ty_param</span> <span class='op'>=</span> <span class='ident'>TyParamBuilder</span>::<span class='ident'>from_ty_param</span>(<span class='ident'>ty_param</span>.<span class='ident'>clone</span>())
-                .<span class='ident'>lifetime_bound</span>(<span class='ident'>lifetime</span>.<span class='ident'>clone</span>())
-                .<span class='ident'>build</span>();
+        <span class="kw">for</span> <span class="ident">lifetime_def</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">lifetimes</span> {
+            <span class="ident">lifetime_def</span>.<span class="ident">bounds</span>.<span class="ident">push</span>(<span class="ident">lifetime</span>.<span class="ident">clone</span>());
         }
 
-        <span class='self'>self</span>
+        <span class="kw">for</span> <span class="ident">ty_param</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">ty_params</span> {
+            <span class="kw-2">*</span><span class="ident">ty_param</span> <span class="op">=</span> <span class="ident">TyParamBuilder</span>::<span class="ident">from_ty_param</span>(<span class="ident">ty_param</span>.<span class="ident">clone</span>())
+                .<span class="ident">lifetime_bound</span>(<span class="ident">lifetime</span>.<span class="ident">clone</span>())
+                .<span class="ident">build</span>();
+        }
+
+        <span class="self">self</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_ty_param_bound</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>path</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
-        <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>IntoPath</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_ty_param_bound</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">path</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+        <span class="kw">where</span> <span class="ident">P</span>: <span class="ident">IntoPath</span>
     {
-        <span class='kw'>let</span> <span class='ident'>path</span> <span class='op'>=</span> <span class='ident'>path</span>.<span class='ident'>into_path</span>();
+        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">path</span>.<span class="ident">into_path</span>();
 
-        <span class='kw'>for</span> <span class='ident'>ty_param</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>ty_params</span> {
-            <span class='kw-2'>*</span><span class='ident'>ty_param</span> <span class='op'>=</span> <span class='ident'>TyParamBuilder</span>::<span class='ident'>from_ty_param</span>(<span class='ident'>ty_param</span>.<span class='ident'>clone</span>())
-                .<span class='ident'>trait_bound</span>(<span class='ident'>path</span>.<span class='ident'>clone</span>())
-                .<span class='ident'>build</span>()
-                .<span class='ident'>build</span>();
+        <span class="kw">for</span> <span class="ident">ty_param</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">ty_params</span> {
+            <span class="kw-2">*</span><span class="ident">ty_param</span> <span class="op">=</span> <span class="ident">TyParamBuilder</span>::<span class="ident">from_ty_param</span>(<span class="ident">ty_param</span>.<span class="ident">clone</span>())
+                .<span class="ident">trait_bound</span>(<span class="ident">path</span>.<span class="ident">clone</span>())
+                .<span class="ident">build</span>()
+                .<span class="ident">build</span>();
         }
 
-        <span class='self'>self</span>
+        <span class="self">self</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>strip_bounds</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>strip_lifetimes</span>()
-            .<span class='ident'>strip_ty_params</span>()
-            .<span class='ident'>strip_predicates</span>()
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strip_bounds</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">strip_lifetimes</span>()
+            .<span class="ident">strip_ty_params</span>()
+            .<span class="ident">strip_predicates</span>()
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>strip_lifetimes</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='kw'>for</span> <span class='ident'>lifetime</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>lifetimes</span> {
-            <span class='ident'>lifetime</span>.<span class='ident'>bounds</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[];
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strip_lifetimes</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">for</span> <span class="ident">lifetime</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">lifetimes</span> {
+            <span class="ident">lifetime</span>.<span class="ident">bounds</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
         }
-        <span class='self'>self</span>
+        <span class="self">self</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>strip_ty_params</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='kw'>for</span> <span class='ident'>ty_param</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>ty_params</span> {
-            <span class='ident'>ty_param</span>.<span class='ident'>bounds</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[];
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strip_ty_params</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">for</span> <span class="ident">ty_param</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">ty_params</span> {
+            <span class="ident">ty_param</span>.<span class="ident">bounds</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
         }
-        <span class='self'>self</span>
+        <span class="self">self</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>strip_predicates</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>predicates</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[];
-        <span class='self'>self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strip_predicates</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">predicates</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
+        <span class="self">self</span>
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>build</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>F</span>::<span class='prelude-ty'>Result</span> {
-        <span class='self'>self</span>.<span class='ident'>callback</span>.<span class='ident'>invoke</span>(<span class='ident'>Generics</span> {
-            <span class='ident'>lifetimes</span>: <span class='self'>self</span>.<span class='ident'>lifetimes</span>,
-            <span class='ident'>ty_params</span>: <span class='self'>self</span>.<span class='ident'>ty_params</span>,
-            <span class='ident'>where_clause</span>: <span class='ident'>WhereClause</span> { <span class='ident'>predicates</span>: <span class='self'>self</span>.<span class='ident'>predicates</span> },
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">F</span>::<span class="prelude-ty">Result</span> {
+        <span class="self">self</span>.<span class="ident">callback</span>.<span class="ident">invoke</span>(<span class="ident">Generics</span> {
+            <span class="ident">lifetimes</span>: <span class="self">self</span>.<span class="ident">lifetimes</span>,
+            <span class="ident">ty_params</span>: <span class="self">self</span>.<span class="ident">ty_params</span>,
+            <span class="ident">where_clause</span>: <span class="ident">WhereClause</span> { <span class="ident">predicates</span>: <span class="self">self</span>.<span class="ident">predicates</span> },
         })
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span> <span class='ident'>Invoke</span><span class='op'>&lt;</span><span class='ident'>LifetimeDef</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>GenericsBuilder</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Invoke</span><span class='op'>&lt;</span><span class='ident'>Generics</span><span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="ident">Invoke</span><span class="op">&lt;</span><span class="ident">LifetimeDef</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">GenericsBuilder</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Invoke</span><span class="op">&lt;</span><span class="ident">Generics</span><span class="op">&gt;</span>
 {
-    <span class='kw'>type</span> <span class='prelude-ty'>Result</span> <span class='op'>=</span> <span class='self'>Self</span>;
+    <span class="kw">type</span> <span class="prelude-ty">Result</span> <span class="op">=</span> <span class="self">Self</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>invoke</span>(<span class='self'>self</span>, <span class='ident'>lifetime</span>: <span class='ident'>LifetimeDef</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>with_lifetime</span>(<span class='ident'>lifetime</span>)
+    <span class="kw">fn</span> <span class="ident">invoke</span>(<span class="self">self</span>, <span class="ident">lifetime</span>: <span class="ident">LifetimeDef</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">with_lifetime</span>(<span class="ident">lifetime</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span> <span class='ident'>Invoke</span><span class='op'>&lt;</span><span class='ident'>TyParam</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>GenericsBuilder</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Invoke</span><span class='op'>&lt;</span><span class='ident'>Generics</span><span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="ident">Invoke</span><span class="op">&lt;</span><span class="ident">TyParam</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">GenericsBuilder</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Invoke</span><span class="op">&lt;</span><span class="ident">Generics</span><span class="op">&gt;</span>
 {
-    <span class='kw'>type</span> <span class='prelude-ty'>Result</span> <span class='op'>=</span> <span class='self'>Self</span>;
+    <span class="kw">type</span> <span class="prelude-ty">Result</span> <span class="op">=</span> <span class="self">Self</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>invoke</span>(<span class='self'>self</span>, <span class='ident'>ty_param</span>: <span class='ident'>TyParam</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>with_ty_param</span>(<span class='ident'>ty_param</span>)
+    <span class="kw">fn</span> <span class="ident">invoke</span>(<span class="self">self</span>, <span class="ident">ty_param</span>: <span class="ident">TyParam</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">with_ty_param</span>(<span class="ident">ty_param</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span> <span class='ident'>Invoke</span><span class='op'>&lt;</span><span class='ident'>WherePredicate</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>GenericsBuilder</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Invoke</span><span class='op'>&lt;</span><span class='ident'>Generics</span><span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> <span class="ident">Invoke</span><span class="op">&lt;</span><span class="ident">WherePredicate</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">GenericsBuilder</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Invoke</span><span class="op">&lt;</span><span class="ident">Generics</span><span class="op">&gt;</span>
 {
-    <span class='kw'>type</span> <span class='prelude-ty'>Result</span> <span class='op'>=</span> <span class='self'>Self</span>;
+    <span class="kw">type</span> <span class="prelude-ty">Result</span> <span class="op">=</span> <span class="self">Self</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>invoke</span>(<span class='self'>self</span>, <span class='ident'>predicate</span>: <span class='ident'>WherePredicate</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='self'>self</span>.<span class='ident'>with_predicate</span>(<span class='ident'>predicate</span>)
+    <span class="kw">fn</span> <span class="ident">invoke</span>(<span class="self">self</span>, <span class="ident">predicate</span>: <span class="ident">WherePredicate</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">with_predicate</span>(<span class="ident">predicate</span>)
     }
 }
 </pre>

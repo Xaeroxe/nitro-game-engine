@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc enum">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,22 +43,22 @@
         </form>
     </nav>
 
-    <section id='main' class="content enum">
-<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>nitro</a>::<wbr><a href='index.html'>component</a>::<wbr><a class='enum' href=''>Message</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>nitro</a>::<wbr><a href='index.html'>component</a>::<wbr><a class="enum" href=''>Message</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/nitro/component/message.rs.html#3-22' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Message {
     Start {
-        key: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a>,
+        key: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
     },
     Update {
-        delta_time: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
+        delta_time: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
     },
     OnDestroy,
     OnDetach,
-    UserMessage(<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt;),
+    UserMessage(<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;<a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a>&gt;),
 }</pre><h2 class='variants'>Variants</h2>
 <span id='variant.Start' class='variant'><span id='Start.v' class='invisible'><code>Start</code></span></span><div class='docblock'><p>Sent to Components the instant they are attached to a GameObject.</p>
 
@@ -66,12 +66,12 @@
 store the key value.</p>
 </div><span class='docblock autohide sub-variant' id='variant.Start.fields'><h3 class='fields'>Fields of <code>Start</code></h3>
 
-                           <table><tr><td id='variant.Start.field.key'><span id='Start.v.key.v' class='invisible'><code>key:&nbsp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i32.html'>i32</a></code></span></td><td></td></tr></table></span><span id='variant.Update' class='variant'><span id='Update.v' class='invisible'><code>Update</code></span></span><div class='docblock'><p>Sent to Components every frame, delta_time is the time elapsed since last frame in seconds.</p>
+                           <table><tr><td id='variant.Start.field.key'><span id='Start.v.key.v' class='invisible'><code>key:&nbsp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a></code></span></td><td></td></tr></table></span><span id='variant.Update' class='variant'><span id='Update.v' class='invisible'><code>Update</code></span></span><div class='docblock'><p>Sent to Components every frame, delta_time is the time elapsed since last frame in seconds.</p>
 </div><span class='docblock autohide sub-variant' id='variant.Update.fields'><h3 class='fields'>Fields of <code>Update</code></h3>
 
-                           <table><tr><td id='variant.Update.field.delta_time'><span id='Update.v.delta_time.v' class='invisible'><code>delta_time:&nbsp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a></code></span></td><td></td></tr></table></span><span id='variant.OnDestroy' class='variant'><span id='OnDestroy.v' class='invisible'><code>OnDestroy</code></span></span><div class='docblock'><p>Sent to all components on a GameObject prior to the GameObject being destroyed.</p>
+                           <table><tr><td id='variant.Update.field.delta_time'><span id='Update.v.delta_time.v' class='invisible'><code>delta_time:&nbsp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a></code></span></td><td></td></tr></table></span><span id='variant.OnDestroy' class='variant'><span id='OnDestroy.v' class='invisible'><code>OnDestroy</code></span></span><div class='docblock'><p>Sent to all components on a GameObject prior to the GameObject being destroyed.</p>
 </div><span id='variant.OnDetach' class='variant'><span id='OnDetach.v' class='invisible'><code>OnDetach</code></span></span><div class='docblock'><p>Sent when this component is removed from the GameObject.</p>
-</div><span id='variant.UserMessage' class='variant'><span id='UserMessage.v' class='invisible'><code>UserMessage(<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a>&gt;)</code></span></span><div class='docblock'><p>Whatever you want it to be!  You can send and receive this message type as much as you
+</div><span id='variant.UserMessage' class='variant'><span id='UserMessage.v' class='invisible'><code>UserMessage(<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;<a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a>&gt;)</code></span></span><div class='docblock'><p>Whatever you want it to be!  You can send and receive this message type as much as you
 like, Nitro will never send these.</p>
 </div></section>
     <section id='search' class="content hidden"></section>

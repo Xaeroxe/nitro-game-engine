@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc struct">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,32 +43,32 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>nphysics2d</a>::<wbr><a href='../index.html'>detection</a>::<wbr><a href='index.html'>joint</a>::<wbr><a class='struct' href=''>Anchor</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>nphysics2d</a>::<wbr><a href='../index.html'>detection</a>::<wbr><a href='index.html'>joint</a>::<wbr><a class="struct" href=''>Anchor</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../../src/nphysics2d/detection/joint/anchor.rs.html#10-15' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct Anchor&lt;N:&nbsp;<a class='trait' href='../../../alga/general/real/trait.Real.html' title='alga::general::real::Real'>Real</a>, P&gt; {
-    pub body: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/rc/struct.Rc.html' title='alloc::rc::Rc'>Rc</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html' title='core::cell::RefCell'>RefCell</a>&lt;<a class='struct' href='../../../nphysics2d/object/struct.RigidBody.html' title='nphysics2d::object::RigidBody'>RigidBody</a>&lt;N&gt;&gt;&gt;&gt;,
+<pre class='rust struct'>pub struct Anchor&lt;N:&nbsp;<a class="trait" href="../../../alga/general/real/trait.Real.html" title="trait alga::general::real::Real">Real</a>, P&gt; {
+    pub body: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/rc/struct.Rc.html" title="struct alloc::rc::Rc">Rc</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;<a class="struct" href="../../../nphysics2d/object/struct.RigidBody.html" title="struct nphysics2d::object::RigidBody">RigidBody</a>&lt;N&gt;&gt;&gt;&gt;,
     pub position: P,
 }</pre><div class='docblock'><p>One of the two end points of a joint.</p>
-</div><h2 class='fields'>Fields</h2><span id='structfield.body' class='structfield'>
+</div><h2 class='fields'>Fields</h2><span id='structfield.body' class="structfield">
                            <span id='body.v' class='invisible'>
-                           <code>body: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/rc/struct.Rc.html' title='alloc::rc::Rc'>Rc</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html' title='core::cell::RefCell'>RefCell</a>&lt;<a class='struct' href='../../../nphysics2d/object/struct.RigidBody.html' title='nphysics2d::object::RigidBody'>RigidBody</a>&lt;N&gt;&gt;&gt;&gt;</code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The body attached to this anchor.</p>
-</div><span id='structfield.position' class='structfield'>
+                           <code>body: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/rc/struct.Rc.html" title="struct alloc::rc::Rc">Rc</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;<a class="struct" href="../../../nphysics2d/object/struct.RigidBody.html" title="struct nphysics2d::object::RigidBody">RigidBody</a>&lt;N&gt;&gt;&gt;&gt;</code>
+                           </span></span><div class='docblock'><p>The body attached to this anchor.</p>
+</div><span id='structfield.position' class="structfield">
                            <span id='position.v' class='invisible'>
                            <code>position: P</code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The attach position, in local coordinates of the attached body.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;N:&nbsp;<a class='trait' href='../../../alga/general/real/trait.Real.html' title='alga::general::real::Real'>Real</a>, P&gt; <a class='struct' href='../../../nphysics2d/detection/joint/struct.Anchor.html' title='nphysics2d::detection::joint::Anchor'>Anchor</a>&lt;N, P&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/nphysics2d/detection/joint/anchor.rs.html#17-28' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(body: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/rc/struct.Rc.html' title='alloc::rc::Rc'>Rc</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html' title='core::cell::RefCell'>RefCell</a>&lt;<a class='struct' href='../../../nphysics2d/object/struct.RigidBody.html' title='nphysics2d::object::RigidBody'>RigidBody</a>&lt;N&gt;&gt;&gt;&gt;, position: P) -&gt; <a class='struct' href='../../../nphysics2d/detection/joint/struct.Anchor.html' title='nphysics2d::detection::joint::Anchor'>Anchor</a>&lt;N, P&gt;</code></span></h4>
+                           </span></span><div class='docblock'><p>The attach position, in local coordinates of the attached body.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;N:&nbsp;<a class="trait" href="../../../alga/general/real/trait.Real.html" title="trait alga::general::real::Real">Real</a>, P&gt; <a class="struct" href="../../../nphysics2d/detection/joint/struct.Anchor.html" title="struct nphysics2d::detection::joint::Anchor">Anchor</a>&lt;N, P&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/nphysics2d/detection/joint/anchor.rs.html#17-28' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(body: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/rc/struct.Rc.html" title="struct alloc::rc::Rc">Rc</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html" title="struct core::cell::RefCell">RefCell</a>&lt;<a class="struct" href="../../../nphysics2d/object/struct.RigidBody.html" title="struct nphysics2d::object::RigidBody">RigidBody</a>&lt;N&gt;&gt;&gt;&gt;, position: P) -&gt; <a class="struct" href="../../../nphysics2d/detection/joint/struct.Anchor.html" title="struct nphysics2d::detection::joint::Anchor">Anchor</a>&lt;N, P&gt;</code></span></h4>
 <div class='docblock'><p>Creates a new <code>Anchor</code> at a given <code>position</code> on a <code>body</code> local space.</p>
 
 <p>If <code>body</code> is <code>None</code>, the anchor is concidered to be attached to the ground and <code>position</code>
 is the attach point in global coordinates.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;N:&nbsp;<a class='trait' href='../../../alga/general/real/trait.Real.html' title='alga::general::real::Real'>Real</a>, P&gt; <a class='struct' href='../../../nphysics2d/detection/joint/struct.Anchor.html' title='nphysics2d::detection::joint::Anchor'>Anchor</a>&lt;N, P&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/nphysics2d/detection/joint/anchor.rs.html#30-44' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.center_of_mass' class='method'><span id='center_of_mass.v' class='invisible'><code>fn <a href='#method.center_of_mass' class='fnname'>center_of_mass</a>(&amp;self) -&gt; <a class='type' href='../../../nphysics2d/math/type.Point.html' title='nphysics2d::math::Point'>Point</a>&lt;N&gt;</code></span></h4>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;N:&nbsp;<a class="trait" href="../../../alga/general/real/trait.Real.html" title="trait alga::general::real::Real">Real</a>, P&gt; <a class="struct" href="../../../nphysics2d/detection/joint/struct.Anchor.html" title="struct nphysics2d::detection::joint::Anchor">Anchor</a>&lt;N, P&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/nphysics2d/detection/joint/anchor.rs.html#30-44' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.center_of_mass' class="method"><span id='center_of_mass.v' class='invisible'><code>fn <a href='#method.center_of_mass' class='fnname'>center_of_mass</a>(&amp;self) -&gt; <a class="type" href="../../../nphysics2d/math/type.Point.html" title="type nphysics2d::math::Point">Point</a>&lt;N&gt;</code></span></h4>
 <div class='docblock'><p>The center of mass of the body attached to this anchor.</p>
 
 <p>Returns the zero vector if no body is attached.</p>

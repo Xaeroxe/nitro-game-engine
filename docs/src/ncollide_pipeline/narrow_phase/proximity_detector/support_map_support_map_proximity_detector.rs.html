@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -126,88 +126,88 @@
 <span id="81">81</span>
 <span id="82">82</span>
 <span id="83">83</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>marker</span>::<span class='ident'>PhantomData</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Isometry</span>};
-<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>shape</span>::{<span class='ident'>Shape</span>, <span class='ident'>AnnotatedPoint</span>};
-<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>query</span>::<span class='ident'>algorithms</span>::<span class='ident'>simplex</span>::<span class='ident'>Simplex</span>;
-<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>query</span>::<span class='ident'>proximity_internal</span>;
-<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>query</span>::<span class='ident'>Proximity</span>;
-<span class='kw'>use</span> <span class='ident'>narrow_phase</span>::{<span class='ident'>ProximityDetector</span>, <span class='ident'>ProximityDispatcher</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
+<span class="kw">use</span> <span class="ident">na</span>;
+<span class="kw">use</span> <span class="ident">math</span>::{<span class="ident">Point</span>, <span class="ident">Isometry</span>};
+<span class="kw">use</span> <span class="ident">geometry</span>::<span class="ident">shape</span>::{<span class="ident">Shape</span>, <span class="ident">AnnotatedPoint</span>};
+<span class="kw">use</span> <span class="ident">geometry</span>::<span class="ident">query</span>::<span class="ident">algorithms</span>::<span class="ident">simplex</span>::<span class="ident">Simplex</span>;
+<span class="kw">use</span> <span class="ident">geometry</span>::<span class="ident">query</span>::<span class="ident">proximity_internal</span>;
+<span class="kw">use</span> <span class="ident">geometry</span>::<span class="ident">query</span>::<span class="ident">Proximity</span>;
+<span class="kw">use</span> <span class="ident">narrow_phase</span>::{<span class="ident">ProximityDetector</span>, <span class="ident">ProximityDispatcher</span>};
 
 
-<span class='doccomment'>/// Persistent proximity detector between two shapes having a support mapping function.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// It is based on the GJK algorithm.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SupportMapSupportMapProximityDetector</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-    <span class='ident'>simplex</span>:   <span class='ident'>S</span>,
-    <span class='ident'>proximity</span>: <span class='ident'>Proximity</span>,
-    <span class='ident'>sep_axis</span>:  <span class='ident'>P</span>::<span class='ident'>Vector</span>,
-    <span class='ident'>pt_type</span>:   <span class='ident'>PhantomData</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>, <span class='comment'>// FIXME: can we avoid this?</span>
-    <span class='ident'>mat_type</span>:  <span class='ident'>PhantomData</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>  <span class='comment'>// FIXME: can we avoid this?</span>
+<span class="doccomment">/// Persistent proximity detector between two shapes having a support mapping function.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// It is based on the GJK algorithm.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SupportMapSupportMapProximityDetector</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="ident">simplex</span>:   <span class="ident">S</span>,
+    <span class="ident">proximity</span>: <span class="ident">Proximity</span>,
+    <span class="ident">sep_axis</span>:  <span class="ident">P</span>::<span class="ident">Vector</span>,
+    <span class="ident">pt_type</span>:   <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>, <span class="comment">// FIXME: can we avoid this?</span>
+    <span class="ident">mat_type</span>:  <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>  <span class="comment">// FIXME: can we avoid this?</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>SupportMapSupportMapProximityDetector</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span>,
-          <span class='ident'>S</span>: <span class='ident'>Simplex</span><span class='op'>&lt;</span><span class='ident'>AnnotatedPoint</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> {
-    <span class='doccomment'>/// Creates a new persistant proximity detector between two shapes with support mapping</span>
-    <span class='doccomment'>/// functions.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// It is initialized with a pre-created simplex.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>simplex</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='ident'>SupportMapSupportMapProximityDetector</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>S</span><span class='op'>&gt;</span> {
-        <span class='ident'>SupportMapSupportMapProximityDetector</span> {
-            <span class='ident'>simplex</span>:   <span class='ident'>simplex</span>,
-            <span class='ident'>proximity</span>: <span class='ident'>Proximity</span>::<span class='ident'>Disjoint</span>,
-            <span class='ident'>sep_axis</span>:  <span class='ident'>na</span>::<span class='ident'>zero</span>(),
-            <span class='ident'>pt_type</span>:   <span class='ident'>PhantomData</span>,
-            <span class='ident'>mat_type</span>:  <span class='ident'>PhantomData</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">SupportMapSupportMapProximityDetector</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">P</span>: <span class="ident">Point</span>,
+          <span class="ident">S</span>: <span class="ident">Simplex</span><span class="op">&lt;</span><span class="ident">AnnotatedPoint</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;&gt;</span> {
+    <span class="doccomment">/// Creates a new persistant proximity detector between two shapes with support mapping</span>
+    <span class="doccomment">/// functions.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// It is initialized with a pre-created simplex.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">simplex</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="ident">SupportMapSupportMapProximityDetector</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+        <span class="ident">SupportMapSupportMapProximityDetector</span> {
+            <span class="ident">simplex</span>:   <span class="ident">simplex</span>,
+            <span class="ident">proximity</span>: <span class="ident">Proximity</span>::<span class="ident">Disjoint</span>,
+            <span class="ident">sep_axis</span>:  <span class="ident">na</span>::<span class="ident">zero</span>(),
+            <span class="ident">pt_type</span>:   <span class="ident">PhantomData</span>,
+            <span class="ident">mat_type</span>:  <span class="ident">PhantomData</span>
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>S</span><span class='op'>&gt;</span> <span class='ident'>ProximityDetector</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>SupportMapSupportMapProximityDetector</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>S</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span>,
-          <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
-          <span class='ident'>S</span>: <span class='ident'>Simplex</span><span class='op'>&lt;</span><span class='ident'>AnnotatedPoint</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>update</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, _: <span class='kw-2'>&amp;</span><span class='ident'>ProximityDispatcher</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
-              <span class='ident'>ma</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>a</span>: <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
-              <span class='ident'>mb</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>,
-              <span class='ident'>margin</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>)
-              <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>if</span> <span class='kw'>let</span> (<span class='prelude-val'>Some</span>(<span class='ident'>sma</span>), <span class='prelude-val'>Some</span>(<span class='ident'>smb</span>)) <span class='op'>=</span> (<span class='ident'>a</span>.<span class='ident'>as_support_map</span>(), <span class='ident'>b</span>.<span class='ident'>as_support_map</span>()) {
-            <span class='kw'>let</span> <span class='ident'>initial_direction</span>;
-            <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>proximity</span> <span class='op'>==</span> <span class='ident'>Proximity</span>::<span class='ident'>Disjoint</span> {
-                <span class='ident'>initial_direction</span> <span class='op'>=</span> <span class='prelude-val'>None</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">ProximityDetector</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SupportMapSupportMapProximityDetector</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">S</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">P</span>: <span class="ident">Point</span>,
+          <span class="ident">M</span>: <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>,
+          <span class="ident">S</span>: <span class="ident">Simplex</span><span class="op">&lt;</span><span class="ident">AnnotatedPoint</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">update</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="kw-2">&amp;</span><span class="ident">ProximityDispatcher</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>,
+              <span class="ident">ma</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>, <span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>,
+              <span class="ident">mb</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>, <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>,
+              <span class="ident">margin</span>: <span class="ident">P</span>::<span class="ident">Real</span>)
+              <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">if</span> <span class="kw">let</span> (<span class="prelude-val">Some</span>(<span class="ident">sma</span>), <span class="prelude-val">Some</span>(<span class="ident">smb</span>)) <span class="op">=</span> (<span class="ident">a</span>.<span class="ident">as_support_map</span>(), <span class="ident">b</span>.<span class="ident">as_support_map</span>()) {
+            <span class="kw">let</span> <span class="ident">initial_direction</span>;
+            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">proximity</span> <span class="op">==</span> <span class="ident">Proximity</span>::<span class="ident">Disjoint</span> {
+                <span class="ident">initial_direction</span> <span class="op">=</span> <span class="prelude-val">None</span>
             }
-            <span class='kw'>else</span> {
-                <span class='ident'>initial_direction</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='self'>self</span>.<span class='ident'>sep_axis</span>)
+            <span class="kw">else</span> {
+                <span class="ident">initial_direction</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">sep_axis</span>)
             }
 
-            <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>proximity_internal</span>::<span class='ident'>support_map_against_support_map_with_params</span>(
-                <span class='ident'>ma</span>,
-                <span class='ident'>sma</span>,
-                <span class='ident'>mb</span>,
-                <span class='ident'>smb</span>,
-                <span class='ident'>margin</span>,
-                <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>simplex</span>,
-                <span class='ident'>initial_direction</span>);
+            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">proximity_internal</span>::<span class="ident">support_map_against_support_map_with_params</span>(
+                <span class="ident">ma</span>,
+                <span class="ident">sma</span>,
+                <span class="ident">mb</span>,
+                <span class="ident">smb</span>,
+                <span class="ident">margin</span>,
+                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">simplex</span>,
+                <span class="ident">initial_direction</span>);
 
-            <span class='self'>self</span>.<span class='ident'>proximity</span> <span class='op'>=</span> <span class='ident'>res</span>.<span class='number'>0</span>;
-            <span class='self'>self</span>.<span class='ident'>sep_axis</span>  <span class='op'>=</span> <span class='ident'>res</span>.<span class='number'>1</span>;
+            <span class="self">self</span>.<span class="ident">proximity</span> <span class="op">=</span> <span class="ident">res</span>.<span class="number">0</span>;
+            <span class="self">self</span>.<span class="ident">sep_axis</span>  <span class="op">=</span> <span class="ident">res</span>.<span class="number">1</span>;
 
-            <span class='bool-val'>true</span>
+            <span class="bool-val">true</span>
         }
-        <span class='kw'>else</span> {
-            <span class='bool-val'>false</span>
+        <span class="kw">else</span> {
+            <span class="bool-val">false</span>
         }
     }
 
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>proximity</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Proximity</span> {
-        <span class='self'>self</span>.<span class='ident'>proximity</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">proximity</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Proximity</span> {
+        <span class="self">self</span>.<span class="ident">proximity</span>
     }
 }
 </pre>

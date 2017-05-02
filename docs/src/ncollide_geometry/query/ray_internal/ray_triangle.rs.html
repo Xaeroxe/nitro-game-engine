@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -155,118 +155,118 @@
 <span id="110">110</span>
 <span id="111">111</span>
 <span id="112">112</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Zero</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">num</span>::<span class="ident">Zero</span>;
 
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::{<span class='ident'>Real</span>, <span class='ident'>Id</span>};
-<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='self'>self</span>, <span class='ident'>Vector3</span>};
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::{<span class="ident">Real</span>, <span class="ident">Id</span>};
+<span class="kw">use</span> <span class="ident">na</span>::{<span class="self">self</span>, <span class="ident">Vector3</span>};
 
-<span class='kw'>use</span> <span class='ident'>query</span>::<span class='ident'>algorithms</span>::<span class='ident'>johnson_simplex</span>::<span class='ident'>JohnsonSimplex</span>;
-<span class='kw'>use</span> <span class='ident'>query</span>::{<span class='ident'>Ray</span>, <span class='ident'>RayCast</span>, <span class='ident'>RayIntersection</span>};
-<span class='kw'>use</span> <span class='ident'>query</span>::<span class='ident'>ray_internal</span>;
-<span class='kw'>use</span> <span class='ident'>shape</span>::<span class='ident'>Triangle</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Isometry</span>};
+<span class="kw">use</span> <span class="ident">query</span>::<span class="ident">algorithms</span>::<span class="ident">johnson_simplex</span>::<span class="ident">JohnsonSimplex</span>;
+<span class="kw">use</span> <span class="ident">query</span>::{<span class="ident">Ray</span>, <span class="ident">RayCast</span>, <span class="ident">RayIntersection</span>};
+<span class="kw">use</span> <span class="ident">query</span>::<span class="ident">ray_internal</span>;
+<span class="kw">use</span> <span class="ident">shape</span>::<span class="ident">Triangle</span>;
+<span class="kw">use</span> <span class="ident">math</span>::{<span class="ident">Point</span>, <span class="ident">Isometry</span>};
 
-<span class='kw'>use</span> <span class='ident'>utils</span>;
+<span class="kw">use</span> <span class="ident">utils</span>;
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> <span class='ident'>RayCast</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Triangle</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>toi_and_normal_with_ray</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>, <span class='ident'>ray</span>: <span class='kw-2'>&amp;</span><span class='ident'>Ray</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>, <span class='ident'>solid</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>RayIntersection</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>ls_ray</span> <span class='op'>=</span> <span class='ident'>ray</span>.<span class='ident'>inverse_transform_by</span>(<span class='ident'>m</span>);
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>: <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;&gt;</span> <span class="ident">RayCast</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Triangle</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">toi_and_normal_with_ray</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>, <span class="ident">ray</span>: <span class="kw-2">&amp;</span><span class="ident">Ray</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>, <span class="ident">solid</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RayIntersection</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Vector</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">let</span> <span class="ident">ls_ray</span> <span class="op">=</span> <span class="ident">ray</span>.<span class="ident">inverse_transform_by</span>(<span class="ident">m</span>);
 
-        <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>na</span>::<span class='ident'>dimension</span>::<span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span>() <span class='op'>==</span> <span class='number'>3</span> {
-            <span class='ident'>triangle_ray_intersection</span>(<span class='self'>self</span>.<span class='ident'>a</span>(), <span class='self'>self</span>.<span class='ident'>b</span>(), <span class='self'>self</span>.<span class='ident'>c</span>(), <span class='kw-2'>&amp;</span><span class='ident'>ls_ray</span>).<span class='ident'>map</span>(<span class='op'>|</span>(<span class='ident'>r</span>, _)<span class='op'>|</span> <span class='ident'>r</span>)
+        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">na</span>::<span class="ident">dimension</span>::<span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Vector</span><span class="op">&gt;</span>() <span class="op">==</span> <span class="number">3</span> {
+            <span class="ident">triangle_ray_intersection</span>(<span class="self">self</span>.<span class="ident">a</span>(), <span class="self">self</span>.<span class="ident">b</span>(), <span class="self">self</span>.<span class="ident">c</span>(), <span class="kw-2">&amp;</span><span class="ident">ls_ray</span>).<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">r</span>, _)<span class="op">|</span> <span class="ident">r</span>)
         }
-        <span class='kw'>else</span> {
-            <span class='ident'>ray_internal</span>::<span class='ident'>implicit_toi_and_normal_with_ray</span>(<span class='kw-2'>&amp;</span><span class='ident'>Id</span>::<span class='ident'>new</span>(), <span class='self'>self</span>,
-                                                           <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>JohnsonSimplex</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>::<span class='ident'>new_w_tls</span>(),
-                                                           <span class='kw-2'>&amp;</span><span class='ident'>ls_ray</span>,
-                                                           <span class='ident'>solid</span>)
+        <span class="kw">else</span> {
+            <span class="ident">ray_internal</span>::<span class="ident">implicit_toi_and_normal_with_ray</span>(<span class="kw-2">&amp;</span><span class="ident">Id</span>::<span class="ident">new</span>(), <span class="self">self</span>,
+                                                           <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">JohnsonSimplex</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>::<span class="ident">new_w_tls</span>(),
+                                                           <span class="kw-2">&amp;</span><span class="ident">ls_ray</span>,
+                                                           <span class="ident">solid</span>)
         };
 
-        <span class='ident'>res</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='kw-2'>mut</span> <span class='ident'>r</span><span class='op'>|</span> { <span class='ident'>r</span>.<span class='ident'>normal</span> <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>rotate_vector</span>(<span class='kw-2'>&amp;</span><span class='ident'>r</span>.<span class='ident'>normal</span>); <span class='ident'>r</span> })
+        <span class="ident">res</span>.<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">mut</span> <span class="ident">r</span><span class="op">|</span> { <span class="ident">r</span>.<span class="ident">normal</span> <span class="op">=</span> <span class="ident">m</span>.<span class="ident">rotate_vector</span>(<span class="kw-2">&amp;</span><span class="ident">r</span>.<span class="ident">normal</span>); <span class="ident">r</span> })
     }
 }
 
-<span class='doccomment'>/// Computes the intersection between a triangle and a ray.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// If an intersection is found, the time of impact, the normal and the barycentric coordinates of</span>
-<span class='doccomment'>/// the intersection point are returned.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>triangle_ray_intersection</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span>(<span class='ident'>a</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>, <span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>, <span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>, <span class='ident'>ray</span>: <span class='kw-2'>&amp;</span><span class='ident'>Ray</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>)
-                                    <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='ident'>RayIntersection</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span>, <span class='ident'>Vector3</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;</span>)<span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>ab</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>b</span> <span class='op'>-</span> <span class='kw-2'>*</span><span class='ident'>a</span>;
-    <span class='kw'>let</span> <span class='ident'>ac</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>c</span> <span class='op'>-</span> <span class='kw-2'>*</span><span class='ident'>a</span>;
+<span class="doccomment">/// Computes the intersection between a triangle and a ray.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If an intersection is found, the time of impact, the normal and the barycentric coordinates of</span>
+<span class="doccomment">/// the intersection point are returned.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">triangle_ray_intersection</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span>(<span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>, <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>, <span class="ident">c</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>, <span class="ident">ray</span>: <span class="kw-2">&amp;</span><span class="ident">Ray</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>)
+                                    <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">RayIntersection</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Vector</span><span class="op">&gt;</span>, <span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Real</span><span class="op">&gt;</span>)<span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">ab</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">-</span> <span class="kw-2">*</span><span class="ident">a</span>;
+    <span class="kw">let</span> <span class="ident">ac</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">c</span> <span class="op">-</span> <span class="kw-2">*</span><span class="ident">a</span>;
 
-    <span class='comment'>// normal</span>
-    <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='ident'>utils</span>::<span class='ident'>cross3</span>(<span class='kw-2'>&amp;</span><span class='ident'>ab</span>, <span class='kw-2'>&amp;</span><span class='ident'>ac</span>);
-    <span class='kw'>let</span> <span class='ident'>d</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>dot</span>(<span class='kw-2'>&amp;</span><span class='ident'>n</span>, <span class='kw-2'>&amp;</span><span class='ident'>ray</span>.<span class='ident'>dir</span>);
+    <span class="comment">// normal</span>
+    <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">utils</span>::<span class="ident">cross3</span>(<span class="kw-2">&amp;</span><span class="ident">ab</span>, <span class="kw-2">&amp;</span><span class="ident">ac</span>);
+    <span class="kw">let</span> <span class="ident">d</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="ident">n</span>, <span class="kw-2">&amp;</span><span class="ident">ray</span>.<span class="ident">dir</span>);
 
-    <span class='comment'>// the normal and the ray direction are parallel</span>
-    <span class='kw'>if</span> <span class='ident'>d</span>.<span class='ident'>is_zero</span>() {
-        <span class='kw'>return</span> <span class='prelude-val'>None</span>;
+    <span class="comment">// the normal and the ray direction are parallel</span>
+    <span class="kw">if</span> <span class="ident">d</span>.<span class="ident">is_zero</span>() {
+        <span class="kw">return</span> <span class="prelude-val">None</span>;
     }
 
-    <span class='kw'>let</span> <span class='ident'>ap</span> <span class='op'>=</span> <span class='ident'>ray</span>.<span class='ident'>origin</span> <span class='op'>-</span> <span class='kw-2'>*</span><span class='ident'>a</span>;
-    <span class='kw'>let</span> <span class='ident'>t</span>  <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>dot</span>(<span class='kw-2'>&amp;</span><span class='ident'>ap</span>, <span class='kw-2'>&amp;</span><span class='ident'>n</span>);
+    <span class="kw">let</span> <span class="ident">ap</span> <span class="op">=</span> <span class="ident">ray</span>.<span class="ident">origin</span> <span class="op">-</span> <span class="kw-2">*</span><span class="ident">a</span>;
+    <span class="kw">let</span> <span class="ident">t</span>  <span class="op">=</span> <span class="ident">na</span>::<span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="ident">ap</span>, <span class="kw-2">&amp;</span><span class="ident">n</span>);
 
-    <span class='comment'>// the ray does not intersect the plane defined by the triangle</span>
-    <span class='kw'>if</span> (<span class='ident'>t</span> <span class='op'>&lt;</span> <span class='ident'>na</span>::<span class='ident'>zero</span>() <span class='op'>&amp;&amp;</span> <span class='ident'>d</span> <span class='op'>&lt;</span> <span class='ident'>na</span>::<span class='ident'>zero</span>()) <span class='op'>||</span>
-       (<span class='ident'>t</span> <span class='op'>&gt;</span> <span class='ident'>na</span>::<span class='ident'>zero</span>() <span class='op'>&amp;&amp;</span> <span class='ident'>d</span> <span class='op'>&gt;</span> <span class='ident'>na</span>::<span class='ident'>zero</span>()) {
-        <span class='kw'>return</span> <span class='prelude-val'>None</span>;
+    <span class="comment">// the ray does not intersect the plane defined by the triangle</span>
+    <span class="kw">if</span> (<span class="ident">t</span> <span class="op">&lt;</span> <span class="ident">na</span>::<span class="ident">zero</span>() <span class="op">&amp;&amp;</span> <span class="ident">d</span> <span class="op">&lt;</span> <span class="ident">na</span>::<span class="ident">zero</span>()) <span class="op">||</span>
+       (<span class="ident">t</span> <span class="op">&gt;</span> <span class="ident">na</span>::<span class="ident">zero</span>() <span class="op">&amp;&amp;</span> <span class="ident">d</span> <span class="op">&gt;</span> <span class="ident">na</span>::<span class="ident">zero</span>()) {
+        <span class="kw">return</span> <span class="prelude-val">None</span>;
     }
 
-    <span class='kw'>let</span> <span class='ident'>d</span> <span class='op'>=</span> <span class='ident'>d</span>.<span class='ident'>abs</span>();
+    <span class="kw">let</span> <span class="ident">d</span> <span class="op">=</span> <span class="ident">d</span>.<span class="ident">abs</span>();
 
-    <span class='comment'>//</span>
-    <span class='comment'>// intersection: compute barycentric coordinates</span>
-    <span class='comment'>//</span>
-    <span class='kw'>let</span> <span class='ident'>e</span> <span class='op'>=</span> <span class='op'>-</span><span class='ident'>utils</span>::<span class='ident'>cross3</span>(<span class='kw-2'>&amp;</span><span class='ident'>ray</span>.<span class='ident'>dir</span>, <span class='kw-2'>&amp;</span><span class='ident'>ap</span>);
+    <span class="comment">//</span>
+    <span class="comment">// intersection: compute barycentric coordinates</span>
+    <span class="comment">//</span>
+    <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="op">-</span><span class="ident">utils</span>::<span class="ident">cross3</span>(<span class="kw-2">&amp;</span><span class="ident">ray</span>.<span class="ident">dir</span>, <span class="kw-2">&amp;</span><span class="ident">ap</span>);
 
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>v</span>;
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>w</span>;
-    <span class='kw'>let</span> <span class='ident'>toi</span>;
-    <span class='kw'>let</span> <span class='ident'>normal</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">v</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">w</span>;
+    <span class="kw">let</span> <span class="ident">toi</span>;
+    <span class="kw">let</span> <span class="ident">normal</span>;
 
-    <span class='kw'>if</span> <span class='ident'>t</span> <span class='op'>&lt;</span> <span class='ident'>na</span>::<span class='ident'>zero</span>() {
-        <span class='ident'>v</span> <span class='op'>=</span> <span class='op'>-</span><span class='ident'>na</span>::<span class='ident'>dot</span>(<span class='kw-2'>&amp;</span><span class='ident'>ac</span>, <span class='kw-2'>&amp;</span><span class='ident'>e</span>);
+    <span class="kw">if</span> <span class="ident">t</span> <span class="op">&lt;</span> <span class="ident">na</span>::<span class="ident">zero</span>() {
+        <span class="ident">v</span> <span class="op">=</span> <span class="op">-</span><span class="ident">na</span>::<span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="ident">ac</span>, <span class="kw-2">&amp;</span><span class="ident">e</span>);
 
-        <span class='kw'>if</span> <span class='ident'>v</span> <span class='op'>&lt;</span> <span class='ident'>na</span>::<span class='ident'>zero</span>() <span class='op'>||</span> <span class='ident'>v</span> <span class='op'>&gt;</span> <span class='ident'>d</span> {
-            <span class='kw'>return</span> <span class='prelude-val'>None</span>;
+        <span class="kw">if</span> <span class="ident">v</span> <span class="op">&lt;</span> <span class="ident">na</span>::<span class="ident">zero</span>() <span class="op">||</span> <span class="ident">v</span> <span class="op">&gt;</span> <span class="ident">d</span> {
+            <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
 
-        <span class='ident'>w</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>dot</span>(<span class='kw-2'>&amp;</span><span class='ident'>ab</span>, <span class='kw-2'>&amp;</span><span class='ident'>e</span>);
+        <span class="ident">w</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="ident">ab</span>, <span class="kw-2">&amp;</span><span class="ident">e</span>);
 
-        <span class='kw'>if</span> <span class='ident'>w</span> <span class='op'>&lt;</span> <span class='ident'>na</span>::<span class='ident'>zero</span>() <span class='op'>||</span> <span class='ident'>v</span> <span class='op'>+</span> <span class='ident'>w</span> <span class='op'>&gt;</span> <span class='ident'>d</span> {
-            <span class='kw'>return</span> <span class='prelude-val'>None</span>;
+        <span class="kw">if</span> <span class="ident">w</span> <span class="op">&lt;</span> <span class="ident">na</span>::<span class="ident">zero</span>() <span class="op">||</span> <span class="ident">v</span> <span class="op">+</span> <span class="ident">w</span> <span class="op">&gt;</span> <span class="ident">d</span> {
+            <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
 
-        <span class='kw'>let</span> <span class='ident'>invd</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>one</span>::<span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;</span>() <span class='op'>/</span> <span class='ident'>d</span>;
-        <span class='ident'>toi</span>      <span class='op'>=</span> <span class='op'>-</span><span class='ident'>t</span> <span class='op'>*</span> <span class='ident'>invd</span>;
-        <span class='ident'>normal</span>   <span class='op'>=</span> <span class='op'>-</span><span class='ident'>na</span>::<span class='ident'>normalize</span>(<span class='kw-2'>&amp;</span><span class='ident'>n</span>);
-        <span class='ident'>v</span>        <span class='op'>=</span> <span class='ident'>v</span> <span class='op'>*</span> <span class='ident'>invd</span>;
-        <span class='ident'>w</span>        <span class='op'>=</span> <span class='ident'>w</span> <span class='op'>*</span> <span class='ident'>invd</span>;
+        <span class="kw">let</span> <span class="ident">invd</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">one</span>::<span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Real</span><span class="op">&gt;</span>() <span class="op">/</span> <span class="ident">d</span>;
+        <span class="ident">toi</span>      <span class="op">=</span> <span class="op">-</span><span class="ident">t</span> <span class="op">*</span> <span class="ident">invd</span>;
+        <span class="ident">normal</span>   <span class="op">=</span> <span class="op">-</span><span class="ident">na</span>::<span class="ident">normalize</span>(<span class="kw-2">&amp;</span><span class="ident">n</span>);
+        <span class="ident">v</span>        <span class="op">=</span> <span class="ident">v</span> <span class="op">*</span> <span class="ident">invd</span>;
+        <span class="ident">w</span>        <span class="op">=</span> <span class="ident">w</span> <span class="op">*</span> <span class="ident">invd</span>;
     }
-    <span class='kw'>else</span> {
-        <span class='ident'>v</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>dot</span>(<span class='kw-2'>&amp;</span><span class='ident'>ac</span>, <span class='kw-2'>&amp;</span><span class='ident'>e</span>);
+    <span class="kw">else</span> {
+        <span class="ident">v</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="ident">ac</span>, <span class="kw-2">&amp;</span><span class="ident">e</span>);
 
-        <span class='kw'>if</span> <span class='ident'>v</span> <span class='op'>&lt;</span> <span class='ident'>na</span>::<span class='ident'>zero</span>() <span class='op'>||</span> <span class='ident'>v</span> <span class='op'>&gt;</span> <span class='ident'>d</span> {
-            <span class='kw'>return</span> <span class='prelude-val'>None</span>;
+        <span class="kw">if</span> <span class="ident">v</span> <span class="op">&lt;</span> <span class="ident">na</span>::<span class="ident">zero</span>() <span class="op">||</span> <span class="ident">v</span> <span class="op">&gt;</span> <span class="ident">d</span> {
+            <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
 
-        <span class='ident'>w</span> <span class='op'>=</span> <span class='op'>-</span><span class='ident'>na</span>::<span class='ident'>dot</span>(<span class='kw-2'>&amp;</span><span class='ident'>ab</span>, <span class='kw-2'>&amp;</span><span class='ident'>e</span>);
+        <span class="ident">w</span> <span class="op">=</span> <span class="op">-</span><span class="ident">na</span>::<span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="ident">ab</span>, <span class="kw-2">&amp;</span><span class="ident">e</span>);
 
-        <span class='kw'>if</span> <span class='ident'>w</span> <span class='op'>&lt;</span> <span class='ident'>na</span>::<span class='ident'>zero</span>() <span class='op'>||</span> <span class='ident'>v</span> <span class='op'>+</span> <span class='ident'>w</span> <span class='op'>&gt;</span> <span class='ident'>d</span> {
-            <span class='kw'>return</span> <span class='prelude-val'>None</span>;
+        <span class="kw">if</span> <span class="ident">w</span> <span class="op">&lt;</span> <span class="ident">na</span>::<span class="ident">zero</span>() <span class="op">||</span> <span class="ident">v</span> <span class="op">+</span> <span class="ident">w</span> <span class="op">&gt;</span> <span class="ident">d</span> {
+            <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
 
-        <span class='kw'>let</span> <span class='ident'>invd</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>one</span>::<span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;</span>() <span class='op'>/</span> <span class='ident'>d</span>;
-        <span class='ident'>toi</span>      <span class='op'>=</span> <span class='ident'>t</span> <span class='op'>*</span> <span class='ident'>invd</span>;
-        <span class='ident'>normal</span>   <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>normalize</span>(<span class='kw-2'>&amp;</span><span class='ident'>n</span>);
-        <span class='ident'>v</span>        <span class='op'>=</span> <span class='ident'>v</span> <span class='op'>*</span> <span class='ident'>invd</span>;
-        <span class='ident'>w</span>        <span class='op'>=</span> <span class='ident'>w</span> <span class='op'>*</span> <span class='ident'>invd</span>;
+        <span class="kw">let</span> <span class="ident">invd</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">one</span>::<span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Real</span><span class="op">&gt;</span>() <span class="op">/</span> <span class="ident">d</span>;
+        <span class="ident">toi</span>      <span class="op">=</span> <span class="ident">t</span> <span class="op">*</span> <span class="ident">invd</span>;
+        <span class="ident">normal</span>   <span class="op">=</span> <span class="ident">na</span>::<span class="ident">normalize</span>(<span class="kw-2">&amp;</span><span class="ident">n</span>);
+        <span class="ident">v</span>        <span class="op">=</span> <span class="ident">v</span> <span class="op">*</span> <span class="ident">invd</span>;
+        <span class="ident">w</span>        <span class="op">=</span> <span class="ident">w</span> <span class="op">*</span> <span class="ident">invd</span>;
     }
 
-    <span class='prelude-val'>Some</span>((<span class='ident'>RayIntersection</span>::<span class='ident'>new</span>(<span class='ident'>toi</span>, <span class='ident'>normal</span>), <span class='ident'>Vector3</span>::<span class='ident'>new</span>(<span class='op'>-</span><span class='ident'>v</span> <span class='op'>-</span> <span class='ident'>w</span> <span class='op'>+</span> <span class='ident'>na</span>::<span class='ident'>one</span>(), <span class='ident'>v</span>, <span class='ident'>w</span>)))
+    <span class="prelude-val">Some</span>((<span class="ident">RayIntersection</span>::<span class="ident">new</span>(<span class="ident">toi</span>, <span class="ident">normal</span>), <span class="ident">Vector3</span>::<span class="ident">new</span>(<span class="op">-</span><span class="ident">v</span> <span class="op">-</span> <span class="ident">w</span> <span class="op">+</span> <span class="ident">na</span>::<span class="ident">one</span>(), <span class="ident">v</span>, <span class="ident">w</span>)))
 }
 </pre>
 </section>

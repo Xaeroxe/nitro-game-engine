@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -333,297 +333,297 @@
 <span id="288">288</span>
 <span id="289">289</span>
 <span id="290">290</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Matrixrices with dimensions known at compile-time.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Matrixrices with dimensions known at compile-time.</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span> <span class='comment'>// we allow missing to avoid having to document the mij components.</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span> <span class="comment">// we allow missing to avoid having to document the mij components.</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>Sub</span>, <span class='ident'>Mul</span>, <span class='ident'>Div</span>, <span class='ident'>AddAssign</span>, <span class='ident'>SubAssign</span>, <span class='ident'>MulAssign</span>, <span class='ident'>DivAssign</span>, <span class='ident'>Index</span>, <span class='ident'>IndexMut</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>slice</span>::{<span class='ident'>Iter</span>, <span class='ident'>IterMut</span>};
-<span class='kw'>use</span> <span class='ident'>rand</span>::{<span class='ident'>Rand</span>, <span class='ident'>Rng</span>};
-<span class='kw'>use</span> <span class='ident'>num</span>::{<span class='ident'>Zero</span>, <span class='ident'>One</span>};
-<span class='kw'>use</span> <span class='ident'>traits</span>::<span class='ident'>operations</span>::<span class='ident'>ApproxEq</span>;
-<span class='kw'>use</span> <span class='ident'>structs</span>::<span class='ident'>vector</span>::{<span class='ident'>Vector1</span>, <span class='ident'>Vector2</span>, <span class='ident'>Vector3</span>, <span class='ident'>Vector4</span>, <span class='ident'>Vector5</span>, <span class='ident'>Vector6</span>};
-<span class='kw'>use</span> <span class='ident'>structs</span>::<span class='ident'>point</span>::{<span class='ident'>Point1</span>, <span class='ident'>Point4</span>, <span class='ident'>Point5</span>, <span class='ident'>Point6</span>};
-<span class='kw'>use</span> <span class='ident'>structs</span>::<span class='ident'>dvector</span>::{<span class='ident'>DVector1</span>, <span class='ident'>DVector2</span>, <span class='ident'>DVector3</span>, <span class='ident'>DVector4</span>, <span class='ident'>DVector5</span>, <span class='ident'>DVector6</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">Sub</span>, <span class="ident">Mul</span>, <span class="ident">Div</span>, <span class="ident">AddAssign</span>, <span class="ident">SubAssign</span>, <span class="ident">MulAssign</span>, <span class="ident">DivAssign</span>, <span class="ident">Index</span>, <span class="ident">IndexMut</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">slice</span>::{<span class="ident">Iter</span>, <span class="ident">IterMut</span>};
+<span class="kw">use</span> <span class="ident">rand</span>::{<span class="ident">Rand</span>, <span class="ident">Rng</span>};
+<span class="kw">use</span> <span class="ident">num</span>::{<span class="ident">Zero</span>, <span class="ident">One</span>};
+<span class="kw">use</span> <span class="ident">traits</span>::<span class="ident">operations</span>::<span class="ident">ApproxEq</span>;
+<span class="kw">use</span> <span class="ident">structs</span>::<span class="ident">vector</span>::{<span class="ident">Vector1</span>, <span class="ident">Vector2</span>, <span class="ident">Vector3</span>, <span class="ident">Vector4</span>, <span class="ident">Vector5</span>, <span class="ident">Vector6</span>};
+<span class="kw">use</span> <span class="ident">structs</span>::<span class="ident">point</span>::{<span class="ident">Point1</span>, <span class="ident">Point4</span>, <span class="ident">Point5</span>, <span class="ident">Point6</span>};
+<span class="kw">use</span> <span class="ident">structs</span>::<span class="ident">dvector</span>::{<span class="ident">DVector1</span>, <span class="ident">DVector2</span>, <span class="ident">DVector3</span>, <span class="ident">DVector4</span>, <span class="ident">DVector5</span>, <span class="ident">DVector6</span>};
 
-<span class='kw'>use</span> <span class='ident'>traits</span>::<span class='ident'>structure</span>::{<span class='ident'>Cast</span>, <span class='ident'>Row</span>, <span class='ident'>Column</span>, <span class='ident'>Iterable</span>, <span class='ident'>IterableMut</span>, <span class='ident'>Dimension</span>, <span class='ident'>Indexable</span>, <span class='ident'>Eye</span>, <span class='ident'>ColumnSlice</span>,
-                        <span class='ident'>RowSlice</span>, <span class='ident'>Diagonal</span>, <span class='ident'>DiagonalMut</span>, <span class='ident'>Shape</span>, <span class='ident'>BaseFloat</span>, <span class='ident'>BaseNum</span>, <span class='ident'>Repeat</span>};
-<span class='kw'>use</span> <span class='ident'>traits</span>::<span class='ident'>operations</span>::{<span class='ident'>Absolute</span>, <span class='ident'>Transpose</span>, <span class='ident'>Inverse</span>, <span class='ident'>Outer</span>, <span class='ident'>EigenQR</span>, <span class='ident'>Mean</span>};
-<span class='kw'>use</span> <span class='ident'>traits</span>::<span class='ident'>geometry</span>::{<span class='ident'>ToHomogeneous</span>, <span class='ident'>FromHomogeneous</span>, <span class='ident'>Origin</span>};
-<span class='kw'>use</span> <span class='ident'>linalg</span>;
+<span class="kw">use</span> <span class="ident">traits</span>::<span class="ident">structure</span>::{<span class="ident">Cast</span>, <span class="ident">Row</span>, <span class="ident">Column</span>, <span class="ident">Iterable</span>, <span class="ident">IterableMut</span>, <span class="ident">Dimension</span>, <span class="ident">Indexable</span>, <span class="ident">Eye</span>, <span class="ident">ColumnSlice</span>,
+                        <span class="ident">RowSlice</span>, <span class="ident">Diagonal</span>, <span class="ident">DiagonalMut</span>, <span class="ident">Shape</span>, <span class="ident">BaseFloat</span>, <span class="ident">BaseNum</span>, <span class="ident">Repeat</span>};
+<span class="kw">use</span> <span class="ident">traits</span>::<span class="ident">operations</span>::{<span class="ident">Absolute</span>, <span class="ident">Transpose</span>, <span class="ident">Inverse</span>, <span class="ident">Outer</span>, <span class="ident">EigenQR</span>, <span class="ident">Mean</span>};
+<span class="kw">use</span> <span class="ident">traits</span>::<span class="ident">geometry</span>::{<span class="ident">ToHomogeneous</span>, <span class="ident">FromHomogeneous</span>, <span class="ident">Origin</span>};
+<span class="kw">use</span> <span class="ident">linalg</span>;
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;arbitrary&quot;</span>)]</span>
-<span class='kw'>use</span> <span class='ident'>quickcheck</span>::{<span class='ident'>Arbitrary</span>, <span class='ident'>Gen</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;arbitrary&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">quickcheck</span>::{<span class="ident">Arbitrary</span>, <span class="ident">Gen</span>};
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;abstract_algebra&quot;</span>)]</span>
-<span class='macro'>use_matrix_group_modules</span><span class='macro'>!</span>();
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;abstract_algebra&quot;</span>)]</span>
+<span class="macro">use_matrix_group_modules</span><span class="macro">!</span>();
 
 
-<span class='doccomment'>/// Special identity matrix. All its operation are no-ops.</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>, <span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Copy</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Identity</span>;
+<span class="doccomment">/// Special identity matrix. All its operation are no-ops.</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Identity</span>;
 
-<span class='kw'>impl</span> <span class='ident'>Identity</span> {
-    <span class='doccomment'>/// Creates a new identity matrix.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>Identity</span> {
-        <span class='ident'>Identity</span>
+<span class="kw">impl</span> <span class="ident">Identity</span> {
+    <span class="doccomment">/// Creates a new identity matrix.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">Identity</span> {
+        <span class="ident">Identity</span>
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>Identity</span> {
-    <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-        <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;Identity&quot;</span>)
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Identity</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Identity&quot;</span>)
     }
 }
 
-<span class='doccomment'>/// Square matrix of dimension 1.</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>, <span class='ident'>Clone</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>, <span class='ident'>Copy</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Matrix1</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span> <span class='ident'>m11</span>: <span class='ident'>N</span>
+<span class="doccomment">/// Square matrix of dimension 1.</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Matrix1</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="ident">m11</span>: <span class="ident">N</span>
 }
 
-<span class='macro'>eye_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix1</span>, <span class='number'>1</span>, <span class='ident'>m11</span>);
+<span class="macro">eye_impl</span><span class="macro">!</span>(<span class="ident">Matrix1</span>, <span class="number">1</span>, <span class="ident">m11</span>);
 
-<span class='macro'>matrix_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix1</span>, <span class='number'>1</span>, <span class='ident'>Vector1</span>, <span class='ident'>DVector1</span>, <span class='ident'>m11</span>);
-<span class='macro'>one_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix1</span>, ::<span class='ident'>one</span>);
-<span class='macro'>dim_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix1</span>, <span class='number'>1</span>);
-<span class='macro'>mat_mul_mat_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix1</span>, <span class='number'>1</span>);
-<span class='macro'>mat_mul_vec_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix1</span>, <span class='ident'>Vector1</span>, <span class='number'>1</span>, ::<span class='ident'>zero</span>);
-<span class='macro'>vec_mul_mat_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix1</span>, <span class='ident'>Vector1</span>, <span class='number'>1</span>, ::<span class='ident'>zero</span>);
-<span class='macro'>mat_mul_point_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix1</span>, <span class='ident'>Point1</span>, <span class='number'>1</span>, <span class='ident'>Origin</span>::<span class='ident'>origin</span>);
-<span class='macro'>point_mul_mat_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix1</span>, <span class='ident'>Point1</span>, <span class='number'>1</span>, <span class='ident'>Origin</span>::<span class='ident'>origin</span>);
-<span class='comment'>// (specialized); inverse_impl!(Matrix1, 1);</span>
-<span class='macro'>to_homogeneous_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix1</span>, <span class='ident'>Matrix2</span>, <span class='number'>1</span>, <span class='number'>2</span>);
-<span class='macro'>from_homogeneous_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix1</span>, <span class='ident'>Matrix2</span>, <span class='number'>1</span>, <span class='number'>2</span>);
-<span class='macro'>eigen_qr_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix1</span>, <span class='ident'>Vector1</span>);
-<span class='macro'>componentwise_arbitrary</span><span class='macro'>!</span>(<span class='ident'>Matrix1</span>, <span class='ident'>m11</span>);
-<span class='macro'>componentwise_rand</span><span class='macro'>!</span>(<span class='ident'>Matrix1</span>, <span class='ident'>m11</span>);
-<span class='macro'>mat_display_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix1</span>, <span class='number'>1</span>);
+<span class="macro">matrix_impl</span><span class="macro">!</span>(<span class="ident">Matrix1</span>, <span class="number">1</span>, <span class="ident">Vector1</span>, <span class="ident">DVector1</span>, <span class="ident">m11</span>);
+<span class="macro">one_impl</span><span class="macro">!</span>(<span class="ident">Matrix1</span>, ::<span class="ident">one</span>);
+<span class="macro">dim_impl</span><span class="macro">!</span>(<span class="ident">Matrix1</span>, <span class="number">1</span>);
+<span class="macro">mat_mul_mat_impl</span><span class="macro">!</span>(<span class="ident">Matrix1</span>, <span class="number">1</span>);
+<span class="macro">mat_mul_vec_impl</span><span class="macro">!</span>(<span class="ident">Matrix1</span>, <span class="ident">Vector1</span>, <span class="number">1</span>, ::<span class="ident">zero</span>);
+<span class="macro">vec_mul_mat_impl</span><span class="macro">!</span>(<span class="ident">Matrix1</span>, <span class="ident">Vector1</span>, <span class="number">1</span>, ::<span class="ident">zero</span>);
+<span class="macro">mat_mul_point_impl</span><span class="macro">!</span>(<span class="ident">Matrix1</span>, <span class="ident">Point1</span>, <span class="number">1</span>, <span class="ident">Origin</span>::<span class="ident">origin</span>);
+<span class="macro">point_mul_mat_impl</span><span class="macro">!</span>(<span class="ident">Matrix1</span>, <span class="ident">Point1</span>, <span class="number">1</span>, <span class="ident">Origin</span>::<span class="ident">origin</span>);
+<span class="comment">// (specialized); inverse_impl!(Matrix1, 1);</span>
+<span class="macro">to_homogeneous_impl</span><span class="macro">!</span>(<span class="ident">Matrix1</span>, <span class="ident">Matrix2</span>, <span class="number">1</span>, <span class="number">2</span>);
+<span class="macro">from_homogeneous_impl</span><span class="macro">!</span>(<span class="ident">Matrix1</span>, <span class="ident">Matrix2</span>, <span class="number">1</span>, <span class="number">2</span>);
+<span class="macro">eigen_qr_impl</span><span class="macro">!</span>(<span class="ident">Matrix1</span>, <span class="ident">Vector1</span>);
+<span class="macro">componentwise_arbitrary</span><span class="macro">!</span>(<span class="ident">Matrix1</span>, <span class="ident">m11</span>);
+<span class="macro">componentwise_rand</span><span class="macro">!</span>(<span class="ident">Matrix1</span>, <span class="ident">m11</span>);
+<span class="macro">mat_display_impl</span><span class="macro">!</span>(<span class="ident">Matrix1</span>, <span class="number">1</span>);
 
-<span class='doccomment'>/// Square matrix of dimension 2.</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>, <span class='ident'>Clone</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>, <span class='ident'>Copy</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Matrix2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span> <span class='ident'>m11</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m21</span>: <span class='ident'>N</span>,
-    <span class='kw'>pub</span> <span class='ident'>m12</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m22</span>: <span class='ident'>N</span>
+<span class="doccomment">/// Square matrix of dimension 2.</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Matrix2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="ident">m11</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m21</span>: <span class="ident">N</span>,
+    <span class="kw">pub</span> <span class="ident">m12</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m22</span>: <span class="ident">N</span>
 }
 
-<span class='macro'>eye_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix2</span>, <span class='number'>2</span>, <span class='ident'>m11</span>, <span class='ident'>m22</span>);
+<span class="macro">eye_impl</span><span class="macro">!</span>(<span class="ident">Matrix2</span>, <span class="number">2</span>, <span class="ident">m11</span>, <span class="ident">m22</span>);
 
-<span class='macro'>matrix_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix2</span>, <span class='number'>2</span>, <span class='ident'>Vector2</span>, <span class='ident'>DVector2</span>, <span class='ident'>m11</span>, <span class='ident'>m12</span>,
-                                  <span class='ident'>m21</span>, <span class='ident'>m22</span>);
-<span class='macro'>one_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix2</span>, ::<span class='ident'>one</span>,  ::<span class='ident'>zero</span>,
-                ::<span class='ident'>zero</span>, ::<span class='ident'>one</span>);
-<span class='macro'>dim_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix2</span>, <span class='number'>2</span>);
-<span class='comment'>// (specialized); mul_impl!(Matrix2, 2);</span>
-<span class='comment'>// (specialized); rmul_impl!(Matrix2, Vector2, 2);</span>
-<span class='comment'>// (specialized); lmul_impl!(Matrix2, Vector2, 2);</span>
-<span class='comment'>// (specialized); inverse_impl!(Matrix2, 2);</span>
-<span class='macro'>to_homogeneous_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix2</span>, <span class='ident'>Matrix3</span>, <span class='number'>2</span>, <span class='number'>3</span>);
-<span class='macro'>from_homogeneous_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix2</span>, <span class='ident'>Matrix3</span>, <span class='number'>2</span>, <span class='number'>3</span>);
-<span class='macro'>eigen_qr_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix2</span>, <span class='ident'>Vector2</span>);
-<span class='macro'>componentwise_arbitrary</span><span class='macro'>!</span>(<span class='ident'>Matrix2</span>, <span class='ident'>m11</span>, <span class='ident'>m12</span>, <span class='ident'>m21</span>, <span class='ident'>m22</span>);
-<span class='macro'>componentwise_rand</span><span class='macro'>!</span>(<span class='ident'>Matrix2</span>, <span class='ident'>m11</span>, <span class='ident'>m12</span>, <span class='ident'>m21</span>, <span class='ident'>m22</span>);
-<span class='macro'>mat_display_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix2</span>, <span class='number'>2</span>);
+<span class="macro">matrix_impl</span><span class="macro">!</span>(<span class="ident">Matrix2</span>, <span class="number">2</span>, <span class="ident">Vector2</span>, <span class="ident">DVector2</span>, <span class="ident">m11</span>, <span class="ident">m12</span>,
+                                  <span class="ident">m21</span>, <span class="ident">m22</span>);
+<span class="macro">one_impl</span><span class="macro">!</span>(<span class="ident">Matrix2</span>, ::<span class="ident">one</span>,  ::<span class="ident">zero</span>,
+                ::<span class="ident">zero</span>, ::<span class="ident">one</span>);
+<span class="macro">dim_impl</span><span class="macro">!</span>(<span class="ident">Matrix2</span>, <span class="number">2</span>);
+<span class="comment">// (specialized); mul_impl!(Matrix2, 2);</span>
+<span class="comment">// (specialized); rmul_impl!(Matrix2, Vector2, 2);</span>
+<span class="comment">// (specialized); lmul_impl!(Matrix2, Vector2, 2);</span>
+<span class="comment">// (specialized); inverse_impl!(Matrix2, 2);</span>
+<span class="macro">to_homogeneous_impl</span><span class="macro">!</span>(<span class="ident">Matrix2</span>, <span class="ident">Matrix3</span>, <span class="number">2</span>, <span class="number">3</span>);
+<span class="macro">from_homogeneous_impl</span><span class="macro">!</span>(<span class="ident">Matrix2</span>, <span class="ident">Matrix3</span>, <span class="number">2</span>, <span class="number">3</span>);
+<span class="macro">eigen_qr_impl</span><span class="macro">!</span>(<span class="ident">Matrix2</span>, <span class="ident">Vector2</span>);
+<span class="macro">componentwise_arbitrary</span><span class="macro">!</span>(<span class="ident">Matrix2</span>, <span class="ident">m11</span>, <span class="ident">m12</span>, <span class="ident">m21</span>, <span class="ident">m22</span>);
+<span class="macro">componentwise_rand</span><span class="macro">!</span>(<span class="ident">Matrix2</span>, <span class="ident">m11</span>, <span class="ident">m12</span>, <span class="ident">m21</span>, <span class="ident">m22</span>);
+<span class="macro">mat_display_impl</span><span class="macro">!</span>(<span class="ident">Matrix2</span>, <span class="number">2</span>);
 
-<span class='doccomment'>/// Square matrix of dimension 3.</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>, <span class='ident'>Clone</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>, <span class='ident'>Copy</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Matrix3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span> <span class='ident'>m11</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m21</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m31</span>: <span class='ident'>N</span>,
-    <span class='kw'>pub</span> <span class='ident'>m12</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m22</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m32</span>: <span class='ident'>N</span>,
-    <span class='kw'>pub</span> <span class='ident'>m13</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m23</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m33</span>: <span class='ident'>N</span>
+<span class="doccomment">/// Square matrix of dimension 3.</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Matrix3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="ident">m11</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m21</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m31</span>: <span class="ident">N</span>,
+    <span class="kw">pub</span> <span class="ident">m12</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m22</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m32</span>: <span class="ident">N</span>,
+    <span class="kw">pub</span> <span class="ident">m13</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m23</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m33</span>: <span class="ident">N</span>
 }
 
-<span class='macro'>eye_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix3</span>, <span class='number'>3</span>, <span class='ident'>m11</span>, <span class='ident'>m22</span>, <span class='ident'>m33</span>);
+<span class="macro">eye_impl</span><span class="macro">!</span>(<span class="ident">Matrix3</span>, <span class="number">3</span>, <span class="ident">m11</span>, <span class="ident">m22</span>, <span class="ident">m33</span>);
 
-<span class='macro'>matrix_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix3</span>, <span class='number'>3</span>, <span class='ident'>Vector3</span>, <span class='ident'>DVector3</span>, <span class='ident'>m11</span>, <span class='ident'>m12</span>, <span class='ident'>m13</span>,
-                                            <span class='ident'>m21</span>, <span class='ident'>m22</span>, <span class='ident'>m23</span>,
-                                            <span class='ident'>m31</span>, <span class='ident'>m32</span>, <span class='ident'>m33</span>);
-<span class='macro'>one_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix3</span>, ::<span class='ident'>one</span> , ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>,
-                ::<span class='ident'>zero</span>, ::<span class='ident'>one</span> , ::<span class='ident'>zero</span>,
-                ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>one</span>);
-<span class='macro'>dim_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix3</span>, <span class='number'>3</span>);
-<span class='comment'>// (specialized); mul_impl!(Matrix3, 3);</span>
-<span class='comment'>// (specialized); rmul_impl!(Matrix3, Vector3, 3);</span>
-<span class='comment'>// (specialized); lmul_impl!(Matrix3, Vector3, 3);</span>
-<span class='comment'>// (specialized); inverse_impl!(Matrix3, 3);</span>
-<span class='macro'>to_homogeneous_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix3</span>, <span class='ident'>Matrix4</span>, <span class='number'>3</span>, <span class='number'>4</span>);
-<span class='macro'>from_homogeneous_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix3</span>, <span class='ident'>Matrix4</span>, <span class='number'>3</span>, <span class='number'>4</span>);
-<span class='macro'>eigen_qr_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix3</span>, <span class='ident'>Vector3</span>);
-<span class='macro'>componentwise_arbitrary</span><span class='macro'>!</span>(<span class='ident'>Matrix3</span>,
-    <span class='ident'>m11</span>, <span class='ident'>m12</span>, <span class='ident'>m13</span>,
-    <span class='ident'>m21</span>, <span class='ident'>m22</span>, <span class='ident'>m23</span>,
-    <span class='ident'>m31</span>, <span class='ident'>m32</span>, <span class='ident'>m33</span>
+<span class="macro">matrix_impl</span><span class="macro">!</span>(<span class="ident">Matrix3</span>, <span class="number">3</span>, <span class="ident">Vector3</span>, <span class="ident">DVector3</span>, <span class="ident">m11</span>, <span class="ident">m12</span>, <span class="ident">m13</span>,
+                                            <span class="ident">m21</span>, <span class="ident">m22</span>, <span class="ident">m23</span>,
+                                            <span class="ident">m31</span>, <span class="ident">m32</span>, <span class="ident">m33</span>);
+<span class="macro">one_impl</span><span class="macro">!</span>(<span class="ident">Matrix3</span>, ::<span class="ident">one</span> , ::<span class="ident">zero</span>, ::<span class="ident">zero</span>,
+                ::<span class="ident">zero</span>, ::<span class="ident">one</span> , ::<span class="ident">zero</span>,
+                ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">one</span>);
+<span class="macro">dim_impl</span><span class="macro">!</span>(<span class="ident">Matrix3</span>, <span class="number">3</span>);
+<span class="comment">// (specialized); mul_impl!(Matrix3, 3);</span>
+<span class="comment">// (specialized); rmul_impl!(Matrix3, Vector3, 3);</span>
+<span class="comment">// (specialized); lmul_impl!(Matrix3, Vector3, 3);</span>
+<span class="comment">// (specialized); inverse_impl!(Matrix3, 3);</span>
+<span class="macro">to_homogeneous_impl</span><span class="macro">!</span>(<span class="ident">Matrix3</span>, <span class="ident">Matrix4</span>, <span class="number">3</span>, <span class="number">4</span>);
+<span class="macro">from_homogeneous_impl</span><span class="macro">!</span>(<span class="ident">Matrix3</span>, <span class="ident">Matrix4</span>, <span class="number">3</span>, <span class="number">4</span>);
+<span class="macro">eigen_qr_impl</span><span class="macro">!</span>(<span class="ident">Matrix3</span>, <span class="ident">Vector3</span>);
+<span class="macro">componentwise_arbitrary</span><span class="macro">!</span>(<span class="ident">Matrix3</span>,
+    <span class="ident">m11</span>, <span class="ident">m12</span>, <span class="ident">m13</span>,
+    <span class="ident">m21</span>, <span class="ident">m22</span>, <span class="ident">m23</span>,
+    <span class="ident">m31</span>, <span class="ident">m32</span>, <span class="ident">m33</span>
 );
-<span class='macro'>componentwise_rand</span><span class='macro'>!</span>(<span class='ident'>Matrix3</span>,
-    <span class='ident'>m11</span>, <span class='ident'>m12</span>, <span class='ident'>m13</span>,
-    <span class='ident'>m21</span>, <span class='ident'>m22</span>, <span class='ident'>m23</span>,
-    <span class='ident'>m31</span>, <span class='ident'>m32</span>, <span class='ident'>m33</span>
+<span class="macro">componentwise_rand</span><span class="macro">!</span>(<span class="ident">Matrix3</span>,
+    <span class="ident">m11</span>, <span class="ident">m12</span>, <span class="ident">m13</span>,
+    <span class="ident">m21</span>, <span class="ident">m22</span>, <span class="ident">m23</span>,
+    <span class="ident">m31</span>, <span class="ident">m32</span>, <span class="ident">m33</span>
 );
-<span class='macro'>mat_display_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix3</span>, <span class='number'>3</span>);
+<span class="macro">mat_display_impl</span><span class="macro">!</span>(<span class="ident">Matrix3</span>, <span class="number">3</span>);
 
-<span class='doccomment'>/// Square matrix of dimension 4.</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>, <span class='ident'>Clone</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>, <span class='ident'>Copy</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Matrix4</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span> <span class='ident'>m11</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m21</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m31</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m41</span>: <span class='ident'>N</span>,
-    <span class='kw'>pub</span> <span class='ident'>m12</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m22</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m32</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m42</span>: <span class='ident'>N</span>,
-    <span class='kw'>pub</span> <span class='ident'>m13</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m23</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m33</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m43</span>: <span class='ident'>N</span>,
-    <span class='kw'>pub</span> <span class='ident'>m14</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m24</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m34</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m44</span>: <span class='ident'>N</span>
+<span class="doccomment">/// Square matrix of dimension 4.</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Matrix4</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="ident">m11</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m21</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m31</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m41</span>: <span class="ident">N</span>,
+    <span class="kw">pub</span> <span class="ident">m12</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m22</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m32</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m42</span>: <span class="ident">N</span>,
+    <span class="kw">pub</span> <span class="ident">m13</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m23</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m33</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m43</span>: <span class="ident">N</span>,
+    <span class="kw">pub</span> <span class="ident">m14</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m24</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m34</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m44</span>: <span class="ident">N</span>
 }
 
-<span class='macro'>eye_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix4</span>, <span class='number'>4</span>, <span class='ident'>m11</span>, <span class='ident'>m22</span>, <span class='ident'>m33</span>, <span class='ident'>m44</span>);
+<span class="macro">eye_impl</span><span class="macro">!</span>(<span class="ident">Matrix4</span>, <span class="number">4</span>, <span class="ident">m11</span>, <span class="ident">m22</span>, <span class="ident">m33</span>, <span class="ident">m44</span>);
 
-<span class='macro'>matrix_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix4</span>, <span class='number'>4</span>, <span class='ident'>Vector4</span>, <span class='ident'>DVector4</span>,
-  <span class='ident'>m11</span>, <span class='ident'>m12</span>, <span class='ident'>m13</span>, <span class='ident'>m14</span>,
-  <span class='ident'>m21</span>, <span class='ident'>m22</span>, <span class='ident'>m23</span>, <span class='ident'>m24</span>,
-  <span class='ident'>m31</span>, <span class='ident'>m32</span>, <span class='ident'>m33</span>, <span class='ident'>m34</span>,
-  <span class='ident'>m41</span>, <span class='ident'>m42</span>, <span class='ident'>m43</span>, <span class='ident'>m44</span>
+<span class="macro">matrix_impl</span><span class="macro">!</span>(<span class="ident">Matrix4</span>, <span class="number">4</span>, <span class="ident">Vector4</span>, <span class="ident">DVector4</span>,
+  <span class="ident">m11</span>, <span class="ident">m12</span>, <span class="ident">m13</span>, <span class="ident">m14</span>,
+  <span class="ident">m21</span>, <span class="ident">m22</span>, <span class="ident">m23</span>, <span class="ident">m24</span>,
+  <span class="ident">m31</span>, <span class="ident">m32</span>, <span class="ident">m33</span>, <span class="ident">m34</span>,
+  <span class="ident">m41</span>, <span class="ident">m42</span>, <span class="ident">m43</span>, <span class="ident">m44</span>
 );
-<span class='macro'>one_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix4</span>, ::<span class='ident'>one</span>  , ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>,
-                ::<span class='ident'>zero</span>, ::<span class='ident'>one</span>  , ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>,
-                ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>one</span>  , ::<span class='ident'>zero</span>,
-                ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>one</span>);
-<span class='macro'>dim_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix4</span>, <span class='number'>4</span>);
-<span class='macro'>mat_mul_mat_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix4</span>, <span class='number'>4</span>);
-<span class='macro'>mat_mul_vec_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix4</span>, <span class='ident'>Vector4</span>, <span class='number'>4</span>, ::<span class='ident'>zero</span>);
-<span class='macro'>vec_mul_mat_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix4</span>, <span class='ident'>Vector4</span>, <span class='number'>4</span>, ::<span class='ident'>zero</span>);
-<span class='macro'>mat_mul_point_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix4</span>, <span class='ident'>Point4</span>, <span class='number'>4</span>, <span class='ident'>Origin</span>::<span class='ident'>origin</span>);
-<span class='macro'>point_mul_mat_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix4</span>, <span class='ident'>Point4</span>, <span class='number'>4</span>, <span class='ident'>Origin</span>::<span class='ident'>origin</span>);
-<span class='macro'>inverse_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix4</span>, <span class='number'>4</span>);
-<span class='macro'>to_homogeneous_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix4</span>, <span class='ident'>Matrix5</span>, <span class='number'>4</span>, <span class='number'>5</span>);
-<span class='macro'>from_homogeneous_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix4</span>, <span class='ident'>Matrix5</span>, <span class='number'>4</span>, <span class='number'>5</span>);
-<span class='macro'>eigen_qr_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix4</span>, <span class='ident'>Vector4</span>);
-<span class='macro'>componentwise_arbitrary</span><span class='macro'>!</span>(<span class='ident'>Matrix4</span>,
-  <span class='ident'>m11</span>, <span class='ident'>m12</span>, <span class='ident'>m13</span>, <span class='ident'>m14</span>,
-  <span class='ident'>m21</span>, <span class='ident'>m22</span>, <span class='ident'>m23</span>, <span class='ident'>m24</span>,
-  <span class='ident'>m31</span>, <span class='ident'>m32</span>, <span class='ident'>m33</span>, <span class='ident'>m34</span>,
-  <span class='ident'>m41</span>, <span class='ident'>m42</span>, <span class='ident'>m43</span>, <span class='ident'>m44</span>
+<span class="macro">one_impl</span><span class="macro">!</span>(<span class="ident">Matrix4</span>, ::<span class="ident">one</span>  , ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>,
+                ::<span class="ident">zero</span>, ::<span class="ident">one</span>  , ::<span class="ident">zero</span>, ::<span class="ident">zero</span>,
+                ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">one</span>  , ::<span class="ident">zero</span>,
+                ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">one</span>);
+<span class="macro">dim_impl</span><span class="macro">!</span>(<span class="ident">Matrix4</span>, <span class="number">4</span>);
+<span class="macro">mat_mul_mat_impl</span><span class="macro">!</span>(<span class="ident">Matrix4</span>, <span class="number">4</span>);
+<span class="macro">mat_mul_vec_impl</span><span class="macro">!</span>(<span class="ident">Matrix4</span>, <span class="ident">Vector4</span>, <span class="number">4</span>, ::<span class="ident">zero</span>);
+<span class="macro">vec_mul_mat_impl</span><span class="macro">!</span>(<span class="ident">Matrix4</span>, <span class="ident">Vector4</span>, <span class="number">4</span>, ::<span class="ident">zero</span>);
+<span class="macro">mat_mul_point_impl</span><span class="macro">!</span>(<span class="ident">Matrix4</span>, <span class="ident">Point4</span>, <span class="number">4</span>, <span class="ident">Origin</span>::<span class="ident">origin</span>);
+<span class="macro">point_mul_mat_impl</span><span class="macro">!</span>(<span class="ident">Matrix4</span>, <span class="ident">Point4</span>, <span class="number">4</span>, <span class="ident">Origin</span>::<span class="ident">origin</span>);
+<span class="macro">inverse_impl</span><span class="macro">!</span>(<span class="ident">Matrix4</span>, <span class="number">4</span>);
+<span class="macro">to_homogeneous_impl</span><span class="macro">!</span>(<span class="ident">Matrix4</span>, <span class="ident">Matrix5</span>, <span class="number">4</span>, <span class="number">5</span>);
+<span class="macro">from_homogeneous_impl</span><span class="macro">!</span>(<span class="ident">Matrix4</span>, <span class="ident">Matrix5</span>, <span class="number">4</span>, <span class="number">5</span>);
+<span class="macro">eigen_qr_impl</span><span class="macro">!</span>(<span class="ident">Matrix4</span>, <span class="ident">Vector4</span>);
+<span class="macro">componentwise_arbitrary</span><span class="macro">!</span>(<span class="ident">Matrix4</span>,
+  <span class="ident">m11</span>, <span class="ident">m12</span>, <span class="ident">m13</span>, <span class="ident">m14</span>,
+  <span class="ident">m21</span>, <span class="ident">m22</span>, <span class="ident">m23</span>, <span class="ident">m24</span>,
+  <span class="ident">m31</span>, <span class="ident">m32</span>, <span class="ident">m33</span>, <span class="ident">m34</span>,
+  <span class="ident">m41</span>, <span class="ident">m42</span>, <span class="ident">m43</span>, <span class="ident">m44</span>
 );
-<span class='macro'>componentwise_rand</span><span class='macro'>!</span>(<span class='ident'>Matrix4</span>,
-  <span class='ident'>m11</span>, <span class='ident'>m12</span>, <span class='ident'>m13</span>, <span class='ident'>m14</span>,
-  <span class='ident'>m21</span>, <span class='ident'>m22</span>, <span class='ident'>m23</span>, <span class='ident'>m24</span>,
-  <span class='ident'>m31</span>, <span class='ident'>m32</span>, <span class='ident'>m33</span>, <span class='ident'>m34</span>,
-  <span class='ident'>m41</span>, <span class='ident'>m42</span>, <span class='ident'>m43</span>, <span class='ident'>m44</span>
+<span class="macro">componentwise_rand</span><span class="macro">!</span>(<span class="ident">Matrix4</span>,
+  <span class="ident">m11</span>, <span class="ident">m12</span>, <span class="ident">m13</span>, <span class="ident">m14</span>,
+  <span class="ident">m21</span>, <span class="ident">m22</span>, <span class="ident">m23</span>, <span class="ident">m24</span>,
+  <span class="ident">m31</span>, <span class="ident">m32</span>, <span class="ident">m33</span>, <span class="ident">m34</span>,
+  <span class="ident">m41</span>, <span class="ident">m42</span>, <span class="ident">m43</span>, <span class="ident">m44</span>
 );
-<span class='macro'>mat_display_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix4</span>, <span class='number'>4</span>);
+<span class="macro">mat_display_impl</span><span class="macro">!</span>(<span class="ident">Matrix4</span>, <span class="number">4</span>);
 
-<span class='doccomment'>/// Square matrix of dimension 5.</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>, <span class='ident'>Clone</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>, <span class='ident'>Copy</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Matrix5</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span> <span class='ident'>m11</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m21</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m31</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m41</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m51</span>: <span class='ident'>N</span>,
-    <span class='kw'>pub</span> <span class='ident'>m12</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m22</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m32</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m42</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m52</span>: <span class='ident'>N</span>,
-    <span class='kw'>pub</span> <span class='ident'>m13</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m23</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m33</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m43</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m53</span>: <span class='ident'>N</span>,
-    <span class='kw'>pub</span> <span class='ident'>m14</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m24</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m34</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m44</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m54</span>: <span class='ident'>N</span>,
-    <span class='kw'>pub</span> <span class='ident'>m15</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m25</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m35</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m45</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m55</span>: <span class='ident'>N</span>
+<span class="doccomment">/// Square matrix of dimension 5.</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Matrix5</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="ident">m11</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m21</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m31</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m41</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m51</span>: <span class="ident">N</span>,
+    <span class="kw">pub</span> <span class="ident">m12</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m22</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m32</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m42</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m52</span>: <span class="ident">N</span>,
+    <span class="kw">pub</span> <span class="ident">m13</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m23</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m33</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m43</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m53</span>: <span class="ident">N</span>,
+    <span class="kw">pub</span> <span class="ident">m14</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m24</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m34</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m44</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m54</span>: <span class="ident">N</span>,
+    <span class="kw">pub</span> <span class="ident">m15</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m25</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m35</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m45</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m55</span>: <span class="ident">N</span>
 }
 
-<span class='macro'>eye_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix5</span>, <span class='number'>5</span>, <span class='ident'>m11</span>, <span class='ident'>m22</span>, <span class='ident'>m33</span>, <span class='ident'>m44</span>, <span class='ident'>m55</span>);
+<span class="macro">eye_impl</span><span class="macro">!</span>(<span class="ident">Matrix5</span>, <span class="number">5</span>, <span class="ident">m11</span>, <span class="ident">m22</span>, <span class="ident">m33</span>, <span class="ident">m44</span>, <span class="ident">m55</span>);
 
-<span class='macro'>matrix_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix5</span>, <span class='number'>5</span>, <span class='ident'>Vector5</span>, <span class='ident'>DVector5</span>,
-  <span class='ident'>m11</span>, <span class='ident'>m12</span>, <span class='ident'>m13</span>, <span class='ident'>m14</span>, <span class='ident'>m15</span>,
-  <span class='ident'>m21</span>, <span class='ident'>m22</span>, <span class='ident'>m23</span>, <span class='ident'>m24</span>, <span class='ident'>m25</span>,
-  <span class='ident'>m31</span>, <span class='ident'>m32</span>, <span class='ident'>m33</span>, <span class='ident'>m34</span>, <span class='ident'>m35</span>,
-  <span class='ident'>m41</span>, <span class='ident'>m42</span>, <span class='ident'>m43</span>, <span class='ident'>m44</span>, <span class='ident'>m45</span>,
-  <span class='ident'>m51</span>, <span class='ident'>m52</span>, <span class='ident'>m53</span>, <span class='ident'>m54</span>, <span class='ident'>m55</span>
+<span class="macro">matrix_impl</span><span class="macro">!</span>(<span class="ident">Matrix5</span>, <span class="number">5</span>, <span class="ident">Vector5</span>, <span class="ident">DVector5</span>,
+  <span class="ident">m11</span>, <span class="ident">m12</span>, <span class="ident">m13</span>, <span class="ident">m14</span>, <span class="ident">m15</span>,
+  <span class="ident">m21</span>, <span class="ident">m22</span>, <span class="ident">m23</span>, <span class="ident">m24</span>, <span class="ident">m25</span>,
+  <span class="ident">m31</span>, <span class="ident">m32</span>, <span class="ident">m33</span>, <span class="ident">m34</span>, <span class="ident">m35</span>,
+  <span class="ident">m41</span>, <span class="ident">m42</span>, <span class="ident">m43</span>, <span class="ident">m44</span>, <span class="ident">m45</span>,
+  <span class="ident">m51</span>, <span class="ident">m52</span>, <span class="ident">m53</span>, <span class="ident">m54</span>, <span class="ident">m55</span>
 );
-<span class='macro'>one_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix5</span>,
-  ::<span class='ident'>one</span>  , ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>,
-  ::<span class='ident'>zero</span>, ::<span class='ident'>one</span>  , ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>,
-  ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>one</span>  , ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>,
-  ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>one</span>  , ::<span class='ident'>zero</span>,
-  ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>one</span>
+<span class="macro">one_impl</span><span class="macro">!</span>(<span class="ident">Matrix5</span>,
+  ::<span class="ident">one</span>  , ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>,
+  ::<span class="ident">zero</span>, ::<span class="ident">one</span>  , ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>,
+  ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">one</span>  , ::<span class="ident">zero</span>, ::<span class="ident">zero</span>,
+  ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">one</span>  , ::<span class="ident">zero</span>,
+  ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">one</span>
 );
-<span class='macro'>dim_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix5</span>, <span class='number'>5</span>);
-<span class='macro'>mat_mul_mat_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix5</span>, <span class='number'>5</span>);
-<span class='macro'>mat_mul_vec_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix5</span>, <span class='ident'>Vector5</span>, <span class='number'>5</span>, ::<span class='ident'>zero</span>);
-<span class='macro'>vec_mul_mat_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix5</span>, <span class='ident'>Vector5</span>, <span class='number'>5</span>, ::<span class='ident'>zero</span>);
-<span class='macro'>mat_mul_point_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix5</span>, <span class='ident'>Point5</span>, <span class='number'>5</span>, <span class='ident'>Origin</span>::<span class='ident'>origin</span>);
-<span class='macro'>point_mul_mat_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix5</span>, <span class='ident'>Point5</span>, <span class='number'>5</span>, <span class='ident'>Origin</span>::<span class='ident'>origin</span>);
-<span class='macro'>inverse_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix5</span>, <span class='number'>5</span>);
-<span class='macro'>to_homogeneous_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix5</span>, <span class='ident'>Matrix6</span>, <span class='number'>5</span>, <span class='number'>6</span>);
-<span class='macro'>from_homogeneous_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix5</span>, <span class='ident'>Matrix6</span>, <span class='number'>5</span>, <span class='number'>6</span>);
-<span class='macro'>eigen_qr_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix5</span>, <span class='ident'>Vector5</span>);
-<span class='macro'>componentwise_arbitrary</span><span class='macro'>!</span>(<span class='ident'>Matrix5</span>,
-  <span class='ident'>m11</span>, <span class='ident'>m12</span>, <span class='ident'>m13</span>, <span class='ident'>m14</span>, <span class='ident'>m15</span>,
-  <span class='ident'>m21</span>, <span class='ident'>m22</span>, <span class='ident'>m23</span>, <span class='ident'>m24</span>, <span class='ident'>m25</span>,
-  <span class='ident'>m31</span>, <span class='ident'>m32</span>, <span class='ident'>m33</span>, <span class='ident'>m34</span>, <span class='ident'>m35</span>,
-  <span class='ident'>m41</span>, <span class='ident'>m42</span>, <span class='ident'>m43</span>, <span class='ident'>m44</span>, <span class='ident'>m45</span>,
-  <span class='ident'>m51</span>, <span class='ident'>m52</span>, <span class='ident'>m53</span>, <span class='ident'>m54</span>, <span class='ident'>m55</span>
+<span class="macro">dim_impl</span><span class="macro">!</span>(<span class="ident">Matrix5</span>, <span class="number">5</span>);
+<span class="macro">mat_mul_mat_impl</span><span class="macro">!</span>(<span class="ident">Matrix5</span>, <span class="number">5</span>);
+<span class="macro">mat_mul_vec_impl</span><span class="macro">!</span>(<span class="ident">Matrix5</span>, <span class="ident">Vector5</span>, <span class="number">5</span>, ::<span class="ident">zero</span>);
+<span class="macro">vec_mul_mat_impl</span><span class="macro">!</span>(<span class="ident">Matrix5</span>, <span class="ident">Vector5</span>, <span class="number">5</span>, ::<span class="ident">zero</span>);
+<span class="macro">mat_mul_point_impl</span><span class="macro">!</span>(<span class="ident">Matrix5</span>, <span class="ident">Point5</span>, <span class="number">5</span>, <span class="ident">Origin</span>::<span class="ident">origin</span>);
+<span class="macro">point_mul_mat_impl</span><span class="macro">!</span>(<span class="ident">Matrix5</span>, <span class="ident">Point5</span>, <span class="number">5</span>, <span class="ident">Origin</span>::<span class="ident">origin</span>);
+<span class="macro">inverse_impl</span><span class="macro">!</span>(<span class="ident">Matrix5</span>, <span class="number">5</span>);
+<span class="macro">to_homogeneous_impl</span><span class="macro">!</span>(<span class="ident">Matrix5</span>, <span class="ident">Matrix6</span>, <span class="number">5</span>, <span class="number">6</span>);
+<span class="macro">from_homogeneous_impl</span><span class="macro">!</span>(<span class="ident">Matrix5</span>, <span class="ident">Matrix6</span>, <span class="number">5</span>, <span class="number">6</span>);
+<span class="macro">eigen_qr_impl</span><span class="macro">!</span>(<span class="ident">Matrix5</span>, <span class="ident">Vector5</span>);
+<span class="macro">componentwise_arbitrary</span><span class="macro">!</span>(<span class="ident">Matrix5</span>,
+  <span class="ident">m11</span>, <span class="ident">m12</span>, <span class="ident">m13</span>, <span class="ident">m14</span>, <span class="ident">m15</span>,
+  <span class="ident">m21</span>, <span class="ident">m22</span>, <span class="ident">m23</span>, <span class="ident">m24</span>, <span class="ident">m25</span>,
+  <span class="ident">m31</span>, <span class="ident">m32</span>, <span class="ident">m33</span>, <span class="ident">m34</span>, <span class="ident">m35</span>,
+  <span class="ident">m41</span>, <span class="ident">m42</span>, <span class="ident">m43</span>, <span class="ident">m44</span>, <span class="ident">m45</span>,
+  <span class="ident">m51</span>, <span class="ident">m52</span>, <span class="ident">m53</span>, <span class="ident">m54</span>, <span class="ident">m55</span>
 );
-<span class='macro'>componentwise_rand</span><span class='macro'>!</span>(<span class='ident'>Matrix5</span>,
-  <span class='ident'>m11</span>, <span class='ident'>m12</span>, <span class='ident'>m13</span>, <span class='ident'>m14</span>, <span class='ident'>m15</span>,
-  <span class='ident'>m21</span>, <span class='ident'>m22</span>, <span class='ident'>m23</span>, <span class='ident'>m24</span>, <span class='ident'>m25</span>,
-  <span class='ident'>m31</span>, <span class='ident'>m32</span>, <span class='ident'>m33</span>, <span class='ident'>m34</span>, <span class='ident'>m35</span>,
-  <span class='ident'>m41</span>, <span class='ident'>m42</span>, <span class='ident'>m43</span>, <span class='ident'>m44</span>, <span class='ident'>m45</span>,
-  <span class='ident'>m51</span>, <span class='ident'>m52</span>, <span class='ident'>m53</span>, <span class='ident'>m54</span>, <span class='ident'>m55</span>
+<span class="macro">componentwise_rand</span><span class="macro">!</span>(<span class="ident">Matrix5</span>,
+  <span class="ident">m11</span>, <span class="ident">m12</span>, <span class="ident">m13</span>, <span class="ident">m14</span>, <span class="ident">m15</span>,
+  <span class="ident">m21</span>, <span class="ident">m22</span>, <span class="ident">m23</span>, <span class="ident">m24</span>, <span class="ident">m25</span>,
+  <span class="ident">m31</span>, <span class="ident">m32</span>, <span class="ident">m33</span>, <span class="ident">m34</span>, <span class="ident">m35</span>,
+  <span class="ident">m41</span>, <span class="ident">m42</span>, <span class="ident">m43</span>, <span class="ident">m44</span>, <span class="ident">m45</span>,
+  <span class="ident">m51</span>, <span class="ident">m52</span>, <span class="ident">m53</span>, <span class="ident">m54</span>, <span class="ident">m55</span>
 );
-<span class='macro'>mat_display_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix5</span>, <span class='number'>5</span>);
+<span class="macro">mat_display_impl</span><span class="macro">!</span>(<span class="ident">Matrix5</span>, <span class="number">5</span>);
 
-<span class='doccomment'>/// Square matrix of dimension 6.</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>, <span class='ident'>Clone</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>, <span class='ident'>Copy</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Matrix6</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span> <span class='ident'>m11</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m21</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m31</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m41</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m51</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m61</span>: <span class='ident'>N</span>,
-    <span class='kw'>pub</span> <span class='ident'>m12</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m22</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m32</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m42</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m52</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m62</span>: <span class='ident'>N</span>,
-    <span class='kw'>pub</span> <span class='ident'>m13</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m23</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m33</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m43</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m53</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m63</span>: <span class='ident'>N</span>,
-    <span class='kw'>pub</span> <span class='ident'>m14</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m24</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m34</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m44</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m54</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m64</span>: <span class='ident'>N</span>,
-    <span class='kw'>pub</span> <span class='ident'>m15</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m25</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m35</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m45</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m55</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m65</span>: <span class='ident'>N</span>,
-    <span class='kw'>pub</span> <span class='ident'>m16</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m26</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m36</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m46</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m56</span>: <span class='ident'>N</span>, <span class='kw'>pub</span> <span class='ident'>m66</span>: <span class='ident'>N</span>
+<span class="doccomment">/// Square matrix of dimension 6.</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>, <span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Matrix6</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="ident">m11</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m21</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m31</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m41</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m51</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m61</span>: <span class="ident">N</span>,
+    <span class="kw">pub</span> <span class="ident">m12</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m22</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m32</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m42</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m52</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m62</span>: <span class="ident">N</span>,
+    <span class="kw">pub</span> <span class="ident">m13</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m23</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m33</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m43</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m53</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m63</span>: <span class="ident">N</span>,
+    <span class="kw">pub</span> <span class="ident">m14</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m24</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m34</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m44</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m54</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m64</span>: <span class="ident">N</span>,
+    <span class="kw">pub</span> <span class="ident">m15</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m25</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m35</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m45</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m55</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m65</span>: <span class="ident">N</span>,
+    <span class="kw">pub</span> <span class="ident">m16</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m26</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m36</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m46</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m56</span>: <span class="ident">N</span>, <span class="kw">pub</span> <span class="ident">m66</span>: <span class="ident">N</span>
 }
 
-<span class='macro'>eye_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix6</span>, <span class='number'>6</span>, <span class='ident'>m11</span>, <span class='ident'>m22</span>, <span class='ident'>m33</span>, <span class='ident'>m44</span>, <span class='ident'>m55</span>, <span class='ident'>m66</span>);
+<span class="macro">eye_impl</span><span class="macro">!</span>(<span class="ident">Matrix6</span>, <span class="number">6</span>, <span class="ident">m11</span>, <span class="ident">m22</span>, <span class="ident">m33</span>, <span class="ident">m44</span>, <span class="ident">m55</span>, <span class="ident">m66</span>);
 
-<span class='macro'>matrix_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix6</span>, <span class='number'>6</span>, <span class='ident'>Vector6</span>, <span class='ident'>DVector6</span>,
-  <span class='ident'>m11</span>, <span class='ident'>m12</span>, <span class='ident'>m13</span>, <span class='ident'>m14</span>, <span class='ident'>m15</span>, <span class='ident'>m16</span>,
-  <span class='ident'>m21</span>, <span class='ident'>m22</span>, <span class='ident'>m23</span>, <span class='ident'>m24</span>, <span class='ident'>m25</span>, <span class='ident'>m26</span>,
-  <span class='ident'>m31</span>, <span class='ident'>m32</span>, <span class='ident'>m33</span>, <span class='ident'>m34</span>, <span class='ident'>m35</span>, <span class='ident'>m36</span>,
-  <span class='ident'>m41</span>, <span class='ident'>m42</span>, <span class='ident'>m43</span>, <span class='ident'>m44</span>, <span class='ident'>m45</span>, <span class='ident'>m46</span>,
-  <span class='ident'>m51</span>, <span class='ident'>m52</span>, <span class='ident'>m53</span>, <span class='ident'>m54</span>, <span class='ident'>m55</span>, <span class='ident'>m56</span>,
-  <span class='ident'>m61</span>, <span class='ident'>m62</span>, <span class='ident'>m63</span>, <span class='ident'>m64</span>, <span class='ident'>m65</span>, <span class='ident'>m66</span>
+<span class="macro">matrix_impl</span><span class="macro">!</span>(<span class="ident">Matrix6</span>, <span class="number">6</span>, <span class="ident">Vector6</span>, <span class="ident">DVector6</span>,
+  <span class="ident">m11</span>, <span class="ident">m12</span>, <span class="ident">m13</span>, <span class="ident">m14</span>, <span class="ident">m15</span>, <span class="ident">m16</span>,
+  <span class="ident">m21</span>, <span class="ident">m22</span>, <span class="ident">m23</span>, <span class="ident">m24</span>, <span class="ident">m25</span>, <span class="ident">m26</span>,
+  <span class="ident">m31</span>, <span class="ident">m32</span>, <span class="ident">m33</span>, <span class="ident">m34</span>, <span class="ident">m35</span>, <span class="ident">m36</span>,
+  <span class="ident">m41</span>, <span class="ident">m42</span>, <span class="ident">m43</span>, <span class="ident">m44</span>, <span class="ident">m45</span>, <span class="ident">m46</span>,
+  <span class="ident">m51</span>, <span class="ident">m52</span>, <span class="ident">m53</span>, <span class="ident">m54</span>, <span class="ident">m55</span>, <span class="ident">m56</span>,
+  <span class="ident">m61</span>, <span class="ident">m62</span>, <span class="ident">m63</span>, <span class="ident">m64</span>, <span class="ident">m65</span>, <span class="ident">m66</span>
 );
 
-<span class='macro'>one_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix6</span>,
-  ::<span class='ident'>one</span>  , ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>,
-  ::<span class='ident'>zero</span>, ::<span class='ident'>one</span>  , ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>,
-  ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>one</span>  , ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>,
-  ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>one</span>  , ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>,
-  ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>one</span>  , ::<span class='ident'>zero</span>,
-  ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>zero</span>, ::<span class='ident'>one</span>
+<span class="macro">one_impl</span><span class="macro">!</span>(<span class="ident">Matrix6</span>,
+  ::<span class="ident">one</span>  , ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>,
+  ::<span class="ident">zero</span>, ::<span class="ident">one</span>  , ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>,
+  ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">one</span>  , ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>,
+  ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">one</span>  , ::<span class="ident">zero</span>, ::<span class="ident">zero</span>,
+  ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">one</span>  , ::<span class="ident">zero</span>,
+  ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">zero</span>, ::<span class="ident">one</span>
 );
-<span class='macro'>dim_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix6</span>, <span class='number'>6</span>);
-<span class='macro'>mat_mul_mat_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix6</span>, <span class='number'>6</span>);
-<span class='macro'>mat_mul_vec_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix6</span>, <span class='ident'>Vector6</span>, <span class='number'>6</span>, ::<span class='ident'>zero</span>);
-<span class='macro'>vec_mul_mat_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix6</span>, <span class='ident'>Vector6</span>, <span class='number'>6</span>, ::<span class='ident'>zero</span>);
-<span class='macro'>mat_mul_point_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix6</span>, <span class='ident'>Point6</span>, <span class='number'>6</span>, <span class='ident'>Origin</span>::<span class='ident'>origin</span>);
-<span class='macro'>point_mul_mat_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix6</span>, <span class='ident'>Point6</span>, <span class='number'>6</span>, <span class='ident'>Origin</span>::<span class='ident'>origin</span>);
-<span class='macro'>inverse_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix6</span>, <span class='number'>6</span>);
-<span class='macro'>eigen_qr_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix6</span>, <span class='ident'>Vector6</span>);
-<span class='macro'>componentwise_arbitrary</span><span class='macro'>!</span>(<span class='ident'>Matrix6</span>,
-  <span class='ident'>m11</span>, <span class='ident'>m12</span>, <span class='ident'>m13</span>, <span class='ident'>m14</span>, <span class='ident'>m15</span>, <span class='ident'>m16</span>,
-  <span class='ident'>m21</span>, <span class='ident'>m22</span>, <span class='ident'>m23</span>, <span class='ident'>m24</span>, <span class='ident'>m25</span>, <span class='ident'>m26</span>,
-  <span class='ident'>m31</span>, <span class='ident'>m32</span>, <span class='ident'>m33</span>, <span class='ident'>m34</span>, <span class='ident'>m35</span>, <span class='ident'>m36</span>,
-  <span class='ident'>m41</span>, <span class='ident'>m42</span>, <span class='ident'>m43</span>, <span class='ident'>m44</span>, <span class='ident'>m45</span>, <span class='ident'>m46</span>,
-  <span class='ident'>m51</span>, <span class='ident'>m52</span>, <span class='ident'>m53</span>, <span class='ident'>m54</span>, <span class='ident'>m55</span>, <span class='ident'>m56</span>,
-  <span class='ident'>m61</span>, <span class='ident'>m62</span>, <span class='ident'>m63</span>, <span class='ident'>m64</span>, <span class='ident'>m65</span>, <span class='ident'>m66</span>
+<span class="macro">dim_impl</span><span class="macro">!</span>(<span class="ident">Matrix6</span>, <span class="number">6</span>);
+<span class="macro">mat_mul_mat_impl</span><span class="macro">!</span>(<span class="ident">Matrix6</span>, <span class="number">6</span>);
+<span class="macro">mat_mul_vec_impl</span><span class="macro">!</span>(<span class="ident">Matrix6</span>, <span class="ident">Vector6</span>, <span class="number">6</span>, ::<span class="ident">zero</span>);
+<span class="macro">vec_mul_mat_impl</span><span class="macro">!</span>(<span class="ident">Matrix6</span>, <span class="ident">Vector6</span>, <span class="number">6</span>, ::<span class="ident">zero</span>);
+<span class="macro">mat_mul_point_impl</span><span class="macro">!</span>(<span class="ident">Matrix6</span>, <span class="ident">Point6</span>, <span class="number">6</span>, <span class="ident">Origin</span>::<span class="ident">origin</span>);
+<span class="macro">point_mul_mat_impl</span><span class="macro">!</span>(<span class="ident">Matrix6</span>, <span class="ident">Point6</span>, <span class="number">6</span>, <span class="ident">Origin</span>::<span class="ident">origin</span>);
+<span class="macro">inverse_impl</span><span class="macro">!</span>(<span class="ident">Matrix6</span>, <span class="number">6</span>);
+<span class="macro">eigen_qr_impl</span><span class="macro">!</span>(<span class="ident">Matrix6</span>, <span class="ident">Vector6</span>);
+<span class="macro">componentwise_arbitrary</span><span class="macro">!</span>(<span class="ident">Matrix6</span>,
+  <span class="ident">m11</span>, <span class="ident">m12</span>, <span class="ident">m13</span>, <span class="ident">m14</span>, <span class="ident">m15</span>, <span class="ident">m16</span>,
+  <span class="ident">m21</span>, <span class="ident">m22</span>, <span class="ident">m23</span>, <span class="ident">m24</span>, <span class="ident">m25</span>, <span class="ident">m26</span>,
+  <span class="ident">m31</span>, <span class="ident">m32</span>, <span class="ident">m33</span>, <span class="ident">m34</span>, <span class="ident">m35</span>, <span class="ident">m36</span>,
+  <span class="ident">m41</span>, <span class="ident">m42</span>, <span class="ident">m43</span>, <span class="ident">m44</span>, <span class="ident">m45</span>, <span class="ident">m46</span>,
+  <span class="ident">m51</span>, <span class="ident">m52</span>, <span class="ident">m53</span>, <span class="ident">m54</span>, <span class="ident">m55</span>, <span class="ident">m56</span>,
+  <span class="ident">m61</span>, <span class="ident">m62</span>, <span class="ident">m63</span>, <span class="ident">m64</span>, <span class="ident">m65</span>, <span class="ident">m66</span>
 );
-<span class='macro'>componentwise_rand</span><span class='macro'>!</span>(<span class='ident'>Matrix6</span>,
-  <span class='ident'>m11</span>, <span class='ident'>m12</span>, <span class='ident'>m13</span>, <span class='ident'>m14</span>, <span class='ident'>m15</span>, <span class='ident'>m16</span>,
-  <span class='ident'>m21</span>, <span class='ident'>m22</span>, <span class='ident'>m23</span>, <span class='ident'>m24</span>, <span class='ident'>m25</span>, <span class='ident'>m26</span>,
-  <span class='ident'>m31</span>, <span class='ident'>m32</span>, <span class='ident'>m33</span>, <span class='ident'>m34</span>, <span class='ident'>m35</span>, <span class='ident'>m36</span>,
-  <span class='ident'>m41</span>, <span class='ident'>m42</span>, <span class='ident'>m43</span>, <span class='ident'>m44</span>, <span class='ident'>m45</span>, <span class='ident'>m46</span>,
-  <span class='ident'>m51</span>, <span class='ident'>m52</span>, <span class='ident'>m53</span>, <span class='ident'>m54</span>, <span class='ident'>m55</span>, <span class='ident'>m56</span>,
-  <span class='ident'>m61</span>, <span class='ident'>m62</span>, <span class='ident'>m63</span>, <span class='ident'>m64</span>, <span class='ident'>m65</span>, <span class='ident'>m66</span>
+<span class="macro">componentwise_rand</span><span class="macro">!</span>(<span class="ident">Matrix6</span>,
+  <span class="ident">m11</span>, <span class="ident">m12</span>, <span class="ident">m13</span>, <span class="ident">m14</span>, <span class="ident">m15</span>, <span class="ident">m16</span>,
+  <span class="ident">m21</span>, <span class="ident">m22</span>, <span class="ident">m23</span>, <span class="ident">m24</span>, <span class="ident">m25</span>, <span class="ident">m26</span>,
+  <span class="ident">m31</span>, <span class="ident">m32</span>, <span class="ident">m33</span>, <span class="ident">m34</span>, <span class="ident">m35</span>, <span class="ident">m36</span>,
+  <span class="ident">m41</span>, <span class="ident">m42</span>, <span class="ident">m43</span>, <span class="ident">m44</span>, <span class="ident">m45</span>, <span class="ident">m46</span>,
+  <span class="ident">m51</span>, <span class="ident">m52</span>, <span class="ident">m53</span>, <span class="ident">m54</span>, <span class="ident">m55</span>, <span class="ident">m56</span>,
+  <span class="ident">m61</span>, <span class="ident">m62</span>, <span class="ident">m63</span>, <span class="ident">m64</span>, <span class="ident">m65</span>, <span class="ident">m66</span>
 );
-<span class='macro'>mat_display_impl</span><span class='macro'>!</span>(<span class='ident'>Matrix6</span>, <span class='number'>6</span>);
+<span class="macro">mat_display_impl</span><span class="macro">!</span>(<span class="ident">Matrix6</span>, <span class="number">6</span>);
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

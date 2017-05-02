@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -165,128 +165,128 @@
 <span id="120">120</span>
 <span id="121">121</span>
 <span id="122">122</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ptr</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='kw'>super</span>::{<span class='ident'>TriMesh</span>, <span class='ident'>Polyline</span>};
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>;
+<span class="kw">use</span> <span class="ident">na</span>;
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">TriMesh</span>, <span class="ident">Polyline</span>};
+<span class="kw">use</span> <span class="ident">math</span>::<span class="ident">Point</span>;
 
-<span class='comment'>// De-Casteljau algorithm.</span>
-<span class='comment'>// Evaluates the bezier curve with control points `control_points`.</span>
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bezier_curve_at</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(<span class='ident'>control_points</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>P</span>], <span class='ident'>t</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>, <span class='ident'>cache</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>P</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span> {
-    <span class='kw'>if</span> <span class='ident'>control_points</span>.<span class='ident'>len</span>() <span class='op'>&gt;</span> <span class='ident'>cache</span>.<span class='ident'>len</span>() {
-        <span class='kw'>let</span> <span class='ident'>diff</span> <span class='op'>=</span> <span class='ident'>control_points</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='ident'>cache</span>.<span class='ident'>len</span>();
-        <span class='ident'>cache</span>.<span class='ident'>extend</span>(<span class='ident'>iter</span>::<span class='ident'>repeat</span>(<span class='ident'>P</span>::<span class='ident'>origin</span>()).<span class='ident'>take</span>(<span class='ident'>diff</span>))
+<span class="comment">// De-Casteljau algorithm.</span>
+<span class="comment">// Evaluates the bezier curve with control points `control_points`.</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bezier_curve_at</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>(<span class="ident">control_points</span>: <span class="kw-2">&amp;</span>[<span class="ident">P</span>], <span class="ident">t</span>: <span class="ident">P</span>::<span class="ident">Real</span>, <span class="ident">cache</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">P</span>
+    <span class="kw">where</span> <span class="ident">P</span>: <span class="ident">Point</span> {
+    <span class="kw">if</span> <span class="ident">control_points</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">cache</span>.<span class="ident">len</span>() {
+        <span class="kw">let</span> <span class="ident">diff</span> <span class="op">=</span> <span class="ident">control_points</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">cache</span>.<span class="ident">len</span>();
+        <span class="ident">cache</span>.<span class="ident">extend</span>(<span class="ident">iter</span>::<span class="ident">repeat</span>(<span class="ident">P</span>::<span class="ident">origin</span>()).<span class="ident">take</span>(<span class="ident">diff</span>))
     }
 
-    <span class='kw'>let</span> <span class='ident'>cache</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>cache</span>[..];
+    <span class="kw">let</span> <span class="ident">cache</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cache</span>[..];
 
-    <span class='kw'>let</span> <span class='ident'>_1</span>: <span class='ident'>P</span>::<span class='ident'>Real</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>1.0</span>);
-    <span class='kw'>let</span> <span class='ident'>t_1</span> <span class='op'>=</span> <span class='ident'>_1</span> <span class='op'>-</span> <span class='ident'>t</span>;
+    <span class="kw">let</span> <span class="ident">_1</span>: <span class="ident">P</span>::<span class="ident">Real</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">convert</span>(<span class="number">1.0</span>);
+    <span class="kw">let</span> <span class="ident">t_1</span> <span class="op">=</span> <span class="ident">_1</span> <span class="op">-</span> <span class="ident">t</span>;
 
-    <span class='comment'>// XXX: not good if the objects are not POD.</span>
-    <span class='kw'>unsafe</span> {
-        <span class='ident'>ptr</span>::<span class='ident'>copy_nonoverlapping</span>(<span class='ident'>control_points</span>.<span class='ident'>as_ptr</span>(), <span class='ident'>cache</span>.<span class='ident'>as_mut_ptr</span>(), <span class='ident'>control_points</span>.<span class='ident'>len</span>());
+    <span class="comment">// XXX: not good if the objects are not POD.</span>
+    <span class="kw">unsafe</span> {
+        <span class="ident">ptr</span>::<span class="ident">copy_nonoverlapping</span>(<span class="ident">control_points</span>.<span class="ident">as_ptr</span>(), <span class="ident">cache</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">control_points</span>.<span class="ident">len</span>());
     }
 
-    <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>1usize</span> .. <span class='ident'>control_points</span>.<span class='ident'>len</span>() {
-        <span class='kw'>for</span> <span class='ident'>j</span> <span class='kw'>in</span> <span class='number'>0usize</span> .. <span class='ident'>control_points</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='ident'>i</span> {
-            <span class='ident'>cache</span>[<span class='ident'>j</span>] <span class='op'>=</span> <span class='ident'>cache</span>[<span class='ident'>j</span>] <span class='op'>*</span> <span class='ident'>t_1</span> <span class='op'>+</span> <span class='ident'>cache</span>[<span class='ident'>j</span> <span class='op'>+</span> <span class='number'>1</span>].<span class='ident'>coordinates</span>() <span class='op'>*</span> <span class='ident'>t</span>;
+    <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">1usize</span> .. <span class="ident">control_points</span>.<span class="ident">len</span>() {
+        <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0usize</span> .. <span class="ident">control_points</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="ident">i</span> {
+            <span class="ident">cache</span>[<span class="ident">j</span>] <span class="op">=</span> <span class="ident">cache</span>[<span class="ident">j</span>] <span class="op">*</span> <span class="ident">t_1</span> <span class="op">+</span> <span class="ident">cache</span>[<span class="ident">j</span> <span class="op">+</span> <span class="number">1</span>].<span class="ident">coordinates</span>() <span class="op">*</span> <span class="ident">t</span>;
         }
     }
 
-    <span class='ident'>cache</span>[<span class='number'>0</span>].<span class='ident'>clone</span>()
+    <span class="ident">cache</span>[<span class="number">0</span>].<span class="ident">clone</span>()
 }
 
-<span class='comment'>// Evaluates the bezier curve with control points `control_points`.</span>
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bezier_surface_at</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(
-                         <span class='ident'>control_points</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>P</span>],
-                         <span class='ident'>nupoints</span>:       <span class='ident'>usize</span>,
-                         <span class='ident'>nvpoints</span>:       <span class='ident'>usize</span>,
-                         <span class='ident'>u</span>:              <span class='ident'>P</span>::<span class='ident'>Real</span>,
-                         <span class='ident'>v</span>:              <span class='ident'>P</span>::<span class='ident'>Real</span>,
-                         <span class='ident'>ucache</span>:         <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
-                         <span class='ident'>vcache</span>:         <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>)
-                         <span class='op'>-&gt;</span> <span class='ident'>P</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span> {
-    <span class='kw'>if</span> <span class='ident'>vcache</span>.<span class='ident'>len</span>() <span class='op'>&lt;</span> <span class='ident'>nvpoints</span> {
-        <span class='kw'>let</span> <span class='ident'>diff</span> <span class='op'>=</span> <span class='ident'>nvpoints</span> <span class='op'>-</span> <span class='ident'>vcache</span>.<span class='ident'>len</span>();
-        <span class='ident'>vcache</span>.<span class='ident'>extend</span>(<span class='ident'>iter</span>::<span class='ident'>repeat</span>(<span class='ident'>P</span>::<span class='ident'>origin</span>()).<span class='ident'>take</span>(<span class='ident'>diff</span>));
+<span class="comment">// Evaluates the bezier curve with control points `control_points`.</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bezier_surface_at</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>(
+                         <span class="ident">control_points</span>: <span class="kw-2">&amp;</span>[<span class="ident">P</span>],
+                         <span class="ident">nupoints</span>:       <span class="ident">usize</span>,
+                         <span class="ident">nvpoints</span>:       <span class="ident">usize</span>,
+                         <span class="ident">u</span>:              <span class="ident">P</span>::<span class="ident">Real</span>,
+                         <span class="ident">v</span>:              <span class="ident">P</span>::<span class="ident">Real</span>,
+                         <span class="ident">ucache</span>:         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>,
+                         <span class="ident">vcache</span>:         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>)
+                         <span class="op">-&gt;</span> <span class="ident">P</span>
+    <span class="kw">where</span> <span class="ident">P</span>: <span class="ident">Point</span> {
+    <span class="kw">if</span> <span class="ident">vcache</span>.<span class="ident">len</span>() <span class="op">&lt;</span> <span class="ident">nvpoints</span> {
+        <span class="kw">let</span> <span class="ident">diff</span> <span class="op">=</span> <span class="ident">nvpoints</span> <span class="op">-</span> <span class="ident">vcache</span>.<span class="ident">len</span>();
+        <span class="ident">vcache</span>.<span class="ident">extend</span>(<span class="ident">iter</span>::<span class="ident">repeat</span>(<span class="ident">P</span>::<span class="ident">origin</span>()).<span class="ident">take</span>(<span class="ident">diff</span>));
     }
 
-    <span class='comment'>// FIXME: start with u or v, depending on which dimension has more control points.</span>
-    <span class='kw'>let</span> <span class='ident'>vcache</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>vcache</span>[..];
+    <span class="comment">// FIXME: start with u or v, depending on which dimension has more control points.</span>
+    <span class="kw">let</span> <span class="ident">vcache</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">vcache</span>[..];
 
-    <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='ident'>nvpoints</span> {
-        <span class='kw'>let</span> <span class='ident'>start</span> <span class='op'>=</span> <span class='ident'>i</span> <span class='op'>*</span> <span class='ident'>nupoints</span>;
-        <span class='kw'>let</span> <span class='ident'>end</span>   <span class='op'>=</span> <span class='ident'>start</span> <span class='op'>+</span> <span class='ident'>nupoints</span>;
+    <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="ident">nvpoints</span> {
+        <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="ident">i</span> <span class="op">*</span> <span class="ident">nupoints</span>;
+        <span class="kw">let</span> <span class="ident">end</span>   <span class="op">=</span> <span class="ident">start</span> <span class="op">+</span> <span class="ident">nupoints</span>;
 
-        <span class='ident'>vcache</span>[<span class='ident'>i</span>] <span class='op'>=</span> <span class='ident'>bezier_curve_at</span>(<span class='kw-2'>&amp;</span><span class='ident'>control_points</span>[<span class='ident'>start</span> .. <span class='ident'>end</span>], <span class='ident'>u</span>, <span class='ident'>ucache</span>);
+        <span class="ident">vcache</span>[<span class="ident">i</span>] <span class="op">=</span> <span class="ident">bezier_curve_at</span>(<span class="kw-2">&amp;</span><span class="ident">control_points</span>[<span class="ident">start</span> .. <span class="ident">end</span>], <span class="ident">u</span>, <span class="ident">ucache</span>);
     }
 
-    <span class='ident'>bezier_curve_at</span>(<span class='kw-2'>&amp;</span><span class='ident'>vcache</span>[<span class='number'>0</span> .. <span class='ident'>nvpoints</span>], <span class='ident'>v</span>, <span class='ident'>ucache</span>)
+    <span class="ident">bezier_curve_at</span>(<span class="kw-2">&amp;</span><span class="ident">vcache</span>[<span class="number">0</span> .. <span class="ident">nvpoints</span>], <span class="ident">v</span>, <span class="ident">ucache</span>)
 }
 
-<span class='doccomment'>/// Given a set of control points, generates a (non-rational) Bezier curve.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bezier_curve</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(<span class='ident'>control_points</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>P</span>], <span class='ident'>nsubdivs</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>Polyline</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span> {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>coords</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>with_capacity</span>(<span class='ident'>nsubdivs</span>);
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>cache</span>  <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
-    <span class='kw'>let</span> <span class='ident'>tstep</span>      <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>1.0</span> <span class='op'>/</span> (<span class='ident'>nsubdivs</span> <span class='kw'>as</span> <span class='ident'>f64</span>));
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>t</span>      <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>::<span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Real</span><span class='op'>&gt;</span>();
+<span class="doccomment">/// Given a set of control points, generates a (non-rational) Bezier curve.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bezier_curve</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>(<span class="ident">control_points</span>: <span class="kw-2">&amp;</span>[<span class="ident">P</span>], <span class="ident">nsubdivs</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Polyline</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">P</span>: <span class="ident">Point</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">coords</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="ident">nsubdivs</span>);
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cache</span>  <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+    <span class="kw">let</span> <span class="ident">tstep</span>      <span class="op">=</span> <span class="ident">na</span>::<span class="ident">convert</span>(<span class="number">1.0</span> <span class="op">/</span> (<span class="ident">nsubdivs</span> <span class="kw">as</span> <span class="ident">f64</span>));
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t</span>      <span class="op">=</span> <span class="ident">na</span>::<span class="ident">zero</span>::<span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Real</span><span class="op">&gt;</span>();
 
-    <span class='kw'>while</span> <span class='ident'>t</span> <span class='op'>&lt;=</span> <span class='ident'>na</span>::<span class='ident'>one</span>() {
-        <span class='ident'>coords</span>.<span class='ident'>push</span>(<span class='ident'>bezier_curve_at</span>(<span class='ident'>control_points</span>, <span class='ident'>t</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>cache</span>));
-        <span class='ident'>t</span> <span class='op'>=</span> <span class='ident'>t</span> <span class='op'>+</span> <span class='ident'>tstep</span>;
+    <span class="kw">while</span> <span class="ident">t</span> <span class="op">&lt;=</span> <span class="ident">na</span>::<span class="ident">one</span>() {
+        <span class="ident">coords</span>.<span class="ident">push</span>(<span class="ident">bezier_curve_at</span>(<span class="ident">control_points</span>, <span class="ident">t</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cache</span>));
+        <span class="ident">t</span> <span class="op">=</span> <span class="ident">t</span> <span class="op">+</span> <span class="ident">tstep</span>;
     }
 
-    <span class='comment'>// FIXME: normals</span>
+    <span class="comment">// FIXME: normals</span>
 
-    <span class='ident'>Polyline</span>::<span class='ident'>new</span>(<span class='ident'>coords</span>, <span class='prelude-val'>None</span>)
+    <span class="ident">Polyline</span>::<span class="ident">new</span>(<span class="ident">coords</span>, <span class="prelude-val">None</span>)
 }
 
-<span class='doccomment'>/// Given a set of control points, generates a (non-rational) Bezier surface.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bezier_surface</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(
-                      <span class='ident'>control_points</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>P</span>],
-                      <span class='ident'>nupoints</span>:       <span class='ident'>usize</span>,
-                      <span class='ident'>nvpoints</span>:       <span class='ident'>usize</span>,
-                      <span class='ident'>usubdivs</span>:       <span class='ident'>usize</span>,
-                      <span class='ident'>vsubdivs</span>:       <span class='ident'>usize</span>)
-                      <span class='op'>-&gt;</span> <span class='ident'>TriMesh</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>P</span>: <span class='ident'>Point</span> {
-    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>nupoints</span> <span class='op'>*</span> <span class='ident'>nvpoints</span> <span class='op'>==</span> <span class='ident'>control_points</span>.<span class='ident'>len</span>());
+<span class="doccomment">/// Given a set of control points, generates a (non-rational) Bezier surface.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bezier_surface</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>(
+                      <span class="ident">control_points</span>: <span class="kw-2">&amp;</span>[<span class="ident">P</span>],
+                      <span class="ident">nupoints</span>:       <span class="ident">usize</span>,
+                      <span class="ident">nvpoints</span>:       <span class="ident">usize</span>,
+                      <span class="ident">usubdivs</span>:       <span class="ident">usize</span>,
+                      <span class="ident">vsubdivs</span>:       <span class="ident">usize</span>)
+                      <span class="op">-&gt;</span> <span class="ident">TriMesh</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">P</span>: <span class="ident">Point</span> {
+    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">nupoints</span> <span class="op">*</span> <span class="ident">nvpoints</span> <span class="op">==</span> <span class="ident">control_points</span>.<span class="ident">len</span>());
 
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>surface</span> <span class='op'>=</span> <span class='kw'>super</span>::<span class='ident'>unit_quad</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(<span class='ident'>usubdivs</span>, <span class='ident'>vsubdivs</span>);
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">surface</span> <span class="op">=</span> <span class="kw">super</span>::<span class="ident">unit_quad</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>(<span class="ident">usubdivs</span>, <span class="ident">vsubdivs</span>);
 
     {
-        <span class='kw'>let</span> <span class='ident'>uvs</span>    <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>surface</span>.<span class='ident'>uvs</span>.<span class='ident'>as_ref</span>().<span class='ident'>unwrap</span>()[..];
-        <span class='kw'>let</span> <span class='ident'>coords</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>surface</span>.<span class='ident'>coords</span>[..];
+        <span class="kw">let</span> <span class="ident">uvs</span>    <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">surface</span>.<span class="ident">uvs</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>()[..];
+        <span class="kw">let</span> <span class="ident">coords</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">surface</span>.<span class="ident">coords</span>[..];
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>ucache</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>vcache</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ucache</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">vcache</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 
-        <span class='kw'>for</span> <span class='ident'>j</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='ident'>vsubdivs</span> <span class='op'>+</span> <span class='number'>1</span> {
-            <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='ident'>usubdivs</span> <span class='op'>+</span> <span class='number'>1</span> {
-                <span class='kw'>let</span> <span class='ident'>id</span> <span class='op'>=</span> <span class='ident'>i</span> <span class='op'>+</span> <span class='ident'>j</span> <span class='op'>*</span> (<span class='ident'>usubdivs</span> <span class='op'>+</span> <span class='number'>1</span>);
-                <span class='ident'>coords</span>[<span class='ident'>id</span>] <span class='op'>=</span> <span class='ident'>bezier_surface_at</span>(<span class='ident'>control_points</span>,
-                                               <span class='ident'>nupoints</span>,
-                                               <span class='ident'>nvpoints</span>,
-                                               <span class='ident'>uvs</span>[<span class='ident'>id</span>].<span class='ident'>x</span>,
-                                               <span class='ident'>uvs</span>[<span class='ident'>id</span>].<span class='ident'>y</span>,
-                                               <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ucache</span>,
-                                               <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>vcache</span>)
+        <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="ident">vsubdivs</span> <span class="op">+</span> <span class="number">1</span> {
+            <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="ident">usubdivs</span> <span class="op">+</span> <span class="number">1</span> {
+                <span class="kw">let</span> <span class="ident">id</span> <span class="op">=</span> <span class="ident">i</span> <span class="op">+</span> <span class="ident">j</span> <span class="op">*</span> (<span class="ident">usubdivs</span> <span class="op">+</span> <span class="number">1</span>);
+                <span class="ident">coords</span>[<span class="ident">id</span>] <span class="op">=</span> <span class="ident">bezier_surface_at</span>(<span class="ident">control_points</span>,
+                                               <span class="ident">nupoints</span>,
+                                               <span class="ident">nvpoints</span>,
+                                               <span class="ident">uvs</span>[<span class="ident">id</span>].<span class="ident">x</span>,
+                                               <span class="ident">uvs</span>[<span class="ident">id</span>].<span class="ident">y</span>,
+                                               <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ucache</span>,
+                                               <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">vcache</span>)
             }
         }
 
-        <span class='comment'>// XXX: compute the normals manually.</span>
-        <span class='ident'>surface</span>.<span class='ident'>normals</span> <span class='op'>=</span> <span class='prelude-val'>None</span>;
+        <span class="comment">// XXX: compute the normals manually.</span>
+        <span class="ident">surface</span>.<span class="ident">normals</span> <span class="op">=</span> <span class="prelude-val">None</span>;
     }
 
-    <span class='ident'>surface</span>
+    <span class="ident">surface</span>
 }
 </pre>
 </section>

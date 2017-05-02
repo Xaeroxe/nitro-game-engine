@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -84,48 +84,48 @@
 <span id="39">39</span>
 <span id="40">40</span>
 <span id="41">41</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Ray-casting related definitions and implementations.</span>
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>inline</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>ray</span>::{<span class='ident'>Ray</span>, <span class='ident'>RayCast</span>, <span class='ident'>RayIntersection</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>ray_plane</span>::<span class='ident'>plane_toi_with_ray</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>ray_triangle</span>::<span class='ident'>triangle_ray_intersection</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>ray_support_map</span>::<span class='ident'>implicit_toi_and_normal_with_ray</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>ray_ball</span>::<span class='ident'>ball_toi_with_ray</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>ray_bvt</span>::{<span class='ident'>RayIntersectionCostFn</span>, <span class='ident'>RayInterferencesCollector</span>};
+</pre><pre class="rust ">
+<span class="doccomment">//! Ray-casting related definitions and implementations.</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ray</span>::{<span class="ident">Ray</span>, <span class="ident">RayCast</span>, <span class="ident">RayIntersection</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ray_plane</span>::<span class="ident">plane_toi_with_ray</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ray_triangle</span>::<span class="ident">triangle_ray_intersection</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ray_support_map</span>::<span class="ident">implicit_toi_and_normal_with_ray</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ray_ball</span>::<span class="ident">ball_toi_with_ray</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ray_bvt</span>::{<span class="ident">RayIntersectionCostFn</span>, <span class="ident">RayInterferencesCollector</span>};
 
-<span class='kw'>use</span> <span class='ident'>na</span>::{<span class='ident'>Point2</span>, <span class='ident'>Vector2</span>, <span class='ident'>Point3</span>, <span class='ident'>Vector3</span>};
+<span class="kw">use</span> <span class="ident">na</span>::{<span class="ident">Point2</span>, <span class="ident">Vector2</span>, <span class="ident">Point3</span>, <span class="ident">Vector3</span>};
 
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>ray</span>;
-<span class='kw'>mod</span> <span class='ident'>ray_plane</span>;
-<span class='kw'>mod</span> <span class='ident'>ray_ball</span>;
-<span class='kw'>mod</span> <span class='ident'>ray_cuboid</span>;
-<span class='kw'>mod</span> <span class='ident'>ray_aabb</span>;
-<span class='kw'>mod</span> <span class='ident'>ray_bounding_sphere</span>;
-<span class='kw'>mod</span> <span class='ident'>ray_support_map</span>;
-<span class='kw'>mod</span> <span class='ident'>ray_triangle</span>;
-<span class='kw'>mod</span> <span class='ident'>ray_compound</span>;
-<span class='kw'>mod</span> <span class='ident'>ray_mesh</span>;
-<span class='kw'>mod</span> <span class='ident'>ray_shape</span>;
-<span class='kw'>mod</span> <span class='ident'>ray_bvt</span>;
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ray</span>;
+<span class="kw">mod</span> <span class="ident">ray_plane</span>;
+<span class="kw">mod</span> <span class="ident">ray_ball</span>;
+<span class="kw">mod</span> <span class="ident">ray_cuboid</span>;
+<span class="kw">mod</span> <span class="ident">ray_aabb</span>;
+<span class="kw">mod</span> <span class="ident">ray_bounding_sphere</span>;
+<span class="kw">mod</span> <span class="ident">ray_support_map</span>;
+<span class="kw">mod</span> <span class="ident">ray_triangle</span>;
+<span class="kw">mod</span> <span class="ident">ray_compound</span>;
+<span class="kw">mod</span> <span class="ident">ray_mesh</span>;
+<span class="kw">mod</span> <span class="ident">ray_shape</span>;
+<span class="kw">mod</span> <span class="ident">ray_bvt</span>;
 
-<span class='comment'>/*
+<span class="comment">/*
  *
  * Aliases.
  *
  */</span>
-<span class='doccomment'>/// A 3D ray.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Ray3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Ray</span><span class='op'>&lt;</span><span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>;
+<span class="doccomment">/// A 3D ray.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Ray3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Ray</span><span class="op">&lt;</span><span class="ident">Point3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>;
 
-<span class='doccomment'>/// A 2D ray.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Ray2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Ray</span><span class='op'>&lt;</span><span class='ident'>Point2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>;
+<span class="doccomment">/// A 2D ray.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Ray2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Ray</span><span class="op">&lt;</span><span class="ident">Point2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>;
 
-<span class='doccomment'>/// A 3D ray intersection.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>RayIntersection3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>RayIntersection</span><span class='op'>&lt;</span><span class='ident'>Vector3</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>;
+<span class="doccomment">/// A 3D ray intersection.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">RayIntersection3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">RayIntersection</span><span class="op">&lt;</span><span class="ident">Vector3</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>;
 
-<span class='doccomment'>/// A 2D ray intersection.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>RayIntersection2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>RayIntersection</span><span class='op'>&lt;</span><span class='ident'>Vector2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>;
+<span class="doccomment">/// A 2D ray intersection.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">RayIntersection2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">RayIntersection</span><span class="op">&lt;</span><span class="ident">Vector2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

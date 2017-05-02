@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc struct">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,22 +43,22 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>nphysics2d</a>::<wbr><a href='index.html'>integration</a>::<wbr><a class='struct' href=''>TranslationalCCDMotionClamping</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>nphysics2d</a>::<wbr><a href='index.html'>integration</a>::<wbr><a class="struct" href=''>TranslationalCCDMotionClamping</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/nphysics2d/integration/translational_ccd_motion_clamping.rs.html#38-41' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct TranslationalCCDMotionClamping&lt;N:&nbsp;<a class='trait' href='../../alga/general/real/trait.Real.html' title='alga::general::real::Real'>Real</a>&gt; { /* fields omitted */ }</pre><div class='docblock'><p>Handles Continuous Collision Detection.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;N:&nbsp;<a class='trait' href='../../alga/general/real/trait.Real.html' title='alga::general::real::Real'>Real</a>&gt; <a class='struct' href='../../nphysics2d/integration/struct.TranslationalCCDMotionClamping.html' title='nphysics2d::integration::TranslationalCCDMotionClamping'>TranslationalCCDMotionClamping</a>&lt;N&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/nphysics2d/integration/translational_ccd_motion_clamping.rs.html#43-190' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../../nphysics2d/integration/struct.TranslationalCCDMotionClamping.html' title='nphysics2d::integration::TranslationalCCDMotionClamping'>TranslationalCCDMotionClamping</a>&lt;N&gt;</code></span></h4>
+<pre class='rust struct'>pub struct TranslationalCCDMotionClamping&lt;N:&nbsp;<a class="trait" href="../../alga/general/real/trait.Real.html" title="trait alga::general::real::Real">Real</a>&gt; { /* fields omitted */ }</pre><div class='docblock'><p>Handles Continuous Collision Detection.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;N:&nbsp;<a class="trait" href="../../alga/general/real/trait.Real.html" title="trait alga::general::real::Real">Real</a>&gt; <a class="struct" href="../../nphysics2d/integration/struct.TranslationalCCDMotionClamping.html" title="struct nphysics2d::integration::TranslationalCCDMotionClamping">TranslationalCCDMotionClamping</a>&lt;N&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/nphysics2d/integration/translational_ccd_motion_clamping.rs.html#43-190' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class="struct" href="../../nphysics2d/integration/struct.TranslationalCCDMotionClamping.html" title="struct nphysics2d::integration::TranslationalCCDMotionClamping">TranslationalCCDMotionClamping</a>&lt;N&gt;</code></span></h4>
 <div class='docblock'><p>Creates a new <code>TranslationalCCDMotionClamping</code> to enable continuous collision detection to
 fast-moving rigid bodies.</p>
-</div><h4 id='method.add_ccd_to' class='method'><span id='add_ccd_to.v' class='invisible'><code>fn <a href='#method.add_ccd_to' class='fnname'>add_ccd_to</a>(&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rigid_body: <a class='type' href='../../nphysics2d/object/type.RigidBodyHandle.html' title='nphysics2d::object::RigidBodyHandle'>RigidBodyHandle</a>&lt;N&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; motion_threshold: N,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; trigger_sensors: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>)</code></span></h4>
+</div><h4 id='method.add_ccd_to' class="method"><span id='add_ccd_to.v' class='invisible'><code>fn <a href='#method.add_ccd_to' class='fnname'>add_ccd_to</a>(&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rigid_body: <a class="type" href="../../nphysics2d/object/type.RigidBodyHandle.html" title="type nphysics2d::object::RigidBodyHandle">RigidBodyHandle</a>&lt;N&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; motion_threshold: N,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; trigger_sensors: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h4>
 <div class='docblock'><p>Enables continuous collision for the given rigid body.</p>
-</div><h4 id='method.remove_ccd_from' class='method'><span id='remove_ccd_from.v' class='invisible'><code>fn <a href='#method.remove_ccd_from' class='fnname'>remove_ccd_from</a>(&amp;mut self, rigid_body: &amp;<a class='type' href='../../nphysics2d/object/type.RigidBodyHandle.html' title='nphysics2d::object::RigidBodyHandle'>RigidBodyHandle</a>&lt;N&gt;)</code></span></h4>
+</div><h4 id='method.remove_ccd_from' class="method"><span id='remove_ccd_from.v' class='invisible'><code>fn <a href='#method.remove_ccd_from' class='fnname'>remove_ccd_from</a>(&amp;mut self, rigid_body: &amp;<a class="type" href="../../nphysics2d/object/type.RigidBodyHandle.html" title="type nphysics2d::object::RigidBodyHandle">RigidBodyHandle</a>&lt;N&gt;)</code></span></h4>
 <div class='docblock'><p>Enables continuous collision for the given rigid body.</p>
-</div><h4 id='method.update' class='method'><span id='update.v' class='invisible'><code>fn <a href='#method.update' class='fnname'>update</a>(&amp;mut self, cw: &amp;mut <a class='type' href='../../nphysics2d/world/type.RigidBodyCollisionWorld.html' title='nphysics2d::world::RigidBodyCollisionWorld'>RigidBodyCollisionWorld</a>&lt;N&gt;) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+</div><h4 id='method.update' class="method"><span id='update.v' class='invisible'><code>fn <a href='#method.update' class='fnname'>update</a>(&amp;mut self, cw: &amp;mut <a class="type" href="../../nphysics2d/world/type.RigidBodyCollisionWorld.html" title="type nphysics2d::world::RigidBodyCollisionWorld">RigidBodyCollisionWorld</a>&lt;N&gt;) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'><p>Update the time of impacts and apply motion clamping when necessary.</p>
 
 <p>Returns <code>false</code> if no clamping was done. If at least one clamping was performed, the

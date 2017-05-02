@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -63,27 +63,27 @@
 <span id="18">18</span>
 <span id="19">19</span>
 <span id="20">20</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Spatial partitioning tools.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Spatial partitioning tools.</span>
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>partitioning</span>::<span class='ident'>dbvt</span>::{<span class='ident'>DBVT</span>, <span class='ident'>DBVTLeaf</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>partitioning</span>::<span class='ident'>bvt</span>::{<span class='ident'>BVT</span>, <span class='ident'>BinaryPartition</span>, <span class='ident'>BVTNode</span>};
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>inline</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>partitioning</span>::<span class='ident'>bvt_visitor</span>::{<span class='ident'>BVTVisitor</span>, <span class='ident'>BoundingVolumeInterferencesCollector</span>};
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>inline</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>partitioning</span>::<span class='ident'>bvtt_visitor</span>::<span class='ident'>BVTTVisitor</span>;
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>inline</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>partitioning</span>::<span class='ident'>bvt_cost_fn</span>::<span class='ident'>BVTCostFn</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">partitioning</span>::<span class="ident">dbvt</span>::{<span class="ident">DBVT</span>, <span class="ident">DBVTLeaf</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">partitioning</span>::<span class="ident">bvt</span>::{<span class="ident">BVT</span>, <span class="ident">BinaryPartition</span>, <span class="ident">BVTNode</span>};
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">partitioning</span>::<span class="ident">bvt_visitor</span>::{<span class="ident">BVTVisitor</span>, <span class="ident">BoundingVolumeInterferencesCollector</span>};
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">partitioning</span>::<span class="ident">bvtt_visitor</span>::<span class="ident">BVTTVisitor</span>;
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">inline</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">partitioning</span>::<span class="ident">bvt_cost_fn</span>::<span class="ident">BVTCostFn</span>;
 
-<span class='kw'>mod</span> <span class='ident'>dbvt</span>;
-<span class='kw'>mod</span> <span class='ident'>bvt</span>;
+<span class="kw">mod</span> <span class="ident">dbvt</span>;
+<span class="kw">mod</span> <span class="ident">bvt</span>;
 
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>bvt_visitor</span>;
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>bvtt_visitor</span>;
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>bvt_cost_fn</span>;
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">bvt_visitor</span>;
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">bvtt_visitor</span>;
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">bvt_cost_fn</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

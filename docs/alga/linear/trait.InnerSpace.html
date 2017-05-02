@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,17 +43,17 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>alga</a>::<wbr><a href='index.html'>linear</a>::<wbr><a class='trait' href=''>InnerSpace</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>alga</a>::<wbr><a href='index.html'>linear</a>::<wbr><a class="trait" href=''>InnerSpace</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/alga/linear/vector.rs.html#41-72' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait InnerSpace: <a class='trait' href='../../alga/linear/trait.NormedSpace.html' title='alga::linear::NormedSpace'>NormedSpace</a>&lt;Field=Self::<a class='trait' href='../../alga/linear/trait.InnerSpace.html' title='alga::linear::InnerSpace'>Real</a>&gt; {
-    type <a href='#associatedtype.Real' class='type'>Real</a>: <a class='trait' href='../../alga/general/trait.Real.html' title='alga::general::Real'>Real</a>;
-    fn <a href='#tymethod.inner_product' class='fnname'>inner_product</a>(&amp;self, other: &amp;Self) -&gt; Self::<a class='trait' href='../../alga/linear/trait.InnerSpace.html' title='alga::linear::InnerSpace'>Real</a>;
+<pre class='rust trait'>pub trait InnerSpace: <a class="trait" href="../../alga/linear/trait.NormedSpace.html" title="trait alga::linear::NormedSpace">NormedSpace</a>&lt;Field=Self::<a class="trait" href="../../alga/linear/trait.InnerSpace.html" title="trait alga::linear::InnerSpace">Real</a>&gt; {
+    type <a href='#associatedtype.Real' class="type">Real</a>: <a class="trait" href="../../alga/general/trait.Real.html" title="trait alga::general::Real">Real</a>;
+    fn <a href='#tymethod.inner_product' class='fnname'>inner_product</a>(&amp;self, other: &amp;Self) -&gt; Self::<a class="trait" href="../../alga/linear/trait.InnerSpace.html" title="trait alga::linear::InnerSpace">Real</a>;
 
-    fn <a href='#method.angle' class='fnname'>angle</a>(&amp;self, other: &amp;Self) -&gt; Self::<a class='trait' href='../../alga/linear/trait.InnerSpace.html' title='alga::linear::InnerSpace'>Real</a> { ... }
+    fn <a href='#method.angle' class='fnname'>angle</a>(&amp;self, other: &amp;Self) -&gt; Self::<a class="trait" href="../../alga/linear/trait.InnerSpace.html" title="trait alga::linear::InnerSpace">Real</a> { ... }
 }</pre><div class='docblock'><p>A vector space aquipped with an inner product.</p>
 
 <p>It must be a normed space as well and the norm must agree with the inner product.
@@ -61,15 +61,15 @@ The inner product must be symmetric, linear in its first agurment, and positive 
 </div>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Real' class='method'><span id='Real.t' class='invisible'><code>type <a href='#associatedtype.Real' class='type'>Real</a>: <a class='trait' href='../../alga/general/trait.Real.html' title='alga::general::Real'>Real</a></code></span></h3><div class='docblock'><p>The result of inner product (same as the field used by this vector space).</p>
+        <h3 id='associatedtype.Real' class='method'><span id='Real.t' class='invisible'><code>type <a href='#associatedtype.Real' class="type">Real</a>: <a class="trait" href="../../alga/general/trait.Real.html" title="trait alga::general::Real">Real</a></code></span></h3><div class='docblock'><p>The result of inner product (same as the field used by this vector space).</p>
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.inner_product' class='method'><span id='inner_product.v' class='invisible'><code>fn <a href='#tymethod.inner_product' class='fnname'>inner_product</a>(&amp;self, other: &amp;Self) -&gt; Self::<a class='trait' href='../../alga/linear/trait.InnerSpace.html' title='alga::linear::InnerSpace'>Real</a></code></span></h3><div class='docblock'><p>Computes the inner product of <code>self</code> with <code>other</code>.</p>
+        <h3 id='tymethod.inner_product' class='method'><span id='inner_product.v' class='invisible'><code>fn <a href='#tymethod.inner_product' class='fnname'>inner_product</a>(&amp;self, other: &amp;Self) -&gt; Self::<a class="trait" href="../../alga/linear/trait.InnerSpace.html" title="trait alga::linear::InnerSpace">Real</a></code></span></h3><div class='docblock'><p>Computes the inner product of <code>self</code> with <code>other</code>.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.angle' class='method'><span id='angle.v' class='invisible'><code>fn <a href='#method.angle' class='fnname'>angle</a>(&amp;self, other: &amp;Self) -&gt; Self::<a class='trait' href='../../alga/linear/trait.InnerSpace.html' title='alga::linear::InnerSpace'>Real</a></code></span></h3><div class='docblock'><p>Measures the angle between two vectors.</p>
+        <h3 id='method.angle' class='method'><span id='angle.v' class='invisible'><code>fn <a href='#method.angle' class='fnname'>angle</a>(&amp;self, other: &amp;Self) -&gt; Self::<a class="trait" href="../../alga/linear/trait.InnerSpace.html" title="trait alga::linear::InnerSpace">Real</a></code></span></h3><div class='docblock'><p>Measures the angle between two vectors.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>

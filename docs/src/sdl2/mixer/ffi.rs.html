@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -197,160 +197,160 @@
 <span id="152">152</span>
 <span id="153">153</span>
 <span id="154">154</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>os</span>::<span class='ident'>raw</span>::{<span class='ident'>c_uint</span>, <span class='ident'>c_int</span>, <span class='ident'>c_char</span>, <span class='ident'>c_double</span>, <span class='ident'>c_void</span>};
-<span class='kw'>use</span> <span class='ident'>sys</span>::<span class='ident'>rwops</span>::<span class='ident'>SDL_RWops</span>;
-<span class='kw'>use</span> <span class='ident'>sys</span>::<span class='ident'>version</span>::<span class='ident'>SDL_version</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::{<span class="ident">c_uint</span>, <span class="ident">c_int</span>, <span class="ident">c_char</span>, <span class="ident">c_double</span>, <span class="ident">c_void</span>};
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">rwops</span>::<span class="ident">SDL_RWops</span>;
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">version</span>::<span class="ident">SDL_version</span>;
 
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>MIX_InitFlags</span> <span class='op'>=</span> <span class='ident'>c_uint</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MIX_INIT_FLAC</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>1</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MIX_INIT_MOD</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>2</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MIX_INIT_MODPLUG</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>4</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MIX_INIT_MP3</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>8</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MIX_INIT_OGG</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>16</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MIX_INIT_FLUIDSYNTH</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>32</span>;
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Struct_Mix_Chunk</span> {
-    <span class='kw'>pub</span> <span class='ident'>allocated</span>: <span class='ident'>c_int</span>,
-    <span class='kw'>pub</span> <span class='ident'>abuf</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>u8</span>,
-    <span class='kw'>pub</span> <span class='ident'>alen</span>: <span class='ident'>u32</span>,
-    <span class='kw'>pub</span> <span class='ident'>volume</span>: <span class='ident'>u8</span>,
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">MIX_InitFlags</span> <span class="op">=</span> <span class="ident">c_uint</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MIX_INIT_FLAC</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MIX_INIT_MOD</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">2</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MIX_INIT_MODPLUG</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">4</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MIX_INIT_MP3</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">8</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MIX_INIT_OGG</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">16</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MIX_INIT_FLUIDSYNTH</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">32</span>;
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Struct_Mix_Chunk</span> {
+    <span class="kw">pub</span> <span class="ident">allocated</span>: <span class="ident">c_int</span>,
+    <span class="kw">pub</span> <span class="ident">abuf</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>,
+    <span class="kw">pub</span> <span class="ident">alen</span>: <span class="ident">u32</span>,
+    <span class="kw">pub</span> <span class="ident">volume</span>: <span class="ident">u8</span>,
 }
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Mix_Chunk</span> <span class='op'>=</span> <span class='ident'>Struct_Mix_Chunk</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Mix_Fading</span> <span class='op'>=</span> <span class='ident'>c_uint</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MIX_NO_FADING</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>0</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MIX_FADING_OUT</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>1</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MIX_FADING_IN</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>2</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Mix_MusicType</span> <span class='op'>=</span> <span class='ident'>c_uint</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MUS_NONE</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>0</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MUS_CMD</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>1</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MUS_WAV</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>2</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MUS_MOD</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>3</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MUS_MID</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>4</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MUS_OGG</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>5</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MUS_MP3</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>6</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MUS_MP3_MAD</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>7</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MUS_FLAC</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>8</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>MUS_MODPLUG</span>: <span class='ident'>c_uint</span> <span class='op'>=</span> <span class='number'>9</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Struct__Mix_Music</span> <span class='op'>=</span> <span class='ident'>c_void</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Mix_Music</span> <span class='op'>=</span> <span class='ident'>Struct__Mix_Music</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Mix_EffectFunc_t</span> <span class='op'>=</span> ::<span class='ident'>std</span>::<span class='ident'>option</span>::<span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span>(<span class='ident'>arg1</span>: <span class='ident'>c_int</span>,
-                                                                  <span class='ident'>arg2</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_void</span>,
-                                                                  <span class='ident'>arg3</span>: <span class='ident'>c_int</span>,
-                                                                  <span class='ident'>arg4</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_void</span>)
-                                                                 <span class='op'>&gt;</span>;
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Mix_EffectDone_t</span> <span class='op'>=</span> ::<span class='ident'>std</span>::<span class='ident'>option</span>::<span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span>(<span class='ident'>arg1</span>: <span class='ident'>c_int</span>,
-                                                                  <span class='ident'>arg2</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_void</span>)
-                                                                 <span class='op'>&gt;</span>;
-<span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_Linked_Version</span>() <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>SDL_version</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_Init</span>(<span class='ident'>flags</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_Quit</span>();
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_OpenAudio</span>(<span class='ident'>frequency</span>: <span class='ident'>c_int</span>,
-                         <span class='ident'>format</span>: <span class='ident'>u16</span>,
-                         <span class='ident'>channels</span>: <span class='ident'>c_int</span>,
-                         <span class='ident'>chunksize</span>: <span class='ident'>c_int</span>)
-                         <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_AllocateChannels</span>(<span class='ident'>numchans</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_QuerySpec</span>(<span class='ident'>frequency</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_int</span>,
-                         <span class='ident'>format</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>u16</span>,
-                         <span class='ident'>channels</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_int</span>)
-                         <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_LoadWAV_RW</span>(<span class='ident'>src</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_RWops</span>, <span class='ident'>freesrc</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>Mix_Chunk</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_LoadMUS</span>(<span class='ident'>file</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>Mix_Music</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_LoadMUS_RW</span>(<span class='ident'>src</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_RWops</span>, <span class='ident'>freesrc</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>Mix_Music</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_LoadMUSType_RW</span>(<span class='ident'>src</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_RWops</span>,
-                              <span class='ident'>type_</span>: <span class='ident'>Mix_MusicType</span>,
-                              <span class='ident'>freesrc</span>: <span class='ident'>c_int</span>)
-                              <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>Mix_Music</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_QuickLoad_WAV</span>(<span class='ident'>mem</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>Mix_Chunk</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_QuickLoad_RAW</span>(<span class='ident'>mem</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>u8</span>, <span class='ident'>len</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>Mix_Chunk</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_FreeChunk</span>(<span class='ident'>chunk</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>Mix_Chunk</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_FreeMusic</span>(<span class='ident'>music</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>Mix_Music</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_GetNumChunkDecoders</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_GetChunkDecoder</span>(<span class='ident'>index</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_GetNumMusicDecoders</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_GetMusicDecoder</span>(<span class='ident'>index</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_GetMusicType</span>(<span class='ident'>music</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>Mix_Music</span>) <span class='op'>-&gt;</span> <span class='ident'>Mix_MusicType</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_SetPostMix</span>(<span class='ident'>mix_func</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw'>unsafe</span> <span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span>(<span class='ident'>udata</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>,
-                                                                <span class='ident'>stream</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>u8</span>,
-                                                                <span class='ident'>len</span>: <span class='ident'>c_int</span>)<span class='op'>&gt;</span>,
-                          <span class='ident'>arg</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_HookMusic</span>(<span class='ident'>mix_func</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw'>unsafe</span> <span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span>(<span class='ident'>udata</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>,
-                                                               <span class='ident'>stream</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>u8</span>,
-                                                               <span class='ident'>len</span>: <span class='ident'>c_int</span>)<span class='op'>&gt;</span>,
-                         <span class='ident'>arg</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_HookMusicFinished</span>(<span class='ident'>music_finished</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span>()<span class='op'>&gt;</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_GetMusicHookData</span>() <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_ChannelFinished</span>(<span class='ident'>channel_finished</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span>(<span class='ident'>channel</span>: <span class='ident'>c_int</span>)<span class='op'>&gt;</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_RegisterEffect</span>(<span class='ident'>chan</span>: <span class='ident'>c_int</span>,
-                              <span class='ident'>f</span>: <span class='ident'>Mix_EffectFunc_t</span>,
-                              <span class='ident'>d</span>: <span class='ident'>Mix_EffectDone_t</span>,
-                              <span class='ident'>arg</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>)
-                              <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_UnregisterEffect</span>(<span class='ident'>channel</span>: <span class='ident'>c_int</span>, <span class='ident'>f</span>: <span class='ident'>Mix_EffectFunc_t</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_UnregisterAllEffects</span>(<span class='ident'>channel</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_SetPanning</span>(<span class='ident'>channel</span>: <span class='ident'>c_int</span>, <span class='ident'>left</span>: <span class='ident'>u8</span>, <span class='ident'>right</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_SetPosition</span>(<span class='ident'>channel</span>: <span class='ident'>c_int</span>, <span class='ident'>angle</span>: <span class='ident'>i16</span>, <span class='ident'>distance</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_SetDistance</span>(<span class='ident'>channel</span>: <span class='ident'>c_int</span>, <span class='ident'>distance</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_SetReverseStereo</span>(<span class='ident'>channel</span>: <span class='ident'>c_int</span>, <span class='ident'>flip</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_ReserveChannels</span>(<span class='ident'>num</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_GroupChannel</span>(<span class='ident'>which</span>: <span class='ident'>c_int</span>, <span class='ident'>tag</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_GroupChannels</span>(<span class='ident'>from</span>: <span class='ident'>c_int</span>, <span class='ident'>to</span>: <span class='ident'>c_int</span>, <span class='ident'>tag</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_GroupAvailable</span>(<span class='ident'>tag</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_GroupCount</span>(<span class='ident'>tag</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_GroupOldest</span>(<span class='ident'>tag</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_GroupNewer</span>(<span class='ident'>tag</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_PlayChannelTimed</span>(<span class='ident'>channel</span>: <span class='ident'>c_int</span>,
-                                <span class='ident'>chunk</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>Mix_Chunk</span>,
-                                <span class='ident'>loops</span>: <span class='ident'>c_int</span>,
-                                <span class='ident'>ticks</span>: <span class='ident'>c_int</span>)
-                                <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_PlayMusic</span>(<span class='ident'>music</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>Mix_Music</span>, <span class='ident'>loops</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_FadeInMusic</span>(<span class='ident'>music</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>Mix_Music</span>, <span class='ident'>loops</span>: <span class='ident'>c_int</span>, <span class='ident'>ms</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_FadeInMusicPos</span>(<span class='ident'>music</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>Mix_Music</span>,
-                              <span class='ident'>loops</span>: <span class='ident'>c_int</span>,
-                              <span class='ident'>ms</span>: <span class='ident'>c_int</span>,
-                              <span class='ident'>position</span>: <span class='ident'>c_double</span>)
-                              <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_FadeInChannelTimed</span>(<span class='ident'>channel</span>: <span class='ident'>c_int</span>,
-                                  <span class='ident'>chunk</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>Mix_Chunk</span>,
-                                  <span class='ident'>loops</span>: <span class='ident'>c_int</span>,
-                                  <span class='ident'>ms</span>: <span class='ident'>c_int</span>,
-                                  <span class='ident'>ticks</span>: <span class='ident'>c_int</span>)
-                                  <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_Volume</span>(<span class='ident'>channel</span>: <span class='ident'>c_int</span>, <span class='ident'>volume</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_VolumeChunk</span>(<span class='ident'>chunk</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>Mix_Chunk</span>, <span class='ident'>volume</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_VolumeMusic</span>(<span class='ident'>volume</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_HaltChannel</span>(<span class='ident'>channel</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_HaltGroup</span>(<span class='ident'>tag</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_HaltMusic</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_ExpireChannel</span>(<span class='ident'>channel</span>: <span class='ident'>c_int</span>, <span class='ident'>ticks</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_FadeOutChannel</span>(<span class='ident'>which</span>: <span class='ident'>c_int</span>, <span class='ident'>ms</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_FadeOutGroup</span>(<span class='ident'>tag</span>: <span class='ident'>c_int</span>, <span class='ident'>ms</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_FadeOutMusic</span>(<span class='ident'>ms</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_FadingMusic</span>() <span class='op'>-&gt;</span> <span class='ident'>Mix_Fading</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_FadingChannel</span>(<span class='ident'>which</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>Mix_Fading</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_Pause</span>(<span class='ident'>channel</span>: <span class='ident'>c_int</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_Resume</span>(<span class='ident'>channel</span>: <span class='ident'>c_int</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_Paused</span>(<span class='ident'>channel</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_PauseMusic</span>();
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_ResumeMusic</span>();
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_RewindMusic</span>();
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_PausedMusic</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_SetMusicPosition</span>(<span class='ident'>position</span>: <span class='ident'>c_double</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_Playing</span>(<span class='ident'>channel</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_PlayingMusic</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_SetMusicCMD</span>(<span class='ident'>command</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_SetSynchroValue</span>(<span class='ident'>value</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_GetSynchroValue</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_SetSoundFonts</span>(<span class='ident'>paths</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_GetSoundFonts</span>() <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_EachSoundFont</span>(<span class='ident'>function</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw'>unsafe</span> <span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> <span class='kw'>fn</span>(<span class='ident'>arg1</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>,
-                                                                   <span class='ident'>arg2</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span><span class='op'>&gt;</span>,
-                             <span class='ident'>data</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_GetChunk</span>(<span class='ident'>channel</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>Mix_Chunk</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>Mix_CloseAudio</span>();
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Mix_Chunk</span> <span class="op">=</span> <span class="ident">Struct_Mix_Chunk</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Mix_Fading</span> <span class="op">=</span> <span class="ident">c_uint</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MIX_NO_FADING</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MIX_FADING_OUT</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MIX_FADING_IN</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">2</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Mix_MusicType</span> <span class="op">=</span> <span class="ident">c_uint</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MUS_NONE</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">0</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MUS_CMD</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MUS_WAV</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">2</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MUS_MOD</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">3</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MUS_MID</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">4</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MUS_OGG</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">5</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MUS_MP3</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">6</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MUS_MP3_MAD</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">7</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MUS_FLAC</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">8</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MUS_MODPLUG</span>: <span class="ident">c_uint</span> <span class="op">=</span> <span class="number">9</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Struct__Mix_Music</span> <span class="op">=</span> <span class="ident">c_void</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Mix_Music</span> <span class="op">=</span> <span class="ident">Struct__Mix_Music</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Mix_EffectFunc_t</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">arg1</span>: <span class="ident">c_int</span>,
+                                                                  <span class="ident">arg2</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>,
+                                                                  <span class="ident">arg3</span>: <span class="ident">c_int</span>,
+                                                                  <span class="ident">arg4</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>)
+                                                                 <span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Mix_EffectDone_t</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">option</span>::<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">arg1</span>: <span class="ident">c_int</span>,
+                                                                  <span class="ident">arg2</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>)
+                                                                 <span class="op">&gt;</span>;
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_Linked_Version</span>() <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">SDL_version</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_Init</span>(<span class="ident">flags</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_Quit</span>();
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_OpenAudio</span>(<span class="ident">frequency</span>: <span class="ident">c_int</span>,
+                         <span class="ident">format</span>: <span class="ident">u16</span>,
+                         <span class="ident">channels</span>: <span class="ident">c_int</span>,
+                         <span class="ident">chunksize</span>: <span class="ident">c_int</span>)
+                         <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_AllocateChannels</span>(<span class="ident">numchans</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_QuerySpec</span>(<span class="ident">frequency</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_int</span>,
+                         <span class="ident">format</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u16</span>,
+                         <span class="ident">channels</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_int</span>)
+                         <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_LoadWAV_RW</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_RWops</span>, <span class="ident">freesrc</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Mix_Chunk</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_LoadMUS</span>(<span class="ident">file</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Mix_Music</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_LoadMUS_RW</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_RWops</span>, <span class="ident">freesrc</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Mix_Music</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_LoadMUSType_RW</span>(<span class="ident">src</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_RWops</span>,
+                              <span class="ident">type_</span>: <span class="ident">Mix_MusicType</span>,
+                              <span class="ident">freesrc</span>: <span class="ident">c_int</span>)
+                              <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Mix_Music</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_QuickLoad_WAV</span>(<span class="ident">mem</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Mix_Chunk</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_QuickLoad_RAW</span>(<span class="ident">mem</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>, <span class="ident">len</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Mix_Chunk</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_FreeChunk</span>(<span class="ident">chunk</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Mix_Chunk</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_FreeMusic</span>(<span class="ident">music</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Mix_Music</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_GetNumChunkDecoders</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_GetChunkDecoder</span>(<span class="ident">index</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_GetNumMusicDecoders</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_GetMusicDecoder</span>(<span class="ident">index</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_GetMusicType</span>(<span class="ident">music</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Mix_Music</span>) <span class="op">-&gt;</span> <span class="ident">Mix_MusicType</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_SetPostMix</span>(<span class="ident">mix_func</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">udata</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
+                                                                <span class="ident">stream</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>,
+                                                                <span class="ident">len</span>: <span class="ident">c_int</span>)<span class="op">&gt;</span>,
+                          <span class="ident">arg</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_HookMusic</span>(<span class="ident">mix_func</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">udata</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
+                                                               <span class="ident">stream</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>,
+                                                               <span class="ident">len</span>: <span class="ident">c_int</span>)<span class="op">&gt;</span>,
+                         <span class="ident">arg</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_HookMusicFinished</span>(<span class="ident">music_finished</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_GetMusicHookData</span>() <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_ChannelFinished</span>(<span class="ident">channel_finished</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">channel</span>: <span class="ident">c_int</span>)<span class="op">&gt;</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_RegisterEffect</span>(<span class="ident">chan</span>: <span class="ident">c_int</span>,
+                              <span class="ident">f</span>: <span class="ident">Mix_EffectFunc_t</span>,
+                              <span class="ident">d</span>: <span class="ident">Mix_EffectDone_t</span>,
+                              <span class="ident">arg</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>)
+                              <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_UnregisterEffect</span>(<span class="ident">channel</span>: <span class="ident">c_int</span>, <span class="ident">f</span>: <span class="ident">Mix_EffectFunc_t</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_UnregisterAllEffects</span>(<span class="ident">channel</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_SetPanning</span>(<span class="ident">channel</span>: <span class="ident">c_int</span>, <span class="ident">left</span>: <span class="ident">u8</span>, <span class="ident">right</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_SetPosition</span>(<span class="ident">channel</span>: <span class="ident">c_int</span>, <span class="ident">angle</span>: <span class="ident">i16</span>, <span class="ident">distance</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_SetDistance</span>(<span class="ident">channel</span>: <span class="ident">c_int</span>, <span class="ident">distance</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_SetReverseStereo</span>(<span class="ident">channel</span>: <span class="ident">c_int</span>, <span class="ident">flip</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_ReserveChannels</span>(<span class="ident">num</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_GroupChannel</span>(<span class="ident">which</span>: <span class="ident">c_int</span>, <span class="ident">tag</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_GroupChannels</span>(<span class="ident">from</span>: <span class="ident">c_int</span>, <span class="ident">to</span>: <span class="ident">c_int</span>, <span class="ident">tag</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_GroupAvailable</span>(<span class="ident">tag</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_GroupCount</span>(<span class="ident">tag</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_GroupOldest</span>(<span class="ident">tag</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_GroupNewer</span>(<span class="ident">tag</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_PlayChannelTimed</span>(<span class="ident">channel</span>: <span class="ident">c_int</span>,
+                                <span class="ident">chunk</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Mix_Chunk</span>,
+                                <span class="ident">loops</span>: <span class="ident">c_int</span>,
+                                <span class="ident">ticks</span>: <span class="ident">c_int</span>)
+                                <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_PlayMusic</span>(<span class="ident">music</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Mix_Music</span>, <span class="ident">loops</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_FadeInMusic</span>(<span class="ident">music</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Mix_Music</span>, <span class="ident">loops</span>: <span class="ident">c_int</span>, <span class="ident">ms</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_FadeInMusicPos</span>(<span class="ident">music</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Mix_Music</span>,
+                              <span class="ident">loops</span>: <span class="ident">c_int</span>,
+                              <span class="ident">ms</span>: <span class="ident">c_int</span>,
+                              <span class="ident">position</span>: <span class="ident">c_double</span>)
+                              <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_FadeInChannelTimed</span>(<span class="ident">channel</span>: <span class="ident">c_int</span>,
+                                  <span class="ident">chunk</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Mix_Chunk</span>,
+                                  <span class="ident">loops</span>: <span class="ident">c_int</span>,
+                                  <span class="ident">ms</span>: <span class="ident">c_int</span>,
+                                  <span class="ident">ticks</span>: <span class="ident">c_int</span>)
+                                  <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_Volume</span>(<span class="ident">channel</span>: <span class="ident">c_int</span>, <span class="ident">volume</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_VolumeChunk</span>(<span class="ident">chunk</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Mix_Chunk</span>, <span class="ident">volume</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_VolumeMusic</span>(<span class="ident">volume</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_HaltChannel</span>(<span class="ident">channel</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_HaltGroup</span>(<span class="ident">tag</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_HaltMusic</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_ExpireChannel</span>(<span class="ident">channel</span>: <span class="ident">c_int</span>, <span class="ident">ticks</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_FadeOutChannel</span>(<span class="ident">which</span>: <span class="ident">c_int</span>, <span class="ident">ms</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_FadeOutGroup</span>(<span class="ident">tag</span>: <span class="ident">c_int</span>, <span class="ident">ms</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_FadeOutMusic</span>(<span class="ident">ms</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_FadingMusic</span>() <span class="op">-&gt;</span> <span class="ident">Mix_Fading</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_FadingChannel</span>(<span class="ident">which</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">Mix_Fading</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_Pause</span>(<span class="ident">channel</span>: <span class="ident">c_int</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_Resume</span>(<span class="ident">channel</span>: <span class="ident">c_int</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_Paused</span>(<span class="ident">channel</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_PauseMusic</span>();
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_ResumeMusic</span>();
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_RewindMusic</span>();
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_PausedMusic</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_SetMusicPosition</span>(<span class="ident">position</span>: <span class="ident">c_double</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_Playing</span>(<span class="ident">channel</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_PlayingMusic</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_SetMusicCMD</span>(<span class="ident">command</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_SetSynchroValue</span>(<span class="ident">value</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_GetSynchroValue</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_SetSoundFonts</span>(<span class="ident">paths</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_GetSoundFonts</span>() <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_EachSoundFont</span>(<span class="ident">function</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(<span class="ident">arg1</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
+                                                                   <span class="ident">arg2</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span><span class="op">&gt;</span>,
+                             <span class="ident">data</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_GetChunk</span>(<span class="ident">channel</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Mix_Chunk</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">Mix_CloseAudio</span>();
 }
 </pre>
 </section>

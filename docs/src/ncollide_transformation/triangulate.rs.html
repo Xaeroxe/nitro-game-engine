@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -228,191 +228,191 @@
 <span id="183">183</span>
 <span id="184">184</span>
 <span id="185">185</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Point cloud triangulation.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Point cloud triangulation.</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>hash_map</span>::<span class='ident'>Entry</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">hash_map</span>::<span class="ident">Entry</span>;
 
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>::<span class='ident'>Point3</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
-<span class='kw'>use</span> <span class='ident'>utils</span>;
-<span class='kw'>use</span> <span class='ident'>geometry</span>::<span class='ident'>bounding_volume</span>;
-<span class='kw'>use</span> <span class='ident'>procedural</span>::{<span class='ident'>TriMesh</span>, <span class='ident'>IndexBuffer</span>};
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::<span class="ident">Real</span>;
+<span class="kw">use</span> <span class="ident">na</span>::<span class="ident">Point3</span>;
+<span class="kw">use</span> <span class="ident">na</span>;
+<span class="kw">use</span> <span class="ident">math</span>::<span class="ident">Point</span>;
+<span class="kw">use</span> <span class="ident">utils</span>;
+<span class="kw">use</span> <span class="ident">geometry</span>::<span class="ident">bounding_volume</span>;
+<span class="kw">use</span> <span class="ident">procedural</span>::{<span class="ident">TriMesh</span>, <span class="ident">IndexBuffer</span>};
 
-<span class='kw'>struct</span> <span class='ident'>Triangle</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> {
-    <span class='ident'>idx</span>:                    <span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>,
-    <span class='ident'>circumcircle_center</span>:    <span class='ident'>P</span>,
-    <span class='ident'>circumcircle_sq_radius</span>: <span class='ident'>P</span>::<span class='ident'>Real</span>,
+<span class="kw">struct</span> <span class="ident">Triangle</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span> {
+    <span class="ident">idx</span>:                    <span class="ident">Point3</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
+    <span class="ident">circumcircle_center</span>:    <span class="ident">P</span>,
+    <span class="ident">circumcircle_sq_radius</span>: <span class="ident">P</span>::<span class="ident">Real</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> <span class='ident'>Triangle</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>idx</span>: <span class='ident'>Point3</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>, <span class='ident'>pts</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>P</span>]) <span class='op'>-&gt;</span> <span class='ident'>Triangle</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>pa</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>pts</span>[<span class='ident'>idx</span>.<span class='ident'>x</span>];
-        <span class='kw'>let</span> <span class='ident'>pb</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>pts</span>[<span class='ident'>idx</span>.<span class='ident'>y</span>];
-        <span class='kw'>let</span> <span class='ident'>pc</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='ident'>pts</span>[<span class='ident'>idx</span>.<span class='ident'>z</span>];
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span> <span class="ident">Triangle</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">idx</span>: <span class="ident">Point3</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>, <span class="ident">pts</span>: <span class="kw-2">&amp;</span>[<span class="ident">P</span>]) <span class="op">-&gt;</span> <span class="ident">Triangle</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">pa</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">pts</span>[<span class="ident">idx</span>.<span class="ident">x</span>];
+        <span class="kw">let</span> <span class="ident">pb</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">pts</span>[<span class="ident">idx</span>.<span class="ident">y</span>];
+        <span class="kw">let</span> <span class="ident">pc</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">pts</span>[<span class="ident">idx</span>.<span class="ident">z</span>];
 
-        <span class='kw'>let</span> (<span class='ident'>center</span>, <span class='ident'>radius</span>) <span class='op'>=</span> <span class='ident'>utils</span>::<span class='ident'>circumcircle</span>(<span class='ident'>pa</span>, <span class='ident'>pb</span>, <span class='ident'>pc</span>);
+        <span class="kw">let</span> (<span class="ident">center</span>, <span class="ident">radius</span>) <span class="op">=</span> <span class="ident">utils</span>::<span class="ident">circumcircle</span>(<span class="ident">pa</span>, <span class="ident">pb</span>, <span class="ident">pc</span>);
 
-        <span class='ident'>Triangle</span> {
-            <span class='ident'>idx</span>:                    <span class='ident'>idx</span>,
-            <span class='ident'>circumcircle_center</span>:    <span class='ident'>center</span>,
-            <span class='ident'>circumcircle_sq_radius</span>: <span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>radius</span>
+        <span class="ident">Triangle</span> {
+            <span class="ident">idx</span>:                    <span class="ident">idx</span>,
+            <span class="ident">circumcircle_center</span>:    <span class="ident">center</span>,
+            <span class="ident">circumcircle_sq_radius</span>: <span class="ident">radius</span> <span class="op">*</span> <span class="ident">radius</span>
         }
 
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>circumcircle_contains_point</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>pt</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='ident'>na</span>::<span class='ident'>distance_squared</span>(<span class='ident'>pt</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>circumcircle_center</span>) <span class='op'>&lt;=</span> <span class='self'>self</span>.<span class='ident'>circumcircle_sq_radius</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">circumcircle_contains_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pt</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="ident">na</span>::<span class="ident">distance_squared</span>(<span class="ident">pt</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">circumcircle_center</span>) <span class="op">&lt;=</span> <span class="self">self</span>.<span class="ident">circumcircle_sq_radius</span>
     }
 }
 
-<span class='doccomment'>/// Incremental triangulation utility.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Triangulator</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> {
-    <span class='ident'>vertices</span>:  <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>,
-    <span class='ident'>triangles</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Triangle</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>edges</span>:     <span class='ident'>HashMap</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>, <span class='ident'>usize</span>), <span class='ident'>usize</span><span class='op'>&gt;</span>
+<span class="doccomment">/// Incremental triangulation utility.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Triangulator</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span> {
+    <span class="ident">vertices</span>:  <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>,
+    <span class="ident">triangles</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Triangle</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">edges</span>:     <span class="ident">HashMap</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>), <span class="ident">usize</span><span class="op">&gt;</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span> <span class='ident'>Triangulator</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new Triangulator.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>supertriangle_a</span>: <span class='ident'>P</span>, <span class='ident'>supertriangle_b</span>: <span class='ident'>P</span>, <span class='ident'>supertriangle_c</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>Triangulator</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>vertices</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>(<span class='ident'>supertriangle_a</span>, <span class='ident'>supertriangle_b</span>, <span class='ident'>supertriangle_c</span>);
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span> <span class="ident">Triangulator</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new Triangulator.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">supertriangle_a</span>: <span class="ident">P</span>, <span class="ident">supertriangle_b</span>: <span class="ident">P</span>, <span class="ident">supertriangle_c</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="ident">Triangulator</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">vertices</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>(<span class="ident">supertriangle_a</span>, <span class="ident">supertriangle_b</span>, <span class="ident">supertriangle_c</span>);
 
-        <span class='ident'>Triangulator</span> {
-            <span class='comment'>// FIXME: why do we have to specify the type explicitely here ?</span>
-            <span class='ident'>triangles</span>: <span class='macro'>vec</span><span class='macro'>!</span>(<span class='ident'>Triangle</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>1</span>, <span class='number'>2</span>), <span class='kw-2'>&amp;</span><span class='ident'>vertices</span>[..])),
-            <span class='ident'>vertices</span>:  <span class='ident'>vertices</span>,
-            <span class='ident'>edges</span>:     <span class='ident'>HashMap</span>::<span class='ident'>new</span>()
+        <span class="ident">Triangulator</span> {
+            <span class="comment">// FIXME: why do we have to specify the type explicitely here ?</span>
+            <span class="ident">triangles</span>: <span class="macro">vec</span><span class="macro">!</span>(<span class="ident">Triangle</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">Point3</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>), <span class="kw-2">&amp;</span><span class="ident">vertices</span>[..])),
+            <span class="ident">vertices</span>:  <span class="ident">vertices</span>,
+            <span class="ident">edges</span>:     <span class="ident">HashMap</span>::<span class="ident">new</span>()
         }
     }
 
-    <span class='doccomment'>/// Adds a point to the triangulated set.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>add_point</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>pt</span>: <span class='ident'>P</span>) {
-        <span class='self'>self</span>.<span class='ident'>remove_containing_triangles_and_register_edges</span>(<span class='kw-2'>&amp;</span><span class='ident'>pt</span>);
+    <span class="doccomment">/// Adds a point to the triangulated set.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_point</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pt</span>: <span class="ident">P</span>) {
+        <span class="self">self</span>.<span class="ident">remove_containing_triangles_and_register_edges</span>(<span class="kw-2">&amp;</span><span class="ident">pt</span>);
 
-        <span class='kw'>let</span> <span class='ident'>ipt</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>vertices</span>.<span class='ident'>len</span>();
-        <span class='self'>self</span>.<span class='ident'>vertices</span>.<span class='ident'>push</span>(<span class='ident'>pt</span>);
+        <span class="kw">let</span> <span class="ident">ipt</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">vertices</span>.<span class="ident">len</span>();
+        <span class="self">self</span>.<span class="ident">vertices</span>.<span class="ident">push</span>(<span class="ident">pt</span>);
 
-        <span class='kw'>for</span> (<span class='kw-2'>&amp;</span>(<span class='ident'>ia</span>, <span class='ident'>ib</span>), <span class='ident'>num</span>) <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>edges</span>.<span class='ident'>iter</span>() {
-            <span class='kw'>if</span> <span class='kw-2'>*</span><span class='ident'>num</span> <span class='op'>==</span> <span class='number'>1</span> {
-                <span class='comment'>// FIXME: why do we have to specify the type explicitely here ?</span>
-                <span class='kw'>let</span> <span class='ident'>t</span> <span class='op'>=</span> <span class='ident'>Triangle</span>::<span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>Point3</span>::<span class='ident'>new</span>(<span class='ident'>ia</span>, <span class='ident'>ib</span>, <span class='ident'>ipt</span>), <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>vertices</span>[..]);
+        <span class="kw">for</span> (<span class="kw-2">&amp;</span>(<span class="ident">ia</span>, <span class="ident">ib</span>), <span class="ident">num</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">edges</span>.<span class="ident">iter</span>() {
+            <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">num</span> <span class="op">==</span> <span class="number">1</span> {
+                <span class="comment">// FIXME: why do we have to specify the type explicitely here ?</span>
+                <span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">Triangle</span>::<span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">Point3</span>::<span class="ident">new</span>(<span class="ident">ia</span>, <span class="ident">ib</span>, <span class="ident">ipt</span>), <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">vertices</span>[..]);
 
-                <span class='self'>self</span>.<span class='ident'>triangles</span>.<span class='ident'>push</span>(<span class='ident'>t</span>)
+                <span class="self">self</span>.<span class="ident">triangles</span>.<span class="ident">push</span>(<span class="ident">t</span>)
             }
         }
     }
 
-    <span class='doccomment'>/// Returns the result of the triangulation.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>to_trimesh</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>TriMesh</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>idx</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>with_capacity</span>(<span class='self'>self</span>.<span class='ident'>triangles</span>.<span class='ident'>len</span>());
+    <span class="doccomment">/// Returns the result of the triangulation.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_trimesh</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">TriMesh</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">idx</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">with_capacity</span>(<span class="self">self</span>.<span class="ident">triangles</span>.<span class="ident">len</span>());
 
-        <span class='kw'>let</span> _ <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>vertices</span>.<span class='ident'>swap_remove</span>(<span class='number'>2</span>);
-        <span class='kw'>let</span> _ <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>vertices</span>.<span class='ident'>swap_remove</span>(<span class='number'>1</span>);
-        <span class='kw'>let</span> _ <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>vertices</span>.<span class='ident'>swap_remove</span>(<span class='number'>0</span>);
+        <span class="kw">let</span> _ <span class="op">=</span> <span class="self">self</span>.<span class="ident">vertices</span>.<span class="ident">swap_remove</span>(<span class="number">2</span>);
+        <span class="kw">let</span> _ <span class="op">=</span> <span class="self">self</span>.<span class="ident">vertices</span>.<span class="ident">swap_remove</span>(<span class="number">1</span>);
+        <span class="kw">let</span> _ <span class="op">=</span> <span class="self">self</span>.<span class="ident">vertices</span>.<span class="ident">swap_remove</span>(<span class="number">0</span>);
 
-        <span class='kw'>let</span> <span class='ident'>num_ids</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>vertices</span>.<span class='ident'>len</span>();
+        <span class="kw">let</span> <span class="ident">num_ids</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">vertices</span>.<span class="ident">len</span>();
 
-        <span class='kw'>for</span> <span class='ident'>t</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>triangles</span>.<span class='ident'>iter</span>() {
-            <span class='kw'>if</span> <span class='ident'>t</span>.<span class='ident'>idx</span>.<span class='ident'>x</span> <span class='op'>&gt;</span> <span class='number'>2</span> <span class='op'>&amp;&amp;</span> <span class='ident'>t</span>.<span class='ident'>idx</span>.<span class='ident'>y</span> <span class='op'>&gt;</span> <span class='number'>2</span> <span class='op'>&amp;&amp;</span> <span class='ident'>t</span>.<span class='ident'>idx</span>.<span class='ident'>z</span> <span class='op'>&gt;</span> <span class='number'>2</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>shifted_idx</span> <span class='op'>=</span> <span class='ident'>t</span>.<span class='ident'>idx</span>;
+        <span class="kw">for</span> <span class="ident">t</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">triangles</span>.<span class="ident">iter</span>() {
+            <span class="kw">if</span> <span class="ident">t</span>.<span class="ident">idx</span>.<span class="ident">x</span> <span class="op">&gt;</span> <span class="number">2</span> <span class="op">&amp;&amp;</span> <span class="ident">t</span>.<span class="ident">idx</span>.<span class="ident">y</span> <span class="op">&gt;</span> <span class="number">2</span> <span class="op">&amp;&amp;</span> <span class="ident">t</span>.<span class="ident">idx</span>.<span class="ident">z</span> <span class="op">&gt;</span> <span class="number">2</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">shifted_idx</span> <span class="op">=</span> <span class="ident">t</span>.<span class="ident">idx</span>;
 
-                <span class='kw'>if</span> <span class='ident'>shifted_idx</span>.<span class='ident'>x</span> <span class='op'>&gt;=</span> <span class='ident'>num_ids</span> {
-                    <span class='ident'>shifted_idx</span>.<span class='ident'>x</span> <span class='op'>-=</span> <span class='ident'>num_ids</span>;
+                <span class="kw">if</span> <span class="ident">shifted_idx</span>.<span class="ident">x</span> <span class="op">&gt;=</span> <span class="ident">num_ids</span> {
+                    <span class="ident">shifted_idx</span>.<span class="ident">x</span> <span class="op">-=</span> <span class="ident">num_ids</span>;
                 }
 
-                <span class='kw'>if</span> <span class='ident'>shifted_idx</span>.<span class='ident'>y</span> <span class='op'>&gt;=</span> <span class='ident'>num_ids</span> {
-                    <span class='ident'>shifted_idx</span>.<span class='ident'>y</span> <span class='op'>-=</span> <span class='ident'>num_ids</span>;
+                <span class="kw">if</span> <span class="ident">shifted_idx</span>.<span class="ident">y</span> <span class="op">&gt;=</span> <span class="ident">num_ids</span> {
+                    <span class="ident">shifted_idx</span>.<span class="ident">y</span> <span class="op">-=</span> <span class="ident">num_ids</span>;
                 }
 
-                <span class='kw'>if</span> <span class='ident'>shifted_idx</span>.<span class='ident'>z</span> <span class='op'>&gt;=</span> <span class='ident'>num_ids</span> {
-                    <span class='ident'>shifted_idx</span>.<span class='ident'>z</span> <span class='op'>-=</span> <span class='ident'>num_ids</span>;
+                <span class="kw">if</span> <span class="ident">shifted_idx</span>.<span class="ident">z</span> <span class="op">&gt;=</span> <span class="ident">num_ids</span> {
+                    <span class="ident">shifted_idx</span>.<span class="ident">z</span> <span class="op">-=</span> <span class="ident">num_ids</span>;
                 }
 
-                <span class='ident'>idx</span>.<span class='ident'>push</span>(<span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='ident'>shifted_idx</span>));
+                <span class="ident">idx</span>.<span class="ident">push</span>(<span class="ident">na</span>::<span class="ident">convert</span>(<span class="ident">shifted_idx</span>));
             }
         }
 
-        <span class='ident'>TriMesh</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>vertices</span>, <span class='prelude-val'>None</span>, <span class='prelude-val'>None</span>, <span class='prelude-val'>Some</span>(<span class='ident'>IndexBuffer</span>::<span class='ident'>Unified</span>(<span class='ident'>idx</span>)))
+        <span class="ident">TriMesh</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">vertices</span>, <span class="prelude-val">None</span>, <span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="ident">IndexBuffer</span>::<span class="ident">Unified</span>(<span class="ident">idx</span>)))
     }
 
-    <span class='kw'>fn</span> <span class='ident'>remove_containing_triangles_and_register_edges</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>pt</span>: <span class='kw-2'>&amp;</span><span class='ident'>P</span>) {
-        <span class='self'>self</span>.<span class='ident'>edges</span>.<span class='ident'>clear</span>();
+    <span class="kw">fn</span> <span class="ident">remove_containing_triangles_and_register_edges</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pt</span>: <span class="kw-2">&amp;</span><span class="ident">P</span>) {
+        <span class="self">self</span>.<span class="ident">edges</span>.<span class="ident">clear</span>();
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>i</span> <span class='op'>=</span> <span class='number'>0</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="number">0</span>;
 
-        <span class='kw'>while</span> <span class='ident'>i</span> <span class='op'>!=</span> <span class='self'>self</span>.<span class='ident'>triangles</span>.<span class='ident'>len</span>() { <span class='comment'>// the len might change inside of the loop</span>
-            <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>triangles</span>[<span class='ident'>i</span>].<span class='ident'>circumcircle_contains_point</span>(<span class='ident'>pt</span>) {
+        <span class="kw">while</span> <span class="ident">i</span> <span class="op">!=</span> <span class="self">self</span>.<span class="ident">triangles</span>.<span class="ident">len</span>() { <span class="comment">// the len might change inside of the loop</span>
+            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">triangles</span>[<span class="ident">i</span>].<span class="ident">circumcircle_contains_point</span>(<span class="ident">pt</span>) {
                 {
-                    <span class='kw'>let</span> <span class='ident'>t</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>triangles</span>[<span class='ident'>i</span>];
+                    <span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">triangles</span>[<span class="ident">i</span>];
 
-                    <span class='kw'>fn</span> <span class='ident'>s</span>(<span class='ident'>a</span>: <span class='ident'>usize</span>, <span class='ident'>b</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> (<span class='ident'>usize</span>, <span class='ident'>usize</span>) {
-                        <span class='kw'>if</span> <span class='ident'>a</span> <span class='op'>&gt;</span> <span class='ident'>b</span> { (<span class='ident'>b</span>, <span class='ident'>a</span>) } <span class='kw'>else</span> { (<span class='ident'>a</span>, <span class='ident'>b</span>) }
+                    <span class="kw">fn</span> <span class="ident">s</span>(<span class="ident">a</span>: <span class="ident">usize</span>, <span class="ident">b</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>) {
+                        <span class="kw">if</span> <span class="ident">a</span> <span class="op">&gt;</span> <span class="ident">b</span> { (<span class="ident">b</span>, <span class="ident">a</span>) } <span class="kw">else</span> { (<span class="ident">a</span>, <span class="ident">b</span>) }
                     }
 
-                    <span class='kw'>let</span> <span class='ident'>edge_keys</span> <span class='op'>=</span> [ <span class='ident'>s</span>(<span class='ident'>t</span>.<span class='ident'>idx</span>.<span class='ident'>x</span>, <span class='ident'>t</span>.<span class='ident'>idx</span>.<span class='ident'>y</span>), <span class='ident'>s</span>(<span class='ident'>t</span>.<span class='ident'>idx</span>.<span class='ident'>y</span>, <span class='ident'>t</span>.<span class='ident'>idx</span>.<span class='ident'>z</span>), <span class='ident'>s</span>(<span class='ident'>t</span>.<span class='ident'>idx</span>.<span class='ident'>z</span>, <span class='ident'>t</span>.<span class='ident'>idx</span>.<span class='ident'>x</span>) ];
+                    <span class="kw">let</span> <span class="ident">edge_keys</span> <span class="op">=</span> [ <span class="ident">s</span>(<span class="ident">t</span>.<span class="ident">idx</span>.<span class="ident">x</span>, <span class="ident">t</span>.<span class="ident">idx</span>.<span class="ident">y</span>), <span class="ident">s</span>(<span class="ident">t</span>.<span class="ident">idx</span>.<span class="ident">y</span>, <span class="ident">t</span>.<span class="ident">idx</span>.<span class="ident">z</span>), <span class="ident">s</span>(<span class="ident">t</span>.<span class="ident">idx</span>.<span class="ident">z</span>, <span class="ident">t</span>.<span class="ident">idx</span>.<span class="ident">x</span>) ];
 
-                    <span class='kw'>for</span> <span class='ident'>edge_key</span> <span class='kw'>in</span> <span class='ident'>edge_keys</span>.<span class='ident'>iter</span>() {
-                        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>edges</span>.<span class='ident'>entry</span>(<span class='kw-2'>*</span><span class='ident'>edge_key</span>) {
-                            <span class='ident'>Entry</span>::<span class='ident'>Occupied</span>(<span class='kw-2'>mut</span> <span class='ident'>entry</span>) <span class='op'>=&gt;</span> <span class='kw-2'>*</span><span class='ident'>entry</span>.<span class='ident'>get_mut</span>() <span class='op'>+=</span> <span class='number'>1</span>,
-                            <span class='ident'>Entry</span>::<span class='ident'>Vacant</span>(<span class='ident'>entry</span>)       <span class='op'>=&gt;</span> { <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>entry</span>.<span class='ident'>insert</span>(<span class='number'>1</span>); }
+                    <span class="kw">for</span> <span class="ident">edge_key</span> <span class="kw">in</span> <span class="ident">edge_keys</span>.<span class="ident">iter</span>() {
+                        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">edges</span>.<span class="ident">entry</span>(<span class="kw-2">*</span><span class="ident">edge_key</span>) {
+                            <span class="ident">Entry</span>::<span class="ident">Occupied</span>(<span class="kw-2">mut</span> <span class="ident">entry</span>) <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="ident">entry</span>.<span class="ident">get_mut</span>() <span class="op">+=</span> <span class="number">1</span>,
+                            <span class="ident">Entry</span>::<span class="ident">Vacant</span>(<span class="ident">entry</span>)       <span class="op">=&gt;</span> { <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">entry</span>.<span class="ident">insert</span>(<span class="number">1</span>); }
                         };
                     }
                 }
 
-                <span class='kw'>let</span> _ <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>triangles</span>.<span class='ident'>swap_remove</span>(<span class='ident'>i</span>);
+                <span class="kw">let</span> _ <span class="op">=</span> <span class="self">self</span>.<span class="ident">triangles</span>.<span class="ident">swap_remove</span>(<span class="ident">i</span>);
             }
-            <span class='kw'>else</span> {
-                <span class='ident'>i</span> <span class='op'>=</span> <span class='ident'>i</span> <span class='op'>+</span> <span class='number'>1</span>;
+            <span class="kw">else</span> {
+                <span class="ident">i</span> <span class="op">=</span> <span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>;
             }
         }
     }
 }
 
-<span class='doccomment'>/// Triangulates a set of point (sort of) lying on the same 2d plane.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// If the points do not lie on the same 2d plane, strange things might happends (triangle might be</span>
-<span class='doccomment'>/// attached together in an unnatural way). Though, if they are only slighly perturbated on the</span>
-<span class='doccomment'>/// directions orthogonal to the plane, this should be fine.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>triangulate</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span><span class='op'>&gt;</span>(<span class='ident'>pts</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>P</span>]) <span class='op'>-&gt;</span> <span class='ident'>TriMesh</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-    <span class='comment'>//// Compute the super-triangle</span>
-    <span class='kw'>let</span> (<span class='ident'>center</span>, <span class='ident'>radius</span>) <span class='op'>=</span> <span class='ident'>bounding_volume</span>::<span class='ident'>point_cloud_bounding_sphere</span>(<span class='ident'>pts</span>);
-    <span class='kw'>let</span> <span class='ident'>radius</span>           <span class='op'>=</span> <span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>2.0</span>);
+<span class="doccomment">/// Triangulates a set of point (sort of) lying on the same 2d plane.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If the points do not lie on the same 2d plane, strange things might happends (triangle might be</span>
+<span class="doccomment">/// attached together in an unnatural way). Though, if they are only slighly perturbated on the</span>
+<span class="doccomment">/// directions orthogonal to the plane, this should be fine.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">triangulate</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span><span class="op">&gt;</span>(<span class="ident">pts</span>: <span class="kw-2">&amp;</span>[<span class="ident">P</span>]) <span class="op">-&gt;</span> <span class="ident">TriMesh</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+    <span class="comment">//// Compute the super-triangle</span>
+    <span class="kw">let</span> (<span class="ident">center</span>, <span class="ident">radius</span>) <span class="op">=</span> <span class="ident">bounding_volume</span>::<span class="ident">point_cloud_bounding_sphere</span>(<span class="ident">pts</span>);
+    <span class="kw">let</span> <span class="ident">radius</span>           <span class="op">=</span> <span class="ident">radius</span> <span class="op">*</span> <span class="ident">na</span>::<span class="ident">convert</span>(<span class="number">2.0</span>);
 
-    <span class='comment'>// Compute a triangle with (center, radius) as its inscribed circle.</span>
-    <span class='kw'>let</span> <span class='ident'>pi</span>          <span class='op'>=</span> <span class='ident'>P</span>::<span class='ident'>Real</span>::<span class='ident'>pi</span>();
-    <span class='kw'>let</span> <span class='ident'>right_shift</span> <span class='op'>=</span> <span class='ident'>radius</span> <span class='op'>/</span> (<span class='ident'>pi</span> <span class='op'>/</span> <span class='ident'>na</span>::<span class='ident'>convert</span>(<span class='number'>6.0</span>)).<span class='ident'>tan</span>();
-    <span class='kw'>let</span> <span class='ident'>up_shift</span>    <span class='op'>=</span> (<span class='ident'>right_shift</span> <span class='op'>*</span> <span class='ident'>right_shift</span> <span class='op'>+</span> <span class='ident'>radius</span> <span class='op'>*</span> <span class='ident'>radius</span>).<span class='ident'>sqrt</span>();
+    <span class="comment">// Compute a triangle with (center, radius) as its inscribed circle.</span>
+    <span class="kw">let</span> <span class="ident">pi</span>          <span class="op">=</span> <span class="ident">P</span>::<span class="ident">Real</span>::<span class="ident">pi</span>();
+    <span class="kw">let</span> <span class="ident">right_shift</span> <span class="op">=</span> <span class="ident">radius</span> <span class="op">/</span> (<span class="ident">pi</span> <span class="op">/</span> <span class="ident">na</span>::<span class="ident">convert</span>(<span class="number">6.0</span>)).<span class="ident">tan</span>();
+    <span class="kw">let</span> <span class="ident">up_shift</span>    <span class="op">=</span> (<span class="ident">right_shift</span> <span class="op">*</span> <span class="ident">right_shift</span> <span class="op">+</span> <span class="ident">radius</span> <span class="op">*</span> <span class="ident">radius</span>).<span class="ident">sqrt</span>();
 
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>up</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>::<span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span>();
-    <span class='ident'>up</span>[<span class='number'>0</span>] <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>one</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">up</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">zero</span>::<span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Vector</span><span class="op">&gt;</span>();
+    <span class="ident">up</span>[<span class="number">0</span>] <span class="op">=</span> <span class="ident">na</span>::<span class="ident">one</span>();
 
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>right</span> <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>zero</span>::<span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span>();
-    <span class='ident'>right</span>[<span class='number'>1</span>] <span class='op'>=</span> <span class='ident'>na</span>::<span class='ident'>one</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">right</span> <span class="op">=</span> <span class="ident">na</span>::<span class="ident">zero</span>::<span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Vector</span><span class="op">&gt;</span>();
+    <span class="ident">right</span>[<span class="number">1</span>] <span class="op">=</span> <span class="ident">na</span>::<span class="ident">one</span>();
 
-    <span class='comment'>// Triangle:</span>
-    <span class='comment'>//</span>
-    <span class='comment'>//              top</span>
-    <span class='comment'>//</span>
-    <span class='comment'>//</span>
-    <span class='comment'>//         bleft    bright</span>
-    <span class='comment'>//</span>
-    <span class='kw'>let</span> <span class='ident'>top</span>    <span class='op'>=</span> <span class='ident'>center</span> <span class='op'>+</span> <span class='ident'>up</span> <span class='op'>*</span> <span class='ident'>up_shift</span>;
-    <span class='comment'>// FIXME: use `-` instead of `+ (-` when the trait refor is done.</span>
-    <span class='kw'>let</span> <span class='ident'>bright</span> <span class='op'>=</span> <span class='ident'>center</span> <span class='op'>+</span> (<span class='op'>-</span><span class='ident'>up</span> <span class='op'>*</span> <span class='ident'>radius</span> <span class='op'>+</span> <span class='ident'>right</span> <span class='op'>*</span> <span class='ident'>right_shift</span>);
-    <span class='kw'>let</span> <span class='ident'>bleft</span>  <span class='op'>=</span> <span class='ident'>center</span> <span class='op'>+</span> (<span class='op'>-</span><span class='ident'>up</span> <span class='op'>*</span> <span class='ident'>radius</span> <span class='op'>-</span> <span class='ident'>right</span> <span class='op'>*</span> <span class='ident'>right_shift</span>);
+    <span class="comment">// Triangle:</span>
+    <span class="comment">//</span>
+    <span class="comment">//              top</span>
+    <span class="comment">//</span>
+    <span class="comment">//</span>
+    <span class="comment">//         bleft    bright</span>
+    <span class="comment">//</span>
+    <span class="kw">let</span> <span class="ident">top</span>    <span class="op">=</span> <span class="ident">center</span> <span class="op">+</span> <span class="ident">up</span> <span class="op">*</span> <span class="ident">up_shift</span>;
+    <span class="comment">// FIXME: use `-` instead of `+ (-` when the trait refor is done.</span>
+    <span class="kw">let</span> <span class="ident">bright</span> <span class="op">=</span> <span class="ident">center</span> <span class="op">+</span> (<span class="op">-</span><span class="ident">up</span> <span class="op">*</span> <span class="ident">radius</span> <span class="op">+</span> <span class="ident">right</span> <span class="op">*</span> <span class="ident">right_shift</span>);
+    <span class="kw">let</span> <span class="ident">bleft</span>  <span class="op">=</span> <span class="ident">center</span> <span class="op">+</span> (<span class="op">-</span><span class="ident">up</span> <span class="op">*</span> <span class="ident">radius</span> <span class="op">-</span> <span class="ident">right</span> <span class="op">*</span> <span class="ident">right_shift</span>);
 
-    <span class='comment'>//// Build the triangulator.</span>
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>triangulator</span> <span class='op'>=</span> <span class='ident'>Triangulator</span>::<span class='ident'>new</span>(<span class='ident'>top</span>, <span class='ident'>bright</span>, <span class='ident'>bleft</span>);
+    <span class="comment">//// Build the triangulator.</span>
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">triangulator</span> <span class="op">=</span> <span class="ident">Triangulator</span>::<span class="ident">new</span>(<span class="ident">top</span>, <span class="ident">bright</span>, <span class="ident">bleft</span>);
 
-    <span class='kw'>for</span> <span class='ident'>pt</span> <span class='kw'>in</span> <span class='ident'>pts</span>.<span class='ident'>iter</span>() {
-        <span class='ident'>triangulator</span>.<span class='ident'>add_point</span>(<span class='ident'>pt</span>.<span class='ident'>clone</span>());
+    <span class="kw">for</span> <span class="ident">pt</span> <span class="kw">in</span> <span class="ident">pts</span>.<span class="ident">iter</span>() {
+        <span class="ident">triangulator</span>.<span class="ident">add_point</span>(<span class="ident">pt</span>.<span class="ident">clone</span>());
     }
 
-    <span class='ident'>triangulator</span>.<span class='ident'>to_trimesh</span>()
+    <span class="ident">triangulator</span>.<span class="ident">to_trimesh</span>()
 }
 </pre>
 </section>

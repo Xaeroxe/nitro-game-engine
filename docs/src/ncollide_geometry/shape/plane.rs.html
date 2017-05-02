@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -77,39 +77,39 @@
 <span id="32">32</span>
 <span id="33">33</span>
 <span id="34">34</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Support mapping based Plane shape.</span>
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Vector</span>;
-<span class='kw'>use</span> <span class='ident'>na</span>;
+</pre><pre class="rust ">
+<span class="doccomment">//! Support mapping based Plane shape.</span>
+<span class="kw">use</span> <span class="ident">math</span>::<span class="ident">Vector</span>;
+<span class="kw">use</span> <span class="ident">na</span>;
 
-<span class='doccomment'>/// SupportMap description of a plane.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Plane</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The plane normal.</span>
-    <span class='ident'>normal</span>: <span class='ident'>V</span>
+<span class="doccomment">/// SupportMap description of a plane.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Plane</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The plane normal.</span>
+    <span class="ident">normal</span>: <span class="ident">V</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>V</span>: <span class='ident'>Vector</span><span class='op'>&gt;</span> <span class='ident'>Plane</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Builds a new plane from its center and its normal.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>normal</span>: <span class='ident'>V</span>) <span class='op'>-&gt;</span> <span class='ident'>Plane</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>Plane</span>::<span class='ident'>new_normalized</span>(<span class='ident'>na</span>::<span class='ident'>normalize</span>(<span class='kw-2'>&amp;</span><span class='ident'>normal</span>)) }
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">V</span>: <span class="ident">Vector</span><span class="op">&gt;</span> <span class="ident">Plane</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Builds a new plane from its center and its normal.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">normal</span>: <span class="ident">V</span>) <span class="op">-&gt;</span> <span class="ident">Plane</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> { <span class="ident">Plane</span>::<span class="ident">new_normalized</span>(<span class="ident">na</span>::<span class="ident">normalize</span>(<span class="kw-2">&amp;</span><span class="ident">normal</span>)) }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>Plane</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Builds a new plane from its center and its normal.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>new_normalized</span>(<span class='ident'>normal</span>: <span class='ident'>V</span>) <span class='op'>-&gt;</span> <span class='ident'>Plane</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span> {
-        <span class='ident'>Plane</span> {
-            <span class='ident'>normal</span>: <span class='ident'>normal</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span> <span class="ident">Plane</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Builds a new plane from its center and its normal.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">new_normalized</span>(<span class="ident">normal</span>: <span class="ident">V</span>) <span class="op">-&gt;</span> <span class="ident">Plane</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span> {
+        <span class="ident">Plane</span> {
+            <span class="ident">normal</span>: <span class="ident">normal</span>
         }
     }
 
-    <span class='doccomment'>/// The plane normal.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>normal</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>V</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>normal</span>
+    <span class="doccomment">/// The plane normal.</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">normal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">V</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">normal</span>
     }
 }
 </pre>

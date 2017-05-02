@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,20 +43,20 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
 <span id="5">5</span>
 <span id="6">6</span>
 <span id="7">7</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::<span class="ident">Real</span>;
 
-<span class='doccomment'>/// Trait implemented by constraint solvers.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Solver</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span>, <span class='ident'>I</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Solve the set of constraints of type `I`.</span>
-    <span class='kw'>fn</span> <span class='ident'>solve</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>N</span>, <span class='kw-2'>&amp;</span>[<span class='ident'>I</span>]);
+<span class="doccomment">/// Trait implemented by constraint solvers.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Solver</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span>, <span class="ident">I</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Solve the set of constraints of type `I`.</span>
+    <span class="kw">fn</span> <span class="ident">solve</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">N</span>, <span class="kw-2">&amp;</span>[<span class="ident">I</span>]);
 }
 </pre>
 </section>

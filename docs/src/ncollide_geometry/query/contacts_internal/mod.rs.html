@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -61,25 +61,25 @@
 <span id="16">16</span>
 <span id="17">17</span>
 <span id="18">18</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Implementation details of the `contact` and `contacts` functions.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Implementation details of the `contact` and `contacts` functions.</span>
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>contact</span>::<span class='ident'>Contact</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>ball_against_ball</span>::<span class='ident'>ball_against_ball</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>support_map_against_support_map</span>::<span class='ident'>support_map_against_support_map</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>support_map_against_support_map</span>::<span class='ident'>support_map_against_support_map_with_params</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>plane_against_support_map</span>::{<span class='ident'>plane_against_support_map</span>, <span class='ident'>support_map_against_plane</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>shape_against_shape</span>::<span class='ident'>shape_against_shape</span> <span class='kw'>as</span> <span class='ident'>contact_internal</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>composite_shape_against_shape</span>::{<span class='ident'>composite_shape_against_shape</span>, <span class='ident'>shape_against_composite_shape</span>};
-<span class='comment'>// pub use self::generate_contact_manifold::generate_contact_manifold;</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">contact</span>::<span class="ident">Contact</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ball_against_ball</span>::<span class="ident">ball_against_ball</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">support_map_against_support_map</span>::<span class="ident">support_map_against_support_map</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">support_map_against_support_map</span>::<span class="ident">support_map_against_support_map_with_params</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">plane_against_support_map</span>::{<span class="ident">plane_against_support_map</span>, <span class="ident">support_map_against_plane</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">shape_against_shape</span>::<span class="ident">shape_against_shape</span> <span class="kw">as</span> <span class="ident">contact_internal</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">composite_shape_against_shape</span>::{<span class="ident">composite_shape_against_shape</span>, <span class="ident">shape_against_composite_shape</span>};
+<span class="comment">// pub use self::generate_contact_manifold::generate_contact_manifold;</span>
 
-<span class='kw'>mod</span> <span class='ident'>contact</span>;
-<span class='kw'>mod</span> <span class='ident'>ball_against_ball</span>;
-<span class='kw'>mod</span> <span class='ident'>support_map_against_support_map</span>;
-<span class='kw'>mod</span> <span class='ident'>plane_against_support_map</span>;
-<span class='kw'>mod</span> <span class='ident'>shape_against_shape</span>;
-<span class='kw'>mod</span> <span class='ident'>composite_shape_against_shape</span>;
-<span class='comment'>// mod generate_contact_manifold;</span>
+<span class="kw">mod</span> <span class="ident">contact</span>;
+<span class="kw">mod</span> <span class="ident">ball_against_ball</span>;
+<span class="kw">mod</span> <span class="ident">support_map_against_support_map</span>;
+<span class="kw">mod</span> <span class="ident">plane_against_support_map</span>;
+<span class="kw">mod</span> <span class="ident">shape_against_shape</span>;
+<span class="kw">mod</span> <span class="ident">composite_shape_against_shape</span>;
+<span class="comment">// mod generate_contact_manifold;</span>
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

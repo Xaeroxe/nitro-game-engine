@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -144,107 +144,107 @@
 <span id="99"> 99</span>
 <span id="100">100</span>
 <span id="101">101</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Trait for hash functions.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Trait for hash functions.</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>num</span>::<span class='ident'>Wrapping</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">num</span>::<span class="ident">Wrapping</span>;
 
-<span class='doccomment'>/// Hash function.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>HashFun</span><span class='op'>&lt;</span><span class='ident'>K</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Hash function.</span>
-    <span class='kw'>fn</span> <span class='ident'>hash</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='kw-2'>&amp;</span><span class='ident'>K</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span>;
+<span class="doccomment">/// Hash function.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">HashFun</span><span class="op">&lt;</span><span class="ident">K</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Hash function.</span>
+    <span class="kw">fn</span> <span class="ident">hash</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">K</span>) <span class="op">-&gt;</span> <span class="ident">usize</span>;
 }
 
-<span class='doccomment'>/// Hash function for pairs of `usize`, using the Tomas Wang hash.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>UintPairTWHash</span> { <span class='ident'>unused</span>: <span class='ident'>usize</span> }
+<span class="doccomment">/// Hash function for pairs of `usize`, using the Tomas Wang hash.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UintPairTWHash</span> { <span class="ident">unused</span>: <span class="ident">usize</span> }
 
-<span class='kw'>impl</span> <span class='ident'>UintPairTWHash</span> {
-    <span class='doccomment'>/// Creates a new UintPairTWHash.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>UintPairTWHash</span> {
-        <span class='ident'>UintPairTWHash</span> { <span class='ident'>unused</span>: <span class='number'>0</span> }
+<span class="kw">impl</span> <span class="ident">UintPairTWHash</span> {
+    <span class="doccomment">/// Creates a new UintPairTWHash.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">UintPairTWHash</span> {
+        <span class="ident">UintPairTWHash</span> { <span class="ident">unused</span>: <span class="number">0</span> }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>HashFun</span><span class='op'>&lt;</span>(<span class='ident'>usize</span>, <span class='ident'>usize</span>)<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>UintPairTWHash</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>hash</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='kw-2'>&amp;</span>(<span class='ident'>a</span>, <span class='ident'>b</span>): <span class='kw-2'>&amp;</span>(<span class='ident'>usize</span>, <span class='ident'>usize</span>)) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>ia</span> <span class='op'>=</span> <span class='ident'>a</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>ib</span> <span class='op'>=</span> <span class='ident'>b</span>;
+<span class="kw">impl</span> <span class="ident">HashFun</span><span class="op">&lt;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>)<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">UintPairTWHash</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">hash</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">&amp;</span>(<span class="ident">a</span>, <span class="ident">b</span>): <span class="kw-2">&amp;</span>(<span class="ident">usize</span>, <span class="ident">usize</span>)) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ia</span> <span class="op">=</span> <span class="ident">a</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ib</span> <span class="op">=</span> <span class="ident">b</span>;
 
-        <span class='kw'>if</span> <span class='ident'>ia</span> <span class='op'>&gt;</span> <span class='ident'>ib</span> {
-            <span class='ident'>mem</span>::<span class='ident'>swap</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ia</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ib</span>)
+        <span class="kw">if</span> <span class="ident">ia</span> <span class="op">&gt;</span> <span class="ident">ib</span> {
+            <span class="ident">mem</span>::<span class="ident">swap</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ia</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ib</span>)
         }
 
-        <span class='ident'>tomas_wang_hash</span>(<span class='ident'>key_from_pair</span>(<span class='ident'>ia</span>, <span class='ident'>ib</span>))
+        <span class="ident">tomas_wang_hash</span>(<span class="ident">key_from_pair</span>(<span class="ident">ia</span>, <span class="ident">ib</span>))
     }
 }
 
-<span class='doccomment'>/// Hash function for `usize`.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>RustcEncodable</span>, <span class='ident'>RustcDecodable</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>UintTWHash</span> { <span class='ident'>unused</span>: <span class='ident'>usize</span> } <span class='comment'>// FIXME: ICE if the struct is zero-sized</span>
+<span class="doccomment">/// Hash function for `usize`.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">RustcEncodable</span>, <span class="ident">RustcDecodable</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UintTWHash</span> { <span class="ident">unused</span>: <span class="ident">usize</span> } <span class="comment">// FIXME: ICE if the struct is zero-sized</span>
 
-<span class='kw'>impl</span> <span class='ident'>UintTWHash</span> {
-    <span class='doccomment'>/// Creates a new UintTWHash.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>UintTWHash</span> {
-        <span class='ident'>UintTWHash</span> { <span class='ident'>unused</span>: <span class='number'>0</span> }
+<span class="kw">impl</span> <span class="ident">UintTWHash</span> {
+    <span class="doccomment">/// Creates a new UintTWHash.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">UintTWHash</span> {
+        <span class="ident">UintTWHash</span> { <span class="ident">unused</span>: <span class="number">0</span> }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>HashFun</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>UintTWHash</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>hash</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>a</span>: <span class='kw-2'>&amp;</span><span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='ident'>tomas_wang_hash</span>(<span class='kw-2'>*</span><span class='ident'>a</span>)
+<span class="kw">impl</span> <span class="ident">HashFun</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">UintTWHash</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">hash</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="ident">tomas_wang_hash</span>(<span class="kw-2">*</span><span class="ident">a</span>)
     }
 }
 
-<span class='doccomment'>/// Combines two `usize` on a single one.</span>
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_pointer_width</span> <span class='op'>=</span> <span class='string'>&quot;32&quot;</span>)]</span> <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>key_from_pair</span>(<span class='ident'>a</span>: <span class='ident'>usize</span>, <span class='ident'>b</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-    (<span class='ident'>a</span> <span class='op'>&amp;</span> <span class='number'>0xffff</span>) <span class='op'>|</span> (<span class='ident'>b</span> <span class='op'>&lt;&lt;</span> <span class='number'>16</span>)
+<span class="doccomment">/// Combines two `usize` on a single one.</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>)]</span> <span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">key_from_pair</span>(<span class="ident">a</span>: <span class="ident">usize</span>, <span class="ident">b</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    (<span class="ident">a</span> <span class="op">&amp;</span> <span class="number">0xffff</span>) <span class="op">|</span> (<span class="ident">b</span> <span class="op">&lt;&lt;</span> <span class="number">16</span>)
 }
 
-<span class='doccomment'>/// Combines two `usize` on a single one.</span>
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_pointer_width</span> <span class='op'>=</span> <span class='string'>&quot;64&quot;</span>)]</span> <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>key_from_pair</span>(<span class='ident'>a</span>: <span class='ident'>usize</span>, <span class='ident'>b</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-    (<span class='ident'>a</span> <span class='op'>&amp;</span> <span class='number'>0xffffffff</span>) <span class='op'>|</span> (<span class='ident'>b</span> <span class='op'>&lt;&lt;</span> <span class='number'>32</span>)
+<span class="doccomment">/// Combines two `usize` on a single one.</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>)]</span> <span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">key_from_pair</span>(<span class="ident">a</span>: <span class="ident">usize</span>, <span class="ident">b</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    (<span class="ident">a</span> <span class="op">&amp;</span> <span class="number">0xffffffff</span>) <span class="op">|</span> (<span class="ident">b</span> <span class="op">&lt;&lt;</span> <span class="number">32</span>)
 }
 
-<span class='comment'>// http://www.concentric.net/~Ttwang/tech/inthash.htm -- dead link!</span>
-<span class='comment'>// (this one works: http://naml.us/blog/tag/thomas-wang)</span>
-<span class='doccomment'>/// Tomas Wang integer hash function.</span>
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_pointer_width</span> <span class='op'>=</span> <span class='string'>&quot;64&quot;</span>)]</span> <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>tomas_wang_hash</span>(<span class='ident'>k</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>Wrapping</span>(<span class='ident'>k</span>);
+<span class="comment">// http://www.concentric.net/~Ttwang/tech/inthash.htm -- dead link!</span>
+<span class="comment">// (this one works: http://naml.us/blog/tag/thomas-wang)</span>
+<span class="doccomment">/// Tomas Wang integer hash function.</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>)]</span> <span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tomas_wang_hash</span>(<span class="ident">k</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Wrapping</span>(<span class="ident">k</span>);
 
-    <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>res</span> <span class='op'>+</span> <span class='op'>!</span>(<span class='ident'>res</span> <span class='op'>&lt;&lt;</span> <span class='number'>32</span>);
-    <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>res</span> <span class='op'>^</span> (<span class='ident'>res</span> <span class='op'>&gt;&gt;</span> <span class='number'>22</span>);
-    <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>res</span> <span class='op'>+</span> <span class='op'>!</span>(<span class='ident'>res</span> <span class='op'>&lt;&lt;</span> <span class='number'>13</span>);
-    <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>res</span> <span class='op'>^</span> (<span class='ident'>res</span> <span class='op'>&gt;&gt;</span> <span class='number'>8</span>);
-    <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>res</span> <span class='op'>+</span> (<span class='ident'>res</span> <span class='op'>&lt;&lt;</span> <span class='number'>3</span>);
-    <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>res</span> <span class='op'>^</span> (<span class='ident'>res</span> <span class='op'>&gt;&gt;</span> <span class='number'>15</span>);
-    <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>res</span> <span class='op'>+</span> <span class='op'>!</span>(<span class='ident'>res</span> <span class='op'>&lt;&lt;</span> <span class='number'>27</span>);
-    <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>res</span> <span class='op'>^</span> (<span class='ident'>res</span> <span class='op'>&gt;&gt;</span> <span class='number'>31</span>);
+    <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span> <span class="op">+</span> <span class="op">!</span>(<span class="ident">res</span> <span class="op">&lt;&lt;</span> <span class="number">32</span>);
+    <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span> <span class="op">^</span> (<span class="ident">res</span> <span class="op">&gt;&gt;</span> <span class="number">22</span>);
+    <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span> <span class="op">+</span> <span class="op">!</span>(<span class="ident">res</span> <span class="op">&lt;&lt;</span> <span class="number">13</span>);
+    <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span> <span class="op">^</span> (<span class="ident">res</span> <span class="op">&gt;&gt;</span> <span class="number">8</span>);
+    <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span> <span class="op">+</span> (<span class="ident">res</span> <span class="op">&lt;&lt;</span> <span class="number">3</span>);
+    <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span> <span class="op">^</span> (<span class="ident">res</span> <span class="op">&gt;&gt;</span> <span class="number">15</span>);
+    <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span> <span class="op">+</span> <span class="op">!</span>(<span class="ident">res</span> <span class="op">&lt;&lt;</span> <span class="number">27</span>);
+    <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span> <span class="op">^</span> (<span class="ident">res</span> <span class="op">&gt;&gt;</span> <span class="number">31</span>);
 
-    <span class='kw'>let</span> <span class='ident'>Wrapping</span>(<span class='ident'>res_val</span>) <span class='op'>=</span> <span class='ident'>res</span>;
-    <span class='ident'>res_val</span>
+    <span class="kw">let</span> <span class="ident">Wrapping</span>(<span class="ident">res_val</span>) <span class="op">=</span> <span class="ident">res</span>;
+    <span class="ident">res_val</span>
 }
 
-<span class='doccomment'>/// Tomas Wang integer hash function.</span>
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_pointer_width</span> <span class='op'>=</span> <span class='string'>&quot;32&quot;</span>)]</span> <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>tomas_wang_hash</span>(<span class='ident'>k</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>Wrapping</span>(<span class='ident'>k</span>);
+<span class="doccomment">/// Tomas Wang integer hash function.</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>)]</span> <span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tomas_wang_hash</span>(<span class="ident">k</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Wrapping</span>(<span class="ident">k</span>);
 
-    <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>res</span> <span class='op'>+</span> <span class='op'>!</span>(<span class='ident'>res</span> <span class='op'>&lt;&lt;</span> <span class='number'>15</span>);
-    <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>res</span> <span class='op'>^</span> (<span class='ident'>res</span> <span class='op'>&gt;&gt;</span> <span class='number'>10</span>);
-    <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>res</span> <span class='op'>+</span> (<span class='ident'>res</span> <span class='op'>&lt;&lt;</span> <span class='number'>3</span>);
-    <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>res</span> <span class='op'>^</span> (<span class='ident'>res</span> <span class='op'>&gt;&gt;</span> <span class='number'>6</span>);
-    <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>res</span> <span class='op'>+</span> <span class='op'>!</span>(<span class='ident'>res</span> <span class='op'>&lt;&lt;</span> <span class='number'>11</span>);
-    <span class='ident'>res</span> <span class='op'>=</span> <span class='ident'>res</span> <span class='op'>^</span> (<span class='ident'>res</span> <span class='op'>&gt;&gt;</span> <span class='number'>16</span>);
+    <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span> <span class="op">+</span> <span class="op">!</span>(<span class="ident">res</span> <span class="op">&lt;&lt;</span> <span class="number">15</span>);
+    <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span> <span class="op">^</span> (<span class="ident">res</span> <span class="op">&gt;&gt;</span> <span class="number">10</span>);
+    <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span> <span class="op">+</span> (<span class="ident">res</span> <span class="op">&lt;&lt;</span> <span class="number">3</span>);
+    <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span> <span class="op">^</span> (<span class="ident">res</span> <span class="op">&gt;&gt;</span> <span class="number">6</span>);
+    <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span> <span class="op">+</span> <span class="op">!</span>(<span class="ident">res</span> <span class="op">&lt;&lt;</span> <span class="number">11</span>);
+    <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span> <span class="op">^</span> (<span class="ident">res</span> <span class="op">&gt;&gt;</span> <span class="number">16</span>);
 
-    <span class='kw'>let</span> <span class='ident'>Wrapping</span>(<span class='ident'>res_val</span>) <span class='op'>=</span> <span class='ident'>res</span>;
-    <span class='ident'>res_val</span>
+    <span class="kw">let</span> <span class="ident">Wrapping</span>(<span class="ident">res_val</span>) <span class="op">=</span> <span class="ident">res</span>;
+    <span class="ident">res_val</span>
 }
 </pre>
 </section>

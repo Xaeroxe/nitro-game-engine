@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,8 +43,8 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>sdl2</a>::<wbr><a href='../index.html'>video</a>::<wbr><a class='mod' href=''>gl_attr</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>sdl2</a>::<wbr><a href='../index.html'>video</a>::<wbr><a class="mod" href=''>gl_attr</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
@@ -52,51 +52,51 @@
 <div class='docblock'><p>OpenGL context getters and setters</p>
 
 <h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
-<pre class='rust rust-example-rendered'>
-<span class='kw'>use</span> <span class='ident'>sdl2</span>::<span class='ident'>video</span>::<span class='ident'>GLProfile</span>;
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">sdl2</span>::<span class="ident">video</span>::<span class="ident">GLProfile</span>;
 
-<span class='kw'>let</span> <span class='ident'>sdl_context</span> <span class='op'>=</span> <span class='ident'>sdl2</span>::<span class='ident'>init</span>().<span class='ident'>unwrap</span>();
-<span class='kw'>let</span> <span class='ident'>video_subsystem</span> <span class='op'>=</span> <span class='ident'>sdl_context</span>.<span class='ident'>video</span>().<span class='ident'>unwrap</span>();
-<span class='kw'>let</span> <span class='ident'>gl_attr</span> <span class='op'>=</span> <span class='ident'>video_subsystem</span>.<span class='ident'>gl_attr</span>();
+<span class="kw">let</span> <span class="ident">sdl_context</span> <span class="op">=</span> <span class="ident">sdl2</span>::<span class="ident">init</span>().<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">video_subsystem</span> <span class="op">=</span> <span class="ident">sdl_context</span>.<span class="ident">video</span>().<span class="ident">unwrap</span>();
+<span class="kw">let</span> <span class="ident">gl_attr</span> <span class="op">=</span> <span class="ident">video_subsystem</span>.<span class="ident">gl_attr</span>();
 
-<span class='comment'>// Don&#39;t use deprecated OpenGL functions</span>
-<span class='ident'>gl_attr</span>.<span class='ident'>set_context_profile</span>(<span class='ident'>GLProfile</span>::<span class='ident'>Core</span>);
+<span class="comment">// Don&#39;t use deprecated OpenGL functions</span>
+<span class="ident">gl_attr</span>.<span class="ident">set_context_profile</span>(<span class="ident">GLProfile</span>::<span class="ident">Core</span>);
 
-<span class='comment'>// Set the context into debug mode</span>
-<span class='ident'>gl_attr</span>.<span class='ident'>set_context_flags</span>().<span class='ident'>debug</span>().<span class='ident'>set</span>();
+<span class="comment">// Set the context into debug mode</span>
+<span class="ident">gl_attr</span>.<span class="ident">set_context_flags</span>().<span class="ident">debug</span>().<span class="ident">set</span>();
 
-<span class='comment'>// Set the OpenGL context version (OpenGL 3.2)</span>
-<span class='ident'>gl_attr</span>.<span class='ident'>set_context_version</span>(<span class='number'>3</span>, <span class='number'>2</span>);
+<span class="comment">// Set the OpenGL context version (OpenGL 3.2)</span>
+<span class="ident">gl_attr</span>.<span class="ident">set_context_version</span>(<span class="number">3</span>, <span class="number">2</span>);
 
-<span class='comment'>// Enable anti-aliasing</span>
-<span class='ident'>gl_attr</span>.<span class='ident'>set_multisample_buffers</span>(<span class='number'>1</span>);
-<span class='ident'>gl_attr</span>.<span class='ident'>set_multisample_samples</span>(<span class='number'>4</span>);
+<span class="comment">// Enable anti-aliasing</span>
+<span class="ident">gl_attr</span>.<span class="ident">set_multisample_buffers</span>(<span class="number">1</span>);
+<span class="ident">gl_attr</span>.<span class="ident">set_multisample_samples</span>(<span class="number">4</span>);
 
-<span class='kw'>let</span> <span class='ident'>window</span> <span class='op'>=</span> <span class='ident'>video_subsystem</span>.<span class='ident'>window</span>(<span class='string'>&quot;rust-sdl2 demo: Video&quot;</span>, <span class='number'>800</span>, <span class='number'>600</span>).<span class='ident'>opengl</span>().<span class='ident'>build</span>().<span class='ident'>unwrap</span>();
+<span class="kw">let</span> <span class="ident">window</span> <span class="op">=</span> <span class="ident">video_subsystem</span>.<span class="ident">window</span>(<span class="string">&quot;rust-sdl2 demo: Video&quot;</span>, <span class="number">800</span>, <span class="number">600</span>).<span class="ident">opengl</span>().<span class="ident">build</span>().<span class="ident">unwrap</span>();
 
-<span class='comment'>// Yes, we&#39;re still using the Core profile</span>
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>gl_attr</span>.<span class='ident'>context_profile</span>(), <span class='ident'>GLProfile</span>::<span class='ident'>Core</span>);
-<span class='comment'>// ... and we&#39;re still using OpenGL 3.2</span>
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>gl_attr</span>.<span class='ident'>context_version</span>(), (<span class='number'>3</span>, <span class='number'>2</span>));</pre>
+<span class="comment">// Yes, we&#39;re still using the Core profile</span>
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">gl_attr</span>.<span class="ident">context_profile</span>(), <span class="ident">GLProfile</span>::<span class="ident">Core</span>);
+<span class="comment">// ... and we&#39;re still using OpenGL 3.2</span>
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">gl_attr</span>.<span class="ident">context_version</span>(), (<span class="number">3</span>, <span class="number">2</span>));</pre>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.ContextFlags.html'
-                                  title='sdl2::video::gl_attr::ContextFlags'>ContextFlags</a></td>
+                           <td><a class="struct" href="struct.ContextFlags.html"
+                                  title='struct sdl2::video::gl_attr::ContextFlags'>ContextFlags</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.ContextFlagsBuilder.html'
-                                  title='sdl2::video::gl_attr::ContextFlagsBuilder'>ContextFlagsBuilder</a></td>
+                           <td><a class="struct" href="struct.ContextFlagsBuilder.html"
+                                  title='struct sdl2::video::gl_attr::ContextFlagsBuilder'>ContextFlagsBuilder</a></td>
                            <td class='docblock-short'>
                                 <p>The type that allows you to build a OpenGL context configuration.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.GLAttr.html'
-                                  title='sdl2::video::gl_attr::GLAttr'>GLAttr</a></td>
+                           <td><a class="struct" href="struct.GLAttr.html"
+                                  title='struct sdl2::video::gl_attr::GLAttr'>GLAttr</a></td>
                            <td class='docblock-short'>
                                 <p>OpenGL context getters and setters. Obtain with <code>VideoSubsystem::gl_attr()</code>.</p>
                            </td>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,27 +43,27 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../../index.html'>nalgebra</a>::<wbr><a href='../index.html'>core</a>::<wbr><a href='index.html'>dimension</a>::<wbr><a class='trait' href=''>DimDiv</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../../index.html'>nalgebra</a>::<wbr><a href='../index.html'>core</a>::<wbr><a href='index.html'>dimension</a>::<wbr><a class="trait" href=''>DimDiv</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../../src/nalgebra/core/dimension.rs.html#81-85' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait DimDiv&lt;D:&nbsp;<a class='trait' href='../../../nalgebra/core/dimension/trait.Dim.html' title='nalgebra::core::dimension::Dim'>Dim</a>&gt;: <a class='trait' href='../../../nalgebra/core/dimension/trait.Dim.html' title='nalgebra::core::dimension::Dim'>Dim</a> {
-    type <a href='#associatedtype.Output' class='type'>Output</a>: <a class='trait' href='../../../nalgebra/core/dimension/trait.Dim.html' title='nalgebra::core::dimension::Dim'>Dim</a>;
-    fn <a href='#tymethod.div' class='fnname'>div</a>(self, other: D) -&gt; Self::<a class='trait' href='../../../nalgebra/core/dimension/trait.DimDiv.html' title='nalgebra::core::dimension::DimDiv'>Output</a>;
+<pre class='rust trait'>pub trait DimDiv&lt;D:&nbsp;<a class="trait" href="../../../nalgebra/core/dimension/trait.Dim.html" title="trait nalgebra::core::dimension::Dim">Dim</a>&gt;: <a class="trait" href="../../../nalgebra/core/dimension/trait.Dim.html" title="trait nalgebra::core::dimension::Dim">Dim</a> {
+    type <a href='#associatedtype.Output' class="type">Output</a>: <a class="trait" href="../../../nalgebra/core/dimension/trait.Dim.html" title="trait nalgebra::core::dimension::Dim">Dim</a>;
+    fn <a href='#tymethod.div' class='fnname'>div</a>(self, other: D) -&gt; Self::<a class="trait" href="../../../nalgebra/core/dimension/trait.DimDiv.html" title="trait nalgebra::core::dimension::DimDiv">Output</a>;
 }</pre>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Output' class='method'><span id='Output.t' class='invisible'><code>type <a href='#associatedtype.Output' class='type'>Output</a>: <a class='trait' href='../../../nalgebra/core/dimension/trait.Dim.html' title='nalgebra::core::dimension::Dim'>Dim</a></code></span></h3></div>
+        <h3 id='associatedtype.Output' class='method'><span id='Output.t' class='invisible'><code>type <a href='#associatedtype.Output' class="type">Output</a>: <a class="trait" href="../../../nalgebra/core/dimension/trait.Dim.html" title="trait nalgebra::core::dimension::Dim">Dim</a></code></span></h3></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.div' class='method'><span id='div.v' class='invisible'><code>fn <a href='#tymethod.div' class='fnname'>div</a>(self, other: D) -&gt; Self::<a class='trait' href='../../../nalgebra/core/dimension/trait.DimDiv.html' title='nalgebra::core::dimension::DimDiv'>Output</a></code></span></h3></div>
+        <h3 id='tymethod.div' class='method'><span id='div.v' class='invisible'><code>fn <a href='#tymethod.div' class='fnname'>div</a>(self, other: D) -&gt; Self::<a class="trait" href="../../../nalgebra/core/dimension/trait.DimDiv.html" title="trait nalgebra::core::dimension::DimDiv">Output</a></code></span></h3></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;D1:&nbsp;<a class='trait' href='../../../nalgebra/core/dimension/trait.DimName.html' title='nalgebra::core::dimension::DimName'>DimName</a>, D2:&nbsp;<a class='trait' href='../../../nalgebra/core/dimension/trait.DimName.html' title='nalgebra::core::dimension::DimName'>DimName</a>&gt; DimDiv&lt;D2&gt; for D1 <span class='where fmt-newline'>where D1::<a class='trait' href='../../../nalgebra/core/dimension/trait.DimName.html' title='nalgebra::core::dimension::DimName'>Value</a>: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Div.html' title='core::ops::Div'>Div</a>&lt;D2::<a class='trait' href='../../../nalgebra/core/dimension/trait.DimName.html' title='nalgebra::core::dimension::DimName'>Value</a>&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class='type' href='../../../typenum/operator_aliases/type.Quot.html' title='typenum::operator_aliases::Quot'>Quot</a>&lt;D1::<a class='trait' href='../../../nalgebra/core/dimension/trait.DimName.html' title='nalgebra::core::dimension::DimName'>Value</a>, D2::<a class='trait' href='../../../nalgebra/core/dimension/trait.DimName.html' title='nalgebra::core::dimension::DimName'>Value</a>&gt;: <a class='trait' href='../../../nalgebra/core/dimension/trait.NamedDim.html' title='nalgebra::core::dimension::NamedDim'>NamedDim</a></span></code></li>
-<li><code>impl&lt;D:&nbsp;<a class='trait' href='../../../nalgebra/core/dimension/trait.Dim.html' title='nalgebra::core::dimension::Dim'>Dim</a>&gt; DimDiv&lt;D&gt; for <a class='struct' href='../../../nalgebra/core/dimension/struct.Dynamic.html' title='nalgebra::core::dimension::Dynamic'>Dynamic</a></code></li>
-<li><code>impl&lt;D:&nbsp;<a class='trait' href='../../../nalgebra/core/dimension/trait.DimName.html' title='nalgebra::core::dimension::DimName'>DimName</a>&gt; DimDiv&lt;<a class='struct' href='../../../nalgebra/core/dimension/struct.Dynamic.html' title='nalgebra::core::dimension::Dynamic'>Dynamic</a>&gt; for D</code></li>
+    <li><code>impl&lt;D1:&nbsp;<a class="trait" href="../../../nalgebra/core/dimension/trait.DimName.html" title="trait nalgebra::core::dimension::DimName">DimName</a>, D2:&nbsp;<a class="trait" href="../../../nalgebra/core/dimension/trait.DimName.html" title="trait nalgebra::core::dimension::DimName">DimName</a>&gt; DimDiv&lt;D2&gt; for D1 <span class="where fmt-newline">where D1::<a class="trait" href="../../../nalgebra/core/dimension/trait.DimName.html" title="trait nalgebra::core::dimension::DimName">Value</a>: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Div.html" title="trait core::ops::Div">Div</a>&lt;D2::<a class="trait" href="../../../nalgebra/core/dimension/trait.DimName.html" title="trait nalgebra::core::dimension::DimName">Value</a>&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="type" href="../../../typenum/operator_aliases/type.Quot.html" title="type typenum::operator_aliases::Quot">Quot</a>&lt;D1::<a class="trait" href="../../../nalgebra/core/dimension/trait.DimName.html" title="trait nalgebra::core::dimension::DimName">Value</a>, D2::<a class="trait" href="../../../nalgebra/core/dimension/trait.DimName.html" title="trait nalgebra::core::dimension::DimName">Value</a>&gt;: <a class="trait" href="../../../nalgebra/core/dimension/trait.NamedDim.html" title="trait nalgebra::core::dimension::NamedDim">NamedDim</a></span></code></li>
+<li><code>impl&lt;D:&nbsp;<a class="trait" href="../../../nalgebra/core/dimension/trait.Dim.html" title="trait nalgebra::core::dimension::Dim">Dim</a>&gt; DimDiv&lt;D&gt; for <a class="struct" href="../../../nalgebra/core/dimension/struct.Dynamic.html" title="struct nalgebra::core::dimension::Dynamic">Dynamic</a></code></li>
+<li><code>impl&lt;D:&nbsp;<a class="trait" href="../../../nalgebra/core/dimension/trait.DimName.html" title="trait nalgebra::core::dimension::DimName">DimName</a>&gt; DimDiv&lt;<a class="struct" href="../../../nalgebra/core/dimension/struct.Dynamic.html" title="struct nalgebra::core::dimension::Dynamic">Dynamic</a>&gt; for D</code></li>
 </ul><script type="text/javascript" async
                          src="../../../implementors/nalgebra/core/dimension/trait.DimDiv.js">
                  </script></section>

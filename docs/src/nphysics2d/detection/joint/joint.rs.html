@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -58,21 +58,21 @@
 <span id="13">13</span>
 <span id="14">14</span>
 <span id="15">15</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>alga</span>::<span class='ident'>general</span>::<span class='ident'>Real</span>;
-<span class='kw'>use</span> <span class='ident'>detection</span>::<span class='ident'>joint</span>::<span class='ident'>anchor</span>::<span class='ident'>Anchor</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">alga</span>::<span class="ident">general</span>::<span class="ident">Real</span>;
+<span class="kw">use</span> <span class="ident">detection</span>::<span class="ident">joint</span>::<span class="ident">anchor</span>::<span class="ident">Anchor</span>;
 
-<span class='comment'>// FIXME: this wont be very helpful to mix several joints.</span>
-<span class='doccomment'>/// Trait implemented by every joint.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Joint</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Real</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The first anchor affected by this joint.</span>
-    <span class='kw'>fn</span> <span class='ident'>anchor1</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Anchor</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>A</span><span class='op'>&gt;</span>;
-    <span class='doccomment'>/// The second anchor affected by this joint.</span>
-    <span class='kw'>fn</span> <span class='ident'>anchor2</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Anchor</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>A</span><span class='op'>&gt;</span>;
-    <span class='doccomment'>/// The first attach point in global coordinates.</span>
-    <span class='kw'>fn</span> <span class='ident'>anchor1_pos</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>A</span>;
-    <span class='doccomment'>/// The second attach point in global coordinates.</span>
-    <span class='kw'>fn</span> <span class='ident'>anchor2_pos</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>A</span>;
+<span class="comment">// FIXME: this wont be very helpful to mix several joints.</span>
+<span class="doccomment">/// Trait implemented by every joint.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Joint</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Real</span>, <span class="ident">A</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The first anchor affected by this joint.</span>
+    <span class="kw">fn</span> <span class="ident">anchor1</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Anchor</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">A</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// The second anchor affected by this joint.</span>
+    <span class="kw">fn</span> <span class="ident">anchor2</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Anchor</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">A</span><span class="op">&gt;</span>;
+    <span class="doccomment">/// The first attach point in global coordinates.</span>
+    <span class="kw">fn</span> <span class="ident">anchor1_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">A</span>;
+    <span class="doccomment">/// The second attach point in global coordinates.</span>
+    <span class="kw">fn</span> <span class="ident">anchor2_pos</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">A</span>;
 }
 </pre>
 </section>

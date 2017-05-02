@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,22 +43,22 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>sdl2</a>::<wbr><a href='index.html'>audio</a>::<wbr><a class='trait' href=''>AudioCallback</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>sdl2</a>::<wbr><a href='index.html'>audio</a>::<wbr><a class="trait" href=''>AudioCallback</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/sdl2/audio.rs.html#312-318' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait AudioCallback: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> <span class='where fmt-newline'>where Self::<a class='trait' href='../../sdl2/audio/trait.AudioCallback.html' title='sdl2::audio::AudioCallback'>Channel</a>: <a class='trait' href='../../sdl2/audio/trait.AudioFormatNum.html' title='sdl2::audio::AudioFormatNum'>AudioFormatNum</a> + 'static</span> {
-    type <a href='#associatedtype.Channel' class='type'>Channel</a>;
-    fn <a href='#tymethod.callback' class='fnname'>callback</a>(&amp;mut self, _: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;mut [</a>Self::<a class='trait' href='../../sdl2/audio/trait.AudioCallback.html' title='sdl2::audio::AudioCallback'>Channel</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>);
+<pre class='rust trait'>pub trait AudioCallback: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> <span class="where fmt-newline">where Self::<a class="trait" href="../../sdl2/audio/trait.AudioCallback.html" title="trait sdl2::audio::AudioCallback">Channel</a>: <a class="trait" href="../../sdl2/audio/trait.AudioFormatNum.html" title="trait sdl2::audio::AudioFormatNum">AudioFormatNum</a> + 'static</span> {
+    type <a href='#associatedtype.Channel' class="type">Channel</a>;
+    fn <a href='#tymethod.callback' class='fnname'>callback</a>(&amp;mut self, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a>Self::<a class="trait" href="../../sdl2/audio/trait.AudioCallback.html" title="trait sdl2::audio::AudioCallback">Channel</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>);
 }</pre>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Channel' class='method'><span id='Channel.t' class='invisible'><code>type <a href='#associatedtype.Channel' class='type'>Channel</a></code></span></h3></div>
+        <h3 id='associatedtype.Channel' class='method'><span id='Channel.t' class='invisible'><code>type <a href='#associatedtype.Channel' class="type">Channel</a></code></span></h3></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.callback' class='method'><span id='callback.v' class='invisible'><code>fn <a href='#tymethod.callback' class='fnname'>callback</a>(&amp;mut self, _: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;mut [</a>Self::<a class='trait' href='../../sdl2/audio/trait.AudioCallback.html' title='sdl2::audio::AudioCallback'>Channel</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>)</code></span></h3></div>
+        <h3 id='tymethod.callback' class='method'><span id='callback.v' class='invisible'><code>fn <a href='#tymethod.callback' class='fnname'>callback</a>(&amp;mut self, _: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a>Self::<a class="trait" href="../../sdl2/audio/trait.AudioCallback.html" title="trait sdl2::audio::AudioCallback">Channel</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>)</code></span></h3></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
     </ul><script type="text/javascript" async

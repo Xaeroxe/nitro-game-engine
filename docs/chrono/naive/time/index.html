@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,8 +43,8 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>chrono</a>::<wbr><a href='../index.html'>naive</a>::<wbr><a class='mod' href=''>time</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>chrono</a>::<wbr><a href='../index.html'>naive</a>::<wbr><a class="mod" href=''>time</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
@@ -91,14 +91,14 @@ You should use the proper formatting to get the raw leap second.</p>
 
 <p>All methods accepting fractional seconds will accept such values.</p>
 
-<pre class='rust rust-example-rendered'>
-<span class='kw'>use</span> <span class='ident'>chrono</span>::{<span class='ident'>NaiveDate</span>, <span class='ident'>NaiveTime</span>, <span class='ident'>UTC</span>, <span class='ident'>TimeZone</span>};
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">chrono</span>::{<span class="ident">NaiveDate</span>, <span class="ident">NaiveTime</span>, <span class="ident">UTC</span>, <span class="ident">TimeZone</span>};
 
-<span class='kw'>let</span> <span class='ident'>t</span> <span class='op'>=</span> <span class='ident'>NaiveTime</span>::<span class='ident'>from_hms_milli</span>(<span class='number'>8</span>, <span class='number'>59</span>, <span class='number'>59</span>, <span class='number'>1_000</span>);
+<span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">NaiveTime</span>::<span class="ident">from_hms_milli</span>(<span class="number">8</span>, <span class="number">59</span>, <span class="number">59</span>, <span class="number">1_000</span>);
 
-<span class='kw'>let</span> <span class='ident'>dt1</span> <span class='op'>=</span> <span class='ident'>NaiveDate</span>::<span class='ident'>from_ymd</span>(<span class='number'>2015</span>, <span class='number'>7</span>, <span class='number'>1</span>).<span class='ident'>and_hms_micro</span>(<span class='number'>8</span>, <span class='number'>59</span>, <span class='number'>59</span>, <span class='number'>1_000_000</span>);
+<span class="kw">let</span> <span class="ident">dt1</span> <span class="op">=</span> <span class="ident">NaiveDate</span>::<span class="ident">from_ymd</span>(<span class="number">2015</span>, <span class="number">7</span>, <span class="number">1</span>).<span class="ident">and_hms_micro</span>(<span class="number">8</span>, <span class="number">59</span>, <span class="number">59</span>, <span class="number">1_000_000</span>);
 
-<span class='kw'>let</span> <span class='ident'>dt2</span> <span class='op'>=</span> <span class='ident'>UTC</span>.<span class='ident'>ymd</span>(<span class='number'>2015</span>, <span class='number'>6</span>, <span class='number'>30</span>).<span class='ident'>and_hms_nano</span>(<span class='number'>23</span>, <span class='number'>59</span>, <span class='number'>59</span>, <span class='number'>1_000_000_000</span>);</pre>
+<span class="kw">let</span> <span class="ident">dt2</span> <span class="op">=</span> <span class="ident">UTC</span>.<span class="ident">ymd</span>(<span class="number">2015</span>, <span class="number">6</span>, <span class="number">30</span>).<span class="ident">and_hms_nano</span>(<span class="number">23</span>, <span class="number">59</span>, <span class="number">59</span>, <span class="number">1_000_000_000</span>);</pre>
 
 <p>Note that the leap second can happen anytime given an appropriate time zone;
 2015-07-01 01:23:60 would be a proper leap second if UTC+01:24 had existed.
@@ -174,11 +174,11 @@ correctly handled both in the formatting and parsing.
 The leap second in the human-readable representation
 will be represented as the second part being 60, as required by ISO 8601.</p>
 
-<pre class='rust rust-example-rendered'>
-<span class='kw'>use</span> <span class='ident'>chrono</span>::{<span class='ident'>UTC</span>, <span class='ident'>TimeZone</span>};
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">chrono</span>::{<span class="ident">UTC</span>, <span class="ident">TimeZone</span>};
 
-<span class='kw'>let</span> <span class='ident'>dt</span> <span class='op'>=</span> <span class='ident'>UTC</span>.<span class='ident'>ymd</span>(<span class='number'>2015</span>, <span class='number'>6</span>, <span class='number'>30</span>).<span class='ident'>and_hms_milli</span>(<span class='number'>23</span>, <span class='number'>59</span>, <span class='number'>59</span>, <span class='number'>1_000</span>);
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{:?}&quot;</span>, <span class='ident'>dt</span>), <span class='string'>&quot;2015-06-30T23:59:60Z&quot;</span>);</pre>
+<span class="kw">let</span> <span class="ident">dt</span> <span class="op">=</span> <span class="ident">UTC</span>.<span class="ident">ymd</span>(<span class="number">2015</span>, <span class="number">6</span>, <span class="number">30</span>).<span class="ident">and_hms_milli</span>(<span class="number">23</span>, <span class="number">59</span>, <span class="number">59</span>, <span class="number">1_000</span>);
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">dt</span>), <span class="string">&quot;2015-06-30T23:59:60Z&quot;</span>);</pre>
 
 <p>There are hypothetical leap seconds not on the minute boundary
 nevertheless supported by Chrono.
@@ -187,23 +187,23 @@ there were several &quot;exotic&quot; time zone offsets with fractional minutes 
 For such cases the human-readable representation is ambiguous
 and would be read back to the next non-leap second.</p>
 
-<pre class='rust rust-example-rendered'>
-<span class='kw'>use</span> <span class='ident'>chrono</span>::{<span class='ident'>DateTime</span>, <span class='ident'>UTC</span>, <span class='ident'>TimeZone</span>};
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">chrono</span>::{<span class="ident">DateTime</span>, <span class="ident">UTC</span>, <span class="ident">TimeZone</span>};
 
-<span class='kw'>let</span> <span class='ident'>dt</span> <span class='op'>=</span> <span class='ident'>UTC</span>.<span class='ident'>ymd</span>(<span class='number'>2015</span>, <span class='number'>6</span>, <span class='number'>30</span>).<span class='ident'>and_hms_milli</span>(<span class='number'>23</span>, <span class='number'>56</span>, <span class='number'>4</span>, <span class='number'>1_000</span>);
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{:?}&quot;</span>, <span class='ident'>dt</span>), <span class='string'>&quot;2015-06-30T23:56:05Z&quot;</span>);
+<span class="kw">let</span> <span class="ident">dt</span> <span class="op">=</span> <span class="ident">UTC</span>.<span class="ident">ymd</span>(<span class="number">2015</span>, <span class="number">6</span>, <span class="number">30</span>).<span class="ident">and_hms_milli</span>(<span class="number">23</span>, <span class="number">56</span>, <span class="number">4</span>, <span class="number">1_000</span>);
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">dt</span>), <span class="string">&quot;2015-06-30T23:56:05Z&quot;</span>);
 
-<span class='kw'>let</span> <span class='ident'>dt</span> <span class='op'>=</span> <span class='ident'>UTC</span>.<span class='ident'>ymd</span>(<span class='number'>2015</span>, <span class='number'>6</span>, <span class='number'>30</span>).<span class='ident'>and_hms</span>(<span class='number'>23</span>, <span class='number'>56</span>, <span class='number'>5</span>);
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{:?}&quot;</span>, <span class='ident'>dt</span>), <span class='string'>&quot;2015-06-30T23:56:05Z&quot;</span>);
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>DateTime</span>::<span class='ident'>parse_from_rfc3339</span>(<span class='string'>&quot;2015-06-30T23:56:05Z&quot;</span>).<span class='ident'>unwrap</span>(), <span class='ident'>dt</span>);</pre>
+<span class="kw">let</span> <span class="ident">dt</span> <span class="op">=</span> <span class="ident">UTC</span>.<span class="ident">ymd</span>(<span class="number">2015</span>, <span class="number">6</span>, <span class="number">30</span>).<span class="ident">and_hms</span>(<span class="number">23</span>, <span class="number">56</span>, <span class="number">5</span>);
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">dt</span>), <span class="string">&quot;2015-06-30T23:56:05Z&quot;</span>);
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">DateTime</span>::<span class="ident">parse_from_rfc3339</span>(<span class="string">&quot;2015-06-30T23:56:05Z&quot;</span>).<span class="ident">unwrap</span>(), <span class="ident">dt</span>);</pre>
 
 <p>Since Chrono alone cannot determine any existence of leap seconds,
 <strong>there is absolutely no guarantee that the leap second read has actually happened</strong>.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.NaiveTime.html'
-                                  title='chrono::naive::time::NaiveTime'>NaiveTime</a></td>
+                           <td><a class="struct" href="struct.NaiveTime.html"
+                                  title='struct chrono::naive::time::NaiveTime'>NaiveTime</a></td>
                            <td class='docblock-short'>
                                 <p>ISO 8601 time without timezone.
 Allows for the nanosecond precision and optional leap second representation.</p>

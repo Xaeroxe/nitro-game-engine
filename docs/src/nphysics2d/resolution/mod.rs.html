@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -66,29 +66,29 @@
 <span id="21">21</span>
 <span id="22">22</span>
 <span id="23">23</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Constraint resolution.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Constraint resolution.</span>
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>resolution</span>::<span class='ident'>solver</span>::<span class='ident'>Solver</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>resolution</span>::<span class='ident'>constraint</span>::<span class='ident'>accumulated_impulse_solver</span>::<span class='ident'>AccumulatedImpulseSolver</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>resolution</span>::<span class='ident'>constraint</span>::<span class='ident'>contact_equation</span>::<span class='ident'>CorrectionMode</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>resolution</span>::<span class='ident'>constraint</span>::<span class='ident'>projected_gauss_seidel_solver</span>::{<span class='ident'>Velocities</span>, <span class='ident'>projected_gauss_seidel_solve</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>resolution</span>::<span class='ident'>constraint</span>::<span class='ident'>impulse_cache</span>::{<span class='ident'>ImpulseCache</span>, <span class='ident'>ContactIdentifier</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>resolution</span>::<span class='ident'>constraint</span>::<span class='ident'>velocity_constraint</span>::<span class='ident'>VelocityConstraint</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">resolution</span>::<span class="ident">solver</span>::<span class="ident">Solver</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">resolution</span>::<span class="ident">constraint</span>::<span class="ident">accumulated_impulse_solver</span>::<span class="ident">AccumulatedImpulseSolver</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">resolution</span>::<span class="ident">constraint</span>::<span class="ident">contact_equation</span>::<span class="ident">CorrectionMode</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">resolution</span>::<span class="ident">constraint</span>::<span class="ident">projected_gauss_seidel_solver</span>::{<span class="ident">Velocities</span>, <span class="ident">projected_gauss_seidel_solve</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">resolution</span>::<span class="ident">constraint</span>::<span class="ident">impulse_cache</span>::{<span class="ident">ImpulseCache</span>, <span class="ident">ContactIdentifier</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">resolution</span>::<span class="ident">constraint</span>::<span class="ident">velocity_constraint</span>::<span class="ident">VelocityConstraint</span>;
 
 
-<span class='comment'>// XXX: `pub` due to rust#18241</span>
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_docs</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>solver</span>;
+<span class="comment">// XXX: `pub` due to rust#18241</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_docs</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">solver</span>;
 
-<span class='kw'>mod</span> <span class='ident'>constraint</span> {
-    <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>impulse_cache</span>;
-    <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>accumulated_impulse_solver</span>;
-    <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>projected_gauss_seidel_solver</span>;
-    <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>velocity_constraint</span>;
-    <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>contact_equation</span>;
-    <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>ball_in_socket_equation</span>;
-    <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>fixed_equation</span>;
+<span class="kw">mod</span> <span class="ident">constraint</span> {
+    <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">impulse_cache</span>;
+    <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">accumulated_impulse_solver</span>;
+    <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">projected_gauss_seidel_solver</span>;
+    <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">velocity_constraint</span>;
+    <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">contact_equation</span>;
+    <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">ball_in_socket_equation</span>;
+    <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">fixed_equation</span>;
 }
 </pre>
 </section>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -491,452 +491,452 @@
 <span id="446">446</span>
 <span id="447">447</span>
 <span id="448">448</span>
-</pre><pre class='rust '>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rand</span>;
+</pre><pre class="rust ">
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rand</span>;
 
-<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>FromPrimitive</span>;
+<span class="kw">use</span> <span class="ident">num</span>::<span class="ident">FromPrimitive</span>;
 
-<span class='kw'>use</span> <span class='ident'>sys</span>::<span class='ident'>pixels</span> <span class='kw'>as</span> <span class='ident'>ll</span>;
-<span class='kw'>use</span> <span class='ident'>libc</span>;
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">pixels</span> <span class="kw">as</span> <span class="ident">ll</span>;
+<span class="kw">use</span> <span class="ident">libc</span>;
 
-<span class='kw'>use</span> <span class='ident'>get_error</span>;
+<span class="kw">use</span> <span class="ident">get_error</span>;
 
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Palette</span> {
-    <span class='ident'>raw</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>ll</span>::<span class='ident'>SDL_Palette</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Palette</span> {
+    <span class="ident">raw</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ll</span>::<span class="ident">SDL_Palette</span>
 }
 
-<span class='kw'>impl</span> <span class='ident'>Palette</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='doccomment'>/// Creates a new, uninitialized palette</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='kw-2'>mut</span> <span class='ident'>capacity</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>use</span> <span class='ident'>common</span>::<span class='kw-2'>*</span>;
+<span class="kw">impl</span> <span class="ident">Palette</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="doccomment">/// Creates a new, uninitialized palette</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="kw-2">mut</span> <span class="ident">capacity</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">use</span> <span class="ident">common</span>::<span class="kw-2">*</span>;
 
-        <span class='kw'>let</span> <span class='ident'>ncolors</span> <span class='op'>=</span> {
-            <span class='comment'>// This is kind of a hack. We have to cast twice because</span>
-            <span class='comment'>// ncolors is a c_int, and validate_int only takes a u32.</span>
-            <span class='comment'>// FIXME: Modify validate_int to make this unnecessary</span>
-            <span class='kw'>let</span> <span class='ident'>u32_max</span> <span class='op'>=</span> <span class='ident'>u32</span>::<span class='ident'>max_value</span>() <span class='kw'>as</span> <span class='ident'>usize</span>;
-            <span class='kw'>if</span> <span class='ident'>capacity</span> <span class='op'>&gt;</span> <span class='ident'>u32_max</span> { <span class='ident'>capacity</span> <span class='op'>=</span> <span class='ident'>u32_max</span>; }
+        <span class="kw">let</span> <span class="ident">ncolors</span> <span class="op">=</span> {
+            <span class="comment">// This is kind of a hack. We have to cast twice because</span>
+            <span class="comment">// ncolors is a c_int, and validate_int only takes a u32.</span>
+            <span class="comment">// FIXME: Modify validate_int to make this unnecessary</span>
+            <span class="kw">let</span> <span class="ident">u32_max</span> <span class="op">=</span> <span class="ident">u32</span>::<span class="ident">max_value</span>() <span class="kw">as</span> <span class="ident">usize</span>;
+            <span class="kw">if</span> <span class="ident">capacity</span> <span class="op">&gt;</span> <span class="ident">u32_max</span> { <span class="ident">capacity</span> <span class="op">=</span> <span class="ident">u32_max</span>; }
 
-            <span class='kw'>match</span> <span class='ident'>validate_int</span>(<span class='ident'>capacity</span> <span class='kw'>as</span> <span class='ident'>u32</span>, <span class='string'>&quot;capacity&quot;</span>) {
-                <span class='prelude-val'>Ok</span>(<span class='ident'>len</span>) <span class='op'>=&gt;</span> <span class='ident'>len</span>,
-                <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>e</span>)),
+            <span class="kw">match</span> <span class="ident">validate_int</span>(<span class="ident">capacity</span> <span class="kw">as</span> <span class="ident">u32</span>, <span class="string">&quot;capacity&quot;</span>) {
+                <span class="prelude-val">Ok</span>(<span class="ident">len</span>) <span class="op">=&gt;</span> <span class="ident">len</span>,
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">e</span>)),
             }
         };
 
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_AllocPalette</span>(<span class='ident'>ncolors</span>) };
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_AllocPalette</span>(<span class="ident">ncolors</span>) };
 
-        <span class='kw'>if</span> <span class='ident'>raw</span>.<span class='ident'>is_null</span>() {
-            <span class='prelude-val'>Err</span>(<span class='ident'>get_error</span>())
-        } <span class='kw'>else</span> {
-            <span class='prelude-val'>Ok</span>(<span class='ident'>Palette</span> {
-                <span class='ident'>raw</span>: <span class='ident'>raw</span>,
+        <span class="kw">if</span> <span class="ident">raw</span>.<span class="ident">is_null</span>() {
+            <span class="prelude-val">Err</span>(<span class="ident">get_error</span>())
+        } <span class="kw">else</span> {
+            <span class="prelude-val">Ok</span>(<span class="ident">Palette</span> {
+                <span class="ident">raw</span>: <span class="ident">raw</span>,
             })
         }
     }
 
-    <span class='doccomment'>/// Creates a palette from the provided colors</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_colors</span>(<span class='ident'>colors</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>Color</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>pal</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>Self</span>::<span class='ident'>new</span>(<span class='ident'>colors</span>.<span class='ident'>len</span>()));
+    <span class="doccomment">/// Creates a palette from the provided colors</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_colors</span>(<span class="ident">colors</span>: <span class="kw-2">&amp;</span>[<span class="ident">Color</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">pal</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">colors</span>.<span class="ident">len</span>()));
 
-        <span class='comment'>// Already validated, so don&#39;t check again</span>
-        <span class='kw'>let</span> <span class='ident'>ncolors</span> <span class='op'>=</span> <span class='ident'>colors</span>.<span class='ident'>len</span>() <span class='kw'>as</span> ::<span class='ident'>libc</span>::<span class='ident'>c_int</span>;
+        <span class="comment">// Already validated, so don&#39;t check again</span>
+        <span class="kw">let</span> <span class="ident">ncolors</span> <span class="op">=</span> <span class="ident">colors</span>.<span class="ident">len</span>() <span class="kw">as</span> ::<span class="ident">libc</span>::<span class="ident">c_int</span>;
 
-        <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>raw_colors</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>ll</span>::<span class='ident'>SDL_Color</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>colors</span>.<span class='ident'>iter</span>()
-                .<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>color</span><span class='op'>|</span> <span class='ident'>color</span>.<span class='ident'>raw</span>())
-                .<span class='ident'>collect</span>();
+        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">raw_colors</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ll</span>::<span class="ident">SDL_Color</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">colors</span>.<span class="ident">iter</span>()
+                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">color</span><span class="op">|</span> <span class="ident">color</span>.<span class="ident">raw</span>())
+                .<span class="ident">collect</span>();
 
-            <span class='kw'>let</span> <span class='ident'>pal_ptr</span> <span class='op'>=</span> (<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>raw_colors</span>[<span class='number'>0</span>]) <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>ll</span>::<span class='ident'>SDL_Color</span>;
+            <span class="kw">let</span> <span class="ident">pal_ptr</span> <span class="op">=</span> (<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">raw_colors</span>[<span class="number">0</span>]) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ll</span>::<span class="ident">SDL_Color</span>;
 
-            <span class='ident'>ll</span>::<span class='ident'>SDL_SetPaletteColors</span>(<span class='ident'>pal</span>.<span class='ident'>raw</span>, <span class='ident'>pal_ptr</span>, <span class='number'>0</span>, <span class='ident'>ncolors</span>)
+            <span class="ident">ll</span>::<span class="ident">SDL_SetPaletteColors</span>(<span class="ident">pal</span>.<span class="ident">raw</span>, <span class="ident">pal_ptr</span>, <span class="number">0</span>, <span class="ident">ncolors</span>)
         };
 
-        <span class='kw'>if</span> <span class='ident'>result</span> <span class='op'>&lt;</span> <span class='number'>0</span> {
-            <span class='prelude-val'>Err</span>(<span class='ident'>get_error</span>())
-        } <span class='kw'>else</span> {
-            <span class='prelude-val'>Ok</span>(<span class='ident'>pal</span>)
+        <span class="kw">if</span> <span class="ident">result</span> <span class="op">&lt;</span> <span class="number">0</span> {
+            <span class="prelude-val">Err</span>(<span class="ident">get_error</span>())
+        } <span class="kw">else</span> {
+            <span class="prelude-val">Ok</span>(<span class="ident">pal</span>)
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>len</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='kw'>unsafe</span> { (<span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>raw</span>).<span class='ident'>ncolors</span> <span class='kw'>as</span> <span class='ident'>usize</span> }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">unsafe</span> { (<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">raw</span>).<span class="ident">ncolors</span> <span class="kw">as</span> <span class="ident">usize</span> }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>Palette</span> {
-    <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_FreePalette</span>(<span class='self'>self</span>.<span class='ident'>raw</span>); }
+<span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">Palette</span> {
+    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_FreePalette</span>(<span class="self">self</span>.<span class="ident">raw</span>); }
     }
 }
 
-<span class='macro'>impl_raw_accessors</span><span class='macro'>!</span>((<span class='ident'>Palette</span>, <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>ll</span>::<span class='ident'>SDL_Palette</span>));
+<span class="macro">impl_raw_accessors</span><span class="macro">!</span>((<span class="ident">Palette</span>, <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ll</span>::<span class="ident">SDL_Palette</span>));
 
-<span class='attribute'>#[<span class='ident'>test</span>]</span>
-<span class='kw'>fn</span> <span class='ident'>create_palette</span>() {
-    <span class='kw'>let</span> <span class='ident'>colors</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;</span> <span class='op'>=</span> (<span class='number'>0</span> .. <span class='number'>0xff</span>).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>u</span><span class='op'>|</span> {
-        <span class='ident'>Color</span>::<span class='ident'>RGB</span>(<span class='ident'>u</span>, <span class='number'>0</span>, <span class='number'>0xff</span> <span class='op'>-</span> <span class='ident'>u</span>)
-    }).<span class='ident'>collect</span>();
+<span class="attribute">#[<span class="ident">test</span>]</span>
+<span class="kw">fn</span> <span class="ident">create_palette</span>() {
+    <span class="kw">let</span> <span class="ident">colors</span>: <span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;</span> <span class="op">=</span> (<span class="number">0</span> .. <span class="number">0xff</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">u</span><span class="op">|</span> {
+        <span class="ident">Color</span>::<span class="ident">RGB</span>(<span class="ident">u</span>, <span class="number">0</span>, <span class="number">0xff</span> <span class="op">-</span> <span class="ident">u</span>)
+    }).<span class="ident">collect</span>();
 
-    <span class='kw'>let</span> <span class='ident'>palette</span> <span class='op'>=</span> <span class='ident'>Palette</span>::<span class='ident'>with_colors</span>(<span class='kw-2'>&amp;</span><span class='ident'>colors</span>).<span class='ident'>unwrap</span>();
+    <span class="kw">let</span> <span class="ident">palette</span> <span class="op">=</span> <span class="ident">Palette</span>::<span class="ident">with_colors</span>(<span class="kw-2">&amp;</span><span class="ident">colors</span>).<span class="ident">unwrap</span>();
 
-    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>palette</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>255</span>);
+    <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">palette</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">255</span>);
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Color</span> {
-    <span class='ident'>RGB</span>(<span class='ident'>u8</span>, <span class='ident'>u8</span>, <span class='ident'>u8</span>),
-    <span class='ident'>RGBA</span>(<span class='ident'>u8</span>, <span class='ident'>u8</span>, <span class='ident'>u8</span>, <span class='ident'>u8</span>)
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Color</span> {
+    <span class="ident">RGB</span>(<span class="ident">u8</span>, <span class="ident">u8</span>, <span class="ident">u8</span>),
+    <span class="ident">RGBA</span>(<span class="ident">u8</span>, <span class="ident">u8</span>, <span class="ident">u8</span>, <span class="ident">u8</span>)
 }
 
-<span class='kw'>impl</span> <span class='ident'>Color</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>to_u32</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>format</span>: <span class='kw-2'>&amp;</span><span class='ident'>PixelFormat</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span> {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='kw-2'>&amp;</span><span class='ident'>Color</span>::<span class='ident'>RGB</span>(<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>) <span class='op'>=&gt;</span> {
-                <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_MapRGB</span>(<span class='ident'>format</span>.<span class='ident'>raw</span>, <span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>) }
+<span class="kw">impl</span> <span class="ident">Color</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_u32</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">format</span>: <span class="kw-2">&amp;</span><span class="ident">PixelFormat</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="kw-2">&amp;</span><span class="ident">Color</span>::<span class="ident">RGB</span>(<span class="ident">r</span>, <span class="ident">g</span>, <span class="ident">b</span>) <span class="op">=&gt;</span> {
+                <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_MapRGB</span>(<span class="ident">format</span>.<span class="ident">raw</span>, <span class="ident">r</span>, <span class="ident">g</span>, <span class="ident">b</span>) }
             }
-            <span class='kw-2'>&amp;</span><span class='ident'>Color</span>::<span class='ident'>RGBA</span>(<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>, <span class='ident'>a</span>) <span class='op'>=&gt;</span> {
-                <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_MapRGBA</span>(<span class='ident'>format</span>.<span class='ident'>raw</span>, <span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>, <span class='ident'>a</span>) }
+            <span class="kw-2">&amp;</span><span class="ident">Color</span>::<span class="ident">RGBA</span>(<span class="ident">r</span>, <span class="ident">g</span>, <span class="ident">b</span>, <span class="ident">a</span>) <span class="op">=&gt;</span> {
+                <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_MapRGBA</span>(<span class="ident">format</span>.<span class="ident">raw</span>, <span class="ident">r</span>, <span class="ident">g</span>, <span class="ident">b</span>, <span class="ident">a</span>) }
             }
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_u32</span>(<span class='ident'>format</span>: <span class='kw-2'>&amp;</span><span class='ident'>PixelFormat</span>, <span class='ident'>pixel</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='ident'>Color</span> {
-        <span class='kw'>let</span> (<span class='kw-2'>mut</span> <span class='ident'>r</span>, <span class='kw-2'>mut</span> <span class='ident'>g</span>, <span class='kw-2'>mut</span> <span class='ident'>b</span>, <span class='kw-2'>mut</span> <span class='ident'>a</span>) <span class='op'>=</span> (<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_u32</span>(<span class="ident">format</span>: <span class="kw-2">&amp;</span><span class="ident">PixelFormat</span>, <span class="ident">pixel</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">Color</span> {
+        <span class="kw">let</span> (<span class="kw-2">mut</span> <span class="ident">r</span>, <span class="kw-2">mut</span> <span class="ident">g</span>, <span class="kw-2">mut</span> <span class="ident">b</span>, <span class="kw-2">mut</span> <span class="ident">a</span>) <span class="op">=</span> (<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
 
-        <span class='kw'>unsafe</span> {
-            <span class='ident'>ll</span>::<span class='ident'>SDL_GetRGBA</span>(<span class='ident'>pixel</span>, <span class='ident'>format</span>.<span class='ident'>raw</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>r</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>g</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>b</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>a</span>)
+        <span class="kw">unsafe</span> {
+            <span class="ident">ll</span>::<span class="ident">SDL_GetRGBA</span>(<span class="ident">pixel</span>, <span class="ident">format</span>.<span class="ident">raw</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">r</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">g</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">b</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">a</span>)
         };
-        <span class='ident'>Color</span>::<span class='ident'>RGBA</span>(<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>, <span class='ident'>a</span>)
+        <span class="ident">Color</span>::<span class="ident">RGBA</span>(<span class="ident">r</span>, <span class="ident">g</span>, <span class="ident">b</span>, <span class="ident">a</span>)
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>rgb</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> (<span class='ident'>u8</span>, <span class='ident'>u8</span>, <span class='ident'>u8</span>) {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='kw-2'>&amp;</span><span class='ident'>Color</span>::<span class='ident'>RGB</span>(<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>) <span class='op'>=&gt;</span> (<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>),
-            <span class='kw-2'>&amp;</span><span class='ident'>Color</span>::<span class='ident'>RGBA</span>(<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>, _) <span class='op'>=&gt;</span> (<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rgb</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">u8</span>, <span class="ident">u8</span>, <span class="ident">u8</span>) {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="kw-2">&amp;</span><span class="ident">Color</span>::<span class="ident">RGB</span>(<span class="ident">r</span>, <span class="ident">g</span>, <span class="ident">b</span>) <span class="op">=&gt;</span> (<span class="ident">r</span>, <span class="ident">g</span>, <span class="ident">b</span>),
+            <span class="kw-2">&amp;</span><span class="ident">Color</span>::<span class="ident">RGBA</span>(<span class="ident">r</span>, <span class="ident">g</span>, <span class="ident">b</span>, _) <span class="op">=&gt;</span> (<span class="ident">r</span>, <span class="ident">g</span>, <span class="ident">b</span>)
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>rgba</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> (<span class='ident'>u8</span>, <span class='ident'>u8</span>, <span class='ident'>u8</span>, <span class='ident'>u8</span>) {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='kw-2'>&amp;</span><span class='ident'>Color</span>::<span class='ident'>RGB</span>(<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>) <span class='op'>=&gt;</span> (<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>, <span class='number'>0xff</span>),
-            <span class='kw-2'>&amp;</span><span class='ident'>Color</span>::<span class='ident'>RGBA</span>(<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>, <span class='ident'>a</span>) <span class='op'>=&gt;</span> (<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>, <span class='ident'>a</span>),
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rgba</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">u8</span>, <span class="ident">u8</span>, <span class="ident">u8</span>, <span class="ident">u8</span>) {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="kw-2">&amp;</span><span class="ident">Color</span>::<span class="ident">RGB</span>(<span class="ident">r</span>, <span class="ident">g</span>, <span class="ident">b</span>) <span class="op">=&gt;</span> (<span class="ident">r</span>, <span class="ident">g</span>, <span class="ident">b</span>, <span class="number">0xff</span>),
+            <span class="kw-2">&amp;</span><span class="ident">Color</span>::<span class="ident">RGBA</span>(<span class="ident">r</span>, <span class="ident">g</span>, <span class="ident">b</span>, <span class="ident">a</span>) <span class="op">=&gt;</span> (<span class="ident">r</span>, <span class="ident">g</span>, <span class="ident">b</span>, <span class="ident">a</span>),
         }
     }
 
-    <span class='comment'>// Implemented manually and kept private, because reasons</span>
-    <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>raw</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ll</span>::<span class='ident'>SDL_Color</span> {
-        <span class='kw'>let</span> (<span class='ident'>r</span>, <span class='ident'>g</span>, <span class='ident'>b</span>, <span class='ident'>a</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>rgba</span>();
-        <span class='ident'>ll</span>::<span class='ident'>SDL_Color</span> { <span class='ident'>r</span>: <span class='ident'>r</span>, <span class='ident'>g</span>: <span class='ident'>g</span>, <span class='ident'>b</span>: <span class='ident'>b</span>, <span class='ident'>a</span>: <span class='ident'>a</span> }
+    <span class="comment">// Implemented manually and kept private, because reasons</span>
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ll</span>::<span class="ident">SDL_Color</span> {
+        <span class="kw">let</span> (<span class="ident">r</span>, <span class="ident">g</span>, <span class="ident">b</span>, <span class="ident">a</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">rgba</span>();
+        <span class="ident">ll</span>::<span class="ident">SDL_Color</span> { <span class="ident">r</span>: <span class="ident">r</span>, <span class="ident">g</span>: <span class="ident">g</span>, <span class="ident">b</span>: <span class="ident">b</span>, <span class="ident">a</span>: <span class="ident">a</span> }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>ll</span>::<span class='ident'>SDL_Color</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Color</span> {
-    <span class='kw'>fn</span> <span class='ident'>into</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ll</span>::<span class='ident'>SDL_Color</span> {
-        <span class='kw'>unsafe</span> { <span class='self'>self</span>.<span class='ident'>raw</span>() }
+<span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">ll</span>::<span class="ident">SDL_Color</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Color</span> {
+    <span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ll</span>::<span class="ident">SDL_Color</span> {
+        <span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">raw</span>() }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>ll</span>::<span class='ident'>SDL_Color</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Color</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>raw</span>: <span class='ident'>ll</span>::<span class='ident'>SDL_Color</span>) <span class='op'>-&gt;</span> <span class='ident'>Color</span> {
-        <span class='ident'>Color</span>::<span class='ident'>RGBA</span>(<span class='ident'>raw</span>.<span class='ident'>r</span>, <span class='ident'>raw</span>.<span class='ident'>g</span>, <span class='ident'>raw</span>.<span class='ident'>b</span>, <span class='ident'>raw</span>.<span class='ident'>a</span>)
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ll</span>::<span class="ident">SDL_Color</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Color</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">raw</span>: <span class="ident">ll</span>::<span class="ident">SDL_Color</span>) <span class="op">-&gt;</span> <span class="ident">Color</span> {
+        <span class="ident">Color</span>::<span class="ident">RGBA</span>(<span class="ident">raw</span>.<span class="ident">r</span>, <span class="ident">raw</span>.<span class="ident">g</span>, <span class="ident">raw</span>.<span class="ident">b</span>, <span class="ident">raw</span>.<span class="ident">a</span>)
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>rand</span>::<span class='ident'>Rand</span> <span class='kw'>for</span> <span class='ident'>Color</span> {
-    <span class='kw'>fn</span> <span class='ident'>rand</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>rand</span>::<span class='ident'>Rng</span><span class='op'>&gt;</span>(<span class='ident'>rng</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>R</span>) <span class='op'>-&gt;</span> <span class='ident'>Color</span> {
-        <span class='kw'>if</span> <span class='ident'>rng</span>.<span class='ident'>gen</span>() { <span class='ident'>Color</span>::<span class='ident'>RGBA</span>(<span class='ident'>rng</span>.<span class='ident'>gen</span>(), <span class='ident'>rng</span>.<span class='ident'>gen</span>(), <span class='ident'>rng</span>.<span class='ident'>gen</span>(), <span class='ident'>rng</span>.<span class='ident'>gen</span>()) }
-        <span class='kw'>else</span> { <span class='ident'>Color</span>::<span class='ident'>RGB</span>(<span class='ident'>rng</span>.<span class='ident'>gen</span>(), <span class='ident'>rng</span>.<span class='ident'>gen</span>(), <span class='ident'>rng</span>.<span class='ident'>gen</span>()) }
+<span class="kw">impl</span> <span class="ident">rand</span>::<span class="ident">Rand</span> <span class="kw">for</span> <span class="ident">Color</span> {
+    <span class="kw">fn</span> <span class="ident">rand</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">rand</span>::<span class="ident">Rng</span><span class="op">&gt;</span>(<span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-&gt;</span> <span class="ident">Color</span> {
+        <span class="kw">if</span> <span class="ident">rng</span>.<span class="ident">gen</span>() { <span class="ident">Color</span>::<span class="ident">RGBA</span>(<span class="ident">rng</span>.<span class="ident">gen</span>(), <span class="ident">rng</span>.<span class="ident">gen</span>(), <span class="ident">rng</span>.<span class="ident">gen</span>(), <span class="ident">rng</span>.<span class="ident">gen</span>()) }
+        <span class="kw">else</span> { <span class="ident">Color</span>::<span class="ident">RGB</span>(<span class="ident">rng</span>.<span class="ident">gen</span>(), <span class="ident">rng</span>.<span class="ident">gen</span>(), <span class="ident">rng</span>.<span class="ident">gen</span>()) }
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>PixelMasks</span> {
-    <span class='doccomment'>/// Bits per pixel; usually 15, 16, or 32</span>
-    <span class='kw'>pub</span> <span class='ident'>bpp</span>: <span class='ident'>u8</span>,
-    <span class='doccomment'>/// The red mask</span>
-    <span class='kw'>pub</span> <span class='ident'>rmask</span>: <span class='ident'>u32</span>,
-    <span class='doccomment'>/// The green mask</span>
-    <span class='kw'>pub</span> <span class='ident'>gmask</span>: <span class='ident'>u32</span>,
-    <span class='doccomment'>/// The blue mask</span>
-    <span class='kw'>pub</span> <span class='ident'>bmask</span>: <span class='ident'>u32</span>,
-    <span class='doccomment'>/// The alpha mask</span>
-    <span class='kw'>pub</span> <span class='ident'>amask</span>: <span class='ident'>u32</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PixelMasks</span> {
+    <span class="doccomment">/// Bits per pixel; usually 15, 16, or 32</span>
+    <span class="kw">pub</span> <span class="ident">bpp</span>: <span class="ident">u8</span>,
+    <span class="doccomment">/// The red mask</span>
+    <span class="kw">pub</span> <span class="ident">rmask</span>: <span class="ident">u32</span>,
+    <span class="doccomment">/// The green mask</span>
+    <span class="kw">pub</span> <span class="ident">gmask</span>: <span class="ident">u32</span>,
+    <span class="doccomment">/// The blue mask</span>
+    <span class="kw">pub</span> <span class="ident">bmask</span>: <span class="ident">u32</span>,
+    <span class="doccomment">/// The alpha mask</span>
+    <span class="kw">pub</span> <span class="ident">amask</span>: <span class="ident">u32</span>
 }
 
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>PixelFormat</span> {
-    <span class='ident'>raw</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PixelFormat</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PixelFormat</span> {
+    <span class="ident">raw</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ll</span>::<span class="ident">SDL_PixelFormat</span>
 }
 
-<span class='macro'>impl_raw_accessors</span><span class='macro'>!</span>((<span class='ident'>PixelFormat</span>, <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PixelFormat</span>));
-<span class='macro'>impl_raw_constructor</span><span class='macro'>!</span>((<span class='ident'>PixelFormat</span>, <span class='ident'>PixelFormat</span> (<span class='ident'>raw</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PixelFormat</span>)));
+<span class="macro">impl_raw_accessors</span><span class="macro">!</span>((<span class="ident">PixelFormat</span>, <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ll</span>::<span class="ident">SDL_PixelFormat</span>));
+<span class="macro">impl_raw_constructor</span><span class="macro">!</span>((<span class="ident">PixelFormat</span>, <span class="ident">PixelFormat</span> (<span class="ident">raw</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ll</span>::<span class="ident">SDL_PixelFormat</span>)));
 
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>i32</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>PixelFormatEnum</span> {
-    <span class='ident'>Unknown</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_UNKNOWN</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>Index1LSB</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_INDEX1LSB</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>Index1MSB</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_INDEX1MSB</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>Index4LSB</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_INDEX4LSB</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>Index4MSB</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_INDEX4MSB</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>Index8</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_INDEX8</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>RGB332</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGB332</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>RGB444</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGB444</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>RGB555</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGB555</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>BGR555</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_BGR555</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>ARGB4444</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_ARGB4444</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>RGBA4444</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGBA4444</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>ABGR4444</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_ABGR4444</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>BGRA4444</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_BGRA4444</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>ARGB1555</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_ARGB1555</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>RGBA5551</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGBA5551</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>ABGR1555</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_ABGR1555</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>BGRA5551</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_BGRA5551</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>RGB565</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGB565</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>BGR565</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_BGR565</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>RGB24</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGB24</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>BGR24</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_BGR24</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>RGB888</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGB888</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>RGBX8888</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGBX8888</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>BGR888</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_BGR888</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>BGRX8888</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_BGRX8888</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>ARGB8888</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_ARGB8888</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>RGBA8888</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGBA8888</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>ABGR8888</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_ABGR8888</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>BGRA8888</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_BGRA8888</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>ARGB2101010</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_ARGB2101010</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>YV12</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_YV12</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>IYUV</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_IYUV</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>YUY2</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_YUY2</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>UYVY</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_UYVY</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-    <span class='ident'>YVYU</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_YVYU</span> <span class='kw'>as</span> <span class='ident'>i32</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">i32</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">PixelFormatEnum</span> {
+    <span class="ident">Unknown</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_UNKNOWN</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">Index1LSB</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_INDEX1LSB</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">Index1MSB</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_INDEX1MSB</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">Index4LSB</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_INDEX4LSB</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">Index4MSB</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_INDEX4MSB</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">Index8</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_INDEX8</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">RGB332</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGB332</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">RGB444</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGB444</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">RGB555</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGB555</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">BGR555</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_BGR555</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">ARGB4444</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_ARGB4444</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">RGBA4444</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGBA4444</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">ABGR4444</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_ABGR4444</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">BGRA4444</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_BGRA4444</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">ARGB1555</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_ARGB1555</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">RGBA5551</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGBA5551</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">ABGR1555</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_ABGR1555</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">BGRA5551</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_BGRA5551</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">RGB565</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGB565</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">BGR565</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_BGR565</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">RGB24</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGB24</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">BGR24</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_BGR24</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">RGB888</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGB888</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">RGBX8888</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGBX8888</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">BGR888</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_BGR888</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">BGRX8888</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_BGRX8888</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">ARGB8888</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_ARGB8888</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">RGBA8888</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGBA8888</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">ABGR8888</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_ABGR8888</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">BGRA8888</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_BGRA8888</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">ARGB2101010</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_ARGB2101010</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">YV12</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_YV12</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">IYUV</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_IYUV</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">YUY2</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_YUY2</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">UYVY</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_UYVY</span> <span class="kw">as</span> <span class="ident">i32</span>,
+    <span class="ident">YVYU</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_YVYU</span> <span class="kw">as</span> <span class="ident">i32</span>
 }
 
-<span class='kw'>impl</span> <span class='ident'>PixelFormatEnum</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_masks</span>(<span class='ident'>masks</span>: <span class='ident'>PixelMasks</span>) <span class='op'>-&gt;</span> <span class='ident'>PixelFormatEnum</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>format</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_MasksToPixelFormatEnum</span>(<span class='ident'>masks</span>.<span class='ident'>bpp</span> <span class='kw'>as</span> <span class='ident'>i32</span>, <span class='ident'>masks</span>.<span class='ident'>rmask</span>, <span class='ident'>masks</span>.<span class='ident'>gmask</span>, <span class='ident'>masks</span>.<span class='ident'>bmask</span>, <span class='ident'>masks</span>.<span class='ident'>amask</span>);
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>from_u64</span>(<span class='ident'>format</span> <span class='kw'>as</span> <span class='ident'>u64</span>).<span class='ident'>unwrap</span>()
+<span class="kw">impl</span> <span class="ident">PixelFormatEnum</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_masks</span>(<span class="ident">masks</span>: <span class="ident">PixelMasks</span>) <span class="op">-&gt;</span> <span class="ident">PixelFormatEnum</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">format</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_MasksToPixelFormatEnum</span>(<span class="ident">masks</span>.<span class="ident">bpp</span> <span class="kw">as</span> <span class="ident">i32</span>, <span class="ident">masks</span>.<span class="ident">rmask</span>, <span class="ident">masks</span>.<span class="ident">gmask</span>, <span class="ident">masks</span>.<span class="ident">bmask</span>, <span class="ident">masks</span>.<span class="ident">amask</span>);
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">from_u64</span>(<span class="ident">format</span> <span class="kw">as</span> <span class="ident">u64</span>).<span class="ident">unwrap</span>()
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>into_masks</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>PixelMasks</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>format</span>: <span class='ident'>u32</span> <span class='op'>=</span> <span class='self'>self</span> <span class='kw'>as</span> <span class='ident'>u32</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>bpp</span> <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>rmask</span> <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>gmask</span> <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>bmask</span> <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>amask</span> <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='kw'>unsafe</span> {
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PixelFormatEnumToMasks</span>(<span class='ident'>format</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>bpp</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>rmask</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>gmask</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>bmask</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>amask</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_masks</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PixelMasks</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">format</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="self">self</span> <span class="kw">as</span> <span class="ident">u32</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bpp</span> <span class="op">=</span> <span class="number">0</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rmask</span> <span class="op">=</span> <span class="number">0</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">gmask</span> <span class="op">=</span> <span class="number">0</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bmask</span> <span class="op">=</span> <span class="number">0</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">amask</span> <span class="op">=</span> <span class="number">0</span>;
+        <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+            <span class="ident">ll</span>::<span class="ident">SDL_PixelFormatEnumToMasks</span>(<span class="ident">format</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bpp</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">rmask</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">gmask</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bmask</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">amask</span>)
         };
-        <span class='kw'>if</span> <span class='ident'>result</span> <span class='op'>==</span> <span class='number'>0</span> {
-            <span class='comment'>// SDL_FALSE</span>
-            <span class='prelude-val'>Err</span>(<span class='ident'>get_error</span>())
-        } <span class='kw'>else</span> {
-            <span class='prelude-val'>Ok</span>(<span class='ident'>PixelMasks</span> {
-                <span class='ident'>bpp</span>: <span class='ident'>bpp</span> <span class='kw'>as</span> <span class='ident'>u8</span>,
-                <span class='ident'>rmask</span>: <span class='ident'>rmask</span>,
-                <span class='ident'>gmask</span>: <span class='ident'>gmask</span>,
-                <span class='ident'>bmask</span>: <span class='ident'>bmask</span>,
-                <span class='ident'>amask</span>: <span class='ident'>amask</span>
+        <span class="kw">if</span> <span class="ident">result</span> <span class="op">==</span> <span class="number">0</span> {
+            <span class="comment">// SDL_FALSE</span>
+            <span class="prelude-val">Err</span>(<span class="ident">get_error</span>())
+        } <span class="kw">else</span> {
+            <span class="prelude-val">Ok</span>(<span class="ident">PixelMasks</span> {
+                <span class="ident">bpp</span>: <span class="ident">bpp</span> <span class="kw">as</span> <span class="ident">u8</span>,
+                <span class="ident">rmask</span>: <span class="ident">rmask</span>,
+                <span class="ident">gmask</span>: <span class="ident">gmask</span>,
+                <span class="ident">bmask</span>: <span class="ident">bmask</span>,
+                <span class="ident">amask</span>: <span class="ident">amask</span>
             })
         }
     }
 
-    <span class='doccomment'>/// Calculates the total byte size of an image buffer, given its pitch</span>
-    <span class='doccomment'>/// and height.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>byte_size_from_pitch_and_height</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>pitch</span>: <span class='ident'>usize</span>, <span class='ident'>height</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>YV12</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>IYUV</span> <span class='op'>=&gt;</span> {
-                <span class='comment'>// YUV is 4:2:0.</span>
-                <span class='comment'>// `pitch` is the width of the Y component, and</span>
-                <span class='comment'>// `height` is the height of the Y component.</span>
-                <span class='comment'>// U and V have half the width and height of Y.</span>
-                <span class='ident'>pitch</span> <span class='op'>*</span> <span class='ident'>height</span> <span class='op'>+</span> <span class='number'>2</span> <span class='op'>*</span> (<span class='ident'>pitch</span> <span class='op'>/</span> <span class='number'>2</span> <span class='op'>*</span> <span class='ident'>height</span> <span class='op'>/</span> <span class='number'>2</span>)
+    <span class="doccomment">/// Calculates the total byte size of an image buffer, given its pitch</span>
+    <span class="doccomment">/// and height.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">byte_size_from_pitch_and_height</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pitch</span>: <span class="ident">usize</span>, <span class="ident">height</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">YV12</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">IYUV</span> <span class="op">=&gt;</span> {
+                <span class="comment">// YUV is 4:2:0.</span>
+                <span class="comment">// `pitch` is the width of the Y component, and</span>
+                <span class="comment">// `height` is the height of the Y component.</span>
+                <span class="comment">// U and V have half the width and height of Y.</span>
+                <span class="ident">pitch</span> <span class="op">*</span> <span class="ident">height</span> <span class="op">+</span> <span class="number">2</span> <span class="op">*</span> (<span class="ident">pitch</span> <span class="op">/</span> <span class="number">2</span> <span class="op">*</span> <span class="ident">height</span> <span class="op">/</span> <span class="number">2</span>)
             },
-            _ <span class='op'>=&gt;</span> <span class='ident'>pitch</span> <span class='op'>*</span> <span class='ident'>height</span>
+            _ <span class="op">=&gt;</span> <span class="ident">pitch</span> <span class="op">*</span> <span class="ident">height</span>
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>byte_size_of_pixels</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>num_of_pixels</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB332</span>
-                <span class='op'>=&gt;</span> <span class='ident'>num_of_pixels</span> <span class='op'>*</span> <span class='number'>1</span>,
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB444</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB555</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGR555</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ARGB4444</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGBA4444</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ABGR4444</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGRA4444</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ARGB1555</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGBA5551</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ABGR1555</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGRA5551</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB565</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGR565</span>
-                <span class='op'>=&gt;</span> <span class='ident'>num_of_pixels</span> <span class='op'>*</span> <span class='number'>2</span>,
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB24</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGR24</span>
-                <span class='op'>=&gt;</span> <span class='ident'>num_of_pixels</span> <span class='op'>*</span> <span class='number'>3</span>,
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB888</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGBX8888</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGR888</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGRX8888</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ARGB8888</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGBA8888</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ABGR8888</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGRA8888</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ARGB2101010</span>
-                <span class='op'>=&gt;</span> <span class='ident'>num_of_pixels</span> <span class='op'>*</span> <span class='number'>4</span>,
-            <span class='comment'>// YUV formats</span>
-            <span class='comment'>// FIXME: rounding error here?</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>YV12</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>IYUV</span>
-                <span class='op'>=&gt;</span> <span class='ident'>num_of_pixels</span> <span class='op'>/</span> <span class='number'>2</span> <span class='op'>*</span> <span class='number'>3</span>,
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>YUY2</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>UYVY</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>YVYU</span>
-                <span class='op'>=&gt;</span> <span class='ident'>num_of_pixels</span> <span class='op'>*</span> <span class='number'>2</span>,
-            <span class='comment'>// Unsupported formats</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>Index8</span>
-                <span class='op'>=&gt;</span> <span class='ident'>num_of_pixels</span> <span class='op'>*</span> <span class='number'>1</span>,
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>Unknown</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>Index1LSB</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>Index1MSB</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>Index4LSB</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>Index4MSB</span>
-                <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;not supported format: {:?}&quot;</span>, <span class='kw-2'>*</span><span class='self'>self</span>),
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">byte_size_of_pixels</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">num_of_pixels</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB332</span>
+                <span class="op">=&gt;</span> <span class="ident">num_of_pixels</span> <span class="op">*</span> <span class="number">1</span>,
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB444</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB555</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">BGR555</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">ARGB4444</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">RGBA4444</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">ABGR4444</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">BGRA4444</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">ARGB1555</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">RGBA5551</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">ABGR1555</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">BGRA5551</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB565</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">BGR565</span>
+                <span class="op">=&gt;</span> <span class="ident">num_of_pixels</span> <span class="op">*</span> <span class="number">2</span>,
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB24</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">BGR24</span>
+                <span class="op">=&gt;</span> <span class="ident">num_of_pixels</span> <span class="op">*</span> <span class="number">3</span>,
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB888</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">RGBX8888</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">BGR888</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">BGRX8888</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">ARGB8888</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">RGBA8888</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">ABGR8888</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">BGRA8888</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">ARGB2101010</span>
+                <span class="op">=&gt;</span> <span class="ident">num_of_pixels</span> <span class="op">*</span> <span class="number">4</span>,
+            <span class="comment">// YUV formats</span>
+            <span class="comment">// FIXME: rounding error here?</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">YV12</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">IYUV</span>
+                <span class="op">=&gt;</span> <span class="ident">num_of_pixels</span> <span class="op">/</span> <span class="number">2</span> <span class="op">*</span> <span class="number">3</span>,
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">YUY2</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">UYVY</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">YVYU</span>
+                <span class="op">=&gt;</span> <span class="ident">num_of_pixels</span> <span class="op">*</span> <span class="number">2</span>,
+            <span class="comment">// Unsupported formats</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">Index8</span>
+                <span class="op">=&gt;</span> <span class="ident">num_of_pixels</span> <span class="op">*</span> <span class="number">1</span>,
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">Unknown</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">Index1LSB</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">Index1MSB</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">Index4LSB</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">Index4MSB</span>
+                <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;not supported format: {:?}&quot;</span>, <span class="kw-2">*</span><span class="self">self</span>),
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>byte_size_per_pixel</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB332</span>
-                <span class='op'>=&gt;</span> <span class='number'>1</span>,
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB444</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB555</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGR555</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ARGB4444</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGBA4444</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ABGR4444</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGRA4444</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ARGB1555</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGBA5551</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ABGR1555</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGRA5551</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB565</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGR565</span>
-                <span class='op'>=&gt;</span> <span class='number'>2</span>,
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB24</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGR24</span>
-                <span class='op'>=&gt;</span> <span class='number'>3</span>,
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB888</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGBX8888</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGR888</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGRX8888</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ARGB8888</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGBA8888</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ABGR8888</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGRA8888</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ARGB2101010</span>
-                <span class='op'>=&gt;</span> <span class='number'>4</span>,
-            <span class='comment'>// YUV formats</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>YV12</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>IYUV</span>
-                <span class='op'>=&gt;</span> <span class='number'>2</span>,
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>YUY2</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>UYVY</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>YVYU</span>
-                <span class='op'>=&gt;</span> <span class='number'>2</span>,
-            <span class='comment'>// Unsupported formats</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>Index8</span>
-                <span class='op'>=&gt;</span> <span class='number'>1</span>,
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>Unknown</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>Index1LSB</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>Index1MSB</span> <span class='op'>|</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>Index4LSB</span> <span class='op'>|</span>
-            <span class='ident'>PixelFormatEnum</span>::<span class='ident'>Index4MSB</span>
-                <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;not supported format: {:?}&quot;</span>, <span class='kw-2'>*</span><span class='self'>self</span>),
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">byte_size_per_pixel</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB332</span>
+                <span class="op">=&gt;</span> <span class="number">1</span>,
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB444</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB555</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">BGR555</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">ARGB4444</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">RGBA4444</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">ABGR4444</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">BGRA4444</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">ARGB1555</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">RGBA5551</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">ABGR1555</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">BGRA5551</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB565</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">BGR565</span>
+                <span class="op">=&gt;</span> <span class="number">2</span>,
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB24</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">BGR24</span>
+                <span class="op">=&gt;</span> <span class="number">3</span>,
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB888</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">RGBX8888</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">BGR888</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">BGRX8888</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">ARGB8888</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">RGBA8888</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">ABGR8888</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">BGRA8888</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">ARGB2101010</span>
+                <span class="op">=&gt;</span> <span class="number">4</span>,
+            <span class="comment">// YUV formats</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">YV12</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">IYUV</span>
+                <span class="op">=&gt;</span> <span class="number">2</span>,
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">YUY2</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">UYVY</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">YVYU</span>
+                <span class="op">=&gt;</span> <span class="number">2</span>,
+            <span class="comment">// Unsupported formats</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">Index8</span>
+                <span class="op">=&gt;</span> <span class="number">1</span>,
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">Unknown</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">Index1LSB</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">Index1MSB</span> <span class="op">|</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">Index4LSB</span> <span class="op">|</span>
+            <span class="ident">PixelFormatEnum</span>::<span class="ident">Index4MSB</span>
+                <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;not supported format: {:?}&quot;</span>, <span class="kw-2">*</span><span class="self">self</span>),
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>ll</span>::<span class='ident'>SDL_PixelFormatEnum</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>PixelFormatEnum</span> {
-    <span class='kw'>fn</span> <span class='ident'>into</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PixelFormatEnum</span> {
-        <span class='self'>self</span> <span class='kw'>as</span> <span class='ident'>libc</span>::<span class='ident'>uint32_t</span>
+<span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">ll</span>::<span class="ident">SDL_PixelFormatEnum</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PixelFormatEnum</span> {
+    <span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ll</span>::<span class="ident">SDL_PixelFormatEnum</span> {
+        <span class="self">self</span> <span class="kw">as</span> <span class="ident">libc</span>::<span class="ident">uint32_t</span>
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>PixelFormat</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>PixelFormatEnum</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>pf</span>: <span class='ident'>PixelFormat</span>) <span class='op'>-&gt;</span> <span class='ident'>PixelFormatEnum</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='kw-2'>ref</span> <span class='ident'>sdl_pf</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>pf</span>.<span class='ident'>raw</span>;
-            <span class='kw'>match</span> <span class='ident'>PixelFormatEnum</span>::<span class='ident'>from_u64</span>(<span class='ident'>sdl_pf</span>.<span class='ident'>format</span> <span class='kw'>as</span> <span class='ident'>u64</span>) {
-                <span class='prelude-val'>Some</span>(<span class='ident'>pfe</span>) <span class='op'>=&gt;</span> <span class='ident'>pfe</span>,
-                <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Unknown pixel format: {:?}&quot;</span>, <span class='ident'>sdl_pf</span>.<span class='ident'>format</span>)
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">PixelFormat</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PixelFormatEnum</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">pf</span>: <span class="ident">PixelFormat</span>) <span class="op">-&gt;</span> <span class="ident">PixelFormatEnum</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="kw-2">ref</span> <span class="ident">sdl_pf</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">pf</span>.<span class="ident">raw</span>;
+            <span class="kw">match</span> <span class="ident">PixelFormatEnum</span>::<span class="ident">from_u64</span>(<span class="ident">sdl_pf</span>.<span class="ident">format</span> <span class="kw">as</span> <span class="ident">u64</span>) {
+                <span class="prelude-val">Some</span>(<span class="ident">pfe</span>) <span class="op">=&gt;</span> <span class="ident">pfe</span>,
+                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unknown pixel format: {:?}&quot;</span>, <span class="ident">sdl_pf</span>.<span class="ident">format</span>)
             }
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>FromPrimitive</span> <span class='kw'>for</span> <span class='ident'>PixelFormatEnum</span> {
-    <span class='kw'>fn</span> <span class='ident'>from_i64</span>(<span class='ident'>n</span>: <span class='ident'>i64</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>PixelFormatEnum</span><span class='op'>&gt;</span> {
-        <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>PixelFormatEnum</span>::<span class='kw-2'>*</span>;
+<span class="kw">impl</span> <span class="ident">FromPrimitive</span> <span class="kw">for</span> <span class="ident">PixelFormatEnum</span> {
+    <span class="kw">fn</span> <span class="ident">from_i64</span>(<span class="ident">n</span>: <span class="ident">i64</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PixelFormatEnum</span><span class="op">&gt;</span> {
+        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">PixelFormatEnum</span>::<span class="kw-2">*</span>;
 
-        <span class='prelude-val'>Some</span>( <span class='kw'>match</span> <span class='ident'>n</span> <span class='kw'>as</span> <span class='ident'>ll</span>::<span class='ident'>SDL_PixelFormatEnum</span> {
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_UNKNOWN</span>     <span class='op'>=&gt;</span> <span class='ident'>Unknown</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_INDEX1LSB</span>   <span class='op'>=&gt;</span> <span class='ident'>Index1LSB</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_INDEX1MSB</span>   <span class='op'>=&gt;</span> <span class='ident'>Index1MSB</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_INDEX4LSB</span>   <span class='op'>=&gt;</span> <span class='ident'>Index4LSB</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_INDEX4MSB</span>   <span class='op'>=&gt;</span> <span class='ident'>Index4MSB</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_INDEX8</span>      <span class='op'>=&gt;</span> <span class='ident'>Index8</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGB332</span>      <span class='op'>=&gt;</span> <span class='ident'>RGB332</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGB444</span>      <span class='op'>=&gt;</span> <span class='ident'>RGB444</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGB555</span>      <span class='op'>=&gt;</span> <span class='ident'>RGB555</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_BGR555</span>      <span class='op'>=&gt;</span> <span class='ident'>BGR555</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_ARGB4444</span>    <span class='op'>=&gt;</span> <span class='ident'>ARGB4444</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGBA4444</span>    <span class='op'>=&gt;</span> <span class='ident'>RGBA4444</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_ABGR4444</span>    <span class='op'>=&gt;</span> <span class='ident'>ABGR4444</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_BGRA4444</span>    <span class='op'>=&gt;</span> <span class='ident'>BGRA4444</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_ARGB1555</span>    <span class='op'>=&gt;</span> <span class='ident'>ARGB1555</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGBA5551</span>    <span class='op'>=&gt;</span> <span class='ident'>RGBA5551</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_ABGR1555</span>    <span class='op'>=&gt;</span> <span class='ident'>ABGR1555</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_BGRA5551</span>    <span class='op'>=&gt;</span> <span class='ident'>BGRA5551</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGB565</span>      <span class='op'>=&gt;</span> <span class='ident'>RGB565</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_BGR565</span>      <span class='op'>=&gt;</span> <span class='ident'>BGR565</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGB24</span>       <span class='op'>=&gt;</span> <span class='ident'>RGB24</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_BGR24</span>       <span class='op'>=&gt;</span> <span class='ident'>BGR24</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGB888</span>      <span class='op'>=&gt;</span> <span class='ident'>RGB888</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGBX8888</span>    <span class='op'>=&gt;</span> <span class='ident'>RGBX8888</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_BGR888</span>      <span class='op'>=&gt;</span> <span class='ident'>BGR888</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_BGRX8888</span>    <span class='op'>=&gt;</span> <span class='ident'>BGRX8888</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_ARGB8888</span>    <span class='op'>=&gt;</span> <span class='ident'>ARGB8888</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_RGBA8888</span>    <span class='op'>=&gt;</span> <span class='ident'>RGBA8888</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_ABGR8888</span>    <span class='op'>=&gt;</span> <span class='ident'>ABGR8888</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_BGRA8888</span>    <span class='op'>=&gt;</span> <span class='ident'>BGRA8888</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_ARGB2101010</span> <span class='op'>=&gt;</span> <span class='ident'>ARGB2101010</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_YV12</span>        <span class='op'>=&gt;</span> <span class='ident'>YV12</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_IYUV</span>        <span class='op'>=&gt;</span> <span class='ident'>IYUV</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_YUY2</span>        <span class='op'>=&gt;</span> <span class='ident'>YUY2</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_UYVY</span>        <span class='op'>=&gt;</span> <span class='ident'>UYVY</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_PIXELFORMAT_YVYU</span>        <span class='op'>=&gt;</span> <span class='ident'>YVYU</span>,
-            _                               <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>None</span>,
+        <span class="prelude-val">Some</span>( <span class="kw">match</span> <span class="ident">n</span> <span class="kw">as</span> <span class="ident">ll</span>::<span class="ident">SDL_PixelFormatEnum</span> {
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_UNKNOWN</span>     <span class="op">=&gt;</span> <span class="ident">Unknown</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_INDEX1LSB</span>   <span class="op">=&gt;</span> <span class="ident">Index1LSB</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_INDEX1MSB</span>   <span class="op">=&gt;</span> <span class="ident">Index1MSB</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_INDEX4LSB</span>   <span class="op">=&gt;</span> <span class="ident">Index4LSB</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_INDEX4MSB</span>   <span class="op">=&gt;</span> <span class="ident">Index4MSB</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_INDEX8</span>      <span class="op">=&gt;</span> <span class="ident">Index8</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGB332</span>      <span class="op">=&gt;</span> <span class="ident">RGB332</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGB444</span>      <span class="op">=&gt;</span> <span class="ident">RGB444</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGB555</span>      <span class="op">=&gt;</span> <span class="ident">RGB555</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_BGR555</span>      <span class="op">=&gt;</span> <span class="ident">BGR555</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_ARGB4444</span>    <span class="op">=&gt;</span> <span class="ident">ARGB4444</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGBA4444</span>    <span class="op">=&gt;</span> <span class="ident">RGBA4444</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_ABGR4444</span>    <span class="op">=&gt;</span> <span class="ident">ABGR4444</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_BGRA4444</span>    <span class="op">=&gt;</span> <span class="ident">BGRA4444</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_ARGB1555</span>    <span class="op">=&gt;</span> <span class="ident">ARGB1555</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGBA5551</span>    <span class="op">=&gt;</span> <span class="ident">RGBA5551</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_ABGR1555</span>    <span class="op">=&gt;</span> <span class="ident">ABGR1555</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_BGRA5551</span>    <span class="op">=&gt;</span> <span class="ident">BGRA5551</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGB565</span>      <span class="op">=&gt;</span> <span class="ident">RGB565</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_BGR565</span>      <span class="op">=&gt;</span> <span class="ident">BGR565</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGB24</span>       <span class="op">=&gt;</span> <span class="ident">RGB24</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_BGR24</span>       <span class="op">=&gt;</span> <span class="ident">BGR24</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGB888</span>      <span class="op">=&gt;</span> <span class="ident">RGB888</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGBX8888</span>    <span class="op">=&gt;</span> <span class="ident">RGBX8888</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_BGR888</span>      <span class="op">=&gt;</span> <span class="ident">BGR888</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_BGRX8888</span>    <span class="op">=&gt;</span> <span class="ident">BGRX8888</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_ARGB8888</span>    <span class="op">=&gt;</span> <span class="ident">ARGB8888</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_RGBA8888</span>    <span class="op">=&gt;</span> <span class="ident">RGBA8888</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_ABGR8888</span>    <span class="op">=&gt;</span> <span class="ident">ABGR8888</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_BGRA8888</span>    <span class="op">=&gt;</span> <span class="ident">BGRA8888</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_ARGB2101010</span> <span class="op">=&gt;</span> <span class="ident">ARGB2101010</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_YV12</span>        <span class="op">=&gt;</span> <span class="ident">YV12</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_IYUV</span>        <span class="op">=&gt;</span> <span class="ident">IYUV</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_YUY2</span>        <span class="op">=&gt;</span> <span class="ident">YUY2</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_UYVY</span>        <span class="op">=&gt;</span> <span class="ident">UYVY</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_PIXELFORMAT_YVYU</span>        <span class="op">=&gt;</span> <span class="ident">YVYU</span>,
+            _                               <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">None</span>,
         })
     }
 
-    <span class='kw'>fn</span> <span class='ident'>from_u64</span>(<span class='ident'>n</span>: <span class='ident'>u64</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>PixelFormatEnum</span><span class='op'>&gt;</span> { <span class='ident'>FromPrimitive</span>::<span class='ident'>from_i64</span>(<span class='ident'>n</span> <span class='kw'>as</span> <span class='ident'>i64</span>) }
+    <span class="kw">fn</span> <span class="ident">from_u64</span>(<span class="ident">n</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">PixelFormatEnum</span><span class="op">&gt;</span> { <span class="ident">FromPrimitive</span>::<span class="ident">from_i64</span>(<span class="ident">n</span> <span class="kw">as</span> <span class="ident">i64</span>) }
 }
 
 
-<span class='comment'>// Just test a round-trip conversion from PixelFormat to</span>
-<span class='comment'>// PixelFormatEnum and back.</span>
-<span class='attribute'>#[<span class='ident'>test</span>]</span>
-<span class='kw'>fn</span> <span class='ident'>test_pixel_format_enum</span>() {
-    <span class='kw'>let</span> <span class='ident'>pixel_formats</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB332</span>,
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB444</span>, <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB555</span>,
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGR555</span>, <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ARGB4444</span>,
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGBA4444</span>, <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ABGR4444</span>,
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGRA4444</span>, <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ARGB1555</span>,
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGBA5551</span>, <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ABGR1555</span>,
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGRA5551</span>, <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB565</span>,
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGR565</span>,
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB24</span>, <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGR24</span>,
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGB888</span>, <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGBX8888</span>,
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGR888</span>, <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGRX8888</span>,
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ARGB8888</span>, <span class='ident'>PixelFormatEnum</span>::<span class='ident'>RGBA8888</span>,
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ABGR8888</span>, <span class='ident'>PixelFormatEnum</span>::<span class='ident'>BGRA8888</span>,
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>ARGB2101010</span>,
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>YV12</span>, <span class='ident'>PixelFormatEnum</span>::<span class='ident'>IYUV</span>,
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>YUY2</span>, <span class='ident'>PixelFormatEnum</span>::<span class='ident'>UYVY</span>,
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>YVYU</span>,
-        <span class='ident'>PixelFormatEnum</span>::<span class='ident'>Index8</span>,
-        <span class='comment'>// These don&#39;t seem to be supported;</span>
-        <span class='comment'>// the round-trip </span>
-        <span class='comment'>//PixelFormatEnum::Unknown, PixelFormatEnum::Index1LSB,</span>
-        <span class='comment'>//PixelFormatEnum::Index1MSB, PixelFormatEnum::Index4LSB,</span>
-        <span class='comment'>//PixelFormatEnum::Index4MSB</span>
+<span class="comment">// Just test a round-trip conversion from PixelFormat to</span>
+<span class="comment">// PixelFormatEnum and back.</span>
+<span class="attribute">#[<span class="ident">test</span>]</span>
+<span class="kw">fn</span> <span class="ident">test_pixel_format_enum</span>() {
+    <span class="kw">let</span> <span class="ident">pixel_formats</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB332</span>,
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB444</span>, <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB555</span>,
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">BGR555</span>, <span class="ident">PixelFormatEnum</span>::<span class="ident">ARGB4444</span>,
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">RGBA4444</span>, <span class="ident">PixelFormatEnum</span>::<span class="ident">ABGR4444</span>,
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">BGRA4444</span>, <span class="ident">PixelFormatEnum</span>::<span class="ident">ARGB1555</span>,
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">RGBA5551</span>, <span class="ident">PixelFormatEnum</span>::<span class="ident">ABGR1555</span>,
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">BGRA5551</span>, <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB565</span>,
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">BGR565</span>,
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB24</span>, <span class="ident">PixelFormatEnum</span>::<span class="ident">BGR24</span>,
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">RGB888</span>, <span class="ident">PixelFormatEnum</span>::<span class="ident">RGBX8888</span>,
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">BGR888</span>, <span class="ident">PixelFormatEnum</span>::<span class="ident">BGRX8888</span>,
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">ARGB8888</span>, <span class="ident">PixelFormatEnum</span>::<span class="ident">RGBA8888</span>,
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">ABGR8888</span>, <span class="ident">PixelFormatEnum</span>::<span class="ident">BGRA8888</span>,
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">ARGB2101010</span>,
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">YV12</span>, <span class="ident">PixelFormatEnum</span>::<span class="ident">IYUV</span>,
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">YUY2</span>, <span class="ident">PixelFormatEnum</span>::<span class="ident">UYVY</span>,
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">YVYU</span>,
+        <span class="ident">PixelFormatEnum</span>::<span class="ident">Index8</span>,
+        <span class="comment">// These don&#39;t seem to be supported;</span>
+        <span class="comment">// the round-trip </span>
+        <span class="comment">//PixelFormatEnum::Unknown, PixelFormatEnum::Index1LSB,</span>
+        <span class="comment">//PixelFormatEnum::Index1MSB, PixelFormatEnum::Index4LSB,</span>
+        <span class="comment">//PixelFormatEnum::Index4MSB</span>
     ];
 
     
-    <span class='kw'>let</span> <span class='ident'>_sdl_context</span> <span class='op'>=</span> ::<span class='ident'>sdl</span>::<span class='ident'>init</span>().<span class='ident'>unwrap</span>();
-    <span class='kw'>for</span> <span class='ident'>format</span> <span class='kw'>in</span> <span class='ident'>pixel_formats</span> {
-        <span class='comment'>// If we don&#39;t support making a surface of a specific format,</span>
-        <span class='comment'>// that&#39;s fine, just keep going the best we can.</span>
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Ok</span>(<span class='ident'>surf</span>) <span class='op'>=</span> <span class='kw'>super</span>::<span class='ident'>surface</span>::<span class='ident'>Surface</span>::<span class='ident'>new</span>(<span class='number'>1</span>, <span class='number'>1</span>, <span class='ident'>format</span>) {
-            <span class='kw'>let</span> <span class='ident'>surf_format</span> <span class='op'>=</span> <span class='ident'>surf</span>.<span class='ident'>pixel_format</span>();
-            <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>PixelFormatEnum</span>::<span class='ident'>from</span>(<span class='ident'>surf_format</span>), <span class='ident'>format</span>);
+    <span class="kw">let</span> <span class="ident">_sdl_context</span> <span class="op">=</span> ::<span class="ident">sdl</span>::<span class="ident">init</span>().<span class="ident">unwrap</span>();
+    <span class="kw">for</span> <span class="ident">format</span> <span class="kw">in</span> <span class="ident">pixel_formats</span> {
+        <span class="comment">// If we don&#39;t support making a surface of a specific format,</span>
+        <span class="comment">// that&#39;s fine, just keep going the best we can.</span>
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">surf</span>) <span class="op">=</span> <span class="kw">super</span>::<span class="ident">surface</span>::<span class="ident">Surface</span>::<span class="ident">new</span>(<span class="number">1</span>, <span class="number">1</span>, <span class="ident">format</span>) {
+            <span class="kw">let</span> <span class="ident">surf_format</span> <span class="op">=</span> <span class="ident">surf</span>.<span class="ident">pixel_format</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">PixelFormatEnum</span>::<span class="ident">from</span>(<span class="ident">surf_format</span>), <span class="ident">format</span>);
         }
     }
 }

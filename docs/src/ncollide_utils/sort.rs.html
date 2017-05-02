@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -98,61 +98,61 @@
 <span id="53">53</span>
 <span id="54">54</span>
 <span id="55">55</span>
-</pre><pre class='rust '>
-<span class='comment'>// FIXME: do this out-of-place?</span>
-<span class='doccomment'>/// Sorts a set of three values in increasing order.</span>
-<span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>sort3</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>N</span>: <span class='ident'>PartialOrd</span><span class='op'>&gt;</span>(<span class='ident'>a</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>N</span>, <span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>N</span>, <span class='ident'>c</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>N</span>) <span class='op'>-&gt;</span> (<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>N</span>, <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>N</span>, <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>N</span>) {
-    <span class='kw'>let</span> <span class='ident'>a_b</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>a</span> <span class='op'>&gt;</span> <span class='kw-2'>*</span><span class='ident'>b</span>;
-    <span class='kw'>let</span> <span class='ident'>a_c</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>a</span> <span class='op'>&gt;</span> <span class='kw-2'>*</span><span class='ident'>c</span>;
-    <span class='kw'>let</span> <span class='ident'>b_c</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>b</span> <span class='op'>&gt;</span> <span class='kw-2'>*</span><span class='ident'>c</span>;
+</pre><pre class="rust ">
+<span class="comment">// FIXME: do this out-of-place?</span>
+<span class="doccomment">/// Sorts a set of three values in increasing order.</span>
+<span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sort3</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">PartialOrd</span><span class="op">&gt;</span>(<span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">N</span>, <span class="ident">b</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">N</span>, <span class="ident">c</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">N</span>) <span class="op">-&gt;</span> (<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">N</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">N</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">N</span>) {
+    <span class="kw">let</span> <span class="ident">a_b</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">a</span> <span class="op">&gt;</span> <span class="kw-2">*</span><span class="ident">b</span>;
+    <span class="kw">let</span> <span class="ident">a_c</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">a</span> <span class="op">&gt;</span> <span class="kw-2">*</span><span class="ident">c</span>;
+    <span class="kw">let</span> <span class="ident">b_c</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">&gt;</span> <span class="kw-2">*</span><span class="ident">c</span>;
 
-    <span class='kw'>let</span> <span class='ident'>sa</span>;
-    <span class='kw'>let</span> <span class='ident'>sb</span>;
-    <span class='kw'>let</span> <span class='ident'>sc</span>;
+    <span class="kw">let</span> <span class="ident">sa</span>;
+    <span class="kw">let</span> <span class="ident">sb</span>;
+    <span class="kw">let</span> <span class="ident">sc</span>;
 
-    <span class='comment'>// Sort the three values.</span>
-    <span class='comment'>// FIXME: move this to the utilities?</span>
-    <span class='kw'>if</span> <span class='ident'>a_b</span> { <span class='comment'>// a &gt; b</span>
-        <span class='kw'>if</span> <span class='ident'>a_c</span> { <span class='comment'>// a &gt; c</span>
-            <span class='ident'>sc</span> <span class='op'>=</span> <span class='ident'>a</span>;
+    <span class="comment">// Sort the three values.</span>
+    <span class="comment">// FIXME: move this to the utilities?</span>
+    <span class="kw">if</span> <span class="ident">a_b</span> { <span class="comment">// a &gt; b</span>
+        <span class="kw">if</span> <span class="ident">a_c</span> { <span class="comment">// a &gt; c</span>
+            <span class="ident">sc</span> <span class="op">=</span> <span class="ident">a</span>;
 
-            <span class='kw'>if</span> <span class='ident'>b_c</span> { <span class='comment'>// b &gt; c</span>
-                <span class='ident'>sa</span> <span class='op'>=</span> <span class='ident'>c</span>;
-                <span class='ident'>sb</span> <span class='op'>=</span> <span class='ident'>b</span>;
+            <span class="kw">if</span> <span class="ident">b_c</span> { <span class="comment">// b &gt; c</span>
+                <span class="ident">sa</span> <span class="op">=</span> <span class="ident">c</span>;
+                <span class="ident">sb</span> <span class="op">=</span> <span class="ident">b</span>;
             }
-            <span class='kw'>else</span> { <span class='comment'>// b &lt;= c</span>
-                <span class='ident'>sa</span> <span class='op'>=</span> <span class='ident'>b</span>;
-                <span class='ident'>sb</span> <span class='op'>=</span> <span class='ident'>c</span>;
-            }
-        }
-        <span class='kw'>else</span> { <span class='comment'>// a &lt;= c</span>
-            <span class='ident'>sa</span> <span class='op'>=</span> <span class='ident'>b</span>;
-            <span class='ident'>sb</span> <span class='op'>=</span> <span class='ident'>a</span>;
-            <span class='ident'>sc</span> <span class='op'>=</span> <span class='ident'>c</span>;
-        }
-    }
-    <span class='kw'>else</span> { <span class='comment'>// a &lt; b</span>
-        <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>a_c</span> { <span class='comment'>// a &lt;= c</span>
-            <span class='ident'>sa</span> <span class='op'>=</span> <span class='ident'>a</span>;
-
-            <span class='kw'>if</span> <span class='ident'>b_c</span> { <span class='comment'>// b &gt; c</span>
-                <span class='ident'>sb</span> <span class='op'>=</span> <span class='ident'>c</span>;
-                <span class='ident'>sc</span> <span class='op'>=</span> <span class='ident'>b</span>;
-            }
-            <span class='kw'>else</span> {
-                <span class='ident'>sb</span> <span class='op'>=</span> <span class='ident'>b</span>;
-                <span class='ident'>sc</span> <span class='op'>=</span> <span class='ident'>c</span>;
+            <span class="kw">else</span> { <span class="comment">// b &lt;= c</span>
+                <span class="ident">sa</span> <span class="op">=</span> <span class="ident">b</span>;
+                <span class="ident">sb</span> <span class="op">=</span> <span class="ident">c</span>;
             }
         }
-        <span class='kw'>else</span> { <span class='comment'>// a &gt; c</span>
-            <span class='ident'>sa</span> <span class='op'>=</span> <span class='ident'>c</span>;
-            <span class='ident'>sb</span> <span class='op'>=</span> <span class='ident'>a</span>;
-            <span class='ident'>sc</span> <span class='op'>=</span> <span class='ident'>b</span>;
+        <span class="kw">else</span> { <span class="comment">// a &lt;= c</span>
+            <span class="ident">sa</span> <span class="op">=</span> <span class="ident">b</span>;
+            <span class="ident">sb</span> <span class="op">=</span> <span class="ident">a</span>;
+            <span class="ident">sc</span> <span class="op">=</span> <span class="ident">c</span>;
         }
     }
+    <span class="kw">else</span> { <span class="comment">// a &lt; b</span>
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">a_c</span> { <span class="comment">// a &lt;= c</span>
+            <span class="ident">sa</span> <span class="op">=</span> <span class="ident">a</span>;
 
-    (<span class='ident'>sa</span>, <span class='ident'>sb</span>, <span class='ident'>sc</span>)
+            <span class="kw">if</span> <span class="ident">b_c</span> { <span class="comment">// b &gt; c</span>
+                <span class="ident">sb</span> <span class="op">=</span> <span class="ident">c</span>;
+                <span class="ident">sc</span> <span class="op">=</span> <span class="ident">b</span>;
+            }
+            <span class="kw">else</span> {
+                <span class="ident">sb</span> <span class="op">=</span> <span class="ident">b</span>;
+                <span class="ident">sc</span> <span class="op">=</span> <span class="ident">c</span>;
+            }
+        }
+        <span class="kw">else</span> { <span class="comment">// a &gt; c</span>
+            <span class="ident">sa</span> <span class="op">=</span> <span class="ident">c</span>;
+            <span class="ident">sb</span> <span class="op">=</span> <span class="ident">a</span>;
+            <span class="ident">sc</span> <span class="op">=</span> <span class="ident">b</span>;
+        }
+    }
+
+    (<span class="ident">sa</span>, <span class="ident">sb</span>, <span class="ident">sc</span>)
 }
 </pre>
 </section>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc struct">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,14 +43,14 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>sdl2</a>::<wbr><a class='struct' href=''>TimerSubsystem</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>sdl2</a>::<wbr><a class="struct" href=''>TimerSubsystem</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/sdl2/sdl.rs.html#200-204' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct TimerSubsystem { /* fields omitted */ }</pre><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../sdl2/struct.TimerSubsystem.html' title='sdl2::TimerSubsystem'>TimerSubsystem</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/sdl2/timer.rs.html#8-53' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.add_timer' class='method'><span id='add_timer.v' class='invisible'><code>fn <a href='#method.add_timer' class='fnname'>add_timer</a>&lt;'b, 'c&gt;(&amp;'b self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; delay: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; callback: <a class='type' href='../sdl2/timer/type.TimerCallback.html' title='sdl2::timer::TimerCallback'>TimerCallback</a>&lt;'c&gt;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='struct' href='../sdl2/timer/struct.Timer.html' title='sdl2::timer::Timer'>Timer</a>&lt;'b, 'c&gt;</code></span></h4>
+<pre class='rust struct'>pub struct TimerSubsystem { /* fields omitted */ }</pre><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../sdl2/struct.TimerSubsystem.html" title="struct sdl2::TimerSubsystem">TimerSubsystem</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/sdl2/timer.rs.html#8-53' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.add_timer' class="method"><span id='add_timer.v' class='invisible'><code>fn <a href='#method.add_timer' class='fnname'>add_timer</a>&lt;'b, 'c&gt;(&amp;'b self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; delay: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; callback: <a class="type" href="../sdl2/timer/type.TimerCallback.html" title="type sdl2::timer::TimerCallback">TimerCallback</a>&lt;'c&gt;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class="struct" href="../sdl2/timer/struct.Timer.html" title="struct sdl2::timer::Timer">Timer</a>&lt;'b, 'c&gt;</code></span></h4>
 <div class='docblock'><p>Constructs a new timer using the boxed closure <code>callback</code>.</p>
 
 <p>The timer is started immediately, it will be cancelled either:</p>
@@ -59,21 +59,21 @@
 <li>when the timer is dropped</li>
 <li>or when the callback returns a non-positive continuation interval</li>
 </ul>
-</div><h4 id='method.ticks' class='method'><span id='ticks.v' class='invisible'><code>fn <a href='#method.ticks' class='fnname'>ticks</a>(&amp;mut self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a></code></span></h4>
+</div><h4 id='method.ticks' class="method"><span id='ticks.v' class='invisible'><code>fn <a href='#method.ticks' class='fnname'>ticks</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a></code></span></h4>
 <div class='docblock'><p>Gets the number of milliseconds elapsed since the timer subsystem was initialized.</p>
 
 <p>It&#39;s recommended that you use another library for timekeeping, such as <code>time</code>.</p>
-</div><h4 id='method.delay' class='method'><span id='delay.v' class='invisible'><code>fn <a href='#method.delay' class='fnname'>delay</a>(&amp;mut self, ms: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>)</code></span></h4>
+</div><h4 id='method.delay' class="method"><span id='delay.v' class='invisible'><code>fn <a href='#method.delay' class='fnname'>delay</a>(&amp;mut self, ms: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>)</code></span></h4>
 <div class='docblock'><p>Sleeps the current thread for the specified amount of milliseconds.</p>
 
 <p>It&#39;s recommended that you use <code>std::thread::sleep()</code> instead.</p>
-</div><h4 id='method.performance_counter' class='method'><span id='performance_counter.v' class='invisible'><code>fn <a href='#method.performance_counter' class='fnname'>performance_counter</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code></span></h4>
-<h4 id='method.performance_frequency' class='method'><span id='performance_frequency.v' class='invisible'><code>fn <a href='#method.performance_frequency' class='fnname'>performance_frequency</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code></span></h4>
-</div><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../sdl2/struct.TimerSubsystem.html' title='sdl2::TimerSubsystem'>TimerSubsystem</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/sdl2/sdl.rs.html#207-220' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.clone' class='method'><span id='clone.v' class='invisible'><code>fn <a href='#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../sdl2/struct.TimerSubsystem.html' title='sdl2::TimerSubsystem'>TimerSubsystem</a></code></span></h4>
-<h4 id='method.sdl' class='method'><span id='sdl.v' class='invisible'><code>fn <a href='#method.sdl' class='fnname'>sdl</a>(&amp;self) -&gt; <a class='struct' href='../sdl2/struct.Sdl.html' title='sdl2::Sdl'>Sdl</a></code></span></h4>
+</div><h4 id='method.performance_counter' class="method"><span id='performance_counter.v' class='invisible'><code>fn <a href='#method.performance_counter' class='fnname'>performance_counter</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a></code></span></h4>
+<h4 id='method.performance_frequency' class="method"><span id='performance_frequency.v' class='invisible'><code>fn <a href='#method.performance_frequency' class='fnname'>performance_frequency</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a></code></span></h4>
+</div><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../sdl2/struct.TimerSubsystem.html" title="struct sdl2::TimerSubsystem">TimerSubsystem</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/sdl2/sdl.rs.html#207-220' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="struct" href="../sdl2/struct.TimerSubsystem.html" title="struct sdl2::TimerSubsystem">TimerSubsystem</a></code></span></h4>
+<h4 id='method.sdl' class="method"><span id='sdl.v' class='invisible'><code>fn <a href='#method.sdl' class='fnname'>sdl</a>(&amp;self) -&gt; <a class="struct" href="../sdl2/struct.Sdl.html" title="struct sdl2::Sdl">Sdl</a></code></span></h4>
 <div class='docblock'><p>Obtain an SDL context.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html' title='core::marker::Sync'>Sync</a> for <a class='struct' href='../sdl2/struct.TimerSubsystem.html' title='sdl2::TimerSubsystem'>TimerSubsystem</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/sdl2/sdl.rs.html#205' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> for <a class="struct" href="../sdl2/struct.TimerSubsystem.html" title="struct sdl2::TimerSubsystem">TimerSubsystem</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/sdl2/sdl.rs.html#205' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'></div></section>
     <section id='search' class="content hidden"></section>
 

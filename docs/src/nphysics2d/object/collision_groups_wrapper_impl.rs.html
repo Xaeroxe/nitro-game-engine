@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -222,182 +222,182 @@
 <span id="177">177</span>
 <span id="178">178</span>
 <span id="179">179</span>
-</pre><pre class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>macro_use</span>]</span>
+</pre><pre class="rust ">
+<span class="attribute">#<span class="op">!</span>[<span class="ident">macro_use</span>]</span>
 
-<span class='doccomment'>/// Reserved group id for static rigid bodies.</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>STATIC_GROUP_ID</span>: <span class='ident'>usize</span> <span class='op'>=</span> <span class='number'>29</span>;
-<span class='doccomment'>/// Reserved group id for sensors.</span>
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SENSOR_GROUP_ID</span>: <span class='ident'>usize</span> <span class='op'>=</span> <span class='number'>28</span>;
+<span class="doccomment">/// Reserved group id for static rigid bodies.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">STATIC_GROUP_ID</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">29</span>;
+<span class="doccomment">/// Reserved group id for sensors.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SENSOR_GROUP_ID</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">28</span>;
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>collision_groups_wrapper_impl</span>(
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>: <span class='ident'>ident</span>) <span class='op'>=&gt;</span> (
-        <span class='kw'>impl</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span> {
-            <span class='doccomment'>/// The maximum allowed group identifier.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>max_group_id</span>() <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-                <span class='number'>27</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">collision_groups_wrapper_impl</span>(
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>: <span class="ident">ident</span>) <span class="op">=&gt;</span> (
+        <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
+            <span class="doccomment">/// The maximum allowed group identifier.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_group_id</span>() <span class="op">-&gt;</span> <span class="ident">usize</span> {
+                <span class="number">27</span>
             }
 
-            <span class='doccomment'>/// Return the internal, ncollide-compatible, `CollisionGroups`</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_collision_groups</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>CollisionGroups</span> {
-                <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>collision_groups</span>
+            <span class="doccomment">/// Return the internal, ncollide-compatible, `CollisionGroups`</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_collision_groups</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">CollisionGroups</span> {
+                <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">collision_groups</span>
             }
 
-            <span class='doccomment'>/// Adds or removes this entity from the given group.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>modify_membership</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>group_id</span>: <span class='ident'>usize</span>, <span class='ident'>add</span>: <span class='ident'>bool</span>) {
-                <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>group_id</span> <span class='op'>!=</span> <span class='ident'>STATIC_GROUP_ID</span>, <span class='string'>&quot;The static group {} is reserved.&quot;</span>, <span class='ident'>STATIC_GROUP_ID</span>);
-                <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>group_id</span> <span class='op'>!=</span> <span class='ident'>SENSOR_GROUP_ID</span>, <span class='string'>&quot;The sensor group {} is reserved.&quot;</span>, <span class='ident'>SENSOR_GROUP_ID</span>);
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>modify_membership</span>(<span class='ident'>group_id</span>, <span class='ident'>add</span>);
+            <span class="doccomment">/// Adds or removes this entity from the given group.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modify_membership</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">group_id</span>: <span class="ident">usize</span>, <span class="ident">add</span>: <span class="ident">bool</span>) {
+                <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">group_id</span> <span class="op">!=</span> <span class="ident">STATIC_GROUP_ID</span>, <span class="string">&quot;The static group {} is reserved.&quot;</span>, <span class="ident">STATIC_GROUP_ID</span>);
+                <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">group_id</span> <span class="op">!=</span> <span class="ident">SENSOR_GROUP_ID</span>, <span class="string">&quot;The sensor group {} is reserved.&quot;</span>, <span class="ident">SENSOR_GROUP_ID</span>);
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">modify_membership</span>(<span class="ident">group_id</span>, <span class="ident">add</span>);
             }
 
-            <span class='doccomment'>/// Adds or removes the given group from this entity whitelist.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>modify_whitelist</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>group_id</span>: <span class='ident'>usize</span>, <span class='ident'>add</span>: <span class='ident'>bool</span>) {
-                <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>group_id</span> <span class='op'>!=</span> <span class='ident'>STATIC_GROUP_ID</span>, <span class='string'>&quot;The static group {} is reserved.&quot;</span>, <span class='ident'>STATIC_GROUP_ID</span>);
-                <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>group_id</span> <span class='op'>!=</span> <span class='ident'>SENSOR_GROUP_ID</span>, <span class='string'>&quot;The sensor group {} is reserved.&quot;</span>, <span class='ident'>SENSOR_GROUP_ID</span>);
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>modify_whitelist</span>(<span class='ident'>group_id</span>, <span class='ident'>add</span>);
+            <span class="doccomment">/// Adds or removes the given group from this entity whitelist.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modify_whitelist</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">group_id</span>: <span class="ident">usize</span>, <span class="ident">add</span>: <span class="ident">bool</span>) {
+                <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">group_id</span> <span class="op">!=</span> <span class="ident">STATIC_GROUP_ID</span>, <span class="string">&quot;The static group {} is reserved.&quot;</span>, <span class="ident">STATIC_GROUP_ID</span>);
+                <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">group_id</span> <span class="op">!=</span> <span class="ident">SENSOR_GROUP_ID</span>, <span class="string">&quot;The sensor group {} is reserved.&quot;</span>, <span class="ident">SENSOR_GROUP_ID</span>);
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">modify_whitelist</span>(<span class="ident">group_id</span>, <span class="ident">add</span>);
             }
 
-            <span class='doccomment'>/// Adds or removes this entity from the given group.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>modify_blacklist</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>group_id</span>: <span class='ident'>usize</span>, <span class='ident'>add</span>: <span class='ident'>bool</span>) {
-                <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>group_id</span> <span class='op'>!=</span> <span class='ident'>STATIC_GROUP_ID</span>, <span class='string'>&quot;The static group {} is reserved.&quot;</span>, <span class='ident'>STATIC_GROUP_ID</span>);
-                <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>group_id</span> <span class='op'>!=</span> <span class='ident'>SENSOR_GROUP_ID</span>, <span class='string'>&quot;The sensor group {} is reserved.&quot;</span>, <span class='ident'>SENSOR_GROUP_ID</span>);
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>modify_blacklist</span>(<span class='ident'>group_id</span>, <span class='ident'>add</span>);
+            <span class="doccomment">/// Adds or removes this entity from the given group.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">modify_blacklist</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">group_id</span>: <span class="ident">usize</span>, <span class="ident">add</span>: <span class="ident">bool</span>) {
+                <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">group_id</span> <span class="op">!=</span> <span class="ident">STATIC_GROUP_ID</span>, <span class="string">&quot;The static group {} is reserved.&quot;</span>, <span class="ident">STATIC_GROUP_ID</span>);
+                <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">group_id</span> <span class="op">!=</span> <span class="ident">SENSOR_GROUP_ID</span>, <span class="string">&quot;The sensor group {} is reserved.&quot;</span>, <span class="ident">SENSOR_GROUP_ID</span>);
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">modify_blacklist</span>(<span class="ident">group_id</span>, <span class="ident">add</span>);
             }
 
-            <span class='doccomment'>/// Make this object member of the given groups only.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_membership</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>groups</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>usize</span>]) {
-                <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>groups</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>STATIC_GROUP_ID</span>), <span class='string'>&quot;The static group {} is reserved.&quot;</span>, <span class='ident'>STATIC_GROUP_ID</span>);
-                <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>groups</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>SENSOR_GROUP_ID</span>), <span class='string'>&quot;The sensor group {} is reserved.&quot;</span>, <span class='ident'>SENSOR_GROUP_ID</span>);
+            <span class="doccomment">/// Make this object member of the given groups only.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_membership</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">groups</span>: <span class="kw-2">&amp;</span>[<span class="ident">usize</span>]) {
+                <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">groups</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">STATIC_GROUP_ID</span>), <span class="string">&quot;The static group {} is reserved.&quot;</span>, <span class="ident">STATIC_GROUP_ID</span>);
+                <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">groups</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">SENSOR_GROUP_ID</span>), <span class="string">&quot;The sensor group {} is reserved.&quot;</span>, <span class="ident">SENSOR_GROUP_ID</span>);
 
-                <span class='kw'>let</span> <span class='ident'>is_dynamic</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>is_dynamic</span>();
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>set_membership</span>(<span class='ident'>groups</span>);
-                <span class='self'>self</span>.<span class='ident'>configure_reserved_flags</span>(<span class='ident'>is_dynamic</span>);
+                <span class="kw">let</span> <span class="ident">is_dynamic</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">is_dynamic</span>();
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">set_membership</span>(<span class="ident">groups</span>);
+                <span class="self">self</span>.<span class="ident">configure_reserved_flags</span>(<span class="ident">is_dynamic</span>);
             }
 
-            <span class='doccomment'>/// Whitelists the given groups only (others will be un-whitelisted).</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_whitelist</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>groups</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>usize</span>]) {
-                <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>groups</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>STATIC_GROUP_ID</span>), <span class='string'>&quot;The static group {} is reserved.&quot;</span>, <span class='ident'>STATIC_GROUP_ID</span>);
-                <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>groups</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>SENSOR_GROUP_ID</span>), <span class='string'>&quot;The sensor group {} is reserved.&quot;</span>, <span class='ident'>SENSOR_GROUP_ID</span>);
+            <span class="doccomment">/// Whitelists the given groups only (others will be un-whitelisted).</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_whitelist</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">groups</span>: <span class="kw-2">&amp;</span>[<span class="ident">usize</span>]) {
+                <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">groups</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">STATIC_GROUP_ID</span>), <span class="string">&quot;The static group {} is reserved.&quot;</span>, <span class="ident">STATIC_GROUP_ID</span>);
+                <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">groups</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">SENSOR_GROUP_ID</span>), <span class="string">&quot;The sensor group {} is reserved.&quot;</span>, <span class="ident">SENSOR_GROUP_ID</span>);
 
-                <span class='kw'>let</span> <span class='ident'>is_dynamic</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>is_dynamic</span>();
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>set_whitelist</span>(<span class='ident'>groups</span>);
-                <span class='self'>self</span>.<span class='ident'>configure_reserved_flags</span>(<span class='ident'>is_dynamic</span>);
+                <span class="kw">let</span> <span class="ident">is_dynamic</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">is_dynamic</span>();
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">set_whitelist</span>(<span class="ident">groups</span>);
+                <span class="self">self</span>.<span class="ident">configure_reserved_flags</span>(<span class="ident">is_dynamic</span>);
             }
 
-            <span class='doccomment'>/// Blacklists the given groups only (others will be un-blacklisted).</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_blacklist</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>groups</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>usize</span>]) {
-                <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>groups</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>STATIC_GROUP_ID</span>), <span class='string'>&quot;The static group {} is reserved.&quot;</span>, <span class='ident'>STATIC_GROUP_ID</span>);
-                <span class='macro'>assert</span><span class='macro'>!</span>(<span class='op'>!</span><span class='ident'>groups</span>.<span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='ident'>SENSOR_GROUP_ID</span>), <span class='string'>&quot;The sensor group {} is reserved.&quot;</span>, <span class='ident'>SENSOR_GROUP_ID</span>);
+            <span class="doccomment">/// Blacklists the given groups only (others will be un-blacklisted).</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_blacklist</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">groups</span>: <span class="kw-2">&amp;</span>[<span class="ident">usize</span>]) {
+                <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">groups</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">STATIC_GROUP_ID</span>), <span class="string">&quot;The static group {} is reserved.&quot;</span>, <span class="ident">STATIC_GROUP_ID</span>);
+                <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">groups</span>.<span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="ident">SENSOR_GROUP_ID</span>), <span class="string">&quot;The sensor group {} is reserved.&quot;</span>, <span class="ident">SENSOR_GROUP_ID</span>);
 
-                <span class='kw'>let</span> <span class='ident'>is_dynamic</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>is_dynamic</span>();
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>set_blacklist</span>(<span class='ident'>groups</span>);
-                <span class='self'>self</span>.<span class='ident'>configure_reserved_flags</span>(<span class='ident'>is_dynamic</span>);
+                <span class="kw">let</span> <span class="ident">is_dynamic</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">is_dynamic</span>();
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">set_blacklist</span>(<span class="ident">groups</span>);
+                <span class="self">self</span>.<span class="ident">configure_reserved_flags</span>(<span class="ident">is_dynamic</span>);
             }
 
-            <span class='doccomment'>/// Copies the membership of another collision groups.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>copy_membership</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>) {
-                <span class='kw'>let</span> <span class='ident'>is_dynamic</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>is_dynamic</span>();
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>copy_membership</span>(<span class='ident'>other</span>.<span class='ident'>as_collision_groups</span>());
-                <span class='self'>self</span>.<span class='ident'>configure_reserved_flags</span>(<span class='ident'>is_dynamic</span>);
+            <span class="doccomment">/// Copies the membership of another collision groups.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_membership</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) {
+                <span class="kw">let</span> <span class="ident">is_dynamic</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">is_dynamic</span>();
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">copy_membership</span>(<span class="ident">other</span>.<span class="ident">as_collision_groups</span>());
+                <span class="self">self</span>.<span class="ident">configure_reserved_flags</span>(<span class="ident">is_dynamic</span>);
             }
 
-            <span class='doccomment'>/// Copies the whitelist of another collision groups.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>copy_whitelist</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>) {
-                <span class='kw'>let</span> <span class='ident'>is_dynamic</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>is_dynamic</span>();
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>copy_whitelist</span>(<span class='ident'>other</span>.<span class='ident'>as_collision_groups</span>());
-                <span class='self'>self</span>.<span class='ident'>configure_reserved_flags</span>(<span class='ident'>is_dynamic</span>);
+            <span class="doccomment">/// Copies the whitelist of another collision groups.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_whitelist</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) {
+                <span class="kw">let</span> <span class="ident">is_dynamic</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">is_dynamic</span>();
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">copy_whitelist</span>(<span class="ident">other</span>.<span class="ident">as_collision_groups</span>());
+                <span class="self">self</span>.<span class="ident">configure_reserved_flags</span>(<span class="ident">is_dynamic</span>);
             }
 
-            <span class='doccomment'>/// Copies the blacklist of another collision groups.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>copy_blacklist</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>) {
-                <span class='kw'>let</span> <span class='ident'>is_dynamic</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>is_dynamic</span>();
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>copy_blacklist</span>(<span class='ident'>other</span>.<span class='ident'>as_collision_groups</span>());
-                <span class='self'>self</span>.<span class='ident'>configure_reserved_flags</span>(<span class='ident'>is_dynamic</span>);
+            <span class="doccomment">/// Copies the blacklist of another collision groups.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_blacklist</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) {
+                <span class="kw">let</span> <span class="ident">is_dynamic</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">is_dynamic</span>();
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">copy_blacklist</span>(<span class="ident">other</span>.<span class="ident">as_collision_groups</span>());
+                <span class="self">self</span>.<span class="ident">configure_reserved_flags</span>(<span class="ident">is_dynamic</span>);
             }
 
-            <span class='doccomment'>/// Un-blacklists static objects.</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>enable_interaction_with_static</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>modify_blacklist</span>(<span class='ident'>STATIC_GROUP_ID</span>, <span class='bool-val'>false</span>);
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>modify_whitelist</span>(<span class='ident'>STATIC_GROUP_ID</span>, <span class='bool-val'>true</span>);
+            <span class="doccomment">/// Un-blacklists static objects.</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">enable_interaction_with_static</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">modify_blacklist</span>(<span class="ident">STATIC_GROUP_ID</span>, <span class="bool-val">false</span>);
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">modify_whitelist</span>(<span class="ident">STATIC_GROUP_ID</span>, <span class="bool-val">true</span>);
             }
 
-            <span class='doccomment'>/// Blacklists any static object.</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>disable_interaction_with_static</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>modify_blacklist</span>(<span class='ident'>STATIC_GROUP_ID</span>, <span class='bool-val'>true</span>);
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>modify_whitelist</span>(<span class='ident'>STATIC_GROUP_ID</span>, <span class='bool-val'>false</span>);
+            <span class="doccomment">/// Blacklists any static object.</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">disable_interaction_with_static</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">modify_blacklist</span>(<span class="ident">STATIC_GROUP_ID</span>, <span class="bool-val">true</span>);
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">modify_whitelist</span>(<span class="ident">STATIC_GROUP_ID</span>, <span class="bool-val">false</span>);
             }
 
-            <span class='doccomment'>/// Un-blacklists sensors.</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>enable_interaction_with_sensors</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>modify_blacklist</span>(<span class='ident'>SENSOR_GROUP_ID</span>, <span class='bool-val'>false</span>);
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>modify_whitelist</span>(<span class='ident'>SENSOR_GROUP_ID</span>, <span class='bool-val'>true</span>);
+            <span class="doccomment">/// Un-blacklists sensors.</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">enable_interaction_with_sensors</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">modify_blacklist</span>(<span class="ident">SENSOR_GROUP_ID</span>, <span class="bool-val">false</span>);
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">modify_whitelist</span>(<span class="ident">SENSOR_GROUP_ID</span>, <span class="bool-val">true</span>);
             }
 
-            <span class='doccomment'>/// Blacklists sensors.</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>disable_interaction_with_sensors</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>modify_blacklist</span>(<span class='ident'>SENSOR_GROUP_ID</span>, <span class='bool-val'>true</span>);
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>modify_whitelist</span>(<span class='ident'>SENSOR_GROUP_ID</span>, <span class='bool-val'>false</span>);
+            <span class="doccomment">/// Blacklists sensors.</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">disable_interaction_with_sensors</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">modify_blacklist</span>(<span class="ident">SENSOR_GROUP_ID</span>, <span class="bool-val">true</span>);
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">modify_whitelist</span>(<span class="ident">SENSOR_GROUP_ID</span>, <span class="bool-val">false</span>);
             }
 
-            <span class='doccomment'>/// Enables self interaction detection.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>enable_self_interaction</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>enable_self_interaction</span>();
+            <span class="doccomment">/// Enables self interaction detection.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">enable_self_interaction</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">enable_self_interaction</span>();
             }
 
-            <span class='doccomment'>/// Disables self interaction detection.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>disable_self_interaction</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>disable_self_interaction</span>();
+            <span class="doccomment">/// Disables self interaction detection.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">disable_self_interaction</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">disable_self_interaction</span>();
             }
 
-            <span class='doccomment'>/// Tests if this entity is part of the given group.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_member_of</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>group_id</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>is_member_of</span>(<span class='ident'>group_id</span>)
+            <span class="doccomment">/// Tests if this entity is part of the given group.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_member_of</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">group_id</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">is_member_of</span>(<span class="ident">group_id</span>)
             }
 
-            <span class='doccomment'>/// Tests if the given group is whitelisted.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_group_whitelisted</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>group_id</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>is_group_whitelisted</span>(<span class='ident'>group_id</span>)
+            <span class="doccomment">/// Tests if the given group is whitelisted.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_group_whitelisted</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">group_id</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">is_group_whitelisted</span>(<span class="ident">group_id</span>)
             }
 
-            <span class='doccomment'>/// Tests if the given group is blacklisted.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_group_blacklisted</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>group_id</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>is_group_blacklisted</span>(<span class='ident'>group_id</span>)
+            <span class="doccomment">/// Tests if the given group is blacklisted.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_group_blacklisted</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">group_id</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">is_group_blacklisted</span>(<span class="ident">group_id</span>)
             }
 
-            <span class='doccomment'>/// Tests whether collisions with a given group is possible.</span>
-            <span class='doccomment'>///</span>
-            <span class='doccomment'>/// Collision is possible if `group_id` is whitelisted but not blacklisted.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>can_interact_with</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>group_id</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>can_interact_with</span>(<span class='ident'>group_id</span>)
+            <span class="doccomment">/// Tests whether collisions with a given group is possible.</span>
+            <span class="doccomment">///</span>
+            <span class="doccomment">/// Collision is possible if `group_id` is whitelisted but not blacklisted.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">can_interact_with</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">group_id</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">can_interact_with</span>(<span class="ident">group_id</span>)
             }
 
-            <span class='doccomment'>/// Tests whether two collision groups have at least one group in common.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>can_interact_with_groups</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>CollisionGroups</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>can_interact_with_groups</span>(<span class='ident'>other</span>)
+            <span class="doccomment">/// Tests whether two collision groups have at least one group in common.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">can_interact_with_groups</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">CollisionGroups</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">can_interact_with_groups</span>(<span class="ident">other</span>)
             }
 
-            <span class='doccomment'>/// Tests whether self-collision is enabled.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>can_interact_with_self</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                <span class='self'>self</span>.<span class='ident'>collision_groups</span>.<span class='ident'>can_interact_with_self</span>()
+            <span class="doccomment">/// Tests whether self-collision is enabled.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">can_interact_with_self</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                <span class="self">self</span>.<span class="ident">collision_groups</span>.<span class="ident">can_interact_with_self</span>()
             }
         }
     )

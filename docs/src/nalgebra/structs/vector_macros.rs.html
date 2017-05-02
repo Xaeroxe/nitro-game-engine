@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -769,598 +769,598 @@
 <span id="724">724</span>
 <span id="725">725</span>
 <span id="726">726</span>
-</pre><pre class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>macro_use</span>]</span>
+</pre><pre class="rust ">
+<span class="attribute">#<span class="op">!</span>[<span class="ident">macro_use</span>]</span>
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>vectorlike_impl</span>(
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>: <span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>: <span class='ident'>expr</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>: <span class='ident'>ident</span>),<span class='op'>+</span>) <span class='op'>=&gt;</span> (
-        <span class='macro'>componentwise_neg</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
-        <span class='macro'>componentwise_repeat</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
-        <span class='macro'>componentwise_arbitrary</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
-        <span class='macro'>componentwise_rand</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
-        <span class='macro'>pointwise_scalar_add</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
-        <span class='macro'>pointwise_scalar_sub</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
-        <span class='macro'>pointwise_scalar_mul</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
-        <span class='macro'>pointwise_scalar_div</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
-        <span class='macro'>component_new</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
-        <span class='macro'>partial_order_impl</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">vectorlike_impl</span>(
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>: <span class="ident">expr</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>: <span class="ident">ident</span>),<span class="op">+</span>) <span class="op">=&gt;</span> (
+        <span class="macro">componentwise_neg</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
+        <span class="macro">componentwise_repeat</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
+        <span class="macro">componentwise_arbitrary</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
+        <span class="macro">componentwise_rand</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
+        <span class="macro">pointwise_scalar_add</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
+        <span class="macro">pointwise_scalar_sub</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
+        <span class="macro">pointwise_scalar_mul</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
+        <span class="macro">pointwise_scalar_div</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
+        <span class="macro">component_new</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
+        <span class="macro">partial_order_impl</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Cast between inner scalar type.
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>Nin</span>: <span class='ident'>Copy</span>, <span class='ident'>Nout</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Cast</span><span class='op'>&lt;</span><span class='ident'>Nin</span><span class='op'>&gt;&gt;</span> <span class='ident'>Cast</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>Nin</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>Nout</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>v</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>Nin</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>Nout</span><span class='op'>&gt;</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>::<span class='ident'>new</span>($(<span class='ident'>Cast</span>::<span class='ident'>from</span>(<span class='ident'>v</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>)),<span class='op'>+</span>)
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Nin</span>: <span class="ident">Copy</span>, <span class="ident">Nout</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Cast</span><span class="op">&lt;</span><span class="ident">Nin</span><span class="op">&gt;&gt;</span> <span class="ident">Cast</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">Nin</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">Nout</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">Nin</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">Nout</span><span class="op">&gt;</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>::<span class="ident">new</span>($(<span class="ident">Cast</span>::<span class="ident">from</span>(<span class="ident">v</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>)),<span class="op">+</span>)
             }
         }
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * ApproxEq
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>ApproxEq</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='ident'>ApproxEq</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>approx_epsilon</span>(_: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-                <span class='ident'>ApproxEq</span>::<span class='ident'>approx_epsilon</span>(<span class='prelude-val'>None</span>::<span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>)
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">ApproxEq</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="ident">ApproxEq</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">approx_epsilon</span>(_: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+                <span class="ident">ApproxEq</span>::<span class="ident">approx_epsilon</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>)
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>approx_ulps</span>(_: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span> {
-                <span class='ident'>ApproxEq</span>::<span class='ident'>approx_ulps</span>(<span class='prelude-val'>None</span>::<span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>)
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">approx_ulps</span>(_: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
+                <span class="ident">ApproxEq</span>::<span class="ident">approx_ulps</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>)
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>approx_eq</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                $(<span class='ident'>ApproxEq</span>::<span class='ident'>approx_eq</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>, <span class='kw-2'>&amp;</span><span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>))<span class='op'>&amp;&amp;</span><span class='op'>+</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">approx_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                $(<span class="ident">ApproxEq</span>::<span class="ident">approx_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>, <span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>))<span class="op">&amp;&amp;</span><span class="op">+</span>
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>approx_eq_eps</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>eps</span>: <span class='kw-2'>&amp;</span><span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                $(<span class='ident'>ApproxEq</span>::<span class='ident'>approx_eq_eps</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>, <span class='kw-2'>&amp;</span><span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>, <span class='ident'>eps</span>))<span class='op'>&amp;&amp;</span><span class='op'>+</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">approx_eq_eps</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">eps</span>: <span class="kw-2">&amp;</span><span class="ident">N</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                $(<span class="ident">ApproxEq</span>::<span class="ident">approx_eq_eps</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>, <span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>, <span class="ident">eps</span>))<span class="op">&amp;&amp;</span><span class="op">+</span>
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>approx_eq_ulps</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='ident'>ulps</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                $(<span class='ident'>ApproxEq</span>::<span class='ident'>approx_eq_ulps</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>, <span class='kw-2'>&amp;</span><span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>, <span class='ident'>ulps</span>))<span class='op'>&amp;&amp;</span><span class='op'>+</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">approx_eq_ulps</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="ident">ulps</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                $(<span class="ident">ApproxEq</span>::<span class="ident">approx_eq_ulps</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>, <span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>, <span class="ident">ulps</span>))<span class="op">&amp;&amp;</span><span class="op">+</span>
             }
         }
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Unsafe indexing.
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Copy</span><span class='op'>&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='doccomment'>/// Unsafe read access to a vector element by index.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>at_fast</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-                (<span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>as_ref</span>().<span class='ident'>get_unchecked</span>(<span class='ident'>i</span>))
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Copy</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="doccomment">/// Unsafe read access to a vector element by index.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">at_fast</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+                (<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">get_unchecked</span>(<span class="ident">i</span>))
             }
 
-            <span class='doccomment'>/// Unsafe write access to a vector element by index.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>set_fast</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>, <span class='ident'>val</span>: <span class='ident'>N</span>) {
-                (<span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>as_mut</span>().<span class='ident'>get_unchecked_mut</span>(<span class='ident'>i</span>)) <span class='op'>=</span> <span class='ident'>val</span>
+            <span class="doccomment">/// Unsafe write access to a vector element by index.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">set_fast</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">val</span>: <span class="ident">N</span>) {
+                (<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">as_mut</span>().<span class="ident">get_unchecked_mut</span>(<span class="ident">i</span>)) <span class="op">=</span> <span class="ident">val</span>
             }
         }
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Axpy
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Axpy</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='ident'>Axpy</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>axpy</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>a</span>: <span class='kw-2'>&amp;</span><span class='ident'>N</span>, <span class='ident'>x</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-                $( <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>.<span class='ident'>axpy</span>(<span class='ident'>a</span>, <span class='kw-2'>&amp;</span><span class='ident'>x</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>); )<span class='op'>+</span>
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Axpy</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="ident">Axpy</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">axpy</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">N</span>, <span class="ident">x</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+                $( <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>.<span class="ident">axpy</span>(<span class="ident">a</span>, <span class="kw-2">&amp;</span><span class="ident">x</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>); )<span class="op">+</span>
             }
         }
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Bounded
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Bounded</span><span class='op'>&gt;</span> <span class='ident'>Bounded</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>max_value</span>() <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span> {
-                    $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>: <span class='ident'>Bounded</span>::<span class='ident'>max_value</span>() ),<span class='op'>+</span>
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Bounded</span><span class="op">&gt;</span> <span class="ident">Bounded</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">max_value</span>() <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
+                    $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>: <span class="ident">Bounded</span>::<span class="ident">max_value</span>() ),<span class="op">+</span>
                 }
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>min_value</span>() <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span> {
-                    $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>: <span class='ident'>Bounded</span>::<span class='ident'>min_value</span>() ),<span class='op'>+</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">min_value</span>() <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span> {
+                    $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>: <span class="ident">Bounded</span>::<span class="ident">min_value</span>() ),<span class="op">+</span>
                 }
             }
         }
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Container
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='doccomment'>/// The dimension of this entity.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>len</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-                <span class='ident'>Dimension</span>::<span class='ident'>dimension</span>(<span class='prelude-val'>None</span>::<span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>)
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="doccomment">/// The dimension of this entity.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+                <span class="ident">Dimension</span>::<span class="ident">dimension</span>(<span class="prelude-val">None</span>::<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>)
             }
         }
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Conversions from/to slices
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>N</span>; <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>]<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>as_ref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span>[<span class='ident'>N</span>; <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>] {
-                <span class='kw'>unsafe</span> {
-                    <span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='self'>self</span>)
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">N</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">N</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>] {
+                <span class="kw">unsafe</span> {
+                    <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="self">self</span>)
                 }
             }
         }
 
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='ident'>AsMut</span><span class='op'>&lt;</span>[<span class='ident'>N</span>; <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>]<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>as_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>N</span>; <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>] {
-                <span class='kw'>unsafe</span> {
-                    <span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='self'>self</span>)
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="ident">AsMut</span><span class="op">&lt;</span>[<span class="ident">N</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">N</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>] {
+                <span class="kw">unsafe</span> {
+                    <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="self">self</span>)
                 }
             }
         }
 
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>N</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>N</span>; <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>]<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>arr</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>N</span>; <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>]) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw'>unsafe</span> {
-                    <span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='ident'>arr</span>)
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">N</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">N</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>]) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw">unsafe</span> {
+                    <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">arr</span>)
                 }
             }
         }
 
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>N</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> [<span class='ident'>N</span>; <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>]<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>arr</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> [<span class='ident'>N</span>; <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>]) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw'>unsafe</span> {
-                    <span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='ident'>arr</span>)
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> [<span class="ident">N</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> [<span class="ident">N</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>]) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw">unsafe</span> {
+                    <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">arr</span>)
                 }
             }
         }
 
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>N</span>: <span class='ident'>Clone</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>N</span>; <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>]<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>arr</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>N</span>; <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>]) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>vref</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>From</span>::<span class='ident'>from</span>(<span class='ident'>arr</span>);
-                <span class='ident'>vref</span>.<span class='ident'>clone</span>()
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">N</span>: <span class="ident">Clone</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">N</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">arr</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">N</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>]) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="ident">vref</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">From</span>::<span class="ident">from</span>(<span class="ident">arr</span>);
+                <span class="ident">vref</span>.<span class="ident">clone</span>()
             }
         }
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Dimension
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='ident'>Dimension</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>dimension</span>(_: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="ident">Dimension</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">dimension</span>(_: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>
             }
         }
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Indexable
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='ident'>Shape</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>shape</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="ident">Shape</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">shape</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>
             }
         }
 
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Copy</span><span class='op'>&gt;</span> <span class='ident'>Indexable</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>N</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>swap</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>i1</span>: <span class='ident'>usize</span>, <span class='ident'>i2</span>: <span class='ident'>usize</span>) {
-                <span class='kw'>unsafe</span> {
-                    <span class='ident'>mem</span>::<span class='ident'>transmute</span>::<span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>N</span>; <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>]<span class='op'>&gt;</span>(<span class='self'>self</span>).<span class='ident'>swap</span>(<span class='ident'>i1</span>, <span class='ident'>i2</span>)
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Copy</span><span class="op">&gt;</span> <span class="ident">Indexable</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">N</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">swap</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i1</span>: <span class="ident">usize</span>, <span class="ident">i2</span>: <span class="ident">usize</span>) {
+                <span class="kw">unsafe</span> {
+                    <span class="ident">mem</span>::<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">N</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>]<span class="op">&gt;</span>(<span class="self">self</span>).<span class="ident">swap</span>(<span class="ident">i1</span>, <span class="ident">i2</span>)
                 }
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>unsafe_at</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-                (<span class='kw-2'>*</span><span class='ident'>mem</span>::<span class='ident'>transmute</span>::<span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='kw-2'>&amp;</span>[<span class='ident'>N</span>; <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>]<span class='op'>&gt;</span>(<span class='self'>self</span>).<span class='ident'>get_unchecked</span>(<span class='ident'>i</span>))
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unsafe_at</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+                (<span class="kw-2">*</span><span class="ident">mem</span>::<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="kw-2">&amp;</span>[<span class="ident">N</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>]<span class="op">&gt;</span>(<span class="self">self</span>).<span class="ident">get_unchecked</span>(<span class="ident">i</span>))
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>unsafe_set</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>usize</span>, <span class='ident'>val</span>: <span class='ident'>N</span>) {
-                (<span class='kw-2'>*</span><span class='ident'>mem</span>::<span class='ident'>transmute</span>::<span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>N</span>; <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>]<span class='op'>&gt;</span>(<span class='self'>self</span>).<span class='ident'>get_unchecked_mut</span>(<span class='ident'>i</span>)) <span class='op'>=</span> <span class='ident'>val</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">unsafe_set</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">usize</span>, <span class="ident">val</span>: <span class="ident">N</span>) {
+                (<span class="kw-2">*</span><span class="ident">mem</span>::<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">N</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>]<span class="op">&gt;</span>(<span class="self">self</span>).<span class="ident">get_unchecked_mut</span>(<span class="ident">i</span>)) <span class="op">=</span> <span class="ident">val</span>
             }
         }
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Index
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Index</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='kw'>where</span> [<span class='ident'>N</span>]: <span class='ident'>Index</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-            <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='op'>&lt;</span>[<span class='ident'>N</span>] <span class='kw'>as</span> <span class='ident'>Index</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span>::<span class='ident'>Output</span>;
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Index</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="kw">where</span> [<span class="ident">N</span>]: <span class="ident">Index</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+            <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="op">&lt;</span>[<span class="ident">N</span>] <span class="kw">as</span> <span class="ident">Index</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span>::<span class="ident">Output</span>;
 
-            <span class='kw'>fn</span> <span class='ident'>index</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='op'>&lt;</span>[<span class='ident'>N</span>] <span class='kw'>as</span> <span class='ident'>Index</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span>::<span class='ident'>Output</span> {
-                <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>as_ref</span>()[<span class='ident'>i</span>]
+            <span class="kw">fn</span> <span class="ident">index</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="op">&lt;</span>[<span class="ident">N</span>] <span class="kw">as</span> <span class="ident">Index</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span>::<span class="ident">Output</span> {
+                <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">as_ref</span>()[<span class="ident">i</span>]
             }
         }
 
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>IndexMut</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='kw'>where</span> [<span class='ident'>N</span>]: <span class='ident'>IndexMut</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-            <span class='kw'>fn</span> <span class='ident'>index_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='op'>&lt;</span>[<span class='ident'>N</span>] <span class='kw'>as</span> <span class='ident'>Index</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span>::<span class='ident'>Output</span> {
-                <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>as_mut</span>()[<span class='ident'>i</span>]
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">IndexMut</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="kw">where</span> [<span class="ident">N</span>]: <span class="ident">IndexMut</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">index_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">i</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="op">&lt;</span>[<span class="ident">N</span>] <span class="kw">as</span> <span class="ident">Index</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span>::<span class="ident">Output</span> {
+                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">as_mut</span>()[<span class="ident">i</span>]
             }
         }
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Iterable
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='ident'>Iterable</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>iter</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Iter</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw'>unsafe</span> {
-                    <span class='ident'>mem</span>::<span class='ident'>transmute</span>::<span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='kw-2'>&amp;</span>[<span class='ident'>N</span>; <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>]<span class='op'>&gt;</span>(<span class='self'>self</span>).<span class='ident'>iter</span>()
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="ident">Iterable</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Iter</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw">unsafe</span> {
+                    <span class="ident">mem</span>::<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="kw-2">&amp;</span>[<span class="ident">N</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>]<span class="op">&gt;</span>(<span class="self">self</span>).<span class="ident">iter</span>()
                 }
             }
         }
 
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='ident'>IterableMut</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>iter_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>IterMut</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw'>unsafe</span> {
-                    <span class='ident'>mem</span>::<span class='ident'>transmute</span>::<span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>N</span>; <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>]<span class='op'>&gt;</span>(<span class='self'>self</span>).<span class='ident'>iter_mut</span>()
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="ident">IterableMut</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">iter_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">IterMut</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw">unsafe</span> {
+                    <span class="ident">mem</span>::<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">N</span>; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>]<span class="op">&gt;</span>(<span class="self">self</span>).<span class="ident">iter_mut</span>()
                 }
             }
         }
     )
 );
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>vector_impl</span>(
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>: <span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tp</span>: <span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>: <span class='ident'>expr</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>: <span class='ident'>ident</span>),<span class='op'>+</span>) <span class='op'>=&gt;</span> (
-        <span class='macro'>pointwise_add</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
-        <span class='macro'>pointwise_sub</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
-        <span class='macro'>pointwise_mul</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
-        <span class='macro'>pointwise_div</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
-        <span class='macro'>componentwise_zero</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
-        <span class='macro'>componentwise_one</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
-        <span class='macro'>componentwise_absolute</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
-        <span class='macro'>component_basis_element</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
-        <span class='macro'>vector_space_impl</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>);
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">vector_impl</span>(
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tp</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>: <span class="ident">expr</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>: <span class="ident">ident</span>),<span class="op">+</span>) <span class="op">=&gt;</span> (
+        <span class="macro">pointwise_add</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
+        <span class="macro">pointwise_sub</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
+        <span class="macro">pointwise_mul</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
+        <span class="macro">pointwise_div</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
+        <span class="macro">componentwise_zero</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
+        <span class="macro">componentwise_one</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
+        <span class="macro">componentwise_absolute</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
+        <span class="macro">component_basis_element</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
+        <span class="macro">vector_space_impl</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>);
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Dot product
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>BaseNum</span><span class='op'>&gt;</span> <span class='ident'>Dot</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>dot</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-                <span class='macro'>fold_add</span><span class='macro'>!</span>($(<span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span> <span class='op'>*</span> <span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span> ),<span class='op'>+</span>)
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">BaseNum</span><span class="op">&gt;</span> <span class="ident">Dot</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+                <span class="macro">fold_add</span><span class="macro">!</span>($(<span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span> <span class="op">*</span> <span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span> ),<span class="op">+</span>)
             }
         }
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Norm
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>BaseFloat</span><span class='op'>&gt;</span> <span class='ident'>Norm</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='kw'>type</span> <span class='ident'>NormType</span> <span class='op'>=</span> <span class='ident'>N</span>;
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">BaseFloat</span><span class="op">&gt;</span> <span class="ident">Norm</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="kw">type</span> <span class="ident">NormType</span> <span class="op">=</span> <span class="ident">N</span>;
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>norm_squared</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-                <span class='ident'>Dot</span>::<span class='ident'>dot</span>(<span class='self'>self</span>, <span class='self'>self</span>)
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">norm_squared</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+                <span class="ident">Dot</span>::<span class="ident">dot</span>(<span class="self">self</span>, <span class="self">self</span>)
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>normalize</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> : <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span>;
-                <span class='kw'>let</span> _ <span class='op'>=</span> <span class='ident'>res</span>.<span class='ident'>normalize_mut</span>();
-                <span class='ident'>res</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">normalize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>;
+                <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">res</span>.<span class="ident">normalize_mut</span>();
+                <span class="ident">res</span>
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>normalize_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-                <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> ::<span class='ident'>norm</span>(<span class='self'>self</span>);
-                <span class='kw-2'>*</span><span class='self'>self</span> <span class='op'>/=</span> <span class='ident'>n</span>;
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">normalize_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+                <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> ::<span class="ident">norm</span>(<span class="self">self</span>);
+                <span class="kw-2">*</span><span class="self">self</span> <span class="op">/=</span> <span class="ident">n</span>;
 
-                <span class='ident'>n</span>
+                <span class="ident">n</span>
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>try_normalize</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>min_norm</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> ::<span class='ident'>norm</span>(<span class='self'>self</span>);
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">try_normalize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">min_norm</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> {
+                <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> ::<span class="ident">norm</span>(<span class="self">self</span>);
 
-                <span class='kw'>if</span> <span class='ident'>n</span> <span class='op'>&lt;=</span> <span class='ident'>min_norm</span> {
-                    <span class='prelude-val'>None</span>
+                <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;=</span> <span class="ident">min_norm</span> {
+                    <span class="prelude-val">None</span>
                 }
-                <span class='kw'>else</span> {
-                    <span class='prelude-val'>Some</span>(<span class='kw-2'>*</span><span class='self'>self</span> <span class='op'>/</span> <span class='ident'>n</span>)
+                <span class="kw">else</span> {
+                    <span class="prelude-val">Some</span>(<span class="kw-2">*</span><span class="self">self</span> <span class="op">/</span> <span class="ident">n</span>)
                 }
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>try_normalize_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>min_norm</span>: <span class='ident'>N</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> ::<span class='ident'>norm</span>(<span class='self'>self</span>);
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">try_normalize_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">min_norm</span>: <span class="ident">N</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> ::<span class="ident">norm</span>(<span class="self">self</span>);
 
-                <span class='kw'>if</span> <span class='ident'>n</span> <span class='op'>&lt;=</span> <span class='ident'>min_norm</span> {
-                    <span class='prelude-val'>None</span>
+                <span class="kw">if</span> <span class="ident">n</span> <span class="op">&lt;=</span> <span class="ident">min_norm</span> {
+                    <span class="prelude-val">None</span>
                 }
-                <span class='kw'>else</span> {
-                    <span class='kw-2'>*</span><span class='self'>self</span> <span class='op'>/=</span> <span class='ident'>n</span>;
-                    <span class='prelude-val'>Some</span>(<span class='ident'>n</span>)
+                <span class="kw">else</span> {
+                    <span class="kw-2">*</span><span class="self">self</span> <span class="op">/=</span> <span class="ident">n</span>;
+                    <span class="prelude-val">Some</span>(<span class="ident">n</span>)
                 }
             }
         }
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Translation
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Add</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Neg</span><span class='op'>&lt;</span><span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='ident'>Translation</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>translation</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw-2'>*</span><span class='self'>self</span>
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Neg</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="ident">Translation</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">translation</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw-2">*</span><span class="self">self</span>
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>inverse_translation</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='op'>-</span><span class='kw-2'>*</span><span class='self'>self</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">inverse_translation</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="op">-</span><span class="kw-2">*</span><span class="self">self</span>
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>append_translation_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>t</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-                <span class='kw-2'>*</span><span class='self'>self</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='ident'>t</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='self'>self</span>;
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">append_translation_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">t</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+                <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">t</span> <span class="op">+</span> <span class="kw-2">*</span><span class="self">self</span>;
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>append_translation</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw-2'>*</span><span class='ident'>t</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='self'>self</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">append_translation</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">t</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw-2">*</span><span class="ident">t</span> <span class="op">+</span> <span class="kw-2">*</span><span class="self">self</span>
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>prepend_translation_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>t</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-                <span class='kw-2'>*</span><span class='self'>self</span> <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='ident'>t</span>;
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">prepend_translation_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">t</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+                <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">+</span> <span class="kw-2">*</span><span class="ident">t</span>;
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>prepend_translation</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>t</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw-2'>*</span><span class='self'>self</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='ident'>t</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">prepend_translation</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">t</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw-2">*</span><span class="self">self</span> <span class="op">+</span> <span class="kw-2">*</span><span class="ident">t</span>
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>set_translation</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>t</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) {
-                <span class='kw-2'>*</span><span class='self'>self</span> <span class='op'>=</span> <span class='ident'>t</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">set_translation</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">t</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) {
+                <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">t</span>
             }
         }
 
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Translate
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Add</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='ident'>Translate</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tp</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='kw'>fn</span> <span class='ident'>translate</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tp</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tp</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw-2'>*</span><span class='ident'>other</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='self'>self</span>
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Sub</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="ident">Translate</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">tp</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">translate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">tp</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tp</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw-2">*</span><span class="ident">other</span> <span class="op">+</span> <span class="kw-2">*</span><span class="self">self</span>
             }
 
-            <span class='kw'>fn</span> <span class='ident'>inverse_translate</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tp</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tp</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw-2'>*</span><span class='ident'>other</span> <span class='op'>-</span> <span class='kw-2'>*</span><span class='self'>self</span>
+            <span class="kw">fn</span> <span class="ident">inverse_translate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">tp</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tp</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw-2">*</span><span class="ident">other</span> <span class="op">-</span> <span class="kw-2">*</span><span class="self">self</span>
             }
         }
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Rotate
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>O</span>: <span class='ident'>Copy</span><span class='op'>&gt;</span> <span class='ident'>Rotate</span><span class='op'>&lt;</span><span class='ident'>O</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='kw'>fn</span> <span class='ident'>rotate</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>O</span>) <span class='op'>-&gt;</span> <span class='ident'>O</span> {
-                <span class='kw-2'>*</span><span class='ident'>other</span>
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">O</span>: <span class="ident">Copy</span><span class="op">&gt;</span> <span class="ident">Rotate</span><span class="op">&lt;</span><span class="ident">O</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">rotate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">O</span>) <span class="op">-&gt;</span> <span class="ident">O</span> {
+                <span class="kw-2">*</span><span class="ident">other</span>
             }
 
-            <span class='kw'>fn</span> <span class='ident'>inverse_rotate</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>O</span>) <span class='op'>-&gt;</span> <span class='ident'>O</span> {
-                <span class='kw-2'>*</span><span class='ident'>other</span>
-            }
-        }
-
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>O</span>: <span class='ident'>Copy</span><span class='op'>&gt;</span> <span class='ident'>Rotate</span><span class='op'>&lt;</span><span class='ident'>O</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tp</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='kw'>fn</span> <span class='ident'>rotate</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>O</span>) <span class='op'>-&gt;</span> <span class='ident'>O</span> {
-                <span class='kw-2'>*</span><span class='ident'>other</span>
-            }
-
-            <span class='kw'>fn</span> <span class='ident'>inverse_rotate</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>O</span>) <span class='op'>-&gt;</span> <span class='ident'>O</span> {
-                <span class='kw-2'>*</span><span class='ident'>other</span>
+            <span class="kw">fn</span> <span class="ident">inverse_rotate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">O</span>) <span class="op">-&gt;</span> <span class="ident">O</span> {
+                <span class="kw-2">*</span><span class="ident">other</span>
             }
         }
 
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">O</span>: <span class="ident">Copy</span><span class="op">&gt;</span> <span class="ident">Rotate</span><span class="op">&lt;</span><span class="ident">O</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tp</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">rotate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">O</span>) <span class="op">-&gt;</span> <span class="ident">O</span> {
+                <span class="kw-2">*</span><span class="ident">other</span>
+            }
+
+            <span class="kw">fn</span> <span class="ident">inverse_rotate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">O</span>) <span class="op">-&gt;</span> <span class="ident">O</span> {
+                <span class="kw-2">*</span><span class="ident">other</span>
+            }
+        }
 
 
-        <span class='comment'>/*
+
+        <span class="comment">/*
          *
          * Transform
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Add</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='ident'>Transform</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tp</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='kw'>fn</span> <span class='ident'>transform</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tp</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tp</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>translate</span>(<span class='ident'>other</span>)
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Sub</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="ident">Transform</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">tp</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">transform</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">tp</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tp</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="self">self</span>.<span class="ident">translate</span>(<span class="ident">other</span>)
             }
 
-            <span class='kw'>fn</span> <span class='ident'>inverse_transform</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tp</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tp</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>inverse_translate</span>(<span class='ident'>other</span>)
+            <span class="kw">fn</span> <span class="ident">inverse_transform</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">tp</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tp</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="self">self</span>.<span class="ident">inverse_translate</span>(<span class="ident">other</span>)
             }
         }
 
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Conversion to point.
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='doccomment'>/// Converts this vector to a point.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>to_point</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tp</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tp</span>::<span class='ident'>new</span>(
-                    $(<span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>),<span class='op'>+</span>
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="doccomment">/// Converts this vector to a point.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_point</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tp</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">tp</span>::<span class="ident">new</span>(
+                    $(<span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>),<span class="op">+</span>
                 )
             }
 
-            <span class='doccomment'>/// Reinterprets this vector as a point.</span>
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_point</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tp</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw'>unsafe</span> {
-                    <span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='self'>self</span>)
+            <span class="doccomment">/// Reinterprets this vector as a point.</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_point</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">tp</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw">unsafe</span> {
+                    <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="self">self</span>)
                 }
             }
         }
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * NumVector / FloatVector
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='ident'>NumVector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>
-            <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>BaseNum</span> {
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="ident">NumVector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>
+            <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">BaseNum</span> {
         }
 
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='ident'>FloatVector</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>
-            <span class='kw'>where</span> <span class='ident'>N</span>: <span class='ident'>BaseFloat</span> {
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="ident">FloatVector</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>
+            <span class="kw">where</span> <span class="ident">N</span>: <span class="ident">BaseFloat</span> {
         }
 
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Mean
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>BaseFloat</span> <span class='op'>+</span> <span class='ident'>Cast</span><span class='op'>&lt;</span><span class='ident'>f64</span><span class='op'>&gt;&gt;</span> <span class='ident'>Mean</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>mean</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span> {
-                <span class='kw'>let</span> <span class='ident'>normalizer</span> <span class='op'>=</span> ::<span class='ident'>cast</span>(<span class='number'>1.0f64</span> <span class='op'>/</span> <span class='self'>self</span>.<span class='ident'>len</span>() <span class='kw'>as</span> <span class='ident'>f64</span>);
-                <span class='self'>self</span>.<span class='ident'>iter</span>().<span class='ident'>fold</span>(::<span class='ident'>zero</span>(), <span class='op'>|</span><span class='ident'>acc</span>, <span class='ident'>x</span><span class='op'>|</span> <span class='ident'>acc</span> <span class='op'>+</span> <span class='kw-2'>*</span><span class='ident'>x</span> <span class='op'>*</span> <span class='ident'>normalizer</span>)
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">BaseFloat</span> <span class="op">+</span> <span class="ident">Cast</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;&gt;</span> <span class="ident">Mean</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">mean</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">N</span> {
+                <span class="kw">let</span> <span class="ident">normalizer</span> <span class="op">=</span> ::<span class="ident">cast</span>(<span class="number">1.0f64</span> <span class="op">/</span> <span class="self">self</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">f64</span>);
+                <span class="self">self</span>.<span class="ident">iter</span>().<span class="ident">fold</span>(::<span class="ident">zero</span>(), <span class="op">|</span><span class="ident">acc</span>, <span class="ident">x</span><span class="op">|</span> <span class="ident">acc</span> <span class="op">+</span> <span class="kw-2">*</span><span class="ident">x</span> <span class="op">*</span> <span class="ident">normalizer</span>)
             }
         }
 
 
-        <span class='comment'>/*
+        <span class="comment">/*
          *
          * Display
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>fmt</span>::<span class='ident'>Display</span><span class='op'>&gt;</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-                <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;(&quot;</span>));
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">fmt</span>::<span class="ident">Display</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+                <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;(&quot;</span>));
 
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>it</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>iter</span>();
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">it</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">iter</span>();
 
-                <span class='kw'>let</span> <span class='ident'>precision</span> <span class='op'>=</span> <span class='ident'>f</span>.<span class='ident'>precision</span>().<span class='ident'>unwrap_or</span>(<span class='number'>8</span>);
+                <span class="kw">let</span> <span class="ident">precision</span> <span class="op">=</span> <span class="ident">f</span>.<span class="ident">precision</span>().<span class="ident">unwrap_or</span>(<span class="number">8</span>);
 
-                <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;{:.*}&quot;</span>, <span class='ident'>precision</span>, <span class='kw-2'>*</span><span class='ident'>it</span>.<span class='ident'>next</span>().<span class='ident'>unwrap</span>()));
+                <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{:.*}&quot;</span>, <span class="ident">precision</span>, <span class="kw-2">*</span><span class="ident">it</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>()));
 
-                <span class='kw'>for</span> <span class='ident'>comp</span> <span class='kw'>in</span> <span class='ident'>it</span> {
-                    <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;, {:.*}&quot;</span>, <span class='ident'>precision</span>, <span class='kw-2'>*</span><span class='ident'>comp</span>));
+                <span class="kw">for</span> <span class="ident">comp</span> <span class="kw">in</span> <span class="ident">it</span> {
+                    <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;, {:.*}&quot;</span>, <span class="ident">precision</span>, <span class="kw-2">*</span><span class="ident">comp</span>));
                 }
 
-                <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;)&quot;</span>)
+                <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;)&quot;</span>)
             }
         }
     )
 );
 
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>basis_impl</span>(
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>: <span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span>: <span class='ident'>expr</span>) <span class='op'>=&gt;</span> (
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>BaseFloat</span><span class='op'>&gt;</span> <span class='ident'>Basis</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>canonical_basis</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnMut</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='ident'>f</span>: <span class='ident'>F</span>) {
-                <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span> {
-                    <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>f</span>(<span class='ident'>Basis</span>::<span class='ident'>canonical_basis_element</span>(<span class='ident'>i</span>).<span class='ident'>unwrap</span>()) { <span class='kw'>return</span> }
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">basis_impl</span>(
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span>: <span class="ident">expr</span>) <span class="op">=&gt;</span> (
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">BaseFloat</span><span class="op">&gt;</span> <span class="ident">Basis</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">canonical_basis</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">F</span>) {
+                <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span> {
+                    <span class="kw">if</span> <span class="op">!</span><span class="ident">f</span>(<span class="ident">Basis</span>::<span class="ident">canonical_basis_element</span>(<span class="ident">i</span>).<span class="ident">unwrap</span>()) { <span class="kw">return</span> }
                 }
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>orthonormal_subspace_basis</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnMut</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span><span class='op'>&gt;</span>(<span class='ident'>n</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>, <span class='kw-2'>mut</span> <span class='ident'>f</span>: <span class='ident'>F</span>) {
-                <span class='comment'>// Compute the basis of the orthogonal subspace using Gram-Schmidt</span>
-                <span class='comment'>// orthogonalization algorithm.</span>
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>basis</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">orthonormal_subspace_basis</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span><span class="op">&gt;</span>(<span class="ident">n</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>, <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="ident">F</span>) {
+                <span class="comment">// Compute the basis of the orthogonal subspace using Gram-Schmidt</span>
+                <span class="comment">// orthogonalization algorithm.</span>
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">basis</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 
-                <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span> .. <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span> {
-                    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>basis_element</span> : <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> ::<span class='ident'>zero</span>();
+                <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span> .. <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span> {
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">basis_element</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> ::<span class="ident">zero</span>();
 
-                    <span class='kw'>unsafe</span> {
-                        <span class='ident'>basis_element</span>.<span class='ident'>set_fast</span>(<span class='ident'>i</span>, ::<span class='ident'>one</span>());
+                    <span class="kw">unsafe</span> {
+                        <span class="ident">basis_element</span>.<span class="ident">set_fast</span>(<span class="ident">i</span>, ::<span class="ident">one</span>());
                     }
 
-                    <span class='kw'>if</span> <span class='ident'>basis</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span> <span class='op'>-</span> <span class='number'>1</span> {
-                        <span class='kw'>break</span>;
+                    <span class="kw">if</span> <span class="ident">basis</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span> <span class="op">-</span> <span class="number">1</span> {
+                        <span class="kw">break</span>;
                     }
 
-                    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>elt</span> <span class='op'>=</span> <span class='ident'>basis_element</span>;
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">elt</span> <span class="op">=</span> <span class="ident">basis_element</span>;
 
-                    <span class='ident'>elt</span> <span class='op'>=</span> <span class='ident'>elt</span> <span class='op'>-</span> <span class='kw-2'>*</span><span class='ident'>n</span> <span class='op'>*</span> <span class='ident'>Dot</span>::<span class='ident'>dot</span>(<span class='kw-2'>&amp;</span><span class='ident'>basis_element</span>, <span class='ident'>n</span>);
+                    <span class="ident">elt</span> <span class="op">=</span> <span class="ident">elt</span> <span class="op">-</span> <span class="kw-2">*</span><span class="ident">n</span> <span class="op">*</span> <span class="ident">Dot</span>::<span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="ident">basis_element</span>, <span class="ident">n</span>);
 
-                    <span class='kw'>for</span> <span class='ident'>v</span> <span class='kw'>in</span> <span class='ident'>basis</span>.<span class='ident'>iter</span>() {
-                        <span class='ident'>elt</span> <span class='op'>=</span> <span class='ident'>elt</span> <span class='op'>-</span> <span class='kw-2'>*</span><span class='ident'>v</span> <span class='op'>*</span> <span class='ident'>Dot</span>::<span class='ident'>dot</span>(<span class='kw-2'>&amp;</span><span class='ident'>elt</span>, <span class='ident'>v</span>)
+                    <span class="kw">for</span> <span class="ident">v</span> <span class="kw">in</span> <span class="ident">basis</span>.<span class="ident">iter</span>() {
+                        <span class="ident">elt</span> <span class="op">=</span> <span class="ident">elt</span> <span class="op">-</span> <span class="kw-2">*</span><span class="ident">v</span> <span class="op">*</span> <span class="ident">Dot</span>::<span class="ident">dot</span>(<span class="kw-2">&amp;</span><span class="ident">elt</span>, <span class="ident">v</span>)
                     };
 
-                    <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>ApproxEq</span>::<span class='ident'>approx_eq</span>(<span class='kw-2'>&amp;</span>::<span class='ident'>norm_squared</span>(<span class='kw-2'>&amp;</span><span class='ident'>elt</span>), <span class='kw-2'>&amp;</span>::<span class='ident'>zero</span>()) {
-                        <span class='kw'>let</span> <span class='ident'>new_element</span> <span class='op'>=</span> ::<span class='ident'>normalize</span>(<span class='kw-2'>&amp;</span><span class='ident'>elt</span>);
+                    <span class="kw">if</span> <span class="op">!</span><span class="ident">ApproxEq</span>::<span class="ident">approx_eq</span>(<span class="kw-2">&amp;</span>::<span class="ident">norm_squared</span>(<span class="kw-2">&amp;</span><span class="ident">elt</span>), <span class="kw-2">&amp;</span>::<span class="ident">zero</span>()) {
+                        <span class="kw">let</span> <span class="ident">new_element</span> <span class="op">=</span> ::<span class="ident">normalize</span>(<span class="kw-2">&amp;</span><span class="ident">elt</span>);
 
-                        <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>f</span>(<span class='ident'>new_element</span>) { <span class='kw'>return</span> };
+                        <span class="kw">if</span> <span class="op">!</span><span class="ident">f</span>(<span class="ident">new_element</span>) { <span class="kw">return</span> };
 
-                        <span class='ident'>basis</span>.<span class='ident'>push</span>(<span class='ident'>new_element</span>);
+                        <span class="ident">basis</span>.<span class="ident">push</span>(<span class="ident">new_element</span>);
                     }
                 }
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>canonical_basis_element</span>(<span class='ident'>i</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> {
-                <span class='kw'>if</span> <span class='ident'>i</span> <span class='op'>&lt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>dimension</span> {
-                    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>basis_element</span> : <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> ::<span class='ident'>zero</span>();
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">canonical_basis_element</span>(<span class="ident">i</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> {
+                <span class="kw">if</span> <span class="ident">i</span> <span class="op">&lt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">dimension</span> {
+                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">basis_element</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> ::<span class="ident">zero</span>();
 
-                    <span class='kw'>unsafe</span> {
-                        <span class='ident'>basis_element</span>.<span class='ident'>set_fast</span>(<span class='ident'>i</span>, ::<span class='ident'>one</span>());
+                    <span class="kw">unsafe</span> {
+                        <span class="ident">basis_element</span>.<span class="ident">set_fast</span>(<span class="ident">i</span>, ::<span class="ident">one</span>());
                     }
 
-                    <span class='prelude-val'>Some</span>(<span class='ident'>basis_element</span>)
+                    <span class="prelude-val">Some</span>(<span class="ident">basis_element</span>)
                 }
-                <span class='kw'>else</span> {
-                    <span class='prelude-val'>None</span>
+                <span class="kw">else</span> {
+                    <span class="prelude-val">None</span>
                 }
             }
         }
@@ -1369,129 +1369,129 @@
 
 
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>from_iterator_impl</span>(
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>: <span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param0</span>: <span class='ident'>ident</span>) <span class='op'>=&gt;</span> (
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='ident'>FromIterator</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>from_iter</span><span class='op'>&lt;</span><span class='ident'>I</span>: <span class='ident'>IntoIterator</span><span class='op'>&lt;</span><span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>N</span><span class='op'>&gt;&gt;</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param0</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param0</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param0</span>.<span class='ident'>into_iter</span>();
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>::<span class='ident'>new</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param0</span>.<span class='ident'>next</span>().<span class='ident'>unwrap</span>())
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">from_iterator_impl</span>(
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">param0</span>: <span class="ident">ident</span>) <span class="op">=&gt;</span> (
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="ident">FromIterator</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">param0</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">param0</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">param0</span>.<span class="ident">into_iter</span>();
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>::<span class="ident">new</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">param0</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>())
             }
         }
     );
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>: <span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param0</span>: <span class='ident'>ident</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>paramN</span>: <span class='ident'>ident</span>),<span class='op'>+</span>) <span class='op'>=&gt;</span> (
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='ident'>FromIterator</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>from_iter</span><span class='op'>&lt;</span><span class='ident'>I</span>: <span class='ident'>IntoIterator</span><span class='op'>&lt;</span><span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>N</span><span class='op'>&gt;&gt;</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param0</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param0</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param0</span>.<span class='ident'>into_iter</span>();
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>::<span class='ident'>new</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param0</span>.<span class='ident'>next</span>().<span class='ident'>unwrap</span>(),
-                        $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>paramN</span>.<span class='ident'>next</span>().<span class='ident'>unwrap</span>()),<span class='op'>+</span>)
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">param0</span>: <span class="ident">ident</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">paramN</span>: <span class="ident">ident</span>),<span class="op">+</span>) <span class="op">=&gt;</span> (
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="ident">FromIterator</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">from_iter</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;&gt;</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">param0</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">param0</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">param0</span>.<span class="ident">into_iter</span>();
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>::<span class="ident">new</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">param0</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>(),
+                        $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">paramN</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>()),<span class="op">+</span>)
             }
         }
     )
 );
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>vec_to_homogeneous_impl</span>(
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>: <span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t2</span>: <span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>extra</span>: <span class='ident'>ident</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>: <span class='ident'>ident</span>),<span class='op'>+</span>) <span class='op'>=&gt;</span> (
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>One</span> <span class='op'>+</span> <span class='ident'>Zero</span><span class='op'>&gt;</span> <span class='ident'>ToHomogeneous</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='kw'>fn</span> <span class='ident'>to_homogeneous</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> ::<span class='ident'>zero</span>();
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">vec_to_homogeneous_impl</span>(
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t2</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">extra</span>: <span class="ident">ident</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>: <span class="ident">ident</span>),<span class="op">+</span>) <span class="op">=&gt;</span> (
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">One</span> <span class="op">+</span> <span class="ident">Zero</span><span class="op">&gt;</span> <span class="ident">ToHomogeneous</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">to_homogeneous</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> ::<span class="ident">zero</span>();
 
-                $( <span class='ident'>res</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>; )<span class='op'>+</span>
+                $( <span class="ident">res</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span> <span class="op">=</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>; )<span class="op">+</span>
 
-                <span class='ident'>res</span>
+                <span class="ident">res</span>
             }
         }
     )
 );
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>vec_from_homogeneous_impl</span>(
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>: <span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t2</span>: <span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>extra</span>: <span class='ident'>ident</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>: <span class='ident'>ident</span>),<span class='op'>+</span>) <span class='op'>=&gt;</span> (
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Div</span><span class='op'>&lt;</span><span class='ident'>N</span>, <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>One</span> <span class='op'>+</span> <span class='ident'>Zero</span><span class='op'>&gt;</span> <span class='ident'>FromHomogeneous</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>v</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t2</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='op'>=</span> ::<span class='ident'>zero</span>();
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">vec_from_homogeneous_impl</span>(
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t2</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">extra</span>: <span class="ident">ident</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>: <span class="ident">ident</span>),<span class="op">+</span>) <span class="op">=&gt;</span> (
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Div</span><span class="op">&lt;</span><span class="ident">N</span>, <span class="ident">Output</span> <span class="op">=</span> <span class="ident">N</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">One</span> <span class="op">+</span> <span class="ident">Zero</span><span class="op">&gt;</span> <span class="ident">FromHomogeneous</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t2</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> <span class="op">=</span> ::<span class="ident">zero</span>();
 
-                $( <span class='ident'>res</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span> <span class='op'>=</span> <span class='ident'>v</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>; )<span class='op'>+</span>
+                $( <span class="ident">res</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span> <span class="op">=</span> <span class="ident">v</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>; )<span class="op">+</span>
 
-                <span class='ident'>res</span>
+                <span class="ident">res</span>
             }
         }
     )
 );
 
 
-<span class='comment'>// We need to keep this on a separate macro to retrieve the first component nam.</span>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>partial_order_impl</span>(
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>: <span class='ident'>ident</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>comp0</span>: <span class='ident'>ident</span> $(, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>: <span class='ident'>ident</span>)<span class='kw-2'>*</span>) <span class='op'>=&gt;</span> (
-        <span class='comment'>/*
+<span class="comment">// We need to keep this on a separate macro to retrieve the first component nam.</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">partial_order_impl</span>(
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>: <span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">comp0</span>: <span class="ident">ident</span> $(, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>: <span class="ident">ident</span>)<span class="kw-2">*</span>) <span class="op">=&gt;</span> (
+        <span class="comment">/*
          *
          * PartialOrder
          *
          */</span>
-        <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>BaseFloat</span><span class='op'>&gt;</span> <span class='ident'>PartialOrder</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>inf</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>comp0</span>.<span class='ident'>min</span>(<span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>comp0</span>), $(<span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>.<span class='ident'>min</span>(<span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>)),<span class='kw-2'>*</span>)
+        <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">BaseFloat</span><span class="op">&gt;</span> <span class="ident">PartialOrder</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">inf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">comp0</span>.<span class="ident">min</span>(<span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">comp0</span>), $(<span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>.<span class="ident">min</span>(<span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>)),<span class="kw-2">*</span>)
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>sup</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>comp0</span>.<span class='ident'>max</span>(<span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>comp0</span>), $(<span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>.<span class='ident'>max</span>(<span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>)),<span class='kw-2'>*</span>)
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">sup</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">comp0</span>.<span class="ident">max</span>(<span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">comp0</span>), $(<span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>.<span class="ident">max</span>(<span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>)),<span class="kw-2">*</span>)
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_mut</span>)]</span> <span class='comment'>// otherwise there will be a warning for is_eq or Vector1.</span>
-            <span class='kw'>fn</span> <span class='ident'>partial_cmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>PartialOrdering</span> {
-                <span class='kw'>let</span> <span class='ident'>is_lt</span>     <span class='op'>=</span> <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>comp0</span> <span class='op'>&lt;</span>  <span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>comp0</span>;
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>is_eq</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>comp0</span> <span class='op'>==</span> <span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>comp0</span>;
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_mut</span>)]</span> <span class="comment">// otherwise there will be a warning for is_eq or Vector1.</span>
+            <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">PartialOrdering</span> {
+                <span class="kw">let</span> <span class="ident">is_lt</span>     <span class="op">=</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">comp0</span> <span class="op">&lt;</span>  <span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">comp0</span>;
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">is_eq</span> <span class="op">=</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">comp0</span> <span class="op">==</span> <span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">comp0</span>;
 
-                <span class='kw'>if</span> <span class='ident'>is_lt</span> { <span class='comment'>// &lt;</span>
+                <span class="kw">if</span> <span class="ident">is_lt</span> { <span class="comment">// &lt;</span>
                     $(
-                        <span class='kw'>if</span> <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span> <span class='op'>&gt;</span> <span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span> {
-                            <span class='kw'>return</span> <span class='ident'>PartialOrdering</span>::<span class='ident'>NotComparable</span>
+                        <span class="kw">if</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span> <span class="op">&gt;</span> <span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span> {
+                            <span class="kw">return</span> <span class="ident">PartialOrdering</span>::<span class="ident">NotComparable</span>
                         }
-                     )<span class='op'>*</span>
+                     )<span class="op">*</span>
 
-                    <span class='ident'>PartialOrdering</span>::<span class='ident'>PartialLess</span>
+                    <span class="ident">PartialOrdering</span>::<span class="ident">PartialLess</span>
                 }
-                <span class='kw'>else</span> { <span class='comment'>// &gt;=</span>
+                <span class="kw">else</span> { <span class="comment">// &gt;=</span>
                     $(
-                        <span class='kw'>if</span> <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span> <span class='op'>&lt;</span> <span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span> {
-                            <span class='kw'>return</span> <span class='ident'>PartialOrdering</span>::<span class='ident'>NotComparable</span>
+                        <span class="kw">if</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span> <span class="op">&lt;</span> <span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span> {
+                            <span class="kw">return</span> <span class="ident">PartialOrdering</span>::<span class="ident">NotComparable</span>
                         }
-                        <span class='kw'>else</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span> <span class='op'>&gt;</span> <span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span> {
-                            <span class='ident'>is_eq</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
+                        <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span> <span class="op">&gt;</span> <span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span> {
+                            <span class="ident">is_eq</span> <span class="op">=</span> <span class="bool-val">false</span>;
                         }
 
-                     )<span class='op'>*</span>
+                     )<span class="op">*</span>
 
-                    <span class='kw'>if</span> <span class='ident'>is_eq</span> {
-                        <span class='ident'>PartialOrdering</span>::<span class='ident'>PartialEqual</span>
+                    <span class="kw">if</span> <span class="ident">is_eq</span> {
+                        <span class="ident">PartialOrdering</span>::<span class="ident">PartialEqual</span>
                     }
-                    <span class='kw'>else</span> {
-                        <span class='ident'>PartialOrdering</span>::<span class='ident'>PartialGreater</span>
+                    <span class="kw">else</span> {
+                        <span class="ident">PartialOrdering</span>::<span class="ident">PartialGreater</span>
                     }
                 }
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>partial_lt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>comp0</span> <span class='op'>&lt;</span> <span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>comp0</span> $(<span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span> <span class='op'>&lt;</span> <span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>)<span class='op'>*</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">partial_lt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">comp0</span> <span class="op">&lt;</span> <span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">comp0</span> $(<span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span> <span class="op">&lt;</span> <span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>)<span class="op">*</span>
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>partial_le</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>comp0</span> <span class='op'>&lt;=</span> <span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>comp0</span> $(<span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span> <span class='op'>&lt;=</span> <span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>)<span class='op'>*</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">partial_le</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">comp0</span> <span class="op">&lt;=</span> <span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">comp0</span> $(<span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span> <span class="op">&lt;=</span> <span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>)<span class="op">*</span>
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>partial_gt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>comp0</span> <span class='op'>&gt;</span> <span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>comp0</span> $(<span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span> <span class='op'>&gt;</span> <span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>)<span class='op'>*</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">partial_gt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">comp0</span> <span class="op">&gt;</span> <span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">comp0</span> $(<span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span> <span class="op">&gt;</span> <span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>)<span class="op">*</span>
             }
 
-            <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-            <span class='kw'>fn</span> <span class='ident'>partial_ge</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-                <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>comp0</span> <span class='op'>&gt;=</span> <span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>comp0</span> $(<span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span> <span class='op'>&gt;=</span> <span class='ident'>other</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>compN</span>)<span class='op'>*</span>
+            <span class="attribute">#[<span class="ident">inline</span>]</span>
+            <span class="kw">fn</span> <span class="ident">partial_ge</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+                <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">comp0</span> <span class="op">&gt;=</span> <span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">comp0</span> $(<span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span> <span class="op">&gt;=</span> <span class="ident">other</span>.<span class="macro-nonterminal">$</span><span class="macro-nonterminal">compN</span>)<span class="op">*</span>
             }
         }
     )

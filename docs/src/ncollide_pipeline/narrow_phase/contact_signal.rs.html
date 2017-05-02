@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -121,82 +121,82 @@
 <span id="76">76</span>
 <span id="77">77</span>
 <span id="78">78</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>world</span>::<span class='ident'>CollisionObject</span>;
-<span class='kw'>use</span> <span class='ident'>narrow_phase</span>::<span class='ident'>ContactAlgorithm</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::<span class='ident'>Point</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">world</span>::<span class="ident">CollisionObject</span>;
+<span class="kw">use</span> <span class="ident">narrow_phase</span>::<span class="ident">ContactAlgorithm</span>;
+<span class="kw">use</span> <span class="ident">math</span>::<span class="ident">Point</span>;
 
-<span class='doccomment'>/// A signal handler for contact detection.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ContactHandler</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Activate an action for when two objects start being in contact.</span>
-    <span class='kw'>fn</span> <span class='ident'>handle_contact_started</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
-                              <span class='ident'>co1</span>:      <span class='kw-2'>&amp;</span><span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span>,
-                              <span class='ident'>co2</span>:      <span class='kw-2'>&amp;</span><span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span>,
-                              <span class='ident'>contacts</span>: <span class='kw-2'>&amp;</span><span class='ident'>ContactAlgorithm</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>);
+<span class="doccomment">/// A signal handler for contact detection.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ContactHandler</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Activate an action for when two objects start being in contact.</span>
+    <span class="kw">fn</span> <span class="ident">handle_contact_started</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+                              <span class="ident">co1</span>:      <span class="kw-2">&amp;</span><span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span>,
+                              <span class="ident">co2</span>:      <span class="kw-2">&amp;</span><span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span>,
+                              <span class="ident">contacts</span>: <span class="kw-2">&amp;</span><span class="ident">ContactAlgorithm</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>);
 
-    <span class='doccomment'>/// Activate an action for when two objects stop being in contact.</span>
-    <span class='kw'>fn</span> <span class='ident'>handle_contact_stopped</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>co1</span>: <span class='kw-2'>&amp;</span><span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>co2</span>: <span class='kw-2'>&amp;</span><span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span>);
+    <span class="doccomment">/// Activate an action for when two objects stop being in contact.</span>
+    <span class="kw">fn</span> <span class="ident">handle_contact_stopped</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">co1</span>: <span class="kw-2">&amp;</span><span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">co2</span>: <span class="kw-2">&amp;</span><span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span>);
 }
 
-<span class='doccomment'>/// Signal for contact start/stop.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>ContactSignal</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='ident'>contact_handlers</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>String</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ContactHandler</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>)<span class='op'>&gt;</span>,
+<span class="doccomment">/// Signal for contact start/stop.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ContactSignal</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="ident">contact_handlers</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">ContactHandler</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>)<span class="op">&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>ContactSignal</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Creates a new `ContactSignal` with no event handler registered.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>ContactSignal</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>ContactSignal</span> {
-            <span class='ident'>contact_handlers</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">ContactSignal</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Creates a new `ContactSignal` with no event handler registered.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">ContactSignal</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">ContactSignal</span> {
+            <span class="ident">contact_handlers</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
         }
     }
 
-    <span class='doccomment'>/// Registers an event handler.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_contact_handler</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
-                                    <span class='ident'>name</span>:     <span class='kw-2'>&amp;</span><span class='ident'>str</span>,
-                                    <span class='ident'>callback</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ContactHandler</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>) {
-        <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> (<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>n</span>, <span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>f</span>) <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>contact_handlers</span>.<span class='ident'>iter_mut</span>() {
-            <span class='kw'>if</span> <span class='ident'>name</span> <span class='op'>==</span> <span class='kw-2'>&amp;</span><span class='ident'>n</span>[..] {
-                <span class='kw-2'>*</span><span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>callback</span>;
-                <span class='kw'>return</span>;
+    <span class="doccomment">/// Registers an event handler.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_contact_handler</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+                                    <span class="ident">name</span>:     <span class="kw-2">&amp;</span><span class="ident">str</span>,
+                                    <span class="ident">callback</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">ContactHandler</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>) {
+        <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> (<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">n</span>, <span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">f</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">contact_handlers</span>.<span class="ident">iter_mut</span>() {
+            <span class="kw">if</span> <span class="ident">name</span> <span class="op">==</span> <span class="kw-2">&amp;</span><span class="ident">n</span>[..] {
+                <span class="kw-2">*</span><span class="ident">f</span> <span class="op">=</span> <span class="ident">callback</span>;
+                <span class="kw">return</span>;
             }
         }
 
-        <span class='self'>self</span>.<span class='ident'>contact_handlers</span>.<span class='ident'>push</span>((<span class='ident'>name</span>.<span class='ident'>to_string</span>(), <span class='ident'>callback</span>))
+        <span class="self">self</span>.<span class="ident">contact_handlers</span>.<span class="ident">push</span>((<span class="ident">name</span>.<span class="ident">to_string</span>(), <span class="ident">callback</span>))
     }
 
-    <span class='doccomment'>/// Unregisters an event handler.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unregister_contact_handler</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>to_remove</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>contact_handlers</span>.<span class='ident'>len</span>();
+    <span class="doccomment">/// Unregisters an event handler.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unregister_contact_handler</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">to_remove</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">contact_handlers</span>.<span class="ident">len</span>();
 
-        <span class='kw'>for</span> (<span class='ident'>i</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> (<span class='kw-2'>ref</span> <span class='ident'>n</span>, _)) <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>contact_handlers</span>.<span class='ident'>iter_mut</span>().<span class='ident'>enumerate</span>() {
-            <span class='kw'>if</span> <span class='ident'>name</span> <span class='op'>==</span> <span class='kw-2'>&amp;</span><span class='ident'>n</span>[..] {
-                <span class='ident'>to_remove</span> <span class='op'>=</span> <span class='ident'>i</span>;
+        <span class="kw">for</span> (<span class="ident">i</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> (<span class="kw-2">ref</span> <span class="ident">n</span>, _)) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">contact_handlers</span>.<span class="ident">iter_mut</span>().<span class="ident">enumerate</span>() {
+            <span class="kw">if</span> <span class="ident">name</span> <span class="op">==</span> <span class="kw-2">&amp;</span><span class="ident">n</span>[..] {
+                <span class="ident">to_remove</span> <span class="op">=</span> <span class="ident">i</span>;
             }
         }
 
-        <span class='kw'>if</span> <span class='ident'>to_remove</span> <span class='op'>!=</span> <span class='self'>self</span>.<span class='ident'>contact_handlers</span>.<span class='ident'>len</span>() {
-            <span class='kw'>let</span> _ <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>contact_handlers</span>.<span class='ident'>remove</span>(<span class='ident'>to_remove</span>);
+        <span class="kw">if</span> <span class="ident">to_remove</span> <span class="op">!=</span> <span class="self">self</span>.<span class="ident">contact_handlers</span>.<span class="ident">len</span>() {
+            <span class="kw">let</span> _ <span class="op">=</span> <span class="self">self</span>.<span class="ident">contact_handlers</span>.<span class="ident">remove</span>(<span class="ident">to_remove</span>);
         }
     }
 
-    <span class='comment'>// FIXME: do we really want to use &amp;mut here ?</span>
-    <span class='doccomment'>/// Activates the contact started signal, executing all the event handlers.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>trigger_contact_started_signal</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
-                                          <span class='ident'>co1</span>:      <span class='kw-2'>&amp;</span><span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span>,
-                                          <span class='ident'>co2</span>:      <span class='kw-2'>&amp;</span><span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span>,
-                                          <span class='ident'>contacts</span>: <span class='kw-2'>&amp;</span><span class='ident'>ContactAlgorithm</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span><span class='op'>&gt;</span>) {
-        <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> (_, <span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>f</span>) <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>contact_handlers</span>.<span class='ident'>iter_mut</span>() {
-            <span class='ident'>f</span>.<span class='ident'>handle_contact_started</span>(<span class='ident'>co1</span>, <span class='ident'>co2</span>, <span class='ident'>contacts</span>)
+    <span class="comment">// FIXME: do we really want to use &amp;mut here ?</span>
+    <span class="doccomment">/// Activates the contact started signal, executing all the event handlers.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">trigger_contact_started_signal</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+                                          <span class="ident">co1</span>:      <span class="kw-2">&amp;</span><span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span>,
+                                          <span class="ident">co2</span>:      <span class="kw-2">&amp;</span><span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span>,
+                                          <span class="ident">contacts</span>: <span class="kw-2">&amp;</span><span class="ident">ContactAlgorithm</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span><span class="op">&gt;</span>) {
+        <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> (_, <span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">f</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">contact_handlers</span>.<span class="ident">iter_mut</span>() {
+            <span class="ident">f</span>.<span class="ident">handle_contact_started</span>(<span class="ident">co1</span>, <span class="ident">co2</span>, <span class="ident">contacts</span>)
         }
     }
 
-    <span class='doccomment'>/// Activates the contact stopped signal, executing all the event handlers.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>trigger_contact_stopped_signal</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
-                                          <span class='ident'>co1</span>: <span class='kw-2'>&amp;</span><span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span>,
-                                          <span class='ident'>co2</span>: <span class='kw-2'>&amp;</span><span class='ident'>CollisionObject</span><span class='op'>&lt;</span><span class='ident'>P</span>, <span class='ident'>M</span>, <span class='ident'>T</span><span class='op'>&gt;</span>) {
-        <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> (_, <span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>f</span>) <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>contact_handlers</span>.<span class='ident'>iter_mut</span>() {
-            <span class='ident'>f</span>.<span class='ident'>handle_contact_stopped</span>(<span class='ident'>co1</span>, <span class='ident'>co2</span>)
+    <span class="doccomment">/// Activates the contact stopped signal, executing all the event handlers.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">trigger_contact_stopped_signal</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+                                          <span class="ident">co1</span>: <span class="kw-2">&amp;</span><span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span>,
+                                          <span class="ident">co2</span>: <span class="kw-2">&amp;</span><span class="ident">CollisionObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">M</span>, <span class="ident">T</span><span class="op">&gt;</span>) {
+        <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> (_, <span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">f</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">contact_handlers</span>.<span class="ident">iter_mut</span>() {
+            <span class="ident">f</span>.<span class="ident">handle_contact_stopped</span>(<span class="ident">co1</span>, <span class="ident">co2</span>)
         }
     }
 }

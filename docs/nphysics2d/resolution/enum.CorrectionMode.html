@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc enum">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,13 +43,13 @@
         </form>
     </nav>
 
-    <section id='main' class="content enum">
-<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>nphysics2d</a>::<wbr><a href='index.html'>resolution</a>::<wbr><a class='enum' href=''>CorrectionMode</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>nphysics2d</a>::<wbr><a href='index.html'>resolution</a>::<wbr><a class="enum" href=''>CorrectionMode</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/nphysics2d/resolution/constraint/contact_equation.rs.html#14-23' title='goto source code'>[src]</a></span></h1>
-<pre class='rust enum'>pub enum CorrectionMode&lt;N:&nbsp;<a class='trait' href='../../alga/general/real/trait.Real.html' title='alga::general::real::Real'>Real</a>&gt; {
+<pre class='rust enum'>pub enum CorrectionMode&lt;N:&nbsp;<a class="trait" href="../../alga/general/real/trait.Real.html" title="trait alga::general::real::Real">Real</a>&gt; {
     Velocity(N),
     VelocityAndPosition(N,&nbsp;N,&nbsp;N),
     VelocityAndPositionThresold(N,&nbsp;N,&nbsp;N),
@@ -60,14 +60,14 @@
 </div><span id='variant.VelocityAndPositionThresold' class='variant'><span id='VelocityAndPositionThresold.v' class='invisible'><code>VelocityAndPositionThresold(N,&nbsp;N,&nbsp;N)</code></span></span><div class='docblock'><p>Penetration are solved by the penalty method together with a hard repositioning.</p>
 
 <p>The amount of velocity correction is bounded by threshold.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;N:&nbsp;<a class='trait' href='../../alga/general/real/trait.Real.html' title='alga::general::real::Real'>Real</a>&gt; <a class='enum' href='../../nphysics2d/resolution/enum.CorrectionMode.html' title='nphysics2d::resolution::CorrectionMode'>CorrectionMode</a>&lt;N&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/nphysics2d/resolution/constraint/contact_equation.rs.html#25-65' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.vel_corr_factor' class='method'><span id='vel_corr_factor.v' class='invisible'><code>fn <a href='#method.vel_corr_factor' class='fnname'>vel_corr_factor</a>(&amp;self) -&gt; N</code></span></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;N:&nbsp;<a class="trait" href="../../alga/general/real/trait.Real.html" title="trait alga::general::real::Real">Real</a>&gt; <a class="enum" href="../../nphysics2d/resolution/enum.CorrectionMode.html" title="enum nphysics2d::resolution::CorrectionMode">CorrectionMode</a>&lt;N&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/nphysics2d/resolution/constraint/contact_equation.rs.html#25-65' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.vel_corr_factor' class="method"><span id='vel_corr_factor.v' class='invisible'><code>fn <a href='#method.vel_corr_factor' class='fnname'>vel_corr_factor</a>(&amp;self) -&gt; N</code></span></h4>
 <div class='docblock'><p>The velocity correction coefficient.</p>
-</div><h4 id='method.pos_corr_factor' class='method'><span id='pos_corr_factor.v' class='invisible'><code>fn <a href='#method.pos_corr_factor' class='fnname'>pos_corr_factor</a>(&amp;self) -&gt; N</code></span></h4>
+</div><h4 id='method.pos_corr_factor' class="method"><span id='pos_corr_factor.v' class='invisible'><code>fn <a href='#method.pos_corr_factor' class='fnname'>pos_corr_factor</a>(&amp;self) -&gt; N</code></span></h4>
 <div class='docblock'><p>The position correction coefficient.</p>
-</div><h4 id='method.min_depth_for_pos_corr' class='method'><span id='min_depth_for_pos_corr.v' class='invisible'><code>fn <a href='#method.min_depth_for_pos_corr' class='fnname'>min_depth_for_pos_corr</a>(&amp;self) -&gt; N</code></span></h4>
+</div><h4 id='method.min_depth_for_pos_corr' class="method"><span id='min_depth_for_pos_corr.v' class='invisible'><code>fn <a href='#method.min_depth_for_pos_corr' class='fnname'>min_depth_for_pos_corr</a>(&amp;self) -&gt; N</code></span></h4>
 <div class='docblock'><p>The minimum penetration depth required to switch on the hard repositioning based method.</p>
-</div><h4 id='method.max_depth_for_vel_corr' class='method'><span id='max_depth_for_vel_corr.v' class='invisible'><code>fn <a href='#method.max_depth_for_vel_corr' class='fnname'>max_depth_for_vel_corr</a>(&amp;self) -&gt; N</code></span></h4>
+</div><h4 id='method.max_depth_for_vel_corr' class="method"><span id='max_depth_for_vel_corr.v' class='invisible'><code>fn <a href='#method.max_depth_for_vel_corr' class='fnname'>max_depth_for_vel_corr</a>(&amp;self) -&gt; N</code></span></h4>
 <div class='docblock'><p>The max penetration depth the velocity correction will attempt to correct.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>

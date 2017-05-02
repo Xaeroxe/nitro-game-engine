@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -312,274 +312,274 @@
 <span id="267">267</span>
 <span id="268">268</span>
 <span id="269">269</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! This module provides a type-level array of type-level numbers.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! It is not very featureful right now, and should be considered a work in progress.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! This module provides a type-level array of type-level numbers.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! It is not very featureful right now, and should be considered a work in progress.</span>
 
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>marker</span>::<span class='ident'>PhantomData</span>;
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>Sub</span>, <span class='ident'>Mul</span>, <span class='ident'>Div</span>};
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">Sub</span>, <span class="ident">Mul</span>, <span class="ident">Div</span>};
 
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='kw-2'>*</span>;
+<span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
 
-<span class='doccomment'>/// The terminating type for type arrays.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Ord</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>ATerm</span>;
+<span class="doccomment">/// The terminating type for type arrays.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ATerm</span>;
 
-<span class='kw'>impl</span> <span class='ident'>TypeArray</span> <span class='kw'>for</span> <span class='ident'>ATerm</span> {}
+<span class="kw">impl</span> <span class="ident">TypeArray</span> <span class="kw">for</span> <span class="ident">ATerm</span> {}
 
-<span class='doccomment'>/// `TArr` is a type that acts as an array of types. It is defined similarly to `UInt`, only its</span>
-<span class='doccomment'>/// values can be more than bits, and it is designed to act as an array. So you can only add two if</span>
-<span class='doccomment'>/// they have the same number of elements, for example.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// This array is only really designed to contain `Integer` types. If you use it with others, you</span>
-<span class='doccomment'>/// may find it lacking functionality.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Ord</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
-    <span class='ident'>_marker</span>: <span class='ident'>PhantomData</span><span class='op'>&lt;</span>(<span class='ident'>V</span>, <span class='ident'>A</span>)<span class='op'>&gt;</span>,
+<span class="doccomment">/// `TArr` is a type that acts as an array of types. It is defined similarly to `UInt`, only its</span>
+<span class="doccomment">/// values can be more than bits, and it is designed to act as an array. So you can only add two if</span>
+<span class="doccomment">/// they have the same number of elements, for example.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This array is only really designed to contain `Integer` types. If you use it with others, you</span>
+<span class="doccomment">/// may find it lacking functionality.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;</span> {
+    <span class="ident">_marker</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span>(<span class="ident">V</span>, <span class="ident">A</span>)<span class="op">&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;</span> <span class='ident'>TypeArray</span> <span class='kw'>for</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {}
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;</span> <span class="ident">TypeArray</span> <span class="kw">for</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;</span> {}
 
-<span class='doccomment'>/// Create a new type-level arrray. Only usable on Rust 1.13.0 or newer.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// There&#39;s not a whole lot you can do with it right now.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Example</span>
-<span class='doccomment'>/// ```rust</span>
-<span class='doccomment'>/// #[macro_use]</span>
-<span class='doccomment'>/// extern crate typenum;</span>
-<span class='doccomment'>/// use typenum::consts::*;</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// type Array = tarr![P3, N4, Z0, P38];</span>
-<span class='doccomment'>/// # fn main() {}</span>
-<span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>tarr</span> {
-    () <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>ATerm</span> );
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>:<span class='ident'>ty</span>) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>TArr</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>, <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>ATerm</span><span class='op'>&gt;</span> );
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>:<span class='ident'>ty</span>,) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>TArr</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>, <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>ATerm</span><span class='op'>&gt;</span> );
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>:<span class='ident'>ty</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tail</span>:<span class='ident'>ty</span>),<span class='op'>+</span>) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>TArr</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>, <span class='macro'>tarr</span><span class='macro'>!</span>[$(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tail</span>),<span class='op'>+</span>]<span class='op'>&gt;</span> );
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>:<span class='ident'>ty</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tail</span>:<span class='ident'>ty</span>),<span class='op'>+</span>,) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>TArr</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>, <span class='macro'>tarr</span><span class='macro'>!</span>[$(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tail</span>),<span class='op'>+</span>]<span class='op'>&gt;</span> );
+<span class="doccomment">/// Create a new type-level arrray. Only usable on Rust 1.13.0 or newer.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// There&#39;s not a whole lot you can do with it right now.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Example</span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// #[macro_use]</span>
+<span class="doccomment">/// extern crate typenum;</span>
+<span class="doccomment">/// use typenum::consts::*;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// type Array = tarr![P3, N4, Z0, P38];</span>
+<span class="doccomment">/// # fn main() {}</span>
+<span class="attribute">#[<span class="ident">macro_export</span>]</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">tarr</span> {
+    () <span class="op">=&gt;</span> ( <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">ATerm</span> );
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>:<span class="ident">ty</span>) <span class="op">=&gt;</span> ( <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">TArr</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>, <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">ATerm</span><span class="op">&gt;</span> );
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>:<span class="ident">ty</span>,) <span class="op">=&gt;</span> ( <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">TArr</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>, <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">ATerm</span><span class="op">&gt;</span> );
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>:<span class="ident">ty</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tail</span>:<span class="ident">ty</span>),<span class="op">+</span>) <span class="op">=&gt;</span> ( <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">TArr</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>, <span class="macro">tarr</span><span class="macro">!</span>[$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tail</span>),<span class="op">+</span>]<span class="op">&gt;</span> );
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>:<span class="ident">ty</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tail</span>:<span class="ident">ty</span>),<span class="op">+</span>,) <span class="op">=&gt;</span> ( <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">TArr</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>, <span class="macro">tarr</span><span class="macro">!</span>[$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">tail</span>),<span class="op">+</span>]<span class="op">&gt;</span> );
 }
 
-<span class='comment'>// ---------------------------------------------------------------------------------------</span>
-<span class='comment'>// Length</span>
+<span class="comment">// ---------------------------------------------------------------------------------------</span>
+<span class="comment">// Length</span>
 
-<span class='doccomment'>/// Length of `ATerm` by itself is 0</span>
-<span class='kw'>impl</span> <span class='ident'>Len</span> <span class='kw'>for</span> <span class='ident'>ATerm</span> {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>U0</span>;
-    <span class='kw'>fn</span> <span class='ident'>len</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='ident'>UTerm</span>
+<span class="doccomment">/// Length of `ATerm` by itself is 0</span>
+<span class="kw">impl</span> <span class="ident">Len</span> <span class="kw">for</span> <span class="ident">ATerm</span> {
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">U0</span>;
+    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="ident">UTerm</span>
     }
 }
 
-<span class='doccomment'>/// Size of a `TypeArray`</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;</span> <span class='ident'>Len</span> <span class='kw'>for</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>A</span>: <span class='ident'>Len</span>,
-          <span class='ident'>Length</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span>: <span class='ident'>Add</span><span class='op'>&lt;</span><span class='ident'>B1</span><span class='op'>&gt;</span>,
-          <span class='ident'>Sum</span><span class='op'>&lt;</span><span class='ident'>Length</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span>, <span class='ident'>B1</span><span class='op'>&gt;</span>: <span class='ident'>Unsigned</span>
+<span class="doccomment">/// Size of a `TypeArray`</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;</span> <span class="ident">Len</span> <span class="kw">for</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">A</span>: <span class="ident">Len</span>,
+          <span class="ident">Length</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>: <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">B1</span><span class="op">&gt;</span>,
+          <span class="ident">Sum</span><span class="op">&lt;</span><span class="ident">Length</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>, <span class="ident">B1</span><span class="op">&gt;</span>: <span class="ident">Unsigned</span>
 {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Add1</span><span class='op'>&lt;</span><span class='ident'>Length</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>len</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='kw'>unsafe</span> { ::<span class='ident'>core</span>::<span class='ident'>mem</span>::<span class='ident'>uninitialized</span>() }
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Add1</span><span class="op">&lt;</span><span class="ident">Length</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">uninitialized</span>() }
     }
 }
 
-<span class='comment'>// ---------------------------------------------------------------------------------------</span>
-<span class='comment'>// Add arrays</span>
-<span class='comment'>// Note that two arrays are only addable if they are the same length.</span>
+<span class="comment">// ---------------------------------------------------------------------------------------</span>
+<span class="comment">// Add arrays</span>
+<span class="comment">// Note that two arrays are only addable if they are the same length.</span>
 
-<span class='kw'>impl</span> <span class='ident'>Add</span><span class='op'>&lt;</span><span class='ident'>ATerm</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ATerm</span> {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>ATerm</span>;
-    <span class='kw'>fn</span> <span class='ident'>add</span>(<span class='self'>self</span>, _: <span class='ident'>ATerm</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='ident'>ATerm</span>
+<span class="kw">impl</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">ATerm</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ATerm</span> {
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">ATerm</span>;
+    <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, _: <span class="ident">ATerm</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="ident">ATerm</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>Al</span>, <span class='ident'>Vl</span>, <span class='ident'>Ar</span>, <span class='ident'>Vr</span><span class='op'>&gt;</span> <span class='ident'>Add</span><span class='op'>&lt;</span><span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>Vr</span>, <span class='ident'>Ar</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>Vl</span>, <span class='ident'>Al</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>Al</span>: <span class='ident'>Add</span><span class='op'>&lt;</span><span class='ident'>Ar</span><span class='op'>&gt;</span>,
-          <span class='ident'>Vl</span>: <span class='ident'>Add</span><span class='op'>&lt;</span><span class='ident'>Vr</span><span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Al</span>, <span class="ident">Vl</span>, <span class="ident">Ar</span>, <span class="ident">Vr</span><span class="op">&gt;</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">Vr</span>, <span class="ident">Ar</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">Vl</span>, <span class="ident">Al</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">Al</span>: <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Ar</span><span class="op">&gt;</span>,
+          <span class="ident">Vl</span>: <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Vr</span><span class="op">&gt;</span>
 {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>Sum</span><span class='op'>&lt;</span><span class='ident'>Vl</span>, <span class='ident'>Vr</span><span class='op'>&gt;</span>, <span class='ident'>Sum</span><span class='op'>&lt;</span><span class='ident'>Al</span>, <span class='ident'>Ar</span><span class='op'>&gt;&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>add</span>(<span class='self'>self</span>, _: <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>Vr</span>, <span class='ident'>Ar</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='kw'>unsafe</span> { ::<span class='ident'>core</span>::<span class='ident'>mem</span>::<span class='ident'>uninitialized</span>() }
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">Sum</span><span class="op">&lt;</span><span class="ident">Vl</span>, <span class="ident">Vr</span><span class="op">&gt;</span>, <span class="ident">Sum</span><span class="op">&lt;</span><span class="ident">Al</span>, <span class="ident">Ar</span><span class="op">&gt;&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, _: <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">Vr</span>, <span class="ident">Ar</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">uninitialized</span>() }
     }
 }
 
-<span class='comment'>// ---------------------------------------------------------------------------------------</span>
-<span class='comment'>// Subtract arrays</span>
-<span class='comment'>// Note that two arrays are only subtractable if they are the same length.</span>
+<span class="comment">// ---------------------------------------------------------------------------------------</span>
+<span class="comment">// Subtract arrays</span>
+<span class="comment">// Note that two arrays are only subtractable if they are the same length.</span>
 
-<span class='kw'>impl</span> <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>ATerm</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ATerm</span> {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>ATerm</span>;
-    <span class='kw'>fn</span> <span class='ident'>sub</span>(<span class='self'>self</span>, _: <span class='ident'>ATerm</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='ident'>ATerm</span>
+<span class="kw">impl</span> <span class="ident">Sub</span><span class="op">&lt;</span><span class="ident">ATerm</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ATerm</span> {
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">ATerm</span>;
+    <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, _: <span class="ident">ATerm</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="ident">ATerm</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>Vl</span>, <span class='ident'>Al</span>, <span class='ident'>Vr</span>, <span class='ident'>Ar</span><span class='op'>&gt;</span> <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>Vr</span>, <span class='ident'>Ar</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>Vl</span>, <span class='ident'>Al</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>Vl</span>: <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>Vr</span><span class='op'>&gt;</span>,
-          <span class='ident'>Al</span>: <span class='ident'>Sub</span><span class='op'>&lt;</span><span class='ident'>Ar</span><span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Vl</span>, <span class="ident">Al</span>, <span class="ident">Vr</span>, <span class="ident">Ar</span><span class="op">&gt;</span> <span class="ident">Sub</span><span class="op">&lt;</span><span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">Vr</span>, <span class="ident">Ar</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">Vl</span>, <span class="ident">Al</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">Vl</span>: <span class="ident">Sub</span><span class="op">&lt;</span><span class="ident">Vr</span><span class="op">&gt;</span>,
+          <span class="ident">Al</span>: <span class="ident">Sub</span><span class="op">&lt;</span><span class="ident">Ar</span><span class="op">&gt;</span>
 {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>Diff</span><span class='op'>&lt;</span><span class='ident'>Vl</span>, <span class='ident'>Vr</span><span class='op'>&gt;</span>, <span class='ident'>Diff</span><span class='op'>&lt;</span><span class='ident'>Al</span>, <span class='ident'>Ar</span><span class='op'>&gt;&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>sub</span>(<span class='self'>self</span>, _: <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>Vr</span>, <span class='ident'>Ar</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='kw'>unsafe</span> { ::<span class='ident'>core</span>::<span class='ident'>mem</span>::<span class='ident'>uninitialized</span>() }
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">Diff</span><span class="op">&lt;</span><span class="ident">Vl</span>, <span class="ident">Vr</span><span class="op">&gt;</span>, <span class="ident">Diff</span><span class="op">&lt;</span><span class="ident">Al</span>, <span class="ident">Ar</span><span class="op">&gt;&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, _: <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">Vr</span>, <span class="ident">Ar</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">uninitialized</span>() }
     }
 }
 
-<span class='comment'>// ---------------------------------------------------------------------------------------</span>
-<span class='comment'>// Multiply an array by a scalar</span>
+<span class="comment">// ---------------------------------------------------------------------------------------</span>
+<span class="comment">// Multiply an array by a scalar</span>
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ATerm</span> {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>ATerm</span>;
-    <span class='kw'>fn</span> <span class='ident'>mul</span>(<span class='self'>self</span>, _: <span class='ident'>Rhs</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='ident'>ATerm</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span> <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ATerm</span> {
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">ATerm</span>;
+    <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, _: <span class="ident">Rhs</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="ident">ATerm</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span>, <span class='ident'>Rhs</span><span class='op'>&gt;</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>V</span>: <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span>,
-          <span class='ident'>A</span>: <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span>, <span class="ident">Rhs</span><span class="op">&gt;</span> <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">V</span>: <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span>,
+          <span class="ident">A</span>: <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span>
 {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>Prod</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>Rhs</span><span class='op'>&gt;</span>, <span class='ident'>Prod</span><span class='op'>&lt;</span><span class='ident'>A</span>, <span class='ident'>Rhs</span><span class='op'>&gt;&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>mul</span>(<span class='self'>self</span>, _: <span class='ident'>Rhs</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='kw'>unsafe</span> { ::<span class='ident'>core</span>::<span class='ident'>mem</span>::<span class='ident'>uninitialized</span>() }
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">Prod</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">Rhs</span><span class="op">&gt;</span>, <span class="ident">Prod</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">Rhs</span><span class="op">&gt;&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, _: <span class="ident">Rhs</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">uninitialized</span>() }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>ATerm</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Z0</span> {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>ATerm</span>;
-    <span class='kw'>fn</span> <span class='ident'>mul</span>(<span class='self'>self</span>, _: <span class='ident'>ATerm</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='ident'>ATerm</span>
+<span class="kw">impl</span> <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">ATerm</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Z0</span> {
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">ATerm</span>;
+    <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, _: <span class="ident">ATerm</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="ident">ATerm</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>ATerm</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>PInt</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>U</span>: <span class='ident'>Unsigned</span> <span class='op'>+</span> <span class='ident'>NonZero</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span> <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">ATerm</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PInt</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">U</span>: <span class="ident">Unsigned</span> <span class="op">+</span> <span class="ident">NonZero</span>
 {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>ATerm</span>;
-    <span class='kw'>fn</span> <span class='ident'>mul</span>(<span class='self'>self</span>, _: <span class='ident'>ATerm</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='ident'>ATerm</span>
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">ATerm</span>;
+    <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, _: <span class="ident">ATerm</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="ident">ATerm</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>ATerm</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>NInt</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>U</span>: <span class='ident'>Unsigned</span> <span class='op'>+</span> <span class='ident'>NonZero</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span> <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">ATerm</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">NInt</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">U</span>: <span class="ident">Unsigned</span> <span class="op">+</span> <span class="ident">NonZero</span>
 {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>ATerm</span>;
-    <span class='kw'>fn</span> <span class='ident'>mul</span>(<span class='self'>self</span>, _: <span class='ident'>ATerm</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='ident'>ATerm</span>
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">ATerm</span>;
+    <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, _: <span class="ident">ATerm</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="ident">ATerm</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Z0</span>
-    <span class='kw'>where</span> <span class='ident'>Z0</span>: <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;</span> <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Z0</span>
+    <span class="kw">where</span> <span class="ident">Z0</span>: <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>
 {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>Z0</span>, <span class='ident'>Prod</span><span class='op'>&lt;</span><span class='ident'>Z0</span>, <span class='ident'>A</span><span class='op'>&gt;&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>mul</span>(<span class='self'>self</span>, _: <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='kw'>unsafe</span> { ::<span class='ident'>core</span>::<span class='ident'>mem</span>::<span class='ident'>uninitialized</span>() }
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">Z0</span>, <span class="ident">Prod</span><span class="op">&lt;</span><span class="ident">Z0</span>, <span class="ident">A</span><span class="op">&gt;&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, _: <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">uninitialized</span>() }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span>, <span class='ident'>U</span><span class='op'>&gt;</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>PInt</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>U</span>: <span class='ident'>Unsigned</span> <span class='op'>+</span> <span class='ident'>NonZero</span>,
-          <span class='ident'>PInt</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span>: <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span>, <span class="ident">U</span><span class="op">&gt;</span> <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">PInt</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">U</span>: <span class="ident">Unsigned</span> <span class="op">+</span> <span class="ident">NonZero</span>,
+          <span class="ident">PInt</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>: <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>
 {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>Prod</span><span class='op'>&lt;</span><span class='ident'>PInt</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span>, <span class='ident'>V</span><span class='op'>&gt;</span>, <span class='ident'>Prod</span><span class='op'>&lt;</span><span class='ident'>PInt</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span>, <span class='ident'>A</span><span class='op'>&gt;&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>mul</span>(<span class='self'>self</span>, _: <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='kw'>unsafe</span> { ::<span class='ident'>core</span>::<span class='ident'>mem</span>::<span class='ident'>uninitialized</span>() }
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">Prod</span><span class="op">&lt;</span><span class="ident">PInt</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>, <span class="ident">V</span><span class="op">&gt;</span>, <span class="ident">Prod</span><span class="op">&lt;</span><span class="ident">PInt</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>, <span class="ident">A</span><span class="op">&gt;&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, _: <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">uninitialized</span>() }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span>, <span class='ident'>U</span><span class='op'>&gt;</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>NInt</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>U</span>: <span class='ident'>Unsigned</span> <span class='op'>+</span> <span class='ident'>NonZero</span>,
-          <span class='ident'>NInt</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span>: <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span>, <span class="ident">U</span><span class="op">&gt;</span> <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">NInt</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">U</span>: <span class="ident">Unsigned</span> <span class="op">+</span> <span class="ident">NonZero</span>,
+          <span class="ident">NInt</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>: <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>
 {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>Prod</span><span class='op'>&lt;</span><span class='ident'>NInt</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span>, <span class='ident'>V</span><span class='op'>&gt;</span>, <span class='ident'>Prod</span><span class='op'>&lt;</span><span class='ident'>NInt</span><span class='op'>&lt;</span><span class='ident'>U</span><span class='op'>&gt;</span>, <span class='ident'>A</span><span class='op'>&gt;&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>mul</span>(<span class='self'>self</span>, _: <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='kw'>unsafe</span> { ::<span class='ident'>core</span>::<span class='ident'>mem</span>::<span class='ident'>uninitialized</span>() }
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">Prod</span><span class="op">&lt;</span><span class="ident">NInt</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>, <span class="ident">V</span><span class="op">&gt;</span>, <span class="ident">Prod</span><span class="op">&lt;</span><span class="ident">NInt</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>, <span class="ident">A</span><span class="op">&gt;&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, _: <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">uninitialized</span>() }
     }
 }
 
-<span class='comment'>// ---------------------------------------------------------------------------------------</span>
-<span class='comment'>// Divide an array by a scalar</span>
+<span class="comment">// ---------------------------------------------------------------------------------------</span>
+<span class="comment">// Divide an array by a scalar</span>
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span> <span class='ident'>Div</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ATerm</span> {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>ATerm</span>;
-    <span class='kw'>fn</span> <span class='ident'>div</span>(<span class='self'>self</span>, _: <span class='ident'>Rhs</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='ident'>ATerm</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span> <span class="ident">Div</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ATerm</span> {
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">ATerm</span>;
+    <span class="kw">fn</span> <span class="ident">div</span>(<span class="self">self</span>, _: <span class="ident">Rhs</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="ident">ATerm</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span>, <span class='ident'>Rhs</span><span class='op'>&gt;</span> <span class='ident'>Div</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>V</span>: <span class='ident'>Div</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span>,
-          <span class='ident'>A</span>: <span class='ident'>Div</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span>, <span class="ident">Rhs</span><span class="op">&gt;</span> <span class="ident">Div</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">V</span>: <span class="ident">Div</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span>,
+          <span class="ident">A</span>: <span class="ident">Div</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span>
 {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>Quot</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>Rhs</span><span class='op'>&gt;</span>, <span class='ident'>Quot</span><span class='op'>&lt;</span><span class='ident'>A</span>, <span class='ident'>Rhs</span><span class='op'>&gt;&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>div</span>(<span class='self'>self</span>, _: <span class='ident'>Rhs</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='kw'>unsafe</span> { ::<span class='ident'>core</span>::<span class='ident'>mem</span>::<span class='ident'>uninitialized</span>() }
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">Quot</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">Rhs</span><span class="op">&gt;</span>, <span class="ident">Quot</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">Rhs</span><span class="op">&gt;&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">div</span>(<span class="self">self</span>, _: <span class="ident">Rhs</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">uninitialized</span>() }
     }
 }
 
-<span class='comment'>// ---------------------------------------------------------------------------------------</span>
-<span class='comment'>// Partial Divide an array by a scalar</span>
+<span class="comment">// ---------------------------------------------------------------------------------------</span>
+<span class="comment">// Partial Divide an array by a scalar</span>
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span> <span class='ident'>PartialDiv</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ATerm</span> {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>ATerm</span>;
-    <span class='kw'>fn</span> <span class='ident'>partial_div</span>(<span class='self'>self</span>, _: <span class='ident'>Rhs</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='ident'>ATerm</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span> <span class="ident">PartialDiv</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ATerm</span> {
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">ATerm</span>;
+    <span class="kw">fn</span> <span class="ident">partial_div</span>(<span class="self">self</span>, _: <span class="ident">Rhs</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="ident">ATerm</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span>, <span class='ident'>Rhs</span><span class='op'>&gt;</span> <span class='ident'>PartialDiv</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>V</span>: <span class='ident'>PartialDiv</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span>,
-          <span class='ident'>A</span>: <span class='ident'>PartialDiv</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span>, <span class="ident">Rhs</span><span class="op">&gt;</span> <span class="ident">PartialDiv</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">V</span>: <span class="ident">PartialDiv</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span>,
+          <span class="ident">A</span>: <span class="ident">PartialDiv</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span>
 {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>PartialQuot</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>Rhs</span><span class='op'>&gt;</span>, <span class='ident'>PartialQuot</span><span class='op'>&lt;</span><span class='ident'>A</span>, <span class='ident'>Rhs</span><span class='op'>&gt;&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>partial_div</span>(<span class='self'>self</span>, _: <span class='ident'>Rhs</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='kw'>unsafe</span> { ::<span class='ident'>core</span>::<span class='ident'>mem</span>::<span class='ident'>uninitialized</span>() }
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">PartialQuot</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">Rhs</span><span class="op">&gt;</span>, <span class="ident">PartialQuot</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">Rhs</span><span class="op">&gt;&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">partial_div</span>(<span class="self">self</span>, _: <span class="ident">Rhs</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">uninitialized</span>() }
     }
 }
 
-<span class='comment'>// ---------------------------------------------------------------------------------------</span>
-<span class='comment'>// Modulo an array by a scalar</span>
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>ops</span>::<span class='ident'>Rem</span>;
+<span class="comment">// ---------------------------------------------------------------------------------------</span>
+<span class="comment">// Modulo an array by a scalar</span>
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::<span class="ident">Rem</span>;
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span> <span class='ident'>Rem</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ATerm</span> {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>ATerm</span>;
-    <span class='kw'>fn</span> <span class='ident'>rem</span>(<span class='self'>self</span>, _: <span class='ident'>Rhs</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='ident'>ATerm</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span> <span class="ident">Rem</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ATerm</span> {
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">ATerm</span>;
+    <span class="kw">fn</span> <span class="ident">rem</span>(<span class="self">self</span>, _: <span class="ident">Rhs</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="ident">ATerm</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span>, <span class='ident'>Rhs</span><span class='op'>&gt;</span> <span class='ident'>Rem</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>V</span>: <span class='ident'>Rem</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span>,
-          <span class='ident'>A</span>: <span class='ident'>Rem</span><span class='op'>&lt;</span><span class='ident'>Rhs</span><span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span>, <span class="ident">Rhs</span><span class="op">&gt;</span> <span class="ident">Rem</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">V</span>: <span class="ident">Rem</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span>,
+          <span class="ident">A</span>: <span class="ident">Rem</span><span class="op">&lt;</span><span class="ident">Rhs</span><span class="op">&gt;</span>
 {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>Mod</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>Rhs</span><span class='op'>&gt;</span>, <span class='ident'>Mod</span><span class='op'>&lt;</span><span class='ident'>A</span>, <span class='ident'>Rhs</span><span class='op'>&gt;&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>rem</span>(<span class='self'>self</span>, _: <span class='ident'>Rhs</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='kw'>unsafe</span> { ::<span class='ident'>core</span>::<span class='ident'>mem</span>::<span class='ident'>uninitialized</span>() }
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">Mod</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">Rhs</span><span class="op">&gt;</span>, <span class="ident">Mod</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">Rhs</span><span class="op">&gt;&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">rem</span>(<span class="self">self</span>, _: <span class="ident">Rhs</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">uninitialized</span>() }
     }
 }
 
-<span class='comment'>// ---------------------------------------------------------------------------------------</span>
-<span class='comment'>// Negate an array</span>
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>ops</span>::<span class='ident'>Neg</span>;
+<span class="comment">// ---------------------------------------------------------------------------------------</span>
+<span class="comment">// Negate an array</span>
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::<span class="ident">Neg</span>;
 
-<span class='kw'>impl</span> <span class='ident'>Neg</span> <span class='kw'>for</span> <span class='ident'>ATerm</span> {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>ATerm</span>;
-    <span class='kw'>fn</span> <span class='ident'>neg</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='ident'>ATerm</span>
+<span class="kw">impl</span> <span class="ident">Neg</span> <span class="kw">for</span> <span class="ident">ATerm</span> {
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">ATerm</span>;
+    <span class="kw">fn</span> <span class="ident">neg</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="ident">ATerm</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;</span> <span class='ident'>Neg</span> <span class='kw'>for</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>V</span>, <span class='ident'>A</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>V</span>: <span class='ident'>Neg</span>,
-          <span class='ident'>A</span>: <span class='ident'>Neg</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;</span> <span class="ident">Neg</span> <span class="kw">for</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">V</span>, <span class="ident">A</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">V</span>: <span class="ident">Neg</span>,
+          <span class="ident">A</span>: <span class="ident">Neg</span>
 {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>TArr</span><span class='op'>&lt;</span><span class='ident'>Negate</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>, <span class='ident'>Negate</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;&gt;</span>;
-    <span class='kw'>fn</span> <span class='ident'>neg</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='kw'>unsafe</span> { ::<span class='ident'>core</span>::<span class='ident'>mem</span>::<span class='ident'>uninitialized</span>() }
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">TArr</span><span class="op">&lt;</span><span class="ident">Negate</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>, <span class="ident">Negate</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">neg</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">mem</span>::<span class="ident">uninitialized</span>() }
     }
 }
 </pre>

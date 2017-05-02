@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -409,371 +409,371 @@
 <span id="364">364</span>
 <span id="365">365</span>
 <span id="366">366</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ptr</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>;
 
-<span class='kw'>use</span> <span class='ident'>get_error</span>;
-<span class='kw'>use</span> <span class='ident'>surface</span>::<span class='ident'>SurfaceRef</span>;
-<span class='kw'>use</span> <span class='ident'>video</span>;
-<span class='kw'>use</span> <span class='ident'>EventPump</span>;
+<span class="kw">use</span> <span class="ident">get_error</span>;
+<span class="kw">use</span> <span class="ident">surface</span>::<span class="ident">SurfaceRef</span>;
+<span class="kw">use</span> <span class="ident">video</span>;
+<span class="kw">use</span> <span class="ident">EventPump</span>;
 
-<span class='kw'>use</span> <span class='ident'>sys</span>::<span class='ident'>mouse</span> <span class='kw'>as</span> <span class='ident'>ll</span>;
+<span class="kw">use</span> <span class="ident">sys</span>::<span class="ident">mouse</span> <span class="kw">as</span> <span class="ident">ll</span>;
 
-<span class='kw'>mod</span> <span class='ident'>relative</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>relative</span>::<span class='ident'>RelativeMouseState</span>;
+<span class="kw">mod</span> <span class="ident">relative</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">relative</span>::<span class="ident">RelativeMouseState</span>;
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>u32</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>SystemCursor</span> {
-    <span class='ident'>Arrow</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_SYSTEM_CURSOR_ARROW</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-    <span class='ident'>IBeam</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_SYSTEM_CURSOR_IBEAM</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-    <span class='ident'>Wait</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_SYSTEM_CURSOR_WAIT</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-    <span class='ident'>Crosshair</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_SYSTEM_CURSOR_CROSSHAIR</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-    <span class='ident'>WaitArrow</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_SYSTEM_CURSOR_WAITARROW</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-    <span class='ident'>SizeNWSE</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_SYSTEM_CURSOR_SIZENWSE</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-    <span class='ident'>SizeNESW</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_SYSTEM_CURSOR_SIZENESW</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-    <span class='ident'>SizeWE</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_SYSTEM_CURSOR_SIZEWE</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-    <span class='ident'>SizeNS</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_SYSTEM_CURSOR_SIZENS</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-    <span class='ident'>SizeAll</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_SYSTEM_CURSOR_SIZEALL</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-    <span class='ident'>No</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_SYSTEM_CURSOR_NO</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
-    <span class='ident'>Hand</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_SYSTEM_CURSOR_HAND</span> <span class='kw'>as</span> <span class='ident'>u32</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u32</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SystemCursor</span> {
+    <span class="ident">Arrow</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_SYSTEM_CURSOR_ARROW</span> <span class="kw">as</span> <span class="ident">u32</span>,
+    <span class="ident">IBeam</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_SYSTEM_CURSOR_IBEAM</span> <span class="kw">as</span> <span class="ident">u32</span>,
+    <span class="ident">Wait</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_SYSTEM_CURSOR_WAIT</span> <span class="kw">as</span> <span class="ident">u32</span>,
+    <span class="ident">Crosshair</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_SYSTEM_CURSOR_CROSSHAIR</span> <span class="kw">as</span> <span class="ident">u32</span>,
+    <span class="ident">WaitArrow</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_SYSTEM_CURSOR_WAITARROW</span> <span class="kw">as</span> <span class="ident">u32</span>,
+    <span class="ident">SizeNWSE</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_SYSTEM_CURSOR_SIZENWSE</span> <span class="kw">as</span> <span class="ident">u32</span>,
+    <span class="ident">SizeNESW</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_SYSTEM_CURSOR_SIZENESW</span> <span class="kw">as</span> <span class="ident">u32</span>,
+    <span class="ident">SizeWE</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_SYSTEM_CURSOR_SIZEWE</span> <span class="kw">as</span> <span class="ident">u32</span>,
+    <span class="ident">SizeNS</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_SYSTEM_CURSOR_SIZENS</span> <span class="kw">as</span> <span class="ident">u32</span>,
+    <span class="ident">SizeAll</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_SYSTEM_CURSOR_SIZEALL</span> <span class="kw">as</span> <span class="ident">u32</span>,
+    <span class="ident">No</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_SYSTEM_CURSOR_NO</span> <span class="kw">as</span> <span class="ident">u32</span>,
+    <span class="ident">Hand</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_SYSTEM_CURSOR_HAND</span> <span class="kw">as</span> <span class="ident">u32</span>,
 }
 
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Cursor</span> {
-    <span class='ident'>raw</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>ll</span>::<span class='ident'>SDL_Cursor</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Cursor</span> {
+    <span class="ident">raw</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ll</span>::<span class="ident">SDL_Cursor</span>
 }
 
-<span class='kw'>impl</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>Cursor</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_FreeCursor</span>(<span class='self'>self</span>.<span class='ident'>raw</span>) };
+<span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">Cursor</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_FreeCursor</span>(<span class="self">self</span>.<span class="ident">raw</span>) };
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Cursor</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>data</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>], <span class='ident'>mask</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>], <span class='ident'>width</span>: <span class='ident'>i32</span>, <span class='ident'>height</span>: <span class='ident'>i32</span>, <span class='ident'>hot_x</span>: <span class='ident'>i32</span>, <span class='ident'>hot_y</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Cursor</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_CreateCursor</span>(<span class='ident'>data</span>.<span class='ident'>as_ptr</span>(),
-                                           <span class='ident'>mask</span>.<span class='ident'>as_ptr</span>(),
-                                           <span class='ident'>width</span> <span class='kw'>as</span> <span class='ident'>i32</span>, <span class='ident'>height</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-                                           <span class='ident'>hot_x</span> <span class='kw'>as</span> <span class='ident'>i32</span>, <span class='ident'>hot_y</span> <span class='kw'>as</span> <span class='ident'>i32</span>);
+<span class="kw">impl</span> <span class="ident">Cursor</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">mask</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">width</span>: <span class="ident">i32</span>, <span class="ident">height</span>: <span class="ident">i32</span>, <span class="ident">hot_x</span>: <span class="ident">i32</span>, <span class="ident">hot_y</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cursor</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_CreateCursor</span>(<span class="ident">data</span>.<span class="ident">as_ptr</span>(),
+                                           <span class="ident">mask</span>.<span class="ident">as_ptr</span>(),
+                                           <span class="ident">width</span> <span class="kw">as</span> <span class="ident">i32</span>, <span class="ident">height</span> <span class="kw">as</span> <span class="ident">i32</span>,
+                                           <span class="ident">hot_x</span> <span class="kw">as</span> <span class="ident">i32</span>, <span class="ident">hot_y</span> <span class="kw">as</span> <span class="ident">i32</span>);
 
-            <span class='kw'>if</span> <span class='ident'>raw</span> <span class='op'>==</span> <span class='ident'>ptr</span>::<span class='ident'>null_mut</span>() {
-                <span class='prelude-val'>Err</span>(<span class='ident'>get_error</span>())
-            } <span class='kw'>else</span> {
-                <span class='prelude-val'>Ok</span>(<span class='ident'>Cursor</span>{ <span class='ident'>raw</span>: <span class='ident'>raw</span> })
+            <span class="kw">if</span> <span class="ident">raw</span> <span class="op">==</span> <span class="ident">ptr</span>::<span class="ident">null_mut</span>() {
+                <span class="prelude-val">Err</span>(<span class="ident">get_error</span>())
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident">Cursor</span>{ <span class="ident">raw</span>: <span class="ident">raw</span> })
             }
         }
     }
 
-    <span class='comment'>// TODO: figure out how to pass Surface in here correctly</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_surface</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>SurfaceRef</span><span class='op'>&gt;&gt;</span>(<span class='ident'>surface</span>: <span class='ident'>S</span>, <span class='ident'>hot_x</span>: <span class='ident'>i32</span>, <span class='ident'>hot_y</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Cursor</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_CreateColorCursor</span>(<span class='ident'>surface</span>.<span class='ident'>as_ref</span>().<span class='ident'>raw</span>(), <span class='ident'>hot_x</span>, <span class='ident'>hot_y</span>);
+    <span class="comment">// TODO: figure out how to pass Surface in here correctly</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_surface</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">SurfaceRef</span><span class="op">&gt;&gt;</span>(<span class="ident">surface</span>: <span class="ident">S</span>, <span class="ident">hot_x</span>: <span class="ident">i32</span>, <span class="ident">hot_y</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cursor</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_CreateColorCursor</span>(<span class="ident">surface</span>.<span class="ident">as_ref</span>().<span class="ident">raw</span>(), <span class="ident">hot_x</span>, <span class="ident">hot_y</span>);
 
-            <span class='kw'>if</span> <span class='ident'>raw</span> <span class='op'>==</span> <span class='ident'>ptr</span>::<span class='ident'>null_mut</span>() {
-                <span class='prelude-val'>Err</span>(<span class='ident'>get_error</span>())
-            } <span class='kw'>else</span> {
-                <span class='prelude-val'>Ok</span>(<span class='ident'>Cursor</span>{ <span class='ident'>raw</span>: <span class='ident'>raw</span> })
+            <span class="kw">if</span> <span class="ident">raw</span> <span class="op">==</span> <span class="ident">ptr</span>::<span class="ident">null_mut</span>() {
+                <span class="prelude-val">Err</span>(<span class="ident">get_error</span>())
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident">Cursor</span>{ <span class="ident">raw</span>: <span class="ident">raw</span> })
             }
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_system</span>(<span class='ident'>cursor</span>: <span class='ident'>SystemCursor</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Cursor</span>, <span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_CreateSystemCursor</span>(<span class='ident'>cursor</span> <span class='kw'>as</span> <span class='ident'>u32</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_system</span>(<span class="ident">cursor</span>: <span class="ident">SystemCursor</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Cursor</span>, <span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_CreateSystemCursor</span>(<span class="ident">cursor</span> <span class="kw">as</span> <span class="ident">u32</span>);
 
-            <span class='kw'>if</span> <span class='ident'>raw</span> <span class='op'>==</span> <span class='ident'>ptr</span>::<span class='ident'>null_mut</span>() {
-                <span class='prelude-val'>Err</span>(<span class='ident'>get_error</span>())
-            } <span class='kw'>else</span> {
-                <span class='prelude-val'>Ok</span>(<span class='ident'>Cursor</span>{ <span class='ident'>raw</span>: <span class='ident'>raw</span> })
+            <span class="kw">if</span> <span class="ident">raw</span> <span class="op">==</span> <span class="ident">ptr</span>::<span class="ident">null_mut</span>() {
+                <span class="prelude-val">Err</span>(<span class="ident">get_error</span>())
+            } <span class="kw">else</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident">Cursor</span>{ <span class="ident">raw</span>: <span class="ident">raw</span> })
             }
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_SetCursor</span>(<span class='self'>self</span>.<span class='ident'>raw</span>); }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_SetCursor</span>(<span class="self">self</span>.<span class="ident">raw</span>); }
     }
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>MouseWheelDirection</span> {
-    <span class='ident'>Normal</span>,
-    <span class='ident'>Flipped</span>,
-    <span class='ident'>Unknown</span>(<span class='ident'>u32</span>),
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">MouseWheelDirection</span> {
+    <span class="ident">Normal</span>,
+    <span class="ident">Flipped</span>,
+    <span class="ident">Unknown</span>(<span class="ident">u32</span>),
 }
 
-<span class='comment'>// 0 and 1 are not fixed values in the SDL source code.  This value is defined as an enum which is then cast to a Uint32.</span>
-<span class='comment'>// The enum in C is defined as such:</span>
+<span class="comment">// 0 and 1 are not fixed values in the SDL source code.  This value is defined as an enum which is then cast to a Uint32.</span>
+<span class="comment">// The enum in C is defined as such:</span>
 
-<span class='doccomment'>/**
+<span class="doccomment">/**
  * \brief Scroll direction types for the Scroll event
  */</span>
-<span class='comment'>//typedef enum</span>
-<span class='comment'>//{</span>
-<span class='comment'>//    SDL_MOUSEWHEEL_NORMAL,    /**&lt; The scroll direction is normal */</span>
-<span class='comment'>//    SDL_MOUSEWHEEL_FLIPPED    /**&lt; The scroll direction is flipped / natural */</span>
-<span class='comment'>//} SDL_MouseWheelDirection;</span>
+<span class="comment">//typedef enum</span>
+<span class="comment">//{</span>
+<span class="comment">//    SDL_MOUSEWHEEL_NORMAL,    /**&lt; The scroll direction is normal */</span>
+<span class="comment">//    SDL_MOUSEWHEEL_FLIPPED    /**&lt; The scroll direction is flipped / natural */</span>
+<span class="comment">//} SDL_MouseWheelDirection;</span>
 
-<span class='comment'>// Since no value is given in the enum definition these values are auto assigned by the C compiler starting at 0.</span>
-<span class='comment'>// Normally I would prefer to use the enum rather than hard code what it is implied to represent however</span>
-<span class='comment'>// the mouse wheel direction value could be described equally as well by a bool, so I don&#39;t think changes</span>
-<span class='comment'>// to this enum in the C source code are going to be a problem.</span>
+<span class="comment">// Since no value is given in the enum definition these values are auto assigned by the C compiler starting at 0.</span>
+<span class="comment">// Normally I would prefer to use the enum rather than hard code what it is implied to represent however</span>
+<span class="comment">// the mouse wheel direction value could be described equally as well by a bool, so I don&#39;t think changes</span>
+<span class="comment">// to this enum in the C source code are going to be a problem.</span>
 
-<span class='kw'>impl</span> <span class='ident'>MouseWheelDirection</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_ll</span>(<span class='ident'>direction</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='ident'>MouseWheelDirection</span> {
-        <span class='kw'>match</span> <span class='ident'>direction</span> {
-            <span class='number'>0</span> <span class='op'>=&gt;</span> <span class='ident'>MouseWheelDirection</span>::<span class='ident'>Normal</span>,
-            <span class='number'>1</span> <span class='op'>=&gt;</span> <span class='ident'>MouseWheelDirection</span>::<span class='ident'>Flipped</span>,
-            _ <span class='op'>=&gt;</span> <span class='ident'>MouseWheelDirection</span>::<span class='ident'>Unknown</span>(<span class='ident'>direction</span>),
+<span class="kw">impl</span> <span class="ident">MouseWheelDirection</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_ll</span>(<span class="ident">direction</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">MouseWheelDirection</span> {
+        <span class="kw">match</span> <span class="ident">direction</span> {
+            <span class="number">0</span> <span class="op">=&gt;</span> <span class="ident">MouseWheelDirection</span>::<span class="ident">Normal</span>,
+            <span class="number">1</span> <span class="op">=&gt;</span> <span class="ident">MouseWheelDirection</span>::<span class="ident">Flipped</span>,
+            _ <span class="op">=&gt;</span> <span class="ident">MouseWheelDirection</span>::<span class="ident">Unknown</span>(<span class="ident">direction</span>),
         }
     }
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>to_ll</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>MouseWheelDirection</span>::<span class='ident'>Normal</span> <span class='op'>=&gt;</span> <span class='number'>0</span>,
-            <span class='ident'>MouseWheelDirection</span>::<span class='ident'>Flipped</span> <span class='op'>=&gt;</span> <span class='number'>1</span>,
-            <span class='ident'>MouseWheelDirection</span>::<span class='ident'>Unknown</span>(<span class='ident'>direction</span>) <span class='op'>=&gt;</span> <span class='ident'>direction</span>,
-        }
-    }
-}
-
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>u8</span>)]</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>MouseButton</span> {
-    <span class='ident'>Unknown</span> <span class='op'>=</span> <span class='number'>0</span>,
-    <span class='ident'>Left</span>   <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_BUTTON_LEFT</span> <span class='kw'>as</span> <span class='ident'>u8</span>,
-    <span class='ident'>Middle</span> <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_BUTTON_MIDDLE</span> <span class='kw'>as</span> <span class='ident'>u8</span>,
-    <span class='ident'>Right</span>  <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_BUTTON_RIGHT</span> <span class='kw'>as</span> <span class='ident'>u8</span>,
-    <span class='ident'>X1</span>     <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_BUTTON_X1</span> <span class='kw'>as</span> <span class='ident'>u8</span>,
-    <span class='ident'>X2</span>     <span class='op'>=</span> <span class='ident'>ll</span>::<span class='ident'>SDL_BUTTON_X2</span> <span class='kw'>as</span> <span class='ident'>u8</span>,
-}
-
-<span class='kw'>impl</span> <span class='ident'>MouseButton</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_ll</span>(<span class='ident'>button</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>MouseButton</span> {
-        <span class='kw'>match</span> <span class='ident'>button</span> {
-            <span class='ident'>ll</span>::<span class='ident'>SDL_BUTTON_LEFT</span>   <span class='op'>=&gt;</span> <span class='ident'>MouseButton</span>::<span class='ident'>Left</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_BUTTON_MIDDLE</span> <span class='op'>=&gt;</span> <span class='ident'>MouseButton</span>::<span class='ident'>Middle</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_BUTTON_RIGHT</span>  <span class='op'>=&gt;</span> <span class='ident'>MouseButton</span>::<span class='ident'>Right</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_BUTTON_X1</span>     <span class='op'>=&gt;</span> <span class='ident'>MouseButton</span>::<span class='ident'>X1</span>,
-            <span class='ident'>ll</span>::<span class='ident'>SDL_BUTTON_X2</span>     <span class='op'>=&gt;</span> <span class='ident'>MouseButton</span>::<span class='ident'>X2</span>,
-            _                     <span class='op'>=&gt;</span> <span class='ident'>MouseButton</span>::<span class='ident'>Unknown</span>,
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_ll</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">MouseWheelDirection</span>::<span class="ident">Normal</span> <span class="op">=&gt;</span> <span class="number">0</span>,
+            <span class="ident">MouseWheelDirection</span>::<span class="ident">Flipped</span> <span class="op">=&gt;</span> <span class="number">1</span>,
+            <span class="ident">MouseWheelDirection</span>::<span class="ident">Unknown</span>(<span class="ident">direction</span>) <span class="op">=&gt;</span> <span class="ident">direction</span>,
         }
     }
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>MouseState</span> {
-    <span class='ident'>mouse_state</span>: <span class='ident'>u32</span>,
-    <span class='ident'>x</span>: <span class='ident'>i32</span>,
-    <span class='ident'>y</span>: <span class='ident'>i32</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u8</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">MouseButton</span> {
+    <span class="ident">Unknown</span> <span class="op">=</span> <span class="number">0</span>,
+    <span class="ident">Left</span>   <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_BUTTON_LEFT</span> <span class="kw">as</span> <span class="ident">u8</span>,
+    <span class="ident">Middle</span> <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_BUTTON_MIDDLE</span> <span class="kw">as</span> <span class="ident">u8</span>,
+    <span class="ident">Right</span>  <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_BUTTON_RIGHT</span> <span class="kw">as</span> <span class="ident">u8</span>,
+    <span class="ident">X1</span>     <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_BUTTON_X1</span> <span class="kw">as</span> <span class="ident">u8</span>,
+    <span class="ident">X2</span>     <span class="op">=</span> <span class="ident">ll</span>::<span class="ident">SDL_BUTTON_X2</span> <span class="kw">as</span> <span class="ident">u8</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>MouseState</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>_e</span>: <span class='kw-2'>&amp;</span><span class='ident'>EventPump</span>) <span class='op'>-&gt;</span> <span class='ident'>MouseState</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>y</span> <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='kw'>let</span> <span class='ident'>mouse_state</span>: <span class='ident'>u32</span> <span class='op'>=</span> <span class='kw'>unsafe</span> {
-            <span class='ident'>ll</span>::<span class='ident'>SDL_GetMouseState</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>x</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>y</span>)
+<span class="kw">impl</span> <span class="ident">MouseButton</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_ll</span>(<span class="ident">button</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">MouseButton</span> {
+        <span class="kw">match</span> <span class="ident">button</span> {
+            <span class="ident">ll</span>::<span class="ident">SDL_BUTTON_LEFT</span>   <span class="op">=&gt;</span> <span class="ident">MouseButton</span>::<span class="ident">Left</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_BUTTON_MIDDLE</span> <span class="op">=&gt;</span> <span class="ident">MouseButton</span>::<span class="ident">Middle</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_BUTTON_RIGHT</span>  <span class="op">=&gt;</span> <span class="ident">MouseButton</span>::<span class="ident">Right</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_BUTTON_X1</span>     <span class="op">=&gt;</span> <span class="ident">MouseButton</span>::<span class="ident">X1</span>,
+            <span class="ident">ll</span>::<span class="ident">SDL_BUTTON_X2</span>     <span class="op">=&gt;</span> <span class="ident">MouseButton</span>::<span class="ident">X2</span>,
+            _                     <span class="op">=&gt;</span> <span class="ident">MouseButton</span>::<span class="ident">Unknown</span>,
+        }
+    }
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MouseState</span> {
+    <span class="ident">mouse_state</span>: <span class="ident">u32</span>,
+    <span class="ident">x</span>: <span class="ident">i32</span>,
+    <span class="ident">y</span>: <span class="ident">i32</span>
+}
+
+<span class="kw">impl</span> <span class="ident">MouseState</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">_e</span>: <span class="kw-2">&amp;</span><span class="ident">EventPump</span>) <span class="op">-&gt;</span> <span class="ident">MouseState</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">x</span> <span class="op">=</span> <span class="number">0</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">y</span> <span class="op">=</span> <span class="number">0</span>;
+        <span class="kw">let</span> <span class="ident">mouse_state</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+            <span class="ident">ll</span>::<span class="ident">SDL_GetMouseState</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">x</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">y</span>)
         };
 
-        <span class='ident'>MouseState</span> {
-            <span class='ident'>mouse_state</span>: <span class='ident'>mouse_state</span>,
-            <span class='ident'>x</span>: <span class='ident'>x</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
-            <span class='ident'>y</span>: <span class='ident'>y</span> <span class='kw'>as</span> <span class='ident'>i32</span>
+        <span class="ident">MouseState</span> {
+            <span class="ident">mouse_state</span>: <span class="ident">mouse_state</span>,
+            <span class="ident">x</span>: <span class="ident">x</span> <span class="kw">as</span> <span class="ident">i32</span>,
+            <span class="ident">y</span>: <span class="ident">y</span> <span class="kw">as</span> <span class="ident">i32</span>
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_sdl_state</span>(<span class='ident'>state</span>: <span class='ident'>u32</span>) <span class='op'>-&gt;</span> <span class='ident'>MouseState</span> {
-        <span class='ident'>MouseState</span> { <span class='ident'>mouse_state</span> : <span class='ident'>state</span>, <span class='ident'>x</span>: <span class='number'>0</span>, <span class='ident'>y</span>: <span class='number'>0</span> }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_sdl_state</span>(<span class="ident">state</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">MouseState</span> {
+        <span class="ident">MouseState</span> { <span class="ident">mouse_state</span> : <span class="ident">state</span>, <span class="ident">x</span>: <span class="number">0</span>, <span class="ident">y</span>: <span class="number">0</span> }
     }
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>to_sdl_state</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u32</span> {
-        <span class='self'>self</span>.<span class='ident'>mouse_state</span>
-    }
-
-    <span class='doccomment'>/// Returns true if the left mouse button is pressed.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Example</span>
-    <span class='doccomment'>/// ```no_run</span>
-    <span class='doccomment'>/// use sdl2::mouse::MouseButton;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// fn is_a_pressed(e: &amp;sdl2::EventPump) -&gt; bool {</span>
-    <span class='doccomment'>///     e.mouse_state().left()</span>
-    <span class='doccomment'>/// }</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>left</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> { (<span class='self'>self</span>.<span class='ident'>mouse_state</span> <span class='op'>&amp;</span> <span class='ident'>ll</span>::<span class='ident'>SDL_BUTTON_LMASK</span>) <span class='op'>!=</span> <span class='number'>0</span> }
-
-    <span class='doccomment'>/// Tests if the middle mouse button was pressed.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>middle</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> { (<span class='self'>self</span>.<span class='ident'>mouse_state</span> <span class='op'>&amp;</span> <span class='ident'>ll</span>::<span class='ident'>SDL_BUTTON_MMASK</span>) <span class='op'>!=</span> <span class='number'>0</span> }
-
-    <span class='doccomment'>/// Tests if the right mouse button was pressed.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>right</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> { (<span class='self'>self</span>.<span class='ident'>mouse_state</span> <span class='op'>&amp;</span> <span class='ident'>ll</span>::<span class='ident'>SDL_BUTTON_RMASK</span>) <span class='op'>!=</span> <span class='number'>0</span> }
-
-    <span class='doccomment'>/// Tests if the X1 mouse button was pressed.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>x1</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> { (<span class='self'>self</span>.<span class='ident'>mouse_state</span> <span class='op'>&amp;</span> <span class='ident'>ll</span>::<span class='ident'>SDL_BUTTON_X1MASK</span>) <span class='op'>!=</span> <span class='number'>0</span> }
-
-    <span class='doccomment'>/// Tests if the X2 mouse button was pressed.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>x2</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> { (<span class='self'>self</span>.<span class='ident'>mouse_state</span> <span class='op'>&amp;</span> <span class='ident'>ll</span>::<span class='ident'>SDL_BUTTON_X2MASK</span>) <span class='op'>!=</span> <span class='number'>0</span> }
-
-    <span class='doccomment'>/// Returns the x coordinate of the state</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>x</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>i32</span> { <span class='self'>self</span>.<span class='ident'>x</span> }
-
-    <span class='doccomment'>/// Returns the y coordinate of the state</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>y</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>i32</span> { <span class='self'>self</span>.<span class='ident'>y</span> }
-
-    <span class='doccomment'>/// Returns true if the mouse button is pressed.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Example</span>
-    <span class='doccomment'>/// ```no_run</span>
-    <span class='doccomment'>/// use sdl2::mouse::MouseButton;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// fn is_left_pressed(e: &amp;sdl2::EventPump) -&gt; bool {</span>
-    <span class='doccomment'>///     e.mouse_state().is_mouse_button_pressed(MouseButton::Left)</span>
-    <span class='doccomment'>/// }</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_mouse_button_pressed</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>mouse_button</span>: <span class='ident'>MouseButton</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>let</span> <span class='ident'>mask</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> ((<span class='ident'>mouse_button</span> <span class='kw'>as</span> <span class='ident'>u32</span>)<span class='op'>-</span><span class='number'>1</span>);
-        <span class='self'>self</span>.<span class='ident'>mouse_state</span> <span class='op'>&amp;</span> <span class='ident'>mask</span> <span class='op'>!=</span> <span class='number'>0</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_sdl_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u32</span> {
+        <span class="self">self</span>.<span class="ident">mouse_state</span>
     }
 
-    <span class='doccomment'>/// Returns an iterator all mouse buttons with a boolean indicating if the scancode is pressed.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Example</span>
-    <span class='doccomment'>/// ```no_run</span>
-    <span class='doccomment'>/// use sdl2::mouse::MouseButton;</span>
-    <span class='doccomment'>/// use std::collections::HashMap;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// fn mouse_button_set(e: &amp;sdl2::EventPump) -&gt; HashMap&lt;MouseButton, bool&gt; {</span>
-    <span class='doccomment'>///     e.mouse_state().mouse_buttons().collect()</span>
-    <span class='doccomment'>/// }</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// fn find_first_pressed(e: &amp;sdl2::EventPump) -&gt; bool {</span>
-    <span class='doccomment'>///     for (key,value) in mouse_button_set(e) {</span>
-    <span class='doccomment'>///         return value != false</span>
-    <span class='doccomment'>///     }</span>
-    <span class='doccomment'>///     false</span>
-    <span class='doccomment'>/// }</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mouse_buttons</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>MouseButtonIterator</span> {
-        <span class='ident'>MouseButtonIterator</span> {
-            <span class='ident'>cur_button</span>: <span class='number'>1</span>,
-            <span class='ident'>mouse_state</span>: <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>mouse_state</span>
+    <span class="doccomment">/// Returns true if the left mouse button is pressed.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">/// ```no_run</span>
+    <span class="doccomment">/// use sdl2::mouse::MouseButton;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// fn is_a_pressed(e: &amp;sdl2::EventPump) -&gt; bool {</span>
+    <span class="doccomment">///     e.mouse_state().left()</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> { (<span class="self">self</span>.<span class="ident">mouse_state</span> <span class="op">&amp;</span> <span class="ident">ll</span>::<span class="ident">SDL_BUTTON_LMASK</span>) <span class="op">!=</span> <span class="number">0</span> }
+
+    <span class="doccomment">/// Tests if the middle mouse button was pressed.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">middle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> { (<span class="self">self</span>.<span class="ident">mouse_state</span> <span class="op">&amp;</span> <span class="ident">ll</span>::<span class="ident">SDL_BUTTON_MMASK</span>) <span class="op">!=</span> <span class="number">0</span> }
+
+    <span class="doccomment">/// Tests if the right mouse button was pressed.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> { (<span class="self">self</span>.<span class="ident">mouse_state</span> <span class="op">&amp;</span> <span class="ident">ll</span>::<span class="ident">SDL_BUTTON_RMASK</span>) <span class="op">!=</span> <span class="number">0</span> }
+
+    <span class="doccomment">/// Tests if the X1 mouse button was pressed.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">x1</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> { (<span class="self">self</span>.<span class="ident">mouse_state</span> <span class="op">&amp;</span> <span class="ident">ll</span>::<span class="ident">SDL_BUTTON_X1MASK</span>) <span class="op">!=</span> <span class="number">0</span> }
+
+    <span class="doccomment">/// Tests if the X2 mouse button was pressed.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">x2</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> { (<span class="self">self</span>.<span class="ident">mouse_state</span> <span class="op">&amp;</span> <span class="ident">ll</span>::<span class="ident">SDL_BUTTON_X2MASK</span>) <span class="op">!=</span> <span class="number">0</span> }
+
+    <span class="doccomment">/// Returns the x coordinate of the state</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">x</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">i32</span> { <span class="self">self</span>.<span class="ident">x</span> }
+
+    <span class="doccomment">/// Returns the y coordinate of the state</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">y</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">i32</span> { <span class="self">self</span>.<span class="ident">y</span> }
+
+    <span class="doccomment">/// Returns true if the mouse button is pressed.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">/// ```no_run</span>
+    <span class="doccomment">/// use sdl2::mouse::MouseButton;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// fn is_left_pressed(e: &amp;sdl2::EventPump) -&gt; bool {</span>
+    <span class="doccomment">///     e.mouse_state().is_mouse_button_pressed(MouseButton::Left)</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_mouse_button_pressed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">mouse_button</span>: <span class="ident">MouseButton</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">let</span> <span class="ident">mask</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> ((<span class="ident">mouse_button</span> <span class="kw">as</span> <span class="ident">u32</span>)<span class="op">-</span><span class="number">1</span>);
+        <span class="self">self</span>.<span class="ident">mouse_state</span> <span class="op">&amp;</span> <span class="ident">mask</span> <span class="op">!=</span> <span class="number">0</span>
+    }
+
+    <span class="doccomment">/// Returns an iterator all mouse buttons with a boolean indicating if the scancode is pressed.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">/// ```no_run</span>
+    <span class="doccomment">/// use sdl2::mouse::MouseButton;</span>
+    <span class="doccomment">/// use std::collections::HashMap;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// fn mouse_button_set(e: &amp;sdl2::EventPump) -&gt; HashMap&lt;MouseButton, bool&gt; {</span>
+    <span class="doccomment">///     e.mouse_state().mouse_buttons().collect()</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// fn find_first_pressed(e: &amp;sdl2::EventPump) -&gt; bool {</span>
+    <span class="doccomment">///     for (key,value) in mouse_button_set(e) {</span>
+    <span class="doccomment">///         return value != false</span>
+    <span class="doccomment">///     }</span>
+    <span class="doccomment">///     false</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mouse_buttons</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MouseButtonIterator</span> {
+        <span class="ident">MouseButtonIterator</span> {
+            <span class="ident">cur_button</span>: <span class="number">1</span>,
+            <span class="ident">mouse_state</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">mouse_state</span>
         }
     }
 
-    <span class='doccomment'>/// Returns an iterator of pressed mouse buttons.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// # Example</span>
-    <span class='doccomment'>/// ```no_run</span>
-    <span class='doccomment'>/// use sdl2::mouse::MouseButton;</span>
-    <span class='doccomment'>/// use std::collections::HashSet;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// fn pressed_mouse_button_set(e: &amp;sdl2::EventPump) -&gt; HashSet&lt;MouseButton&gt; {</span>
-    <span class='doccomment'>///     e.mouse_state().pressed_mouse_buttons().collect()</span>
-    <span class='doccomment'>/// }</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// fn newly_pressed(old: &amp;HashSet&lt;MouseButton&gt;, new: &amp;HashSet&lt;MouseButton&gt;) -&gt; HashSet&lt;MouseButton&gt; {</span>
-    <span class='doccomment'>///     new - old</span>
-    <span class='doccomment'>///     // sugar for: new.difference(old).collect()</span>
-    <span class='doccomment'>/// }</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>pressed_mouse_buttons</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>PressedMouseButtonIterator</span> {
-        <span class='ident'>PressedMouseButtonIterator</span> {
-            <span class='ident'>iter</span>: <span class='self'>self</span>.<span class='ident'>mouse_buttons</span>()
-        }
-    }
-}
-
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>MouseButtonIterator</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>cur_button</span>: <span class='ident'>u8</span>,
-    <span class='ident'>mouse_state</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>u32</span>
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>MouseButtonIterator</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> (<span class='ident'>MouseButton</span>, <span class='ident'>bool</span>);
-
-    <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='ident'>MouseButton</span>, <span class='ident'>bool</span>)<span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>cur_button</span> <span class='op'>&lt;</span> <span class='ident'>MouseButton</span>::<span class='ident'>X2</span> <span class='kw'>as</span> <span class='ident'>u8</span> <span class='op'>+</span> <span class='number'>1</span> {
-            <span class='kw'>let</span> <span class='ident'>mouse_button</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>cur_button</span>;
-            <span class='kw'>let</span> <span class='ident'>mask</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> ((<span class='self'>self</span>.<span class='ident'>cur_button</span> <span class='kw'>as</span> <span class='ident'>u32</span>)<span class='op'>-</span><span class='number'>1</span>);
-            <span class='kw'>let</span> <span class='ident'>pressed</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>mouse_state</span> <span class='op'>&amp;</span> <span class='ident'>mask</span> <span class='op'>!=</span> <span class='number'>0</span>;
-            <span class='self'>self</span>.<span class='ident'>cur_button</span> <span class='op'>+=</span> <span class='number'>1</span>;
-            <span class='prelude-val'>Some</span>((<span class='ident'>MouseButton</span>::<span class='ident'>from_ll</span>(<span class='ident'>mouse_button</span>), <span class='ident'>pressed</span>))
-        } <span class='kw'>else</span> {
-            <span class='prelude-val'>None</span>
+    <span class="doccomment">/// Returns an iterator of pressed mouse buttons.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">/// ```no_run</span>
+    <span class="doccomment">/// use sdl2::mouse::MouseButton;</span>
+    <span class="doccomment">/// use std::collections::HashSet;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// fn pressed_mouse_button_set(e: &amp;sdl2::EventPump) -&gt; HashSet&lt;MouseButton&gt; {</span>
+    <span class="doccomment">///     e.mouse_state().pressed_mouse_buttons().collect()</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// fn newly_pressed(old: &amp;HashSet&lt;MouseButton&gt;, new: &amp;HashSet&lt;MouseButton&gt;) -&gt; HashSet&lt;MouseButton&gt; {</span>
+    <span class="doccomment">///     new - old</span>
+    <span class="doccomment">///     // sugar for: new.difference(old).collect()</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pressed_mouse_buttons</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">PressedMouseButtonIterator</span> {
+        <span class="ident">PressedMouseButtonIterator</span> {
+            <span class="ident">iter</span>: <span class="self">self</span>.<span class="ident">mouse_buttons</span>()
         }
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>PressedMouseButtonIterator</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>iter</span>: <span class='ident'>MouseButtonIterator</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MouseButtonIterator</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">cur_button</span>: <span class="ident">u8</span>,
+    <span class="ident">mouse_state</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">u32</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>PressedMouseButtonIterator</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>MouseButton</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">MouseButtonIterator</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> (<span class="ident">MouseButton</span>, <span class="ident">bool</span>);
 
-    <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>MouseButton</span><span class='op'>&gt;</span> {
-        <span class='kw'>while</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>((<span class='ident'>mouse_button</span>, <span class='ident'>pressed</span>)) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>iter</span>.<span class='ident'>next</span>() {
-            <span class='kw'>if</span> <span class='ident'>pressed</span> { <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>mouse_button</span>) }
-        }
-        <span class='prelude-val'>None</span>
-    }
-}
-
-<span class='kw'>impl</span> ::<span class='ident'>Sdl</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>mouse</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>MouseUtil</span> {
-        <span class='ident'>MouseUtil</span> {
-            <span class='ident'>_sdldrop</span>: <span class='self'>self</span>.<span class='ident'>sdldrop</span>()
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">MouseButton</span>, <span class="ident">bool</span>)<span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">cur_button</span> <span class="op">&lt;</span> <span class="ident">MouseButton</span>::<span class="ident">X2</span> <span class="kw">as</span> <span class="ident">u8</span> <span class="op">+</span> <span class="number">1</span> {
+            <span class="kw">let</span> <span class="ident">mouse_button</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">cur_button</span>;
+            <span class="kw">let</span> <span class="ident">mask</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> ((<span class="self">self</span>.<span class="ident">cur_button</span> <span class="kw">as</span> <span class="ident">u32</span>)<span class="op">-</span><span class="number">1</span>);
+            <span class="kw">let</span> <span class="ident">pressed</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">mouse_state</span> <span class="op">&amp;</span> <span class="ident">mask</span> <span class="op">!=</span> <span class="number">0</span>;
+            <span class="self">self</span>.<span class="ident">cur_button</span> <span class="op">+=</span> <span class="number">1</span>;
+            <span class="prelude-val">Some</span>((<span class="ident">MouseButton</span>::<span class="ident">from_ll</span>(<span class="ident">mouse_button</span>), <span class="ident">pressed</span>))
+        } <span class="kw">else</span> {
+            <span class="prelude-val">None</span>
         }
     }
 }
 
-<span class='doccomment'>/// Mouse utility functions. Access with `Sdl::mouse()`.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```no_run</span>
-<span class='doccomment'>/// let sdl_context = sdl2::init().unwrap();</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// // Hide the cursor</span>
-<span class='doccomment'>/// sdl_context.mouse().show_cursor(false);</span>
-<span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>MouseUtil</span> {
-    <span class='ident'>_sdldrop</span>: ::<span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span><span class='op'>&lt;</span>::<span class='ident'>SdlDrop</span><span class='op'>&gt;</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PressedMouseButtonIterator</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">iter</span>: <span class="ident">MouseButtonIterator</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>
 }
 
-<span class='kw'>impl</span> <span class='ident'>MouseUtil</span> {
-    <span class='doccomment'>/// Gets the id of the window which currently has mouse focus.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>focused_window_id</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>u32</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>raw</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_GetMouseFocus</span>() };
-        <span class='kw'>if</span> <span class='ident'>raw</span> <span class='op'>==</span> <span class='ident'>ptr</span>::<span class='ident'>null_mut</span>() {
-            <span class='prelude-val'>None</span>
-        } <span class='kw'>else</span> {
-            <span class='kw'>let</span> <span class='ident'>id</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { ::<span class='ident'>sys</span>::<span class='ident'>video</span>::<span class='ident'>SDL_GetWindowID</span>(<span class='ident'>raw</span>) };
-            <span class='prelude-val'>Some</span>(<span class='ident'>id</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">PressedMouseButtonIterator</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">MouseButton</span>;
+
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MouseButton</span><span class="op">&gt;</span> {
+        <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="ident">mouse_button</span>, <span class="ident">pressed</span>)) <span class="op">=</span> <span class="self">self</span>.<span class="ident">iter</span>.<span class="ident">next</span>() {
+            <span class="kw">if</span> <span class="ident">pressed</span> { <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">mouse_button</span>) }
+        }
+        <span class="prelude-val">None</span>
+    }
+}
+
+<span class="kw">impl</span> ::<span class="ident">Sdl</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mouse</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MouseUtil</span> {
+        <span class="ident">MouseUtil</span> {
+            <span class="ident">_sdldrop</span>: <span class="self">self</span>.<span class="ident">sdldrop</span>()
+        }
+    }
+}
+
+<span class="doccomment">/// Mouse utility functions. Access with `Sdl::mouse()`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```no_run</span>
+<span class="doccomment">/// let sdl_context = sdl2::init().unwrap();</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// // Hide the cursor</span>
+<span class="doccomment">/// sdl_context.mouse().show_cursor(false);</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MouseUtil</span> {
+    <span class="ident">_sdldrop</span>: ::<span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span><span class="op">&lt;</span>::<span class="ident">SdlDrop</span><span class="op">&gt;</span>
+}
+
+<span class="kw">impl</span> <span class="ident">MouseUtil</span> {
+    <span class="doccomment">/// Gets the id of the window which currently has mouse focus.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">focused_window_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_GetMouseFocus</span>() };
+        <span class="kw">if</span> <span class="ident">raw</span> <span class="op">==</span> <span class="ident">ptr</span>::<span class="ident">null_mut</span>() {
+            <span class="prelude-val">None</span>
+        } <span class="kw">else</span> {
+            <span class="kw">let</span> <span class="ident">id</span> <span class="op">=</span> <span class="kw">unsafe</span> { ::<span class="ident">sys</span>::<span class="ident">video</span>::<span class="ident">SDL_GetWindowID</span>(<span class="ident">raw</span>) };
+            <span class="prelude-val">Some</span>(<span class="ident">id</span>)
         }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>warp_mouse_in_window</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>window</span>: <span class='kw-2'>&amp;</span><span class='ident'>video</span>::<span class='ident'>WindowRef</span>, <span class='ident'>x</span>: <span class='ident'>i32</span>, <span class='ident'>y</span>: <span class='ident'>i32</span>) {
-        <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_WarpMouseInWindow</span>(<span class='ident'>window</span>.<span class='ident'>raw</span>(), <span class='ident'>x</span>, <span class='ident'>y</span>); }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">warp_mouse_in_window</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">window</span>: <span class="kw-2">&amp;</span><span class="ident">video</span>::<span class="ident">WindowRef</span>, <span class="ident">x</span>: <span class="ident">i32</span>, <span class="ident">y</span>: <span class="ident">i32</span>) {
+        <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_WarpMouseInWindow</span>(<span class="ident">window</span>.<span class="ident">raw</span>(), <span class="ident">x</span>, <span class="ident">y</span>); }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_relative_mouse_mode</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>on</span>: <span class='ident'>bool</span>) {
-        <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_SetRelativeMouseMode</span>(<span class='ident'>on</span> <span class='kw'>as</span> <span class='ident'>i32</span>); }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_relative_mouse_mode</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">on</span>: <span class="ident">bool</span>) {
+        <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_SetRelativeMouseMode</span>(<span class="ident">on</span> <span class="kw">as</span> <span class="ident">i32</span>); }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>relative_mouse_mode</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_GetRelativeMouseMode</span>() <span class='op'>==</span> <span class='number'>1</span> }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">relative_mouse_mode</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_GetRelativeMouseMode</span>() <span class="op">==</span> <span class="number">1</span> }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_cursor_showing</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_ShowCursor</span>(::<span class='ident'>sys</span>::<span class='ident'>SDL_QUERY</span>) <span class='op'>==</span> <span class='number'>1</span> }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_cursor_showing</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_ShowCursor</span>(::<span class="ident">sys</span>::<span class="ident">SDL_QUERY</span>) <span class="op">==</span> <span class="number">1</span> }
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>show_cursor</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>show</span>: <span class='ident'>bool</span>) {
-        <span class='kw'>unsafe</span> { <span class='ident'>ll</span>::<span class='ident'>SDL_ShowCursor</span>(<span class='ident'>show</span> <span class='kw'>as</span> <span class='ident'>i32</span>); }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">show_cursor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">show</span>: <span class="ident">bool</span>) {
+        <span class="kw">unsafe</span> { <span class="ident">ll</span>::<span class="ident">SDL_ShowCursor</span>(<span class="ident">show</span> <span class="kw">as</span> <span class="ident">i32</span>); }
     }
 }
 </pre>

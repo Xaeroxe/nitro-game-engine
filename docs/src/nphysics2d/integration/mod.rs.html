@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -60,24 +60,24 @@
 <span id="15">15</span>
 <span id="16">16</span>
 <span id="17">17</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! Position and orientation update of rigid bodies.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! Position and orientation update of rigid bodies.</span>
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>integration</span>::<span class='ident'>integrator</span>::<span class='ident'>Integrator</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>integration</span>::<span class='ident'>body_exp_euler_integrator</span>::<span class='ident'>BodyExpEulerIntegrator</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>integration</span>::<span class='ident'>body_smp_euler_integrator</span>::<span class='ident'>BodySmpEulerIntegrator</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>integration</span>::<span class='ident'>body_force_generator</span>::<span class='ident'>BodyForceGenerator</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>integration</span>::<span class='ident'>body_damping</span>::<span class='ident'>BodyDamping</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>integration</span>::<span class='ident'>translational_ccd_motion_clamping</span>::<span class='ident'>TranslationalCCDMotionClamping</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">integration</span>::<span class="ident">integrator</span>::<span class="ident">Integrator</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">integration</span>::<span class="ident">body_exp_euler_integrator</span>::<span class="ident">BodyExpEulerIntegrator</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">integration</span>::<span class="ident">body_smp_euler_integrator</span>::<span class="ident">BodySmpEulerIntegrator</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">integration</span>::<span class="ident">body_force_generator</span>::<span class="ident">BodyForceGenerator</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">integration</span>::<span class="ident">body_damping</span>::<span class="ident">BodyDamping</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">integration</span>::<span class="ident">translational_ccd_motion_clamping</span>::<span class="ident">TranslationalCCDMotionClamping</span>;
 
-<span class='comment'>// XXX: `pub` due to rust#18241</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>integrator</span>;
-<span class='kw'>mod</span> <span class='ident'>body_exp_euler_integrator</span>;
-<span class='kw'>mod</span> <span class='ident'>body_smp_euler_integrator</span>;
-<span class='kw'>mod</span> <span class='ident'>body_force_generator</span>;
-<span class='kw'>mod</span> <span class='ident'>body_damping</span>;
-<span class='kw'>mod</span> <span class='ident'>translational_ccd_motion_clamping</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>euler</span>;
+<span class="comment">// XXX: `pub` due to rust#18241</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">integrator</span>;
+<span class="kw">mod</span> <span class="ident">body_exp_euler_integrator</span>;
+<span class="kw">mod</span> <span class="ident">body_smp_euler_integrator</span>;
+<span class="kw">mod</span> <span class="ident">body_force_generator</span>;
+<span class="kw">mod</span> <span class="ident">body_damping</span>;
+<span class="kw">mod</span> <span class="ident">translational_ccd_motion_clamping</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">euler</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

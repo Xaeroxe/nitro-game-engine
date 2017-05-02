@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -122,84 +122,84 @@
 <span id="77">77</span>
 <span id="78">78</span>
 <span id="79">79</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! `bincode` is a crate for encoding and decoding using a tiny binary</span>
-<span class='doccomment'>//! serialization strategy.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! There are simple functions for encoding to `Vec&lt;u8&gt;` and decoding from</span>
-<span class='doccomment'>//! `&amp;[u8]`, but the meat of the library is the `encode_into` and `decode_from`</span>
-<span class='doccomment'>//! functions which respectively allow encoding into a `std::io::Writer`</span>
-<span class='doccomment'>//! and decoding from a `std::io::Buffer`.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ## Modules</span>
-<span class='doccomment'>//! There are two ways to encode and decode structs using `bincode`, either using `rustc_serialize`</span>
-<span class='doccomment'>//! or the `serde` crate.  `rustc_serialize` and `serde` are crates and and also the names of their</span>
-<span class='doccomment'>//! corresponding modules inside of `bincode`.  Both modules have exactly equivalant functions, and</span>
-<span class='doccomment'>//! and the only difference is whether or not the library user wants to use `rustc_serialize` or</span>
-<span class='doccomment'>//! `serde`.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ### Using Basic Functions</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! ```rust</span>
-<span class='doccomment'>//! #![allow(unstable)]</span>
-<span class='doccomment'>//! extern crate bincode;</span>
-<span class='doccomment'>//! use bincode::rustc_serialize::{encode, decode};</span>
-<span class='doccomment'>//! fn main() {</span>
-<span class='doccomment'>//!     // The object that we will serialize.</span>
-<span class='doccomment'>//!     let target = Some(&quot;hello world&quot;.to_string());</span>
-<span class='doccomment'>//!     // The maximum size of the encoded message.</span>
-<span class='doccomment'>//!     let limit = bincode::SizeLimit::Bounded(20);</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!     let encoded: Vec&lt;u8&gt;        = encode(&amp;target, limit).unwrap();</span>
-<span class='doccomment'>//!     let decoded: Option&lt;String&gt; = decode(&amp;encoded[..]).unwrap();</span>
-<span class='doccomment'>//!     assert_eq!(target, decoded);</span>
-<span class='doccomment'>//! }</span>
-<span class='doccomment'>//! ```</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! `bincode` is a crate for encoding and decoding using a tiny binary</span>
+<span class="doccomment">//! serialization strategy.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! There are simple functions for encoding to `Vec&lt;u8&gt;` and decoding from</span>
+<span class="doccomment">//! `&amp;[u8]`, but the meat of the library is the `encode_into` and `decode_from`</span>
+<span class="doccomment">//! functions which respectively allow encoding into a `std::io::Writer`</span>
+<span class="doccomment">//! and decoding from a `std::io::Buffer`.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Modules</span>
+<span class="doccomment">//! There are two ways to encode and decode structs using `bincode`, either using `rustc_serialize`</span>
+<span class="doccomment">//! or the `serde` crate.  `rustc_serialize` and `serde` are crates and and also the names of their</span>
+<span class="doccomment">//! corresponding modules inside of `bincode`.  Both modules have exactly equivalant functions, and</span>
+<span class="doccomment">//! and the only difference is whether or not the library user wants to use `rustc_serialize` or</span>
+<span class="doccomment">//! `serde`.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ### Using Basic Functions</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```rust</span>
+<span class="doccomment">//! #![allow(unstable)]</span>
+<span class="doccomment">//! extern crate bincode;</span>
+<span class="doccomment">//! use bincode::rustc_serialize::{encode, decode};</span>
+<span class="doccomment">//! fn main() {</span>
+<span class="doccomment">//!     // The object that we will serialize.</span>
+<span class="doccomment">//!     let target = Some(&quot;hello world&quot;.to_string());</span>
+<span class="doccomment">//!     // The maximum size of the encoded message.</span>
+<span class="doccomment">//!     let limit = bincode::SizeLimit::Bounded(20);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     let encoded: Vec&lt;u8&gt;        = encode(&amp;target, limit).unwrap();</span>
+<span class="doccomment">//!     let decoded: Option&lt;String&gt; = decode(&amp;encoded[..]).unwrap();</span>
+<span class="doccomment">//!     assert_eq!(target, decoded);</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//! ```</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_name</span> <span class='op'>=</span> <span class='string'>&quot;bincode&quot;</span>]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_type</span> <span class='op'>=</span> <span class='string'>&quot;rlib&quot;</span>]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_type</span> <span class='op'>=</span> <span class='string'>&quot;dylib&quot;</span>]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">crate_name</span> <span class="op">=</span> <span class="string">&quot;bincode&quot;</span>]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">crate_type</span> <span class="op">=</span> <span class="string">&quot;rlib&quot;</span>]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">crate_type</span> <span class="op">=</span> <span class="string">&quot;dylib&quot;</span>]</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_logo_url</span> <span class='op'>=</span> <span class='string'>&quot;./icon.png&quot;</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">html_logo_url</span> <span class="op">=</span> <span class="string">&quot;./icon.png&quot;</span>)]</span>
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc-serialize&quot;</span>)]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustc_serialize</span> <span class='kw'>as</span> <span class='ident'>rustc_serialize_crate</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>byteorder</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>num_traits</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;serde&quot;</span>)]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>serde</span> <span class='kw'>as</span> <span class='ident'>serde_crate</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rustc-serialize&quot;</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rustc_serialize</span> <span class="kw">as</span> <span class="ident">rustc_serialize_crate</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">byteorder</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num_traits</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde</span> <span class="kw">as</span> <span class="ident">serde_crate</span>;
 
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>refbox</span>::{<span class='ident'>RefBox</span>, <span class='ident'>StrBox</span>, <span class='ident'>SliceBox</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">refbox</span>::{<span class="ident">RefBox</span>, <span class="ident">StrBox</span>, <span class="ident">SliceBox</span>};
 
-<span class='kw'>mod</span> <span class='ident'>refbox</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc-serialize&quot;</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>rustc_serialize</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;serde&quot;</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>serde</span>;
+<span class="kw">mod</span> <span class="ident">refbox</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rustc-serialize&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">rustc_serialize</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">serde</span>;
 
-<span class='doccomment'>/// A limit on the amount of bytes that can be read or written.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Size limits are an incredibly important part of both encoding and decoding.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// In order to prevent DOS attacks on a decoder, it is important to limit the</span>
-<span class='doccomment'>/// amount of bytes that a single encoded message can be; otherwise, if you</span>
-<span class='doccomment'>/// are decoding bytes right off of a TCP stream for example, it would be</span>
-<span class='doccomment'>/// possible for an attacker to flood your server with a 3TB vec, causing the</span>
-<span class='doccomment'>/// decoder to run out of memory and crash your application!</span>
-<span class='doccomment'>/// Because of this, you can provide a maximum-number-of-bytes that can be read</span>
-<span class='doccomment'>/// during decoding, and the decoder will explicitly fail if it has to read</span>
-<span class='doccomment'>/// any more than that.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// On the other side, you want to make sure that you aren&#39;t encoding a message</span>
-<span class='doccomment'>/// that is larger than your decoder expects.  By supplying a size limit to an</span>
-<span class='doccomment'>/// encoding function, the encoder will verify that the structure can be encoded</span>
-<span class='doccomment'>/// within that limit.  This verification occurs before any bytes are written to</span>
-<span class='doccomment'>/// the Writer, so recovering from an error is easy.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>Debug</span>, <span class='ident'>Hash</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Ord</span>, <span class='ident'>PartialOrd</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>SizeLimit</span> {
-    <span class='ident'>Infinite</span>,
-    <span class='ident'>Bounded</span>(<span class='ident'>u64</span>)
+<span class="doccomment">/// A limit on the amount of bytes that can be read or written.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Size limits are an incredibly important part of both encoding and decoding.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// In order to prevent DOS attacks on a decoder, it is important to limit the</span>
+<span class="doccomment">/// amount of bytes that a single encoded message can be; otherwise, if you</span>
+<span class="doccomment">/// are decoding bytes right off of a TCP stream for example, it would be</span>
+<span class="doccomment">/// possible for an attacker to flood your server with a 3TB vec, causing the</span>
+<span class="doccomment">/// decoder to run out of memory and crash your application!</span>
+<span class="doccomment">/// Because of this, you can provide a maximum-number-of-bytes that can be read</span>
+<span class="doccomment">/// during decoding, and the decoder will explicitly fail if it has to read</span>
+<span class="doccomment">/// any more than that.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// On the other side, you want to make sure that you aren&#39;t encoding a message</span>
+<span class="doccomment">/// that is larger than your decoder expects.  By supplying a size limit to an</span>
+<span class="doccomment">/// encoding function, the encoder will verify that the structure can be encoded</span>
+<span class="doccomment">/// within that limit.  This verification occurs before any bytes are written to</span>
+<span class="doccomment">/// the Writer, so recovering from an error is easy.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">Hash</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SizeLimit</span> {
+    <span class="ident">Infinite</span>,
+    <span class="ident">Bounded</span>(<span class="ident">u64</span>)
 }
 
 </pre>

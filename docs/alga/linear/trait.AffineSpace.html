@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,28 +43,28 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>alga</a>::<wbr><a href='index.html'>linear</a>::<wbr><a class='trait' href=''>AffineSpace</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>alga</a>::<wbr><a href='index.html'>linear</a>::<wbr><a class="trait" href=''>AffineSpace</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/alga/linear/vector.rs.html#123-142' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait AffineSpace: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Sub.html' title='core::ops::Sub'>Sub</a>&lt;Self, Output=Self::<a class='trait' href='../../alga/linear/trait.AffineSpace.html' title='alga::linear::AffineSpace'>Translation</a>&gt; + <a class='trait' href='../../alga/general/trait.ClosedAdd.html' title='alga::general::ClosedAdd'>ClosedAdd</a>&lt;Self::<a class='trait' href='../../alga/linear/trait.AffineSpace.html' title='alga::linear::AffineSpace'>Translation</a>&gt; {
-    type <a href='#associatedtype.Translation' class='type'>Translation</a>: <a class='trait' href='../../alga/linear/trait.VectorSpace.html' title='alga::linear::VectorSpace'>VectorSpace</a>;
-    fn <a href='#method.translate_by' class='fnname'>translate_by</a>(&amp;self, t: &amp;Self::<a class='trait' href='../../alga/linear/trait.AffineSpace.html' title='alga::linear::AffineSpace'>Translation</a>) -&gt; Self { ... }
-    fn <a href='#method.subtract' class='fnname'>subtract</a>(&amp;self, right: &amp;Self) -&gt; Self::<a class='trait' href='../../alga/linear/trait.AffineSpace.html' title='alga::linear::AffineSpace'>Translation</a> { ... }
+<pre class='rust trait'>pub trait AffineSpace: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Sub.html" title="trait core::ops::Sub">Sub</a>&lt;Self, Output=Self::<a class="trait" href="../../alga/linear/trait.AffineSpace.html" title="trait alga::linear::AffineSpace">Translation</a>&gt; + <a class="trait" href="../../alga/general/trait.ClosedAdd.html" title="trait alga::general::ClosedAdd">ClosedAdd</a>&lt;Self::<a class="trait" href="../../alga/linear/trait.AffineSpace.html" title="trait alga::linear::AffineSpace">Translation</a>&gt; {
+    type <a href='#associatedtype.Translation' class="type">Translation</a>: <a class="trait" href="../../alga/linear/trait.VectorSpace.html" title="trait alga::linear::VectorSpace">VectorSpace</a>;
+    fn <a href='#method.translate_by' class='fnname'>translate_by</a>(&amp;self, t: &amp;Self::<a class="trait" href="../../alga/linear/trait.AffineSpace.html" title="trait alga::linear::AffineSpace">Translation</a>) -&gt; Self { ... }
+    fn <a href='#method.subtract' class='fnname'>subtract</a>(&amp;self, right: &amp;Self) -&gt; Self::<a class="trait" href="../../alga/linear/trait.AffineSpace.html" title="trait alga::linear::AffineSpace">Translation</a> { ... }
 }</pre><div class='docblock'><p>A set points associated with a vector space and a transitive and free additive group action
 (the translation).</p>
 </div>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Translation' class='method'><span id='Translation.t' class='invisible'><code>type <a href='#associatedtype.Translation' class='type'>Translation</a>: <a class='trait' href='../../alga/linear/trait.VectorSpace.html' title='alga::linear::VectorSpace'>VectorSpace</a></code></span></h3><div class='docblock'><p>The associated vector space.</p>
+        <h3 id='associatedtype.Translation' class='method'><span id='Translation.t' class='invisible'><code>type <a href='#associatedtype.Translation' class="type">Translation</a>: <a class="trait" href="../../alga/linear/trait.VectorSpace.html" title="trait alga::linear::VectorSpace">VectorSpace</a></code></span></h3><div class='docblock'><p>The associated vector space.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.translate_by' class='method'><span id='translate_by.v' class='invisible'><code>fn <a href='#method.translate_by' class='fnname'>translate_by</a>(&amp;self, t: &amp;Self::<a class='trait' href='../../alga/linear/trait.AffineSpace.html' title='alga::linear::AffineSpace'>Translation</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Same as <code>*self + *t</code>. Applies the additive group action of this affine space&#39;s associated
+        <h3 id='method.translate_by' class='method'><span id='translate_by.v' class='invisible'><code>fn <a href='#method.translate_by' class='fnname'>translate_by</a>(&amp;self, t: &amp;Self::<a class="trait" href="../../alga/linear/trait.AffineSpace.html" title="trait alga::linear::AffineSpace">Translation</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Same as <code>*self + *t</code>. Applies the additive group action of this affine space&#39;s associated
 vector space on <code>self</code>.</p>
-</div><h3 id='method.subtract' class='method'><span id='subtract.v' class='invisible'><code>fn <a href='#method.subtract' class='fnname'>subtract</a>(&amp;self, right: &amp;Self) -&gt; Self::<a class='trait' href='../../alga/linear/trait.AffineSpace.html' title='alga::linear::AffineSpace'>Translation</a></code></span></h3><div class='docblock'><p>Same as <code>*self - *other</code>. Returns the unique element <code>v</code> of the associated vector space
+</div><h3 id='method.subtract' class='method'><span id='subtract.v' class='invisible'><code>fn <a href='#method.subtract' class='fnname'>subtract</a>(&amp;self, right: &amp;Self) -&gt; Self::<a class="trait" href="../../alga/linear/trait.AffineSpace.html" title="trait alga::linear::AffineSpace">Translation</a></code></span></h3><div class='docblock'><p>Same as <code>*self - *other</code>. Returns the unique element <code>v</code> of the associated vector space
 such that <code>self = right + v</code>.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>

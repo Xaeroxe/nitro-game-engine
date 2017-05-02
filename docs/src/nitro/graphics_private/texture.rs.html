@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -73,36 +73,36 @@
 <span id="28">28</span>
 <span id="29">29</span>
 <span id="30">30</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>sdl2</span>::<span class='ident'>render</span>::<span class='ident'>Texture</span> <span class='kw'>as</span> <span class='ident'>SdlTexture</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>Arc</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">sdl2</span>::<span class="ident">render</span>::<span class="ident">Texture</span> <span class="kw">as</span> <span class="ident">SdlTexture</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
 
-<span class='doccomment'>/// A static handle to a texture whose data is managed by Nitro.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Texture</span> {
-    <span class='ident'>width</span>: <span class='ident'>u32</span>,
-    <span class='ident'>height</span>: <span class='ident'>u32</span>,
-    <span class='ident'>texture</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>SdlTexture</span><span class='op'>&gt;</span>,
-    <span class='kw'>pub</span> <span class='ident'>flip_vertical</span>: <span class='ident'>bool</span>,
-    <span class='kw'>pub</span> <span class='ident'>flip_horizontal</span>: <span class='ident'>bool</span>,
+<span class="doccomment">/// A static handle to a texture whose data is managed by Nitro.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Texture</span> {
+    <span class="ident">width</span>: <span class="ident">u32</span>,
+    <span class="ident">height</span>: <span class="ident">u32</span>,
+    <span class="ident">texture</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">SdlTexture</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">flip_vertical</span>: <span class="ident">bool</span>,
+    <span class="kw">pub</span> <span class="ident">flip_horizontal</span>: <span class="ident">bool</span>,
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>texture</span>: <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>SdlTexture</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Texture</span> {
-    <span class='kw'>let</span> <span class='ident'>query</span> <span class='op'>=</span> <span class='ident'>texture</span>.<span class='ident'>query</span>();
-    <span class='ident'>Texture</span> {
-        <span class='ident'>width</span>: <span class='ident'>query</span>.<span class='ident'>width</span>,
-        <span class='ident'>height</span>: <span class='ident'>query</span>.<span class='ident'>height</span>,
-        <span class='ident'>texture</span>: <span class='ident'>texture</span>,
-        <span class='ident'>flip_vertical</span>: <span class='bool-val'>false</span>,
-        <span class='ident'>flip_horizontal</span>: <span class='bool-val'>false</span>,
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">texture</span>: <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">SdlTexture</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Texture</span> {
+    <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">texture</span>.<span class="ident">query</span>();
+    <span class="ident">Texture</span> {
+        <span class="ident">width</span>: <span class="ident">query</span>.<span class="ident">width</span>,
+        <span class="ident">height</span>: <span class="ident">query</span>.<span class="ident">height</span>,
+        <span class="ident">texture</span>: <span class="ident">texture</span>,
+        <span class="ident">flip_vertical</span>: <span class="bool-val">false</span>,
+        <span class="ident">flip_horizontal</span>: <span class="bool-val">false</span>,
     }
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>size</span>(<span class='ident'>nitro_texture</span>: <span class='kw-2'>&amp;</span><span class='ident'>Texture</span>) <span class='op'>-&gt;</span> (<span class='ident'>u32</span>, <span class='ident'>u32</span>) {
-    (<span class='ident'>nitro_texture</span>.<span class='ident'>width</span>, <span class='ident'>nitro_texture</span>.<span class='ident'>height</span>)
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size</span>(<span class="ident">nitro_texture</span>: <span class="kw-2">&amp;</span><span class="ident">Texture</span>) <span class="op">-&gt;</span> (<span class="ident">u32</span>, <span class="ident">u32</span>) {
+    (<span class="ident">nitro_texture</span>.<span class="ident">width</span>, <span class="ident">nitro_texture</span>.<span class="ident">height</span>)
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get_raw</span>(<span class='ident'>nitro_texture</span>: <span class='kw-2'>&amp;</span><span class='ident'>Texture</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>SdlTexture</span><span class='op'>&gt;</span> {
-    <span class='kw-2'>&amp;</span><span class='ident'>nitro_texture</span>.<span class='ident'>texture</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_raw</span>(<span class="ident">nitro_texture</span>: <span class="kw-2">&amp;</span><span class="ident">Texture</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">SdlTexture</span><span class="op">&gt;</span> {
+    <span class="kw-2">&amp;</span><span class="ident">nitro_texture</span>.<span class="ident">texture</span>
 }
 </pre>
 </section>

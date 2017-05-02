@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,150 +43,150 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../../index.html'>nalgebra</a>::<wbr><a href='../index.html'>core</a>::<wbr><a href='index.html'>dimension</a>::<wbr><a class='trait' href=''>NamedDim</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../../index.html'>nalgebra</a>::<wbr><a href='../index.html'>core</a>::<wbr><a href='index.html'>dimension</a>::<wbr><a class="trait" href=''>NamedDim</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../../src/nalgebra/core/dimension.rs.html#161-163' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait NamedDim: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a> + <a class='trait' href='../../../typenum/marker_traits/trait.Unsigned.html' title='typenum::marker_traits::Unsigned'>Unsigned</a> {
-    type <a href='#associatedtype.Name' class='type'>Name</a>: <a class='trait' href='../../../nalgebra/core/dimension/trait.DimName.html' title='nalgebra::core::dimension::DimName'>DimName</a>&lt;Value=Self&gt;;
+<pre class='rust trait'>pub trait NamedDim: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + <a class="trait" href="../../../typenum/marker_traits/trait.Unsigned.html" title="trait typenum::marker_traits::Unsigned">Unsigned</a> {
+    type <a href='#associatedtype.Name' class="type">Name</a>: <a class="trait" href="../../../nalgebra/core/dimension/trait.DimName.html" title="trait nalgebra::core::dimension::DimName">DimName</a>&lt;Value=Self&gt;;
 }</pre>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Name' class='method'><span id='Name.t' class='invisible'><code>type <a href='#associatedtype.Name' class='type'>Name</a>: <a class='trait' href='../../../nalgebra/core/dimension/trait.DimName.html' title='nalgebra::core::dimension::DimName'>DimName</a>&lt;Value=Self&gt;</code></span></h3></div>
+        <h3 id='associatedtype.Name' class='method'><span id='Name.t' class='invisible'><code>type <a href='#associatedtype.Name' class="type">Name</a>: <a class="trait" href="../../../nalgebra/core/dimension/trait.DimName.html" title="trait nalgebra::core::dimension::DimName">DimName</a>&lt;Value=Self&gt;</code></span></h3></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U1.html' title='typenum::consts::U1'>U1</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U0.html' title='typenum::consts::U0'>U0</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U2.html' title='typenum::consts::U2'>U2</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U3.html' title='typenum::consts::U3'>U3</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U4.html' title='typenum::consts::U4'>U4</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U5.html' title='typenum::consts::U5'>U5</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U6.html' title='typenum::consts::U6'>U6</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U7.html' title='typenum::consts::U7'>U7</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U8.html' title='typenum::consts::U8'>U8</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U9.html' title='typenum::consts::U9'>U9</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U10.html' title='typenum::consts::U10'>U10</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U11.html' title='typenum::consts::U11'>U11</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U12.html' title='typenum::consts::U12'>U12</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U13.html' title='typenum::consts::U13'>U13</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U14.html' title='typenum::consts::U14'>U14</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U15.html' title='typenum::consts::U15'>U15</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U16.html' title='typenum::consts::U16'>U16</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U17.html' title='typenum::consts::U17'>U17</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U18.html' title='typenum::consts::U18'>U18</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U19.html' title='typenum::consts::U19'>U19</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U20.html' title='typenum::consts::U20'>U20</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U21.html' title='typenum::consts::U21'>U21</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U22.html' title='typenum::consts::U22'>U22</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U23.html' title='typenum::consts::U23'>U23</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U24.html' title='typenum::consts::U24'>U24</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U25.html' title='typenum::consts::U25'>U25</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U26.html' title='typenum::consts::U26'>U26</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U27.html' title='typenum::consts::U27'>U27</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U28.html' title='typenum::consts::U28'>U28</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U29.html' title='typenum::consts::U29'>U29</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U30.html' title='typenum::consts::U30'>U30</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U31.html' title='typenum::consts::U31'>U31</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U32.html' title='typenum::consts::U32'>U32</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U33.html' title='typenum::consts::U33'>U33</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U34.html' title='typenum::consts::U34'>U34</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U35.html' title='typenum::consts::U35'>U35</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U36.html' title='typenum::consts::U36'>U36</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U37.html' title='typenum::consts::U37'>U37</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U38.html' title='typenum::consts::U38'>U38</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U39.html' title='typenum::consts::U39'>U39</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U40.html' title='typenum::consts::U40'>U40</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U41.html' title='typenum::consts::U41'>U41</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U42.html' title='typenum::consts::U42'>U42</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U43.html' title='typenum::consts::U43'>U43</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U44.html' title='typenum::consts::U44'>U44</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U45.html' title='typenum::consts::U45'>U45</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U46.html' title='typenum::consts::U46'>U46</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U47.html' title='typenum::consts::U47'>U47</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U48.html' title='typenum::consts::U48'>U48</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U49.html' title='typenum::consts::U49'>U49</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U50.html' title='typenum::consts::U50'>U50</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U51.html' title='typenum::consts::U51'>U51</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U52.html' title='typenum::consts::U52'>U52</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U53.html' title='typenum::consts::U53'>U53</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U54.html' title='typenum::consts::U54'>U54</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U55.html' title='typenum::consts::U55'>U55</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U56.html' title='typenum::consts::U56'>U56</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U57.html' title='typenum::consts::U57'>U57</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U58.html' title='typenum::consts::U58'>U58</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U59.html' title='typenum::consts::U59'>U59</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U60.html' title='typenum::consts::U60'>U60</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U61.html' title='typenum::consts::U61'>U61</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U62.html' title='typenum::consts::U62'>U62</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U63.html' title='typenum::consts::U63'>U63</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U64.html' title='typenum::consts::U64'>U64</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U65.html' title='typenum::consts::U65'>U65</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U66.html' title='typenum::consts::U66'>U66</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U67.html' title='typenum::consts::U67'>U67</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U68.html' title='typenum::consts::U68'>U68</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U69.html' title='typenum::consts::U69'>U69</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U70.html' title='typenum::consts::U70'>U70</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U71.html' title='typenum::consts::U71'>U71</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U72.html' title='typenum::consts::U72'>U72</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U73.html' title='typenum::consts::U73'>U73</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U74.html' title='typenum::consts::U74'>U74</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U75.html' title='typenum::consts::U75'>U75</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U76.html' title='typenum::consts::U76'>U76</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U77.html' title='typenum::consts::U77'>U77</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U78.html' title='typenum::consts::U78'>U78</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U79.html' title='typenum::consts::U79'>U79</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U80.html' title='typenum::consts::U80'>U80</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U81.html' title='typenum::consts::U81'>U81</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U82.html' title='typenum::consts::U82'>U82</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U83.html' title='typenum::consts::U83'>U83</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U84.html' title='typenum::consts::U84'>U84</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U85.html' title='typenum::consts::U85'>U85</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U86.html' title='typenum::consts::U86'>U86</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U87.html' title='typenum::consts::U87'>U87</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U88.html' title='typenum::consts::U88'>U88</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U89.html' title='typenum::consts::U89'>U89</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U90.html' title='typenum::consts::U90'>U90</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U91.html' title='typenum::consts::U91'>U91</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U92.html' title='typenum::consts::U92'>U92</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U93.html' title='typenum::consts::U93'>U93</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U94.html' title='typenum::consts::U94'>U94</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U95.html' title='typenum::consts::U95'>U95</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U96.html' title='typenum::consts::U96'>U96</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U97.html' title='typenum::consts::U97'>U97</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U98.html' title='typenum::consts::U98'>U98</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U99.html' title='typenum::consts::U99'>U99</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U100.html' title='typenum::consts::U100'>U100</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U101.html' title='typenum::consts::U101'>U101</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U102.html' title='typenum::consts::U102'>U102</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U103.html' title='typenum::consts::U103'>U103</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U104.html' title='typenum::consts::U104'>U104</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U105.html' title='typenum::consts::U105'>U105</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U106.html' title='typenum::consts::U106'>U106</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U107.html' title='typenum::consts::U107'>U107</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U108.html' title='typenum::consts::U108'>U108</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U109.html' title='typenum::consts::U109'>U109</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U110.html' title='typenum::consts::U110'>U110</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U111.html' title='typenum::consts::U111'>U111</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U112.html' title='typenum::consts::U112'>U112</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U113.html' title='typenum::consts::U113'>U113</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U114.html' title='typenum::consts::U114'>U114</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U115.html' title='typenum::consts::U115'>U115</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U116.html' title='typenum::consts::U116'>U116</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U117.html' title='typenum::consts::U117'>U117</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U118.html' title='typenum::consts::U118'>U118</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U119.html' title='typenum::consts::U119'>U119</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U120.html' title='typenum::consts::U120'>U120</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U121.html' title='typenum::consts::U121'>U121</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U122.html' title='typenum::consts::U122'>U122</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U123.html' title='typenum::consts::U123'>U123</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U124.html' title='typenum::consts::U124'>U124</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U125.html' title='typenum::consts::U125'>U125</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U126.html' title='typenum::consts::U126'>U126</a></code></li>
-<li><code>impl NamedDim for <a class='type' href='../../../typenum/consts/type.U127.html' title='typenum::consts::U127'>U127</a></code></li>
-<li><code>impl&lt;A:&nbsp;<a class='trait' href='../../../typenum/marker_traits/trait.Bit.html' title='typenum::marker_traits::Bit'>Bit</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>, B:&nbsp;<a class='trait' href='../../../typenum/marker_traits/trait.Bit.html' title='typenum::marker_traits::Bit'>Bit</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>, C:&nbsp;<a class='trait' href='../../../typenum/marker_traits/trait.Bit.html' title='typenum::marker_traits::Bit'>Bit</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>, D:&nbsp;<a class='trait' href='../../../typenum/marker_traits/trait.Bit.html' title='typenum::marker_traits::Bit'>Bit</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>, E:&nbsp;<a class='trait' href='../../../typenum/marker_traits/trait.Bit.html' title='typenum::marker_traits::Bit'>Bit</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>, F:&nbsp;<a class='trait' href='../../../typenum/marker_traits/trait.Bit.html' title='typenum::marker_traits::Bit'>Bit</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>, G:&nbsp;<a class='trait' href='../../../typenum/marker_traits/trait.Bit.html' title='typenum::marker_traits::Bit'>Bit</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>&gt; NamedDim for typenum::uint::<a class='struct' href='../../../typenum/uint/struct.UInt.html' title='typenum::uint::UInt'>UInt</a>&lt;<a class='struct' href='../../../typenum/uint/struct.UInt.html' title='typenum::uint::UInt'>UInt</a>&lt;<a class='struct' href='../../../typenum/uint/struct.UInt.html' title='typenum::uint::UInt'>UInt</a>&lt;<a class='struct' href='../../../typenum/uint/struct.UInt.html' title='typenum::uint::UInt'>UInt</a>&lt;<a class='struct' href='../../../typenum/uint/struct.UInt.html' title='typenum::uint::UInt'>UInt</a>&lt;<a class='struct' href='../../../typenum/uint/struct.UInt.html' title='typenum::uint::UInt'>UInt</a>&lt;<a class='struct' href='../../../typenum/uint/struct.UInt.html' title='typenum::uint::UInt'>UInt</a>&lt;<a class='struct' href='../../../typenum/uint/struct.UInt.html' title='typenum::uint::UInt'>UInt</a>&lt;<a class='struct' href='../../../typenum/uint/struct.UTerm.html' title='typenum::uint::UTerm'>UTerm</a>, <a class='struct' href='../../../typenum/bit/struct.B1.html' title='typenum::bit::B1'>B1</a>&gt;, A&gt;, B&gt;, C&gt;, D&gt;, E&gt;, F&gt;, G&gt;</code></li>
-<li><code>impl&lt;U:&nbsp;<a class='trait' href='../../../typenum/marker_traits/trait.Unsigned.html' title='typenum::marker_traits::Unsigned'>Unsigned</a> + <a class='trait' href='../../../nalgebra/core/dimension/trait.DimName.html' title='nalgebra::core::dimension::DimName'>DimName</a>, B:&nbsp;<a class='trait' href='../../../typenum/marker_traits/trait.Bit.html' title='typenum::marker_traits::Bit'>Bit</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/any/trait.Any.html' title='core::any::Any'>Any</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a>&gt; NamedDim for typenum::uint::<a class='struct' href='../../../typenum/uint/struct.UInt.html' title='typenum::uint::UInt'>UInt</a>&lt;U, B&gt;</code></li>
+    <li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U1.html" title="type typenum::consts::U1">U1</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U0.html" title="type typenum::consts::U0">U0</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U2.html" title="type typenum::consts::U2">U2</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U3.html" title="type typenum::consts::U3">U3</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U4.html" title="type typenum::consts::U4">U4</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U5.html" title="type typenum::consts::U5">U5</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U6.html" title="type typenum::consts::U6">U6</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U7.html" title="type typenum::consts::U7">U7</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U8.html" title="type typenum::consts::U8">U8</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U9.html" title="type typenum::consts::U9">U9</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U10.html" title="type typenum::consts::U10">U10</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U11.html" title="type typenum::consts::U11">U11</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U12.html" title="type typenum::consts::U12">U12</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U13.html" title="type typenum::consts::U13">U13</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U14.html" title="type typenum::consts::U14">U14</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U15.html" title="type typenum::consts::U15">U15</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U16.html" title="type typenum::consts::U16">U16</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U17.html" title="type typenum::consts::U17">U17</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U18.html" title="type typenum::consts::U18">U18</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U19.html" title="type typenum::consts::U19">U19</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U20.html" title="type typenum::consts::U20">U20</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U21.html" title="type typenum::consts::U21">U21</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U22.html" title="type typenum::consts::U22">U22</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U23.html" title="type typenum::consts::U23">U23</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U24.html" title="type typenum::consts::U24">U24</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U25.html" title="type typenum::consts::U25">U25</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U26.html" title="type typenum::consts::U26">U26</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U27.html" title="type typenum::consts::U27">U27</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U28.html" title="type typenum::consts::U28">U28</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U29.html" title="type typenum::consts::U29">U29</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U30.html" title="type typenum::consts::U30">U30</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U31.html" title="type typenum::consts::U31">U31</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U32.html" title="type typenum::consts::U32">U32</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U33.html" title="type typenum::consts::U33">U33</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U34.html" title="type typenum::consts::U34">U34</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U35.html" title="type typenum::consts::U35">U35</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U36.html" title="type typenum::consts::U36">U36</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U37.html" title="type typenum::consts::U37">U37</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U38.html" title="type typenum::consts::U38">U38</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U39.html" title="type typenum::consts::U39">U39</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U40.html" title="type typenum::consts::U40">U40</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U41.html" title="type typenum::consts::U41">U41</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U42.html" title="type typenum::consts::U42">U42</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U43.html" title="type typenum::consts::U43">U43</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U44.html" title="type typenum::consts::U44">U44</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U45.html" title="type typenum::consts::U45">U45</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U46.html" title="type typenum::consts::U46">U46</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U47.html" title="type typenum::consts::U47">U47</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U48.html" title="type typenum::consts::U48">U48</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U49.html" title="type typenum::consts::U49">U49</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U50.html" title="type typenum::consts::U50">U50</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U51.html" title="type typenum::consts::U51">U51</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U52.html" title="type typenum::consts::U52">U52</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U53.html" title="type typenum::consts::U53">U53</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U54.html" title="type typenum::consts::U54">U54</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U55.html" title="type typenum::consts::U55">U55</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U56.html" title="type typenum::consts::U56">U56</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U57.html" title="type typenum::consts::U57">U57</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U58.html" title="type typenum::consts::U58">U58</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U59.html" title="type typenum::consts::U59">U59</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U60.html" title="type typenum::consts::U60">U60</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U61.html" title="type typenum::consts::U61">U61</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U62.html" title="type typenum::consts::U62">U62</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U63.html" title="type typenum::consts::U63">U63</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U64.html" title="type typenum::consts::U64">U64</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U65.html" title="type typenum::consts::U65">U65</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U66.html" title="type typenum::consts::U66">U66</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U67.html" title="type typenum::consts::U67">U67</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U68.html" title="type typenum::consts::U68">U68</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U69.html" title="type typenum::consts::U69">U69</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U70.html" title="type typenum::consts::U70">U70</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U71.html" title="type typenum::consts::U71">U71</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U72.html" title="type typenum::consts::U72">U72</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U73.html" title="type typenum::consts::U73">U73</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U74.html" title="type typenum::consts::U74">U74</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U75.html" title="type typenum::consts::U75">U75</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U76.html" title="type typenum::consts::U76">U76</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U77.html" title="type typenum::consts::U77">U77</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U78.html" title="type typenum::consts::U78">U78</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U79.html" title="type typenum::consts::U79">U79</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U80.html" title="type typenum::consts::U80">U80</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U81.html" title="type typenum::consts::U81">U81</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U82.html" title="type typenum::consts::U82">U82</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U83.html" title="type typenum::consts::U83">U83</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U84.html" title="type typenum::consts::U84">U84</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U85.html" title="type typenum::consts::U85">U85</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U86.html" title="type typenum::consts::U86">U86</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U87.html" title="type typenum::consts::U87">U87</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U88.html" title="type typenum::consts::U88">U88</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U89.html" title="type typenum::consts::U89">U89</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U90.html" title="type typenum::consts::U90">U90</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U91.html" title="type typenum::consts::U91">U91</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U92.html" title="type typenum::consts::U92">U92</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U93.html" title="type typenum::consts::U93">U93</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U94.html" title="type typenum::consts::U94">U94</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U95.html" title="type typenum::consts::U95">U95</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U96.html" title="type typenum::consts::U96">U96</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U97.html" title="type typenum::consts::U97">U97</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U98.html" title="type typenum::consts::U98">U98</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U99.html" title="type typenum::consts::U99">U99</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U100.html" title="type typenum::consts::U100">U100</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U101.html" title="type typenum::consts::U101">U101</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U102.html" title="type typenum::consts::U102">U102</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U103.html" title="type typenum::consts::U103">U103</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U104.html" title="type typenum::consts::U104">U104</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U105.html" title="type typenum::consts::U105">U105</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U106.html" title="type typenum::consts::U106">U106</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U107.html" title="type typenum::consts::U107">U107</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U108.html" title="type typenum::consts::U108">U108</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U109.html" title="type typenum::consts::U109">U109</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U110.html" title="type typenum::consts::U110">U110</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U111.html" title="type typenum::consts::U111">U111</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U112.html" title="type typenum::consts::U112">U112</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U113.html" title="type typenum::consts::U113">U113</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U114.html" title="type typenum::consts::U114">U114</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U115.html" title="type typenum::consts::U115">U115</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U116.html" title="type typenum::consts::U116">U116</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U117.html" title="type typenum::consts::U117">U117</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U118.html" title="type typenum::consts::U118">U118</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U119.html" title="type typenum::consts::U119">U119</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U120.html" title="type typenum::consts::U120">U120</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U121.html" title="type typenum::consts::U121">U121</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U122.html" title="type typenum::consts::U122">U122</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U123.html" title="type typenum::consts::U123">U123</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U124.html" title="type typenum::consts::U124">U124</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U125.html" title="type typenum::consts::U125">U125</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U126.html" title="type typenum::consts::U126">U126</a></code></li>
+<li><code>impl NamedDim for <a class="type" href="../../../typenum/consts/type.U127.html" title="type typenum::consts::U127">U127</a></code></li>
+<li><code>impl&lt;A:&nbsp;<a class="trait" href="../../../typenum/marker_traits/trait.Bit.html" title="trait typenum::marker_traits::Bit">Bit</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a>, B:&nbsp;<a class="trait" href="../../../typenum/marker_traits/trait.Bit.html" title="trait typenum::marker_traits::Bit">Bit</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a>, C:&nbsp;<a class="trait" href="../../../typenum/marker_traits/trait.Bit.html" title="trait typenum::marker_traits::Bit">Bit</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a>, D:&nbsp;<a class="trait" href="../../../typenum/marker_traits/trait.Bit.html" title="trait typenum::marker_traits::Bit">Bit</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a>, E:&nbsp;<a class="trait" href="../../../typenum/marker_traits/trait.Bit.html" title="trait typenum::marker_traits::Bit">Bit</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a>, F:&nbsp;<a class="trait" href="../../../typenum/marker_traits/trait.Bit.html" title="trait typenum::marker_traits::Bit">Bit</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a>, G:&nbsp;<a class="trait" href="../../../typenum/marker_traits/trait.Bit.html" title="trait typenum::marker_traits::Bit">Bit</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a>&gt; NamedDim for <a class="struct" href="../../../typenum/uint/struct.UInt.html" title="struct typenum::uint::UInt">UInt</a>&lt;<a class="struct" href="../../../typenum/uint/struct.UInt.html" title="struct typenum::uint::UInt">UInt</a>&lt;<a class="struct" href="../../../typenum/uint/struct.UInt.html" title="struct typenum::uint::UInt">UInt</a>&lt;<a class="struct" href="../../../typenum/uint/struct.UInt.html" title="struct typenum::uint::UInt">UInt</a>&lt;<a class="struct" href="../../../typenum/uint/struct.UInt.html" title="struct typenum::uint::UInt">UInt</a>&lt;<a class="struct" href="../../../typenum/uint/struct.UInt.html" title="struct typenum::uint::UInt">UInt</a>&lt;<a class="struct" href="../../../typenum/uint/struct.UInt.html" title="struct typenum::uint::UInt">UInt</a>&lt;<a class="struct" href="../../../typenum/uint/struct.UInt.html" title="struct typenum::uint::UInt">UInt</a>&lt;<a class="struct" href="../../../typenum/uint/struct.UTerm.html" title="struct typenum::uint::UTerm">UTerm</a>, <a class="struct" href="../../../typenum/bit/struct.B1.html" title="struct typenum::bit::B1">B1</a>&gt;, A&gt;, B&gt;, C&gt;, D&gt;, E&gt;, F&gt;, G&gt;</code></li>
+<li><code>impl&lt;U:&nbsp;<a class="trait" href="../../../typenum/marker_traits/trait.Unsigned.html" title="trait typenum::marker_traits::Unsigned">Unsigned</a> + <a class="trait" href="../../../nalgebra/core/dimension/trait.DimName.html" title="trait nalgebra::core::dimension::DimName">DimName</a>, B:&nbsp;<a class="trait" href="../../../typenum/marker_traits/trait.Bit.html" title="trait typenum::marker_traits::Bit">Bit</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/any/trait.Any.html" title="trait core::any::Any">Any</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html" title="trait core::marker::Copy">Copy</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a>&gt; NamedDim for <a class="struct" href="../../../typenum/uint/struct.UInt.html" title="struct typenum::uint::UInt">UInt</a>&lt;U, B&gt;</code></li>
 </ul><script type="text/javascript" async
                          src="../../../implementors/nalgebra/core/dimension/trait.NamedDim.js">
                  </script></section>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -59,21 +59,21 @@
 <span id="14">14</span>
 <span id="15">15</span>
 <span id="16">16</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Bounded</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">num</span>::<span class="ident">Bounded</span>;
 
-<span class='kw'>use</span> <span class='ident'>bounding_volume</span>::{<span class='ident'>HasBoundingVolume</span>, <span class='ident'>BoundingSphere</span>};
-<span class='kw'>use</span> <span class='ident'>shape</span>::<span class='ident'>Plane</span>;
-<span class='kw'>use</span> <span class='ident'>math</span>::{<span class='ident'>Point</span>, <span class='ident'>Isometry</span>};
+<span class="kw">use</span> <span class="ident">bounding_volume</span>::{<span class="ident">HasBoundingVolume</span>, <span class="ident">BoundingSphere</span>};
+<span class="kw">use</span> <span class="ident">shape</span>::<span class="ident">Plane</span>;
+<span class="kw">use</span> <span class="ident">math</span>::{<span class="ident">Point</span>, <span class="ident">Isometry</span>};
 
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Point</span>, <span class='ident'>M</span>: <span class='ident'>Isometry</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> <span class='ident'>HasBoundingVolume</span><span class='op'>&lt;</span><span class='ident'>M</span>, <span class='ident'>BoundingSphere</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Plane</span><span class='op'>&lt;</span><span class='ident'>P</span>::<span class='ident'>Vector</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>bounding_volume</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>m</span>: <span class='kw-2'>&amp;</span><span class='ident'>M</span>) <span class='op'>-&gt;</span> <span class='ident'>BoundingSphere</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>center</span> <span class='op'>=</span> <span class='ident'>m</span>.<span class='ident'>translate_point</span>(<span class='kw-2'>&amp;</span><span class='ident'>P</span>::<span class='ident'>origin</span>());
-        <span class='kw'>let</span> <span class='ident'>radius</span> <span class='op'>=</span> <span class='ident'>P</span>::<span class='ident'>Real</span>::<span class='ident'>max_value</span>();
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Point</span>, <span class="ident">M</span>: <span class="ident">Isometry</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;&gt;</span> <span class="ident">HasBoundingVolume</span><span class="op">&lt;</span><span class="ident">M</span>, <span class="ident">BoundingSphere</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Plane</span><span class="op">&lt;</span><span class="ident">P</span>::<span class="ident">Vector</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">fn</span> <span class="ident">bounding_volume</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">m</span>: <span class="kw-2">&amp;</span><span class="ident">M</span>) <span class="op">-&gt;</span> <span class="ident">BoundingSphere</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">center</span> <span class="op">=</span> <span class="ident">m</span>.<span class="ident">translate_point</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>::<span class="ident">origin</span>());
+        <span class="kw">let</span> <span class="ident">radius</span> <span class="op">=</span> <span class="ident">P</span>::<span class="ident">Real</span>::<span class="ident">max_value</span>();
 
-        <span class='ident'>BoundingSphere</span>::<span class='ident'>new</span>(<span class='ident'>center</span>, <span class='ident'>radius</span>)
+        <span class="ident">BoundingSphere</span>::<span class="ident">new</span>(<span class="ident">center</span>, <span class="ident">radius</span>)
     }
 }
 </pre>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -238,201 +238,201 @@
 <span id="193">193</span>
 <span id="194">194</span>
 <span id="195">195</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>joystick</span>::<span class='ident'>SDL_Joystick</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;no_std&quot;</span>)]</span>
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>prelude</span>::<span class='kw-2'>*</span>;
-<span class='kw'>use</span> <span class='ident'>libc</span>::{<span class='ident'>c_int</span>, <span class='ident'>c_uint</span>, <span class='ident'>c_char</span>, <span class='ident'>c_float</span>, <span class='ident'>c_void</span>, <span class='ident'>int16_t</span>, <span class='ident'>int32_t</span>, <span class='ident'>uint8_t</span>, <span class='ident'>uint16_t</span>, <span class='ident'>uint32_t</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">joystick</span>::<span class="ident">SDL_Joystick</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;no_std&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">libc</span>::{<span class="ident">c_int</span>, <span class="ident">c_uint</span>, <span class="ident">c_char</span>, <span class="ident">c_float</span>, <span class="ident">c_void</span>, <span class="ident">int16_t</span>, <span class="ident">int32_t</span>, <span class="ident">uint8_t</span>, <span class="ident">uint16_t</span>, <span class="ident">uint32_t</span>};
 
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_HAPTIC_CONSTANT</span>: <span class='ident'>uint16_t</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>0</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_HAPTIC_SINE</span>: <span class='ident'>uint16_t</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>1</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_HAPTIC_LEFTRIGHT</span>: <span class='ident'>uint16_t</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>2</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_HAPTIC_TRIANGLE</span>: <span class='ident'>uint16_t</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>3</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_HAPTIC_SAWTOOTHUP</span>: <span class='ident'>uint16_t</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>4</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_HAPTIC_SAWTOOTHDOWN</span>: <span class='ident'>uint16_t</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>5</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_HAPTIC_RAMP</span>: <span class='ident'>uint16_t</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>6</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_HAPTIC_SPRING</span>: <span class='ident'>uint16_t</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>7</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_HAPTIC_DAMPER</span>: <span class='ident'>uint16_t</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>8</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_HAPTIC_INERTIA</span>: <span class='ident'>uint16_t</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>9</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_HAPTIC_FRICTION</span>: <span class='ident'>uint16_t</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>10</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_HAPTIC_CUSTOM</span>: <span class='ident'>uint16_t</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>11</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_HAPTIC_GAIN</span>: <span class='ident'>uint16_t</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>12</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_HAPTIC_AUTOCENTER</span>: <span class='ident'>uint16_t</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>13</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_HAPTIC_STATUS</span>: <span class='ident'>uint16_t</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>14</span>;
-<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SDL_HAPTIC_PAUSE</span>: <span class='ident'>uint16_t</span> <span class='op'>=</span> <span class='number'>1</span> <span class='op'>&lt;&lt;</span> <span class='number'>15</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_HAPTIC_CONSTANT</span>: <span class="ident">uint16_t</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">0</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_HAPTIC_SINE</span>: <span class="ident">uint16_t</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">1</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_HAPTIC_LEFTRIGHT</span>: <span class="ident">uint16_t</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">2</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_HAPTIC_TRIANGLE</span>: <span class="ident">uint16_t</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">3</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_HAPTIC_SAWTOOTHUP</span>: <span class="ident">uint16_t</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">4</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_HAPTIC_SAWTOOTHDOWN</span>: <span class="ident">uint16_t</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">5</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_HAPTIC_RAMP</span>: <span class="ident">uint16_t</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">6</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_HAPTIC_SPRING</span>: <span class="ident">uint16_t</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">7</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_HAPTIC_DAMPER</span>: <span class="ident">uint16_t</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">8</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_HAPTIC_INERTIA</span>: <span class="ident">uint16_t</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">9</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_HAPTIC_FRICTION</span>: <span class="ident">uint16_t</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">10</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_HAPTIC_CUSTOM</span>: <span class="ident">uint16_t</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">11</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_HAPTIC_GAIN</span>: <span class="ident">uint16_t</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">12</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_HAPTIC_AUTOCENTER</span>: <span class="ident">uint16_t</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">13</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_HAPTIC_STATUS</span>: <span class="ident">uint16_t</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">14</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SDL_HAPTIC_PAUSE</span>: <span class="ident">uint16_t</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">15</span>;
 
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>SDL_Haptic</span> <span class='op'>=</span> <span class='ident'>c_void</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">SDL_Haptic</span> <span class="op">=</span> <span class="ident">c_void</span>;
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_HapticDirection</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>dir</span>: [<span class='ident'>int32_t</span>; <span class='number'>3</span>],
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_HapticDirection</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">dir</span>: [<span class="ident">int32_t</span>; <span class="number">3</span>],
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_HapticConstant</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>direction</span>: <span class='ident'>SDL_HapticDirection</span>,
-    <span class='kw'>pub</span> <span class='ident'>length</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>delay</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>button</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>interval</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>level</span>: <span class='ident'>int16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>attack_length</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>attack_level</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>fade_length</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>fade_level</span>: <span class='ident'>uint16_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_HapticConstant</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">direction</span>: <span class="ident">SDL_HapticDirection</span>,
+    <span class="kw">pub</span> <span class="ident">length</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">delay</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">button</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">interval</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">level</span>: <span class="ident">int16_t</span>,
+    <span class="kw">pub</span> <span class="ident">attack_length</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">attack_level</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">fade_length</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">fade_level</span>: <span class="ident">uint16_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_HapticPeriodic</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>direction</span>: <span class='ident'>SDL_HapticDirection</span>,
-    <span class='kw'>pub</span> <span class='ident'>length</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>delay</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>button</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>interval</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>period</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>magnitude</span>: <span class='ident'>int16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>offset</span>: <span class='ident'>int16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>phase</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>attack_length</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>attack_level</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>fade_length</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>fade_level</span>: <span class='ident'>uint16_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_HapticPeriodic</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">direction</span>: <span class="ident">SDL_HapticDirection</span>,
+    <span class="kw">pub</span> <span class="ident">length</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">delay</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">button</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">interval</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">period</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">magnitude</span>: <span class="ident">int16_t</span>,
+    <span class="kw">pub</span> <span class="ident">offset</span>: <span class="ident">int16_t</span>,
+    <span class="kw">pub</span> <span class="ident">phase</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">attack_length</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">attack_level</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">fade_length</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">fade_level</span>: <span class="ident">uint16_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_HapticCondition</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>direction</span>: <span class='ident'>SDL_HapticDirection</span>,
-    <span class='kw'>pub</span> <span class='ident'>length</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>delay</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>button</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>interval</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>right_sat</span>: [<span class='ident'>uint16_t</span>; <span class='number'>3</span>],
-    <span class='kw'>pub</span> <span class='ident'>left_sat</span>: [<span class='ident'>uint16_t</span>; <span class='number'>3</span>],
-    <span class='kw'>pub</span> <span class='ident'>right_coeff</span>: [<span class='ident'>int16_t</span>; <span class='number'>3</span>],
-    <span class='kw'>pub</span> <span class='ident'>left_coeff</span>: [<span class='ident'>int16_t</span>; <span class='number'>3</span>],
-    <span class='kw'>pub</span> <span class='ident'>deadband</span>: [<span class='ident'>uint16_t</span>; <span class='number'>3</span>],
-    <span class='kw'>pub</span> <span class='ident'>center</span>: [<span class='ident'>int16_t</span>; <span class='number'>3</span>],
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_HapticCondition</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">direction</span>: <span class="ident">SDL_HapticDirection</span>,
+    <span class="kw">pub</span> <span class="ident">length</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">delay</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">button</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">interval</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">right_sat</span>: [<span class="ident">uint16_t</span>; <span class="number">3</span>],
+    <span class="kw">pub</span> <span class="ident">left_sat</span>: [<span class="ident">uint16_t</span>; <span class="number">3</span>],
+    <span class="kw">pub</span> <span class="ident">right_coeff</span>: [<span class="ident">int16_t</span>; <span class="number">3</span>],
+    <span class="kw">pub</span> <span class="ident">left_coeff</span>: [<span class="ident">int16_t</span>; <span class="number">3</span>],
+    <span class="kw">pub</span> <span class="ident">deadband</span>: [<span class="ident">uint16_t</span>; <span class="number">3</span>],
+    <span class="kw">pub</span> <span class="ident">center</span>: [<span class="ident">int16_t</span>; <span class="number">3</span>],
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_HapticRamp</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>length</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>delay</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>button</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>interval</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>start</span>: <span class='ident'>int16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>end</span>: <span class='ident'>int16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>attack_length</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>attack_level</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>fade_length</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>fade_level</span>: <span class='ident'>uint16_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_HapticRamp</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">length</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">delay</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">button</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">interval</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">start</span>: <span class="ident">int16_t</span>,
+    <span class="kw">pub</span> <span class="ident">end</span>: <span class="ident">int16_t</span>,
+    <span class="kw">pub</span> <span class="ident">attack_length</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">attack_level</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">fade_length</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">fade_level</span>: <span class="ident">uint16_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_HapticLeftRight</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>length</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>large_magnitude</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>small_magnitude</span>: <span class='ident'>uint16_t</span>,
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_HapticLeftRight</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">length</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">large_magnitude</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">small_magnitude</span>: <span class="ident">uint16_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_copy_implementations</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_HapticCustom</span> {
-    <span class='kw'>pub</span> <span class='ident'>type_</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>direction</span>: <span class='ident'>SDL_HapticDirection</span>,
-    <span class='kw'>pub</span> <span class='ident'>length</span>: <span class='ident'>uint32_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>delay</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>button</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>interval</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>channels</span>: <span class='ident'>uint8_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>period</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>samples</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>data</span>: <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>attack_length</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>attack_level</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>fade_length</span>: <span class='ident'>uint16_t</span>,
-    <span class='kw'>pub</span> <span class='ident'>fade_level</span>: <span class='ident'>uint16_t</span>,
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_copy_implementations</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_HapticCustom</span> {
+    <span class="kw">pub</span> <span class="ident">type_</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">direction</span>: <span class="ident">SDL_HapticDirection</span>,
+    <span class="kw">pub</span> <span class="ident">length</span>: <span class="ident">uint32_t</span>,
+    <span class="kw">pub</span> <span class="ident">delay</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">button</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">interval</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">channels</span>: <span class="ident">uint8_t</span>,
+    <span class="kw">pub</span> <span class="ident">period</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">samples</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">data</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">attack_length</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">attack_level</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">fade_length</span>: <span class="ident">uint16_t</span>,
+    <span class="kw">pub</span> <span class="ident">fade_level</span>: <span class="ident">uint16_t</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>missing_copy_implementations</span>)]</span>
-<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>C</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SDL_HapticEffect</span> {
-    <span class='kw'>pub</span> <span class='ident'>data</span>: [<span class='ident'>uint8_t</span>; <span class='number'>72</span>],
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">missing_copy_implementations</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SDL_HapticEffect</span> {
+    <span class="kw">pub</span> <span class="ident">data</span>: [<span class="ident">uint8_t</span>; <span class="number">72</span>],
 }
 
-<span class='kw'>impl</span> <span class='ident'>SDL_HapticEffect</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>type_</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>uint16_t</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+<span class="kw">impl</span> <span class="ident">SDL_HapticEffect</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">type_</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">uint16_t</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>constant</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_HapticConstant</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">constant</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_HapticConstant</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>periodic</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_HapticPeriodic</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">periodic</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_HapticPeriodic</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>condition</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_HapticCondition</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">condition</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_HapticCondition</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>ramp</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_HapticRamp</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ramp</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_HapticRamp</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>left_right</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_HapticLeftRight</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left_right</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_HapticLeftRight</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>custom</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_HapticCustom</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>as_mut_ptr</span>() <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">custom</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_HapticCustom</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> _
     }
 }
 
-<span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_NumHaptics</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticName</span>(<span class='ident'>device_index</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>c_char</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticOpen</span>(<span class='ident'>device_index</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticOpened</span>(<span class='ident'>device_index</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticIndex</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_MouseIsHaptic</span>() <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticOpenFromMouse</span>() <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_JoystickIsHaptic</span>(<span class='ident'>joystick</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Joystick</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticOpenFromJoystick</span>(<span class='ident'>joystick</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Joystick</span>) <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticClose</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticNumEffects</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticNumEffectsPlaying</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticQuery</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>) <span class='op'>-&gt;</span> <span class='ident'>c_uint</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticNumAxes</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticEffectSupported</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>, <span class='ident'>effect</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_HapticEffect</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticNewEffect</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>, <span class='ident'>effect</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_HapticEffect</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticUpdateEffect</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>, <span class='ident'>effect</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_HapticEffect</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticRunEffect</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>, <span class='ident'>effect</span>: <span class='ident'>c_int</span>, <span class='ident'>iterations</span>: <span class='ident'>uint32_t</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticStopEffect</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>, <span class='ident'>effect</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticDestroyEffect</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>, <span class='ident'>effect</span>: <span class='ident'>c_int</span>);
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticGetEffectStatus</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>, <span class='ident'>effect</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticSetGain</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>, <span class='ident'>gain</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticSetAutocenter</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>, <span class='ident'>autocenter</span>: <span class='ident'>c_int</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticPause</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticUnpause</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticStopAll</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticRumbleSupported</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticRumbleInit</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticRumblePlay</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>, <span class='ident'>strength</span>: <span class='ident'>c_float</span>, <span class='ident'>length</span>: <span class='ident'>uint32_t</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>SDL_HapticRumbleStop</span>(<span class='ident'>haptic</span>: <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>SDL_Haptic</span>) <span class='op'>-&gt;</span> <span class='ident'>c_int</span>;
+<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_NumHaptics</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticName</span>(<span class="ident">device_index</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticOpen</span>(<span class="ident">device_index</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticOpened</span>(<span class="ident">device_index</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticIndex</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_MouseIsHaptic</span>() <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticOpenFromMouse</span>() <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_JoystickIsHaptic</span>(<span class="ident">joystick</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Joystick</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticOpenFromJoystick</span>(<span class="ident">joystick</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Joystick</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticClose</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticNumEffects</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticNumEffectsPlaying</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticQuery</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>) <span class="op">-&gt;</span> <span class="ident">c_uint</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticNumAxes</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticEffectSupported</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>, <span class="ident">effect</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_HapticEffect</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticNewEffect</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>, <span class="ident">effect</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_HapticEffect</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticUpdateEffect</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>, <span class="ident">effect</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_HapticEffect</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticRunEffect</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>, <span class="ident">effect</span>: <span class="ident">c_int</span>, <span class="ident">iterations</span>: <span class="ident">uint32_t</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticStopEffect</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>, <span class="ident">effect</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticDestroyEffect</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>, <span class="ident">effect</span>: <span class="ident">c_int</span>);
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticGetEffectStatus</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>, <span class="ident">effect</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticSetGain</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>, <span class="ident">gain</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticSetAutocenter</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>, <span class="ident">autocenter</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticPause</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticUnpause</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticStopAll</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticRumbleSupported</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticRumbleInit</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticRumblePlay</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>, <span class="ident">strength</span>: <span class="ident">c_float</span>, <span class="ident">length</span>: <span class="ident">uint32_t</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">SDL_HapticRumbleStop</span>(<span class="ident">haptic</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SDL_Haptic</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span>;
 }
 </pre>
 </section>
