@@ -111,7 +111,7 @@ impl App {
 
 
     /// Called every frame to paint the scene. Do not put game logic here, that goes in update.
-    fn render(&mut self, profiling: bool) {
+    fn render(&mut self) {
         use std::f32;
         let game_objs = &self.game_objects;
         let camera_transform = self.camera.transform;
@@ -301,7 +301,7 @@ impl App {
             };
             last_frame_instant = Instant::now();
             let render_start = Instant::now();
-            self.render(profiling);
+            self.render();
             
             let render_duration = if profiling {
                 Duration::from_std(render_start.elapsed())
