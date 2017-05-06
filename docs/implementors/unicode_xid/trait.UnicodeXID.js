@@ -1,4 +1,5 @@
 (function() {var implementors = {};
+implementors["syn"] = [];
 implementors["unicode_xid"] = [];
 
             if (window.register_implementors) {

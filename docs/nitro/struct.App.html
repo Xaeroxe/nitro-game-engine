@@ -48,12 +48,14 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/nitro/app.rs.html#47-58' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/nitro/app.rs.html#47-64' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct App {
     pub input: <a class="struct" href="../nitro/input/struct.Input.html" title="struct nitro::input::Input">Input</a>,
     pub camera: <a class="struct" href="../nitro/struct.Camera.html" title="struct nitro::Camera">Camera</a>,
     pub world: <a class="struct" href="../nphysics2d/world/world/struct.World.html" title="struct nphysics2d::world::world::World">World</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;,
     pub audio: <a class="struct" href="../nitro/audio/struct.Audio.html" title="struct nitro::audio::Audio">Audio</a>,
+    pub screen_to_world_ratio: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+    pub cull_padding: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
     // some fields omitted
 }</pre><div class='docblock'><p>This structure represents a game instance.</p>
 
@@ -71,13 +73,23 @@ processing input, rendering the game and playing audio.</p>
                            </span></span><span id='structfield.audio' class="structfield">
                            <span id='audio.v' class='invisible'>
                            <code>audio: <a class="struct" href="../nitro/audio/struct.Audio.html" title="struct nitro::audio::Audio">Audio</a></code>
-                           </span></span><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../nitro/struct.App.html" title="struct nitro::App">App</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/nitro/app.rs.html#60-345' title='goto source code'>[src]</a></span></h3>
+                           </span></span><span id='structfield.screen_to_world_ratio' class="structfield">
+                           <span id='screen_to_world_ratio.v' class='invisible'>
+                           <code>screen_to_world_ratio: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a></code>
+                           </span></span><div class='docblock'><p>How many pixels = 1 game world unit.  Defaults to 100.</p>
+</div><span id='structfield.cull_padding' class="structfield">
+                           <span id='cull_padding.v' class='invisible'>
+                           <code>cull_padding: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a></code>
+                           </span></span><div class='docblock'><p>Distance in pixels from screen at which an object won&#39;t be drawn.  Defaults to 750.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../nitro/struct.App.html" title="struct nitro::App">App</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/nitro/app.rs.html#66-404' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(name: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="struct" href="../nitro/struct.App.html" title="struct nitro::App">App</a></code></span></h4>
 <div class='docblock'><p>Constructs a new App using the given name for the window title.</p>
-</div><h4 id='method.run' class="method"><span id='run.v' class='invisible'><code>fn <a href='#method.run' class='fnname'>run</a>(&amp;mut self)</code></span></h4>
+</div><h4 id='method.run' class="method"><span id='run.v' class='invisible'><code>fn <a href='#method.run' class='fnname'>run</a>(&amp;mut self, profiling: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h4>
 <div class='docblock'><p>Begin execution of the game.</p>
 
-<p>This function won&#39;t return until the game has been quit.</p>
+<p>This function won&#39;t return until the game has been quit.
+If profiling is true then additional information on game processing durations will be
+printed to console.</p>
 </div><h4 id='method.quit' class="method"><span id='quit.v' class='invisible'><code>fn <a href='#method.quit' class='fnname'>quit</a>(&amp;mut self)</code></span></h4>
 <div class='docblock'><p>Exit the game</p>
 

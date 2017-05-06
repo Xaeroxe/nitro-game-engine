@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.21/src/unix/notbsd/linux/other/b64/x86_64.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/libc-0.2.22/src/unix/notbsd/linux/other/b64/x86_64.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>x86_64.rs.html -- source</title>
@@ -557,6 +557,7 @@
 <span id="512">512</span>
 <span id="513">513</span>
 <span id="514">514</span>
+<span id="515">515</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! x86_64-specific definitions for 64-bit linux-like values</span>
 
@@ -962,6 +963,7 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MCL_FUTURE</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x0002</span>;
 
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SIGSTKSZ</span>: ::<span class="ident">size_t</span> <span class="op">=</span> <span class="number">8192</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MINSIGSTKSZ</span>: ::<span class="ident">size_t</span> <span class="op">=</span> <span class="number">2048</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CBAUD</span>: ::<span class="ident">tcflag_t</span> <span class="op">=</span> <span class="number">0o0010017</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TAB1</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x00000800</span>;
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TAB2</span>: ::<span class="ident">c_int</span> <span class="op">=</span> <span class="number">0x00001000</span>;

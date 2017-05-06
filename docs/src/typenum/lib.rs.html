@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.7.0/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/typenum-1.8.0/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -160,6 +160,11 @@
 <span id="115">115</span>
 <span id="116">116</span>
 <span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! This crate provides type-level numbers evaluated at compile time. It depends only on libcore.</span>
 <span class="doccomment">//!</span>
@@ -218,9 +223,14 @@
 <span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">clippy</span>)]</span>
 <span class="attribute">#<span class="op">!</span>[<span class="ident">allow</span>(<span class="ident">type_complexity</span>, <span class="ident">len_without_is_empty</span>)]</span>
 
+<span class="comment">// For debugging macros:</span>
+<span class="comment">// #![feature(trace_macros)]</span>
+<span class="comment">// trace_macros!(true);</span>
+
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
 
 <span class="macro">include</span><span class="macro">!</span>(<span class="macro">concat</span><span class="macro">!</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;OUT_DIR&quot;</span>), <span class="string">&quot;/consts.rs&quot;</span>));
+<span class="macro">include</span><span class="macro">!</span>(<span class="macro">concat</span><span class="macro">!</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;OUT_DIR&quot;</span>), <span class="string">&quot;/op.rs&quot;</span>));
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">bit</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">uint</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">int</span>;

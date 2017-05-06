@@ -225,6 +225,25 @@
 <span id="180">180</span>
 <span id="181">181</span>
 <span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">app</span>;
 <span class="kw">use</span> <span class="ident">app</span>::<span class="ident">App</span>;
@@ -247,9 +266,12 @@
     <span class="kw">pub</span> <span class="ident">transform</span>: <span class="ident">Transform</span>,
     <span class="kw">pub</span> <span class="ident">sprite</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Sprite</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">body</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RigidBodyHandle</span><span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">draw_layer</span>: <span class="ident">i32</span>,
     <span class="comment">// This value will never be 0.  0 can now be used as a null value.</span>
     <span class="ident">id</span>: <span class="ident">u64</span>,
     <span class="ident">components</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">i32</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">ComponentAny</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>,
+    <span class="comment">// If this value is false messages will not be sent.  Optimization for game_objects with empty component lists.</span>
+    <span class="ident">has_components</span>: <span class="ident">bool</span>,
     <span class="ident">drop</span>: <span class="ident">bool</span>,
 }
 
@@ -279,35 +301,43 @@
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">receive_message</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">app</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">App</span>, <span class="ident">message</span>: <span class="kw-2">&amp;</span><span class="ident">Message</span>) {
-        <span class="kw">for</span> <span class="ident">key</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">components</span>
-                .<span class="ident">keys</span>()
-                .<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">x</span>)
-                .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;&gt;</span>() {
-            <span class="self">self</span>.<span class="ident">send_message_to_component</span>(<span class="ident">app</span>, <span class="ident">message</span>, <span class="ident">key</span>);
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">has_components</span> {
+            <span class="kw">for</span> <span class="ident">key</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">components</span>
+                    .<span class="ident">keys</span>()
+                    .<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">x</span>)
+                    .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;&gt;</span>() {
+                <span class="self">self</span>.<span class="ident">send_message_to_component</span>(<span class="ident">app</span>, <span class="ident">message</span>, <span class="ident">key</span>);
+            }
         }
+        
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">update</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">app</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">App</span>, <span class="ident">delta_time</span>: <span class="ident">f32</span>) {
-        <span class="kw">let</span> <span class="ident">message</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">Message</span>::<span class="ident">Update</span> { <span class="ident">delta_time</span>: <span class="ident">delta_time</span> };
-        <span class="self">self</span>.<span class="ident">receive_message</span>(<span class="ident">app</span>, <span class="ident">message</span>)
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">has_components</span> {
+            <span class="kw">let</span> <span class="ident">message</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">Message</span>::<span class="ident">Update</span> { <span class="ident">delta_time</span>: <span class="ident">delta_time</span> };
+            <span class="self">self</span>.<span class="ident">receive_message</span>(<span class="ident">app</span>, <span class="ident">message</span>)
+        }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">component_keys</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">i32</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="ident">Box</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">components</span>.<span class="ident">keys</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">x</span>))
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">component_keys</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">i32</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">has_components</span> {<span class="prelude-val">Some</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">components</span>.<span class="ident">keys</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">x</span>)))} <span class="kw">else</span> {<span class="prelude-val">None</span>}
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">component_keys_with_type</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">i32</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;a</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">component_keys_with_type</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">i32</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span>
         <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>
     {
-        <span class="ident">Box</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">components</span>.<span class="ident">iter</span>().<span class="ident">filter_map</span>(<span class="op">|</span>(<span class="ident">k</span>, <span class="ident">c</span>)<span class="op">|</span> <span class="kw">if</span> <span class="kw">let</span> <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">c</span>) <span class="op">=</span> <span class="ident">c</span> {
-                                                       <span class="kw">if</span> <span class="ident">c</span>.<span class="ident">as_any</span>().<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>() {
-                                                           <span class="prelude-val">Some</span>(<span class="kw-2">*</span><span class="ident">k</span>)
-                                                       } <span class="kw">else</span> {
-                                                           <span class="prelude-val">None</span>
-                                                       }
-                                                   } <span class="kw">else</span> {
-                                                       <span class="prelude-val">None</span>
-                                                   }))
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">has_components</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">Box</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">components</span>
+                     .<span class="ident">iter</span>()
+                     .<span class="ident">filter_map</span>(<span class="op">|</span>(<span class="ident">k</span>, <span class="ident">c</span>)<span class="op">|</span> <span class="kw">if</span> <span class="kw">let</span> <span class="kw-2">&amp;</span><span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">c</span>) <span class="op">=</span> <span class="ident">c</span> {
+                                     <span class="kw">if</span> <span class="ident">c</span>.<span class="ident">as_any</span>().<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>() { <span class="prelude-val">Some</span>(<span class="kw-2">*</span><span class="ident">k</span>) } <span class="kw">else</span> { <span class="prelude-val">None</span> }
+                                 } <span class="kw">else</span> {
+                                     <span class="prelude-val">None</span>
+                                 })))
+        } <span class="kw">else</span> {
+            <span class="prelude-val">None</span>
+        }
+        
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remove_component</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
@@ -317,6 +347,9 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">component_result</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">components</span>.<span class="ident">remove</span>(<span class="kw-2">&amp;</span><span class="ident">index</span>);
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">component</span>)) <span class="op">=</span> <span class="ident">component_result</span> {
             <span class="ident">component</span>.<span class="ident">receive_message</span>(<span class="ident">app</span>, <span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Message</span>::<span class="ident">OnDetach</span>);
+        }
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">components</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span> {
+            <span class="self">self</span>.<span class="ident">has_components</span> <span class="op">=</span> <span class="bool-val">false</span>;
         }
         <span class="ident">OptionLoaned</span>::<span class="ident">from</span>(<span class="ident">component_result</span>)
     }
@@ -354,6 +387,7 @@
                                <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">ComponentAny</span><span class="op">&gt;&gt;</span>
         <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>
     {
+        <span class="self">self</span>.<span class="ident">has_components</span> <span class="op">=</span> <span class="bool-val">true</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">boxxed</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">component</span>);
         <span class="ident">boxxed</span>.<span class="ident">receive_message</span>(<span class="ident">app</span>, <span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">Message</span>::<span class="ident">Start</span> { <span class="ident">key</span>: <span class="ident">index</span> });
         <span class="kw">let</span> <span class="ident">replaced</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">components</span>.<span class="ident">insert</span>(<span class="ident">index</span>, <span class="prelude-val">Some</span>(<span class="ident">boxxed</span>));
@@ -367,11 +401,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_component</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">app</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">App</span>, <span class="ident">component</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">i32</span>
         <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>
     {
-        <span class="kw">let</span> <span class="ident">new_key</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">components</span>
-            .<span class="ident">keys</span>()
-            .<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">x</span>)
-            .<span class="ident">nth</span>(<span class="number">0</span>)
-            .<span class="ident">unwrap_or</span>(<span class="number">1</span>) <span class="op">-</span> <span class="number">1</span>;
+        <span class="kw">let</span> <span class="ident">new_key</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">components</span>.<span class="ident">keys</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">x</span>).<span class="ident">nth</span>(<span class="number">0</span>).<span class="ident">unwrap_or</span>(<span class="number">1</span>) <span class="op">-</span> <span class="number">1</span>;
         <span class="self">self</span>.<span class="ident">insert_component</span>(<span class="ident">app</span>, <span class="ident">component</span>, <span class="ident">new_key</span>);
         <span class="ident">new_key</span>
     }
@@ -389,6 +419,8 @@
         <span class="ident">components</span>: <span class="ident">BTreeMap</span>::<span class="ident">new</span>(),
         <span class="ident">sprite</span>: <span class="prelude-val">None</span>,
         <span class="ident">body</span>: <span class="prelude-val">None</span>,
+        <span class="ident">draw_layer</span>: <span class="number">0</span>,
+        <span class="ident">has_components</span>: <span class="bool-val">false</span>,
     }
 }
 
@@ -405,8 +437,14 @@
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_to_physics</span>(<span class="ident">game_object</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">GameObject</span>) {
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">body_box</span>) <span class="op">=</span> <span class="ident">game_object</span>.<span class="ident">body</span> {
-        <span class="ident">body_box</span>.<span class="ident">borrow_mut</span>().<span class="ident">set_transformation</span>(<span class="ident">game_object</span>.<span class="ident">transform</span>.<span class="ident">clone</span>());
+        <span class="ident">body_box</span>
+            .<span class="ident">borrow_mut</span>()
+            .<span class="ident">set_transformation</span>(<span class="ident">game_object</span>.<span class="ident">transform</span>.<span class="ident">clone</span>());
     }
+}
+
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_components</span>(<span class="ident">game_object</span>: <span class="kw-2">&amp;</span><span class="ident">GameObject</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="ident">game_object</span>.<span class="ident">has_components</span>
 }
 </pre>
 </section>

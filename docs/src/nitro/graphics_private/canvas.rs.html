@@ -99,6 +99,7 @@
 <span id="54">54</span>
 <span id="55">55</span>
 <span id="56">56</span>
+<span id="57">57</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">graphics_private</span>::<span class="ident">texture</span>;
 <span class="kw">use</span> <span class="ident">graphics</span>::<span class="ident">Texture</span>;
@@ -147,13 +148,14 @@
         } <span class="kw">else</span> {
             <span class="ident">sdl_center</span> <span class="op">=</span> <span class="prelude-val">None</span>;
         }
-        <span class="self">self</span>.<span class="ident">renderer</span>.<span class="ident">copy_ex</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">texture</span>,
-                              <span class="ident">sdl_src</span>,
-                              <span class="ident">sdl_dst</span>,
-                              <span class="ident">angle</span>,
-                              <span class="ident">sdl_center</span>,
-                              <span class="ident">flip_horizontal</span>,
-                              <span class="ident">flip_vertical</span>)
+        <span class="self">self</span>.<span class="ident">renderer</span>
+            .<span class="ident">copy_ex</span>(<span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">texture</span>,
+                     <span class="ident">sdl_src</span>,
+                     <span class="ident">sdl_dst</span>,
+                     <span class="ident">angle</span>,
+                     <span class="ident">sdl_center</span>,
+                     <span class="ident">flip_horizontal</span>,
+                     <span class="ident">flip_vertical</span>)
     }
 }
 </pre>

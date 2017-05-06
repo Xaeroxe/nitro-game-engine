@@ -8,6 +8,7 @@ implementors["ncollide"] = [];
 implementors["num"] = [];
 implementors["sdl2"] = [];
 implementors["serde"] = [];
+implementors["syn"] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

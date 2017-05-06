@@ -48,9 +48,9 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/chrono/lib.rs.html#4-766' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/chrono/lib.rs.html#4-887' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'>
-<h1 id='chrono-030' class='section-header'><a href='#chrono-030'>Chrono 0.3.0</a></h1>
+<h1 id='chrono-031' class='section-header'><a href='#chrono-031'>Chrono 0.3.1</a></h1>
 <p>Date and time handling for Rust.
 It aims to be a feature-complete superset of
 the <a href="https://github.com/rust-lang-deprecated/time">time</a> library.
@@ -63,7 +63,7 @@ In particular,</p>
 </ul>
 
 <p>There were several previous attempts to bring a good date and time library to Rust,
-which Chrono builts upon and should acknowledge:</p>
+which Chrono builds upon and should acknowledge:</p>
 
 <ul>
 <li><a href="https://github.com/rust-lang/rust-wiki-backup/blob/master/Lib-datetime.md">Initial research on
@@ -423,6 +423,13 @@ and consequently <code>UTC.ymd(2014, 1, 30).with_month(2)</code> returns <code>N
                            <td class='docblock-short'>
                                 <p>ISO 8601 time duration with nanosecond precision.
 This also allows for the negative duration; see individual methods for details.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.ParseWeekdayError.html"
+                                  title='struct chrono::ParseWeekdayError'>ParseWeekdayError</a></td>
+                           <td class='docblock-short'>
+                                <p>An error resulting from reading <code>Weekday</code> value with <code>FromStr</code>.</p>
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>

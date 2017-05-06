@@ -251,7 +251,30 @@ One should prefer <code>*_from_monday</code> or <code>*_from_sunday</code> metho
 </tr>
 </tbody>
 </table>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> for <a class="enum" href="../chrono/enum.Weekday.html" title="enum chrono::Weekday">Weekday</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/chrono/lib.rs.html#414' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html" title="trait core::str::FromStr">FromStr</a> for <a class="enum" href="../chrono/enum.Weekday.html" title="enum chrono::Weekday">Weekday</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/chrono/format/mod.rs.html#587-597' title='goto source code'>[src]</a></span></h3>
+<div class='docblock'><p>Parsing a <code>str</code> into a <code>Weekday</code> uses the format <a href="../../format/strftime/index.html"><code>%W</code></a>.</p>
+
+<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">chrono</span>::<span class="ident">Weekday</span>;
+
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;Sunday&quot;</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Weekday</span><span class="op">&gt;</span>(), <span class="prelude-val">Ok</span>(<span class="ident">Weekday</span>::<span class="ident">Sun</span>));
+<span class="macro">assert</span><span class="macro">!</span>(<span class="string">&quot;any day&quot;</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Weekday</span><span class="op">&gt;</span>().<span class="ident">is_err</span>());</pre>
+
+<p>The parsing is case-insensitive.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="string">&quot;mON&quot;</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Weekday</span><span class="op">&gt;</span>(), <span class="prelude-val">Ok</span>(<span class="ident">Weekday</span>::<span class="ident">Mon</span>));</pre>
+
+<p>Only the shortest form (e.g. <code>sun</code>) and the longest form (e.g. <code>sunday</code>) is accepted.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="macro">assert</span><span class="macro">!</span>(<span class="string">&quot;thurs&quot;</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Weekday</span><span class="op">&gt;</span>().<span class="ident">is_err</span>());</pre>
+</div><div class='impl-items'><h4 id='associatedtype.Err' class="type"><span id='Err.t' class='invisible'><code>type <a href='https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html#associatedtype.Err' class="type">Err</a> = <a class="struct" href="../chrono/struct.ParseWeekdayError.html" title="struct chrono::ParseWeekdayError">ParseWeekdayError</a></code></span></h4>
+<div class='docblock'><p>The associated error which can be returned from parsing.</p>
+</div><h4 id='method.from_str' class="method"><span id='from_str.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html#tymethod.from_str' class='fnname'>from_str</a>(s: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self, Self::<a class="trait" href="https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html" title="trait core::str::FromStr">Err</a>&gt;</code></span></h4>
+<div class='docblock'><p>Parses a string <code>s</code> to return a value of this type. <a href="https://doc.rust-lang.org/nightly/core/str/trait.FromStr.html#tymethod.from_str">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html" title="trait core::cmp::PartialEq">PartialEq</a> for <a class="enum" href="../chrono/enum.Weekday.html" title="enum chrono::Weekday">Weekday</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/chrono/lib.rs.html#414' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.eq' class="method"><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class="enum" href="../chrono/enum.Weekday.html" title="enum chrono::Weekday">Weekday</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h4>
 <div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
 </div><h4 id='method.ne' class="method"><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, other: &amp;Rhs) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>

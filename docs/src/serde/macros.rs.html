@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-0.8.23/src/macros.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.2/src/macros.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>macros.rs.html -- source</title>
@@ -222,184 +222,310 @@
 <span id="177">177</span>
 <span id="178">178</span>
 <span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
 </pre><pre class="rust ">
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">forward_to_deserialize_method</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">func</span>:<span class="ident">ident</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>:<span class="ident">ty</span>),<span class="kw-2">*</span>)) <span class="op">=&gt;</span> {
-        <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">func</span><span class="op">&lt;</span><span class="ident">__V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, $(_: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>,)<span class="op">*</span> <span class="ident">visitor</span>: <span class="ident">__V</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">__V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
-            <span class="kw">where</span> <span class="ident">__V</span>: <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">de</span>::<span class="ident">Visitor</span>
-        {
-            <span class="self">self</span>.<span class="ident">deserialize</span>(<span class="ident">visitor</span>)
-        }
-    };
-}
+<span class="comment">// Copyright 2017 Serde Developers</span>
+<span class="comment">//</span>
+<span class="comment">// Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or</span>
+<span class="comment">// http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license</span>
+<span class="comment">// &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;, at your</span>
+<span class="comment">// option. This file may not be copied, modified, or distributed</span>
+<span class="comment">// except according to those terms.</span>
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">forward_to_deserialize_method</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">func</span>:<span class="ident">ident</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>:<span class="ident">ty</span>),<span class="kw-2">*</span>)) <span class="op">=&gt;</span> {
-        <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">func</span><span class="op">&lt;</span><span class="ident">__V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, $(_: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>,)<span class="op">*</span> <span class="ident">visitor</span>: <span class="ident">__V</span>) <span class="op">-&gt;</span> ::<span class="ident">core</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">__V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
-            <span class="kw">where</span> <span class="ident">__V</span>: <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">de</span>::<span class="ident">Visitor</span>
-        {
-            <span class="self">self</span>.<span class="ident">deserialize</span>(<span class="ident">visitor</span>)
-        }
-    };
-}
-
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">forward_to_deserialize_enum</span> {
-    () <span class="op">=&gt;</span> {
-        <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">fn</span> <span class="ident">deserialize_enum</span><span class="op">&lt;</span><span class="ident">__V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="kw-2">&amp;</span><span class="ident">str</span>, _: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>], _: <span class="ident">__V</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">__V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
-            <span class="kw">where</span> <span class="ident">__V</span>: <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">de</span>::<span class="ident">EnumVisitor</span>
-        {
-            <span class="prelude-val">Err</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">de</span>::<span class="ident">Error</span>::<span class="ident">invalid_type</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">de</span>::<span class="ident">Type</span>::<span class="ident">Enum</span>))
-        }
-    };
-}
-
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">forward_to_deserialize_enum</span> {
-    () <span class="op">=&gt;</span> {
-        <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">fn</span> <span class="ident">deserialize_enum</span><span class="op">&lt;</span><span class="ident">__V</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, _: <span class="kw-2">&amp;</span><span class="ident">str</span>, _: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>], _: <span class="ident">__V</span>) <span class="op">-&gt;</span> ::<span class="ident">core</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">__V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
-            <span class="kw">where</span> <span class="ident">__V</span>: <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">de</span>::<span class="ident">EnumVisitor</span>
-        {
-            <span class="prelude-val">Err</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">de</span>::<span class="ident">Error</span>::<span class="ident">invalid_type</span>(<span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">de</span>::<span class="ident">Type</span>::<span class="ident">Enum</span>))
-        }
-    };
-}
-
-<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-<span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">forward_to_deserialize_helper</span> {
-    (<span class="ident">bool</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_bool</span>()}
-    };
-    (<span class="ident">usize</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_usize</span>()}
-    };
-    (<span class="ident">u8</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_u8</span>()}
-    };
-    (<span class="ident">u16</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_u16</span>()}
-    };
-    (<span class="ident">u32</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_u32</span>()}
-    };
-    (<span class="ident">u64</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_u64</span>()}
-    };
-    (<span class="ident">isize</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_isize</span>()}
-    };
-    (<span class="ident">i8</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_i8</span>()}
-    };
-    (<span class="ident">i16</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_i16</span>()}
-    };
-    (<span class="ident">i32</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_i32</span>()}
-    };
-    (<span class="ident">i64</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_i64</span>()}
-    };
-    (<span class="ident">f32</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_f32</span>()}
-    };
-    (<span class="ident">f64</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_f64</span>()}
-    };
-    (<span class="ident">char</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_char</span>()}
-    };
-    (<span class="ident">str</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_str</span>()}
-    };
-    (<span class="ident">string</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_string</span>()}
-    };
-    (<span class="ident">unit</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_unit</span>()}
-    };
-    (<span class="ident">option</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_option</span>()}
-    };
-    (<span class="ident">seq</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_seq</span>()}
-    };
-    (<span class="ident">seq_fixed_size</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_seq_fixed_size</span>(<span class="ident">usize</span>)}
-    };
-    (<span class="ident">bytes</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_bytes</span>()}
-    };
-    (<span class="ident">map</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_map</span>()}
-    };
-    (<span class="ident">unit_struct</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_unit_struct</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>)}
-    };
-    (<span class="ident">newtype_struct</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_newtype_struct</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>)}
-    };
-    (<span class="ident">tuple_struct</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_tuple_struct</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">usize</span>)}
-    };
-    (<span class="kw">struct</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_struct</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>])}
-    };
-    (<span class="ident">struct_field</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_struct_field</span>()}
-    };
-    (<span class="ident">tuple</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_tuple</span>(<span class="ident">usize</span>)}
-    };
-    (<span class="ident">ignored_any</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_method</span><span class="macro">!</span>{<span class="ident">deserialize_ignored_any</span>()}
-    };
-    (<span class="kw">enum</span>) <span class="op">=&gt;</span> {
-        <span class="macro">forward_to_deserialize_enum</span><span class="macro">!</span>();
-    };
-}
-
-<span class="doccomment">/// Helper to forward `Deserializer` methods to `Deserializer::deserialize`.</span>
-<span class="doccomment">/// Every given method ignores all arguments and forwards to `deserialize`.</span>
-<span class="doccomment">/// Note that `deserialize_enum` simply returns an `Error::invalid_type`; a</span>
-<span class="doccomment">/// better approach is tracked in [serde-rs/serde#521][1].</span>
+<span class="comment">// Super explicit first paragraph because this shows up at the top level and</span>
+<span class="comment">// trips up people who are just looking for basic Serialize / Deserialize</span>
+<span class="comment">// documentation.</span>
+<span class="comment">//</span>
+<span class="doccomment">/// Helper macro when implementing the `Deserializer` part of a new data format</span>
+<span class="doccomment">/// for Serde.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// ```rust,ignore</span>
-<span class="doccomment">/// impl Deserializer for MyDeserializer {</span>
-<span class="doccomment">///     fn deserialize&lt;V&gt;(&amp;mut self, visitor: V) -&gt; Result&lt;V::Value, Self::Error&gt;</span>
-<span class="doccomment">///         where V: Visitor</span>
-<span class="doccomment">///     {</span>
-<span class="doccomment">///         /* ... */</span>
-<span class="doccomment">///     }</span>
+<span class="doccomment">/// Some [`Deserializer`] implementations for self-describing formats do not</span>
+<span class="doccomment">/// care what hint the [`Visitor`] gives them, they just want to blindly call</span>
+<span class="doccomment">/// the [`Visitor`] method corresponding to the data they can tell is in the</span>
+<span class="doccomment">/// input. This requires repetitive implementations of all the [`Deserializer`]</span>
+<span class="doccomment">/// trait methods.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///     forward_to_deserialize! {</span>
-<span class="doccomment">///         bool usize u8 u16 u32 u64 isize i8 i16 i32 i64 f32 f64 char str string</span>
-<span class="doccomment">///         unit option seq seq_fixed_size bytes map unit_struct newtype_struct</span>
-<span class="doccomment">///         tuple_struct struct struct_field tuple enum ignored_any</span>
-<span class="doccomment">///     }</span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// # #[macro_use]</span>
+<span class="doccomment">/// # extern crate serde;</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # use serde::de::{value, Deserializer, Visitor};</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # struct MyDeserializer;</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # impl&lt;&#39;de&gt; Deserializer&lt;&#39;de&gt; for MyDeserializer {</span>
+<span class="doccomment">/// #     type Error = value::Error;</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// #     fn deserialize_any&lt;V&gt;(self, _: V) -&gt; Result&lt;V::Value, Self::Error&gt;</span>
+<span class="doccomment">/// #         where V: Visitor&lt;&#39;de&gt;</span>
+<span class="doccomment">/// #     {</span>
+<span class="doccomment">/// #         unimplemented!()</span>
+<span class="doccomment">/// #     }</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// #[inline]</span>
+<span class="doccomment">/// fn deserialize_bool&lt;V&gt;(self, visitor: V) -&gt; Result&lt;V::Value, Self::Error&gt;</span>
+<span class="doccomment">///     where V: Visitor&lt;&#39;de&gt;</span>
+<span class="doccomment">/// {</span>
+<span class="doccomment">///     self.deserialize_any(visitor)</span>
 <span class="doccomment">/// }</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// #     forward_to_deserialize_any! {</span>
+<span class="doccomment">/// #         i8 i16 i32 i64 u8 u16 u32 u64 f32 f64 char str string bytes</span>
+<span class="doccomment">/// #         byte_buf option unit unit_struct newtype_struct seq tuple</span>
+<span class="doccomment">/// #         tuple_struct map struct enum identifier ignored_any</span>
+<span class="doccomment">/// #     }</span>
+<span class="doccomment">/// # }</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # fn main() {}</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// [1]: https://github.com/serde-rs/serde/issues/521</span>
+<span class="doccomment">/// The `forward_to_deserialize_any!` macro implements these simple forwarding</span>
+<span class="doccomment">/// methods so that they forward directly to [`Deserializer::deserialize_any`].</span>
+<span class="doccomment">/// You can choose which methods to forward.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// # #[macro_use]</span>
+<span class="doccomment">/// # extern crate serde;</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # use serde::de::{value, Deserializer, Visitor};</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # struct MyDeserializer;</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// impl&lt;&#39;de&gt; Deserializer&lt;&#39;de&gt; for MyDeserializer {</span>
+<span class="doccomment">/// #   type Error = value::Error;</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">///     fn deserialize_any&lt;V&gt;(self, visitor: V) -&gt; Result&lt;V::Value, Self::Error&gt;</span>
+<span class="doccomment">///         where V: Visitor&lt;&#39;de&gt;</span>
+<span class="doccomment">///     {</span>
+<span class="doccomment">///         /* ... */</span>
+<span class="doccomment">/// #       let _ = visitor;</span>
+<span class="doccomment">/// #       unimplemented!()</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///     forward_to_deserialize_any! {</span>
+<span class="doccomment">///         bool i8 i16 i32 i64 u8 u16 u32 u64 f32 f64 char str string bytes</span>
+<span class="doccomment">///         byte_buf option unit unit_struct newtype_struct seq tuple</span>
+<span class="doccomment">///         tuple_struct map struct enum identifier ignored_any</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # fn main() {}</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The macro assumes the convention that your `Deserializer` lifetime parameter</span>
+<span class="doccomment">/// is called `&#39;de` and that the `Visitor` type parameters on each method are</span>
+<span class="doccomment">/// called `V`. A different type parameter and a different lifetime can be</span>
+<span class="doccomment">/// specified explicitly if necessary.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```rust</span>
+<span class="doccomment">/// # #[macro_use]</span>
+<span class="doccomment">/// # extern crate serde;</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # use std::marker::PhantomData;</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # use serde::de::{value, Deserializer, Visitor};</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # struct MyDeserializer&lt;V&gt;(PhantomData&lt;V&gt;);</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # impl&lt;&#39;q, V&gt; Deserializer&lt;&#39;q&gt; for MyDeserializer&lt;V&gt; {</span>
+<span class="doccomment">/// #     type Error = value::Error;</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// #     fn deserialize_any&lt;W&gt;(self, visitor: W) -&gt; Result&lt;W::Value, Self::Error&gt;</span>
+<span class="doccomment">/// #         where W: Visitor&lt;&#39;q&gt;</span>
+<span class="doccomment">/// #     {</span>
+<span class="doccomment">/// #         unimplemented!()</span>
+<span class="doccomment">/// #     }</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// forward_to_deserialize_any! {</span>
+<span class="doccomment">///     &lt;W: Visitor&lt;&#39;q&gt;&gt;</span>
+<span class="doccomment">///     bool i8 i16 i32 i64 u8 u16 u32 u64 f32 f64 char str string bytes</span>
+<span class="doccomment">///     byte_buf option unit unit_struct newtype_struct seq tuple tuple_struct</span>
+<span class="doccomment">///     map struct enum identifier ignored_any</span>
+<span class="doccomment">/// }</span>
+<span class="doccomment">/// # }</span>
+<span class="doccomment">/// #</span>
+<span class="doccomment">/// # fn main() {}</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`Deserializer`]: trait.Deserializer.html</span>
+<span class="doccomment">/// [`Visitor`]: de/trait.Visitor.html</span>
+<span class="doccomment">/// [`Deserializer::deserialize_any`]: trait.Deserializer.html#tymethod.deserialize_any</span>
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
-<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">forward_to_deserialize</span> {
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">forward_to_deserialize_any</span> {
+    (<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">visitor</span>:<span class="ident">ident</span>: <span class="ident">Visitor</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">lifetime</span>:<span class="ident">tt</span><span class="op">&gt;&gt;</span> $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">func</span>:<span class="ident">ident</span>)<span class="kw-2">*</span>) <span class="op">=&gt;</span> {
+        $(<span class="macro">forward_to_deserialize_any_helper</span><span class="macro">!</span>{<span class="macro-nonterminal">$</span><span class="macro-nonterminal">func</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">lifetime</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visitor</span><span class="op">&gt;</span>})<span class="op">*</span>
+    };
+    <span class="comment">// This case must be after the previous one.</span>
     ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">func</span>:<span class="ident">ident</span>)<span class="kw-2">*</span>) <span class="op">=&gt;</span> {
-        $(<span class="macro">forward_to_deserialize_helper</span><span class="macro">!</span>{<span class="macro-nonterminal">$</span><span class="macro-nonterminal">func</span>})<span class="op">*</span>
+        $(<span class="macro">forward_to_deserialize_any_helper</span><span class="macro">!</span>{<span class="macro-nonterminal">$</span><span class="macro-nonterminal">func</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span>, <span class="ident">V</span><span class="op">&gt;</span>})<span class="op">*</span>
+    };
+}
+
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="attribute">#[<span class="ident">macro_export</span>]</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">forward_to_deserialize_any_method</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">func</span>:<span class="ident">ident</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>:<span class="ident">ident</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ty</span>),<span class="kw-2">*</span>)) <span class="op">=&gt;</span> {
+        <span class="attribute">#[<span class="ident">inline</span>]</span>
+        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">func</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>(<span class="self">self</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>,)<span class="op">*</span> <span class="ident">visitor</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">export</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+        <span class="kw">where</span>
+            <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>: <span class="macro-nonterminal">$</span><span class="kw">crate</span>::<span class="macro-nonterminal">de</span>::<span class="ident">Visitor</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span><span class="op">&gt;</span>,
+        {
+            $(
+                <span class="kw">let</span> _ <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>;
+            )<span class="op">*</span>
+            <span class="self">self</span>.<span class="ident">deserialize_any</span>(<span class="ident">visitor</span>)
+        }
+    };
+}
+
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="attribute">#[<span class="ident">macro_export</span>]</span>
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">forward_to_deserialize_any_helper</span> {
+    (<span class="ident">bool</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_bool</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">i8</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_i8</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">i16</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_i16</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">i32</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_i32</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">i64</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_i64</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">u8</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_u8</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">u16</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_u16</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">u32</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_u32</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">u64</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_u64</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">f32</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_f32</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">f64</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_f64</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">char</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_char</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">str</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_str</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">string</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_string</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">bytes</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_bytes</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">byte_buf</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_byte_buf</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">unit</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_unit</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">unit_struct</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_unit_struct</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>)}
+    };
+    (<span class="ident">newtype_struct</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_newtype_struct</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>)}
+    };
+    (<span class="ident">seq</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_seq</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">tuple</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_tuple</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>(<span class="ident">len</span>: <span class="ident">usize</span>)}
+    };
+    (<span class="ident">tuple_struct</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_tuple_struct</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">len</span>: <span class="ident">usize</span>)}
+    };
+    (<span class="ident">map</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_map</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="kw">struct</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_struct</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">fields</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>])}
+    };
+    (<span class="kw">enum</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_enum</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">variants</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>])}
+    };
+    (<span class="ident">identifier</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_identifier</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
+    };
+    (<span class="ident">ignored_any</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>:<span class="ident">tt</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span>:<span class="ident">ident</span><span class="op">&gt;</span>) <span class="op">=&gt;</span> {
+        <span class="macro">forward_to_deserialize_any_method</span><span class="macro">!</span>{<span class="ident">deserialize_ignored_any</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">l</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">v</span><span class="op">&gt;</span>()}
     };
 }
 </pre>

@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/sdl2/render.rs.html#925-928' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/sdl2/render.rs.html#930-933' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct RenderTarget&lt;'renderer&gt; { /* fields omitted */ }</pre><div class='docblock'><p>A handle for getting/setting the render target of the render context.</p>
 
 <h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
@@ -71,7 +71,7 @@
     <span class="kw">let</span> <span class="ident">texture</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Texture</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">r</span>.<span class="ident">render_target</span>().<span class="ident">unwrap</span>().<span class="ident">reset</span>().<span class="ident">unwrap</span>();
     <span class="ident">texture</span>.<span class="ident">unwrap</span>()
 }</pre>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'renderer&gt; <a class="struct" href="../../sdl2/render/struct.RenderTarget.html" title="struct sdl2::render::RenderTarget">RenderTarget</a>&lt;'renderer&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/sdl2/render.rs.html#930-1012' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'renderer&gt; <a class="struct" href="../../sdl2/render/struct.RenderTarget.html" title="struct sdl2::render::RenderTarget">RenderTarget</a>&lt;'renderer&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/sdl2/render.rs.html#935-1017' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.reset' class="method"><span id='reset.v' class='invisible'><code>fn <a href='#method.reset' class='fnname'>reset</a>(&amp;mut self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../sdl2/render/struct.Texture.html" title="struct sdl2::render::Texture">Texture</a>&gt;, <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</code></span></h4>
 <div class='docblock'><p>Resets the render target to the default render target.</p>
 

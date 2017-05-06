@@ -1,6 +1,5 @@
 (function() {var implementors = {};
 implementors["chrono"] = [];
-implementors["ncollide"] = [];
 implementors["num"] = [];
 implementors["sdl2"] = [];
 

@@ -164,6 +164,10 @@
 <span id="119">119</span>
 <span id="120">120</span>
 <span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">sdl2</span>::<span class="ident">mixer</span>::<span class="ident">Music</span>;
 <span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">thread_rng</span>;
@@ -173,7 +177,7 @@
 <span class="doccomment">/// Allows you to create and control playlists for music playback.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Playlists are optimized for music, if you want to play sound effects functions in nitro::Audio</span>
-<span class="doccomment">/// should be of assistance to you.  Apps can have one active playlist at a time which lives in </span>
+<span class="doccomment">/// should be of assistance to you.  Apps can have one active playlist at a time which lives in</span>
 <span class="doccomment">/// nitro::App.playlist.  To change the playlist stop App.playlist then assign a new playlist to</span>
 <span class="doccomment">/// App.playlist and then start App.playlist.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Playlist</span> {
@@ -189,7 +193,6 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Playlist</span> {
-
     <span class="doccomment">/// Creates a new playlist with no tracks, and shuffle and loop_music set to false.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">Playlist</span> {
         <span class="ident">Playlist</span> {
@@ -226,9 +229,15 @@
 
             <span class="comment">// Make sure the new first track is never the previous last track.  Keeps from hearing</span>
             <span class="comment">// the same song twice in a row.</span>
-            <span class="ident">new_tracks</span>.<span class="ident">push</span>(<span class="macro">unborrow</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">tracks</span>.<span class="ident">remove</span>(<span class="ident">thread_rng</span>().<span class="ident">gen_range</span>(<span class="number">0</span>, <span class="self">self</span>.<span class="ident">tracks</span>.<span class="ident">len</span>()<span class="op">-</span><span class="number">1</span>))));
+            <span class="ident">new_tracks</span>.<span class="ident">push</span>(<span class="macro">unborrow</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">tracks</span>
+                                          .<span class="ident">remove</span>(<span class="ident">thread_rng</span>().<span class="ident">gen_range</span>(<span class="number">0</span>,
+                                                                         <span class="self">self</span>.<span class="ident">tracks</span>.<span class="ident">len</span>() <span class="op">-</span>
+                                                                         <span class="number">1</span>))));
             <span class="kw">while</span> <span class="self">self</span>.<span class="ident">tracks</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">0</span> {
-                <span class="ident">new_tracks</span>.<span class="ident">push</span>(<span class="macro">unborrow</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">tracks</span>.<span class="ident">remove</span>(<span class="ident">thread_rng</span>().<span class="ident">gen_range</span>(<span class="number">0</span>, <span class="self">self</span>.<span class="ident">tracks</span>.<span class="ident">len</span>()))));
+                <span class="ident">new_tracks</span>.<span class="ident">push</span>(<span class="macro">unborrow</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">tracks</span>
+                                              .<span class="ident">remove</span>(<span class="ident">thread_rng</span>().<span class="ident">gen_range</span>(<span class="number">0</span>,
+                                                                             <span class="self">self</span>.<span class="ident">tracks</span>
+                                                                                 .<span class="ident">len</span>()))));
             }
             <span class="self">self</span>.<span class="ident">tracks</span> <span class="op">=</span> <span class="ident">new_tracks</span>;
         }
@@ -237,8 +246,7 @@
     <span class="doccomment">/// Advance to the next track in the playlist</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">next_track</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">current_track</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">tracks</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span> {
-            <span class="macro">unborrow</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">play_track</span>(<span class="self">self</span>.<span class="ident">current_track</span> <span class="op">+</span> <span class="number">1</span>))
-                .<span class="ident">expect</span>(<span class="string">&quot;Track index invalid.&quot;</span>);
+            <span class="macro">unborrow</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">play_track</span>(<span class="self">self</span>.<span class="ident">current_track</span> <span class="op">+</span> <span class="number">1</span>)).<span class="ident">expect</span>(<span class="string">&quot;Track index invalid.&quot;</span>);
         } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">loop_music</span> {
             <span class="kw">if</span> <span class="self">self</span>.<span class="ident">shuffle</span> {
                 <span class="self">self</span>.<span class="ident">shuffle</span>();

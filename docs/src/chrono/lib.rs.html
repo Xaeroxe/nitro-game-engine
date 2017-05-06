@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/chrono-0.3.0/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/chrono-0.3.1/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -809,11 +809,132 @@
 <span id="764">764</span>
 <span id="765">765</span>
 <span id="766">766</span>
+<span id="767">767</span>
+<span id="768">768</span>
+<span id="769">769</span>
+<span id="770">770</span>
+<span id="771">771</span>
+<span id="772">772</span>
+<span id="773">773</span>
+<span id="774">774</span>
+<span id="775">775</span>
+<span id="776">776</span>
+<span id="777">777</span>
+<span id="778">778</span>
+<span id="779">779</span>
+<span id="780">780</span>
+<span id="781">781</span>
+<span id="782">782</span>
+<span id="783">783</span>
+<span id="784">784</span>
+<span id="785">785</span>
+<span id="786">786</span>
+<span id="787">787</span>
+<span id="788">788</span>
+<span id="789">789</span>
+<span id="790">790</span>
+<span id="791">791</span>
+<span id="792">792</span>
+<span id="793">793</span>
+<span id="794">794</span>
+<span id="795">795</span>
+<span id="796">796</span>
+<span id="797">797</span>
+<span id="798">798</span>
+<span id="799">799</span>
+<span id="800">800</span>
+<span id="801">801</span>
+<span id="802">802</span>
+<span id="803">803</span>
+<span id="804">804</span>
+<span id="805">805</span>
+<span id="806">806</span>
+<span id="807">807</span>
+<span id="808">808</span>
+<span id="809">809</span>
+<span id="810">810</span>
+<span id="811">811</span>
+<span id="812">812</span>
+<span id="813">813</span>
+<span id="814">814</span>
+<span id="815">815</span>
+<span id="816">816</span>
+<span id="817">817</span>
+<span id="818">818</span>
+<span id="819">819</span>
+<span id="820">820</span>
+<span id="821">821</span>
+<span id="822">822</span>
+<span id="823">823</span>
+<span id="824">824</span>
+<span id="825">825</span>
+<span id="826">826</span>
+<span id="827">827</span>
+<span id="828">828</span>
+<span id="829">829</span>
+<span id="830">830</span>
+<span id="831">831</span>
+<span id="832">832</span>
+<span id="833">833</span>
+<span id="834">834</span>
+<span id="835">835</span>
+<span id="836">836</span>
+<span id="837">837</span>
+<span id="838">838</span>
+<span id="839">839</span>
+<span id="840">840</span>
+<span id="841">841</span>
+<span id="842">842</span>
+<span id="843">843</span>
+<span id="844">844</span>
+<span id="845">845</span>
+<span id="846">846</span>
+<span id="847">847</span>
+<span id="848">848</span>
+<span id="849">849</span>
+<span id="850">850</span>
+<span id="851">851</span>
+<span id="852">852</span>
+<span id="853">853</span>
+<span id="854">854</span>
+<span id="855">855</span>
+<span id="856">856</span>
+<span id="857">857</span>
+<span id="858">858</span>
+<span id="859">859</span>
+<span id="860">860</span>
+<span id="861">861</span>
+<span id="862">862</span>
+<span id="863">863</span>
+<span id="864">864</span>
+<span id="865">865</span>
+<span id="866">866</span>
+<span id="867">867</span>
+<span id="868">868</span>
+<span id="869">869</span>
+<span id="870">870</span>
+<span id="871">871</span>
+<span id="872">872</span>
+<span id="873">873</span>
+<span id="874">874</span>
+<span id="875">875</span>
+<span id="876">876</span>
+<span id="877">877</span>
+<span id="878">878</span>
+<span id="879">879</span>
+<span id="880">880</span>
+<span id="881">881</span>
+<span id="882">882</span>
+<span id="883">883</span>
+<span id="884">884</span>
+<span id="885">885</span>
+<span id="886">886</span>
+<span id="887">887</span>
 </pre><pre class="rust ">
 <span class="comment">// This is a part of Chrono.</span>
 <span class="comment">// See README.md and LICENSE.txt for details.</span>
 
-<span class="doccomment">//! # Chrono 0.3.0</span>
+<span class="doccomment">//! # Chrono 0.3.1</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Date and time handling for Rust.</span>
 <span class="doccomment">//! It aims to be a feature-complete superset of</span>
@@ -825,7 +946,7 @@
 <span class="doccomment">//! * Chrono is space-optimal and (while not being the primary goal) reasonably efficient.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! There were several previous attempts to bring a good date and time library to Rust,</span>
-<span class="doccomment">//! which Chrono builts upon and should acknowledge:</span>
+<span class="doccomment">//! which Chrono builds upon and should acknowledge:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! * [Initial research on</span>
 <span class="doccomment">//!    the wiki](https://github.com/rust-lang/rust-wiki-backup/blob/master/Lib-datetime.md)</span>
@@ -922,19 +1043,19 @@
 <span class="doccomment">//! or in the local time zone</span>
 <span class="doccomment">//! ([`Local::now()`](./offset/local/struct.Local.html#method.now)).</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ~~~~ {.rust}</span>
+<span class="doccomment">//! ```rust</span>
 <span class="doccomment">//! use chrono::prelude::*;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! let utc: DateTime&lt;UTC&gt; = UTC::now();       // e.g. `2014-11-28T12:45:59.324310806Z`</span>
 <span class="doccomment">//! let local: DateTime&lt;Local&gt; = Local::now(); // e.g. `2014-11-28T21:45:59.324310806+09:00`</span>
 <span class="doccomment">//! # let _ = utc; let _ = local;</span>
-<span class="doccomment">//! ~~~~</span>
+<span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Alternatively, you can create your own date and time.</span>
 <span class="doccomment">//! This is a bit verbose due to Rust&#39;s lack of function and method overloading,</span>
 <span class="doccomment">//! but in turn we get a rich combination of initialization methods.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ~~~~ {.rust}</span>
+<span class="doccomment">//! ```rust</span>
 <span class="doccomment">//! use chrono::prelude::*;</span>
 <span class="doccomment">//! use chrono::offset::LocalResult;</span>
 <span class="doccomment">//!</span>
@@ -960,7 +1081,7 @@
 <span class="doccomment">//! let fixed_dt = FixedOffset::east(9 * 3600).ymd(2014, 7, 8).and_hms_milli(18, 10, 11, 12);</span>
 <span class="doccomment">//! assert_eq!(dt, fixed_dt);</span>
 <span class="doccomment">//! # let _ = local_dt;</span>
-<span class="doccomment">//! ~~~~</span>
+<span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Various properties are available to the date and time, and can be altered individually.</span>
 <span class="doccomment">//! Most of them are defined in the traits [`Datelike`](./trait.Datelike.html) and</span>
@@ -968,7 +1089,7 @@
 <span class="doccomment">//! Addition and subtraction is also supported.</span>
 <span class="doccomment">//! The following illustrates most supported operations to the date and time:</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ~~~~ {.rust}</span>
+<span class="doccomment">//! ```rust</span>
 <span class="doccomment">//! # extern crate chrono; extern crate time; fn main() {</span>
 <span class="doccomment">//! use chrono::prelude::*;</span>
 <span class="doccomment">//! use time::Duration;</span>
@@ -1008,7 +1129,7 @@
 <span class="doccomment">//! assert_eq!(UTC.ymd(1970, 1, 1).and_hms(0, 0, 0) - Duration::seconds(1_000_000_000),</span>
 <span class="doccomment">//!            UTC.ymd(1938, 4, 24).and_hms(22, 13, 20));</span>
 <span class="doccomment">//! # }</span>
-<span class="doccomment">//! ~~~~</span>
+<span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Formatting is done via the [`format`](./datetime/struct.DateTime.html#method.format) method,</span>
 <span class="doccomment">//! which format is equivalent to the familiar `strftime` format.</span>
@@ -1020,7 +1141,7 @@
 <span class="doccomment">//! [`to_rfc3339`](./datetime/struct.DateTime.html#method.to_rfc3339) methods</span>
 <span class="doccomment">//! for well-known formats.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ~~~~ {.rust}</span>
+<span class="doccomment">//! ```rust</span>
 <span class="doccomment">//! use chrono::prelude::*;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! let dt = UTC.ymd(2014, 11, 28).and_hms(12, 0, 9);</span>
@@ -1032,7 +1153,7 @@
 <span class="doccomment">//! assert_eq!(dt.to_rfc2822(), &quot;Fri, 28 Nov 2014 12:00:09 +0000&quot;);</span>
 <span class="doccomment">//! assert_eq!(dt.to_rfc3339(), &quot;2014-11-28T12:00:09+00:00&quot;);</span>
 <span class="doccomment">//! assert_eq!(format!(&quot;{:?}&quot;, dt), &quot;2014-11-28T12:00:09Z&quot;);</span>
-<span class="doccomment">//! ~~~~</span>
+<span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Parsing can be done with three methods:</span>
 <span class="doccomment">//!</span>
@@ -1061,7 +1182,7 @@
 <span class="doccomment">//! More detailed control over the parsing process is available via</span>
 <span class="doccomment">//! [`format`](./format/index.html) module.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ~~~~ {.rust}</span>
+<span class="doccomment">//! ```rust</span>
 <span class="doccomment">//! use chrono::prelude::*;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! let dt = UTC.ymd(2014, 11, 28).and_hms(12, 0, 9);</span>
@@ -1089,7 +1210,7 @@
 <span class="doccomment">//! assert!(UTC.datetime_from_str(&quot;Fri Nov 28 12:00:09&quot;, &quot;%a %b %e %T&quot;).is_err());</span>
 <span class="doccomment">//! // oops, the weekday is incorrect!</span>
 <span class="doccomment">//! assert!(UTC.datetime_from_str(&quot;Sat Nov 28 12:00:09 2014&quot;, &quot;%a %b %e %T %Y&quot;).is_err());</span>
-<span class="doccomment">//! ~~~~</span>
+<span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ### Individual date</span>
 <span class="doccomment">//!</span>
@@ -1097,7 +1218,7 @@
 <span class="doccomment">//! It also has time zones attached, and have to be constructed via time zones.</span>
 <span class="doccomment">//! Most operations available to `DateTime` are also available to `Date` whenever appropriate.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ~~~~ {.rust}</span>
+<span class="doccomment">//! ```rust</span>
 <span class="doccomment">//! use chrono::prelude::*;</span>
 <span class="doccomment">//! use chrono::offset::LocalResult;</span>
 <span class="doccomment">//!</span>
@@ -1109,7 +1230,7 @@
 <span class="doccomment">//! assert_eq!(UTC.ymd_opt(2014, 11, 31), LocalResult::None);</span>
 <span class="doccomment">//! assert_eq!(UTC.ymd(2014, 11, 28).and_hms_milli(7, 8, 9, 10).format(&quot;%H%M%S&quot;).to_string(),</span>
 <span class="doccomment">//!            &quot;070809&quot;);</span>
-<span class="doccomment">//! ~~~~</span>
+<span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! There is no timezone-aware `Time` due to the lack of usefulness and also the complexity.</span>
 <span class="doccomment">//!</span>
@@ -1385,6 +1506,127 @@
     }
 }
 
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+
+<span class="doccomment">/// An error resulting from reading `Weekday` value with `FromStr`.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ParseWeekdayError</span> {
+    <span class="ident">_dummy</span>: (),
+}
+
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">ParseWeekdayError</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;ParseWeekdayError {{ .. }}&quot;</span>)
+    }
+}
+
+<span class="comment">// the actual `FromStr` implementation is in the `format` module to leverage the existing code</span>
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+<span class="kw">mod</span> <span class="ident">weekday_serde</span> {
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Weekday</span>;
+    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+    <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">ser</span>, <span class="ident">de</span>};
+
+    <span class="kw">impl</span> <span class="ident">ser</span>::<span class="ident">Serialize</span> <span class="kw">for</span> <span class="ident">Weekday</span> {
+        <span class="kw">fn</span> <span class="ident">serialize</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="prelude-val">Ok</span>, <span class="ident">S</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+            <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">ser</span>::<span class="ident">Serializer</span>
+        {
+            <span class="ident">serializer</span>.<span class="ident">serialize_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="self">self</span>))
+        }
+    }
+
+    <span class="kw">struct</span> <span class="ident">WeekdayVisitor</span>;
+
+    <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">de</span>::<span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">WeekdayVisitor</span> {
+        <span class="kw">type</span> <span class="ident">Value</span> <span class="op">=</span> <span class="ident">Weekday</span>;
+
+        <span class="kw">fn</span> <span class="ident">expecting</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+            <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Weekday&quot;</span>)
+        }
+
+        <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+            <span class="kw">where</span> <span class="ident">E</span>: <span class="ident">de</span>::<span class="ident">Error</span>
+        {
+            <span class="ident">value</span>.<span class="ident">parse</span>().<span class="ident">map_err</span>(<span class="op">|</span>_<span class="op">|</span> <span class="ident">E</span>::<span class="ident">custom</span>(<span class="string">&quot;short or long weekday names expected&quot;</span>))
+        }
+    }
+
+    <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="ident">de</span>::<span class="ident">Deserialize</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Weekday</span> {
+        <span class="kw">fn</span> <span class="ident">deserialize</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">deserializer</span>: <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">D</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+            <span class="kw">where</span> <span class="ident">D</span>: <span class="ident">de</span>::<span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>
+        {
+            <span class="ident">deserializer</span>.<span class="ident">deserialize_str</span>(<span class="ident">WeekdayVisitor</span>)
+        }
+    }
+
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+    <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde_json</span>;
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_serde_serialize</span>() {
+        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">serde_json</span>::<span class="ident">to_string</span>;
+        <span class="kw">use</span> <span class="ident">Weekday</span>::<span class="kw-2">*</span>;
+
+        <span class="kw">let</span> <span class="ident">cases</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">Weekday</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
+            (<span class="ident">Mon</span>, <span class="string">&quot;\&quot;Mon\&quot;&quot;</span>),
+            (<span class="ident">Tue</span>, <span class="string">&quot;\&quot;Tue\&quot;&quot;</span>),
+            (<span class="ident">Wed</span>, <span class="string">&quot;\&quot;Wed\&quot;&quot;</span>),
+            (<span class="ident">Thu</span>, <span class="string">&quot;\&quot;Thu\&quot;&quot;</span>),
+            (<span class="ident">Fri</span>, <span class="string">&quot;\&quot;Fri\&quot;&quot;</span>),
+            (<span class="ident">Sat</span>, <span class="string">&quot;\&quot;Sat\&quot;&quot;</span>),
+            (<span class="ident">Sun</span>, <span class="string">&quot;\&quot;Sun\&quot;&quot;</span>),
+        ];
+
+        <span class="kw">for</span> (<span class="ident">weekday</span>, <span class="ident">expected_str</span>) <span class="kw">in</span> <span class="ident">cases</span> {
+            <span class="kw">let</span> <span class="ident">string</span> <span class="op">=</span> <span class="ident">to_string</span>(<span class="kw-2">&amp;</span><span class="ident">weekday</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">string</span>, <span class="ident">expected_str</span>);
+        }
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_serde_deserialize</span>() {
+        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">serde_json</span>::<span class="ident">from_str</span>;
+        <span class="kw">use</span> <span class="ident">Weekday</span>::<span class="kw-2">*</span>;
+
+        <span class="kw">let</span> <span class="ident">cases</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">Weekday</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
+            (<span class="string">&quot;\&quot;mon\&quot;&quot;</span>, <span class="ident">Mon</span>),
+            (<span class="string">&quot;\&quot;MONDAY\&quot;&quot;</span>, <span class="ident">Mon</span>),
+            (<span class="string">&quot;\&quot;MonDay\&quot;&quot;</span>, <span class="ident">Mon</span>),
+            (<span class="string">&quot;\&quot;mOn\&quot;&quot;</span>, <span class="ident">Mon</span>),
+            (<span class="string">&quot;\&quot;tue\&quot;&quot;</span>, <span class="ident">Tue</span>),
+            (<span class="string">&quot;\&quot;tuesday\&quot;&quot;</span>, <span class="ident">Tue</span>),
+            (<span class="string">&quot;\&quot;wed\&quot;&quot;</span>, <span class="ident">Wed</span>),
+            (<span class="string">&quot;\&quot;wednesday\&quot;&quot;</span>, <span class="ident">Wed</span>),
+            (<span class="string">&quot;\&quot;thu\&quot;&quot;</span>, <span class="ident">Thu</span>),
+            (<span class="string">&quot;\&quot;thursday\&quot;&quot;</span>, <span class="ident">Thu</span>),
+            (<span class="string">&quot;\&quot;fri\&quot;&quot;</span>, <span class="ident">Fri</span>),
+            (<span class="string">&quot;\&quot;friday\&quot;&quot;</span>, <span class="ident">Fri</span>),
+            (<span class="string">&quot;\&quot;sat\&quot;&quot;</span>, <span class="ident">Sat</span>),
+            (<span class="string">&quot;\&quot;saturday\&quot;&quot;</span>, <span class="ident">Sat</span>),
+            (<span class="string">&quot;\&quot;sun\&quot;&quot;</span>, <span class="ident">Sun</span>),
+            (<span class="string">&quot;\&quot;sunday\&quot;&quot;</span>, <span class="ident">Sun</span>),
+        ];
+
+        <span class="kw">for</span> (<span class="ident">str</span>, <span class="ident">expected_weekday</span>) <span class="kw">in</span> <span class="ident">cases</span> {
+            <span class="kw">let</span> <span class="ident">weekday</span> <span class="op">=</span> <span class="ident">from_str</span>::<span class="op">&lt;</span><span class="ident">Weekday</span><span class="op">&gt;</span>(<span class="ident">str</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">weekday</span>, <span class="ident">expected_weekday</span>);
+        }
+
+        <span class="kw">let</span> <span class="ident">errors</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[
+            <span class="string">&quot;\&quot;not a weekday\&quot;&quot;</span>,
+            <span class="string">&quot;\&quot;monDAYs\&quot;&quot;</span>,
+            <span class="string">&quot;\&quot;mond\&quot;&quot;</span>,
+            <span class="string">&quot;mon&quot;</span>,
+            <span class="string">&quot;\&quot;thur\&quot;&quot;</span>,
+            <span class="string">&quot;\&quot;thurs\&quot;&quot;</span>,
+        ];
+
+        <span class="kw">for</span> <span class="ident">str</span> <span class="kw">in</span> <span class="ident">errors</span> {
+            <span class="ident">from_str</span>::<span class="op">&lt;</span><span class="ident">Weekday</span><span class="op">&gt;</span>(<span class="ident">str</span>).<span class="ident">unwrap_err</span>();
+        }
+    }
+}
 
 <span class="doccomment">/// The common set of methods for date component.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Datelike</span>: <span class="ident">Sized</span> {

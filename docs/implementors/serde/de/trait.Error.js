@@ -1,5 +1,5 @@
 (function() {var implementors = {};
-implementors["bincode"] = ["impl <a class=\"trait\" href=\"serde/de/trait.Error.html\" title=\"trait serde::de::Error\">Error</a> for <a class=\"enum\" href=\"bincode/serde/enum.DeserializeError.html\" title=\"enum bincode::serde::DeserializeError\">DeserializeError</a>",];
+implementors["bincode"] = ["impl <a class=\"trait\" href=\"serde/de/trait.Error.html\" title=\"trait serde::de::Error\">Error</a> for <a class=\"type\" href=\"bincode/internal/type.Error.html\" title=\"type bincode::internal::Error\">Error</a>",];
 implementors["serde"] = [];
 
             if (window.register_implementors) {

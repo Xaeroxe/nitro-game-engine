@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/chrono-0.3.0/src/offset/local.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/jacob/.cargo/registry/src/github.com-1ecc6299db9ec823/chrono-0.3.1/src/offset/local.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>local.rs.html -- source</title>
@@ -228,7 +228,6 @@
 <span id="183">183</span>
 <span id="184">184</span>
 <span id="185">185</span>
-<span id="186">186</span>
 </pre><pre class="rust ">
 <span class="comment">// This is a part of Chrono.</span>
 <span class="comment">// See README.md and LICENSE.txt for details.</span>
@@ -236,7 +235,6 @@
 <span class="doccomment">//! The local (system) time zone.</span>
 
 <span class="kw">use</span> <span class="ident">oldtime</span>;
-<span class="kw">use</span> <span class="ident">oldtime</span>::<span class="ident">Duration</span> <span class="kw">as</span> <span class="ident">OldDuration</span>;
 
 <span class="kw">use</span> {<span class="ident">Datelike</span>, <span class="ident">Timelike</span>};
 <span class="kw">use</span> <span class="ident">naive</span>::<span class="ident">date</span>::<span class="ident">NaiveDate</span>;
@@ -271,7 +269,7 @@
     <span class="kw">let</span> <span class="ident">time</span> <span class="op">=</span> <span class="ident">NaiveTime</span>::<span class="ident">from_hms_nano</span>(<span class="ident">tm</span>.<span class="ident">tm_hour</span> <span class="kw">as</span> <span class="ident">u32</span>, <span class="ident">tm</span>.<span class="ident">tm_min</span> <span class="kw">as</span> <span class="ident">u32</span>,
                                         <span class="ident">tm</span>.<span class="ident">tm_sec</span> <span class="kw">as</span> <span class="ident">u32</span>, <span class="ident">tm</span>.<span class="ident">tm_nsec</span> <span class="kw">as</span> <span class="ident">u32</span>);
     <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="ident">FixedOffset</span>::<span class="ident">east</span>(<span class="ident">tm</span>.<span class="ident">tm_utcoff</span>);
-    <span class="ident">DateTime</span>::<span class="ident">from_utc</span>(<span class="ident">date</span>.<span class="ident">and_time</span>(<span class="ident">time</span>) <span class="op">+</span> <span class="ident">OldDuration</span>::<span class="ident">seconds</span>(<span class="op">-</span><span class="ident">tm</span>.<span class="ident">tm_utcoff</span> <span class="kw">as</span> <span class="ident">i64</span>), <span class="ident">offset</span>)
+    <span class="ident">DateTime</span>::<span class="ident">from_utc</span>(<span class="ident">date</span>.<span class="ident">and_time</span>(<span class="ident">time</span>) <span class="op">-</span> <span class="ident">offset</span>, <span class="ident">offset</span>)
 }
 
 <span class="doccomment">/// Converts a local `NaiveDateTime` to the `time::Timespec`.</span>

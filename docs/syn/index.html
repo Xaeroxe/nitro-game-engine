@@ -48,14 +48,15 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/syn/lib.rs.html#1-170' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/syn/lib.rs.html#1-211' title='goto source code'>[src]</a></span></h1>
 <h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class="mod" href="aster/index.html"
-                                  title='mod syn::aster'>aster</a></td>
+                           <td><a class="mod" href="parse/index.html"
+                                  title='mod syn::parse'>parse</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>This module contains a set of exported nom parsers which can be used to
+parse custom grammars when used alongside the <code>synom</code> crate.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -66,14 +67,6 @@
 happens with its node, it can do its own traversal of the node&#39;s children,
 call <code>visit::walk_*</code> to apply the default traversal algorithm, or prevent
 deeper traversal by doing nothing.</p>
-                           </td>
-                       </tr></table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="macro" href="macro.walk_list.html"
-                                  title='macro syn::walk_list'>walk_list</a></td>
-                           <td class='docblock-short'>
-                                
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -106,8 +99,36 @@ deeper traversal by doing nothing.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="struct" href="struct.ByteStrLit.html"
+                                  title='struct syn::ByteStrLit'>ByteStrLit</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Delimited.html"
+                                  title='struct syn::Delimited'>Delimited</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.DeriveInput.html"
+                                  title='struct syn::DeriveInput'>DeriveInput</a></td>
+                           <td class='docblock-short'>
+                                <p>Struct or enum sent to a <code>proc_macro_derive</code> macro.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="struct" href="struct.Field.html"
                                   title='struct syn::Field'>Field</a></td>
+                           <td class='docblock-short'>
+                                <p>A field of a struct or enum variant.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.FloatLit.html"
+                                  title='struct syn::FloatLit'>FloatLit</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
@@ -135,6 +156,13 @@ of a function, enum, trait, etc.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="struct" href="struct.IntLit.html"
+                                  title='struct syn::IntLit'>IntLit</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="struct" href="struct.Lifetime.html"
                                   title='struct syn::Lifetime'>Lifetime</a></td>
                            <td class='docblock-short'>
@@ -149,10 +177,12 @@ of a function, enum, trait, etc.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.MacroInput.html"
-                                  title='struct syn::MacroInput'>MacroInput</a></td>
+                           <td><a class="struct" href="struct.Mac.html"
+                                  title='struct syn::Mac'>Mac</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Represents a macro invocation. The Path indicates which macro
+is being invoked, and the vector of token-trees contains the source
+of the macro invocation.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -201,6 +231,20 @@ item qualified with this Self type.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="struct" href="struct.StrLit.html"
+                                  title='struct syn::StrLit'>StrLit</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Turbofish.html"
+                                  title='struct syn::Turbofish'>Turbofish</a></td>
+                           <td class='docblock-short'>
+                                <p>Returned by <code>TyGenerics::as_turbofish</code>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="struct" href="struct.TyGenerics.html"
                                   title='struct syn::TyGenerics'>TyGenerics</a></td>
                            <td class='docblock-short'>
@@ -211,7 +255,7 @@ item qualified with this Self type.</p>
                            <td><a class="struct" href="struct.TyParam.html"
                                   title='struct syn::TyParam'>TyParam</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>A generic type parameter, e.g. <code>T: Into&lt;String&gt;</code>.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -225,7 +269,7 @@ item qualified with this Self type.</p>
                            <td><a class="struct" href="struct.Variant.html"
                                   title='struct syn::Variant'>Variant</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>An enum variant.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -240,6 +284,13 @@ item qualified with this Self type.</p>
                                   title='struct syn::WhereClause'>WhereClause</a></td>
                            <td class='docblock-short'>
                                 <p>A <code>where</code> clause in a definition</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.WhereEqPredicate.html"
+                                  title='struct syn::WhereEqPredicate'>WhereEqPredicate</a></td>
+                           <td class='docblock-short'>
+                                <p>An equality predicate (unsupported).</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -274,10 +325,17 @@ distinguished for pretty-printing.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="enum" href="enum.BinOpToken.html"
+                                  title='enum syn::BinOpToken'>BinOpToken</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="enum" href="enum.Body.html"
                                   title='enum syn::Body'>Body</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Body of a derived struct or enum.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -285,6 +343,13 @@ distinguished for pretty-printing.</p>
                                   title='enum syn::ConstExpr'>ConstExpr</a></td>
                            <td class='docblock-short'>
                                 
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.DelimToken.html"
+                                  title='enum syn::DelimToken'>DelimToken</a></td>
+                           <td class='docblock-short'>
+                                <p>A delimiter token</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -351,6 +416,23 @@ distinguished for pretty-printing.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="enum" href="enum.Token.html"
+                                  title='enum syn::Token'>Token</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.TokenTree.html"
+                                  title='enum syn::TokenTree'>TokenTree</a></td>
+                           <td class='docblock-short'>
+                                <p>When the main rust parser encounters a syntax-extension invocation, it
+parses the arguments to the invocation as a token-tree. This is a very
+loose structure, such that all sorts of different AST-fragments can
+be passed to syntax extensions using a uniform type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="enum" href="enum.TraitBoundModifier.html"
                                   title='enum syn::TraitBoundModifier'>TraitBoundModifier</a></td>
                            <td class='docblock-short'>
@@ -393,14 +475,14 @@ detects Copy, Send and Sync.</p>
                            <td><a class="enum" href="enum.VariantData.html"
                                   title='enum syn::VariantData'>VariantData</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Data stored within an enum variant or struct.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="enum" href="enum.Visibility.html"
                                   title='enum syn::Visibility'>Visibility</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Visibility level of an item.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -412,6 +494,13 @@ detects Copy, Send and Sync.</p>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
                        <tr class=' module-item'>
+                           <td><a class="fn" href="fn.parse_derive_input.html"
+                                  title='fn syn::parse_derive_input'>parse_derive_input</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="fn" href="fn.parse_ident.html"
                                   title='fn syn::parse_ident'>parse_ident</a></td>
                            <td class='docblock-short'>
@@ -419,8 +508,8 @@ detects Copy, Send and Sync.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="fn" href="fn.parse_macro_input.html"
-                                  title='fn syn::parse_macro_input'>parse_macro_input</a></td>
+                           <td><a class="fn" href="fn.parse_outer_attr.html"
+                                  title='fn syn::parse_outer_attr'>parse_outer_attr</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
@@ -428,6 +517,20 @@ detects Copy, Send and Sync.</p>
                        <tr class=' module-item'>
                            <td><a class="fn" href="fn.parse_path.html"
                                   title='fn syn::parse_path'>parse_path</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.parse_token_trees.html"
+                                  title='fn syn::parse_token_trees'>parse_token_trees</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.parse_ty_param_bound.html"
+                                  title='fn syn::parse_ty_param_bound'>parse_ty_param_bound</a></td>
                            <td class='docblock-short'>
                                 
                            </td>
