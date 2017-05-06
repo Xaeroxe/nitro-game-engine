@@ -6,7 +6,7 @@ use rand::Rng;
 /// Allows you to create and control playlists for music playback.
 ///
 /// Playlists are optimized for music, if you want to play sound effects functions in nitro::Audio
-/// should be of assistance to you.  Apps can have one active playlist at a time which lives in 
+/// should be of assistance to you.  Apps can have one active playlist at a time which lives in
 /// nitro::App.playlist.  To change the playlist stop App.playlist then assign a new playlist to
 /// App.playlist and then start App.playlist.
 pub struct Playlist {
@@ -22,7 +22,6 @@ pub struct Playlist {
 }
 
 impl Playlist {
-
     /// Creates a new playlist with no tracks, and shuffle and loop_music set to false.
     pub fn new() -> Playlist {
         Playlist {
@@ -59,9 +58,15 @@ impl Playlist {
 
             // Make sure the new first track is never the previous last track.  Keeps from hearing
             // the same song twice in a row.
-            new_tracks.push(unborrow!(self.tracks.remove(thread_rng().gen_range(0, self.tracks.len()-1))));
+            new_tracks.push(unborrow!(self.tracks
+                                          .remove(thread_rng().gen_range(0,
+                                                                         self.tracks.len() -
+                                                                         1))));
             while self.tracks.len() > 0 {
-                new_tracks.push(unborrow!(self.tracks.remove(thread_rng().gen_range(0, self.tracks.len()))));
+                new_tracks.push(unborrow!(self.tracks
+                                              .remove(thread_rng().gen_range(0,
+                                                                             self.tracks
+                                                                                 .len()))));
             }
             self.tracks = new_tracks;
         }
@@ -70,8 +75,7 @@ impl Playlist {
     /// Advance to the next track in the playlist
     pub fn next_track(&mut self) {
         if self.current_track < self.tracks.len() - 1 {
-            unborrow!(self.play_track(self.current_track + 1))
-                .expect("Track index invalid.");
+            unborrow!(self.play_track(self.current_track + 1)).expect("Track index invalid.");
         } else if self.loop_music {
             if self.shuffle {
                 self.shuffle();

@@ -11,8 +11,7 @@ use std::io::Read;
 use std::fs::File;
 use std::clone::Clone;
 use std::collections::HashMap;
-use bincode::SizeLimit;
-use bincode::serde::{serialize, SerializeError, deserialize, DeserializeError};
+use bincode::{Bounded, serialize, deserialize, ErrorKind};
 use num::FromPrimitive;
 use input::mouse::Mouse;
 
@@ -28,25 +27,18 @@ pub struct Input {
 #[derive(Debug)]
 pub enum BincodeIOError {
     IOError(Error),
-    DeserializeError(DeserializeError),
-    SerializeError(SerializeError),
+    BincodeError(Box<ErrorKind>),
 }
 
-impl From<Error> for BincodeIOError{
+impl From<Error> for BincodeIOError {
     fn from(err: Error) -> BincodeIOError {
         BincodeIOError::IOError(err)
     }
 }
 
-impl From<DeserializeError> for BincodeIOError {
-    fn from(err: DeserializeError) -> BincodeIOError {
-        BincodeIOError::DeserializeError(err)
-    }
-}
-
-impl From<SerializeError> for BincodeIOError {
-    fn from(err: SerializeError) -> BincodeIOError {
-        BincodeIOError::SerializeError(err)
+impl From<Box<ErrorKind>> for BincodeIOError {
+    fn from(err: Box<ErrorKind>) -> BincodeIOError {
+        BincodeIOError::BincodeError(err)
     }
 }
 
@@ -64,7 +56,7 @@ impl Input {
 
     pub fn save_bindings(&mut self, path: &str) -> Result<(), BincodeIOError> {
         let mut f = File::create(path)?;
-        let result = serialize(&(&self.axes, &self.actions), SizeLimit::Infinite)?;
+        let result = serialize(&(&self.axes, &self.actions), Bounded(1000000000))?;
         f.write_all(result.as_slice())?;
         Ok(())
     }
@@ -113,7 +105,9 @@ impl Input {
 
     pub fn is_button_pressed(&self, button: Button) -> bool {
         (&self.buttons_pressed).into_iter().any(|&b| b == button) &&
-        !(&self.previous_buttons_pressed).into_iter().any(|&b| b == button)
+        !(&self.previous_buttons_pressed)
+             .into_iter()
+             .any(|&b| b == button)
     }
 
     pub fn is_button_down(&self, button: Button) -> bool {
@@ -122,7 +116,9 @@ impl Input {
 
     pub fn is_button_released(&self, button: Button) -> bool {
         !(&self.buttons_pressed).into_iter().any(|&b| b == button) &&
-        (&self.previous_buttons_pressed).into_iter().any(|&b| b == button)
+        (&self.previous_buttons_pressed)
+            .into_iter()
+            .any(|&b| b == button)
     }
 }
 
@@ -141,38 +137,45 @@ pub fn process_event(input: &mut Input, input_event: &Event) {
         Event::KeyDown { scancode, repeat, .. } => {
             if !repeat {
                 if let Some(scancode) = scancode {
-                    input.buttons_pressed.push(Button::Keyboard(Key::from_u32(scancode as u32)
-                                                                    .unwrap()));
+                    input
+                        .buttons_pressed
+                        .push(Button::Keyboard(Key::from_u32(scancode as u32).unwrap()));
                 }
             }
         }
         Event::KeyUp { scancode, repeat, .. } => {
             if !repeat {
                 if let Some(scancode) = scancode {
-                    while let Some(i) = input.buttons_pressed
-                        .iter()
-                        .position(|&item| {
-                            item == Button::Keyboard(Key::from_u32(scancode as u32).unwrap())
-                        }) {
+                    while let Some(i) = input
+                              .buttons_pressed
+                              .iter()
+                              .position(|&item| {
+                                            item ==
+                                            Button::Keyboard(Key::from_u32(scancode as u32)
+                                                                 .unwrap())
+                                        }) {
                         input.buttons_pressed.swap_remove(i);
                     }
                 }
             }
         }
         Event::MouseButtonDown { mouse_btn, .. } => {
-            input.buttons_pressed.push(Button::Mouse(MouseButton::from_u32(mouse_btn as u32)
-                                                         .unwrap()));
+            input
+                .buttons_pressed
+                .push(Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap()));
         }
         Event::MouseButtonUp { mouse_btn, .. } => {
-            while let Some(i) = input.buttons_pressed
-                .iter()
-                .position(|&item| {
-                    item == Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap())
-                }) {
+            while let Some(i) = input
+                      .buttons_pressed
+                      .iter()
+                      .position(|&item| {
+                                    item ==
+                                    Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap())
+                                }) {
                 input.buttons_pressed.swap_remove(i);
             }
         }
-        Event::MouseMotion{..} => {
+        Event::MouseMotion { .. } => {
             mouse::process_event(&mut input.mouse, input_event);
         }
         _ => {}

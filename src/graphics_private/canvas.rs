@@ -45,12 +45,13 @@ impl<'a> Canvas<'a> {
         } else {
             sdl_center = None;
         }
-        self.renderer.copy_ex(&*texture,
-                              sdl_src,
-                              sdl_dst,
-                              angle,
-                              sdl_center,
-                              flip_horizontal,
-                              flip_vertical)
+        self.renderer
+            .copy_ex(&*texture,
+                     sdl_src,
+                     sdl_dst,
+                     angle,
+                     sdl_center,
+                     flip_horizontal,
+                     flip_vertical)
     }
 }
