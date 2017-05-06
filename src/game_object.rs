@@ -19,9 +19,12 @@ pub struct GameObject {
     pub transform: Transform,
     pub sprite: Option<Sprite>,
     pub body: Option<RigidBodyHandle<f32>>,
+    pub draw_layer: i32,
     // This value will never be 0.  0 can now be used as a null value.
     id: u64,
     components: BTreeMap<i32, Option<Box<ComponentAny>>>,
+    // If this value is false messages will not be sent.  Optimization for game_objects with empty component lists.
+    has_components: bool,
     drop: bool,
 }
 
@@ -51,33 +54,43 @@ impl GameObject {
     }
 
     pub fn receive_message(&mut self, app: &mut App, message: &Message) {
-        for key in self.components
-                .keys()
-                .map(|x| *x)
-                .collect::<Vec<i32>>() {
-            self.send_message_to_component(app, message, key);
+        if self.has_components {
+            for key in self.components
+                    .keys()
+                    .map(|x| *x)
+                    .collect::<Vec<i32>>() {
+                self.send_message_to_component(app, message, key);
+            }
         }
+        
     }
 
     pub fn update(&mut self, app: &mut App, delta_time: f32) {
-        let message = &Message::Update { delta_time: delta_time };
-        self.receive_message(app, message)
+        if self.has_components {
+            let message = &Message::Update { delta_time: delta_time };
+            self.receive_message(app, message)
+        }
     }
 
-    pub fn component_keys<'a>(&'a self) -> Box<Iterator<Item = i32> + 'a> {
-        Box::new(self.components.keys().map(|x| *x))
+    pub fn component_keys<'a>(&'a self) -> Option<Box<Iterator<Item = i32> + 'a>> {
+        if self.has_components {Some(Box::new(self.components.keys().map(|x| *x)))} else {None}
     }
 
-    pub fn component_keys_with_type<'a, T>(&'a self) -> Box<Iterator<Item = i32> + 'a>
+    pub fn component_keys_with_type<'a, T>(&'a self) -> Option<Box<Iterator<Item = i32> + 'a>>
         where T: Component + 'static
     {
-        Box::new(self.components
+        if self.has_components {
+            Some(Box::new(self.components
                      .iter()
                      .filter_map(|(k, c)| if let &Some(ref c) = c {
                                      if c.as_any().is::<T>() { Some(*k) } else { None }
                                  } else {
                                      None
-                                 }))
+                                 })))
+        } else {
+            None
+        }
+        
     }
 
     pub fn remove_component(&mut self,
@@ -87,6 +100,9 @@ impl GameObject {
         let mut component_result = self.components.remove(&index);
         if let Some(Some(ref mut component)) = component_result {
             component.receive_message(app, self, &Message::OnDetach);
+        }
+        if self.components.len() == 0 {
+            self.has_components = false;
         }
         OptionLoaned::from(component_result)
     }
@@ -124,6 +140,7 @@ impl GameObject {
                                -> Option<Box<ComponentAny>>
         where T: Component + 'static
     {
+        self.has_components = true;
         let mut boxxed = Box::new(component);
         boxxed.receive_message(app, self, &Message::Start { key: index });
         let replaced = self.components.insert(index, Some(boxxed));
@@ -155,6 +172,8 @@ pub fn new(app: &mut App) -> GameObject {
         components: BTreeMap::new(),
         sprite: None,
         body: None,
+        draw_layer: 0,
+        has_components: false,
     }
 }
 
@@ -169,10 +188,14 @@ pub fn copy_from_physics(game_object: &mut GameObject) {
     }
 }
 
-pub fn copy_to_physics(game_object: &mut GameObject)) {
+pub fn copy_to_physics(game_object: &mut GameObject) {
     if let Some(ref mut body_box) = game_object.body {
         body_box
             .borrow_mut()
             .set_transformation(game_object.transform.clone());
     }
+}
+
+pub fn has_components(game_object: &GameObject) -> bool {
+    game_object.has_components
 }

@@ -58,6 +58,9 @@ pub struct App {
     
     /// How many pixels = 1 game world unit.  Defaults to 100.
     pub screen_to_world_ratio: f32,
+
+    /// Distance in pixels from screen at which an object won't be drawn.  Defaults to 750.
+    pub cull_padding: u32,
 }
 
 impl App {
@@ -102,33 +105,42 @@ impl App {
             },
             world: World::new(),
             screen_to_world_ratio: 100.0,
+            cull_padding: 750,
         }
     }
 
 
     /// Called every frame to paint the scene. Do not put game logic here, that goes in update.
-    fn render(&mut self) {
+    fn render(&mut self, profiling: bool) {
         use std::f32;
         let game_objs = &self.game_objects;
         let camera_transform = self.camera.transform;
         self.renderer.set_draw_color(Color::RGB(0, 0, 0));
         self.renderer.clear();
         let (screen_width, screen_height) = self.renderer.window().unwrap().size();
-        for game_obj in game_objs.values() {
-            if let Some(ref game_obj) = *game_obj {
-                if let Some(ref sprite) = game_obj.sprite {
-                    let mut render_transform = game_obj.transform;
-                    render_transform.translation.vector.x -= camera_transform.translation.vector.x;
-                    render_transform.translation.vector.y -= camera_transform.translation.vector.y;
-                    let mut polar = PolarCoords::from(render_transform.translation.vector.clone());
-                    polar.rotation -= camera_transform.rotation.angle();
-                    render_transform.translation = Translation::from_vector(Vector::from(polar));
-                    render_transform.translation.vector *= self.camera.zoom * self.screen_to_world_ratio;
-                    render_transform.translation.vector.x += (screen_width / 2) as f32;
-                    render_transform.translation.vector.y += (screen_height / 2) as f32;
+        let mut game_obj_sorted = game_objs.values().filter_map(|g| g.as_ref()).collect::<Vec<&Box<GameObject>>>();
+        (&mut game_obj_sorted).sort_by_key(|g| g.draw_layer);
+        for game_obj in game_obj_sorted {
+            if let Some(ref sprite) = game_obj.sprite {
+                let mut render_transform = game_obj.transform;
+                render_transform.translation.vector.x -= camera_transform.translation.vector.x;
+                render_transform.translation.vector.y -= camera_transform.translation.vector.y;
+                let mut polar = PolarCoords::from(render_transform.translation.vector.clone());
+                polar.rotation -= camera_transform.rotation.angle();
+                render_transform.translation = Translation::from_vector(Vector::from(polar));
+                render_transform.translation.vector.y *= -1.0;
+                render_transform.translation.vector *= self.camera.zoom * self.screen_to_world_ratio;
+                render_transform.translation.vector.x += (screen_width / 2) as f32;
+                render_transform.translation.vector.y += (screen_height / 2) as f32;
+
+                // Now we can determine if an object should be culled.
+                if (render_transform.translation.vector.x as i32 + self.cull_padding as i32) > 0
+                && (render_transform.translation.vector.x as i32 - self.cull_padding as i32) < screen_width as i32
+                && (render_transform.translation.vector.y as i32 + self.cull_padding as i32) > 0
+                && (render_transform.translation.vector.y as i32 - self.cull_padding as i32) < screen_height as i32 {
                     render_transform.rotation =
-                        UnitComplex::from_angle(render_transform.rotation.angle() -
-                                                camera_transform.rotation.angle());
+                    UnitComplex::from_angle(render_transform.rotation.angle() -
+                                            camera_transform.rotation.angle());
                     match *sprite {
                         Sprite::Texture(ref texture) => {
                             let (tex_width, tex_height) = texture::size(texture);
@@ -136,21 +148,19 @@ impl App {
                             let draw_height = (tex_height as f32 * self.camera.zoom) as u32;
                             let render_rect =
                                 Rect::new((render_transform.translation.vector.x as i32) -
-                                          (draw_width as i32 / 2),
-                                          (render_transform.translation.vector.y as i32) -
-                                          (draw_height as i32 / 2),
-                                          draw_width,
-                                          draw_height);
+                                            (draw_width as i32 / 2),
+                                            (render_transform.translation.vector.y as i32) -
+                                            (draw_height as i32 / 2),
+                                            draw_width,
+                                            draw_height);
                             let result = self.renderer
                                 .copy_ex(texture::get_raw(texture),
-                                         None,
-                                         Some(render_rect),
-                                         (game_obj.transform.rotation.angle() * 180.0 /
-                                          f32::consts::PI) as
-                                         f64,
-                                         None,
-                                         texture.flip_horizontal,
-                                         texture.flip_vertical);
+                                            None,
+                                            Some(render_rect),
+                                            ((camera_transform.rotation.angle() - game_obj.transform.rotation.angle()) * 180.0 / f32::consts::PI) as f64 ,
+                                            None,
+                                            texture.flip_horizontal,
+                                            texture.flip_vertical);
                             if let Err(err) = result {
                                 println!("Unable to draw texture, Error: {:?}", err);
                             }
@@ -159,25 +169,19 @@ impl App {
                             let ref current_frame = sprite_sheet.animations[sprite_sheet.current_animation as
                             usize]
                                 [sprite_sheet.current_frame as usize];
+                            let draw_width = current_frame.frame_rect.width() as f32 * self.camera.zoom;
+                            let draw_height = current_frame.frame_rect.height() as f32 * self.camera.zoom;
                             let result = self.renderer
                                 .copy_ex(sprite_sheet::get_texture(sprite_sheet),
-                                         Some(Rect::from(current_frame.frame_rect)),
-                                         Some(Rect::new((render_transform.translation.vector.x as
-                                                         i32) -
-                                                        (current_frame.frame_rect.width() as i32 /
-                                                         2),
-                                                        (render_transform.translation.vector.y as
-                                                         i32) -
-                                                        (current_frame.frame_rect.height() as i32 /
-                                                         2),
-                                                        current_frame.frame_rect.width(),
-                                                        current_frame.frame_rect.height())),
-                                         (game_obj.transform.rotation.angle() * 180.0 /
-                                          f32::consts::PI) as
-                                         f64,
-                                         None,
-                                         current_frame.flip_horizontal,
-                                         current_frame.flip_vertical);
+                                            Some(Rect::from(current_frame.frame_rect)),
+                                            Some(Rect::new((render_transform.translation.vector.x - draw_width) as i32 / 2,
+                                                        (render_transform.translation.vector.y - draw_height) as i32 / 2,
+                                                        draw_width as u32,
+                                                        draw_height as u32)),
+                                            (game_obj.transform.rotation.angle() * 180.0 / f32::consts::PI) as f64,
+                                            None,
+                                            current_frame.flip_horizontal,
+                                            current_frame.flip_vertical);
                             if let Err(err) = result {
                                 println!("Unable to draw texture, Error: {:?}", err);
                             }
@@ -190,9 +194,11 @@ impl App {
             let mut canvas = Canvas::new(&mut self.renderer);
             for game_obj in game_objs.values() {
                 if let Some(ref game_obj) = *game_obj {
-                    for key in game_obj.component_keys() {
-                        if let OptionLoaned::Some(component) = game_obj.component(key) {
-                            component.render_gui(&mut canvas, game_obj);
+                    if let Some(keys) = game_obj.component_keys() {
+                        for key in keys {
+                            if let OptionLoaned::Some(component) = game_obj.component(key) {
+                                component.render_gui(&mut canvas, game_obj);
+                            }
                         }
                     }
                 }
@@ -203,10 +209,11 @@ impl App {
 
 
     /// Called every frame to simulate the game. Do not put rendering here, that goes in render.
-    fn update(&mut self, delta_time: f32) {
+    fn update(&mut self, delta_time: f32, profiling: bool) {
         // Advance audio if necessary.
         playlist::advance_if_needed(&mut self.audio.playlist);
         //Copy game_object to the physics world, step, then copy from physics to game_object
+        let physics_start = Instant::now();
         for mut game_object in self.game_objects.values_mut() {
             if let Some(game_object) = game_object.as_mut() {
                 game_object::copy_to_physics(game_object);
@@ -218,11 +225,18 @@ impl App {
                 game_object::copy_from_physics(game_object);
             }
         }
+        if profiling {
+            let physics_duration = Duration::from_std(physics_start.elapsed())
+                            .unwrap()
+                            .num_microseconds()
+                            .unwrap() as f32 / 1000000.0;
+            println!("\tPhysics step time: {} seconds", physics_duration);
+        }
 
         //Send update messages
         let keys = self.game_objects
-            .keys()
-            .map(|x| *x)
+            .iter()
+            .filter_map(|(k, g)| if g.as_ref().map_or(false, |g| game_object::has_components(g.as_ref())) {Some(*k)} else {None} )
             .collect::<Vec<u64>>();
         for key in keys {
             let mut game_obj_option = None;
@@ -261,7 +275,9 @@ impl App {
     /// Begin execution of the game.
     ///
     /// This function won't return until the game has been quit.
-    pub fn run(&mut self) {
+    /// If profiling is true then additional information on game processing durations will be
+    /// printed to console.
+    pub fn run(&mut self, profiling: bool) {
         let mut last_frame_instant = Instant::now();
         while !self.exit {
             while let Some(e) = self.event_pump.poll_event() {
@@ -270,12 +286,36 @@ impl App {
                 }
                 input_private::input::process_event(&mut self.input, &e);
             }
+            let update_start = Instant::now();
             self.update(Duration::from_std(last_frame_instant.elapsed())
                             .unwrap()
                             .num_microseconds()
-                            .unwrap() as f32 / 1000000.0);
+                            .unwrap() as f32 / 1000000.0, profiling);
+            let update_duration = if profiling {
+                Duration::from_std(update_start.elapsed())
+                            .unwrap()
+                            .num_microseconds()
+                            .unwrap() as f32 / 1000000.0
+            } else {
+                0.0
+            };
             last_frame_instant = Instant::now();
-            self.render();
+            let render_start = Instant::now();
+            self.render(profiling);
+            
+            let render_duration = if profiling {
+                Duration::from_std(render_start.elapsed())
+                            .unwrap()
+                            .num_microseconds()
+                            .unwrap() as f32 / 1000000.0
+            } else {
+                0.0
+            };
+            if profiling {
+                println!("Total frame time: {} seconds", update_duration + render_duration);
+                println!("Update time: {} seconds", update_duration);
+                println!("Render time: {} seconds", render_duration);
+            }
         }
     }
 
@@ -302,7 +342,7 @@ impl App {
                                                                        i32))
                                                                .to_vec());
         mouse_relative_pos.rotation += self.camera.transform.rotation.angle();
-        self.camera.transform.translation.vector + (Vector::from(mouse_relative_pos) / (self.camera.zoom * self.screen_to_world_ratio)
+        self.camera.transform.translation.vector + (Vector::from(mouse_relative_pos) / (self.camera.zoom * self.screen_to_world_ratio))
     }
 
     /// Creates a new GameObject
