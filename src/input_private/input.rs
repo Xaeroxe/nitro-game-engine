@@ -11,7 +11,7 @@ use std::io::Read;
 use std::fs::File;
 use std::clone::Clone;
 use std::collections::HashMap;
-use bincode::{Bounded, serialize, deserialize};
+use bincode::{Bounded, serialize, deserialize, ErrorKind};
 use num::FromPrimitive;
 use input::mouse::Mouse;
 
@@ -27,8 +27,7 @@ pub struct Input {
 #[derive(Debug)]
 pub enum BincodeIOError {
     IOError(Error),
-    DeserializeError(DeserializeError),
-    SerializeError(SerializeError),
+    BincodeError(Box<ErrorKind>),
 }
 
 impl From<Error> for BincodeIOError {
@@ -37,15 +36,9 @@ impl From<Error> for BincodeIOError {
     }
 }
 
-impl From<DeserializeError> for BincodeIOError {
-    fn from(err: DeserializeError) -> BincodeIOError {
-        BincodeIOError::DeserializeError(err)
-    }
-}
-
-impl From<SerializeError> for BincodeIOError {
-    fn from(err: SerializeError) -> BincodeIOError {
-        BincodeIOError::SerializeError(err)
+impl From<Box<ErrorKind>> for BincodeIOError {
+    fn from(err: Box<ErrorKind>) -> BincodeIOError {
+        BincodeIOError::BincodeError(err)
     }
 }
 

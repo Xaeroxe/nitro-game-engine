@@ -55,6 +55,9 @@ pub struct App {
     pub camera: Camera,
     pub world: World<f32>,
     pub audio: Audio,
+    
+    /// How many pixels = 1 game world unit.  Defaults to 100.
+    pub screen_to_world_ratio: f32,
 }
 
 impl App {
@@ -98,6 +101,7 @@ impl App {
                 zoom: 1.0,
             },
             world: World::new(),
+            screen_to_world_ratio: 100.0,
         }
     }
 
@@ -119,7 +123,7 @@ impl App {
                     let mut polar = PolarCoords::from(render_transform.translation.vector.clone());
                     polar.rotation -= camera_transform.rotation.angle();
                     render_transform.translation = Translation::from_vector(Vector::from(polar));
-                    render_transform.translation.vector *= self.camera.zoom;
+                    render_transform.translation.vector *= self.camera.zoom * self.screen_to_world_ratio;
                     render_transform.translation.vector.x += (screen_width / 2) as f32;
                     render_transform.translation.vector.y += (screen_height / 2) as f32;
                     render_transform.rotation =
@@ -298,7 +302,7 @@ impl App {
                                                                        i32))
                                                                .to_vec());
         mouse_relative_pos.rotation += self.camera.transform.rotation.angle();
-        self.camera.transform.translation.vector + Vector::from(mouse_relative_pos)
+        self.camera.transform.translation.vector + (Vector::from(mouse_relative_pos) / (self.camera.zoom * self.screen_to_world_ratio)
     }
 
     /// Creates a new GameObject

@@ -169,7 +169,7 @@ pub fn copy_from_physics(game_object: &mut GameObject) {
     }
 }
 
-pub fn copy_to_physics(game_object: &mut GameObject) {
+pub fn copy_to_physics(game_object: &mut GameObject)) {
     if let Some(ref mut body_box) = game_object.body {
         body_box
             .borrow_mut()
