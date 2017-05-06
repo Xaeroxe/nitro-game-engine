@@ -71,15 +71,13 @@ impl GameObject {
     pub fn component_keys_with_type<'a, T>(&'a self) -> Box<Iterator<Item = i32> + 'a>
         where T: Component + 'static
     {
-        Box::new(self.components.iter().filter_map(|(k, c)| if let &Some(ref c) = c {
-                                                       if c.as_any().is::<T>() {
-                                                           Some(*k)
-                                                       } else {
-                                                           None
-                                                       }
-                                                   } else {
-                                                       None
-                                                   }))
+        Box::new(self.components
+                     .iter()
+                     .filter_map(|(k, c)| if let &Some(ref c) = c {
+                                     if c.as_any().is::<T>() { Some(*k) } else { None }
+                                 } else {
+                                     None
+                                 }))
     }
 
     pub fn remove_component(&mut self,
@@ -139,11 +137,7 @@ impl GameObject {
     pub fn add_component<T>(&mut self, app: &mut App, component: T) -> i32
         where T: Component + 'static
     {
-        let new_key = self.components
-            .keys()
-            .map(|x| *x)
-            .nth(0)
-            .unwrap_or(1) - 1;
+        let new_key = self.components.keys().map(|x| *x).nth(0).unwrap_or(1) - 1;
         self.insert_component(app, component, new_key);
         new_key
     }
@@ -177,6 +171,8 @@ pub fn copy_from_physics(game_object: &mut GameObject) {
 
 pub fn copy_to_physics(game_object: &mut GameObject) {
     if let Some(ref mut body_box) = game_object.body {
-        body_box.borrow_mut().set_transformation(game_object.transform.clone());
+        body_box
+            .borrow_mut()
+            .set_transformation(game_object.transform.clone());
     }
 }

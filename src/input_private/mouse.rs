@@ -46,7 +46,7 @@ pub fn new(mouse_util: MouseUtil) -> Mouse {
 
 pub fn process_event(mouse: &mut Mouse, event: &Event) {
     match *event {
-        Event::MouseMotion{ x, y, .. } => {
+        Event::MouseMotion { x, y, .. } => {
             mouse.pos = IntVector::new(x as i32, y as i32);
         }
         _ => {}

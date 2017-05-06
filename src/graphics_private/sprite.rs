@@ -3,7 +3,6 @@ use graphics::SpriteSheet;
 
 /// Something which can be displayed on screen.  This can optionally be animated.
 pub enum Sprite {
-
     /// A static image.  No animation is available.
     Texture(Texture),
 

@@ -11,10 +11,7 @@ pub struct Axis {
 
 impl Axis {
     pub fn new(pos: Button, neg: Button) -> Axis {
-        Axis {
-            pos: pos,
-            neg: neg,
-        }
+        Axis { pos: pos, neg: neg }
     }
 
     pub fn get_value(&self, input: &Input) -> f32 {

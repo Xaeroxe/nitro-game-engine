@@ -61,14 +61,20 @@ impl App {
     ///Constructs a new App using the given name for the window title.
     pub fn new(name: &str) -> App {
         let sdl_context = sdl2::init().expect("Failed to initialize SDL2.");
-        let video_subsystem = sdl_context.video().expect("Failed to initialize video subsystem");
-        let window = video_subsystem.window(name, 800, 600)
+        let video_subsystem = sdl_context
+            .video()
+            .expect("Failed to initialize video subsystem");
+        let window = video_subsystem
+            .window(name, 800, 600)
             .position_centered()
             .fullscreen_desktop()
             .opengl()
             .build()
             .unwrap();
-        let renderer = window.renderer().build().expect("Failed to initialize renderer");
+        let renderer = window
+            .renderer()
+            .build()
+            .expect("Failed to initialize renderer");
         let audio = sdl_context.audio().expect("Failed to initialize audio");
         let mixer = mixer::init(mixer::INIT_OGG).expect("Failed to initialize mixer");
         mixer::open_audio(mixer::DEFAULT_FREQUENCY, mixer::DEFAULT_FORMAT, 2, 1024)
@@ -84,8 +90,13 @@ impl App {
             renderer: renderer,
             texture_cache: HashMap::new(),
             audio: audio::new(audio, mixer),
-            event_pump: sdl_context.event_pump().expect("Failed to initalize event pump."),
-            camera: Camera { transform: Transform::new(Vector::new(0.0, 0.0), 0.0), zoom: 1.0 },
+            event_pump: sdl_context
+                .event_pump()
+                .expect("Failed to initalize event pump."),
+            camera: Camera {
+                transform: Transform::new(Vector::new(0.0, 0.0), 0.0),
+                zoom: 1.0,
+            },
             world: World::new(),
         }
     }
@@ -98,10 +109,7 @@ impl App {
         let camera_transform = self.camera.transform;
         self.renderer.set_draw_color(Color::RGB(0, 0, 0));
         self.renderer.clear();
-        let (screen_width, screen_height) = self.renderer
-            .window()
-            .unwrap()
-            .size();
+        let (screen_width, screen_height) = self.renderer.window().unwrap().size();
         for game_obj in game_objs.values() {
             if let Some(ref game_obj) = *game_obj {
                 if let Some(ref sprite) = game_obj.sprite {
@@ -111,31 +119,34 @@ impl App {
                     let mut polar = PolarCoords::from(render_transform.translation.vector.clone());
                     polar.rotation -= camera_transform.rotation.angle();
                     render_transform.translation = Translation::from_vector(Vector::from(polar));
-		    render_transform.translation.vector *= self.camera.zoom;
+                    render_transform.translation.vector *= self.camera.zoom;
                     render_transform.translation.vector.x += (screen_width / 2) as f32;
                     render_transform.translation.vector.y += (screen_height / 2) as f32;
-                    render_transform.rotation = UnitComplex::from_angle(render_transform.rotation.angle() - camera_transform.rotation.angle());
+                    render_transform.rotation =
+                        UnitComplex::from_angle(render_transform.rotation.angle() -
+                                                camera_transform.rotation.angle());
                     match *sprite {
                         Sprite::Texture(ref texture) => {
                             let (tex_width, tex_height) = texture::size(texture);
-			    let draw_width = (tex_width as f32 * self.camera.zoom) as u32;
-			    let draw_height = (tex_height as f32 * self.camera.zoom) as u32;
-                            let render_rect = Rect::new((render_transform.translation.vector.x as i32) -
-                                                        (draw_width as i32 / 2),
-                                                        (render_transform.translation.vector.y as i32) -
-                                                        (draw_height as i32 / 2),
-                                                        draw_width,
-                                                        draw_height);
-                            let result = self.renderer.copy_ex(texture::get_raw(texture),
-                                                               None,
-                                                               Some(render_rect),
-                                                               (game_obj.transform.rotation.angle() *
-                                                                180.0 /
-                                                                f32::consts::PI) as
-                                                               f64,
-                                                               None,
-                                                               texture.flip_horizontal,
-                                                               texture.flip_vertical);
+                            let draw_width = (tex_width as f32 * self.camera.zoom) as u32;
+                            let draw_height = (tex_height as f32 * self.camera.zoom) as u32;
+                            let render_rect =
+                                Rect::new((render_transform.translation.vector.x as i32) -
+                                          (draw_width as i32 / 2),
+                                          (render_transform.translation.vector.y as i32) -
+                                          (draw_height as i32 / 2),
+                                          draw_width,
+                                          draw_height);
+                            let result = self.renderer
+                                .copy_ex(texture::get_raw(texture),
+                                         None,
+                                         Some(render_rect),
+                                         (game_obj.transform.rotation.angle() * 180.0 /
+                                          f32::consts::PI) as
+                                         f64,
+                                         None,
+                                         texture.flip_horizontal,
+                                         texture.flip_vertical);
                             if let Err(err) = result {
                                 println!("Unable to draw texture, Error: {:?}", err);
                             }
@@ -147,10 +158,12 @@ impl App {
                             let result = self.renderer
                                 .copy_ex(sprite_sheet::get_texture(sprite_sheet),
                                          Some(Rect::from(current_frame.frame_rect)),
-                                         Some(Rect::new((render_transform.translation.vector.x as i32) -
+                                         Some(Rect::new((render_transform.translation.vector.x as
+                                                         i32) -
                                                         (current_frame.frame_rect.width() as i32 /
                                                          2),
-                                                        (render_transform.translation.vector.y as i32) -
+                                                        (render_transform.translation.vector.y as
+                                                         i32) -
                                                         (current_frame.frame_rect.height() as i32 /
                                                          2),
                                                         current_frame.frame_rect.width(),
@@ -278,11 +291,12 @@ impl App {
     }
 
     pub fn world_mouse_pos(&self) -> Vector {
-         let (screen_width, screen_height) = self.renderer
-            .window()
-            .unwrap()
-            .size();
-        let mut mouse_relative_pos = PolarCoords::from((self.input.mouse.pos() - IntVector::new((screen_width / 2) as i32, (screen_height / 2) as i32)).to_vec());
+        let (screen_width, screen_height) = self.renderer.window().unwrap().size();
+        let mut mouse_relative_pos = PolarCoords::from((self.input.mouse.pos() -
+                                                        IntVector::new((screen_width / 2) as i32,
+                                                                       (screen_height / 2) as
+                                                                       i32))
+                                                               .to_vec());
         mouse_relative_pos.rotation += self.camera.transform.rotation.angle();
         self.camera.transform.translation.vector + Vector::from(mouse_relative_pos)
     }
@@ -339,7 +353,8 @@ impl App {
         texture_path.push(texture_name);
         let sdl_texture = self.renderer.load_texture(texture_path.as_path())?;
         let sdl_texture = Arc::new(sdl_texture);
-        self.texture_cache.insert(texture_name.to_string(), sdl_texture.clone());
+        self.texture_cache
+            .insert(texture_name.to_string(), sdl_texture.clone());
         Ok(texture::new(sdl_texture))
     }
 }

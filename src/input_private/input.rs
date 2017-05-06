@@ -31,7 +31,7 @@ pub enum BincodeIOError {
     SerializeError(SerializeError),
 }
 
-impl From<Error> for BincodeIOError{
+impl From<Error> for BincodeIOError {
     fn from(err: Error) -> BincodeIOError {
         BincodeIOError::IOError(err)
     }
@@ -112,7 +112,9 @@ impl Input {
 
     pub fn is_button_pressed(&self, button: Button) -> bool {
         (&self.buttons_pressed).into_iter().any(|&b| b == button) &&
-        !(&self.previous_buttons_pressed).into_iter().any(|&b| b == button)
+        !(&self.previous_buttons_pressed)
+             .into_iter()
+             .any(|&b| b == button)
     }
 
     pub fn is_button_down(&self, button: Button) -> bool {
@@ -121,7 +123,9 @@ impl Input {
 
     pub fn is_button_released(&self, button: Button) -> bool {
         !(&self.buttons_pressed).into_iter().any(|&b| b == button) &&
-        (&self.previous_buttons_pressed).into_iter().any(|&b| b == button)
+        (&self.previous_buttons_pressed)
+            .into_iter()
+            .any(|&b| b == button)
     }
 }
 
@@ -140,38 +144,45 @@ pub fn process_event(input: &mut Input, input_event: &Event) {
         Event::KeyDown { scancode, repeat, .. } => {
             if !repeat {
                 if let Some(scancode) = scancode {
-                    input.buttons_pressed.push(Button::Keyboard(Key::from_u32(scancode as u32)
-                                                                    .unwrap()));
+                    input
+                        .buttons_pressed
+                        .push(Button::Keyboard(Key::from_u32(scancode as u32).unwrap()));
                 }
             }
         }
         Event::KeyUp { scancode, repeat, .. } => {
             if !repeat {
                 if let Some(scancode) = scancode {
-                    while let Some(i) = input.buttons_pressed
-                        .iter()
-                        .position(|&item| {
-                            item == Button::Keyboard(Key::from_u32(scancode as u32).unwrap())
-                        }) {
+                    while let Some(i) = input
+                              .buttons_pressed
+                              .iter()
+                              .position(|&item| {
+                                            item ==
+                                            Button::Keyboard(Key::from_u32(scancode as u32)
+                                                                 .unwrap())
+                                        }) {
                         input.buttons_pressed.swap_remove(i);
                     }
                 }
             }
         }
         Event::MouseButtonDown { mouse_btn, .. } => {
-            input.buttons_pressed.push(Button::Mouse(MouseButton::from_u32(mouse_btn as u32)
-                                                         .unwrap()));
+            input
+                .buttons_pressed
+                .push(Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap()));
         }
         Event::MouseButtonUp { mouse_btn, .. } => {
-            while let Some(i) = input.buttons_pressed
-                .iter()
-                .position(|&item| {
-                    item == Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap())
-                }) {
+            while let Some(i) = input
+                      .buttons_pressed
+                      .iter()
+                      .position(|&item| {
+                                    item ==
+                                    Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap())
+                                }) {
                 input.buttons_pressed.swap_remove(i);
             }
         }
-        Event::MouseMotion{..} => {
+        Event::MouseMotion { .. } => {
             mouse::process_event(&mut input.mouse, input_event);
         }
         _ => {}
