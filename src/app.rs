@@ -1,13 +1,11 @@
 use sdl2;
 use sdl2::EventPump;
 use sdl2::event::Event;
-use sdl2::render::Renderer;
 use sdl2::pixels::Color;
 use sdl2::rect::Rect;
 use sdl2::image::LoadTexture;
 use sdl2::render::Texture as SdlTexture;
 use sdl2::mixer;
-use OptionLoaned;
 use input_private;
 use input::Input;
 use input_private::input;
@@ -18,6 +16,7 @@ use graphics::Texture;
 use graphics_private::texture;
 use graphics::Sprite;
 use graphics_private::sprite_sheet;
+use graphics::Screen;
 use math::PolarCoords;
 use math::Vector;
 use math::IntVector;
@@ -28,9 +27,9 @@ use audio_private::playlist;
 use math::Transform;
 use graphics::Canvas;
 use camera::Camera;
-use nphysics2d::world::World;
 use nphysics2d::math::Translation;
 use nalgebra::geometry::UnitComplex;
+use specs::Planner;
 use std::sync::Arc;
 use std::mem::replace;
 use std::collections::HashMap;
@@ -45,22 +44,24 @@ use chrono::Duration;
 /// This structure is responsible for managing asset loading,
 /// processing input, rendering the game and playing audio.
 pub struct App {
-    exit: bool,
-    renderer: Renderer<'static>,
-    event_pump: EventPump,
-    game_objects: HashMap<u64, Option<Box<GameObject>>>,
-    texture_cache: HashMap<String, Arc<SdlTexture>>,
-    next_game_object_id: u64,
-    pub input: Input,
-    pub camera: Camera,
-    pub world: World<f32>,
-    pub audio: Audio,
-    
-    /// How many pixels = 1 game world unit.  Defaults to 100.
-    pub screen_to_world_ratio: f32,
+    planner: Planner,    
+}
 
-    /// Distance in pixels from screen at which an object won't be drawn.  Defaults to 750.
-    pub cull_padding: u32,
+pub struct AppData {
+    delta_time: f32,
+    exit: bool
+}
+
+impl AppData {
+    /// Signal to the App that it's time to quit.  App will exit at the end of this frame.
+    pub fn exit(&mut self) {
+        self.exit = true;
+    }
+
+    /// Get the total time it took to compute the previous frame in seconds.
+    pub fn delta_time(&self) -> f32 {
+        self.delta_time
+    }
 }
 
 impl App {
@@ -69,50 +70,46 @@ impl App {
         let sdl_context = sdl2::init().expect("Failed to initialize SDL2.");
         let video_subsystem = sdl_context
             .video()
-            .expect("Failed to initialize video subsystem");
+            .expect("Failed to initialize video subsystem.");
         let window = video_subsystem
             .window(name, 800, 600)
             .position_centered()
             .fullscreen_desktop()
             .opengl()
             .build()
-            .unwrap();
-        let renderer = window
-            .renderer()
+            .expect("Failed to initialize SDL window.");
+        let canvas = CanvasBuilder::new(window)
+            .accelerated()
             .build()
-            .expect("Failed to initialize renderer");
-        let audio = sdl_context.audio().expect("Failed to initialize audio");
-        let mixer = mixer::init(mixer::INIT_OGG).expect("Failed to initialize mixer");
+            .expect("Failed to initialize canvas");
+        let audio = sdl_context.audio().expect("Failed to initialize audio.");
+        let mixer = mixer::init(mixer::INIT_OGG).expect("Failed to initialize mixer.");
         mixer::open_audio(mixer::DEFAULT_FREQUENCY, mixer::DEFAULT_FORMAT, 2, 1024)
-            .expect("Failed to open audio");
+            .expect("Failed to open audio.");
         mixer::allocate_channels(256);
         mixer::reserve_channels(128);
-        let input = input::new(sdl_context.mouse());
-        App {
-            exit: false,
-            next_game_object_id: 0,
-            game_objects: HashMap::new(),
-            input: input,
-            renderer: renderer,
-            texture_cache: HashMap::new(),
-            audio: audio::new(audio, mixer),
-            event_pump: sdl_context
-                .event_pump()
-                .expect("Failed to initalize event pump."),
-            camera: Camera {
+        let planner = {
+            let world = World::new();
+            world.add_resource(Screen::new(canvas));
+            world.add_resource(audio::new(audio, mixer));
+            world.add_resource(sdl_context.event_pump().expect("Failed to initialize event pump."));
+            world.add_resource(Camera {
                 transform: Transform::new(Vector::new(0.0, 0.0), 0.0),
                 zoom: 1.0,
-            },
-            world: World::new(),
-            screen_to_world_ratio: 100.0,
-            cull_padding: 750,
+            });
+            world.add_resource(input::new(sdl_context.mouse()));
+            world.add_resource(AppData {delta_time: 0.0, exit: false});
+            Planner::new(world)
+        }
+        App {
+            planner
         }
     }
 
 
     /// Called every frame to paint the scene. Do not put game logic here, that goes in update.
-    fn render(&mut self) {
-        use std::f32;
+    fn render(run_arg: RunArg) {
+        
         let game_objs = &self.game_objects;
         let camera_transform = self.camera.transform;
         self.renderer.set_draw_color(Color::RGB(0, 0, 0));
@@ -166,9 +163,8 @@ impl App {
                             }
                         }
                         Sprite::SpriteSheet(ref sprite_sheet) => {
-                            let ref current_frame = sprite_sheet.animations[sprite_sheet.current_animation as
-                            usize]
-                                [sprite_sheet.current_frame as usize];
+                            let ref current_frame = sprite_sheet.animations
+                                [sprite_sheet.current_animation as usize][sprite_sheet.current_frame as usize];
                             let draw_width = current_frame.frame_rect.width() as f32 * self.camera.zoom;
                             let draw_height = current_frame.frame_rect.height() as f32 * self.camera.zoom;
                             let result = self.renderer
@@ -190,86 +186,7 @@ impl App {
                 }
             }
         }
-        {
-            let mut canvas = Canvas::new(&mut self.renderer);
-            for game_obj in game_objs.values() {
-                if let Some(ref game_obj) = *game_obj {
-                    if let Some(keys) = game_obj.component_keys() {
-                        for key in keys {
-                            if let OptionLoaned::Some(component) = game_obj.component(key) {
-                                component.render_gui(&mut canvas, game_obj);
-                            }
-                        }
-                    }
-                }
-            }
-        }
         self.renderer.present();
-    }
-
-
-    /// Called every frame to simulate the game. Do not put rendering here, that goes in render.
-    fn update(&mut self, delta_time: f32, profiling: bool) {
-        // Advance audio if necessary.
-        playlist::advance_if_needed(&mut self.audio.playlist);
-        //Copy game_object to the physics world, step, then copy from physics to game_object
-        let physics_start = Instant::now();
-        for mut game_object in self.game_objects.values_mut() {
-            if let Some(game_object) = game_object.as_mut() {
-                game_object::copy_to_physics(game_object);
-            }
-        }
-        self.world.step(delta_time);
-        for mut game_object in self.game_objects.values_mut() {
-            if let Some(game_object) = game_object.as_mut() {
-                game_object::copy_from_physics(game_object);
-            }
-        }
-        if profiling {
-            let physics_duration = Duration::from_std(physics_start.elapsed())
-                            .unwrap()
-                            .num_microseconds()
-                            .unwrap() as f32 / 1000000.0;
-            println!("\tPhysics step time: {} seconds", physics_duration);
-        }
-
-        //Send update messages
-        let keys = self.game_objects
-            .iter()
-            .filter_map(|(k, g)| if g.as_ref().map_or(false, |g| game_object::has_components(g.as_ref())) {Some(*k)} else {None} )
-            .collect::<Vec<u64>>();
-        for key in keys {
-            let mut game_obj_option = None;
-            if let Some(game_obj_ref) = self.game_objects.get_mut(&key) {
-                game_obj_option = replace(game_obj_ref, None);
-            }
-            if let Some(ref mut game_obj) = game_obj_option {
-                game_obj.update(self, delta_time);
-            }
-            if let Some(game_obj_ref) = self.game_objects.get_mut(&key) {
-                replace(game_obj_ref, game_obj_option);
-            }
-        }
-
-        // Drop any game objects that need to be dropped.
-        let mut dropped_keys = Vec::new();
-        for (key, game_obj) in self.game_objects.iter() {
-            if let Some(ref game_obj) = *game_obj {
-                if game_object::was_dropped(game_obj.borrow()) {
-                    dropped_keys.push(*key);
-                }
-            } else {
-                dropped_keys.push(*key);
-            }
-        }
-        for key in dropped_keys {
-            let removed = self.game_objects.remove(&key);
-            if let Some(Some(mut game_obj)) = removed {
-                game_obj.receive_message(self, &Message::OnDestroy);
-            }
-        }
-
-        input_private::input::shift_frame(&mut self.input);
     }
 
     /// Begin execution of the game.
@@ -277,45 +194,42 @@ impl App {
     /// This function won't return until the game has been quit.
     /// If profiling is true then additional information on game processing durations will be
     /// printed to console.
-    pub fn run(&mut self, profiling: bool) {
+    pub fn run(&mut self) {
         let mut last_frame_instant = Instant::now();
-        while !self.exit {
-            while let Some(e) = self.event_pump.poll_event() {
-                if let Event::Quit { .. } = e {
-                    self.exit = true;
+        while !self.planner.mut_world().read_resource_now<AppData>().exit {
+            // Measure time elapsed in the previous frame.
+            let now = Instant::now();
+            let delta_time = Duration::from_std(last_frame_instant.elapsed())
+                            .unwrap()
+                            .num_microseconds()
+                            .unwrap() as f32 / 1000000.0;
+            last_frame_instant = now;
+
+
+            // Event polling from SDL2 Window.
+            self.planner.run_custom(|run_arg| {
+                let event_pump;
+                let input;
+                let app_data;
+                run_arg.fetch(|world| {
+                    event_pump = world.write_resource<EventPump>();
+                    input = world.write_resource<Input>();
+                    app_data = world.write_resource<AppData>();
+                });
+                app_data.delta_time = delta_time;
+                while let Some(e) = event_pump.poll_event() {
+                    if let Event::Quit { .. } = e {
+                        app_data.exit();
+                    }
+                    input_private::input::process_event(&mut input, &e);
                 }
-                input_private::input::process_event(&mut self.input, &e);
-            }
-            let update_start = Instant::now();
-            self.update(Duration::from_std(last_frame_instant.elapsed())
-                            .unwrap()
-                            .num_microseconds()
-                            .unwrap() as f32 / 1000000.0, profiling);
-            let update_duration = if profiling {
-                Duration::from_std(update_start.elapsed())
-                            .unwrap()
-                            .num_microseconds()
-                            .unwrap() as f32 / 1000000.0
-            } else {
-                0.0
-            };
-            last_frame_instant = Instant::now();
-            let render_start = Instant::now();
-            self.render();
+            });
             
-            let render_duration = if profiling {
-                Duration::from_std(render_start.elapsed())
-                            .unwrap()
-                            .num_microseconds()
-                            .unwrap() as f32 / 1000000.0
-            } else {
-                0.0
-            };
-            if profiling {
-                println!("Total frame time: {} seconds", update_duration + render_duration);
-                println!("Update time: {} seconds", update_duration);
-                println!("Render time: {} seconds", render_duration);
-            }
+            
+            //Pass control to user here.
+            
+            //Render game
+            self.planner.run_custom(render);
         }
     }
 
@@ -324,14 +238,6 @@ impl App {
     /// Signals that it's time to quit. Execution will stop at the end of the current frame.
     pub fn quit(&mut self) {
         self.exit = true;
-    }
-
-    pub fn camera(&self) -> &Camera {
-        &self.camera
-    }
-
-    pub fn camera_mut(&mut self) -> &mut Camera {
-        &mut self.camera
     }
 
     pub fn world_mouse_pos(&self) -> Vector {
@@ -343,45 +249,6 @@ impl App {
                                                                .to_vec());
         mouse_relative_pos.rotation += self.camera.transform.rotation.angle();
         self.camera.transform.translation.vector + (Vector::from(mouse_relative_pos) / (self.camera.zoom * self.screen_to_world_ratio))
-    }
-
-    /// Creates a new GameObject
-    ///
-    /// GameObjects are typically physical objects in your game world, such as characters or
-    /// decorative objects.
-    ///
-    /// Parameter f will be called on the newly created GameObject, allowing you to initialize it.
-    /// Returns the id of the new GameObject, which can be used to retrieve this GameObject later.
-    pub fn new_gameobject<F>(&mut self, f: F) -> u64
-        where F: FnOnce(&mut App, &mut GameObject)
-    {
-        let mut game_object = Box::new(game_object::new(self));
-        f(self, &mut game_object);
-        let id = game_object.id();
-        self.game_objects.insert(id, Some(game_object));
-        id
-    }
-
-    /// Retrieves a reference to an existing GameObject by the GameObject's id.
-    ///
-    /// Returns Away if and only if the GameObject exists but is currently loaned out
-    /// in another borrow.
-    ///
-    /// Hint: That borrow is most likely in the game_object parameter of the receive_message
-    /// function.
-    pub fn game_object_by_id(&self, id: u64) -> OptionLoaned<&GameObject> {
-        OptionLoaned::from(self.game_objects.get(&id))
-    }
-
-    /// Retrieves a mutable reference to an existing GameObject by the GameObject's id.
-    ///
-    /// Returns Away if and only if the GameObject exists but is currently loaned out
-    /// in another borrow.
-    ///
-    /// Hint: That borrow is most likely in the game_object parameter of the receive_message
-    /// function.
-    pub fn game_object_by_id_mut(&mut self, id: u64) -> OptionLoaned<&mut GameObject> {
-        OptionLoaned::from(self.game_objects.get_mut(&id))
     }
 
     /// Loads a texture and returns it for use.
@@ -401,10 +268,4 @@ impl App {
             .insert(texture_name.to_string(), sdl_texture.clone());
         Ok(texture::new(sdl_texture))
     }
-}
-
-// This function will never return 0.  0 can now be used as a null value.
-pub fn next_game_object_id(app: &mut App) -> u64 {
-    app.next_game_object_id += 1;
-    app.next_game_object_id
 }

@@ -3,6 +3,7 @@ use sdl2::rect::Rect as SdlRect;
 
 #[derive(Debug, Copy, PartialEq, Clone)]
 pub struct IntRect {
+    ///The top left or the rectangle.
     pub xy: IntVector,
     pub width: u32,
     pub height: u32,
@@ -31,6 +32,13 @@ impl IntRect {
 
     pub fn height(&self) -> u32 {
         self.height
+    }
+
+    pub fn contains(&self, int_vector: &IntVector) -> bool {
+        self.x() <= int_vector.x
+        && self.x() + self.width() >= int_vector.x
+        && self.y() >= int_vector.y
+        && self.y() - self.height() <= int_vector.y
     }
 }
 

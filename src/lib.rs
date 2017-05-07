@@ -14,6 +14,7 @@ extern crate unborrow;
 pub extern crate ncollide;
 pub extern crate nphysics2d;
 pub extern crate nalgebra;
+pub extern crate specs;
 
 mod app;
 pub use app::App;
@@ -24,17 +25,12 @@ pub mod audio {
     pub use audio_private::playlist::Playlist;
 }
 
-mod game_object;
-pub use game_object::GameObject;
-
-pub mod component;
-
 mod graphics_private;
 pub mod graphics {
     pub use graphics_private::texture::Texture;
     pub use graphics_private::Sprite;
     pub use graphics_private::sprite_sheet::SpriteSheet;
-    pub use graphics_private::canvas::Canvas;
+    pub use graphics_private::Screen;
 }
 
 mod math_private;
@@ -62,6 +58,3 @@ pub mod input {
 
 mod camera;
 pub use camera::Camera;
-
-mod option_loaned;
-pub use option_loaned::OptionLoaned;
