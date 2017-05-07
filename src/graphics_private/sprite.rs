@@ -2,7 +2,7 @@ use graphics::Texture;
 use graphics::SpriteSheet;
 
 /// Something which can be displayed on screen.  This can optionally be animated.
-pub enum SpriteImage {
+pub enum Sprite {
     /// A static image.  No animation is available.
     Texture(Texture),
 
@@ -12,9 +12,4 @@ pub enum SpriteImage {
     /// frames is typically the responsiblity of a Component delegated to controlling
     /// animation.
     SpriteSheet(SpriteSheet),
-}
-
-pub struct Sprite {
-    pub image: SpriteImage,
-    pub draw_layer: i32,
 }

@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 use sdl2::render::WindowCanvas;
+use sdl2::render::Texture as SdlTexture;
+use std::sync::Arc;
 
 pub struct Screen {
     texture_cache: HashMap<String, Arc<SdlTexture>>,
@@ -19,5 +21,9 @@ impl Screen {
             screen_to_world_ratio: 100.0,
             cull_padding: 750,
         }
+    }
+
+    pub fn canvas(&mut self) -> &mut WindowCanvas {
+        &mut self.canvas
     }
 }

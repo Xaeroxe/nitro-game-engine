@@ -58,3 +58,5 @@ pub mod input {
 
 mod camera;
 pub use camera::Camera;
+
+pub mod component;
