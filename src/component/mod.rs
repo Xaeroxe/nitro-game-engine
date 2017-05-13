@@ -1,4 +1,8 @@
-mod transform_component;
-pub use self::transform_component::TransformComponent;
-mod sprite_component;
-pub use self::sprite_component::SpriteComponent;
+mod message;
+pub use self::message::Message;
+
+mod component;
+pub use self::component::Component;
+
+mod component_any;
+pub use self::component_any::ComponentAny;
