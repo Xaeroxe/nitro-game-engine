@@ -39,6 +39,7 @@ use std::path::PathBuf;
 use std::f32;
 use std::time::Instant;
 use chrono::Duration;
+use fnv::FnvHashMap;
 
 /// This structure represents a game instance.
 ///
@@ -48,8 +49,8 @@ pub struct App {
     exit: bool,
     renderer: Renderer<'static>,
     event_pump: EventPump,
-    game_objects: HashMap<u64, Option<Box<GameObject>>>,
-    texture_cache: HashMap<String, Arc<SdlTexture>>,
+    game_objects: FnvHashMap<u64, Option<Box<GameObject>>>,
+    texture_cache: FnvHashMap<String, Arc<SdlTexture>>,
     next_game_object_id: u64,
     pub input: Input,
     pub camera: Camera,
@@ -91,10 +92,10 @@ impl App {
         App {
             exit: false,
             next_game_object_id: 0,
-            game_objects: HashMap::new(),
+            game_objects: FnvHashMap::default(),
             input: input,
             renderer: renderer,
-            texture_cache: HashMap::new(),
+            texture_cache: FnvHashMap::default(),
             audio: audio::new(audio, mixer),
             event_pump: sdl_context
                 .event_pump()

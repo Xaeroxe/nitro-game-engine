@@ -10,6 +10,7 @@ extern crate num;
 extern crate rand;
 #[macro_use]
 extern crate unborrow;
+extern crate fnv;
 
 pub extern crate ncollide;
 pub extern crate nphysics2d;
