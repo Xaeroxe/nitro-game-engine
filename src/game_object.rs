@@ -1,12 +1,8 @@
-use app;
 use app::App;
 use OptionLoaned;
 use graphics::Sprite;
-use math::Transform;
-use math::Vector;
-use component::Component;
-use component::ComponentAny;
-use component::Message;
+use math::{Transform, Vector};
+use component::{Component, ComponentAny, Message};
 use std::collections::BTreeMap;
 use std::mem::replace;
 use nphysics2d::object::{RigidBody, RigidBodyHandle};
@@ -24,8 +20,8 @@ pub struct GameObject {
     id: u64,
     components: BTreeMap<i32, Option<Box<ComponentAny>>>,
     // If this value is false messages will not be sent.  Optimization for game_objects with empty component lists.
-    has_components: bool,
-    drop: bool,
+    pub(crate) has_components: bool,
+    pub(crate) drop: bool,
 }
 
 impl GameObject {
@@ -72,24 +68,20 @@ impl GameObject {
         }
     }
 
-    pub fn component_keys<'a>(&'a self) -> Option<Box<Iterator<Item = i32> + 'a>> {
-        if self.has_components {Some(Box::new(self.components.keys().map(|x| *x)))} else {None}
+    pub fn component_keys<'a>(&'a self) -> Box<Iterator<Item = i32> + 'a> {
+        Box::new(self.components.keys().map(|x| *x))
     }
 
-    pub fn component_keys_with_type<'a, T>(&'a self) -> Option<Box<Iterator<Item = i32> + 'a>>
+    pub fn component_keys_with_type<'a, T>(&'a self) -> Box<Iterator<Item = i32> + 'a>
         where T: Component + 'static
     {
-        if self.has_components {
-            Some(Box::new(self.components
+        Box::new(self.components
                      .iter()
                      .filter_map(|(k, c)| if let &Some(ref c) = c {
                                      if c.as_any().is::<T>() { Some(*k) } else { None }
                                  } else {
                                      None
-                                 })))
-        } else {
-            None
-        }
+                                 }))
         
     }
 
@@ -162,40 +154,34 @@ impl GameObject {
     pub fn set_rigid_body(&mut self, app: &mut App, rigid_body: RigidBody<f32>) {
         self.body = Some(app.world.add_rigid_body(rigid_body));
     }
-}
 
-pub fn new(app: &mut App) -> GameObject {
-    GameObject {
-        id: app::next_game_object_id(app),
-        drop: false,
-        transform: Transform::new(Vector::new(0.0, 0.0), 0.0),
-        components: BTreeMap::new(),
-        sprite: None,
-        body: None,
-        draw_layer: 0,
-        has_components: false,
+    pub(crate) fn new(app: &mut App) -> GameObject {
+        GameObject {
+            id: app.next_game_object_id(),
+            drop: false,
+            transform: Transform::new(Vector::new(0.0, 0.0), 0.0),
+            components: BTreeMap::new(),
+            sprite: None,
+            body: None,
+            draw_layer: 0,
+            has_components: false,
+        }
     }
-}
 
-pub fn was_dropped(game_object: &GameObject) -> bool {
-    game_object.drop
-}
-
-pub fn copy_from_physics(game_object: &mut GameObject) {
-    if let &Some(ref body_box) = &game_object.body {
-        let body_borrow = body_box.borrow();
-        game_object.transform = body_borrow.position().clone();
+    pub(crate) fn copy_from_physics(&mut self) {
+        if let &Some(ref body_box) = &self.body {
+            let body_borrow = body_box.borrow();
+            self.transform = body_borrow.position().clone();
+        }
     }
+
+    pub(crate) fn copy_to_physics(&mut self) {
+        if let Some(ref mut body_box) = self.body {
+            body_box
+                .borrow_mut()
+                .set_transformation(self.transform.clone());
+        }
+    }  
 }
 
-pub fn copy_to_physics(game_object: &mut GameObject) {
-    if let Some(ref mut body_box) = game_object.body {
-        body_box
-            .borrow_mut()
-            .set_transformation(game_object.transform.clone());
-    }
-}
 
-pub fn has_components(game_object: &GameObject) -> bool {
-    game_object.has_components
-}

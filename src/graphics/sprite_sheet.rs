@@ -14,12 +14,16 @@ pub struct SpriteSheet {
     pub current_frame: u32,
 }
 
+impl SpriteSheet {
+    pub(crate) fn get_texture(&self) -> &Arc<SdlTexture> {
+        &self.texture
+    }
+}
+
 pub struct SpriteSheetFrame {
     pub frame_rect: IntRect,
     pub flip_horizontal: bool,
     pub flip_vertical: bool,
 }
 
-pub fn get_texture(sprite_sheet: &SpriteSheet) -> &Arc<SdlTexture> {
-    &sprite_sheet.texture
-}
+

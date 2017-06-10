@@ -1,7 +1,8 @@
 mod axis;
 pub use self::axis::Axis;
 
-pub mod input;
+mod input;
+pub use self::input::Input;
 pub mod keyboard;
 pub mod mouse;
 

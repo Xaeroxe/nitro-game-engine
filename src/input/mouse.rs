@@ -35,20 +35,22 @@ impl Mouse {
     pub fn set_show_cursor(&mut self, input: bool) {
         self.mouse_util.show_cursor(input);
     }
-}
 
-pub fn new(mouse_util: MouseUtil) -> Mouse {
-    Mouse {
-        mouse_util: mouse_util,
-        pos: IntVector::new(0, 0),
-    }
-}
-
-pub fn process_event(mouse: &mut Mouse, event: &Event) {
-    match *event {
-        Event::MouseMotion { x, y, .. } => {
-            mouse.pos = IntVector::new(x as i32, y as i32);
+    pub(crate) fn new(mouse_util: MouseUtil) -> Mouse {
+        Mouse {
+            mouse_util: mouse_util,
+            pos: IntVector::new(0, 0),
         }
-        _ => {}
+    }
+
+    pub(crate) fn process_event(&mut self, event: &Event) {
+        match *event {
+            Event::MouseMotion { x, y, .. } => {
+                self.pos = IntVector::new(x as i32, y as i32);
+            }
+            _ => {}
+        }
     }
 }
+
+

@@ -1,5 +1,5 @@
 use input::Button;
-use input_private::input::Input;
+use input::Input;
 
 /// An input axis, could be bound to W and S, A and D, up and down, or left and
 /// right.

@@ -2,8 +2,6 @@
 
 [Documentation](https://nitro-devs.github.io/nitro-game-engine/nitro/)
 
-UPDATE: (April 25th 2017) I feel Nitro is far enough along now for me to start making my game in it, so work on Nitro is going to slow down while I work on my game.  I'll occasionally be making updates for needs that arise in my game but I'll be committing much less frequently to this code base.  I'm still happy to accept PRs though! -@Xaeroxe
-
 Nitro is a game engine built in Rust for Windows, Mac OSX, and Linux systems.
 
 The Nitro project aims to be a complete game development solution, including a scene editor, asset import,
@@ -26,6 +24,7 @@ We're not there yet.  This project is a Work In Progress.  You can make some bas
 * Improve asset import (Current asset system is just based on the filesystem.)
 * Create a scene editor
 * Implement a GUI editor that allows users to visually design a GUI WYSIWYG style.
+* Add an animation editor that allows for easy GUI creation of animations
 
 # Objectives for the distant future
 * Extend the engine to work in 3D

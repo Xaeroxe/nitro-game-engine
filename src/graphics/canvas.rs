@@ -1,4 +1,3 @@
-use graphics_private::texture;
 use graphics::Texture;
 use math::IntRect;
 use sdl2::rect::Rect as SdlRect;
@@ -26,7 +25,7 @@ impl<'a> Canvas<'a> {
                         flip_horizontal: bool,
                         flip_vertical: bool)
                         -> Result<(), String> {
-        let texture = texture::get_raw(texture);
+        let texture = texture.get_raw();
         let sdl_src;
         let sdl_dst;
         let sdl_center;

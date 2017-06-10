@@ -8,23 +8,16 @@ use sdl2::image::LoadTexture;
 use sdl2::render::Texture as SdlTexture;
 use sdl2::mixer;
 use OptionLoaned;
-use input_private;
 use input::Input;
-use input_private::input;
 use game_object::GameObject;
 use component::Message;
-use game_object;
 use graphics::Texture;
-use graphics_private::texture;
 use graphics::Sprite;
-use graphics_private::sprite_sheet;
 use math::PolarCoords;
 use math::Vector;
 use math::IntVector;
-use math_private::int_vector::IntVecConvert;
+use math::int_vector::IntVecConvert;
 use audio::Audio;
-use audio_private::audio;
-use audio_private::playlist;
 use math::Transform;
 use graphics::Canvas;
 use camera::Camera;
@@ -33,8 +26,6 @@ use nphysics2d::math::Translation;
 use nalgebra::geometry::UnitComplex;
 use std::sync::Arc;
 use std::mem::replace;
-use std::collections::HashMap;
-use std::borrow::Borrow;
 use std::path::PathBuf;
 use std::f32;
 use std::time::Instant;
@@ -56,7 +47,7 @@ pub struct App {
     pub camera: Camera,
     pub world: World<f32>,
     pub audio: Audio,
-    
+
     /// How many pixels = 1 game world unit.  Defaults to 100.
     pub screen_to_world_ratio: f32,
 
@@ -88,7 +79,7 @@ impl App {
             .expect("Failed to open audio");
         mixer::allocate_channels(256);
         mixer::reserve_channels(128);
-        let input = input::new(sdl_context.mouse());
+        let input = Input::new(sdl_context.mouse());
         App {
             exit: false,
             next_game_object_id: 0,
@@ -96,7 +87,7 @@ impl App {
             input: input,
             renderer: renderer,
             texture_cache: FnvHashMap::default(),
-            audio: audio::new(audio, mixer),
+            audio: Audio::new(audio, mixer),
             event_pump: sdl_context
                 .event_pump()
                 .expect("Failed to initalize event pump."),
@@ -144,7 +135,7 @@ impl App {
                                             camera_transform.rotation.angle());
                     match *sprite {
                         Sprite::Texture(ref texture) => {
-                            let (tex_width, tex_height) = texture::size(texture);
+                            let (tex_width, tex_height) = Texture::size(texture);
                             let draw_width = (tex_width as f32 * self.camera.zoom) as u32;
                             let draw_height = (tex_height as f32 * self.camera.zoom) as u32;
                             let render_rect =
@@ -155,7 +146,7 @@ impl App {
                                             draw_width,
                                             draw_height);
                             let result = self.renderer
-                                .copy_ex(texture::get_raw(texture),
+                                .copy_ex(Texture::get_raw(texture),
                                             None,
                                             Some(render_rect),
                                             ((camera_transform.rotation.angle() - game_obj.transform.rotation.angle()) * 180.0 / f32::consts::PI) as f64 ,
@@ -173,7 +164,7 @@ impl App {
                             let draw_width = current_frame.frame_rect.width() as f32 * self.camera.zoom;
                             let draw_height = current_frame.frame_rect.height() as f32 * self.camera.zoom;
                             let result = self.renderer
-                                .copy_ex(sprite_sheet::get_texture(sprite_sheet),
+                                .copy_ex(sprite_sheet.get_texture(),
                                             Some(Rect::from(current_frame.frame_rect)),
                                             Some(Rect::new((render_transform.translation.vector.x - draw_width) as i32 / 2,
                                                         (render_transform.translation.vector.y - draw_height) as i32 / 2,
@@ -212,18 +203,18 @@ impl App {
     /// Called every frame to simulate the game. Do not put rendering here, that goes in render.
     fn update(&mut self, delta_time: f32, profiling: bool) {
         // Advance audio if necessary.
-        playlist::advance_if_needed(&mut self.audio.playlist);
+        self.audio.playlist.advance_if_needed();
         //Copy game_object to the physics world, step, then copy from physics to game_object
         let physics_start = Instant::now();
         for mut game_object in self.game_objects.values_mut() {
             if let Some(game_object) = game_object.as_mut() {
-                game_object::copy_to_physics(game_object);
+                GameObject::copy_to_physics(game_object);
             }
         }
         self.world.step(delta_time);
         for mut game_object in self.game_objects.values_mut() {
             if let Some(game_object) = game_object.as_mut() {
-                game_object::copy_from_physics(game_object);
+                GameObject::copy_from_physics(game_object);
             }
         }
         if profiling {
@@ -237,7 +228,7 @@ impl App {
         //Send update messages
         let keys = self.game_objects
             .iter()
-            .filter_map(|(k, g)| if g.as_ref().map_or(false, |g| game_object::has_components(g.as_ref())) {Some(*k)} else {None} )
+            .filter_map(|(k, g)| if g.as_ref().map_or(false, |g| g.has_components) {Some(*k)} else {None} )
             .collect::<Vec<u64>>();
         for key in keys {
             let mut game_obj_option = None;
@@ -256,7 +247,7 @@ impl App {
         let mut dropped_keys = Vec::new();
         for (key, game_obj) in self.game_objects.iter() {
             if let Some(ref game_obj) = *game_obj {
-                if game_object::was_dropped(game_obj.borrow()) {
+                if game_obj.drop {
                     dropped_keys.push(*key);
                 }
             } else {
@@ -270,7 +261,7 @@ impl App {
             }
         }
 
-        input_private::input::shift_frame(&mut self.input);
+        self.input.shift_frame();
     }
 
     /// Begin execution of the game.
@@ -285,7 +276,7 @@ impl App {
                 if let Event::Quit { .. } = e {
                     self.exit = true;
                 }
-                input_private::input::process_event(&mut self.input, &e);
+                self.input.process_event(&e);
             }
             let update_start = Instant::now();
             self.update(Duration::from_std(last_frame_instant.elapsed())
@@ -356,7 +347,7 @@ impl App {
     pub fn new_gameobject<F>(&mut self, f: F) -> u64
         where F: FnOnce(&mut App, &mut GameObject)
     {
-        let mut game_object = Box::new(game_object::new(self));
+        let mut game_object = Box::new(GameObject::new(self));
         f(self, &mut game_object);
         let id = game_object.id();
         self.game_objects.insert(id, Some(game_object));
@@ -391,7 +382,7 @@ impl App {
     /// (assets\textures on Windows)
     pub fn fetch_texture(&mut self, texture_name: &str) -> Result<Texture, String> {
         if let Some(sdl_texture) = self.texture_cache.get(texture_name) {
-            return Ok(texture::new(sdl_texture.clone()));
+            return Ok(Texture::new(sdl_texture.clone()));
         }
         let mut texture_path = PathBuf::from("assets");
         texture_path.push("textures");
@@ -400,12 +391,14 @@ impl App {
         let sdl_texture = Arc::new(sdl_texture);
         self.texture_cache
             .insert(texture_name.to_string(), sdl_texture.clone());
-        Ok(texture::new(sdl_texture))
+        Ok(Texture::new(sdl_texture))
+    }
+
+    // This function will never return 0.  0 can now be used as a null value.
+    pub(crate) fn next_game_object_id(&mut self) -> u64 {
+        self.next_game_object_id += 1;
+        self.next_game_object_id
     }
 }
 
-// This function will never return 0.  0 can now be used as a null value.
-pub fn next_game_object_id(app: &mut App) -> u64 {
-    app.next_game_object_id += 1;
-    app.next_game_object_id
-}
+

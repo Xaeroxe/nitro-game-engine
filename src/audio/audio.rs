@@ -99,9 +99,8 @@ impl Audio {
         }
         None
     }
-}
 
-pub fn new(audio: AudioSubsystem, mixer: Sdl2MixerContext) -> Audio {
+    pub(crate) fn new(audio: AudioSubsystem, mixer: Sdl2MixerContext) -> Audio {
     Audio {
         playlist: Playlist::new(),
         sound_cache: HashMap::new(),
@@ -109,3 +108,6 @@ pub fn new(audio: AudioSubsystem, mixer: Sdl2MixerContext) -> Audio {
         _mixer: mixer,
     }
 }
+}
+
+

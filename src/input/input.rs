@@ -2,7 +2,6 @@ use sdl2::event::Event;
 use sdl2::mouse::MouseUtil;
 use input::keyboard::Key;
 use input::mouse::MouseButton;
-use input_private::mouse;
 use input::Button;
 use input::Axis;
 use std::io::Error;
@@ -120,68 +119,70 @@ impl Input {
             .into_iter()
             .any(|&b| b == button)
     }
-}
 
-pub fn new(mouse_util: MouseUtil) -> Input {
-    Input {
-        buttons_pressed: vec![],
-        previous_buttons_pressed: vec![],
-        axes: HashMap::new(),
-        actions: HashMap::new(),
-        mouse: mouse::new(mouse_util),
-    }
-}
-
-pub fn process_event(input: &mut Input, input_event: &Event) {
-    match *input_event {
-        Event::KeyDown { scancode, repeat, .. } => {
-            if !repeat {
-                if let Some(scancode) = scancode {
-                    input
-                        .buttons_pressed
-                        .push(Button::Keyboard(Key::from_u32(scancode as u32).unwrap()));
-                }
-            }
+    pub(crate) fn new(mouse_util: MouseUtil) -> Input {
+        Input {
+            buttons_pressed: vec![],
+            previous_buttons_pressed: vec![],
+            axes: HashMap::new(),
+            actions: HashMap::new(),
+            mouse: Mouse::new(mouse_util),
         }
-        Event::KeyUp { scancode, repeat, .. } => {
-            if !repeat {
-                if let Some(scancode) = scancode {
-                    while let Some(i) = input
-                              .buttons_pressed
-                              .iter()
-                              .position(|&item| {
-                                            item ==
-                                            Button::Keyboard(Key::from_u32(scancode as u32)
-                                                                 .unwrap())
-                                        }) {
-                        input.buttons_pressed.swap_remove(i);
+    }
+
+    pub(crate) fn process_event(&mut self, input_event: &Event) {
+        match *input_event {
+            Event::KeyDown { scancode, repeat, .. } => {
+                if !repeat {
+                    if let Some(scancode) = scancode {
+                        self
+                            .buttons_pressed
+                            .push(Button::Keyboard(Key::from_u32(scancode as u32).unwrap()));
                     }
                 }
             }
-        }
-        Event::MouseButtonDown { mouse_btn, .. } => {
-            input
-                .buttons_pressed
-                .push(Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap()));
-        }
-        Event::MouseButtonUp { mouse_btn, .. } => {
-            while let Some(i) = input
-                      .buttons_pressed
-                      .iter()
-                      .position(|&item| {
-                                    item ==
-                                    Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap())
-                                }) {
-                input.buttons_pressed.swap_remove(i);
+            Event::KeyUp { scancode, repeat, .. } => {
+                if !repeat {
+                    if let Some(scancode) = scancode {
+                        while let Some(i) = self
+                                .buttons_pressed
+                                .iter()
+                                .position(|&item| {
+                                                item ==
+                                                Button::Keyboard(Key::from_u32(scancode as u32)
+                                                                    .unwrap())
+                                            }) {
+                            self.buttons_pressed.swap_remove(i);
+                        }
+                    }
+                }
             }
+            Event::MouseButtonDown { mouse_btn, .. } => {
+                self
+                    .buttons_pressed
+                    .push(Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap()));
+            }
+            Event::MouseButtonUp { mouse_btn, .. } => {
+                while let Some(i) = self
+                        .buttons_pressed
+                        .iter()
+                        .position(|&item| {
+                                        item ==
+                                        Button::Mouse(MouseButton::from_u32(mouse_btn as u32).unwrap())
+                                    }) {
+                    self.buttons_pressed.swap_remove(i);
+                }
+            }
+            Event::MouseMotion { .. } => {
+                self.mouse.process_event(input_event);
+            }
+            _ => {}
         }
-        Event::MouseMotion { .. } => {
-            mouse::process_event(&mut input.mouse, input_event);
-        }
-        _ => {}
+    }
+
+    pub(crate) fn shift_frame(&mut self) {
+        self.previous_buttons_pressed = self.buttons_pressed.clone();
     }
 }
 
-pub fn shift_frame(input: &mut Input) {
-    input.previous_buttons_pressed = input.buttons_pressed.clone();
-}
+

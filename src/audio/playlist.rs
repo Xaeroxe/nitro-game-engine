@@ -114,12 +114,14 @@ impl Playlist {
     pub fn track_count(&self) -> usize {
         self.tracks.len()
     }
-}
 
-pub fn advance_if_needed(playlist: &mut Playlist) {
-    if playlist.started {
+    pub fn advance_if_needed(&mut self) {
+    if self.started {
         if !Music::is_playing() {
-            playlist.next_track();
+            self.next_track();
         }
     }
 }
+}
+
+
