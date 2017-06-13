@@ -186,11 +186,9 @@ impl App {
             let mut canvas = Canvas::new(&mut self.renderer);
             for game_obj in game_objs.values() {
                 if let Some(ref game_obj) = *game_obj {
-                    if let Some(keys) = game_obj.component_keys() {
-                        for key in keys {
-                            if let OptionLoaned::Some(component) = game_obj.component(key) {
-                                component.render_gui(&mut canvas, game_obj);
-                            }
+                    for key in game_obj.component_keys() {
+                        if let OptionLoaned::Some(component) = game_obj.component(key) {
+                            component.render_gui(&mut canvas, game_obj);
                         }
                     }
                 }
