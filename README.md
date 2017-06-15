@@ -1,5 +1,7 @@
 # Nitro game engine [![Crates listing](https://img.shields.io/crates/v/nitro.svg)](https://crates.io/crates/nitro) [![Build Status](https://travis-ci.org/nitro-devs/nitro-game-engine.svg?branch=master)](https://travis-ci.org/nitro-devs/nitro-game-engine/branches) [![Build Status](https://ci.appveyor.com/api/projects/status/github/nitro-devs/nitro-game-engine?branch=master&svg=true)](https://ci.appveyor.com/project/Xaeroxe/nitro-game-engine?branch=master) [![Gitter Chat](https://badges.gitter.im/nitro-game-engine/nitro.svg)](https://gitter.im/nitro-game-engine/nitro)
 
+UPDATE: It is unlikely further work will be done in this repository, as I've decided to work on the [Amethyst](https://www.amethyst.rs/) project alternatively.  After evaluating the two code bases and philosophies I've determined that Nitro and Amethyst have the same goals, I hope any fans of this project will consider the Amethyst project as a sufficient alternative.  If anyone wants to take over the nitro repositories I'll be happy to do the transfer.
+
 [Documentation](https://nitro-devs.github.io/nitro-game-engine/nitro/)
 
 Nitro is a game engine built in Rust for Windows, Mac OSX, and Linux systems.
