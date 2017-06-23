@@ -7,10 +7,9 @@ UPDATE: It is unlikely further work will be done in this repository, as I've dec
 Nitro is a game engine built in Rust for Windows, Mac OSX, and Linux systems.
 
 The Nitro project aims to be a complete game development solution, including a scene editor, asset import,
-and all the features we've come to expect from commercial offerings such as Unity or Unreal Engine 4.
-We're not there yet.  This project is a Work In Progress.  You can make some basic games with it as it is today, for example a mario clone.  However in some areas the API endpoints are a bit scarce and some features such as multiplayer are missing entirely.
+and all the features we've come to expect from commercial offerings such as Unity or Unreal Engine 4.  This project is ~~a Work In Progress~~ abandoned.  You can make some basic games with it as it is today, for example a mario clone.  However in some areas the API endpoints are a bit scarce and some features such as multiplayer are missing entirely.
 
-# Progress thus far
+# Features
 * Very basic asset management exists.
 * A 2D rendering backend powered by SDL2 is present, 3D is a long ways off at this point.
 * "Immediate mode" GUI system driven by Components.
@@ -19,21 +18,6 @@ We're not there yet.  This project is a Work In Progress.  You can make some bas
 * Rebindable keys and input axes exist and can be queried by Components.
 * The ECS is in place, allowing users to create GameObjects and extend them by attaching Components.
 * Components receive messages from the engine which allow the components to respond to events as they occur.
-
-# Objectives for the near future
-* Add layer masking support.
-* Facilitate easy setup of multiplayer games.
-* Improve asset import (Current asset system is just based on the filesystem.)
-* Create a scene editor
-* Implement a GUI editor that allows users to visually design a GUI WYSIWYG style.
-* Add an animation editor that allows for easy GUI creation of animations
-
-# Objectives for the distant future
-* Extend the engine to work in 3D
-* Implement importing of existing 3D animations
-* "Locomotion" type system to allow animations to respond to the game environment.
-* Implement a lighting system that can compete with State of the Art commercial engines.
-* Anything beyond this is too far out to plan at this time.
 
 # Building the engine
 Nitro has three major C based dependencies that will need to be setup on your dev machine:
@@ -65,6 +49,4 @@ sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev
 
 # Contributing
 
-* We try and keep the issues list on this project up to date with any "requests for help" we might have.  If you don't know what to start working on you can look there.
-* If you spot issues please submit them.  Keep in mind that we only officially support the Rust stable channel, and we will not be adapting to changes in nightly or beta unless the rust project plans to move those changes to stable.
-* Small improvements can be made via PR without prior communication.  You're welcome to make larger PRs without prior communication as well, but be aware they may be rejected wholesale if they don't align with the project goals.  To avoid this, open up an issue for discussing the changes before you put too much work into them.
+* This repository has been abandoned.  If you'd like to take over further development on it (or use the nitro name itself for another project) please contact @Xaeroxe.
