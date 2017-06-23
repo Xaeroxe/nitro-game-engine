@@ -6,8 +6,7 @@ UPDATE: It is unlikely further work will be done in this repository, as I've dec
 
 Nitro is a game engine built in Rust for Windows, Mac OSX, and Linux systems.
 
-The Nitro project aims to be a complete game development solution, including a scene editor, asset import,
-and all the features we've come to expect from commercial offerings such as Unity or Unreal Engine 4.  This project is ~~a Work In Progress~~ abandoned.  You can make some basic games with it as it is today, for example a mario clone.  However in some areas the API endpoints are a bit scarce and some features such as multiplayer are missing entirely.
+This project is ~~a Work In Progress~~ abandoned.  You can make some basic games with it as it is today, for example a mario clone.  However in some areas the API endpoints are a bit scarce and some features such as multiplayer are missing entirely.
 
 # Features
 * Very basic asset management exists.
