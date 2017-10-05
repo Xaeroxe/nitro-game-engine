@@ -1,12 +1,11 @@
 [package]
 name = "nitro"
-version = "0.9.0"
+version = "0.9.1"
 authors = ["Jacob Kiesel <kieseljake@gmail.com>"]
-description = "A game engine built in Rust"
+description = "A game engine built in Rust.  This crate is no longer maintained."
 license = "MIT/Apache-2.0"
-repository = "https://github.com/nitro-devs/nitro-game-engine"
+repository = "https://github.com/Xaeroxe/nitro-game-engine"
 build = "build.rs"
-documentation = "https://nitro-devs.github.io/nitro-game-engine/nitro/"
 exclude = ["docs/*"]
 
 [dependencies.sdl2]
